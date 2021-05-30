@@ -1,0 +1,15 @@
+{
+  "name": "framework-example",
+  "version": "0.1.0",
+  "description": "An example of the AsyncAPI framework",
+  "scripts": {
+    "dev": "nodemon ./node_modules/framework/src/index.js",
+    "start": "node ./node_modules/framework/src/index.js"
+  },
+  "author": "Fran Mendez",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {}
+}

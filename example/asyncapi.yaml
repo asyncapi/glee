@@ -1,0 +1,74 @@
+asyncapi: 2.0.0
+info:
+  title: Account Service
+  version: 1.0.0
+  description: This service is in charge of processing user signups
+servers:
+  test:
+    url: mqtts://c0df6463bbbf45bab99a2efd697c2ebf.s2.eu.hivemq.cloud
+    protocol: mqtts
+    security:
+      - userAndPassword: []
+    bindings:
+      mqtt:
+        clientId: testing
+        cleanSession: true
+        lastWill:
+          topic: /last-wills
+          qos: 2
+          message: Guest gone offline.
+          retain: false
+        keepAlive: 60
+        bindingVersion: 0.1.0
+channels:
+  user/signedup:
+    publish:
+      operationId: functions/onUserSignedUp.js
+      message:
+        $ref: '#/components/messages/UserSignedUp'
+      bindings:
+        mqtt:
+          qos: 2
+          retain: true
+          bindingVersion: 0.1.0
+  email/sent:
+    subscribe:
+      message:
+        $ref: '#/components/messages/EmailSent'
+  server/announce:
+    subscribe:
+      message:
+        $ref: '#/components/messages/ServerAnnounce'
+components:
+  securitySchemes:
+    userAndPassword:
+      type: userPassword
+  messages:
+    UserSignedUp:
+      payload:
+        type: object
+        properties:
+          displayName:
+            type: string
+            description: Name of the user
+          email:
+            type: string
+            format: email
+            description: Email of the user
+    EmailSent:
+      payload:
+        type: object
+        properties:
+          email:
+            type: string
+            format: email
+            description: Email of the user
+          timestamp:
+            type: string
+            format: date-time
+    ServerAnnounce:
+      payload:
+        type: object
+        properties:
+          id:
+            type: string

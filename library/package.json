@@ -2,7 +2,10 @@
   "name": "framework",
   "version": "0.1.0",
   "description": "The AsyncAPI framework",
-  "main": "index.js",
+  "main": "src/index.js",
+  "bin": {
+    "asyncapi-framework": "./src/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +16,12 @@
   "author": "Fran Mendez",
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/parser": "^1.5.0"
+    "@asyncapi/parser": "^1.5.0",
+    "async": "^3.2.0",
+    "colors": "^1.4.0",
+    "debug": "^4.3.1",
+    "dotenv": "^10.0.0",
+    "mqtt": "^4.2.6",
+    "path-to-regexp": "^6.2.0"
   }
 }
