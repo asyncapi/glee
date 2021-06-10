@@ -1,10 +1,10 @@
 {
-  "name": "framework-example",
+  "name": "glee-example",
   "version": "0.1.0",
-  "description": "An example of the AsyncAPI framework",
+  "description": "An example of the AsyncAPI Glee framework",
   "scripts": {
-    "dev": "nodemon ./node_modules/framework/src/index.js",
-    "start": "node ./node_modules/framework/src/index.js"
+    "dev": "nodemon ./node_modules/@asyncapi/glee/src/index.js",
+    "start": "node ./node_modules/@asyncapi/glee/src/index.js"
   },
   "author": "Fran Mendez",
   "license": "Apache-2.0",
