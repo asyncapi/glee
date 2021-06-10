@@ -1,15 +1,14 @@
-const config = require('./lib/config')
 const MqttAdapter = require('./adapters/mqtt')
 
 module.exports = (app, parsedAsyncAPI) => {
-  if (!config.SERVER_NAME) {
+  if (!process.env.GLEE_SERVER_NAME) {
     // TODO: Improve the error pointing to a guide on how to do it properly.
-    throw new Error(`Missing "SERVER_NAME" configuration key.`)
+    throw new Error(`Missing "GLEE_SERVER_NAME" configuration key.`)
   }
-  const server = parsedAsyncAPI.server(config.SERVER_NAME)
+  const server = parsedAsyncAPI.server(process.env.GLEE_SERVER_NAME)
 
   if (!server) {
-    throw new Error(`Server "${config.SERVER_NAME}" is not defined in your AsyncAPI file.`)
+    throw new Error(`Server "${process.env.GLEE_SERVER_NAME}" is not defined in your AsyncAPI file.`)
   }
 
   const protocol = server.protocol()

@@ -1,68 +1,59 @@
-class EvolveRouter {
+class GleeRouter {
   /**
-   * Instantiates a EvolveRouter.
-   *
-   * @param {Object} options
-   * @param {String} [options.pathSeparator='/'] The character to use when joining paths.
+   * Instantiates a GleeRouter.
    */
   constructor (options) {
-    this.options = {
-      ...{
-        pathSeparator: '/'
-      },
-      ...options
-    };
-    this.middlewares = [];
-    this.outboundMiddlewares = [];
-    this.errorMiddlewares = [];
-    this.outboundErrorMiddlewares = [];
+    this.middlewares = []
+    this.outboundMiddlewares = []
+    this.errorMiddlewares = []
+    this.outboundErrorMiddlewares = []
   }
 
   /**
-   * Use a middleware for inbound messages. Please, note that when passing a EvolveRouter as a param,
+   * Use a middleware for inbound messages. Please, note that when passing a GleeRouter as a param,
    * this function will make use of inbound and outbound middlewares.
    *
    * @param {String} [channel] The channel you want to scope the middleware to.
-   * @param {Function|EvolveRouter} ...middlewares A function or EvolveRouter to use as a middleware.
+   * @param {Function|GleeRouter} ...middlewares A function or GleeRouter to use as a middleware.
    */
   use (...args) {
     if (!args || !args.length) {
-      console.error(`EvolveRouter.use() requires at least one argument.`);
-      return;
+      console.error(`GleeRouter.use() requires at least one argument.`)
+      return
     }
 
-    if (args.length === 1 && args[0] instanceof EvolveRouter) {
-      this.addMiddlewares(args[0].getMiddlewares());
-      this.addErrorMiddlewares(args[0].getErrorMiddlewares());
-      this.addOutboundMiddlewares(args[0].getOutboundMiddlewares());
-      this.addOutboundErrorMiddlewares(args[0].getOutboundErrorMiddlewares());
-    } else if (args.length === 2 && typeof args[0] === 'string' && args[1] instanceof EvolveRouter) {
-      this.addMiddlewares(args[1].getMiddlewares(), args[0]);
-      this.addErrorMiddlewares(args[1].getErrorMiddlewares(), args[0]);
-      this.addOutboundMiddlewares(args[1].getOutboundMiddlewares(), args[0]);
-      this.addOutboundErrorMiddlewares(args[1].getOutboundErrorMiddlewares(), args[0]);
+    if (args.length === 1 && args[0] instanceof GleeRouter) {
+      this.addMiddlewares(args[0].getMiddlewares())
+      this.addErrorMiddlewares(args[0].getErrorMiddlewares())
+      this.addOutboundMiddlewares(args[0].getOutboundMiddlewares())
+      this.addOutboundErrorMiddlewares(args[0].getOutboundErrorMiddlewares())
+    } else if (args.length === 2 && typeof args[0] === 'string' && args[1] instanceof GleeRouter) {
+      this.addMiddlewares(args[1].getMiddlewares(), args[0])
+      this.addErrorMiddlewares(args[1].getErrorMiddlewares(), args[0])
+      this.addOutboundMiddlewares(args[1].getOutboundMiddlewares(), args[0])
+      this.addOutboundErrorMiddlewares(args[1].getOutboundErrorMiddlewares(), args[0])
     } else {
-      let channel;
-      let functions = [];
+      let channel
+      let functions = []
 
       if (typeof args[0] === 'string') {
-        channel = args[0];
-        functions = args.splice(1);
+        channel = args[0]
+        functions = args.splice(1)
       } else {
-        functions = args;
+        functions = args
       }
 
-      const mws = functions.map(fn => ({ channel, fn }));
+      const mws = functions.map(fn => ({ channel, fn }))
 
       mws.forEach(mw => {
-        if (typeof mw.fn !== 'function') return;
+        if (typeof mw.fn !== 'function') return
 
         if (mw.fn.length <= 2) {
-          this.addMiddlewares([mw]);
+          this.addMiddlewares([mw])
         } else {
-          this.addErrorMiddlewares([mw]);
+          this.addErrorMiddlewares([mw])
         }
-      });
+      })
     }
   }
 
@@ -70,42 +61,42 @@ class EvolveRouter {
    * Use a middleware for outbound messages.
    *
    * @param {String} [channel] The channel you want to scope the middleware to.
-   * @param {Function|EvolveRouter} ...middlewares A function or EvolveRouter to use as a middleware.
+   * @param {Function|GleeRouter} ...middlewares A function or GleeRouter to use as a middleware.
    */
   useOutbound (...args) {
     if (!args || !args.length) {
-      console.error(`EvolveRouter.useOutbound() requires at least one argument.`);
-      return;
+      console.error(`GleeRouter.useOutbound() requires at least one argument.`)
+      return
     }
 
-    if (args.length === 1 && args[0] instanceof EvolveRouter) {
-      this.addOutboundMiddlewares(args[0].getOutboundMiddlewares());
-      this.addOutboundErrorMiddlewares(args[0].getOutboundErrorMiddlewares());
-    } else if (args.length === 2 && typeof args[0] === 'string' && args[1] instanceof EvolveRouter) {
-      this.addOutboundMiddlewares(args[1].getOutboundMiddlewares(), args[0]);
-      this.addOutboundErrorMiddlewares(args[1].getOutboundErrorMiddlewares(), args[0]);
+    if (args.length === 1 && args[0] instanceof GleeRouter) {
+      this.addOutboundMiddlewares(args[0].getOutboundMiddlewares())
+      this.addOutboundErrorMiddlewares(args[0].getOutboundErrorMiddlewares())
+    } else if (args.length === 2 && typeof args[0] === 'string' && args[1] instanceof GleeRouter) {
+      this.addOutboundMiddlewares(args[1].getOutboundMiddlewares(), args[0])
+      this.addOutboundErrorMiddlewares(args[1].getOutboundErrorMiddlewares(), args[0])
     } else {
-      let channel;
-      let functions = [];
+      let channel
+      let functions = []
 
       if (typeof args[0] === 'string') {
-        channel = args[0];
-        functions = args.splice(1);
+        channel = args[0]
+        functions = args.splice(1)
       } else {
-        functions = args;
+        functions = args
       }
 
-      const mws = functions.map(fn => ({ channel, fn }));
+      const mws = functions.map(fn => ({ channel, fn }))
 
       mws.forEach(mw => {
-        if (typeof mw.fn !== 'function') return;
+        if (typeof mw.fn !== 'function') return
 
         if (mw.fn.length <= 2) {
-          this.addOutboundMiddlewares([mw]);
+          this.addOutboundMiddlewares([mw])
         } else {
-          this.addOutboundErrorMiddlewares([mw]);
+          this.addOutboundErrorMiddlewares([mw])
         }
-      });
+      })
     }
   }
 
@@ -114,7 +105,7 @@ class EvolveRouter {
    * @return {Array<Function>}
    */
   getMiddlewares () {
-    return this.middlewares;
+    return this.middlewares
   }
 
   /**
@@ -122,7 +113,7 @@ class EvolveRouter {
    * @return {Array<Function>}
    */
   getOutboundMiddlewares () {
-    return this.outboundMiddlewares;
+    return this.outboundMiddlewares
   }
 
   /**
@@ -130,7 +121,7 @@ class EvolveRouter {
    * @return {Array<Function>}
    */
   getErrorMiddlewares () {
-    return this.errorMiddlewares;
+    return this.errorMiddlewares
   }
 
   /**
@@ -138,7 +129,7 @@ class EvolveRouter {
    * @return {Array<Function>}
    */
   getOutboundErrorMiddlewares () {
-    return this.outboundErrorMiddlewares;
+    return this.outboundErrorMiddlewares
   }
 
   /**
@@ -152,12 +143,12 @@ class EvolveRouter {
   _addMiddlewares (target, middlewares, channel) {
     middlewares.forEach(mw => {
       if (channel) {
-        const compoundchannel = mw.channel ? `${channel}${this.options.pathSeparator}${mw.channel}` : channel;
-        target.push({ ...mw, ...{ channel: compoundchannel } });
+        const compoundchannel = mw.channel ? `${channel}/${mw.channel}` : channel
+        target.push({ ...mw, ...{ channel: compoundchannel } })
       } else {
-        target.push(mw);
+        target.push(mw)
       }
-    });
+    })
   }
 
   /**
@@ -167,7 +158,7 @@ class EvolveRouter {
    * @param {String} [channel] The scope channel.
    */
   addMiddlewares (middlewares, channel) {
-    this._addMiddlewares(this.middlewares, middlewares, channel);
+    this._addMiddlewares(this.middlewares, middlewares, channel)
   }
 
   /**
@@ -177,7 +168,7 @@ class EvolveRouter {
    * @param {String} [channel] The scope channel.
    */
   addOutboundMiddlewares (middlewares, channel) {
-    this._addMiddlewares(this.outboundMiddlewares, middlewares, channel);
+    this._addMiddlewares(this.outboundMiddlewares, middlewares, channel)
   }
 
   /**
@@ -187,7 +178,7 @@ class EvolveRouter {
    * @param {String} [channel] The scope channel.
    */
   addErrorMiddlewares (errorMiddlewares, channel) {
-    this._addMiddlewares(this.errorMiddlewares, errorMiddlewares, channel);
+    this._addMiddlewares(this.errorMiddlewares, errorMiddlewares, channel)
   }
 
   /**
@@ -197,8 +188,8 @@ class EvolveRouter {
    * @param {String} [channel] The scope channel.
    */
   addOutboundErrorMiddlewares (errorMiddlewares, channel) {
-    this._addMiddlewares(this.outboundErrorMiddlewares, errorMiddlewares, channel);
+    this._addMiddlewares(this.outboundErrorMiddlewares, errorMiddlewares, channel)
   }
 }
 
-module.exports = EvolveRouter;
+module.exports = GleeRouter

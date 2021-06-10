@@ -11,13 +11,22 @@ servers:
       - userAndPassword: []
     bindings:
       mqtt:
-        clientId: testing
+        clientId: guest
         cleanSession: true
         lastWill:
           topic: /last-wills
           qos: 2
           message: Guest gone offline.
           retain: false
+        keepAlive: 60
+        bindingVersion: 0.1.0
+  mosquitto:
+    url: mqtt://test.mosquitto.org
+    protocol: mqtt
+    bindings:
+      mqtt:
+        clientId: guest
+        cleanSession: true
         keepAlive: 60
         bindingVersion: 0.1.0
 channels:

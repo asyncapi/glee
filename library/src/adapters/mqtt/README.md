@@ -1,22 +1,22 @@
 # TODO: Review and include this documentation in the main README
 
-# evolve-mqtt
+# glee-mqtt
 
-MQTT adapter for [EvolveJS](https://github.com/fmvilas/evolve).
+MQTT adapter for [GleeJS](https://github.com/fmvilas/glee).
 
 ## Installing
 
 ```
-npm install evolve-mqtt
+npm install glee-mqtt
 ```
 
 ## Example
 
 ```js
-const Evolve = require('evolve');
-const MqttAdapter = require('evolve-mqtt');
+const Glee = require('glee');
+const MqttAdapter = require('glee-mqtt');
 
-const app = new Evolve();
+const app = new Glee();
 
 app.addAdapter(MqttAdapter, {
   url: 'mqtt://test.mosquitto.org',

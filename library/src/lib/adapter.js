@@ -1,25 +1,25 @@
 const EventEmitter = require('events')
 
-class EvolveAdapter extends EventEmitter {
+class GleeAdapter extends EventEmitter {
   /**
-   * Instantiates a Evolve adapter.
+   * Instantiates a Glee adapter.
    *
-   * @param {Evolve} evolve  A reference to the Evolve app.
+   * @param {Glee} glee  A reference to the Glee app.
    * @param {Server} AsyncAPIServer  The AsyncAPI server object.
    * @param {AsyncAPIDocument} parsedAsyncAPI The AsyncAPI document.
    */
-  constructor (evolve, AsyncAPIServer, parsedAsyncAPI) {
+  constructor (glee, AsyncAPIServer, parsedAsyncAPI) {
     super()
 
-    this.evolve = evolve
+    this.glee = glee
     this.AsyncAPIServer = AsyncAPIServer
     this.parsedAsyncAPI = parsedAsyncAPI
 
-    this.on('error', err => { this.evolve.injectError(err) })
-    this.on('message', message => { this.evolve.injectMessage(message) })
+    this.on('error', err => { this.glee.injectError(err) })
+    this.on('message', message => { this.glee.injectMessage(message) })
 
     this.on('connect', (...args) => {
-      this.evolve.emit('adapter:connect', ...args)
+      this.glee.emit('adapter:connect', ...args)
     })
   }
 
@@ -35,7 +35,7 @@ class EvolveAdapter extends EventEmitter {
   /**
    * Sends a message to the remote server.
    *
-   * @param {EvolveMessage} message The message to send.
+   * @param {GleeMessage} message The message to send.
    * @return {Promise}
    */
   async send (message) {
@@ -43,4 +43,4 @@ class EvolveAdapter extends EventEmitter {
   }
 }
 
-module.exports = EvolveAdapter
+module.exports = GleeAdapter

@@ -1,7 +1,8 @@
+require('localenv')
 const { readFile } = require('fs/promises')
 const path = require('path')
 const asyncapi = require('@asyncapi/parser')
-const Evolve = require('./lib/evolve')
+const Glee = require('./lib/glee')
 const registerAdapters = require('./registerAdapters')
 const buffer2string = require('./middlewares/buffer2string')
 const string2json = require('./middlewares/string2json')
@@ -14,11 +15,20 @@ init().catch(console.error)
 
 async function init() {
   const directory = process.cwd() // TODO: Make it configurable
+  let options = {}
+  try {
+    options = require(path.resolve(directory, 'glee.config.js'))
+    if (typeof options === 'function') options = options()
+  } catch(e) {
+    if (e.code !== 'MODULE_NOT_FOUND') {
+      console.error(e)
+    }
+  }
   const asyncapiFileContent = await readFile(path.resolve(directory, 'asyncapi.yaml'), 'utf-8')
   const parsedAsyncAPI = await asyncapi.parse(asyncapiFileContent)
   const channelNames = parsedAsyncAPI.channelNames()
   
-  const app = new Evolve()
+  const app = new Glee(options)
 
   registerAdapters(app, parsedAsyncAPI)
 
@@ -52,7 +62,7 @@ async function init() {
     }
     if (channel.hasSubscribe()) {
       const schema = channel.subscribe().message().payload().json()
-      app.useOutbound(channelName, validate(schema), json2string);
+      app.useOutbound(channelName, validate(schema), json2string)
     }
   })
 
@@ -68,7 +78,7 @@ async function init() {
 
   app
     .listen()
-    .then((adapter) => {
+    .then((adapters) => {
       try {
         const afterStart = require(path.resolve(directory, 'lifecycle', 'afterStart.js'))
         const res = afterStart()
@@ -86,5 +96,5 @@ async function init() {
         // We did our best...
       }
     })
-    .catch(console.error);
+    .catch(console.error)
 }

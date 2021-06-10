@@ -1,23 +1,23 @@
 const EventEmitter = require('events');
 
-class EvolveMessage extends EventEmitter {
+class GleeMessage extends EventEmitter {
   /**
-   * Instantiates a new EvolveMessage.
+   * Instantiates a new GleeMessage.
    *
-   * @param {Evolve} evolve A reference to the Evolve app.
+   * @param {Glee} glee A reference to the Glee app.
    * @param {Any} [payload] Message payload.
    * @param {Any} [headers] Message headers.
    * @param {String} [channel] Message channel.
    */
-  constructor (evolve, payload, headers, channel) {
+  constructor (glee, payload, headers, channel) {
     super();
 
-    this.evolve = evolve;
+    this.glee = glee;
     if (payload) this.payload = payload;
     if (headers) this.headers = headers;
     if (channel) this.channel = channel;
 
-    this.__isEvolveMessage = true;
+    this.__isGleeMessage = true;
   }
 
   /**
@@ -44,7 +44,7 @@ class EvolveMessage extends EventEmitter {
       } else if (typeof channel === 'string') {
         this.channel = channel;
       } else {
-        return console.error('EvolveMessage.reply(payload, headers, channel): channel must be a string or null.');
+        return console.error('GleeMessage.reply(payload, headers, channel): channel must be a string or null.');
       }
     }
 
@@ -52,11 +52,11 @@ class EvolveMessage extends EventEmitter {
   }
 
   /**
-   * Tells Evolve to send the message to all the adapters.
+   * Tells Glee to send the message to all the adapters.
    */
   send () {
     this.emit('send', this);
   }
 }
 
-module.exports = EvolveMessage;
+module.exports = GleeMessage;

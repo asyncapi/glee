@@ -4,26 +4,26 @@ const Message = require('./message');
 const util = module.exports;
 
 /**
- * Creates a EvolveMessage from any payload and channel.
+ * Creates a GleeMessage from any payload and channel.
  *
- * @param {Evolve} evolve A reference to the Evolve app.
+ * @param {Glee} glee A reference to the Glee app.
  * @param {Any} payload The payload of the message.
  * @param {Any} headers The headers of the message.
  * @param {String} [channel] The channel of the message.
- * @return {EvolveMessage}
+ * @return {GleeMessage}
  */
-util.createMessage = (evolve, payload, headers, channel) => {
-  return (payload instanceof Message ? payload : new Message(evolve, payload, headers, channel));
+util.createMessage = (glee, payload, headers, channel) => {
+  return (payload instanceof Message ? payload : new Message(glee, payload, headers, channel));
 };
 
 /**
- * Duplicates a EvolveMessage.
+ * Duplicates a GleeMessage.
  *
- * @param {EvolveMessage} message The message to duplicate.
- * @return {EvolveMessage}
+ * @param {GleeMessage} message The message to duplicate.
+ * @return {GleeMessage}
  */
 util.duplicateMessage = (message) => {
-  const newMessage = new Message(message.evolve, message.payload, message.headers, message.channel);
+  const newMessage = new Message(message.glee, message.payload, message.headers, message.channel);
   newMessage.inbound = message.inbound;
   newMessage.outbound = message.outbound;
   return newMessage;

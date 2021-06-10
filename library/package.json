@@ -20,7 +20,7 @@
     "async": "^3.2.0",
     "colors": "^1.4.0",
     "debug": "^4.3.1",
-    "dotenv": "^10.0.0",
+    "localenv": "^0.2.2",
     "mqtt": "^4.2.6",
     "path-to-regexp": "^6.2.0"
   }

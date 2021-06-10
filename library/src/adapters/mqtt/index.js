@@ -1,7 +1,6 @@
 const mqtt = require('mqtt')
 const Adapter = require('../../lib/adapter')
 const Message = require('../../lib/message')
-const config = require('../../lib/config')
 
 class MqttAdapter extends Adapter {
   name () {
@@ -21,7 +20,7 @@ class MqttAdapter extends Adapter {
       const channelNames = this.parsedAsyncAPI.channelNames()
       const subscribedChannels = channelNames.filter(chan => this.parsedAsyncAPI.channel(chan).hasPublish())
       const serverBinding = this.AsyncAPIServer.binding('mqtt')
-      const securityRequirements = this.AsyncAPIServer.security().map(sec => {
+      const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
         const secName = Object.keys(sec.json())[0]
         return this.parsedAsyncAPI.components().securityScheme(secName)
       })
@@ -35,14 +34,14 @@ class MqttAdapter extends Adapter {
         clientId: serverBinding.clientId,
         clean: serverBinding.cleanSession,
         will: {
-          topic: serverBinding.lastWill.topic,
-          qos: serverBinding.lastWill.qos,
-          payload: serverBinding.lastWill.message,
-          retain: serverBinding.lastWill.retain,
+          topic: serverBinding.lastWill && serverBinding.lastWill.topic ? serverBinding.lastWill.topic : undefined,
+          qos: serverBinding.lastWill && serverBinding.lastWill.qos ? serverBinding.lastWill.qos : undefined,
+          payload: serverBinding.lastWill && serverBinding.lastWill.message ? serverBinding.lastWill.message : undefined,
+          retain: serverBinding.lastWill && serverBinding.lastWill.retain ? serverBinding.lastWill.retain : undefined,
         },
         keepalive: serverBinding.keepAlive,
-        username: userAndPasswordSecurityReq ? config.USERNAME : undefined,
-        password: userAndPasswordSecurityReq ? config.PASSWORD : undefined
+        username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
+        password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined
       })
 
       this.client.on('connect', () => {
@@ -58,8 +57,8 @@ class MqttAdapter extends Adapter {
           })
         }
 
-        this.client.on('message', (channel, message, packet) => {
-          const msg = this._createMessage(packet)
+        this.client.on('message', (channel, message, mqttPacket) => {
+          const msg = this._createMessage(mqttPacket)
           this.emit('message', msg)
         })
 
@@ -99,7 +98,7 @@ class MqttAdapter extends Adapter {
       length: packet.length
     }
 
-    return new Message(this.evolve, packet.payload, headers, packet.topic)
+    return new Message(this.glee, packet.payload, headers, packet.topic)
   }
 }
 
