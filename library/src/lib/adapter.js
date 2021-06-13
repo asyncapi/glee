@@ -16,7 +16,7 @@ class GleeAdapter extends EventEmitter {
     this.parsedAsyncAPI = parsedAsyncAPI
 
     this.on('error', err => { this.glee.injectError(err) })
-    this.on('message', message => { this.glee.injectMessage(message) })
+    this.on('message', (message, connection) => { this.glee.injectMessage(message, connection) })
 
     this.on('connect', (...args) => {
       this.glee.emit('adapter:connect', ...args)

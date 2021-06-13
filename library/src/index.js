@@ -11,15 +11,13 @@ const validate = require('./middlewares/validate')
 const existsInAsyncAPI = require('./middlewares/existsInAsyncAPI')
 const logger = require('./middlewares/logger')
 
-init().catch(console.error)
-
-async function init() {
+module.exports = async function GleeAppInitializer (config = {}) {
   const directory = process.cwd() // TODO: Make it configurable
   let options = {}
   try {
     options = require(path.resolve(directory, 'glee.config.js'))
     if (typeof options === 'function') options = options()
-  } catch(e) {
+  } catch (e) {
     if (e.code !== 'MODULE_NOT_FOUND') {
       console.error(e)
     }
@@ -27,7 +25,7 @@ async function init() {
   const asyncapiFileContent = await readFile(path.resolve(directory, 'asyncapi.yaml'), 'utf-8')
   const parsedAsyncAPI = await asyncapi.parse(asyncapiFileContent)
   const channelNames = parsedAsyncAPI.channelNames()
-  
+
   const app = new Glee(options)
 
   registerAdapters(app, parsedAsyncAPI)
@@ -70,31 +68,37 @@ async function init() {
     console.error('You have received a malformed event. Please review the error below:')
     console.error(err)
   })
-  
+
   app.useOutbound((err, event, next) => {
     console.error('One of your functions is producing a malformed event. Please review the error below:')
     console.error(err)
   })
 
+  app.on('adapter:connect', (e) => {
+    try {
+      const afterStart = require(path.resolve(directory, 'lifecycle', 'afterStart.js'))
+      const res = afterStart()
+      if (res && Array.isArray(res.send)) {
+        res.send.forEach((event) => {
+          try {
+            app.send(event.payload, event.headers, event.channel, e.connection)
+          } catch (e) {
+            console.error(`The onStart lifecycle function failed to send an event to channel ${event.channel}.`)
+            console.error(e)
+          }
+        })
+      }
+    } catch (e) {
+      // We did our best...
+    }
+  })
+
   app
     .listen()
     .then((adapters) => {
-      try {
-        const afterStart = require(path.resolve(directory, 'lifecycle', 'afterStart.js'))
-        const res = afterStart()
-        if (res && Array.isArray(res.send)) {
-          res.send.forEach((event) => {
-            try {
-              app.send(event.payload, event.headers, event.channel)
-            } catch (e) {
-              console.error(`The onStart lifecycle function failed to send an event to channel ${event.channel}.`)
-              console.error(e)
-            }
-          })
-        }
-      } catch (e) {
-        // We did our best...
-      }
+      adapters.forEach(
+        adapter => console.log(`${adapter.name()} initialized.`)
+      )
     })
     .catch(console.error)
 }

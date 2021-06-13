@@ -56,8 +56,9 @@ class Glee extends EventEmitter {
    * @param {Object|GleeMessage} message The payload of the message you want to send.
    * @param {Any} [headers] The headers of the message you want to send.
    * @param {String} [channel] The channel in which you want to send the message.
+   * @param {Unknown} [connection] The connection to use when sending the message. Its type is unknown and must be handled by the adapters.
    */
-  send (payload, headers, channel) {
+  send (payload, headers, channel, connection) {
     let message
 
     if (payload.__isGleeMessage) {
@@ -69,6 +70,7 @@ class Glee extends EventEmitter {
 
     message.inbound = false
     message.outbound = true
+    message.connection = connection
 
     this._processMessage(
       this.router.getOutboundMiddlewares(),
@@ -108,15 +110,18 @@ class Glee extends EventEmitter {
    * @param {Object|GleeMessage} message The payload of the message you want to send.
    * @param {Any} [headers] The headers of the message you want to send.
    * @param {String} [channel] The channel of the message.
+   * @param {Unknown} [connection] The connection used when receiving the message. Its type is unknown and must be handled by the adapters.
    */
-  injectMessage (payload, headers, channel) {
+  injectMessage (payload, headers, channel, connection) {
     let message
 
     if (payload.__isGleeMessage) {
       message = payload
       channel = payload.channel
+      message.connection = headers
     } else {
       message = util.createMessage(this, payload, headers, channel)
+      message.connection = connection
     }
 
     message.inbound = true

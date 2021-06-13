@@ -4,22 +4,6 @@ info:
   version: 1.0.0
   description: This service is in charge of processing user signups
 servers:
-  test:
-    url: mqtts://c0df6463bbbf45bab99a2efd697c2ebf.s2.eu.hivemq.cloud
-    protocol: mqtts
-    security:
-      - userAndPassword: []
-    bindings:
-      mqtt:
-        clientId: guest
-        cleanSession: true
-        lastWill:
-          topic: /last-wills
-          qos: 2
-          message: Guest gone offline.
-          retain: false
-        keepAlive: 60
-        bindingVersion: 0.1.0
   mosquitto:
     url: mqtt://test.mosquitto.org
     protocol: mqtt
@@ -29,6 +13,9 @@ servers:
         cleanSession: true
         keepAlive: 60
         bindingVersion: 0.1.0
+  websockets:
+    url: ws://localhost:3005
+    protocol: ws
 channels:
   user/signedup:
     publish:

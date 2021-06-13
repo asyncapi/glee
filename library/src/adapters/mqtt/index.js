@@ -31,21 +31,21 @@ class MqttAdapter extends Adapter {
         host: url.host,
         port: url.port || (url.protocol === 'mqtt:' ? 1883 : 8883),
         protocol: url.protocol.substr(0, url.protocol.length - 1),
-        clientId: serverBinding.clientId,
-        clean: serverBinding.cleanSession,
-        will: {
-          topic: serverBinding.lastWill && serverBinding.lastWill.topic ? serverBinding.lastWill.topic : undefined,
-          qos: serverBinding.lastWill && serverBinding.lastWill.qos ? serverBinding.lastWill.qos : undefined,
-          payload: serverBinding.lastWill && serverBinding.lastWill.message ? serverBinding.lastWill.message : undefined,
-          retain: serverBinding.lastWill && serverBinding.lastWill.retain ? serverBinding.lastWill.retain : undefined,
+        clientId: serverBinding && serverBinding.clientId,
+        clean: serverBinding && serverBinding.cleanSession,
+        will: serverBinding && serverBinding.will && {
+          topic: serverBinding && serverBinding.lastWill && serverBinding.lastWill.topic ? serverBinding.lastWill.topic : undefined,
+          qos: serverBinding && serverBinding.lastWill && serverBinding.lastWill.qos ? serverBinding.lastWill.qos : undefined,
+          payload: serverBinding && serverBinding.lastWill && serverBinding.lastWill.message ? serverBinding.lastWill.message : undefined,
+          retain: serverBinding && serverBinding.lastWill && serverBinding.lastWill.retain ? serverBinding.lastWill.retain : undefined,
         },
-        keepalive: serverBinding.keepAlive,
+        keepalive: serverBinding && serverBinding.keepAlive,
         username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
         password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined
       })
 
       this.client.on('connect', () => {
-        this.emit('connect', { name: 'MQTT adapter', adapter: this })
+        this.emit('connect', { name: this.name(), adapter: this })
 
         if (Array.isArray(subscribedChannels)) {
           subscribedChannels.forEach((channel) => {

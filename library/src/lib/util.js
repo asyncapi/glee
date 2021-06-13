@@ -26,6 +26,7 @@ util.duplicateMessage = (message) => {
   const newMessage = new Message(message.glee, message.payload, message.headers, message.channel);
   newMessage.inbound = message.inbound;
   newMessage.outbound = message.outbound;
+  newMessage.connection = message.connection;
   return newMessage;
 };
 
