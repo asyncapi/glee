@@ -10,23 +10,32 @@ const json2string = require('./middlewares/json2string')
 const validate = require('./middlewares/validate')
 const existsInAsyncAPI = require('./middlewares/existsInAsyncAPI')
 const logger = require('./middlewares/logger')
+const errorLogger = require('./middlewares/errorLogger')
 
 module.exports = async function GleeAppInitializer (config = {}) {
-  const directory = process.cwd() // TODO: Make it configurable
-  let options = {}
+  const GLEE_DIR = config.dir || process.cwd()
+  const GLEE_FUNCTIONS_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'functions')
+  const GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
+  const ASYNCAPI_FILE_PATH = path.resolve(GLEE_DIR, 'asyncapi.yaml')
+  
   try {
-    options = require(path.resolve(directory, 'glee.config.js'))
-    if (typeof options === 'function') options = options()
+    let cfg = require(GLEE_CONFIG_FILE_PATH)
+    if (typeof cfg === 'function') cfg = cfg()
+    config = {
+      ...config,
+      ...cfg,
+    }
   } catch (e) {
     if (e.code !== 'MODULE_NOT_FOUND') {
-      console.error(e)
+      return console.error(e)
     }
   }
-  const asyncapiFileContent = await readFile(path.resolve(directory, 'asyncapi.yaml'), 'utf-8')
+
+  const asyncapiFileContent = await readFile(ASYNCAPI_FILE_PATH, 'utf-8')
   const parsedAsyncAPI = await asyncapi.parse(asyncapiFileContent)
   const channelNames = parsedAsyncAPI.channelNames()
 
-  const app = new Glee(options)
+  const app = new Glee(config)
 
   registerAdapters(app, parsedAsyncAPI)
 
@@ -36,13 +45,15 @@ module.exports = async function GleeAppInitializer (config = {}) {
   app.use(string2json)
   app.use(logger)
   app.useOutbound(logger)
+  app.use(errorLogger)
+  app.useOutbound(errorLogger)
 
   channelNames.forEach((channelName) => {
     const channel = parsedAsyncAPI.channel(channelName)
     if (channel.hasPublish()) {
       const operationId = channel.publish().json('operationId')
       if (operationId) {
-        const func = require(path.resolve(directory, operationId))
+        const func = require(path.resolve(GLEE_DIR, GLEE_FUNCTIONS_DIR, operationId))
         const schema = channel.publish().message().payload().json()
         app.use(channelName, validate(schema), (event, next) => {
           func(event)
@@ -64,19 +75,9 @@ module.exports = async function GleeAppInitializer (config = {}) {
     }
   })
 
-  app.use((err, event, next) => {
-    console.error('You have received a malformed event. Please review the error below:')
-    console.error(err)
-  })
-
-  app.useOutbound((err, event, next) => {
-    console.error('One of your functions is producing a malformed event. Please review the error below:')
-    console.error(err)
-  })
-
   app.on('adapter:connect', (e) => {
     try {
-      const afterStart = require(path.resolve(directory, 'lifecycle', 'afterStart.js'))
+      const afterStart = require(path.resolve(GLEE_DIR, 'lifecycle', 'afterStart.js'))
       const res = afterStart()
       if (res && Array.isArray(res.send)) {
         res.send.forEach((event) => {

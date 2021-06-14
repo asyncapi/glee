@@ -18,12 +18,15 @@
   "dependencies": {
     "@asyncapi/parser": "^1.5.0",
     "async": "^3.2.0",
+    "bufferutil": "^4.0.3",
     "colors": "^1.4.0",
     "debug": "^4.3.1",
     "localenv": "^0.2.2",
     "mqtt": "^4.2.6",
     "nodemon": "^2.0.7",
     "path-to-regexp": "^6.2.0",
-    "socket.io": "^4.1.2"
+    "socket.io": "^4.1.2",
+    "utf-8-validate": "^5.0.5",
+    "ws": "^7.4.6"
   }
 }

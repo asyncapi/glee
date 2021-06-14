@@ -17,28 +17,30 @@ class SocketIOAdapter extends Adapter {
 
   _connect () {
     return new Promise((resolve) => {
-      const channelNames = this.parsedAsyncAPI.channelNames()
-      const subscribedChannels = channelNames.filter(chan => this.parsedAsyncAPI.channel(chan).hasPublish())
-      const serverBinding = this.AsyncAPIServer.binding('ws')
-      const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
-        const secName = Object.keys(sec.json())[0]
-        return this.parsedAsyncAPI.components().securityScheme(secName)
-      })
-      const userAndPasswordSecurityReq = securityRequirements.find(sec => sec.type() === 'userPassword')
       const url = new URL(this.AsyncAPIServer.url())
 
       const serverOptions = {
         path: url.pathname || '/',
         serveClient: false,
-        cors: {
-          origin: true,
-        }
+        transports: ['websocket'],
       }
 
-      if (this.glee.options.httpServer) {
-        this.server = io(this.glee.options.httpServer, serverOptions)
+      if (this.glee.options.wsHttpServer) {
+        const server = this.glee.options.wsHttpServer
+        if (String(server.address().port) !== String(url.port)) {
+          console.error(`Your custom HTTP server is listening on port ${server.address().port} but your AsyncAPI file says it must listen on ${url.port}. Please fix the inconsistency.`)
+          process.exit(1)
+        }
+        this.server = io(server, serverOptions)
       } else {
-        this.server = new io.Server(serverOptions)
+        this.server = new io.Server({
+          ...serverOptions,
+          ...{
+            cors: {
+              origin: true,
+            }
+          }
+        })
       }
 
       this.server.on('connect', (socket) => {
@@ -50,7 +52,9 @@ class SocketIOAdapter extends Adapter {
         })
       })
 
-      this.server.listen(url.port || 80)
+      if (!this.glee.options.wsHttpServer) {
+        this.server.listen(url.port || 80)
+      }
       resolve(this)
     })
   }

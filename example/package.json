@@ -4,7 +4,6 @@
   "description": "An example of the AsyncAPI Glee framework",
   "scripts": {
     "dev": "glee dev",
-    "customServer": "node customServer.js",
     "start": "glee start"
   },
   "author": "Fran Mendez",

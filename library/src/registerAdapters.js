@@ -1,4 +1,5 @@
 const MqttAdapter = require('./adapters/mqtt')
+const WebSocketAdapter = require('./adapters/ws')
 const SocketIOAdapter = require('./adapters/socket.io')
 
 module.exports = (app, parsedAsyncAPI) => {
@@ -18,7 +19,7 @@ module.exports = (app, parsedAsyncAPI) => {
   } else if (['amqp', 'amqps'].includes(protocol)) {
     // TODO: Implement AMQP support
   } else if (['ws', 'wss'].includes(protocol)) {
-    app.addAdapter(SocketIOAdapter, server, parsedAsyncAPI)
+    app.addAdapter(WebSocketAdapter, server, parsedAsyncAPI)
   } else {
     // TODO: Improve error message with link to repo encouraging the developer to contribute.
     throw new Error(`Protocol "${server.protocol()}" is not supported yet.`)

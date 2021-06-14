@@ -8,7 +8,7 @@ const args = process.argv.splice(2)
 if (args[0] === 'dev') {
   nodemon({
     script: path.resolve(__dirname, 'start.js'),
-    ext: 'js json'
+    ext: 'js json yml yaml'
   });
 
   nodemon.on('start', function () {

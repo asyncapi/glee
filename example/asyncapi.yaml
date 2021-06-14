@@ -14,12 +14,12 @@ servers:
         keepAlive: 60
         bindingVersion: 0.1.0
   websockets:
-    url: ws://localhost:3005
+    url: ws://localhost:3005/ws
     protocol: ws
 channels:
   user/signedup:
     publish:
-      operationId: functions/onUserSignedUp.js
+      operationId: onUserSignedUp
       message:
         $ref: '#/components/messages/UserSignedUp'
       bindings:
