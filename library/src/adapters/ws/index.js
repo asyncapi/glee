@@ -1,10 +1,11 @@
 const WebSocket = require('ws')
 const http = require('http')
 const path = require('path')
+const { validateData } = require('../../lib/util')
 const Adapter = require('../../lib/adapter')
 const Message = require('../../lib/message')
 
-class SocketIOAdapter extends Adapter {
+class WebSocketsAdapter extends Adapter {
   name () {
     return 'WebSockets adapter'
   }
@@ -21,41 +22,82 @@ class SocketIOAdapter extends Adapter {
     return new Promise((resolve) => {
       const channelNames = this.parsedAsyncAPI.channelNames()
       const serverUrl = new URL(this.AsyncAPIServer.url())
-      const wsHttpServer = this.glee.options.wsHttpServer
+      const wsHttpServer = this.glee.options.websocket.httpServer || http.createServer()
       const asyncapiServerPort = serverUrl.port || 80
       
-      if (wsHttpServer && String(wsHttpServer.address().port) !== String(asyncapiServerPort)) {
+      if (this.glee.options.websocket.httpServer && String(wsHttpServer.address().port) !== String(asyncapiServerPort)) {
         console.error(`Your custom HTTP server is listening on port ${wsHttpServer.address().port} but your AsyncAPI file says it must listen on ${asyncapiServerPort}. Please fix the inconsistency.`)
         process.exit(1)
       }
 
-      let server
-
-      if (wsHttpServer) {
-        server = new WebSocket.Server({ server: wsHttpServer })
-      } else {
-        server = new WebSocket.Server({
-          port: asyncapiServerPort,
-          host: serverUrl.hostname,
-        })
-      }
-
-      server.on('connection', (socket) => {
-        socket.on('message', (payload) => {
-          let jsonPayload
-          try {
-            jsonPayload = JSON.parse(payload)
-            const msg = this._createMessage(jsonPayload.type, jsonPayload.data)
-            this.emit('message', msg, socket)
-          } catch (e) {
-            e.message = `Invalid JSON message received: ${e.message}`
-            this.emit('error', e)
-          }
-        })
-
-        this.emit('connect', { name: this.name(), adapter: this, connection: socket })
+      let servers = {}
+      channelNames.forEach(channelName => {
+        servers[channelName] = new WebSocket.Server({ noServer: true })
       })
 
+      wsHttpServer.on('upgrade', (request, socket, head) => {
+        let { pathname } = new URL(request.url, `ws://${request.headers.host}`)
+
+        // If pathname is /something but AsyncAPI file says the channel name is "something"
+        // then we convert pathname to "something".
+        if (pathname.startsWith('/') && !servers[pathname] && servers[pathname.substr(1)]) {
+          pathname = pathname.substr(1)
+        }
+
+        const { searchParams } = new URL(request.url, `ws://${request.headers.host}`)
+        const wsChannelBinding = this.parsedAsyncAPI.channel(pathname).binding('ws')
+
+        if (wsChannelBinding) {
+          const { query, headers } = wsChannelBinding
+          if (query) {
+            let queryParams = {}
+            searchParams.forEach((value, key) => {
+              queryParams[key] = value
+            })
+            const { isValid, humanReadableError } = validateData(queryParams, query)
+            if (!isValid) {
+              const err = new Error('Invalid query params. Check details below:')
+              err.details = humanReadableError
+              this.emit('error', err)
+              socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
+              return
+            }
+          }
+
+          if (headers) {
+            const { isValid, humanReadableError } = validateData(request.headers, headers)
+            if (!isValid) {
+              const err = new Error('Invalid headers. Check details below:')
+              err.details = humanReadableError
+              this.emit('error', err)
+              socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
+              return
+            }
+          }
+        }
+        
+        if (servers[pathname]) {
+          servers[pathname].handleUpgrade(request, socket, head, (ws) => {
+            servers[pathname].emit('connection', ws, request)
+            
+            ws.on('message', (payload) => {
+              const msg = this._createMessage(pathname, payload)
+              this.emit('message', msg, ws)
+            })
+
+            this.emit('connection', { name: this.name(), adapter: this, connection: ws, channel: pathname })
+          })
+        } else {
+          socket.destroy()
+        }
+      })
+
+      if (!this.glee.options.websocket.httpServer) {
+        wsHttpServer.listen(asyncapiServerPort)
+      }
+      
+      this.emit('ready', { name: this.name(), adapter: this })
+      
       resolve(this)
     })
   }
@@ -63,10 +105,17 @@ class SocketIOAdapter extends Adapter {
   _send (message) {
     return new Promise((resolve, reject) => {
       try {
-        message.connection.send(JSON.stringify({
-          type: message.channel,
-          data: message.payload,
-        }))
+        if (message.broadcast) {
+          this
+            .connections
+            .filter(({channel}) => channel === message.channel)
+            .forEach(({connection}) => {
+              connection.send(message.payload)
+            })
+        } else {
+          if (!message.connection) throw new Error('There is no WebSocket connection to send the message yet.')
+          message.connection.send(message.payload)
+        }
         resolve()
       } catch (err) {
         reject(err)
@@ -75,8 +124,11 @@ class SocketIOAdapter extends Adapter {
   }
 
   _createMessage (eventName, payload) {
-    return new Message(this.glee, payload, undefined, eventName)
+    return new Message({
+      payload,
+      channel: eventName
+    })
   }
 }
 
-module.exports = SocketIOAdapter
+module.exports = WebSocketsAdapter

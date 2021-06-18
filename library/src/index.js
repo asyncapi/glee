@@ -37,7 +37,7 @@ module.exports = async function GleeAppInitializer (config = {}) {
 
   const app = new Glee(config)
 
-  registerAdapters(app, parsedAsyncAPI)
+  registerAdapters(app, parsedAsyncAPI, config)
 
   app.use(existsInAsyncAPI(parsedAsyncAPI))
   app.useOutbound(existsInAsyncAPI(parsedAsyncAPI))
@@ -60,7 +60,34 @@ module.exports = async function GleeAppInitializer (config = {}) {
             .then((res) => {
               if (res && Array.isArray(res.send)) {
                 res.send.forEach((msg) => {
-                  event.reply(msg.payload, msg.headers, msg.channel)
+                  app.send(new Glee.Message({
+                    payload: msg.payload,
+                    headers: msg.headers,
+                    channel: msg.channel || event.channel,
+                    serverName: msg.server,
+                  }))
+                })
+              }
+
+              if (res && Array.isArray(res.reply)) {
+                res.reply.forEach((msg) => {
+                  event.reply({
+                    payload: msg.payload,
+                    headers: msg.headers,
+                    channel: msg.channel,
+                  })
+                })
+              }
+
+              if (res && Array.isArray(res.broadcast)) {
+                res.broadcast.forEach((msg) => {
+                  app.send(new Glee.Message({
+                    payload: msg.payload,
+                    headers: msg.headers,
+                    channel: msg.channel || event.channel,
+                    serverName: msg.server,
+                    broadcast: true,
+                  }))
                 })
               }
             })
@@ -76,13 +103,30 @@ module.exports = async function GleeAppInitializer (config = {}) {
   })
 
   app.on('adapter:connect', (e) => {
+    console.log(`${e.name} connected`)
+  })
+  
+  app.on('adapter:ready', (e) => {
+    console.log(`${e.name} is ready to accept connections`)
+  })
+
+  app.on('adapter:connect', (e) => {
     try {
       const afterStart = require(path.resolve(GLEE_DIR, 'lifecycle', 'afterStart.js'))
-      const res = afterStart()
+      const res = afterStart({
+        serverName: e.serverName,
+        server: e.server,
+      })
       if (res && Array.isArray(res.send)) {
         res.send.forEach((event) => {
           try {
-            app.send(event.payload, event.headers, event.channel, e.connection)
+            app.send(new Glee.Message({
+              payload: event.payload,
+              headers: event.headers,
+              channel: event.channel,
+              serverName: event.server,
+              connection: e.connection,
+            }))
           } catch (e) {
             console.error(`The onStart lifecycle function failed to send an event to channel ${event.channel}.`)
             console.error(e)
@@ -96,10 +140,5 @@ module.exports = async function GleeAppInitializer (config = {}) {
 
   app
     .listen()
-    .then((adapters) => {
-      adapters.forEach(
-        adapter => console.log(`${adapter.name()} initialized.`)
-      )
-    })
     .catch(console.error)
 }

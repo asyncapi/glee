@@ -25,8 +25,8 @@ class SocketIOAdapter extends Adapter {
         transports: ['websocket'],
       }
 
-      if (this.glee.options.wsHttpServer) {
-        const server = this.glee.options.wsHttpServer
+      if (this.glee.options.websocket.httpServer) {
+        const server = this.glee.options.websocket.httpServer
         if (String(server.address().port) !== String(url.port)) {
           console.error(`Your custom HTTP server is listening on port ${server.address().port} but your AsyncAPI file says it must listen on ${url.port}. Please fix the inconsistency.`)
           process.exit(1)
@@ -52,7 +52,7 @@ class SocketIOAdapter extends Adapter {
         })
       })
 
-      if (!this.glee.options.wsHttpServer) {
+      if (!this.glee.options.websocket.httpServer) {
         this.server.listen(url.port || 80)
       }
       resolve(this)
@@ -71,7 +71,10 @@ class SocketIOAdapter extends Adapter {
   }
 
   _createMessage (eventName, payload) {
-    return new Message(this.glee, payload, undefined, eventName)
+    return new Message({
+      payload,
+      channel: eventName
+    })
   }
 }
 

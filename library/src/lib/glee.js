@@ -25,11 +25,12 @@ class Glee extends EventEmitter {
    * Adds a connection adapter.
    *
    * @param {GleeAdapter} adapter The adapter.
-   * @param {Server} AsyncAPIServer AsyncAPI Server to use with the adapter.
+   * @param {String} serverName The name of the AsyncAPI Server to use with the adapter.
+   * @param {AsyncAPIServer} server AsyncAPI Server to use with the adapter.
    * @param {AsyncAPIDocument} parsedAsyncAPI The AsyncAPI document.
    */
-  addAdapter (Adapter, AsyncAPIServer, parsedAsyncAPI) {
-    this.adapters.push({Adapter, AsyncAPIServer, parsedAsyncAPI})
+  addAdapter (Adapter, { serverName, server, parsedAsyncAPI }) {
+    this.adapters.push({Adapter, serverName, server, parsedAsyncAPI})
   }
 
   /**
@@ -54,23 +55,9 @@ class Glee extends EventEmitter {
    * Send a message to the adapters.
    *
    * @param {Object|GleeMessage} message The payload of the message you want to send.
-   * @param {Any} [headers] The headers of the message you want to send.
-   * @param {String} [channel] The channel in which you want to send the message.
-   * @param {Unknown} [connection] The connection to use when sending the message. Its type is unknown and must be handled by the adapters.
    */
-  send (payload, headers, channel, connection) {
-    let message
-
-    if (payload.__isGleeMessage) {
-      message = payload
-      channel = payload.channel
-    } else {
-      message = util.createMessage(this, payload, headers, channel)
-    }
-
-    message.inbound = false
-    message.outbound = true
-    message.connection = connection
+  send (message) {
+    message.setOutbound()
 
     this._processMessage(
       this.router.getOutboundMiddlewares(),
@@ -88,7 +75,7 @@ class Glee extends EventEmitter {
     const promises = []
 
     this.adapters.forEach(a => {
-      a.instance = new a.Adapter(this, a.AsyncAPIServer, a.parsedAsyncAPI)
+      a.instance = new a.Adapter(this, a.serverName, a.server, a.parsedAsyncAPI)
       promises.push(a.instance.connect())
     })
 
@@ -107,23 +94,13 @@ class Glee extends EventEmitter {
   /**
    * Injects a message into the Glee inbound middleware chain.
    *
-   * @param {Object|GleeMessage} message The payload of the message you want to send.
-   * @param {Any} [headers] The headers of the message you want to send.
-   * @param {String} [channel] The channel of the message.
+   * @param {GleeMessage} message The message you want to send.
+   * @param {String} serverName The name of the server this message is coming from.
    * @param {Unknown} [connection] The connection used when receiving the message. Its type is unknown and must be handled by the adapters.
    */
-  injectMessage (payload, headers, channel, connection) {
-    let message
-
-    if (payload.__isGleeMessage) {
-      message = payload
-      channel = payload.channel
-      message.connection = headers
-    } else {
-      message = util.createMessage(this, payload, headers, channel)
-      message.connection = connection
-    }
-
+  injectMessage (message, serverName, connection) {
+    message.serverName = serverName
+    message.connection = connection
     message.inbound = true
     message.outbound = false
 
@@ -191,7 +168,7 @@ class Glee extends EventEmitter {
         debug('Outbound pipeline finished. Sending message...')
         debug(msg)
         this.adapters.forEach(a => {
-          if (a.instance) {
+          if (a.instance && (!msg.serverName || msg.serverName === a.serverName)) {
             a.instance.send(msg).catch((e) => {
               this._processError(errorMiddlewares, e, msg)
             })

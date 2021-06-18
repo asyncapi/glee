@@ -1,8 +1,9 @@
-module.exports = () => {
-  console.log('Server started...')
+module.exports = (context) => {
+  if (context.serverName !== 'mosquitto') return
   
   return {
     send: [{
+      server: 'mosquitto',
       channel: 'server/announce',
       payload: {
         id: process.env.SERVER_ID || String(Date.now()),

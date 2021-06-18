@@ -7,7 +7,5 @@
     "start": "glee start"
   },
   "author": "Fran Mendez",
-  "license": "Apache-2.0",
-  "devDependencies": {},
-  "dependencies": {}
+  "license": "Apache-2.0"
 }

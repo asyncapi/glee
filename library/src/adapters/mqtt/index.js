@@ -98,7 +98,11 @@ class MqttAdapter extends Adapter {
       length: packet.length
     }
 
-    return new Message(this.glee, packet.payload, headers, packet.topic)
+    return new Message({
+      payload: packet.payload,
+      headers: headers,
+      channel: packet.topic,
+    })
   }
 }
 

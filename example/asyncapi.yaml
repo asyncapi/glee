@@ -18,6 +18,23 @@ servers:
     protocol: ws
 channels:
   user/signedup:
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+        query:
+          type: object
+          additionalProperties: false
+          properties:
+            salutation:
+              type: string
+              default: Hello
+        headers:
+          type: object
+          properties:
+            my-custom-header:
+              type: string
+              const: 'custom value'
+
     publish:
       operationId: onUserSignedUp
       message:
@@ -27,10 +44,9 @@ channels:
           qos: 2
           retain: true
           bindingVersion: 0.1.0
-  email/sent:
     subscribe:
       message:
-        $ref: '#/components/messages/EmailSent'
+        $ref: '#/components/messages/UserSignedUp'  
   server/announce:
     subscribe:
       message:
@@ -43,6 +59,10 @@ components:
     UserSignedUp:
       payload:
         type: object
+        additionalProperties: false
+        required:
+          - displayName
+          - email
         properties:
           displayName:
             type: string
@@ -54,6 +74,10 @@ components:
     EmailSent:
       payload:
         type: object
+        additionalProperties: false
+        required:
+          - email
+          - timestamp
         properties:
           email:
             type: string
@@ -65,6 +89,9 @@ components:
     ServerAnnounce:
       payload:
         type: object
+        additionalProperties: false
+        required:
+          - id
         properties:
           id:
             type: string

@@ -1,10 +1,7 @@
-const Ajv = require("ajv")
-
-const ajv = new Ajv({ allErrors: true })
+const { validateData } = require('../lib/util')
 
 module.exports = schema => (event, next) => {
-  const validate = ajv.compile(schema)
-  const valid = validate(event.payload)
-  if (!valid) return next(validate.errors)
+  const { humanReadableError, isValid } = validateData(event.payload, schema)
+  if (!isValid) return next(humanReadableError)
   next()
 }
