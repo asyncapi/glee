@@ -32,20 +32,21 @@ function registerAdapterForServer(serverName, server, app, parsedAsyncAPI, confi
   } else if (['amqp', 'amqps'].includes(protocol)) {
     // TODO: Implement AMQP support
   } else if (['ws', 'wss'].includes(protocol)) {
-    if (!config.websocket.adapter || config.websocket.adapter === 'native') {
+    const configWsAdapter = config?.websocket?.adapter
+    if (!configWsAdapter || configWsAdapter === 'native') {
       app.addAdapter(WebSocketAdapter, {
         serverName,
         server,
         parsedAsyncAPI,
       })
-    } else if (config.websocket.adapter === 'socket.io') {
+    } else if (configWsAdapter === 'socket.io') {
       app.addAdapter(SocketIOAdapter, {
         serverName,
         server,
         parsedAsyncAPI,
       })
-    } else if (typeof config.websocket.adapter === 'object') {
-      app.addAdapter(config.websocket.adapter, {
+    } else if (typeof configWsAdapter === 'object') {
+      app.addAdapter(configWsAdapter, {
         serverName,
         server,
         parsedAsyncAPI,
