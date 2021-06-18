@@ -40,3 +40,5 @@ npm install @asyncapi/glee
 1. Create functions on the `functions` folder and link them to AsyncAPI operations using the `operationId` field.
 
 Have a look at the [examples](./examples) folder on this repository to get a better grasp on how to use it.
+
+> :warning: So far, it just support MQTT and WebSockets (native, Socket.IO, and custom implementations).
