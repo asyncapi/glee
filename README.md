@@ -38,6 +38,7 @@ npm install @asyncapi/glee
     ```
 1. Place or create a new `asyncapi.yaml` or `asyncapi.json` file in the root directory of the project.
 1. Create functions on the `functions` folder and link them to AsyncAPI operations using the `operationId` field.
+1. Once you're ready, run `npm run dev`.
 
 Have a look at the [examples](./examples) folder on this repository to get a better grasp on how to use it.
 
