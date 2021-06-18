@@ -1,5 +1,6 @@
 <h5 align="center">
-  <img src="./assets/glee.svg" alt="Glee logo" width="200">
+  <br>
+  <img src="./assets/glee.svg" alt="Glee logo" width="250">
 </h5>
 <p align="center">
   <em>The AsyncAPI framework that will make you smile again.</em>
