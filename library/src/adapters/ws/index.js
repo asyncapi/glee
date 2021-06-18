@@ -1,6 +1,5 @@
 const WebSocket = require('ws')
 const http = require('http')
-const path = require('path')
 const { validateData } = require('../../lib/util')
 const Adapter = require('../../lib/adapter')
 const Message = require('../../lib/message')
