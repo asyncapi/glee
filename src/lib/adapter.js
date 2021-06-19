@@ -21,24 +21,22 @@ class GleeAdapter extends EventEmitter {
     this.on('error', err => { this.glee.injectError(err) })
     this.on('message', (message, connection) => { this.glee.injectMessage(message, serverName, connection) })
 
-    this.on('connect', (ev) => {
-      this.glee.emit('adapter:connect', {
+    function enrichEvent(ev) {
+      return {
         ...ev,
         ...{
           serverName,
           server,
         }
-      })
+      }
+    }
+
+    this.on('connect', (ev) => {
+      this.glee.emit('adapter:connect', enrichEvent(ev))
     })
     
     this.on('ready', (ev) => {
-      this.glee.emit('adapter:ready', {
-        ...ev,
-        ...{
-          serverName,
-          server,
-        }
-      })
+      this.glee.emit('adapter:ready', enrichEvent(ev))
     })
     
     this.on('connection', (ev) => {
@@ -47,13 +45,15 @@ class GleeAdapter extends EventEmitter {
         channel: ev.channel,
       })
 
-      this.glee.emit('adapter:connection', {
-        ...ev,
-        ...{
-          serverName,
-          server,
-        }
-      })
+      this.glee.emit('adapter:connection', enrichEvent(ev))
+    })
+
+    this.on('reconnect', (ev) => {
+      this.glee.emit('adapter:reconnect', enrichEvent(ev))
+    })
+    
+    this.on('close', (ev) => {
+      this.glee.emit('adapter:close', enrichEvent(ev))
     })
   }
 
