@@ -11,7 +11,6 @@ class Glee extends EventEmitter {
    * Instantiates Glee.
    *
    * @param {Object} [options={}]
-   * @param {String} options.serverName The name of the AsyncAPI server to use.
    */
   constructor (options = {}) {
     super()

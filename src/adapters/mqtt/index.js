@@ -1,3 +1,4 @@
+const fs = require('fs')
 const mqtt = require('mqtt')
 const Adapter = require('../../lib/adapter')
 const Message = require('../../lib/message')
@@ -27,6 +28,9 @@ class MqttAdapter extends Adapter {
       const userAndPasswordSecurityReq = securityRequirements.find(sec => sec.type() === 'userPassword')
       const url = new URL(this.AsyncAPIServer.url())
 
+      const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
+      const certs = certsConfig?.filter(tuple => tuple[0] === this.serverName)?.map(t => fs.readFileSync(t[1]))
+
       this.client = mqtt.connect({
         host: url.host,
         port: url.port || (url.protocol === 'mqtt:' ? 1883 : 8883),
@@ -41,7 +45,8 @@ class MqttAdapter extends Adapter {
         },
         keepalive: serverBinding && serverBinding.keepAlive,
         username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
-        password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined
+        password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined,
+        ca: certs,
       })
 
       this.client.on('connect', () => {

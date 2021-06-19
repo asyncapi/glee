@@ -5,8 +5,8 @@ info:
   description: This service is in charge of processing user signups
 servers:
   mosquitto:
-    url: mqtt://test.mosquitto.org
-    protocol: mqtt
+    url: mqtts://test.mosquitto.org
+    protocol: mqtts
     bindings:
       mqtt:
         clientId: guest
