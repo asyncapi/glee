@@ -11,3 +11,5 @@ export default async function (context) {
     }]
   }
 }
+
+export const lifecycleEvent = 'start:after'

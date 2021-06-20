@@ -50,7 +50,7 @@ export const logLineWithIcon = (icon, text, { iconColor = 'cyan', highlightedWor
 }
 
 export const logInfoMessage = (text, { highlightedWords = [] } = {}) => {
-  logLineWithIcon('ⓘ', text, {
+  logLineWithIcon('ⓘ ', text, {
     highlightedWords: highlightedWords,
   })
 }

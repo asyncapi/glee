@@ -32,6 +32,7 @@
     "socket.io": "^4.1.2",
     "terminal-image": "^2.0.0",
     "utf-8-validate": "^5.0.5",
+    "walkdir": "^0.4.1",
     "word-wrap": "^1.2.3",
     "ws": "^7.4.6"
   }

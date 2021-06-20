@@ -5,6 +5,7 @@ import asyncapi from '@asyncapi/parser'
 import Glee from './lib/glee.js'
 import { logWelcome, logLineWithIcon } from './lib/logger.js'
 import registerAdapters from './registerAdapters.js'
+import { register as registerLifecycleEvents, run as runLifecycleEvents } from './lib/lifecycleEvents.js'
 import buffer2string from './middlewares/buffer2string.js'
 import string2json from './middlewares/string2json.js'
 import json2string from './middlewares/json2string.js'
@@ -19,17 +20,12 @@ export default async function GleeAppInitializer (config = {}) {
   }
 
   const GLEE_DIR = config.dir || process.cwd()
+  const GLEE_LIFECYCLE_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'lifecycle')
   const GLEE_FUNCTIONS_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'functions')
   const GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
   const ASYNCAPI_FILE_PATH = path.resolve(GLEE_DIR, 'asyncapi.yaml')
 
-  let afterStartFn = async () => {}
-
-  try {
-    afterStartFn = (await import(path.resolve(GLEE_DIR, 'lifecycle', 'afterStart.js'))).default
-  } catch (e) {
-    // We did our best...
-  }
+  await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
 
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
@@ -155,26 +151,28 @@ export default async function GleeAppInitializer (config = {}) {
 
   app.on('adapter:connect', async (e) => {
     try {
-      const res = await afterStartFn({
+      const responses = await runLifecycleEvents('start:after', {
         serverName: e.serverName,
         server: e.server,
       })
-      if (res && Array.isArray(res.send)) {
-        res.send.forEach((event) => {
-          try {
-            app.send(new Glee.Message({
-              payload: event.payload,
-              headers: event.headers,
-              channel: event.channel,
-              serverName: event.server,
-              connection: e.connection,
-            }))
-          } catch (e) {
-            console.error(`The onStart lifecycle function failed to send an event to channel ${event.channel}.`)
-            console.error(e)
-          }
-        })
-      }
+      responses.forEach(res => {
+        if (res && Array.isArray(res.send)) {
+          res.send.forEach((event) => {
+            try {
+              app.send(new Glee.Message({
+                payload: event.payload,
+                headers: event.headers,
+                channel: event.channel,
+                serverName: event.server,
+                connection: e.connection,
+              }))
+            } catch (e) {
+              console.error(`The onStart lifecycle function failed to send an event to channel ${event.channel}.`)
+              console.error(e)
+            }
+          })
+        }
+      })
     } catch (e) {
       // We did our best...
     }
