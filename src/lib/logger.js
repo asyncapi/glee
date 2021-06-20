@@ -1,7 +1,9 @@
+const path = require('path')
 const util = require('util')
 const chalk = require('chalk')
-const wordWrap = require('word-wrap')
 const emojis = require('emojis')
+const wordWrap = require('word-wrap')
+const package = require('../../package.json')
 
 const logger = module.exports
 
@@ -17,9 +19,24 @@ const highlightWords = (words, text) => {
   return result
 }
 
-logger.logErrorLineWithBlock = (blockText, context, message, options) => {
-  options.colorFn = chalk.reset.inverse.bold.red
-  logger.logLineWithBlock(blockText, context, message, options)
+logger.logWelcome = ({
+  servers,
+  dir,
+  functionsDir,
+}) => {
+  const primaryColor = '#08d2a1'
+  const bgPrimary = chalk.bgHex(primaryColor)
+  const fgPrimary = chalk.hex(primaryColor)
+  console.log(bgPrimary.black(` Glee ${package.version} \n`))
+  console.log(fgPrimary('{}'), chalk.gray('Running in development mode...'))
+  console.log(fgPrimary('↙↗'), chalk.gray(wordWrap(`Selected server(s): ${servers.join(', ')}`, { width: 37, indent: '   ' }).trim()))
+  if (dir !== process.cwd()) {
+    console.log(fgPrimary('./'), chalk.gray(wordWrap(`App directory: ${dir}`, { width: 37, indent: '   ', cut: true }).trim()))
+  }
+  if (functionsDir !== path.resolve(process.cwd(), 'functions')) {
+    console.log(fgPrimary('𝑓×'), chalk.gray(wordWrap(`Functions directory: ${dir}`, { width: 37, indent: '   ', cut: true }).trim()))
+  }
+  console.log(chalk.gray('─'.repeat(40)))
 }
 
 logger.logLineWithIcon = (icon, text, { iconColor = 'cyan', highlightedWords = [], disableEmojis = false } = {}) => {

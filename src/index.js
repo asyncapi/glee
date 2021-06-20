@@ -3,7 +3,7 @@ const { readFile } = require('fs/promises')
 const path = require('path')
 const asyncapi = require('@asyncapi/parser')
 const Glee = require('./lib/glee')
-const { logInfoMessage, logLineWithIcon } = require('./lib/logger')
+const { logWelcome, logLineWithIcon } = require('./lib/logger')
 const registerAdapters = require('./registerAdapters')
 const buffer2string = require('./middlewares/buffer2string')
 const string2json = require('./middlewares/string2json')
@@ -14,10 +14,20 @@ const logger = require('./middlewares/logger')
 const errorLogger = require('./middlewares/errorLogger')
 
 module.exports = async function GleeAppInitializer (config = {}) {
+  if (!process.env.GLEE_SERVER_NAMES) {
+    throw new Error(`Missing "GLEE_SERVER_NAMES" environment variable.`)
+  }
+
   const GLEE_DIR = config.dir || process.cwd()
   const GLEE_FUNCTIONS_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'functions')
   const GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
   const ASYNCAPI_FILE_PATH = path.resolve(GLEE_DIR, 'asyncapi.yaml')
+
+  logWelcome({
+    servers: process.env.GLEE_SERVER_NAMES.split(','),
+    dir: GLEE_DIR,
+    functionsDir: GLEE_FUNCTIONS_DIR,
+  })
   
   try {
     let cfg = require(GLEE_CONFIG_FILE_PATH)

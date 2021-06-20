@@ -3,11 +3,6 @@ const WebSocketAdapter = require('./adapters/ws')
 const SocketIOAdapter = require('./adapters/socket.io')
 
 module.exports = (app, parsedAsyncAPI, config) => {
-  if (!process.env.GLEE_SERVER_NAMES) {
-    // TODO: Improve the error pointing to a guide on how to do it properly.
-    throw new Error(`Missing "GLEE_SERVER_NAMES" configuration key.`)
-  }
-
   const serverNames = process.env.GLEE_SERVER_NAMES.split(',')
 
   serverNames.forEach(serverName => {
