@@ -3,6 +3,7 @@ const { readFile } = require('fs/promises')
 const path = require('path')
 const asyncapi = require('@asyncapi/parser')
 const Glee = require('./lib/glee')
+const { logInfoMessage, logLineWithIcon } = require('./lib/logger')
 const registerAdapters = require('./registerAdapters')
 const buffer2string = require('./middlewares/buffer2string')
 const string2json = require('./middlewares/string2json')
@@ -103,11 +104,30 @@ module.exports = async function GleeAppInitializer (config = {}) {
   })
 
   app.on('adapter:connect', (e) => {
-    console.log(`${e.name} connected`)
+    logLineWithIcon(':zap:', `Connected to server ${e.serverName}.`, {
+      highlightedWords: [e.serverName],
+    })
   })
   
   app.on('adapter:ready', (e) => {
-    console.log(`${e.name} is ready to accept connections`)
+    logLineWithIcon(':zap:', `Server ${e.serverName} is ready to accept connections.`, {
+      highlightedWords: [e.serverName],
+    })
+  })
+  
+  app.on('adapter:reconnect', (e) => {
+    logLineWithIcon('↪', `Reconnected to server ${e.serverName}.`, {
+      highlightedWords: [e.serverName],
+      iconColor: 'green',
+    })
+  })
+  
+  app.on('adapter:close', (e) => {
+    logLineWithIcon('x', `Closed connection with server ${e.serverName}.`, {
+      highlightedWords: [e.serverName],
+      iconColor: 'red',
+      disableEmojis: true,
+    })
   })
 
   app.on('adapter:connect', (e) => {

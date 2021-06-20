@@ -1,10 +1,10 @@
-const util = require('util')
-const { yellow, blue, magenta } = require('colors')
+const { logInboundMessage, logOutboundMessage } = require('../lib/logger')
 
 module.exports = (message, next) => {
-  const arrow = message.inbound ? blue('←') : magenta('→')
-  const action = message.inbound ? 'received' : 'sent'
-  console.log(`${arrow} ${yellow(message.channel)} was ${action}:`)
-  console.log(util.inspect(message.payload, { depth: null, colors: true }))
+  if (message.inbound) {
+    logInboundMessage(message)
+  } else if (message.outbound) {
+    logOutboundMessage(message)
+  }
   next()
 }

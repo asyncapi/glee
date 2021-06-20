@@ -1,7 +1,13 @@
+const ValidationError = require('../errors/validation')
 const { validateData } = require('../lib/util')
 
 module.exports = schema => (event, next) => {
-  const { humanReadableError, isValid } = validateData(event.payload, schema)
-  if (!isValid) return next(humanReadableError)
+  const { humanReadableError, errors, isValid } = validateData(event.payload, schema)
+  if (!isValid) {
+    return next(new ValidationError({
+      humanReadableError,
+      errors,
+    }))
+  }
   next()
 }

@@ -1,17 +1,17 @@
-const { red, gray, bold, white } = require('colors/safe')
+const { logError } = require('../lib/logger')
+const ValidationError = require('../errors/validation')
 
 module.exports = (err, message, next) => {
-  if (message && message.inbound) {
-    console.error(red('❗  You have received a malformed event. Please review the error below:'))
-    console.error(white(bold(err.message || err)))
-  } else if (message && message.outbound) {
-    console.error(red('❗  One of your functions is producing a malformed event. Please review the error below:'))
-    console.error(white(bold(err.message || err)))
+  if (err instanceof ValidationError) {
+    if (message && message.inbound) {
+      err.message = 'You have received a malformed event or there has been error processing it. Please review the error below:'
+      logError(err, { showStack: false })
+    } else if (message && message.outbound) {
+      err.message = 'One of your functions is producing a malformed event or there has been an error processing it. Please review the error below:'
+      logError(err, { showStack: false })
+    }
   } else {
-    console.error(red(`❗  ${err.message}`))
+    logError(err)
   }
-  
-  if (err.details) console.error(gray(err.details))
-  if (err.stack) console.error(gray(err.stack.substr(err.stack.indexOf('\n') + 1)))
   next()
 }

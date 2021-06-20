@@ -21,14 +21,16 @@
     "async": "^3.2.0",
     "better-ajv-errors": "^0.7.0",
     "bufferutil": "^4.0.3",
-    "colors": "^1.4.0",
+    "chalk": "^4.1.1",
     "debug": "^4.3.1",
+    "emojis": "^1.0.10",
     "localenv": "^0.2.2",
     "mqtt": "^4.2.6",
     "nodemon": "^2.0.7",
     "path-to-regexp": "^6.2.0",
     "socket.io": "^4.1.2",
     "utf-8-validate": "^5.0.5",
+    "word-wrap": "^1.2.3",
     "ws": "^7.4.6"
   }
 }
