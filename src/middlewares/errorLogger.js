@@ -1,7 +1,7 @@
-const { logError } = require('../lib/logger')
-const ValidationError = require('../errors/validation')
+import { logError } from '../lib/logger.js'
+import ValidationError from '../errors/validation.js'
 
-module.exports = (err, message, next) => {
+export default (err, message, next) => {
   if (err instanceof ValidationError) {
     if (message && message.inbound) {
       err.message = 'You have received a malformed event or there has been error processing it. Please review the error below:'

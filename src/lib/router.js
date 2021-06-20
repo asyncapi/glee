@@ -192,4 +192,4 @@ class GleeRouter {
   }
 }
 
-module.exports = GleeRouter
+export default GleeRouter

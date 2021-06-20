@@ -13,8 +13,8 @@ npm install glee-mqtt
 ## Example
 
 ```js
-const Glee = require('glee');
-const MqttAdapter = require('glee-mqtt');
+import Glee from 'glee';
+import MqttAdapter from 'glee-mqtt';
 
 const app = new Glee();
 

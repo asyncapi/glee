@@ -1,8 +1,8 @@
-const WebSocket = require('ws')
-const http = require('http')
-const { validateData } = require('../../lib/util')
-const Adapter = require('../../lib/adapter')
-const Message = require('../../lib/message')
+import WebSocket from 'ws'
+import http from 'http'
+import { validateData } from '../../lib/util.js'
+import Adapter from '../../lib/adapter.js'
+import Message from '../../lib/message.js'
 
 class WebSocketsAdapter extends Adapter {
   name () {
@@ -130,4 +130,4 @@ class WebSocketsAdapter extends Adapter {
   }
 }
 
-module.exports = WebSocketsAdapter
+export default WebSocketsAdapter

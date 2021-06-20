@@ -1,10 +1,12 @@
-const EventEmitter = require('events')
-const async = require('async')
-const debug = require('debug')('glee')
-const Adapter = require('./adapter')
-const Router = require('./router')
-const GleeMessage = require('./message')
-const util = require('./util')
+import EventEmitter from 'events'
+import async from 'async'
+import Debug from 'debug'
+import Adapter from './adapter.js'
+import Router from './router.js'
+import GleeMessage from './message.js'
+import { matchChannel, duplicateMessage, getParams } from './util.js'
+
+const debug = Debug('glee')
 
 class Glee extends EventEmitter {
   /**
@@ -135,10 +137,10 @@ class Glee extends EventEmitter {
   _processMessage (middlewares, errorMiddlewares, message) {
     const mws =
       middlewares
-        .filter(mw => util.matchchannel(mw.channel, message.channel))
+        .filter(mw => matchChannel(mw.channel, message.channel))
         .map(mw => (msg, next) => {
-          const msgForMiddleware = util.duplicateMessage(msg)
-          msgForMiddleware.params = util.getParams(mw.channel, msgForMiddleware.channel)
+          const msgForMiddleware = duplicateMessage(msg)
+          msgForMiddleware.params = getParams(mw.channel, msgForMiddleware.channel)
 
           msgForMiddleware.on('send', (m) => {
             m.inbound = false
@@ -188,7 +190,7 @@ class Glee extends EventEmitter {
    * @private
    */
   _processError (errorMiddlewares, error, message) {
-    const emws = errorMiddlewares.filter(emw => util.matchchannel(emw.channel, message.channel))
+    const emws = errorMiddlewares.filter(emw => matchChannel(emw.channel, message.channel))
     if (!emws.length) return
 
     this._execErrorMiddleware(emws, 0, error, message)
@@ -206,4 +208,4 @@ Glee.Message = GleeMessage
 Glee.Adapter = Adapter
 Glee.Router = Router
 
-module.exports = Glee
+export default Glee

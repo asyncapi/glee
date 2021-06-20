@@ -1,4 +1,4 @@
-module.exports = (context) => {
+export default async function (context) {
   if (context.serverName !== 'mosquitto') return
   
   return {

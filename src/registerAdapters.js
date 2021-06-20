@@ -1,8 +1,8 @@
-const MqttAdapter = require('./adapters/mqtt')
-const WebSocketAdapter = require('./adapters/ws')
-const SocketIOAdapter = require('./adapters/socket.io')
+import MqttAdapter from './adapters/mqtt/index.js'
+import WebSocketAdapter from './adapters/ws/index.js'
+import SocketIOAdapter from './adapters/socket.io/index.js'
 
-module.exports = (app, parsedAsyncAPI, config) => {
+export default (app, parsedAsyncAPI, config) => {
   const serverNames = process.env.GLEE_SERVER_NAMES.split(',')
 
   serverNames.forEach(serverName => {

@@ -1,8 +1,12 @@
-const path = require('path')
-const fs = require('fs')
-const { createServer } = require('http')
+import { fileURLToPath } from 'url'
+import path, { dirname } from 'path'
+import fs from 'fs'
+import { createServer } from http
 
-module.exports = createServer((req, res) => {
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+export default createServer((req, res) => {
   let pathname
   
   try {

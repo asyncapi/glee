@@ -1,4 +1,4 @@
-module.exports = (message, next) => {
+export default (message, next) => {
   if (message.payload instanceof Buffer) {
     message.payload = message.payload.toString();
   }

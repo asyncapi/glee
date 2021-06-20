@@ -1,4 +1,4 @@
-const EventEmitter = require('events')
+import EventEmitter from 'events'
 
 class GleeAdapter extends EventEmitter {
   /**
@@ -77,4 +77,4 @@ class GleeAdapter extends EventEmitter {
   }
 }
 
-module.exports = GleeAdapter
+export default GleeAdapter

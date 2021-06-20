@@ -1,7 +1,7 @@
-const fs = require('fs')
-const mqtt = require('mqtt')
-const Adapter = require('../../lib/adapter')
-const Message = require('../../lib/message')
+import fs from 'fs'
+import mqtt from 'mqtt'
+import Adapter from '../../lib/adapter.js'
+import Message from '../../lib/message.js'
 
 class MqttAdapter extends Adapter {
   name () {
@@ -122,4 +122,4 @@ class MqttAdapter extends Adapter {
   }
 }
 
-module.exports = MqttAdapter
+export default MqttAdapter

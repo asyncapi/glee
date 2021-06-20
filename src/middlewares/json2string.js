@@ -1,4 +1,4 @@
-module.exports = (message, next) => {
+export default (message, next) => {
   try {
     message.payload = JSON.stringify(message.payload);
   } catch (e) {

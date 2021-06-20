@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "The AsyncAPI framework",
   "main": "src/index.js",
+  "type": "module",
   "bin": {
     "glee": "./src/cli/index.js"
   },

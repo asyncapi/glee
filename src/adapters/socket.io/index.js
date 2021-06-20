@@ -1,6 +1,6 @@
-const io = require('socket.io')
-const Adapter = require('../../lib/adapter')
-const Message = require('../../lib/message')
+import * as io from 'socket.io'
+import Adapter from '../../lib/adapter.js'
+import Message from '../../lib/message.js'
 
 class SocketIOAdapter extends Adapter {
   name () {
@@ -78,4 +78,4 @@ class SocketIOAdapter extends Adapter {
   }
 }
 
-module.exports = SocketIOAdapter
+export default SocketIOAdapter

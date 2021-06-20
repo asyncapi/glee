@@ -1,9 +1,7 @@
-const Ajv = require('ajv')
-const betterAjvErrors = require('better-ajv-errors')
-const { pathToRegexp } = require('path-to-regexp')
-const Message = require('./message')
-
-const util = module.exports
+import Ajv from 'ajv'
+import betterAjvErrors from 'better-ajv-errors'
+import { pathToRegexp } from 'path-to-regexp'
+import Message from './message.js'
 
 /**
  * Duplicates a GleeMessage.
@@ -11,7 +9,7 @@ const util = module.exports
  * @param {GleeMessage} message The message to duplicate.
  * @return {GleeMessage}
  */
-util.duplicateMessage = (message) => {
+export const duplicateMessage = (message) => {
   const newMessage = new Message({
     payload: message.payload,
     headers: message.headers,
@@ -37,8 +35,8 @@ util.duplicateMessage = (message) => {
  * @param {String} channel The channel.
  * @return {Boolean}
  */
-util.matchchannel = (path, channel) => {
-  return (this.getParams(path, channel) !== null)
+export const matchChannel = (path, channel) => {
+  return (getParams(path, channel) !== null)
 }
 
 /**
@@ -48,7 +46,7 @@ util.matchchannel = (path, channel) => {
  * @param {String} channel The channel.
  * @return {Object|null}
  */
-util.getParams = (path, channel) => {
+export const getParams = (path, channel) => {
   if (path === undefined) return {}
 
   const keys = []
@@ -69,7 +67,7 @@ util.getParams = (path, channel) => {
  * @param {Object} schema A JSON Schema definition
  * @returns Object
  */
-util.validateData = (data, schema) => {
+export const validateData = (data, schema) => {
   const ajv = new Ajv({ allErrors: true, strictSchema: false, jsonPointers: true })
   const validation = ajv.compile(schema)
   const isValid = validation(data)

@@ -1,19 +1,19 @@
-require('localenv')
-const { readFile } = require('fs/promises')
-const path = require('path')
-const asyncapi = require('@asyncapi/parser')
-const Glee = require('./lib/glee')
-const { logWelcome, logLineWithIcon } = require('./lib/logger')
-const registerAdapters = require('./registerAdapters')
-const buffer2string = require('./middlewares/buffer2string')
-const string2json = require('./middlewares/string2json')
-const json2string = require('./middlewares/json2string')
-const validate = require('./middlewares/validate')
-const existsInAsyncAPI = require('./middlewares/existsInAsyncAPI')
-const logger = require('./middlewares/logger')
-const errorLogger = require('./middlewares/errorLogger')
+import 'localenv'
+import { readFile } from 'fs/promises'
+import path from 'path'
+import asyncapi from '@asyncapi/parser'
+import Glee from './lib/glee.js'
+import { logWelcome, logLineWithIcon } from './lib/logger.js'
+import registerAdapters from './registerAdapters.js'
+import buffer2string from './middlewares/buffer2string.js'
+import string2json from './middlewares/string2json.js'
+import json2string from './middlewares/json2string.js'
+import validate from './middlewares/validate.js'
+import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
+import logger from './middlewares/logger.js'
+import errorLogger from './middlewares/errorLogger.js'
 
-module.exports = async function GleeAppInitializer (config = {}) {
+export default async function GleeAppInitializer (config = {}) {
   if (!process.env.GLEE_SERVER_NAMES) {
     throw new Error(`Missing "GLEE_SERVER_NAMES" environment variable.`)
   }
@@ -23,6 +23,14 @@ module.exports = async function GleeAppInitializer (config = {}) {
   const GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
   const ASYNCAPI_FILE_PATH = path.resolve(GLEE_DIR, 'asyncapi.yaml')
 
+  let afterStartFn = async () => {}
+
+  try {
+    afterStartFn = (await import(path.resolve(GLEE_DIR, 'lifecycle', 'afterStart.js'))).default
+  } catch (e) {
+    // We did our best...
+  }
+
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
     servers: process.env.GLEE_SERVER_NAMES.split(','),
@@ -31,7 +39,7 @@ module.exports = async function GleeAppInitializer (config = {}) {
   })
   
   try {
-    let cfg = require(GLEE_CONFIG_FILE_PATH)
+    let cfg = await import(GLEE_CONFIG_FILE_PATH)
     if (typeof cfg === 'function') cfg = cfg()
     config = {
       ...config,
@@ -65,46 +73,50 @@ module.exports = async function GleeAppInitializer (config = {}) {
     if (channel.hasPublish()) {
       const operationId = channel.publish().json('operationId')
       if (operationId) {
-        const func = require(path.resolve(GLEE_DIR, GLEE_FUNCTIONS_DIR, operationId))
-        const schema = channel.publish().message().payload().json()
-        app.use(channelName, validate(schema), (event, next) => {
-          func(event)
-            .then((res) => {
-              if (res && Array.isArray(res.send)) {
-                res.send.forEach((msg) => {
-                  app.send(new Glee.Message({
-                    payload: msg.payload,
-                    headers: msg.headers,
-                    channel: msg.channel || event.channel,
-                    serverName: msg.server,
-                  }))
-                })
-              }
+        const filePath = path.resolve(GLEE_DIR, GLEE_FUNCTIONS_DIR, operationId)
+        import(`${filePath}.js`)
+          .catch(console.error)
+          .then(({ default: func }) => {
+            const schema = channel.publish().message().payload().json()
+            app.use(channelName, validate(schema), (event, next) => {
+              func(event)
+                .then((res) => {
+                  if (res && Array.isArray(res.send)) {
+                    res.send.forEach((msg) => {
+                      app.send(new Glee.Message({
+                        payload: msg.payload,
+                        headers: msg.headers,
+                        channel: msg.channel || event.channel,
+                        serverName: msg.server,
+                      }))
+                    })
+                  }
 
-              if (res && Array.isArray(res.reply)) {
-                res.reply.forEach((msg) => {
-                  event.reply({
-                    payload: msg.payload,
-                    headers: msg.headers,
-                    channel: msg.channel,
-                  })
-                })
-              }
+                  if (res && Array.isArray(res.reply)) {
+                    res.reply.forEach((msg) => {
+                      event.reply({
+                        payload: msg.payload,
+                        headers: msg.headers,
+                        channel: msg.channel,
+                      })
+                    })
+                  }
 
-              if (res && Array.isArray(res.broadcast)) {
-                res.broadcast.forEach((msg) => {
-                  app.send(new Glee.Message({
-                    payload: msg.payload,
-                    headers: msg.headers,
-                    channel: msg.channel || event.channel,
-                    serverName: msg.server,
-                    broadcast: true,
-                  }))
+                  if (res && Array.isArray(res.broadcast)) {
+                    res.broadcast.forEach((msg) => {
+                      app.send(new Glee.Message({
+                        payload: msg.payload,
+                        headers: msg.headers,
+                        channel: msg.channel || event.channel,
+                        serverName: msg.server,
+                        broadcast: true,
+                      }))
+                    })
+                  }
                 })
-              }
+                .then(next)
+                .catch(next)
             })
-            .then(next)
-            .catch(next)
         })
       }
     }
@@ -141,10 +153,9 @@ module.exports = async function GleeAppInitializer (config = {}) {
     })
   })
 
-  app.on('adapter:connect', (e) => {
+  app.on('adapter:connect', async (e) => {
     try {
-      const afterStart = require(path.resolve(GLEE_DIR, 'lifecycle', 'afterStart.js'))
-      const res = afterStart({
+      const res = await afterStartFn({
         serverName: e.serverName,
         server: e.server,
       })

@@ -1,4 +1,4 @@
-const EventEmitter = require('events')
+import EventEmitter from 'events'
 
 class GleeMessage extends EventEmitter {
   /**
@@ -86,4 +86,4 @@ class GleeMessage extends EventEmitter {
   }
 }
 
-module.exports = GleeMessage
+export default GleeMessage

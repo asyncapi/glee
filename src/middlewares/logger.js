@@ -1,6 +1,6 @@
-const { logInboundMessage, logOutboundMessage } = require('../lib/logger')
+import { logInboundMessage, logOutboundMessage } from '../lib/logger.js'
 
-module.exports = (message, next) => {
+export default (message, next) => {
   if (message.inbound) {
     logInboundMessage(message)
   } else if (message.outbound) {

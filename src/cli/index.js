@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
-const path = require('path')
-const nodemon = require('nodemon')
+import { fileURLToPath } from 'url'
+import path, { dirname } from 'path'
+import nodemon from 'nodemon'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 const args = process.argv.splice(2)
 
 if (args[0] === 'dev') {
@@ -20,7 +23,7 @@ if (args[0] === 'dev') {
     // TODO: log something
   });
 } else if (args[0] === 'start') {
-  require('./start')
+  import('./start.js')
 } else {
   console.error(`Unknown command ${args[0]}`)
 }
