@@ -6,6 +6,7 @@ const nodemon = require('nodemon')
 const args = process.argv.splice(2)
 
 if (args[0] === 'dev') {
+  process.env.NODE_ENV = 'development'
   nodemon({
     script: path.resolve(__dirname, 'start.js'),
     ext: 'js json yml yaml'

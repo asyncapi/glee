@@ -24,6 +24,7 @@ module.exports = async function GleeAppInitializer (config = {}) {
   const ASYNCAPI_FILE_PATH = path.resolve(GLEE_DIR, 'asyncapi.yaml')
 
   logWelcome({
+    dev: process.env.NODE_ENV === 'development',
     servers: process.env.GLEE_SERVER_NAMES.split(','),
     dir: GLEE_DIR,
     functionsDir: GLEE_FUNCTIONS_DIR,

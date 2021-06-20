@@ -20,6 +20,7 @@ const highlightWords = (words, text) => {
 }
 
 logger.logWelcome = ({
+  dev,
   servers,
   dir,
   functionsDir,
@@ -28,7 +29,9 @@ logger.logWelcome = ({
   const bgPrimary = chalk.bgHex(primaryColor)
   const fgPrimary = chalk.hex(primaryColor)
   console.log(bgPrimary.black(` Glee ${package.version} \n`))
-  console.log(fgPrimary('{}'), chalk.gray('Running in development mode...'))
+  if (dev) {
+    console.log(fgPrimary('{}'), chalk.gray('Running in development mode...'))
+  }
   console.log(fgPrimary('↙↗'), chalk.gray(wordWrap(`Selected server(s): ${servers.join(', ')}`, { width: 37, indent: '   ' }).trim()))
   if (dir !== process.cwd()) {
     console.log(fgPrimary('./'), chalk.gray(wordWrap(`App directory: ${dir}`, { width: 37, indent: '   ', cut: true }).trim()))
