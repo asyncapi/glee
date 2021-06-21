@@ -1,6 +1,7 @@
-import * as io from 'socket.io'
+import { Server } from 'socket.io'
 import Adapter from '../../lib/adapter.js'
 import Message from '../../lib/message.js'
+import GleeConnection from '../../lib/connection.js'
 
 class SocketIOAdapter extends Adapter {
   name () {
@@ -17,6 +18,7 @@ class SocketIOAdapter extends Adapter {
 
   _connect () {
     return new Promise((resolve) => {
+      const channelNames = this.parsedAsyncAPI.channelNames()
       const url = new URL(this.AsyncAPIServer.url())
 
       const serverOptions = {
@@ -31,9 +33,9 @@ class SocketIOAdapter extends Adapter {
           console.error(`Your custom HTTP server is listening on port ${server.address().port} but your AsyncAPI file says it must listen on ${url.port}. Please fix the inconsistency.`)
           process.exit(1)
         }
-        this.server = io(server, serverOptions)
+        this.server = new Server(server, serverOptions)
       } else {
-        this.server = new io.Server({
+        this.server = new Server({
           ...serverOptions,
           ...{
             cors: {
@@ -44,7 +46,7 @@ class SocketIOAdapter extends Adapter {
       }
 
       this.server.on('connect', (socket) => {
-        this.emit('connect', { name: this.name(), adapter: this, connection: socket })
+        this.emit('connect', { name: this.name(), adapter: this, connection: socket, channels: channelNames })
 
         socket.onAny((eventName, payload) => {
           const msg = this._createMessage(eventName, payload)
@@ -62,7 +64,18 @@ class SocketIOAdapter extends Adapter {
   _send (message) {
     return new Promise((resolve, reject) => {
       try {
-        message.connection.emit(message.channel, message.payload)
+        if (message.broadcast) {
+          this
+            .connections
+            .filter(({ channels }) => channels.includes(message.channel))
+            .forEach((connection) => {
+              connection.getRaw().emit(message.channel, message.payload)
+            })
+        } else {
+          if (!message.connection) throw new Error('There is no Socket.IO connection to send the message yet.')
+          if (!(message.connection instanceof GleeConnection)) throw new Error('Connection object is not of GleeConnection type.')
+          message.connection.getRaw().emit(message.channel, message.payload)
+        }
         resolve()
       } catch (err) {
         reject(err)

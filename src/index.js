@@ -36,7 +36,7 @@ export default async function GleeAppInitializer (config = {}) {
   })
   
   try {
-    let cfg = await import(GLEE_CONFIG_FILE_PATH)
+    let { default: cfg } = await import(GLEE_CONFIG_FILE_PATH)
     if (typeof cfg === 'function') cfg = await cfg()
     config = {
       ...config,
