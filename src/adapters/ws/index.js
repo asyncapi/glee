@@ -38,14 +38,16 @@ class WebSocketsAdapter extends Adapter {
       wsHttpServer.on('upgrade', (request, socket, head) => {
         let { pathname } = new URL(request.url, `ws://${request.headers.host}`)
 
-        if (!pathname.startsWith(serverUrl.pathname)) {
+        if (!pathname.startsWith(serverUrl.pathname) && !pathname.startsWith(`/${serverUrl.pathname}`)) {
           socket.end('HTTP/1.1 404 Not Found\r\n\r\n')
           const err = new Error(`A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file.`)
           this.emit('error', err)
           return reject(err)
         }
-        
-        pathname = pathname.substr(serverUrl.pathname.length)
+
+        if (serverUrl.pathname !== '/') {
+          pathname = pathname.substr(serverUrl.pathname.length)
+        }
 
         // If pathname is /something but AsyncAPI file says the channel name is "something"
         // then we convert pathname to "something".
