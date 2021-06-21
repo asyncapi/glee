@@ -52,7 +52,7 @@ class MqttAdapter extends Adapter {
       this.client.on('connect', () => {
         if (!this.firstConnect) {
           this.firstConnect = true
-          this.emit('connect', { name: this.name(), adapter: this })
+          this.emit('connect', { name: this.name(), adapter: this, connection: this.client, channels: channelNames })
         }
 
         if (Array.isArray(subscribedChannels)) {
@@ -70,7 +70,7 @@ class MqttAdapter extends Adapter {
 
       this.client.on('message', (channel, message, mqttPacket) => {
         const msg = this._createMessage(mqttPacket)
-        this.emit('message', msg)
+        this.emit('message', msg, this.client)
       })
 
       this.client.on('reconnect', () => {

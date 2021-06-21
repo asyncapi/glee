@@ -42,7 +42,19 @@ class GleeAdapter extends EventEmitter {
     }
 
     this.on('connect', (ev) => {
-      this.glee.emit('adapter:connect', enrichEvent(ev))
+      const conn = new GleeConnection({
+        connection: ev.connection,
+        channels: ev.channels,
+        serverName,
+        server,
+        parsedAsyncAPI,
+      })
+
+      this.connections.push(conn)
+
+      this.glee.emit('adapter:connect', enrichEvent({
+        connection: conn,
+      }))
     })
     
     this.on('ready', (ev) => {
