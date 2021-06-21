@@ -1,4 +1,5 @@
 import EventEmitter from 'events'
+import GleeConnection from './connection.js'
 
 class GleeAdapter extends EventEmitter {
   /**
@@ -19,7 +20,16 @@ class GleeAdapter extends EventEmitter {
     this.connections = []
 
     this.on('error', err => { this.glee.injectError(err) })
-    this.on('message', (message, connection) => { this.glee.injectMessage(message, serverName, connection) })
+    this.on('message', (message, connection) => {
+      const conn = new GleeConnection({
+        connection,
+        channels: this.connections.find(c => c.rawConnection === connection).channels,
+        serverName,
+        server,
+        parsedAsyncAPI,
+      })
+      this.glee.injectMessage(message, serverName, conn)
+    })
 
     function enrichEvent(ev) {
       return {
@@ -40,12 +50,19 @@ class GleeAdapter extends EventEmitter {
     })
     
     this.on('connection', (ev) => {
-      this.connections.push({
+      const conn = new GleeConnection({
         connection: ev.connection,
-        channel: ev.channel,
+        channels: [ev.channel],
+        serverName,
+        server,
+        parsedAsyncAPI,
       })
 
-      this.glee.emit('adapter:connection', enrichEvent(ev))
+      this.connections.push(conn)
+
+      this.glee.emit('adapter:connection', enrichEvent({
+        connection: conn,
+      }))
     })
 
     this.on('reconnect', (ev) => {

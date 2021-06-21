@@ -1,21 +1,71 @@
 import walkdir from 'walkdir'
+import Glee from './glee.js'
 import { logInfoMessage } from './logger.js'
+import { arrayHasDuplicates } from './util.js'
 
 export const events = {}
 
 export async function register (dir) {
-  const files = await walkdir.async(dir, { return_object: true })
-  return Promise.all(Object.keys(files).map(async (filePath) => {
-    const { default: fn, lifecycleEvent } = await import(filePath)
-    if (!events[lifecycleEvent]) events[lifecycleEvent] = []
-    events[lifecycleEvent].push(fn)
-  }))
+  try {
+    const files = await walkdir.async(dir, { return_object: true })
+    return await Promise.all(Object.keys(files).map(async (filePath) => {
+      try {
+        const { default: fn, lifecycleEvent, channels } = await import(filePath)
+        if (!events[lifecycleEvent]) events[lifecycleEvent] = []
+        events[lifecycleEvent].push({
+          fn,
+          channels,
+        })
+      } catch (e) {
+        console.error(e)
+      }
+    }))
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 export async function run (lifecycleEvent, params) {
   if (!Array.isArray(events[lifecycleEvent])) return
-  logInfoMessage(`Running ${lifecycleEvent} lifecycle event...`, {
-    highlightedWords: [lifecycleEvent]
-  })
-  return Promise.all(events[lifecycleEvent].map(fn => fn(params)))
+  
+  try {
+    const connectionChannels = params.connection.channels
+    const handlers = events[lifecycleEvent]
+      .filter(info => {
+        if (!info.channels) return true
+        return arrayHasDuplicates([
+          ...connectionChannels,
+          ...(info.channels)
+        ])
+      })
+
+    if (!handlers.length) return
+
+    logInfoMessage(`Running ${lifecycleEvent} lifecycle event...`, {
+      highlightedWords: [lifecycleEvent]
+    })
+    
+    const responses = await Promise.all(handlers.map(info => info.fn(params)))
+    
+    responses.forEach(res => {
+      if (res && Array.isArray(res.send)) {
+        res.send.forEach((event) => {
+          try {
+            params.glee.send(new Glee.Message({
+              payload: event.payload,
+              headers: event.headers,
+              channel: event.channel,
+              serverName: event.server,
+              connection: params.connection,
+            }))
+          } catch (e) {
+            console.error(`The ${lifecycleEvent} lifecycle function failed to send an event to channel ${event.channel}.`)
+            console.error(e)
+          }
+        })
+      }
+    })
+  } catch (e) {
+    console.error(e)
+  }
 }

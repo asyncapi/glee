@@ -3,6 +3,7 @@ import http from 'http'
 import { validateData } from '../../lib/util.js'
 import Adapter from '../../lib/adapter.js'
 import Message from '../../lib/message.js'
+import GleeConnection from '../../lib/connection.js'
 
 class WebSocketsAdapter extends Adapter {
   name () {
@@ -18,7 +19,7 @@ class WebSocketsAdapter extends Adapter {
   }
 
   _connect () {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const channelNames = this.parsedAsyncAPI.channelNames()
       const serverUrl = new URL(this.AsyncAPIServer.url())
       const wsHttpServer = this.glee.options?.websocket?.httpServer || http.createServer()
@@ -41,6 +42,13 @@ class WebSocketsAdapter extends Adapter {
         // then we convert pathname to "something".
         if (pathname.startsWith('/') && !servers[pathname] && servers[pathname.substr(1)]) {
           pathname = pathname.substr(1)
+        }
+
+        if (!this.parsedAsyncAPI.channel(pathname)) {
+          socket.end('HTTP/1.1 404 Not Found\r\n\r\n')
+          const err = new Error(`A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file.`)
+          this.emit('error', err)
+          return reject(err)
         }
 
         const { searchParams } = new URL(request.url, `ws://${request.headers.host}`)
@@ -109,11 +117,12 @@ class WebSocketsAdapter extends Adapter {
             .connections
             .filter(({channel}) => channel === message.channel)
             .forEach(({connection}) => {
-              connection.send(message.payload)
+              connection.getRaw().send(message.payload)
             })
         } else {
           if (!message.connection) throw new Error('There is no WebSocket connection to send the message yet.')
-          message.connection.send(message.payload)
+          if (!(message.connection instanceof GleeConnection)) throw new Error('Connection object is not of GleeConnection type.')
+          message.connection.getRaw().send(message.payload)
         }
         resolve()
       } catch (err) {

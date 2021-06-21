@@ -9,7 +9,7 @@ class GleeMessage extends EventEmitter {
    * @param {Object} [options.headers] Message headers.
    * @param {String} [options.channel] Message channel.
    * @param {String} [options.serverName] The name of the associated AsyncAPI server.
-   * @param {Any} [options.connection] The connection through which the message will be sent or has been received.
+   * @param {GleeConnection} [options.connection] The connection through which the message will be sent or has been received.
    * @param {Boolean} [options.broadcast=false] Whether the message should be broadcasted or not.
    */
   constructor ({

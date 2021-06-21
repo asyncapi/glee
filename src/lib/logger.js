@@ -55,6 +55,13 @@ export const logInfoMessage = (text, { highlightedWords = [] } = {}) => {
   })
 }
 
+export const logWarningMessage = (text, { highlightedWords = [] } = {}) => {
+  logLineWithIcon(':warning: ', text, {
+    highlightedWords: highlightedWords,
+    iconColor: 'yellow',
+  })
+}
+
 export const logInboundMessage = (message) => {
   console.log(chalk.reset.blue('↙'), chalk.yellow(message.channel), 'was received from', chalk.gray(message.serverName))
   logJSON(message.payload)
@@ -63,7 +70,8 @@ export const logInboundMessage = (message) => {
 export const logOutboundMessage = (message) => {
   const icon = message.broadcast ? '⇶' : '↗'
   const verb = message.broadcast ? 'broadcasted' : 'sent'
-  console.log(chalk.reset.magenta(icon), chalk.yellow(message.channel), 'was', verb ,'to', chalk.gray(message.serverName || 'all servers'))
+  const serverName = message.serverName || 'all servers'
+  console.log(chalk.reset.magenta(icon), chalk.yellow(message.channel), 'was', verb ,'to', chalk.gray(serverName))
   logJSON(message.payload)
 }
 

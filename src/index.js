@@ -3,7 +3,7 @@ import { readFile } from 'fs/promises'
 import path from 'path'
 import asyncapi from '@asyncapi/parser'
 import Glee from './lib/glee.js'
-import { logWelcome, logLineWithIcon } from './lib/logger.js'
+import { logWelcome, logLineWithIcon, logWarningMessage } from './lib/logger.js'
 import registerAdapters from './registerAdapters.js'
 import { register as registerLifecycleEvents, run as runLifecycleEvents } from './lib/lifecycleEvents.js'
 import buffer2string from './middlewares/buffer2string.js'
@@ -13,6 +13,7 @@ import validate from './middlewares/validate.js'
 import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import logger from './middlewares/logger.js'
 import errorLogger from './middlewares/errorLogger.js'
+import validateConnection from './middlewares/validateConnection.js'
 
 export default async function GleeAppInitializer (config = {}) {
   if (!process.env.GLEE_SERVER_NAMES) {
@@ -36,13 +37,13 @@ export default async function GleeAppInitializer (config = {}) {
   
   try {
     let cfg = await import(GLEE_CONFIG_FILE_PATH)
-    if (typeof cfg === 'function') cfg = cfg()
+    if (typeof cfg === 'function') cfg = await cfg()
     config = {
       ...config,
       ...cfg,
     }
   } catch (e) {
-    if (e.code !== 'MODULE_NOT_FOUND') {
+    if (e.code !== 'ERR_MODULE_NOT_FOUND') {
       return console.error(e)
     }
   }
@@ -57,6 +58,7 @@ export default async function GleeAppInitializer (config = {}) {
 
   app.use(existsInAsyncAPI(parsedAsyncAPI))
   app.useOutbound(existsInAsyncAPI(parsedAsyncAPI))
+  app.useOutbound(validateConnection)
   app.use(buffer2string)
   app.use(string2json)
   app.use(logger)
@@ -71,7 +73,6 @@ export default async function GleeAppInitializer (config = {}) {
       if (operationId) {
         const filePath = path.resolve(GLEE_DIR, GLEE_FUNCTIONS_DIR, operationId)
         import(`${filePath}.js`)
-          .catch(console.error)
           .then(({ default: func }) => {
             const schema = channel.publish().message().payload().json()
             app.use(channelName, validate(schema), (event, next) => {
@@ -113,7 +114,19 @@ export default async function GleeAppInitializer (config = {}) {
                 .then(next)
                 .catch(next)
             })
-        })
+          })
+          .catch(err => {
+            if (err.code === 'ERR_MODULE_NOT_FOUND') {
+              const functionsPath = path.relative(GLEE_DIR, GLEE_FUNCTIONS_DIR)
+              const missingFile = path.relative(GLEE_FUNCTIONS_DIR, `${filePath}.js`)
+              const missingPath = path.join(functionsPath, missingFile)
+              logWarningMessage(`Missing function file ${missingPath}.`, {
+                highlightedWords: [missingPath],
+              })
+            } else {
+              console.error(err)
+            }
+          })
       }
     }
     if (channel.hasSubscribe()) {
@@ -149,33 +162,22 @@ export default async function GleeAppInitializer (config = {}) {
     })
   })
 
-  app.on('adapter:connect', async (e) => {
-    try {
-      const responses = await runLifecycleEvents('start:after', {
-        serverName: e.serverName,
-        server: e.server,
-      })
-      responses.forEach(res => {
-        if (res && Array.isArray(res.send)) {
-          res.send.forEach((event) => {
-            try {
-              app.send(new Glee.Message({
-                payload: event.payload,
-                headers: event.headers,
-                channel: event.channel,
-                serverName: event.server,
-                connection: e.connection,
-              }))
-            } catch (e) {
-              console.error(`The onStart lifecycle function failed to send an event to channel ${event.channel}.`)
-              console.error(e)
-            }
-          })
-        }
-      })
-    } catch (e) {
-      // We did our best...
-    }
+  app.on('adapter:connection', (e) => {
+    runLifecycleEvents('onNewConnection', {
+      glee: app,
+      serverName: e.serverName,
+      server: e.server,
+      connection: e.connection,
+    })
+  })
+
+  app.on('adapter:connect', (e) => {
+    runLifecycleEvents('onStart', {
+      glee: app,
+      serverName: e.serverName,
+      server: e.server,
+      connection: e.connection,
+    })
   })
 
   app
