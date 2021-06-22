@@ -10,11 +10,19 @@ export async function register (dir) {
     const files = await walkdir.async(dir, { return_object: true })
     return await Promise.all(Object.keys(files).map(async (filePath) => {
       try {
-        const { default: fn, lifecycleEvent, channels } = await import(filePath)
+        const {
+          default: fn,
+          lifecycleEvent,
+          channels,
+          servers
+        } = await import(filePath)
+
         if (!events[lifecycleEvent]) events[lifecycleEvent] = []
+        
         events[lifecycleEvent].push({
           fn,
           channels,
+          servers,
         })
       } catch (e) {
         console.error(e)
@@ -30,13 +38,23 @@ export async function run (lifecycleEvent, params) {
   
   try {
     const connectionChannels = params.connection.channels
+    const connectionServer = params.connection.serverName
     const handlers = events[lifecycleEvent]
       .filter(info => {
-        if (!info.channels) return true
-        return arrayHasDuplicates([
-          ...connectionChannels,
-          ...(info.channels)
-        ])
+        if (info.channels) {
+          if (!arrayHasDuplicates([
+            ...connectionChannels,
+            ...(info.channels)
+          ])) {
+            return false
+          }
+        }
+        
+        if (info.servers) {
+          return info.servers.includes(connectionServer)
+        }
+
+        return true
       })
 
     if (!handlers.length) return

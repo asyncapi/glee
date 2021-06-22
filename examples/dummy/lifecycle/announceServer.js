@@ -1,6 +1,4 @@
-export default async function (context) {
-  if (context.serverName !== 'mosquitto') return
-  
+export default async function ({ connection }) {  
   return {
     send: [{
       server: 'mosquitto',
@@ -13,3 +11,4 @@ export default async function (context) {
 }
 
 export const lifecycleEvent = 'onStart'
+export const servers = ['mosquitto']
