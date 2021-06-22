@@ -32,7 +32,6 @@ export default async function (event) {
   return {
     reply: [
       {
-        connection: event.connection,
         payload: shrekAnswer
       }
     ]
