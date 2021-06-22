@@ -74,11 +74,17 @@ class MqttAdapter extends Adapter {
       })
 
       this.client.on('reconnect', () => {
-        this.emit('reconnect')
+        this.emit('reconnect', {
+          connection: this.client,
+          channels: channelNames,
+        })
       })
       
       this.client.on('close', () => {
-        this.emit('close')
+        this.emit('close', {
+          connection: this.client,
+          channels: channelNames,
+        })
       })
 
       this.client.on('error', (error) => {

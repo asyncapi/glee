@@ -41,15 +41,21 @@ class GleeAdapter extends EventEmitter {
       }
     }
 
-    this.on('connect', (ev) => {
-      const conn = new GleeConnection({
+    function createConnection(ev) {
+      let channels = ev.channels
+      if (!channels && ev.channel) channels = [ev.channel]
+
+      return new GleeConnection({
         connection: ev.connection,
-        channels: ev.channels,
+        channels: channels,
         serverName,
         server,
         parsedAsyncAPI,
       })
+    }
 
+    this.on('connect', (ev) => {
+      const conn = createConnection(ev)
       this.connections.push(conn)
 
       this.glee.emit('adapter:connect', enrichEvent({
@@ -57,32 +63,33 @@ class GleeAdapter extends EventEmitter {
       }))
     })
     
-    this.on('ready', (ev) => {
-      this.glee.emit('adapter:ready', enrichEvent(ev))
+    this.on('server:ready', (ev) => {
+      this.glee.emit('adapter:server:ready', enrichEvent(ev))
     })
     
-    this.on('connection', (ev) => {
-      const conn = new GleeConnection({
-        connection: ev.connection,
-        channels: [ev.channel],
-        serverName,
-        server,
-        parsedAsyncAPI,
-      })
-
+    this.on('server:connection:open', (ev) => {
+      const conn = createConnection(ev)
       this.connections.push(conn)
 
-      this.glee.emit('adapter:connection', enrichEvent({
+      this.glee.emit('adapter:server:connection:open', enrichEvent({
         connection: conn,
       }))
     })
 
     this.on('reconnect', (ev) => {
-      this.glee.emit('adapter:reconnect', enrichEvent(ev))
+      const conn = createConnection(ev)
+
+      this.glee.emit('adapter:reconnect', enrichEvent({
+        connection: conn,
+      }))
     })
     
     this.on('close', (ev) => {
-      this.glee.emit('adapter:close', enrichEvent(ev))
+      const conn = createConnection(ev)
+      
+      this.glee.emit('adapter:close', enrichEvent({
+        connection: conn,
+      }))
     })
   }
 

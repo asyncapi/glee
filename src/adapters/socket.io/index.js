@@ -46,7 +46,7 @@ class SocketIOAdapter extends Adapter {
       }
 
       this.server.on('connect', (socket) => {
-        this.emit('connect', { name: this.name(), adapter: this, connection: socket, channels: channelNames })
+        this.emit('server:ready', { name: this.name(), adapter: this, connection: socket, channels: channelNames })
 
         socket.onAny((eventName, payload) => {
           const msg = this._createMessage(eventName, payload)

@@ -96,7 +96,7 @@ class WebSocketsAdapter extends Adapter {
         
         if (servers[pathname]) {
           servers[pathname].handleUpgrade(request, socket, head, (ws) => {
-            servers[pathname].emit('connection', ws, request)
+            servers[pathname].emit('server:connection:open', ws, request)
             
             ws.on('message', (payload) => {
               const msg = this._createMessage(pathname, payload)
@@ -114,7 +114,7 @@ class WebSocketsAdapter extends Adapter {
         wsHttpServer.listen(asyncapiServerPort)
       }
       
-      this.emit('ready', { name: this.name(), adapter: this })
+      this.emit('server:ready', { name: this.name(), adapter: this })
       
       resolve(this)
     })

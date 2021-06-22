@@ -10,5 +10,5 @@ export default async function ({ connection }) {
   }
 }
 
-export const lifecycleEvent = 'onStart'
+export const lifecycleEvent = 'onConnect'
 export const servers = ['mosquitto']

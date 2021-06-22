@@ -139,11 +139,11 @@ export default async function GleeAppInitializer (config = {}) {
     logLineWithIcon(':zap:', `Connected to server ${e.serverName}.`, {
       highlightedWords: [e.serverName],
     })
-  })
-  
-  app.on('adapter:ready', (e) => {
-    logLineWithIcon(':zap:', `Server ${e.serverName} is ready to accept connections.`, {
-      highlightedWords: [e.serverName],
+    runLifecycleEvents('onConnect', {
+      glee: app,
+      serverName: e.serverName,
+      server: e.server,
+      connection: e.connection,
     })
   })
   
@@ -151,6 +151,12 @@ export default async function GleeAppInitializer (config = {}) {
     logLineWithIcon('↪', `Reconnected to server ${e.serverName}.`, {
       highlightedWords: [e.serverName],
       iconColor: 'green',
+    })
+    runLifecycleEvents('onReconnect', {
+      glee: app,
+      serverName: e.serverName,
+      server: e.server,
+      connection: e.connection,
     })
   })
   
@@ -160,10 +166,7 @@ export default async function GleeAppInitializer (config = {}) {
       iconColor: 'red',
       disableEmojis: true,
     })
-  })
-
-  app.on('adapter:connection', (e) => {
-    runLifecycleEvents('onNewConnection', {
+    runLifecycleEvents('onDisconnect', {
       glee: app,
       serverName: e.serverName,
       server: e.server,
@@ -171,8 +174,28 @@ export default async function GleeAppInitializer (config = {}) {
     })
   })
 
-  app.on('adapter:connect', (e) => {
-    runLifecycleEvents('onStart', {
+  app.on('adapter:server:ready', (e) => {
+    logLineWithIcon(':zap:', `Server ${e.serverName} is ready to accept connections.`, {
+      highlightedWords: [e.serverName],
+    })
+    runLifecycleEvents('onServerReady', {
+      glee: app,
+      serverName: e.serverName,
+      server: e.server,
+    })
+  })
+
+  app.on('adapter:server:connection:open', (e) => {
+    runLifecycleEvents('onServerConnectionOpen', {
+      glee: app,
+      serverName: e.serverName,
+      server: e.server,
+      connection: e.connection,
+    })
+  })
+  
+  app.on('adapter:server:connection:close', (e) => {
+    runLifecycleEvents('onServerConnectionClose', {
       glee: app,
       serverName: e.serverName,
       server: e.server,

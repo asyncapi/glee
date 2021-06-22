@@ -23,5 +23,5 @@ export default async function ({ glee, connection }) {
   }
 }
 
-export const lifecycleEvent = 'onNewConnection'
+export const lifecycleEvent = 'onServerConnectionOpen'
 export const channels = ['/travel/status']
