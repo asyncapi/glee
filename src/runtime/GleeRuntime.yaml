@@ -1,0 +1,125 @@
+asyncapi: 2.0.0
+info:
+  title: Glee runtime server
+  version: 0.0.1
+channels: 
+  "glee/register/function": 
+    subscribe: 
+      message:
+        payload:
+          $ref: '#/components/schemas/RegisterFunctionRequest'
+      bindings:
+        grpc: 
+          publish:
+            payload:
+              $ref: '#/components/schemas/RegisterFunctionResponse'
+  "glee/trigger/function": 
+    subscribe: 
+      message:
+        payload:
+          $ref: '#/components/schemas/TriggerFunctionRequest'
+      bindings:
+        grpc: 
+          publish:
+            payload:
+              $ref: '#/components/schemas/TriggerFunctionResponse'
+  "glee/trigger/lifecycle":
+    subscribe: 
+      message:
+        payload:
+          $ref: '#/components/schemas/TriggerLifecycleHookRequest'
+      bindings:
+        grpc: 
+          publish:
+            payload:
+              $ref: '#/components/schemas/RegisterLifecycleHookResponse'
+  "glee/register/lifecycle": 
+    subscribe: 
+      message:
+        payload:
+          $ref: '#/components/schemas/RegisterLifecycleHookRequest'
+      bindings:
+        grpc: 
+          publish:
+            payload:
+              $ref: '#/components/schemas/RegisterLifecycleHookResponse'
+components: 
+  schemas:  
+    StandardLifecycle:
+      type: object
+      properties:
+        serverName: 
+          type: string
+        server: true
+        connection: true
+        glee: true
+    GleeConnection:
+      type: object
+      properties:
+        server: true 
+        parsedAsyncapi: true 
+        channels: 
+          type: array
+          items:
+            type: string
+        serverName: 
+          type: string
+    Message:
+      type: object
+      properties:
+        payload: true
+        headers:
+          type: object
+        channel: 
+          type: string
+        server: 
+          type: string
+    TriggerFunctionRequest: 
+      type: object
+      properties:
+        event: true
+    TriggerFunctionResponse:
+      type: object
+      properties:
+        send: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Message'
+        reply: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Message'
+        broadcast: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Message'
+    RegisterFunctionRequest:
+      type: object
+      properties:
+        content: 
+          type: string
+          description: Full source code for the function
+    RegisterFunctionResponse:
+      type: object
+      properties:
+        error: true
+        errorMessage: 
+          type: string
+    TriggerLifecycleHookRequest:
+      oneOf:
+        - $ref: '#/components/schemas/StandardLifecycle'
+    TriggerLifecycleHookResponse:
+      type: object
+      properties:
+        content: 
+          type: string
+    RegisterLifecycleHookRequest:
+      type: object
+      properties:
+        content: 
+          type: string
+    RegisterLifecycleHookResponse:
+      type: object
+      properties:
+        content: 
+          type: string
