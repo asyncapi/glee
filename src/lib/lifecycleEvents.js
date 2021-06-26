@@ -2,30 +2,42 @@ import walkdir from 'walkdir'
 import Glee from './glee.js'
 import { logInfoMessage } from './logger.js'
 import { arrayHasDuplicates } from './util.js'
+import path from 'path'
+import fs from 'fs'
+import { gRPCClient, servers as gRPCServers } from '../runtime/client/index.js'
 
 export const events = {}
-
 export async function register (dir) {
   try {
     const files = await walkdir.async(dir, { return_object: true })
     return await Promise.all(Object.keys(files).map(async (filePath) => {
-      try {
-        const {
-          default: fn,
-          lifecycleEvent,
-          channels,
-          servers
-        } = await import(filePath)
-
-        if (!events[lifecycleEvent]) events[lifecycleEvent] = []
-        
-        events[lifecycleEvent].push({
-          fn,
-          channels,
-          servers,
-        })
-      } catch (e) {
-        console.error(e)
+      const ext = path.extname(filePath);
+      if(ext === '.js') {
+        // JS run as regular
+        try {
+          const {
+            default: fn,
+            lifecycleEvent,
+            channels,
+            servers
+          } = await import(filePath)
+  
+          if (!events[lifecycleEvent]) events[lifecycleEvent] = []
+          
+          events[lifecycleEvent].push({
+            fn,
+            channels,
+            servers,
+          })
+        } catch (e) {
+          console.error(e)
+        }
+      } else if (ext === '.java') {
+        // If Java use Glee Java runtime
+        logInfoMessage(`Found .java life cycle events, Trying to connect to Glee Java runtime...`);
+        const content = fs.readFileSync(filePath, 'utf8');
+        //Register content
+        gRPCClient(gRPCServers.java);
       }
     }))
   } catch (e) {
