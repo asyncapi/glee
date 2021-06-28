@@ -5,6 +5,7 @@ import Adapter from './adapter.js'
 import Router from './router.js'
 import GleeMessage from './message.js'
 import { matchChannel, duplicateMessage, getParams } from './util.js'
+import { Readable } from 'stream'
 
 const debug = Debug('glee')
 
@@ -20,6 +21,10 @@ class Glee extends EventEmitter {
     this.options = options
     this.router = new Router()
     this.adapters = []
+    this.incomingStream = new Readable({
+      objectMode: true,
+      read() {}
+    })
   }
 
   /**
@@ -160,12 +165,15 @@ class Glee extends EventEmitter {
         })
 
     async.seq(...mws)(message, (err, msg) => {
+      const isInbound = middlewares === this.router.getMiddlewares()
+
       if (err) {
+        this.emit('message:processed', err, msg)
         this._processError(errorMiddlewares, err, msg)
         return
       }
 
-      if (middlewares === this.router.getOutboundMiddlewares()) {
+      if (!isInbound) {
         debug('Outbound pipeline finished. Sending message...')
         debug(msg)
         this.adapters.forEach(a => {
@@ -177,6 +185,7 @@ class Glee extends EventEmitter {
         })
       } else {
         debug('Inbound pipeline finished.')
+        this.emit('message:processed', null, msg)
       }
     })
   }

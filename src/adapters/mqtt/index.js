@@ -49,6 +49,16 @@ class MqttAdapter extends Adapter {
         ca: certs,
       })
 
+      this.client.handleMessage = (packet, callback) => {
+        this.glee.once('message:processed', (err, msg) => {
+          if (err) {
+            console.error(err.message)
+            return callback(err)
+          }
+          callback()
+        })
+      }
+
       this.client.on('connect', () => {
         if (!this.firstConnect) {
           this.firstConnect = true
@@ -112,18 +122,12 @@ class MqttAdapter extends Adapter {
   }
 
   _createMessage (packet) {
-    const headers = {
-      cmd: packet.cmd,
-      retain: packet.retain,
-      qos: packet.qos,
-      dup: packet.dup,
-      length: packet.length
-    }
+    const { payload, topic, ...headers } = packet
 
     return new Message({
-      payload: packet.payload,
-      headers: headers,
-      channel: packet.topic,
+      payload,
+      headers,
+      channel: topic,
     })
   }
 }
