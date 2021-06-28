@@ -11,3 +11,4 @@ public class UserSignedUpPayload {
   public Object getEmail() { return this.email; }
   public void setEmail(Object email) { this.email = email; }
 }
+  

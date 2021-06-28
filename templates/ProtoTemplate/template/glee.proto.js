@@ -69,6 +69,7 @@ async function gRPCMessages(asyncapi){
   const typescriptGenerator = new TypeScriptGenerator({modelType: 'interface', presets: [preset]});
   const channelEntries = Object.keys(asyncapi.channels()).length ? Object.entries(asyncapi.channels()) : [];
   let generatedModels = [];
+  const generatedModelIds = [];
   for (const [, channel] of channelEntries) {
     let requestSchema;
     let responseSchema;
@@ -82,9 +83,21 @@ async function gRPCMessages(asyncapi){
     }
     const requestModels = await typescriptGenerator.generate(requestSchema);
     const responseModels = await typescriptGenerator.generate(responseSchema);
-    generatedModels = [ ...generatedModels, ...requestModels.filter((model) => !generatedModels.includes(model)), ...responseModels.filter((model) => !generatedModels.includes(model))];
+    for (const requestModel of requestModels) {
+      if(!generatedModelIds.includes(requestModel.model.$id)){
+        generatedModelIds.push(requestModel.model.$id);
+        generatedModels.push(requestModel.result);
+      }
+    }
+    for (const responseModel of responseModels) {
+      if(!generatedModelIds.includes(responseModel.model.$id)){
+        generatedModelIds.push(responseModel.model.$id);
+        generatedModels.push(responseModel.result);
+      }
+    }
   }
-  return generatedModels.map((model) => {return model.result;});
+  console.log(JSON.stringify(generatedModels, null, 4))
+  return generatedModels;
 }
 
 /**

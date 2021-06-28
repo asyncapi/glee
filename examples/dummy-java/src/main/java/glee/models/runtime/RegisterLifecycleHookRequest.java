@@ -15,4 +15,4 @@ public class RegisterLifecycleHookRequest {
   public Map<String, Object> getAdditionalProperties() { return this.additionalProperties; }
   public void setAdditionalProperties(Map<String, Object> additionalProperties) { this.additionalProperties = additionalProperties; }
 }
-  
+    

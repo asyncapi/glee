@@ -11,3 +11,4 @@ public class EmailSentPayload {
   public java.time.OffsetDateTime getTimestamp() { return this.timestamp; }
   public void setTimestamp(java.time.OffsetDateTime timestamp) { this.timestamp = timestamp; }
 }
+  
