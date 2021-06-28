@@ -1,1 +1,5 @@
 node_modules
+.class
+workspace.xml
+.iws
+tasks.xml

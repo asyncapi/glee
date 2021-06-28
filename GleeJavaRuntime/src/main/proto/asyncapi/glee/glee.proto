@@ -53,12 +53,6 @@ message TriggerLifecycleHookResponse {
 	repeated Message reply = 9;
 	repeated Message broadcast = 10;
 }
-message Message {
-	oneof payload { bytes payloadBytesValue = 1; string payloadStringValue = 2; double payloadDoubleValue = 3; google.protobuf.Any payloadGoogleProtobufAnyValue = 4; bool payloadBoolValue = 5;  int64 payloadInt64Value = 6; }
-	oneof headers { bytes headersBytesValue = 7; string headersStringValue = 8; double headersDoubleValue = 9; google.protobuf.Any headersGoogleProtobufAnyValue = 10; bool headersBoolValue = 11;  int64 headersInt64Value = 12; }
-	string channel = 13;
-	string server = 14;
-}
 message RegisterLifecycleHookRequest {
 	string content = 1;
 	string filename = 2;

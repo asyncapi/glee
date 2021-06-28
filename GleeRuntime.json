@@ -1,0 +1,247 @@
+{
+  "asyncapi": "2.0.0",
+  "info": {
+    "title": "Glee runtime server",
+    "version": "0.0.1"
+  },
+  "channels": {
+    "glee/register/function": {
+      "subscribe": {
+        "message": {
+          "payload": {
+            "$ref": "#/components/schemas/RegisterFunctionRequest"
+          }
+        },
+        "bindings": {
+          "grpc": {
+            "publish": {
+              "payload": {
+                "$ref": "#/components/schemas/RegisterFunctionResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "glee/trigger/function": {
+      "subscribe": {
+        "message": {
+          "payload": {
+            "$ref": "#/components/schemas/TriggerFunctionRequest"
+          }
+        },
+        "bindings": {
+          "grpc": {
+            "publish": {
+              "payload": {
+                "$ref": "#/components/schemas/TriggerFunctionResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "glee/trigger/lifecycle": {
+      "subscribe": {
+        "message": {
+          "payload": {
+            "$ref": "#/components/schemas/TriggerLifecycleHookRequest"
+          }
+        },
+        "bindings": {
+          "grpc": {
+            "publish": {
+              "payload": {
+                "$ref": "#/components/schemas/TriggerLifecycleHookResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "glee/register/lifecycle": {
+      "subscribe": {
+        "message": {
+          "payload": {
+            "$ref": "#/components/schemas/RegisterLifecycleHookRequest"
+          }
+        },
+        "bindings": {
+          "grpc": {
+            "publish": {
+              "payload": {
+                "$ref": "#/components/schemas/RegisterLifecycleHookResponse"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StandardLifecycle": {
+        "$id": "StandardLifecycle",
+        "type": "object",
+        "properties": {
+          "lifecycle": {
+            "type": "string"
+          },
+          "serverName": {
+            "type": "string"
+          },
+          "server": true,
+          "connection": true,
+          "glee": true
+        }
+      },
+      "GleeConnection": {
+        "$id": "GleeConnection",
+        "type": "object",
+        "properties": {
+          "server": true,
+          "parsedAsyncapi": true,
+          "channels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "serverName": {
+            "type": "string"
+          }
+        }
+      },
+      "Message": {
+        "$id": "Message",
+        "type": "object",
+        "properties": {
+          "payload": true,
+          "headers": true,
+          "channel": {
+            "type": "string"
+          },
+          "server": {
+            "type": "string"
+          }
+        }
+      },
+      "TriggerFunctionRequest": {
+        "$id": "TriggerFunctionRequest",
+        "type": "object",
+        "properties": {
+          "event": true
+        }
+      },
+      "TriggerFunctionResponse": {
+        "$id": "TriggerFunctionResponse",
+        "type": "object",
+        "properties": {
+          "send": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            }
+          },
+          "reply": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            }
+          },
+          "broadcast": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            }
+          }
+        }
+      },
+      "RegisterFunctionRequest": {
+        "$id": "RegisterFunctionRequest",
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "Full source code for the function"
+          },
+          "filename": {
+            "type": "string",
+            "description": "Full filename"
+          }
+        }
+      },
+      "RegisterFunctionResponse": {
+        "$id": "RegisterFunctionResponse",
+        "type": "object",
+        "properties": {
+          "error": true,
+          "errorMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "TriggerLifecycleHookRequest": {
+        "$id": "TriggerLifecycleHookRequest",
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/StandardLifecycle"
+          }
+        ]
+      },
+      "TriggerLifecycleHookResponse": {
+        "$id": "TriggerLifecycleHookResponse",
+        "type": "object",
+        "properties": {
+          "error": true,
+          "errorMessage": {
+            "type": "string"
+          },
+          "send": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            }
+          },
+          "reply": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            }
+          },
+          "broadcast": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            }
+          }
+        }
+      },
+      "RegisterLifecycleHookRequest": {
+        "$id": "RegisterLifecycleHookRequest",
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "Full source code for the lifecycle"
+          },
+          "filename": {
+            "type": "string",
+            "description": "Full filename"
+          }
+        }
+      },
+      "RegisterLifecycleHookResponse": {
+        "$id": "RegisterLifecycleHookResponse",
+        "type": "object",
+        "properties": {
+          "error": true,
+          "errorMessage": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

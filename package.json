@@ -9,7 +9,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate:runtime:client": "ag ./src/runtime/GleeRuntime.yaml ./src/runtime/ClientTemplate --force-write --output ./src/runtime/client"
+    "generate:runtime:client": "ag ./GleeRuntime.json ./templates/ClientTemplate --force-write --output ./src/runtime/client && npm run generate:runtime:proto:client",
+    "generate:runtime:java": "ag ./GleeRuntime.json ./templates/ClientTemplate --force-write --output ./src/runtime/client && npm run generate:runtime:proto:java",
+    "generate:runtime:proto:client": "ag ./GleeRuntime.json ./templates/ProtoTemplate --force-write --output ./src/runtime/client/proto",
+    "generate:runtime:proto:java": "ag ./GleeRuntime.json ./templates/ProtoTemplate --force-write --output ./GleeJavaRuntime/src/main/proto/asyncapi/glee"
   },
   "keywords": [
     "asyncapi",
@@ -18,9 +21,10 @@
   "author": "Fran Mendez",
   "license": "Apache-2.0",
   "devDependencies": {
-		"@asyncapi/generator": "^1.7.4"
+    "@asyncapi/generator": "^1.7.4"
   },
   "dependencies": {
+    "@asyncapi/modelina": "^0.14.1",
     "@asyncapi/parser": "^1.5.0",
     "@grpc/grpc-js": "^1.3.4",
     "@grpc/proto-loader": "^0.6.3",

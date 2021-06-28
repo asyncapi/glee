@@ -57,6 +57,13 @@
             <artifactId>grpc-stub</artifactId>
             <version>1.38.0</version>
         </dependency>
+      <dependency>
+        <groupId>jdk.tools</groupId>
+        <artifactId>jdk.tools</artifactId>
+        <version>1.8</version>
+        <scope>system</scope>
+        <systemPath>${java.home}/../lib/tools.jar</systemPath>
+      </dependency>
     </dependencies>
     <build>
         <extensions>

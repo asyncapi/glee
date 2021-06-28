@@ -58,6 +58,7 @@ components:
   messages:
     UserSignedUp:
       payload:
+        $id: UserSignedUpPayload
         type: object
         additionalProperties: false
         required:
@@ -73,6 +74,7 @@ components:
             description: Email of the user
     EmailSent:
       payload:
+        $id: EmailSentPayload
         type: object
         additionalProperties: false
         required:
@@ -88,6 +90,7 @@ components:
             format: date-time
     ServerAnnounce:
       payload:
+        $id: ServerAnnouncePayload
         type: object
         additionalProperties: false
         required:

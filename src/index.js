@@ -1,5 +1,5 @@
 import 'localenv'
-import { readFile } from 'fs/promises'
+import { readFile, mkdir, writeFile } from 'fs/promises'
 import path from 'path'
 import asyncapi from '@asyncapi/parser'
 import Glee from './lib/glee.js'
@@ -14,6 +14,7 @@ import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import logger from './middlewares/logger.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
+import { JavaGenerator, FormatHelpers } from '@asyncapi/modelina';
 
 export default async function GleeAppInitializer (config = {}) {
   if (!process.env.GLEE_SERVER_NAMES) {
@@ -21,12 +22,14 @@ export default async function GleeAppInitializer (config = {}) {
   }
 
   const GLEE_DIR = config.dir || process.cwd()
-  const GLEE_LIFECYCLE_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'lifecycle')
+  const GLEE_CONFIG_DIR = path.resolve(GLEE_DIR, 'glee.config.js');
+  const { default: userConfig } = await import(GLEE_CONFIG_DIR);
+  config = {...config, ...await userConfig()};
+  const GLEE_LIFECYCLE_DIR = path.resolve(GLEE_DIR, config.lifecycleDir || 'lifecycle')
   const GLEE_FUNCTIONS_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'functions')
+  const GLEE_MODEL_DIR = path.resolve(GLEE_DIR, config.modelDir || 'models')
   const GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
   const ASYNCAPI_FILE_PATH = path.resolve(GLEE_DIR, 'asyncapi.yaml')
-
-  await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
 
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
@@ -50,6 +53,48 @@ export default async function GleeAppInitializer (config = {}) {
 
   const asyncapiFileContent = await readFile(ASYNCAPI_FILE_PATH, 'utf-8')
   const parsedAsyncAPI = await asyncapi.parse(asyncapiFileContent)
+
+
+  //Generate all relevant java models
+  if(config.language === 'java') {
+    await mkdir(GLEE_MODEL_DIR, { recursive: true });
+    const javaModelGenerator = new JavaGenerator();
+    const models = await javaModelGenerator.generate(parsedAsyncAPI);
+    for (const outputModel of models) {
+      const outputFilePath = path.resolve(GLEE_MODEL_DIR, `./application/${FormatHelpers.toPascalCase(outputModel.model.$id || 'undefined')}.java`);
+      const outputContent = `
+package glee.models.application;
+${outputModel.dependencies.join('\n')}
+${outputModel.result}
+  `;
+      await writeFile(outputFilePath, outputContent);
+    }
+  
+    //GleeRuntimeModels
+    const runtimeAsyncAPIFile = path.resolve('../../GleeRuntime.json');
+    console.log(runtimeAsyncAPIFile);
+    const runtimeAsyncapiFileContent = await readFile(runtimeAsyncAPIFile, 'utf-8');
+    const runtimeParsedAsyncAPI = await asyncapi.parse(runtimeAsyncapiFileContent);
+    const runtimeSchemas = [...runtimeParsedAsyncAPI.allSchemas().values()].map((element) => {return element._json;});
+    for (const schema of runtimeSchemas) {
+      const runtimeModels = await javaModelGenerator.generate(schema);
+      for (const outputModel of runtimeModels) {
+        const outputFilePath = path.resolve(GLEE_MODEL_DIR, `./runtime/${FormatHelpers.toPascalCase(outputModel.model.$id || 'undefined')}.java`);
+        const outputContent = `
+package glee.models.runtime;
+${outputModel.dependencies.join('\n')}
+${outputModel.result}
+    `;
+        await writeFile(outputFilePath, outputContent);
+      }
+    }
+  }
+
+  //Done with setup
+
+  await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
+
+
   const channelNames = parsedAsyncAPI.channelNames()
 
   const app = new Glee(config)
@@ -64,7 +109,8 @@ export default async function GleeAppInitializer (config = {}) {
   app.use(logger)
   app.useOutbound(logger)
   app.use(errorLogger)
-  app.useOutbound(errorLogger)
+  app.useOutbound(errorLogger);
+
 
   channelNames.forEach((channelName) => {
     const channel = parsedAsyncAPI.channel(channelName)
