@@ -14,6 +14,7 @@ import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import logger from './middlewares/logger.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
+import { startIpcServers } from './lib/IPCServers.js'
 
 export default async function GleeAppInitializer (config = {}) {
   if (!process.env.GLEE_SERVER_NAMES) {
@@ -26,14 +27,15 @@ export default async function GleeAppInitializer (config = {}) {
   const GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
   const ASYNCAPI_FILE_PATH = path.resolve(GLEE_DIR, 'asyncapi.yaml')
 
-  await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
-
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
     servers: process.env.GLEE_SERVER_NAMES.split(','),
     dir: GLEE_DIR,
     functionsDir: GLEE_FUNCTIONS_DIR,
   })
+
+  await startIpcServers(GLEE_FUNCTIONS_DIR)
+  await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
   
   try {
     let { default: cfg } = await import(GLEE_CONFIG_FILE_PATH)
