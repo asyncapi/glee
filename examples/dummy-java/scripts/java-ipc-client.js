@@ -7,8 +7,22 @@ ipc.connectTo(
   'java',
   function () {
     ipc.of.java.emit(
-      'OnUserSignedUp',
-      '{"displayName": "Hola","email":"what@email.com"}'
+      'OnUserSignedUpFunction',
+      JSON.stringify({
+        headers: {
+          customHeader: 'test',
+        },
+        payload: {
+          displayName: 'Hola',
+          email: 'what@email.com',
+        },
+        channel: 'user/signedup',
+        server: 'mosquitto',
+      })
     )
+
+    ipc.of.java.on('OnUserSignedUpFunction', (msg) => {
+      console.log(msg)
+    })
   }
 )

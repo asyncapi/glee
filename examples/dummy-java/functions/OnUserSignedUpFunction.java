@@ -1,23 +1,25 @@
 package glee.functions;
 
-import glee.models.*;
+import glee.models.FunctionResponse;
+import glee.models.GleeMessage;
+import glee.messages.UserSignedUp;
+import glee.messages.UserSignedUpPayload;
+import glee.messages.EmailSentPayload;
 
 public class OnUserSignedUpFunction {
-  public static FunctionResponse onEvent(GleeMessage event) {
-    UserSignedUp user = (UserSignedUp) event.getPayload();
+  public static FunctionResponse onEvent(UserSignedUp event) {
+    UserSignedUpPayload user = event.getPayload();
     System.out.println("display name = " + user.getDisplayName());
     System.out.println("email = " + user.getEmail());
     FunctionResponse response = new FunctionResponse();
     
-    // UserSignedUp payload = new UserSignedUp();
-    // payload.setDisplayName("Fran Mendez");
-    // payload.setEmail("fmvilas@gmail.com");
+    EmailSentPayload sendPayload = new EmailSentPayload();
+    sendPayload.setEmail("fmvilas@gmail.com");
     
-    // GleeMessage message = new GleeMessage();
-    // message.setServer("mosquitto");
-    // message.setPayload(payload);
+    GleeMessage message = new GleeMessage();
+    message.setPayload(sendPayload);
     
-    // response.setSend(new GleeMessage[]{message});
+    response.setSend(new GleeMessage[]{message});
     return response;
   }
 } 

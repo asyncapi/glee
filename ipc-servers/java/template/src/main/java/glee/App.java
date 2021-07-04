@@ -53,7 +53,7 @@ public class App
                 } catch (IOException e) {}
             }});
 
-            EchoServer echo = new EchoServer(serverSocket);
+            RuntimeServer echo = new RuntimeServer(serverSocket);
             echo.run();
         } catch (SocketException e) {
             // Ignore. This exception happens when the server is stopped abruptly.

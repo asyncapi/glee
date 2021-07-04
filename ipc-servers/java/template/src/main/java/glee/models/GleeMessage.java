@@ -1,17 +1,20 @@
 package glee.models;
 
-public class GleeMessage {
-  private Object payload;
-  private Object headers;
-  private String channel;
-  private String server;
+import com.fasterxml.jackson.annotation.*;
 
-  public GleeMessage(Object payload, Object headers, String channel, String server) {
-    this.payload = payload;
-    this.headers = headers;
-    this.channel = channel;
-    this.server = server;
-  }
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class GleeMessage {
+  @JsonProperty("payload")
+  protected Object payload;
+  
+  @JsonProperty("headers")
+  protected Object headers;
+
+  @JsonProperty("channel")
+  protected String channel;
+
+  @JsonProperty("server")
+  protected String server;
 
   public Object getPayload() { return this.payload; }
   public void setPayload(Object payload) { this.payload = payload; }

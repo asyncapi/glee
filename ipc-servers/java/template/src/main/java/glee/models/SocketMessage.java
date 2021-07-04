@@ -3,7 +3,7 @@ package glee.models;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.annotation.*;
 
-public class FunctionRequest {
+public class SocketMessage {
   @JsonProperty("type")
   private String type;
 
@@ -13,8 +13,14 @@ public class FunctionRequest {
   public String getType() {
     return this.type;
   }
+  public void setType(String type) {
+    this.type = type;
+  }
   
   public JsonNode getData() {
     return this.data;
+  }
+  public void setData(JsonNode data) {
+    this.data = data;
   }
 }

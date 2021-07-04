@@ -13,12 +13,14 @@ import java.net.SocketException;
 import java.util.concurrent.CompletableFuture;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
-import glee.models.*;
+import glee.models.SocketMessage;
+import glee.models.FunctionResponse;
+import glee.messages.*;
 
-public class EchoServer {
+public class RuntimeServer {
   private final ServerSocket serverSocket;
 
-  public EchoServer(ServerSocket serverSocket) {
+  public RuntimeServer(ServerSocket serverSocket) {
     this.serverSocket = serverSocket;
   }
 
@@ -42,20 +44,17 @@ public class EchoServer {
               do {
                 line = in.readLine();
                 if (line != null) {
-                  System.out.println("server: " + line);
-
                   try {
-                      FunctionRequest req = objectMapper.readValue(line, FunctionRequest.class);
-
-                      System.out.println("type = " + req.getType());
-                      UserSignedUp event = objectMapper.readValue(req.getData().asText(), UserSignedUp.class);
-                      if (req.getType().equals("OnUserSignedUp")) {
-                        glee.functions.OnUserSignedUpFunction.onEvent(new GleeMessage(
-                          event,
-                          null,
-                          null,
-                          null
-                        ));
+                      SocketMessage req = objectMapper.readValue(line, SocketMessage.class);
+                      
+                      if (req.getType().equals("OnUserSignedUpFunction")) {
+                        UserSignedUp event = objectMapper.readValue(req.getData().asText(), UserSignedUp.class);
+                        FunctionResponse res = glee.functions.OnUserSignedUpFunction.onEvent(event);
+                        SocketMessage sm = new SocketMessage();
+                        sm.setType("response");
+                        sm.setData(objectMapper.valueToTree(res));
+                        out.print(objectMapper.writeValueAsString(sm));
+                        out.print('\n');
                       } else {
                         System.out.println("Unknown event type " + req.getType());
                       }
@@ -63,7 +62,6 @@ public class EchoServer {
                       e.printStackTrace();
                   }
 
-                  out.print(line + "\n");
                   out.flush();
                 }
               } while (true);
