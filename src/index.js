@@ -34,7 +34,7 @@ export default async function GleeAppInitializer (config = {}) {
     functionsDir: GLEE_FUNCTIONS_DIR,
   })
 
-  await startIpcServers(GLEE_FUNCTIONS_DIR)
+  await startIpcServers(GLEE_FUNCTIONS_DIR, ASYNCAPI_FILE_PATH)
   await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
   
   try {

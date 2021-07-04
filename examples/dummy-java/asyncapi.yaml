@@ -36,7 +36,7 @@ channels:
               const: 'custom value'
 
     publish:
-      operationId: onUserSignedUp
+      operationId: OnUserSignedUp
       message:
         $ref: '#/components/messages/UserSignedUp'
       bindings:

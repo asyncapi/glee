@@ -1,4 +1,4 @@
-package ipcserver;
+package glee;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,7 +36,7 @@ public class App
 
     public static void main( String[] args )
     {
-        final String socketName = isWin ? "\\\\.\\pipe\\ipcsockettest" : "/tmp/socket-loc.sock";
+        final String socketName = isWin ? "\\\\.\\pipe\\ipcsockettest" : "/tmp/glee.runtime.java";
         final Path socketPath = Paths.get(socketName);
         
         try {
