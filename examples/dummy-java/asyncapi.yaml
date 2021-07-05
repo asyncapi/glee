@@ -44,9 +44,10 @@ channels:
           qos: 2
           retain: true
           bindingVersion: 0.1.0
+  email/sent:
     subscribe:
       message:
-        $ref: '#/components/messages/UserSignedUp'  
+        $ref: '#/components/messages/EmailSent'  
   server/announce:
     subscribe:
       message:
@@ -84,7 +85,7 @@ components:
             format: email
             description: Email of the user
           timestamp:
-            type: string
+            type: ['null', string]
             format: date-time
     ServerAnnounce:
       payload:

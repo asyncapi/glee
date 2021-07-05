@@ -26,6 +26,12 @@ export default async function ModelFile({ message }) {
       server: {
         type: 'string',
       },
+      messageId: {
+        type: 'string',
+      },
+      correlationId: {
+        type: 'string',
+      },
     },
   }
   const generated = await generator.generate(messageDef)

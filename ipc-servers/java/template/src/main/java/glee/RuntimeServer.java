@@ -9,6 +9,11 @@ import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.ClassNotFoundException;
+import java.lang.NoSuchMethodException;
+import java.lang.IllegalAccessException;
 
 import java.util.concurrent.CompletableFuture;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,19 +51,34 @@ public class RuntimeServer {
                 if (line != null) {
                   try {
                       SocketMessage req = objectMapper.readValue(line, SocketMessage.class);
-                      
-                      if (req.getType().equals("OnUserSignedUpFunction")) {
-                        UserSignedUp event = objectMapper.readValue(req.getData().asText(), UserSignedUp.class);
-                        FunctionResponse res = glee.functions.OnUserSignedUpFunction.onEvent(event);
-                        SocketMessage sm = new SocketMessage();
-                        sm.setType("response");
-                        sm.setData(objectMapper.valueToTree(res));
-                        out.print(objectMapper.writeValueAsString(sm));
-                        out.print('\n');
-                      } else {
+                      JsonNode data = objectMapper.readValue(req.getData().asText(), JsonNode.class);
+                      System.out.println("messageId = " + data.get("messageId").asText());
+                      if (!data.has("messageId")) {
                         System.out.println("Unknown event type " + req.getType());
+                        continue;
                       }
+                      
+                      Class<?> functionClass = Class.forName("glee.functions." + req.getType());
+                      Class MessageClass = Class.forName("glee.messages." + data.get("messageId").asText());
+                      Method m = functionClass.getMethod("onEvent", MessageClass);
+                      FunctionResponse res = (FunctionResponse) m.invoke(
+                        null,
+                        objectMapper.treeToValue(data, MessageClass)
+                      );
+                      res.setCorrelationId(data.get("correlationId").asText());
+                      SocketMessage sm = new SocketMessage("response", res);
+                      out.print(sm.toJsonString());
+                  } catch (ClassNotFoundException e) {
+                      e.printStackTrace();
+                  } catch (NoSuchMethodException e) {
+                      e.printStackTrace();
+                  } catch (IllegalAccessException e) {
+                      e.printStackTrace();
+                  } catch (InvocationTargetException e) {
+                      e.printStackTrace();
                   } catch (IOException e) {
+                      e.printStackTrace();
+                  } catch (Exception e) {
                       e.printStackTrace();
                   }
 

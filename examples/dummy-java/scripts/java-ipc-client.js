@@ -18,6 +18,7 @@ ipc.connectTo(
         },
         channel: 'user/signedup',
         server: 'mosquitto',
+        messageId: 'UserSignedUp',
       })
     )
 

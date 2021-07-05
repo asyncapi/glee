@@ -1,11 +1,11 @@
 import 'localenv'
 import { readFile } from 'fs/promises'
-import path from 'path'
 import asyncapi from '@asyncapi/parser'
 import Glee from './lib/glee.js'
-import { logWelcome, logLineWithIcon, logWarningMessage } from './lib/logger.js'
+import { logWelcome, logLineWithIcon } from './lib/logger.js'
 import registerAdapters from './registerAdapters.js'
 import { register as registerLifecycleEvents, run as runLifecycleEvents } from './lib/lifecycleEvents.js'
+import { register as registerFunctions } from './lib/functions.js'
 import buffer2string from './middlewares/buffer2string.js'
 import string2json from './middlewares/string2json.js'
 import json2string from './middlewares/json2string.js'
@@ -15,17 +15,21 @@ import logger from './middlewares/logger.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
 import { startIpcServers } from './lib/IPCServers.js'
+import { setConstants } from './lib/constants.js'
+import { triggerFunction } from './lib/runtimes/index.js'
 
 export default async function GleeAppInitializer (config = {}) {
   if (!process.env.GLEE_SERVER_NAMES) {
     throw new Error(`Missing "GLEE_SERVER_NAMES" environment variable.`)
   }
 
-  const GLEE_DIR = config.dir || process.cwd()
-  const GLEE_LIFECYCLE_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'lifecycle')
-  const GLEE_FUNCTIONS_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'functions')
-  const GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
-  const ASYNCAPI_FILE_PATH = path.resolve(GLEE_DIR, 'asyncapi.yaml')
+  const {
+    GLEE_DIR,
+    GLEE_LIFECYCLE_DIR,
+    GLEE_FUNCTIONS_DIR,
+    GLEE_CONFIG_FILE_PATH,
+    ASYNCAPI_FILE_PATH
+  } = setConstants(config)
 
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
@@ -35,6 +39,7 @@ export default async function GleeAppInitializer (config = {}) {
   })
 
   await startIpcServers(GLEE_FUNCTIONS_DIR, ASYNCAPI_FILE_PATH)
+  await registerFunctions(GLEE_FUNCTIONS_DIR)
   await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
   
   try {
@@ -73,62 +78,16 @@ export default async function GleeAppInitializer (config = {}) {
     if (channel.hasPublish()) {
       const operationId = channel.publish().json('operationId')
       if (operationId) {
-        const filePath = path.resolve(GLEE_DIR, GLEE_FUNCTIONS_DIR, operationId)
-        import(`${filePath}.js`)
-          .then(({ default: func }) => {
-            const schema = channel.publish().message().payload().json()
-            app.use(channelName, validate(schema), (event, next) => {
-              func(event)
-                .then((res) => {
-                  if (res && Array.isArray(res.send)) {
-                    res.send.forEach((msg) => {
-                      app.send(new Glee.Message({
-                        payload: msg.payload,
-                        headers: msg.headers,
-                        channel: msg.channel || event.channel,
-                        serverName: msg.server,
-                      }))
-                    })
-                  }
-
-                  if (res && Array.isArray(res.reply)) {
-                    res.reply.forEach((msg) => {
-                      event.reply({
-                        payload: msg.payload,
-                        headers: msg.headers,
-                        channel: msg.channel,
-                      })
-                    })
-                  }
-
-                  if (res && Array.isArray(res.broadcast)) {
-                    res.broadcast.forEach((msg) => {
-                      app.send(new Glee.Message({
-                        payload: msg.payload,
-                        headers: msg.headers,
-                        channel: msg.channel || event.channel,
-                        serverName: msg.server,
-                        broadcast: true,
-                      }))
-                    })
-                  }
-                })
-                .then(next)
-                .catch(next)
-            })
-          })
-          .catch(err => {
-            if (err.code === 'ERR_MODULE_NOT_FOUND') {
-              const functionsPath = path.relative(GLEE_DIR, GLEE_FUNCTIONS_DIR)
-              const missingFile = path.relative(GLEE_FUNCTIONS_DIR, `${filePath}.js`)
-              const missingPath = path.join(functionsPath, missingFile)
-              logWarningMessage(`Missing function file ${missingPath}.`, {
-                highlightedWords: [missingPath],
-              })
-            } else {
-              console.error(err)
-            }
-          })
+        const schema = channel.publish().message().payload().json()
+        const messageId = channel.publish().message().ext('x-parser-message-name')
+        app.use(channelName, validate(schema), (event, next) => {
+          triggerFunction({
+            app,
+            operationId,
+            messageId,
+            message: event,
+          }).then(next).catch(next)
+        })
       }
     }
     if (channel.hasSubscribe()) {
