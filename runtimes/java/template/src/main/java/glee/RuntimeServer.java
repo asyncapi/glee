@@ -52,7 +52,7 @@ public class RuntimeServer {
                   try {
                       SocketMessage req = objectMapper.readValue(line, SocketMessage.class);
                       JsonNode data = objectMapper.readValue(req.getData().asText(), JsonNode.class);
-                      System.out.println("messageId = " + data.get("messageId").asText());
+
                       if (!data.has("messageId")) {
                         System.out.println("Unknown event type " + req.getType());
                         continue;

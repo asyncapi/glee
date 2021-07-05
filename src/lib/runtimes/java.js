@@ -6,6 +6,7 @@ import { copyFile, rmdir, mkdir } from 'fs/promises'
 import Generator from '@asyncapi/generator'
 import ipc, { sendMessage } from "../ipc.js"
 import { logErrorLine, logInfoMessage } from '../logger.js'
+import { getConstants } from '../constants.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -41,13 +42,14 @@ export function runJava(operationId, messageId, message) {
 
 export function generateAndStartServer(asyncapiFilePath, runtime) {
   return new Promise(async (resolve, reject) => {
-    const generatedPath = path.resolve(__dirname, '../../../runtimes/java/generated')
+    const { GLEE_DIR } = getConstants()
+    const generatedPath = path.resolve(GLEE_DIR, '.runtimes/java')
 
     // Remove and re-create the "generated" directory
     // to avoid dangling files.
     try {
       await rmdir(path.resolve(generatedPath), { recursive: true })
-      await mkdir(path.resolve(generatedPath))
+      await mkdir(path.resolve(generatedPath), { recursive: true })
     } catch (e) { console.error(e) /* We did our best... */ }
 
     try {
@@ -64,14 +66,14 @@ export function generateAndStartServer(asyncapiFilePath, runtime) {
       logInfoMessage('Compiling Java IPC server...')
       const maven = spawn('mvn package', ['-l maven.log'], {
         env: process.env,
-        cwd: path.resolve(__dirname, '../../../runtimes/java/generated'),
+        cwd: generatedPath,
         shell: true,
         stdio: ['ignore', 'ignore', 'inherit'],
       })
 
       maven.on('close', (code) => {
         if (code !== 0) {
-          const mavenLogPath = path.resolve(__dirname, '../../../runtimes/java/generated/maven.log')
+          const mavenLogPath = path.resolve(generatedPath, 'maven.log')
           logErrorLine(`There was an error compiling the Java IPC server. Check ${mavenLogPath} for more details.`, {
             highlightedWords: [mavenLogPath],
           })
@@ -80,7 +82,7 @@ export function generateAndStartServer(asyncapiFilePath, runtime) {
           logInfoMessage('Starting Java IPC server...')
           spawn('java -jar target/glee-0.1.0.jar', {
             env: process.env,
-            cwd: path.resolve(__dirname, '../../../runtimes/java/generated'),
+            cwd: generatedPath,
             shell: true,
             stdio: 'inherit',
           })
