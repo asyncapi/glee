@@ -73,12 +73,14 @@ export async function startRuntimeServers(dir, asyncapiFilePath) {
     await Promise.all(Object.keys(files).map(async (filePath) => {
       try {
         const extension = extname(filePath).substr(1)
-        const dirStats = await stat(path.resolve(__dirname, '../../../runtimes', extension))
-        if (dirStats.isDirectory()) {
-          runtimes[extension] = runtimes[extension] || {}
-          runtimes[extension].files = runtimes[extension].files || new Set()
-          runtimes[extension].files.add(filePath)
+        if (extension !== 'js') {
+          const dirStats = await stat(path.resolve(__dirname, '../../../runtimes', extension))
+          if (!dirStats.isDirectory()) return
         }
+        
+        runtimes[extension] = runtimes[extension] || {}
+        runtimes[extension].files = runtimes[extension].files || new Set()
+        runtimes[extension].files.add(filePath)
       } catch (e) {
         logError(e)
       }
