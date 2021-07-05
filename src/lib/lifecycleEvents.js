@@ -1,3 +1,4 @@
+import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import Glee from './glee.js'
 import { logInfoMessage } from './logger.js'
@@ -6,6 +7,13 @@ import { arrayHasDuplicates } from './util.js'
 export const events = {}
 
 export async function register (dir) {
+  try {
+    const statsDir = await stat(dir)
+    if (!statsDir.isDirectory()) return
+  } catch (e) {
+    if (e.code === 'ENOENT') return
+  }
+
   try {
     const files = await walkdir.async(dir, { return_object: true })
     return await Promise.all(Object.keys(files).map(async (filePath) => {
