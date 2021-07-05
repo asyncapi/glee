@@ -12,7 +12,8 @@ if (args[0] === 'dev') {
   process.env.NODE_ENV = 'development'
   nodemon({
     script: path.resolve(__dirname, 'start.js'),
-    ext: 'js json yml yaml'
+    ext: 'js json yml yaml java',
+    signal: 'SIGINT',
   });
 
   nodemon.on('start', function () {
