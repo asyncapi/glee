@@ -14,7 +14,7 @@ import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import logger from './middlewares/logger.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
-import { startIpcServers } from './lib/IPCServers.js'
+import { startRuntimeServers } from './lib/runtimes/index.js'
 import { setConstants } from './lib/constants.js'
 import { triggerFunction } from './lib/runtimes/index.js'
 
@@ -38,7 +38,7 @@ export default async function GleeAppInitializer (config = {}) {
     functionsDir: GLEE_FUNCTIONS_DIR,
   })
 
-  await startIpcServers(GLEE_FUNCTIONS_DIR, ASYNCAPI_FILE_PATH)
+  await startRuntimeServers(GLEE_FUNCTIONS_DIR, ASYNCAPI_FILE_PATH)
   await registerFunctions(GLEE_FUNCTIONS_DIR)
   await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
   

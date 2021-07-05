@@ -1,8 +1,15 @@
-import Glee from '../glee.js'
+import { fileURLToPath } from 'url'
+import path, { dirname, extname } from 'path'
+import { stat } from 'fs/promises'
+import walkdir from 'walkdir'
 import { runJS } from './js.js'
-import { runJava } from './java.js'
+import { generateAndStartServer, runJava } from './java.js'
+import { logError } from '../logger.js'
 import { functions } from '../functions.js'
+import Glee from '../glee.js'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 export async function triggerFunction({
   app,
@@ -55,5 +62,34 @@ export async function triggerFunction({
         broadcast: true,
       }))
     })
+  }
+}
+
+export async function startRuntimeServers(dir, asyncapiFilePath) {
+  try {
+    const files = await walkdir.async(dir, { return_object: true })
+    const runtimes = {}
+
+    await Promise.all(Object.keys(files).map(async (filePath) => {
+      try {
+        const extension = extname(filePath).substr(1)
+        const dirStats = await stat(path.resolve(__dirname, '../../../runtimes', extension))
+        if (dirStats.isDirectory()) {
+          runtimes[extension] = runtimes[extension] || {}
+          runtimes[extension].files = runtimes[extension].files || new Set()
+          runtimes[extension].files.add(filePath)
+        }
+      } catch (e) {
+        logError(e)
+      }
+    }))
+
+    await Promise.all(Object.keys(runtimes).map((runtime) => {
+      if (runtime === 'java') {
+        return generateAndStartServer(asyncapiFilePath, runtimes[runtime])
+      }
+    }))
+  } catch (e) {
+    console.error(e)
   }
 }
