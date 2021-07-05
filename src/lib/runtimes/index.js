@@ -77,7 +77,6 @@ export async function startRuntimeServers(dir, asyncapiFilePath) {
           const dirStats = await stat(path.resolve(__dirname, '../../../runtimes', extension))
           if (!dirStats.isDirectory()) return
         }
-        
         runtimes[extension] = runtimes[extension] || {}
         runtimes[extension].files = runtimes[extension].files || new Set()
         runtimes[extension].files.add(filePath)
