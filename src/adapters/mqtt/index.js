@@ -26,6 +26,7 @@ class MqttAdapter extends Adapter {
         return this.parsedAsyncAPI.components().securityScheme(secName)
       })
       const userAndPasswordSecurityReq = securityRequirements.find(sec => sec.type() === 'userPassword')
+      const X509SecurityReq = securityRequirements.find(sec => sec.type() === 'X509')
       const url = new URL(this.AsyncAPIServer.url())
 
       const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
@@ -46,7 +47,7 @@ class MqttAdapter extends Adapter {
         keepalive: serverBinding && serverBinding.keepAlive,
         username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
         password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined,
-        ca: certs,
+        ca: X509SecurityReq ? certs : undefined,
       })
 
       this.client.on('connect', () => {
