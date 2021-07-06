@@ -4,6 +4,17 @@ info:
   version: 1.0.0
   description: This service is in charge of processing user signups
 servers:
+  hivemq:
+    url: mqtts://c0df6463bbbf45bab99a2efd697c2ebf.s2.eu.hivemq.cloud
+    protocol: mqtts
+    security:
+      - userAndPassword: []
+    bindings:
+      mqtt:
+        clientId: gleeDummyExample
+        cleanSession: false
+        keepAlive: 60
+        bindingVersion: 0.1.0
   mosquitto:
     url: mqtts://test.mosquitto.org
     protocol: mqtts

@@ -164,10 +164,6 @@ export default async function GleeAppInitializer (config = {}) {
     })
   })
 
-  // app.on('message:processed', (msg) => {
-  //   console.log(msg)
-  // })
-
   app
     .listen()
     .catch(console.error)

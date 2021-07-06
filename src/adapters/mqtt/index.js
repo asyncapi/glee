@@ -51,10 +51,7 @@ class MqttAdapter extends Adapter {
 
       this.client.handleMessage = (packet, callback) => {
         this.glee.once('message:processed', (err, msg) => {
-          if (err) {
-            console.error(err.message)
-            return callback(err)
-          }
+          if (err) return callback(err)
           callback()
         })
       }
