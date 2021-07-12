@@ -20,6 +20,9 @@
     "framework"
   ],
   "author": "Fran Mendez",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/generator": "^1.8.0",
