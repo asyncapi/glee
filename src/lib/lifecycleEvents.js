@@ -49,13 +49,11 @@ export async function run (lifecycleEvent, params) {
     const connectionServer = params.connection.serverName
     const handlers = events[lifecycleEvent]
       .filter(info => {
-        if (info.channels) {
-          if (!arrayHasDuplicates([
-            ...connectionChannels,
-            ...(info.channels)
-          ])) {
-            return false
-          }
+        if (info.channels && !arrayHasDuplicates([
+          ...connectionChannels,
+          ...(info.channels)
+        ])) {
+          return false
         }
         
         if (info.servers) {

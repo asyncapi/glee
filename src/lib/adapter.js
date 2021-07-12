@@ -47,7 +47,7 @@ class GleeAdapter extends EventEmitter {
 
       return new GleeConnection({
         connection: ev.connection,
-        channels: channels,
+        channels,
         serverName,
         server,
         parsedAsyncAPI,

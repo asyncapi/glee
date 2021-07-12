@@ -30,7 +30,7 @@ class WebSocketsAdapter extends Adapter {
         process.exit(1)
       }
 
-      let servers = {}
+      const servers = {}
       channelNames.forEach(channelName => {
         servers[channelName] = new WebSocket.Server({ noServer: true })
       })
@@ -68,7 +68,7 @@ class WebSocketsAdapter extends Adapter {
         if (wsChannelBinding) {
           const { query, headers } = wsChannelBinding
           if (query) {
-            let queryParams = {}
+            const queryParams = {}
             searchParams.forEach((value, key) => {
               queryParams[key] = value
             })

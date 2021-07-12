@@ -4,6 +4,28 @@ import { pathToRegexp } from 'path-to-regexp'
 import Message from './message.js'
 
 /**
+ * Determines if a path matches a channel, and returns an array of matching params.
+ *
+ * @param {String} path The path.
+ * @param {String} channel The channel.
+ * @return {Object|null}
+ */
+export const getParams = (path, channel) => {
+  if (path === undefined) return {}
+
+  const keys = []
+  const re = pathToRegexp(path, keys)
+  const result = re.exec(channel)
+
+  if (result === null) return null
+
+  return keys.map((key, index) => ({ [key.name]: result[index + 1] })).reduce((prev, val) => ({
+    ...prev,
+    ...val,
+  }), {})
+}
+
+/**
  * Duplicates a GleeMessage.
  *
  * @param {GleeMessage} message The message to duplicate.
@@ -37,28 +59,6 @@ export const duplicateMessage = (message) => {
  */
 export const matchChannel = (path, channel) => {
   return (getParams(path, channel) !== null)
-}
-
-/**
- * Determines if a path matches a channel, and returns an array of matching params.
- *
- * @param {String} path The path.
- * @param {String} channel The channel.
- * @return {Object|null}
- */
-export const getParams = (path, channel) => {
-  if (path === undefined) return {}
-
-  const keys = []
-  const re = pathToRegexp(path, keys)
-  const result = re.exec(channel)
-
-  if (result === null) return null
-
-  return keys.map((key, index) => ({ [key.name]: result[index+1] })).reduce((prev, val) => ({
-    ...prev,
-    ...val,
-  }), {})
 }
 
 /**

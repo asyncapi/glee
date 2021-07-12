@@ -18,7 +18,7 @@ class GleeRouter {
    */
   use (...args) {
     if (!args || !args.length) {
-      console.error(`GleeRouter.use() requires at least one argument.`)
+      console.error('GleeRouter.use() requires at least one argument.')
       return
     }
 
@@ -65,7 +65,7 @@ class GleeRouter {
    */
   useOutbound (...args) {
     if (!args || !args.length) {
-      console.error(`GleeRouter.useOutbound() requires at least one argument.`)
+      console.error('GleeRouter.useOutbound() requires at least one argument.')
       return
     }
 

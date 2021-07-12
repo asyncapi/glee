@@ -22,10 +22,12 @@ export const logWelcome = ({
   servers,
   dir,
   functionsDir,
+  experimentalFlags = [],
 }) => {
   const primaryColor = '#08d2a1'
   const bgPrimary = chalk.bgHex(primaryColor)
   const fgPrimary = chalk.hex(primaryColor)
+  const fgWarning = chalk.yellow
 
   const pkg = JSON.parse(readFileSync(path.resolve(dir, 'package.json')))
 
@@ -40,26 +42,35 @@ export const logWelcome = ({
   if (functionsDir !== path.resolve(process.cwd(), 'functions')) {
     console.log(fgPrimary('𝑓×'), chalk.gray(wordWrap(`Functions directory: ${dir}`, { width: 37, indent: '   ', cut: true }).trim()))
   }
+  if (experimentalFlags.has('JAVA')) {
+    console.log(emojis.unicode(':coffee:'), fgWarning('Java experimental support has been enabled'))
+  }
   console.log(chalk.gray('─'.repeat(40)))
 }
 
-export const logLineWithIcon = (icon, text, { iconColor = 'cyan', highlightedWords = [], disableEmojis = false } = {}) => {
+export const logLineWithIcon = (icon, text, { iconColor = 'cyan', textColor = '#999', highlightedWords = [], disableEmojis = false } = {}) => {
   const iconColorFn = chalk[iconColor] || chalk.hex(iconColor)
+  const textColorFn = chalk[textColor] || chalk.hex(textColor)
   icon = !disableEmojis ? emojis.unicode(icon) : icon
-  console.log(iconColorFn(icon), chalk.hex('#999')(highlightWords(highlightedWords, text)))
+  console.log(iconColorFn(icon), textColorFn(highlightWords(highlightedWords, text)))
 }
 
 export const logInfoMessage = (text, { highlightedWords = [] } = {}) => {
   logLineWithIcon('ⓘ ', text, {
-    highlightedWords: highlightedWords,
+    highlightedWords,
   })
 }
 
 export const logWarningMessage = (text, { highlightedWords = [] } = {}) => {
   logLineWithIcon(':warning: ', text, {
-    highlightedWords: highlightedWords,
-    iconColor: 'yellow',
+    highlightedWords,
+    textColor: 'yellow',
   })
+}
+
+export const logJSON = (json, { error = false } = {}) => {
+  const logFn = error ? console.error : console.log
+  logFn(util.inspect(json, { depth: null, sorted: true, breakLength: 40, colors: true }))
 }
 
 export const logInboundMessage = (message) => {
@@ -73,11 +84,6 @@ export const logOutboundMessage = (message) => {
   const serverName = message.serverName || 'all servers'
   console.log(chalk.reset.magenta(icon), chalk.yellow(message.channel), 'was', verb ,'to', chalk.gray(serverName))
   logJSON(message.payload)
-}
-
-export const logJSON = (json, { error = false } = {}) => {
-  const logFn = error ? console.error : console.log
-  logFn(util.inspect(json, { depth: null, sorted: true, breakLength: 40, colors: true }))
 }
 
 export const logErrorLine = (message, { highlightedWords = [] } = {}) => {
