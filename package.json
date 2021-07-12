@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"No test specified\"",
-    "lint": "eslint --max-warnings 0 --config .eslintrc ."
+    "lint": "eslint --max-warnings 4 --config .eslintrc ."
   },
   "keywords": [
     "asyncapi",
