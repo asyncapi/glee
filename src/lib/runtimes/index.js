@@ -4,9 +4,10 @@ import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import { runJS } from './js.js'
 import { generateAndStartServer, runJava } from './java.js'
-import { logError } from '../logger.js'
+import { logError, logWarningMessage } from '../logger.js'
 import { functions } from '../functions.js'
 import Glee from '../glee.js'
+import experimentalFlags from '../experimentalFlags.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -23,7 +24,7 @@ export async function triggerFunction({
   
   if (funcDef.runtime === 'js') {
     res = await runJS(operationId, messageId, message)
-  } else if (funcDef.runtime === 'java') {
+  } else if (experimentalFlags.has('JAVA') && funcDef.runtime === 'java') {
     res = await runJava(operationId, messageId, message)
   } else {
     throw new Error(`Couldn't find a suitable runtime for "${funcDef.runtime}" files.`)
@@ -74,8 +75,21 @@ export async function startRuntimeServers(dir, asyncapiFilePath) {
       try {
         const extension = extname(filePath).substr(1)
         if (extension !== 'js') {
-          const dirStats = await stat(path.resolve(__dirname, '../../../runtimes', extension))
-          if (!dirStats.isDirectory()) return
+          if (extension === 'java' && !experimentalFlags.has('JAVA')) {
+            logWarningMessage('Experimental Java support is not enabled. To enable it, set the environment variable GLEE_EXPERIMENTAL_JAVA=on.', {
+              highlightedWords: ['GLEE_EXPERIMENTAL_JAVA=on']
+            })
+            return
+          }
+
+          try {
+            const dirStats = await stat(path.resolve(__dirname, '../../../runtimes', extension))
+            if (!dirStats.isDirectory()) throw new Error()
+          } catch (e) {
+            logWarningMessage(`Could not find a suitable runtime for .${extension} files.`, {
+              highlightedWords: [`.${extension}`]
+            })
+          }
         }
 
         runtimes[extension] = runtimes[extension] || {}
@@ -87,7 +101,7 @@ export async function startRuntimeServers(dir, asyncapiFilePath) {
     }))
 
     await Promise.all(Object.keys(runtimes).map((runtime) => {
-      if (runtime === 'java') {
+      if (experimentalFlags.has('JAVA') && runtime === 'java') {
         return generateAndStartServer(asyncapiFilePath, runtimes[runtime])
       }
     }))

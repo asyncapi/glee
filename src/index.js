@@ -3,6 +3,7 @@ import { readFile } from 'fs/promises'
 import asyncapi from '@asyncapi/parser'
 import Glee from './lib/glee.js'
 import { logWelcome, logLineWithIcon } from './lib/logger.js'
+import experimentalFlags from './lib/experimentalFlags.js'
 import registerAdapters from './registerAdapters.js'
 import { register as registerLifecycleEvents, run as runLifecycleEvents } from './lib/lifecycleEvents.js'
 import { register as registerFunctions } from './lib/functions.js'
@@ -36,6 +37,7 @@ export default async function GleeAppInitializer (config = {}) {
     servers: process.env.GLEE_SERVER_NAMES.split(','),
     dir: GLEE_DIR,
     functionsDir: GLEE_FUNCTIONS_DIR,
+    experimentalFlags,
   })
 
   await startRuntimeServers(GLEE_FUNCTIONS_DIR, ASYNCAPI_FILE_PATH)
