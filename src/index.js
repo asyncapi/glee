@@ -21,7 +21,7 @@ import { triggerFunction } from './lib/runtimes/index.js'
 
 export default async function GleeAppInitializer (config = {}) {
   if (!process.env.GLEE_SERVER_NAMES) {
-    throw new Error(`Missing "GLEE_SERVER_NAMES" environment variable.`)
+    throw new Error('Missing "GLEE_SERVER_NAMES" environment variable.')
   }
 
   const {

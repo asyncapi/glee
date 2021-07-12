@@ -57,15 +57,20 @@ export const logLineWithIcon = (icon, text, { iconColor = 'cyan', textColor = '#
 
 export const logInfoMessage = (text, { highlightedWords = [] } = {}) => {
   logLineWithIcon('ⓘ ', text, {
-    highlightedWords: highlightedWords,
+    highlightedWords,
   })
 }
 
 export const logWarningMessage = (text, { highlightedWords = [] } = {}) => {
   logLineWithIcon(':warning: ', text, {
-    highlightedWords: highlightedWords,
+    highlightedWords,
     textColor: 'yellow',
   })
+}
+
+export const logJSON = (json, { error = false } = {}) => {
+  const logFn = error ? console.error : console.log
+  logFn(util.inspect(json, { depth: null, sorted: true, breakLength: 40, colors: true }))
 }
 
 export const logInboundMessage = (message) => {
@@ -79,11 +84,6 @@ export const logOutboundMessage = (message) => {
   const serverName = message.serverName || 'all servers'
   console.log(chalk.reset.magenta(icon), chalk.yellow(message.channel), 'was', verb ,'to', chalk.gray(serverName))
   logJSON(message.payload)
-}
-
-export const logJSON = (json, { error = false } = {}) => {
-  const logFn = error ? console.error : console.log
-  logFn(util.inspect(json, { depth: null, sorted: true, breakLength: 40, colors: true }))
 }
 
 export const logErrorLine = (message, { highlightedWords = [] } = {}) => {

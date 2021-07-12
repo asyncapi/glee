@@ -1,9 +1,9 @@
 export default (message, next) => {
   try {
-    message.payload = JSON.parse(message.payload);
+    message.payload = JSON.parse(message.payload)
   } catch (e) {
     // We did our best...
   }
 
-  next();
-};
+  next()
+}
