@@ -3,7 +3,7 @@
 import { fileURLToPath } from 'url'
 import path, { dirname, resolve } from 'path'
 import nodemon from 'nodemon'
-import { accessSync, constants, mkdirSync, readFileSync, statSync, write, writeFileSync } from 'fs'
+import { mkdirSync, readFileSync, statSync, writeFileSync } from 'fs'
 import asyncapi from '@asyncapi/parser'
 
 const __filename = fileURLToPath(import.meta.url)
