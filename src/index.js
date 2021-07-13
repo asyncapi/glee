@@ -1,4 +1,5 @@
-import 'localenv'
+import dotenv from 'dotenv'
+import dotenvExpand from 'dotenv-expand'
 import { readFile } from 'fs/promises'
 import asyncapi from '@asyncapi/parser'
 import Glee from './lib/glee.js'
@@ -18,6 +19,8 @@ import validateConnection from './middlewares/validateConnection.js'
 import { startRuntimeServers } from './lib/runtimes/index.js'
 import { setConstants } from './lib/constants.js'
 import { triggerFunction } from './lib/runtimes/index.js'
+
+dotenvExpand(dotenv.config())
 
 export default async function GleeAppInitializer (config = {}) {
   if (!process.env.GLEE_SERVER_NAMES) {

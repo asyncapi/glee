@@ -21,7 +21,7 @@ class WebSocketsAdapter extends Adapter {
   _connect () {
     return new Promise((resolve, reject) => {
       const channelNames = this.parsedAsyncAPI.channelNames()
-      const serverUrl = new URL(this.AsyncAPIServer.url())
+      const serverUrl = new URL(this.serverUrlExpanded)
       const wsHttpServer = this.glee.options?.websocket?.httpServer || http.createServer()
       const asyncapiServerPort = serverUrl.port || 80
       
