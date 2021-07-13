@@ -1,4 +1,5 @@
 import EventEmitter from 'events'
+import uriTemplates from 'uri-templates'
 import GleeConnection from './connection.js'
 
 class GleeAdapter extends EventEmitter {
@@ -16,8 +17,16 @@ class GleeAdapter extends EventEmitter {
     this.glee = glee
     this.serverName = serverName
     this.AsyncAPIServer = server
+    
     this.parsedAsyncAPI = parsedAsyncAPI
     this.connections = []
+
+    const uriTemplateValues = {}
+    process.env.GLEE_SERVER_VARIABLES?.split(',').forEach(t => {
+      const [server, variable, value] = t.split(':')
+      if (server === this.serverName) uriTemplateValues[variable] = value
+    })
+    this.serverUrlExpanded  = uriTemplates(this.AsyncAPIServer.url()).fill(uriTemplateValues)
 
     this.on('error', err => { this.glee.injectError(err) })
     this.on('message', (message, connection) => {
