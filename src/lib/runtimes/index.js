@@ -4,7 +4,7 @@ import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import { runJS } from './js.js'
 import { generateAndStartServer, runJava } from './java.js'
-import { logError, logWarningMessage } from '../logger.js'
+import { logError, logInfoMessage, logWarningMessage } from '../logger.js'
 import { functions } from '../functions.js'
 import Glee from '../glee.js'
 import experimentalFlags from '../experimentalFlags.js'
@@ -68,7 +68,15 @@ export async function triggerFunction({
 
 export async function startRuntimeServers(dir, asyncapiFilePath) {
   try {
-    const files = await walkdir.async(dir, { return_object: true })
+    let files
+    
+    try {
+      files = await walkdir.async(dir, { return_object: true })
+    } catch (e) {
+      logInfoMessage('No functions directory found.')
+      return
+    }
+
     const runtimes = {}
 
     await Promise.all(Object.keys(files).map(async (filePath) => {
