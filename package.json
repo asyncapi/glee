@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"No test specified\"",
-    "lint": "eslint --max-warnings 4 --config .eslintrc .",
+    "lint": "eslint --max-warnings 5 --config .eslintrc .",
     "release": "semantic-release",
     "get:version": "echo $npm_package_version",
     "get:name": "echo $npm_package_name",
