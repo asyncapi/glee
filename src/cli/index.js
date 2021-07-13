@@ -18,7 +18,7 @@ if (command === 'dev') {
     script: path.resolve(__dirname, 'start.js'),
     ext: '*',
     watch: [
-      '.env.local',
+      '.env',
     ],
     env: {
       NODE_ENV: 'development',
