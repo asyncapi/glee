@@ -18,8 +18,7 @@ class MqttAdapter extends Adapter {
 
   _connect () {
     return new Promise((resolve) => {
-      const channelNames = this.parsedAsyncAPI.channelNames()
-      const subscribedChannels = channelNames.filter(chan => this.parsedAsyncAPI.channel(chan).hasPublish())
+      const subscribedChannels = this.getSubscribedChannels()
       const serverBinding = this.AsyncAPIServer.binding('mqtt')
       const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
         const secName = Object.keys(sec.json())[0]
@@ -53,7 +52,7 @@ class MqttAdapter extends Adapter {
       this.client.on('connect', () => {
         if (!this.firstConnect) {
           this.firstConnect = true
-          this.emit('connect', { name: this.name(), adapter: this, connection: this.client, channels: channelNames })
+          this.emit('connect', { name: this.name(), adapter: this, connection: this.client, channels: this.channelNames })
         }
 
         if (Array.isArray(subscribedChannels)) {
@@ -77,14 +76,14 @@ class MqttAdapter extends Adapter {
       this.client.on('reconnect', () => {
         this.emit('reconnect', {
           connection: this.client,
-          channels: channelNames,
+          channels: this.channelNames,
         })
       })
       
       this.client.on('close', () => {
         this.emit('close', {
           connection: this.client,
-          channels: channelNames,
+          channels: this.channelNames,
         })
       })
 
