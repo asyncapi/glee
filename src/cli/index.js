@@ -1,4 +1,4 @@
-#!/usr/bin/env node --unhandled-rejections=strict
+#!/usr/bin/env node
 
 import { fileURLToPath } from 'url'
 import path, { dirname, resolve } from 'path'
