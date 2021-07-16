@@ -18,7 +18,6 @@ class SocketIOAdapter extends Adapter {
 
   _connect () {
     return new Promise((resolve) => {
-      const channelNames = this.parsedAsyncAPI.channelNames()
       const serverUrl = new URL(this.serverUrlExpanded)
       const asyncapiServerPort = serverUrl.port || 80
       const optionsPort = this.glee.options?.websocket?.port
@@ -49,7 +48,7 @@ class SocketIOAdapter extends Adapter {
       }
 
       this.server.on('connect', (socket) => {
-        this.emit('server:ready', { name: this.name(), adapter: this, connection: socket, channels: channelNames })
+        this.emit('server:ready', { name: this.name(), adapter: this, connection: socket, channels: this.channelNames })
 
         socket.onAny((eventName, payload) => {
           const msg = this._createMessage(eventName, payload)

@@ -19,6 +19,7 @@ class GleeAdapter extends EventEmitter {
     this.AsyncAPIServer = server
     
     this.parsedAsyncAPI = parsedAsyncAPI
+    this.channelNames = this.parsedAsyncAPI.channelNames()
     this.connections = []
 
     const uriTemplateValues = {}
@@ -100,6 +101,22 @@ class GleeAdapter extends EventEmitter {
         connection: conn,
       }))
     })
+  }
+
+  /**
+   * Returns a list of the channels a given adapter has to subscribe to.
+   *
+   * @return {Promise}
+   */
+  getSubscribedChannels() {
+    return this.channelNames
+      .filter(channelName => {
+        const channel = this.parsedAsyncAPI.channel(channelName)
+        if (!channel.hasPublish()) return false
+        
+        const channelServers = channel.publish().ext('x-servers') || this.parsedAsyncAPI.serverNames()
+        return channelServers.includes(this.serverName)
+      })
   }
 
   /**
