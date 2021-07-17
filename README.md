@@ -17,29 +17,18 @@ npm install @asyncapi/glee
 
 ## Usage
 
-> These are temporary indications. We will offer a way to scaffold a basic Glee project.
+The best way to get started with Glee is using `create-glee-app`, which sets up everything automatically for you. To create a project, run:
 
-1. Create a new Node.js project:
+```bash
+npx create-glee-app
+```
 
-    ```bash
-    npm init
-    ```
-1. Install Glee:
-   ```bash
-   npm install @asyncapi/glee
-   ```
-1. Add `dev` and `start` scripts to your package.json file:
+After the installation is complete, follow the instructions to start the development server.
 
-    ```json
-    "scripts": {
-      "dev": "glee dev",
-      "start": "glee start"
-    },
-    ```
-1. Place or create a new `asyncapi.yaml` or `asyncapi.json` file in the root directory of the project.
-1. Create functions on the `functions` folder and link them to AsyncAPI operations using the `operationId` field.
-1. Once you're ready, run `npm run dev`.
+For more information on how to use `create-glee-app`, you can review [the `create-glee-app` documentation](https://github.com/asyncapi/create-glee-app).
 
-Have a look at the [examples](./examples) folder on this repository to get a better grasp on how to use it.
+## Examples
+
+Have a look at the [examples](./examples) folder of this repository to get a better grasp on how to use it.
 
 > :warning: So far, it just support MQTT and WebSockets (native, Socket.IO, and custom implementations).
