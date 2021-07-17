@@ -9,13 +9,7 @@
 
 > :warning: This package is still under development, it didn't reach v1.0.0 yet, and therefore is not suitable for production use yet.
 
-## Installation
-
-```bash
-npm install @asyncapi/glee
-```
-
-## Usage
+## Setup
 
 The best way to get started with Glee is using `create-glee-app`, which sets up everything automatically for you. To create a project, run:
 
