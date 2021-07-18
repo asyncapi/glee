@@ -9,6 +9,13 @@
 
 > :warning: This package is still under development, it didn't reach v1.0.0 yet, and therefore is not suitable for production use yet.
 
+## What's Glee?
+
+Glee is a spec-first framework that helps you build server-side applications. It leverages the AsyncAPI specification to make you more productive:
+
+* It makes sure your code and AsyncAPI definition are on par. No more outdated documentation. Glee takes care of it for you, automatically.
+* Glee makes you focus on what matters and handles the rest for you. You only write the code for your business use-case. Glee takes care of performance, scalability, resilience, and everything you need to make your application production-ready.
+
 ## Setup
 
 The best way to get started with Glee is using `create-glee-app`, which sets up everything automatically for you. To create a project, run:
