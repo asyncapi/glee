@@ -20,14 +20,14 @@ export default async function () {
     websocket: {
       httpServer: customServer, // A custom HTTP server of your own.
       adapter: 'native', // Default. Can also be 'socket.io' or a reference to a custom adapter.
-      port: 80,
+      port: process.env.PORT,
     }
   }
 }
 ```
 
-|Field|Values|Default|Description|
-|---|---|---|---|
-|adapter|`native` (default), `socket.io` or custom|`native`|The Glee adapter to use for the WebSocket server. Defaults to a "native" WebSocket implementation. Other allowed values are `socket.io` (to use the [Socket.IO](https://socket.io/) Glee adapter) or a reference to a custom adapter.
-|httpServer|HTTP Server|_none_|A custom HTTP server of your own. E.g., an [Express](https://expressjs.com/en/4x/api.html) server or any object that implements an [http.Server](https://nodejs.org/api/http.html#http_class_http_server) interface.
-|port|Port number|The port specified in the selected AsyncAPI server|The port to use when binding the WebSocket server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to.
+|Field|Description|
+|---|---|
+|adapter|The Glee adapter to use for the WebSocket server. Defaults to a "native" WebSocket implementation. Other allowed values are `socket.io` (to use the [Socket.IO](https://socket.io/) Glee adapter) or a reference to a custom adapter.
+|httpServer|A custom HTTP server of your own. E.g., an [Express](https://expressjs.com/en/4x/api.html) server or any object that implements an [http.Server](https://nodejs.org/api/http.html#http_class_http_server) interface.
+|port|The port to use when binding the WebSocket server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.
