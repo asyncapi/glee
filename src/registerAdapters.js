@@ -1,9 +1,10 @@
 import MqttAdapter from './adapters/mqtt/index.js'
 import WebSocketAdapter from './adapters/ws/index.js'
 import SocketIOAdapter from './adapters/socket.io/index.js'
+import { getSelectedServerNames } from './lib/servers.js'
 
-export default (app, parsedAsyncAPI, config) => {
-  const serverNames = process.env.GLEE_SERVER_NAMES.split(',')
+export default async (app, parsedAsyncAPI, config) => {
+  const serverNames = await getSelectedServerNames()
 
   serverNames.forEach(serverName => {
     const server = parsedAsyncAPI.server(serverName)

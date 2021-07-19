@@ -1,7 +1,5 @@
 import dotenv from 'dotenv'
 import dotenvExpand from 'dotenv-expand'
-import { readFile } from 'fs/promises'
-import asyncapi from '@asyncapi/parser'
 import Glee from './lib/glee.js'
 import { logWelcome, logLineWithIcon } from './lib/logger.js'
 import experimentalFlags from './lib/experimentalFlags.js'
@@ -19,14 +17,12 @@ import validateConnection from './middlewares/validateConnection.js'
 import { startRuntimeServers } from './lib/runtimes/index.js'
 import { setConstants } from './lib/constants.js'
 import { triggerFunction } from './lib/runtimes/index.js'
+import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
+import { getSelectedServerNames } from './lib/servers.js'
 
 dotenvExpand(dotenv.config())
 
 export default async function GleeAppInitializer (config = {}) {
-  if (!process.env.GLEE_SERVER_NAMES) {
-    throw new Error('Missing "GLEE_SERVER_NAMES" environment variable.')
-  }
-
   const {
     GLEE_DIR,
     GLEE_LIFECYCLE_DIR,
@@ -37,7 +33,7 @@ export default async function GleeAppInitializer (config = {}) {
 
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
-    servers: process.env.GLEE_SERVER_NAMES.split(','),
+    servers: await getSelectedServerNames(),
     dir: GLEE_DIR,
     functionsDir: GLEE_FUNCTIONS_DIR,
     experimentalFlags,
@@ -60,13 +56,12 @@ export default async function GleeAppInitializer (config = {}) {
     }
   }
 
-  const asyncapiFileContent = await readFile(ASYNCAPI_FILE_PATH, 'utf-8')
-  const parsedAsyncAPI = await asyncapi.parse(asyncapiFileContent)
+  const parsedAsyncAPI = await getParsedAsyncAPI()
   const channelNames = parsedAsyncAPI.channelNames()
 
   const app = new Glee(config)
 
-  registerAdapters(app, parsedAsyncAPI, config)
+  await registerAdapters(app, parsedAsyncAPI, config)
 
   app.use(existsInAsyncAPI(parsedAsyncAPI))
   app.useOutbound(existsInAsyncAPI(parsedAsyncAPI))
