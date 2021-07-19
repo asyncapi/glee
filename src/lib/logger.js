@@ -1,11 +1,15 @@
 import { readFileSync } from 'fs'
-import path from 'path'
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
 import util from 'util'
 import chalk from 'chalk'
 import emojis from 'emojis'
 import wordWrap from 'word-wrap'
 
 export { chalk }
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const highlightWords = (words, text) => {
   let result = text
@@ -28,8 +32,8 @@ export const logWelcome = ({
   const bgPrimary = chalk.bgHex(primaryColor)
   const fgPrimary = chalk.hex(primaryColor)
   const fgWarning = chalk.yellow
-
-  const pkg = JSON.parse(readFileSync(path.resolve(dir, 'package.json')))
+  
+  const pkg = JSON.parse(readFileSync(path.resolve(__dirname, '../../package.json')))
 
   console.log(bgPrimary.black(` Glee ${pkg.version} \n`))
   if (dev) {
