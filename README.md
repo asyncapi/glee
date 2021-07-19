@@ -30,10 +30,6 @@ After the installation is complete, follow the instructions to start the develop
 
 For more information on how to use `create-glee-app`, you can review [the `create-glee-app` documentation](https://github.com/asyncapi/create-glee-app).
 
-## Examples
-
-Have a look at the [examples](./examples) folder of this repository to get a better grasp on how to use it.
-
 ## Getting started
 
 * :file_folder: [Application structure](docs/app-structure.md): know how to structure your application with Glee.

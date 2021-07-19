@@ -1,4 +1,4 @@
-export default class GleeConnection {
+class GleeConnection {
   /**
    * Instantiates a Glee connection.
    *
@@ -41,3 +41,5 @@ export default class GleeConnection {
     return this.rawConnection
   }
 }
+
+export default GleeConnection
