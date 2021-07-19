@@ -10,10 +10,11 @@
   "scripts": {
     "test": "echo \"No test specified\"",
     "lint": "eslint --max-warnings 5 --config .eslintrc .",
+    "docs": "jsdoc2md \"src/lib/glee.js\" -f \"src/lib/*.js\" > docs/api.md",
     "release": "semantic-release",
     "get:version": "echo $npm_package_version",
     "get:name": "echo $npm_package_name",
-    "generate:assets": "echo \"No assets to generate so far\"",
+    "generate:assets": "npm run docs",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
   },
   "keywords": [
@@ -61,7 +62,7 @@
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^25.5.0",
-    "jsdoc-to-markdown": "^5.0.0",
+    "jsdoc-to-markdown": "^5.0.3",
     "markdown-toc": "^1.2.0",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.2.2",

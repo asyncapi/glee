@@ -7,7 +7,16 @@
 </p>
 
 
-> :warning: This package is still under development, it didn't reach v1.0.0 yet, and therefore is not suitable for production use yet.
+> :warning: Glee is still under development, it didn't reach v1.0.0 and therefore is not suitable for production use yet.
+
+> :warning: So far, it only supports MQTT and WebSockets (native, Socket.IO, and custom implementations).
+
+## What's Glee?
+
+Glee is a spec-first framework that helps you build server-side applications. It leverages the AsyncAPI specification to make you more productive:
+
+* It makes sure your code and AsyncAPI definition are on par. No more outdated documentation. Glee takes care of it for you, automatically.
+* Glee lets you focus on what matters and handles the rest for you. You only write the code for your business use-case. Glee takes care of performance, scalability, resilience, and everything you need to make your application production-ready.
 
 ## Setup
 
@@ -21,8 +30,8 @@ After the installation is complete, follow the instructions to start the develop
 
 For more information on how to use `create-glee-app`, you can review [the `create-glee-app` documentation](https://github.com/asyncapi/create-glee-app).
 
-## Examples
+## Getting started
 
-Have a look at the [examples](./examples) folder of this repository to get a better grasp on how to use it.
-
-> :warning: So far, it just support MQTT and WebSockets (native, Socket.IO, and custom implementations).
+* :file_folder: [Application structure](docs/app-structure.md): know how to structure your application with Glee.
+* :gear: [Configuring your application](docs/config-file.md): tweak Glee's default configuration.
+* :rocket: [Examples](./examples): see Glee in action.

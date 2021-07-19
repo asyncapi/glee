@@ -6,6 +6,7 @@ import Message from './message.js'
 /**
  * Determines if a path matches a channel, and returns an array of matching params.
  *
+ * @private
  * @param {String} path The path.
  * @param {String} channel The channel.
  * @return {Object|null}
@@ -28,6 +29,7 @@ export const getParams = (path, channel) => {
 /**
  * Duplicates a GleeMessage.
  *
+ * @private
  * @param {GleeMessage} message The message to duplicate.
  * @return {GleeMessage}
  */
@@ -53,6 +55,7 @@ export const duplicateMessage = (message) => {
 /**
  * Determines if a path matches a channel.
  *
+ * @private
  * @param {String} path The path.
  * @param {String} channel The channel.
  * @return {Boolean}
@@ -63,6 +66,8 @@ export const matchChannel = (path, channel) => {
 
 /**
  * Validates data against a given JSON Schema definition
+ * 
+ * @private
  * @param {Any} data The data to validate
  * @param {Object} schema A JSON Schema definition
  * @returns Object
