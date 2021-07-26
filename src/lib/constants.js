@@ -13,7 +13,12 @@ export async function setConstants(config) {
   GLEE_FUNCTIONS_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'functions')
   GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
   ASYNCAPI_FILE_PATH = path.resolve(GLEE_DIR, 'asyncapi.yaml')
+  await loadConfigsFromFile();
+  
+  return getConstants()
+}
 
+async function loadConfigsFromFile(config){
   if(existsSync(GLEE_CONFIG_FILE_PATH)){
     //Load and overwrite configs from file
     try {
@@ -31,8 +36,6 @@ export async function setConstants(config) {
       }
     }
   }
-  
-  return getConstants()
 }
 
 export function getConstants() {
