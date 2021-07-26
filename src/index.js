@@ -27,7 +27,6 @@ export default async function GleeAppInitializer (config = {}) {
     GLEE_DIR,
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
-    GLEE_CONFIG_FILE_PATH,
     ASYNCAPI_FILE_PATH
   } = setConstants(config)
 
@@ -42,19 +41,6 @@ export default async function GleeAppInitializer (config = {}) {
   await startRuntimeServers(GLEE_FUNCTIONS_DIR, ASYNCAPI_FILE_PATH)
   await registerFunctions(GLEE_FUNCTIONS_DIR)
   await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
-  
-  try {
-    let { default: cfg } = await import(GLEE_CONFIG_FILE_PATH)
-    if (typeof cfg === 'function') cfg = await cfg()
-    config = {
-      ...config,
-      ...cfg,
-    }
-  } catch (e) {
-    if (e.code !== 'ERR_MODULE_NOT_FOUND') {
-      return console.error(e)
-    }
-  }
 
   const parsedAsyncAPI = await getParsedAsyncAPI()
   const channelNames = parsedAsyncAPI.channelNames()
