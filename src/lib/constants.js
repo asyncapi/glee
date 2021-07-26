@@ -18,6 +18,7 @@ export function setConstants(config) {
     let { default: projectConfigs } = await import(GLEE_CONFIG_FILE_PATH)
     if (typeof projectConfigs === 'function') projectConfigs = await projectConfigs()
 
+    GLEE_DIR = projectConfigs.GLEE_DIR ? path.parse(projectConfigs.GLEE_DIR) : GLEE_DIR; 
     GLEE_LIFECYCLE_DIR = projectConfigs.GLEE_LIFECYCLE_DIR ? path.resolve(GLEE_DIR, projectConfigs.GLEE_LIFECYCLE_DIR) : GLEE_LIFECYCLE_DIR; 
     GLEE_FUNCTIONS_DIR = projectConfigs.GLEE_FUNCTIONS_DIR ? path.resolve(GLEE_DIR, projectConfigs.GLEE_FUNCTIONS_DIR) : GLEE_FUNCTIONS_DIR; 
     ASYNCAPI_FILE_PATH = projectConfigs.ASYNCAPI_FILE_PATH ? path.resolve(GLEE_DIR, projectConfigs.ASYNCAPI_FILE_PATH) : ASYNCAPI_FILE_PATH;
