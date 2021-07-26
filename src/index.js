@@ -15,7 +15,7 @@ import logger from './middlewares/logger.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
 import { startRuntimeServers } from './lib/runtimes/index.js'
-import { setConstants } from './lib/constants.js'
+import { setConfigs } from './lib/configs.js'
 import { triggerFunction } from './lib/runtimes/index.js'
 import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
@@ -27,9 +27,8 @@ export default async function GleeAppInitializer (config = {}) {
     GLEE_DIR,
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
-    GLEE_CONFIG_FILE_PATH,
     ASYNCAPI_FILE_PATH
-  } = setConstants(config)
+  } = await setConfigs(config)
 
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
@@ -42,19 +41,6 @@ export default async function GleeAppInitializer (config = {}) {
   await startRuntimeServers(GLEE_FUNCTIONS_DIR, ASYNCAPI_FILE_PATH)
   await registerFunctions(GLEE_FUNCTIONS_DIR)
   await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
-  
-  try {
-    let { default: cfg } = await import(GLEE_CONFIG_FILE_PATH)
-    if (typeof cfg === 'function') cfg = await cfg()
-    config = {
-      ...config,
-      ...cfg,
-    }
-  } catch (e) {
-    if (e.code !== 'ERR_MODULE_NOT_FOUND') {
-      return console.error(e)
-    }
-  }
 
   const parsedAsyncAPI = await getParsedAsyncAPI()
   const channelNames = parsedAsyncAPI.channelNames()
