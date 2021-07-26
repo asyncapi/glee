@@ -28,7 +28,7 @@ export default async function GleeAppInitializer (config = {}) {
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
     ASYNCAPI_FILE_PATH
-  } = setConstants(config)
+  } = await setConstants(config)
 
   logWelcome({
     dev: process.env.NODE_ENV === 'development',

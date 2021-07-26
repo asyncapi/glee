@@ -6,7 +6,7 @@ let GLEE_FUNCTIONS_DIR
 let GLEE_CONFIG_FILE_PATH
 let ASYNCAPI_FILE_PATH
 
-export function setConstants(config) {
+export async function setConstants(config) {
   GLEE_DIR = config.dir || process.cwd()
   GLEE_LIFECYCLE_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'lifecycle')
   GLEE_FUNCTIONS_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'functions')
