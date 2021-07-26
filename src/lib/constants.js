@@ -18,7 +18,7 @@ export async function setConstants(config) {
   return getConstants()
 }
 
-async function loadConfigsFromFile(config){
+async function loadConfigsFromFile(){
   if(existsSync(GLEE_CONFIG_FILE_PATH)){
     //Load and overwrite configs from file
     try {
