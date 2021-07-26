@@ -6,7 +6,7 @@ import { copyFile, rmdir, mkdir } from 'fs/promises'
 import Generator from '@asyncapi/generator'
 import ipc, { sendMessage } from '../ipc.js'
 import { logErrorLine, logInfoMessage } from '../logger.js'
-import { getConstants } from '../constants.js'
+import { getConfigs } from '../configs.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -42,7 +42,7 @@ export function runJava(operationId, messageId, message) {
 
 export function generateAndStartServer(asyncapiFilePath, runtime) {
   return new Promise(async (resolve, reject) => {
-    const { GLEE_DIR } = getConstants()
+    const { GLEE_DIR } = getConfigs()
     const generatedPath = path.resolve(GLEE_DIR, '.runtimes/java')
 
     // Remove and re-create the "generated" directory

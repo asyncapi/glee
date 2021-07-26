@@ -15,7 +15,7 @@ import logger from './middlewares/logger.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
 import { startRuntimeServers } from './lib/runtimes/index.js'
-import { setConstants } from './lib/constants.js'
+import { setConfigs } from './lib/configs.js'
 import { triggerFunction } from './lib/runtimes/index.js'
 import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
@@ -28,7 +28,7 @@ export default async function GleeAppInitializer (config = {}) {
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
     ASYNCAPI_FILE_PATH
-  } = await setConstants(config)
+  } = await setConfigs(config)
 
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
