@@ -13,6 +13,14 @@
 <dd></dd>
 </dl>
 
+## Functions
+
+<dl>
+<dt><a href="#loadConfigsFromFile">loadConfigsFromFile()</a></dt>
+<dd><p>Loads the configuration from glee project.</p>
+</dd>
+</dl>
+
 <a name="Glee"></a>
 
 ## Glee
@@ -393,3 +401,9 @@ Adds a normalized middleware to the outbound error middlewares collection.
 | errorMiddlewares | <code>Array</code> | The middlewares to add to the collection. |
 | [channel] | <code>String</code> | The scope channel. |
 
+<a name="loadConfigsFromFile"></a>
+
+## loadConfigsFromFile()
+Loads the configuration from glee project.
+
+**Kind**: global function  
