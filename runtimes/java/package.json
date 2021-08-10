@@ -4,7 +4,7 @@
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/generator-filters": "^2.0.0",
+    "@asyncapi/generator-filters": "^2.1.0",
     "@asyncapi/generator-react-sdk": "^0.2.11",
     "@asyncapi/modelina": "^0.23.3"
   },
