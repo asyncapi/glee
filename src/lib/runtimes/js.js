@@ -1,12 +1,12 @@
 import path from 'path'
-import { getConstants } from '../constants.js'
+import { getConfigs } from '../configs.js'
 import { logWarningMessage } from '../logger.js'
 import { functions } from '../functions.js'
 
 const {
   GLEE_DIR,
   GLEE_FUNCTIONS_DIR,
-} = getConstants()
+} = getConfigs()
 
 export function runJS(operationId, messageId, message) {
   return new Promise((resolve, reject) => {

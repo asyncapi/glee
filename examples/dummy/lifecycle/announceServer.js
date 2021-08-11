@@ -1,4 +1,4 @@
-export default async function ({ connection }) {  
+export default async function () {  
   return {
     send: [{
       server: 'mosquitto',

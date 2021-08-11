@@ -1,4 +1,5 @@
 import EventEmitter from 'events'
+import uriTemplates from 'uri-templates'
 import GleeConnection from './connection.js'
 
 class GleeAdapter extends EventEmitter {
@@ -16,11 +17,20 @@ class GleeAdapter extends EventEmitter {
     this.glee = glee
     this.serverName = serverName
     this.AsyncAPIServer = server
+    
     this.parsedAsyncAPI = parsedAsyncAPI
+    this.channelNames = this.parsedAsyncAPI.channelNames()
     this.connections = []
 
+    const uriTemplateValues = {}
+    process.env.GLEE_SERVER_VARIABLES?.split(',').forEach(t => {
+      const [server, variable, value] = t.split(':')
+      if (server === this.serverName) uriTemplateValues[variable] = value
+    })
+    this.serverUrlExpanded  = uriTemplates(this.AsyncAPIServer.url()).fill(uriTemplateValues)
+
     this.on('error', err => { this.glee.injectError(err) })
-    this.on('message', (message, connection) => {
+    this.on('message', (message, connection) => {      
       const conn = new GleeConnection({
         connection,
         channels: this.connections.find(c => c.rawConnection === connection).channels,
@@ -47,7 +57,7 @@ class GleeAdapter extends EventEmitter {
 
       return new GleeConnection({
         connection: ev.connection,
-        channels: channels,
+        channels,
         serverName,
         server,
         parsedAsyncAPI,
@@ -91,6 +101,22 @@ class GleeAdapter extends EventEmitter {
         connection: conn,
       }))
     })
+  }
+
+  /**
+   * Returns a list of the channels a given adapter has to subscribe to.
+   *
+   * @return {Promise}
+   */
+  getSubscribedChannels() {
+    return this.channelNames
+      .filter(channelName => {
+        const channel = this.parsedAsyncAPI.channel(channelName)
+        if (!channel.hasPublish()) return false
+        
+        const channelServers = channel.publish().ext('x-servers') || this.parsedAsyncAPI.serverNames()
+        return channelServers.includes(this.serverName)
+      })
   }
 
   /**

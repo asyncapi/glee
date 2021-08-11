@@ -9,7 +9,7 @@ export default async function (event) {
 
   try {
     botAnswer = await fetch(`https://api.wit.ai/message?q=${messageToShrek}`, {
-      headers: { 'Authorization': `Bearer ${process.env.CHATBOT_TOKEN}` }
+      headers: { Authorization: `Bearer ${process.env.CHATBOT_TOKEN}` }
     })
   } catch (e) {
     throw new Error(`Having issues communicating with the bot: ${e}`)

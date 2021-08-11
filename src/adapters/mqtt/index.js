@@ -18,14 +18,14 @@ class MqttAdapter extends Adapter {
 
   _connect () {
     return new Promise((resolve) => {
-      const channelNames = this.parsedAsyncAPI.channelNames()
-      const subscribedChannels = channelNames.filter(chan => this.parsedAsyncAPI.channel(chan).hasPublish())
+      const subscribedChannels = this.getSubscribedChannels()
       const serverBinding = this.AsyncAPIServer.binding('mqtt')
       const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
         const secName = Object.keys(sec.json())[0]
         return this.parsedAsyncAPI.components().securityScheme(secName)
       })
       const userAndPasswordSecurityReq = securityRequirements.find(sec => sec.type() === 'userPassword')
+      const X509SecurityReq = securityRequirements.find(sec => sec.type() === 'X509')
       const url = new URL(this.AsyncAPIServer.url())
 
       const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
@@ -46,7 +46,7 @@ class MqttAdapter extends Adapter {
         keepalive: serverBinding && serverBinding.keepAlive,
         username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
         password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined,
-        ca: certs,
+        ca: X509SecurityReq ? certs : undefined,
       })
 
       this.client.handleMessage = (packet, callback) => {
@@ -59,7 +59,7 @@ class MqttAdapter extends Adapter {
       this.client.on('connect', () => {
         if (!this.firstConnect) {
           this.firstConnect = true
-          this.emit('connect', { name: this.name(), adapter: this, connection: this.client, channels: channelNames })
+          this.emit('connect', { name: this.name(), adapter: this, connection: this.client, channels: this.channelNames })
         }
 
         if (Array.isArray(subscribedChannels)) {
@@ -83,14 +83,14 @@ class MqttAdapter extends Adapter {
       this.client.on('reconnect', () => {
         this.emit('reconnect', {
           connection: this.client,
-          channels: channelNames,
+          channels: this.channelNames,
         })
       })
       
       this.client.on('close', () => {
         this.emit('close', {
           connection: this.client,
-          channels: channelNames,
+          channels: this.channelNames,
         })
       })
 
@@ -105,8 +105,8 @@ class MqttAdapter extends Adapter {
       const operation = this.parsedAsyncAPI.channel(message.channel).subscribe()
       const binding = operation ? operation.binding('mqtt') : undefined
       this.client.publish(message.channel, message.payload, {
-        qos: binding && bindng.qos ? bindng.qos : 2,
-        retain: binding && bindng.retain ? bindng.retain : false
+        qos: binding && binding.qos ? binding.qos : 2,
+        retain: binding && binding.retain ? binding.retain : false
       }, (err) => {
         if (err) {
           reject(err)

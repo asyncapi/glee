@@ -4,9 +4,9 @@ import { v4 } from 'uuid'
 import { spawn } from 'child_process'
 import { copyFile, rmdir, mkdir } from 'fs/promises'
 import Generator from '@asyncapi/generator'
-import ipc, { sendMessage } from "../ipc.js"
+import ipc, { sendMessage } from '../ipc.js'
 import { logErrorLine, logInfoMessage } from '../logger.js'
-import { getConstants } from '../constants.js'
+import { getConfigs } from '../configs.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -24,25 +24,25 @@ export function runJava(operationId, messageId, message) {
       server: message.server,
       messageId,
     })
-    .then(() => {
-      const timeout = setTimeout(() => {
-        reject(new Error(`Could not send IPC message "${operationId}" to Java socket.`))
-      }, IPC_REQUEST_TIMEOUT)
+      .then(() => {
+        const timeout = setTimeout(() => {
+          reject(new Error(`Could not send IPC message "${operationId}" to Java socket.`))
+        }, IPC_REQUEST_TIMEOUT)
       
-      ipc.once(correlationId, (res) => {
-        clearTimeout(timeout)
-        resolve(res)
+        ipc.once(correlationId, (res) => {
+          clearTimeout(timeout)
+          resolve(res)
+        })
       })
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+      .catch((err) => {
+        console.error(err)
+      })
   })
 }
 
 export function generateAndStartServer(asyncapiFilePath, runtime) {
   return new Promise(async (resolve, reject) => {
-    const { GLEE_DIR } = getConstants()
+    const { GLEE_DIR } = getConfigs()
     const generatedPath = path.resolve(GLEE_DIR, '.runtimes/java')
 
     // Remove and re-create the "generated" directory
@@ -89,7 +89,7 @@ export function generateAndStartServer(asyncapiFilePath, runtime) {
           resolve()
         }
       })
-    } catch(e) {
+    } catch (e) {
       reject(e)
     }
   })

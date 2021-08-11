@@ -4,8 +4,32 @@ import { pathToRegexp } from 'path-to-regexp'
 import Message from './message.js'
 
 /**
+ * Determines if a path matches a channel, and returns an array of matching params.
+ *
+ * @private
+ * @param {String} path The path.
+ * @param {String} channel The channel.
+ * @return {Object|null}
+ */
+export const getParams = (path, channel) => {
+  if (path === undefined) return {}
+
+  const keys = []
+  const re = pathToRegexp(path, keys)
+  const result = re.exec(channel)
+
+  if (result === null) return null
+
+  return keys.map((key, index) => ({ [key.name]: result[index + 1] })).reduce((prev, val) => ({
+    ...prev,
+    ...val,
+  }), {})
+}
+
+/**
  * Duplicates a GleeMessage.
  *
+ * @private
  * @param {GleeMessage} message The message to duplicate.
  * @return {GleeMessage}
  */
@@ -31,6 +55,7 @@ export const duplicateMessage = (message) => {
 /**
  * Determines if a path matches a channel.
  *
+ * @private
  * @param {String} path The path.
  * @param {String} channel The channel.
  * @return {Boolean}
@@ -40,29 +65,9 @@ export const matchChannel = (path, channel) => {
 }
 
 /**
- * Determines if a path matches a channel, and returns an array of matching params.
- *
- * @param {String} path The path.
- * @param {String} channel The channel.
- * @return {Object|null}
- */
-export const getParams = (path, channel) => {
-  if (path === undefined) return {}
-
-  const keys = []
-  const re = pathToRegexp(path, keys)
-  const result = re.exec(channel)
-
-  if (result === null) return null
-
-  return keys.map((key, index) => ({ [key.name]: result[index+1] })).reduce((prev, val) => ({
-    ...prev,
-    ...val,
-  }), {})
-}
-
-/**
  * Validates data against a given JSON Schema definition
+ * 
+ * @private
  * @param {Any} data The data to validate
  * @param {Object} schema A JSON Schema definition
  * @returns Object

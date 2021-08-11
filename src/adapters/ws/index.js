@@ -20,18 +20,19 @@ class WebSocketsAdapter extends Adapter {
 
   _connect () {
     return new Promise((resolve, reject) => {
-      const channelNames = this.parsedAsyncAPI.channelNames()
-      const serverUrl = new URL(this.AsyncAPIServer.url())
+      const serverUrl = new URL(this.serverUrlExpanded)
       const wsHttpServer = this.glee.options?.websocket?.httpServer || http.createServer()
       const asyncapiServerPort = serverUrl.port || 80
+      const optionsPort = this.glee.options?.websocket?.port
+      const port = optionsPort || asyncapiServerPort
       
-      if (this.glee.options?.websocket?.httpServer && String(wsHttpServer.address().port) !== String(asyncapiServerPort)) {
-        console.error(`Your custom HTTP server is listening on port ${wsHttpServer.address().port} but your AsyncAPI file says it must listen on ${asyncapiServerPort}. Please fix the inconsistency.`)
+      if (!optionsPort && this.glee.options?.websocket?.httpServer && String(wsHttpServer.address().port) !== String(port)) {
+        console.error(`Your custom HTTP server is listening on port ${wsHttpServer.address().port} but your AsyncAPI file says it must listen on ${port}. Please fix the inconsistency.`)
         process.exit(1)
       }
 
-      let servers = {}
-      channelNames.forEach(channelName => {
+      const servers = {}
+      this.channelNames.forEach(channelName => {
         servers[channelName] = new WebSocket.Server({ noServer: true })
       })
 
@@ -68,7 +69,7 @@ class WebSocketsAdapter extends Adapter {
         if (wsChannelBinding) {
           const { query, headers } = wsChannelBinding
           if (query) {
-            let queryParams = {}
+            const queryParams = {}
             searchParams.forEach((value, key) => {
               queryParams[key] = value
             })
@@ -103,7 +104,7 @@ class WebSocketsAdapter extends Adapter {
               this.emit('message', msg, ws)
             })
 
-            this.emit('connection', { name: this.name(), adapter: this, connection: ws, channel: pathname })
+            this.emit('connect', { name: this.name(), adapter: this, connection: ws, channel: pathname })
           })
         } else {
           socket.destroy()
@@ -111,7 +112,7 @@ class WebSocketsAdapter extends Adapter {
       })
 
       if (!this.glee.options?.websocket?.httpServer) {
-        wsHttpServer.listen(asyncapiServerPort)
+        wsHttpServer.listen(port)
       }
       
       this.emit('server:ready', { name: this.name(), adapter: this })

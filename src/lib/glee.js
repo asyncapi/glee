@@ -161,7 +161,7 @@ class Glee extends EventEmitter {
             const nextMessage = newMessage || msgForMiddleware
             nextMessage.channel = message.channel // This is to avoid the channel to be modified.
             next(err, nextMessage)
-          } )
+          })
         })
 
     async.seq(...mws)(message, (err, msg) => {
