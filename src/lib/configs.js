@@ -1,4 +1,3 @@
-import { existsSync } from 'fs'
 import path from 'path'
 
 let GLEE_DIR
@@ -21,8 +20,7 @@ export async function setConfigs(config) {
 /**
  * Loads the configuration from glee project.
  */
-async function loadConfigsFromFile() {
-  if (!existsSync(GLEE_CONFIG_FILE_PATH)) return 
+export async function loadConfigsFromFile() {
   try {
     let { default: projectConfigs } = await import(GLEE_CONFIG_FILE_PATH)
     if (typeof projectConfigs === 'function') projectConfigs = await projectConfigs()
@@ -32,6 +30,7 @@ async function loadConfigsFromFile() {
     GLEE_LIFECYCLE_DIR = projectConfigs.GLEE_LIFECYCLE_DIR ? path.resolve(GLEE_DIR, projectConfigs.GLEE_LIFECYCLE_DIR) : GLEE_LIFECYCLE_DIR 
     GLEE_FUNCTIONS_DIR = projectConfigs.GLEE_FUNCTIONS_DIR ? path.resolve(GLEE_DIR, projectConfigs.GLEE_FUNCTIONS_DIR) : GLEE_FUNCTIONS_DIR 
     ASYNCAPI_FILE_PATH = projectConfigs.ASYNCAPI_FILE_PATH ? path.resolve(GLEE_DIR, projectConfigs.ASYNCAPI_FILE_PATH) : ASYNCAPI_FILE_PATH
+    return projectConfigs
   } catch (e) {
     if (e.code !== 'ERR_MODULE_NOT_FOUND') {
       return console.error(e)

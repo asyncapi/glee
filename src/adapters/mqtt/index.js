@@ -49,10 +49,12 @@ class MqttAdapter extends Adapter {
         ca: X509SecurityReq ? certs : undefined,
       })
 
-      this.client.handleMessage = (packet, callback) => {
+      this.client.handleMessage = (packet, done) => {
+        this._buildAndEmitMessage(packet)
+
         this.glee.once('message:processed', (err, msg) => {
-          if (err) return callback(err)
-          callback()
+          if (err) return done(err)
+          done()
         })
       }
 
@@ -73,11 +75,6 @@ class MqttAdapter extends Adapter {
         }
 
         resolve(this)
-      })
-
-      this.client.on('message', (channel, message, mqttPacket) => {
-        const msg = this._createMessage(mqttPacket)
-        this.emit('message', msg, this.client)
       })
 
       this.client.on('reconnect', () => {
@@ -126,6 +123,11 @@ class MqttAdapter extends Adapter {
       headers,
       channel: topic,
     })
+  }
+
+  _buildAndEmitMessage (packet) {
+    const msg = this._createMessage(packet)
+    this.emit('message', msg, this.client)
   }
 }
 

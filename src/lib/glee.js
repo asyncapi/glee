@@ -164,15 +164,14 @@ class Glee extends EventEmitter {
           })
         })
 
-    async.seq(...mws)(message, (err, msg) => {
-      const isInbound = middlewares === this.router.getMiddlewares()
-
+    async.seq(...mws)(message, (err, msg) => {      
       if (err) {
         this.emit('message:processed', err, msg)
         this._processError(errorMiddlewares, err, msg)
         return
       }
-
+      
+      const isInbound = middlewares === this.router.getMiddlewares()
       if (!isInbound) {
         debug('Outbound pipeline finished. Sending message...')
         debug(msg)
