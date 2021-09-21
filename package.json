@@ -28,7 +28,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/generator": "^1.8.0",
-    "@asyncapi/parser": "^1.9.0",
+    "@asyncapi/parser": "^1.9.1",
     "ajv": "^6.12.6",
     "async": "^3.2.0",
     "better-ajv-errors": "^0.7.0",
