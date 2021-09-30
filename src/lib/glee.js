@@ -30,7 +30,7 @@ class Glee extends EventEmitter {
    * @param {AsyncAPIServer} server AsyncAPI Server to use with the adapter.
    * @param {AsyncAPIDocument} parsedAsyncAPI The AsyncAPI document.
    */
-  addAdapter (Adapter, { serverName, server, parsedAsyncAPI }) {
+  addAdapter ({serverName, server, parsedAsyncAPI }) {
     this.adapters.push({Adapter, serverName, server, parsedAsyncAPI})
   }
 
