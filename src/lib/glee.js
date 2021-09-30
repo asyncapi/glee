@@ -14,7 +14,7 @@ class Glee extends EventEmitter {
    *
    * @param {Object} [options={}]
    */
-  constructor (options = {}) {
+  constructor(options = {}) {
     super()
 
     this.options = options
@@ -30,8 +30,8 @@ class Glee extends EventEmitter {
    * @param {AsyncAPIServer} server AsyncAPI Server to use with the adapter.
    * @param {AsyncAPIDocument} parsedAsyncAPI The AsyncAPI document.
    */
-  addAdapter (Adapter, { serverName, server, parsedAsyncAPI }) {
-    this.adapters.push({Adapter, serverName, server, parsedAsyncAPI})
+  addAdapter(Adapter, { serverName, server, parsedAsyncAPI }) {
+    this.adapters.push({ _Adapter, serverName, server, parsedAsyncAPI })
   }
 
   /**
@@ -39,7 +39,7 @@ class Glee extends EventEmitter {
    * @param {String} [channel] The channel you want to scope the middleware to.
    * @param {Function|GleeRouter} ...middlewares A function or GleeRouter to use as a middleware.
    */
-  use (...args) {
+  use(...args) {
     this.router.use(...args)
   }
 
@@ -48,7 +48,7 @@ class Glee extends EventEmitter {
    * @param {String} [channel] The channel you want to scope the middleware to.
    * @param {Function|GleeRouter} ...middlewares A function or GleeRouter to use as a middleware.
    */
-  useOutbound (...args) {
+  useOutbound(...args) {
     this.router.useOutbound(...args)
   }
 
@@ -57,7 +57,7 @@ class Glee extends EventEmitter {
    *
    * @param {Object|GleeMessage} message The payload of the message you want to send.
    */
-  send (message) {
+  send(message) {
     message.setOutbound()
 
     this._processMessage(
@@ -72,7 +72,7 @@ class Glee extends EventEmitter {
    *
    * @return {Promise}
    */
-  async connect () {
+  async connect() {
     const promises = []
 
     this.adapters.forEach(a => {
@@ -88,7 +88,7 @@ class Glee extends EventEmitter {
    *
    * @return {Promise}
    */
-  async listen () {
+  async listen() {
     return this.connect()
   }
 
@@ -99,7 +99,7 @@ class Glee extends EventEmitter {
    * @param {String} serverName The name of the server this message is coming from.
    * @param {Unknown} [connection] The connection used when receiving the message. Its type is unknown and must be handled by the adapters.
    */
-  injectMessage (message, serverName, connection) {
+  injectMessage(message, serverName, connection) {
     message.serverName = serverName
     message.connection = connection
     message.inbound = true
@@ -118,7 +118,7 @@ class Glee extends EventEmitter {
    * @param {Any} error The error.
    * @param {String} [channel] The channel of the error.
    */
-  injectError (error, channel) {
+  injectError(error, channel) {
     this._processError(
       this.router.getErrorMiddlewares(),
       error,
@@ -134,7 +134,7 @@ class Glee extends EventEmitter {
    * @param {GleeMessage} message The message to pass to the middlewares.
    * @private
    */
-  _processMessage (middlewares, errorMiddlewares, message) {
+  _processMessage(middlewares, errorMiddlewares, message) {
     const mws =
       middlewares
         .filter(mw => matchChannel(mw.channel, message.channel))
@@ -189,17 +189,17 @@ class Glee extends EventEmitter {
    * @param {GleeMessage} message The message to pass to the middlewares.
    * @private
    */
-  _processError (errorMiddlewares, error, message) {
+  _processError(errorMiddlewares, error, message) {
     const emws = errorMiddlewares.filter(emw => matchChannel(emw.channel, message.channel))
     if (!emws.length) return
 
     this._execErrorMiddleware(emws, 0, error, message)
   }
 
-  _execErrorMiddleware (emws, index, error, message) {
+  _execErrorMiddleware(emws, index, error, message) {
     emws[index].fn(error, message, (err) => {
-      if (!emws[index+1]) return
-      this._execErrorMiddleware.call(null, emws, index+1, err, message)
+      if (!emws[index + 1]) return
+      this._execErrorMiddleware.call(null, emws, index + 1, err, message)
     })
   }
 }
