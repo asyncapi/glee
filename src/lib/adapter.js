@@ -24,8 +24,8 @@ class GleeAdapter extends EventEmitter {
 
     const uriTemplateValues = {}
     process.env.GLEE_SERVER_VARIABLES?.split(',').forEach(t => {
-      const [server, variable, value] = t.split(':')
-      if (server === this.serverName) uriTemplateValues[variable] = value
+      const [localServerName, variable, value] = t.split(':')
+      if (localServerName === this.serverName) uriTemplateValues[variable] = value
     })
     this.serverUrlExpanded  = uriTemplates(this.AsyncAPIServer.url()).fill(uriTemplateValues)
 
