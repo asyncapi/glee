@@ -22,6 +22,8 @@ class Glee extends EventEmitter {
     this.adapters = []
   }
 
+  copyOfAdapter = Adapter
+
   /**
    * Adds a connection adapter.
    *
@@ -31,8 +33,7 @@ class Glee extends EventEmitter {
    * @param {AsyncAPIDocument} parsedAsyncAPI The AsyncAPI document.
    */
   addAdapter (Adapter, { serverName, server, parsedAsyncAPI }) {
-    newAdap = Adapter
-    this.adapters.push({newAdap, serverName, server, parsedAsyncAPI})
+    this.adapters.push({copyOfAdap, serverName, server, parsedAsyncAPI})
   }
 
   /**
