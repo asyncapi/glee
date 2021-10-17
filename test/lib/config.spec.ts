@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { resolveAsnycApiPath } from '../../src/lib/configs.js';
+import { resolveAsyncApiPath } from '../../src/lib/configs.js';
 
 describe('Test resolving the AsyncApi file path', () => {
     afterEach(async () => {
@@ -9,18 +9,18 @@ describe('Test resolving the AsyncApi file path', () => {
     })
 
     test('Should throw error if no asyncapi file exists', async () => {
-        await expect(resolveAsnycApiPath(__dirname)).rejects.toThrow('AsyncApi file was not found or is not readable')
+        await expect(resolveAsyncApiPath(__dirname)).rejects.toThrow('AsyncApi file was not found or is not readable')
     })
 
     test('Should throw error if two asyncapi files are existing', async () => {
         fs.writeFileSync(path.resolve(__dirname, './asyncapi.json'), '')
         fs.writeFileSync(path.resolve(__dirname, './asyncapi.yaml'), '')
-        await expect(resolveAsnycApiPath(__dirname)).rejects.toThrow('Multiple AsyncApi files were found - please remove all but one')
+        await expect(resolveAsyncApiPath(__dirname)).rejects.toThrow('Multiple AsyncApi files were found - please remove all but one')
     })
 
     test('Should throw error if two asyncapi files are existing', async () => {
         fs.writeFileSync(path.resolve(__dirname, './asyncapi.json'), '')
-        const resultingPath = await resolveAsnycApiPath(__dirname)
+        const resultingPath = await resolveAsyncApiPath(__dirname)
         expect(resultingPath).toBe(path.resolve(__dirname, './asyncapi.json'))
     })
 })

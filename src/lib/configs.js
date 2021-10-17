@@ -13,16 +13,16 @@ export async function setConfigs(config) {
   GLEE_LIFECYCLE_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'lifecycle')
   GLEE_FUNCTIONS_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'functions')
   GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
-  ASYNCAPI_FILE_PATH = resolveAsnycApiPath(GLEE_DIR)
+  ASYNCAPI_FILE_PATH = resolveAsyncApiPath(GLEE_DIR)
   await loadConfigsFromFile()
-  
+
   return getConfigs()
 }
 
 /**
  * Tries to resolve the path to a valid asyncapi file in the baseDir
  */
-export async function resolveAsnycApiPath(baseDir) {
+export async function resolveAsyncApiPath(baseDir) {
   const asyncApiFiles = ['asyncapi.yaml', 'asyncapi.json', 'asyncapi.yml']
 
   const promiseArray = asyncApiFiles.map(async (filename) => {
@@ -42,15 +42,15 @@ export async function resolveAsnycApiPath(baseDir) {
  * Loads the configuration from glee project.
  */
 async function loadConfigsFromFile() {
-  if (!existsSync(GLEE_CONFIG_FILE_PATH)) return 
+  if (!existsSync(GLEE_CONFIG_FILE_PATH)) return
   try {
     let { default: projectConfigs } = await import(GLEE_CONFIG_FILE_PATH)
     if (typeof projectConfigs === 'function') projectConfigs = await projectConfigs()
     if (!projectConfigs) return
 
-    GLEE_DIR = projectConfigs.GLEE_DIR ? path.parse(projectConfigs.GLEE_DIR) : GLEE_DIR 
-    GLEE_LIFECYCLE_DIR = projectConfigs.GLEE_LIFECYCLE_DIR ? path.resolve(GLEE_DIR, projectConfigs.GLEE_LIFECYCLE_DIR) : GLEE_LIFECYCLE_DIR 
-    GLEE_FUNCTIONS_DIR = projectConfigs.GLEE_FUNCTIONS_DIR ? path.resolve(GLEE_DIR, projectConfigs.GLEE_FUNCTIONS_DIR) : GLEE_FUNCTIONS_DIR 
+    GLEE_DIR = projectConfigs.GLEE_DIR ? path.parse(projectConfigs.GLEE_DIR) : GLEE_DIR
+    GLEE_LIFECYCLE_DIR = projectConfigs.GLEE_LIFECYCLE_DIR ? path.resolve(GLEE_DIR, projectConfigs.GLEE_LIFECYCLE_DIR) : GLEE_LIFECYCLE_DIR
+    GLEE_FUNCTIONS_DIR = projectConfigs.GLEE_FUNCTIONS_DIR ? path.resolve(GLEE_DIR, projectConfigs.GLEE_FUNCTIONS_DIR) : GLEE_FUNCTIONS_DIR
     ASYNCAPI_FILE_PATH = projectConfigs.ASYNCAPI_FILE_PATH ? path.resolve(GLEE_DIR, projectConfigs.ASYNCAPI_FILE_PATH) : ASYNCAPI_FILE_PATH
   } catch (e) {
     if (e.code !== 'ERR_MODULE_NOT_FOUND') {
