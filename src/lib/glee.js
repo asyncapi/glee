@@ -1,7 +1,7 @@
 import EventEmitter from 'events'
 import async from 'async'
 import Debug from 'debug'
-import Adapter from './adapter.js'
+import GleeAdapter from './adapter.js'
 import Router from './router.js'
 import GleeMessage from './message.js'
 import { matchChannel, duplicateMessage, getParams } from './util.js'
@@ -205,7 +205,7 @@ class Glee extends EventEmitter {
 }
 
 Glee.Message = GleeMessage
-Glee.Adapter = Adapter
+Glee.Adapter = GleeAdapter
 Glee.Router = Router
 
 export default Glee
