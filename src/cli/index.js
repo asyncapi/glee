@@ -16,6 +16,7 @@ if (command === 'dev') {
     ext: '*',
     watch: [
       '.env',
+      '*',
     ],
     env: {
       NODE_ENV: 'development',
