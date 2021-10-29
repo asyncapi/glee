@@ -31,10 +31,20 @@ class MqttAdapter extends Adapter {
       const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
       const certs = certsConfig?.filter(tuple => tuple[0] === this.serverName)?.map(t => fs.readFileSync(t[1]))
 
+      const customHandleAcks = (topic, message, packet, done) => {
+        this._buildAndEmitMessage(packet)
+
+        this.glee.once('message:processed', (err, msg) => {
+          if (err) return done(err, 0)
+          done(0)
+        })
+      }
+
       this.client = mqtt.connect({
         host: url.host,
         port: url.port || (url.protocol === 'mqtt:' ? 1883 : 8883),
         protocol: url.protocol.substr(0, url.protocol.length - 1),
+        protocolVersion: Number(this.AsyncAPIServer.protocolVersion()) || 4,
         clientId: serverBinding && serverBinding.clientId,
         clean: serverBinding && serverBinding.cleanSession,
         will: serverBinding && serverBinding.will && {
@@ -47,16 +57,8 @@ class MqttAdapter extends Adapter {
         username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
         password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined,
         ca: X509SecurityReq ? certs : undefined,
+        customHandleAcks,
       })
-
-      this.client.handleMessage = (packet, done) => {
-        this._buildAndEmitMessage(packet)
-
-        this.glee.once('message:processed', (err, msg) => {
-          if (err) return done(err)
-          done()
-        })
-      }
 
       this.client.on('connect', () => {
         if (!this.firstConnect) {
