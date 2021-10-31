@@ -114,7 +114,7 @@ class GleeAdapter extends EventEmitter {
         const channel = this.parsedAsyncAPI.channel(channelName)
         if (!channel.hasPublish()) return false
         
-        const channelServers = channel.publish().ext('x-servers') || this.parsedAsyncAPI.serverNames()
+        const channelServers = channel.hasServers() ? channel.servers() : channel.ext('x-servers') || this.parsedAsyncAPI.serverNames()
         return channelServers.includes(this.serverName)
       })
   }
