@@ -127,8 +127,8 @@ class WebSocketsAdapter extends Adapter {
         if (message.broadcast) {
           this
             .connections
-            .filter(({channel}) => channel === message.channel)
-            .forEach(({connection}) => {
+            .filter(({channels}) => channels.includes(message.channel))
+            .forEach((connection) => {
               connection.getRaw().send(message.payload)
             })
         } else {
