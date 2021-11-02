@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/generator-filters": "^2.1.0",
-    "@asyncapi/generator-react-sdk": "^0.2.16",
+    "@asyncapi/generator-react-sdk": "^0.2.17",
     "@asyncapi/modelina": "^0.39.0"
   },
   "generator": {
