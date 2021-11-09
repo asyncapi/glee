@@ -15,11 +15,9 @@ export default async function (event) {
       likes.push({ postId, userId })
       await db.write()
     }
-  } else {
-    if (existingLikeIndex !== -1) {
-      likes.splice(existingLikeIndex)
-      await db.write()
-    }
+  } else if (existingLikeIndex !== -1) {
+    likes.splice(existingLikeIndex)
+    await db.write()
   }
 
   const totalCount = likes.filter(like => like.postId === postId).length

@@ -10,7 +10,7 @@ export default async function (event) {
   const userWhoLiked = users[userId]
 
   if (postOwner.id === userWhoLiked.id) {
-    console.log(`It's great that you like yourself but I'm not going to send a notification 😊`)
+    console.log('It\'s great that you like yourself but I\'m not going to send a notification 😊')
   } else {
     console.log('Sending message to Slack...')
     fetch(process.env.SLACK_URL, {
