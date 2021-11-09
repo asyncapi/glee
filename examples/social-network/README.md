@@ -2,6 +2,10 @@
 
 This example was created as part of the [talk Fran Mendez did at QCon Plus 2021](https://plus.qconferences.com/plus2021/speakers/fran-mendez).
 
+Here's an overview of what this example is about:
+
+![](./architecture.jpg)
+
 ## Run it
 
 There are three services. All of them can be started by running:
