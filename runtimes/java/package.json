@@ -6,7 +6,7 @@
   "dependencies": {
     "@asyncapi/generator-filters": "^2.1.0",
     "@asyncapi/generator-react-sdk": "^0.2.20",
-    "@asyncapi/modelina": "^0.39.5"
+    "@asyncapi/modelina": "^0.39.6"
   },
   "generator": {
     "renderer": "react",
