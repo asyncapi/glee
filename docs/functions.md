@@ -50,7 +50,7 @@ export default async function (event) {
 
 ## How does Glee know which function it should execute?
 
-Glee reads your `asyncapi.yaml` file and searches for all the `publish` operations containing an `operationId` attribute. The `operationId` serves as a mechanism to bind a given operation to a specific function file. For instance, given the folowing AsyncAPI definition:
+Glee reads your `asyncapi.(yaml|yml|json)` file and searches for all the `publish` operations containing an `operationId` attribute. The `operationId` serves as a mechanism to bind a given operation to a specific function file. For instance, given the folowing AsyncAPI definition:
 
 ```yaml
 ...
