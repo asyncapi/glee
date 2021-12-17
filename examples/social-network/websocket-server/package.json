@@ -1,7 +1,6 @@
 {
   "name": "glee-hello-world",
   "version": "0.1.0",
-  "description": "Hello world app to improve Glee onboarding ",
   "type": "module",
   "engines": {
     "node": ">=14.15.1"
