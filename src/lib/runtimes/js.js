@@ -17,7 +17,7 @@ export function runJS(operationId, messageId, message) {
       })
       .catch(err => {
         if (err.code === 'ERR_MODULE_NOT_FOUND') {
-          const functionsPath = path.relative(GLEE_DIR, GLEE_FUNCTIONS_DIR)
+          const functionsPath = path.relative(GLEE_DIR, '.glee', GLEE_FUNCTIONS_DIR)
           const missingFile = path.relative(GLEE_FUNCTIONS_DIR, `${filePath}.js`)
           const missingPath = path.join(functionsPath, missingFile)
           logWarningMessage(`Missing function file ${missingPath}.`, {

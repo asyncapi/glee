@@ -82,7 +82,7 @@ export async function startRuntimeServers(dir, asyncapiFilePath) {
     await Promise.all(Object.keys(files).map(async (filePath) => {
       try {
         const extension = extname(filePath).substr(1)
-        if (extension !== 'js') {
+        if (!['ts', 'js'].includes(extension)) {
           if (extension === 'java' && !experimentalFlags.has('JAVA')) {
             logWarningMessage('Experimental Java support is not enabled. To enable it, set the environment variable GLEE_EXPERIMENTAL_JAVA=on.', {
               highlightedWords: ['GLEE_EXPERIMENTAL_JAVA=on']

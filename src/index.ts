@@ -1,4 +1,5 @@
-import dotenv from 'dotenv'
+import { resolve } from 'path'
+import * as dotenv from 'dotenv'
 import dotenvExpand from 'dotenv-expand'
 import Glee from './lib/glee.js'
 import { logWelcome, logLineWithIcon } from './lib/logger.js'
@@ -24,6 +25,7 @@ dotenvExpand(dotenv.config())
 export default async function GleeAppInitializer (config = {}) {
   const {
     GLEE_DIR,
+    GLEE_PROJECT_DIR,
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
     ASYNCAPI_FILE_PATH
@@ -32,9 +34,11 @@ export default async function GleeAppInitializer (config = {}) {
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
     servers: await getSelectedServerNames(),
-    dir: GLEE_DIR,
+    dir: GLEE_PROJECT_DIR,
     functionsDir: GLEE_FUNCTIONS_DIR,
     experimentalFlags,
+    showAppDir: GLEE_PROJECT_DIR !== process.cwd(),
+    showFunctionsDir: GLEE_FUNCTIONS_DIR !== resolve(GLEE_DIR, 'functions'),
   })
 
   await startRuntimeServers(GLEE_FUNCTIONS_DIR, ASYNCAPI_FILE_PATH)

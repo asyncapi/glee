@@ -2,17 +2,19 @@ import { existsSync } from 'fs'
 import path from 'path'
 
 let GLEE_DIR
+let GLEE_PROJECT_DIR
 let GLEE_LIFECYCLE_DIR
 let GLEE_FUNCTIONS_DIR
 let GLEE_CONFIG_FILE_PATH
 let ASYNCAPI_FILE_PATH
 
 export async function setConfigs(config) {
-  GLEE_DIR = config.dir || process.cwd()
+  GLEE_PROJECT_DIR = process.cwd()
+  GLEE_DIR = path.resolve(GLEE_PROJECT_DIR, '.glee')
   GLEE_LIFECYCLE_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'lifecycle')
   GLEE_FUNCTIONS_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'functions')
   GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
-  ASYNCAPI_FILE_PATH = path.resolve(GLEE_DIR, 'asyncapi.yaml')
+  ASYNCAPI_FILE_PATH = path.resolve(GLEE_PROJECT_DIR, 'asyncapi.yaml')
   await loadConfigsFromFile()
   
   return getConfigs()
@@ -42,6 +44,7 @@ async function loadConfigsFromFile() {
 export function getConfigs() {
   return {
     GLEE_DIR,
+    GLEE_PROJECT_DIR,
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
     GLEE_CONFIG_FILE_PATH,

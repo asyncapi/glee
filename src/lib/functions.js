@@ -23,7 +23,7 @@ export async function register(dir) {
           runtime,
         }
 
-        if (runtime === 'js') {
+        if (['js', 'ts'].includes(runtime)) {
           const { default: fn } = await import(filePath)
           functions[functionName].run = fn
         }

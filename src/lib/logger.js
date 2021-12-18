@@ -26,7 +26,9 @@ export const logWelcome = ({
   servers,
   dir,
   functionsDir,
-  experimentalFlags = [],
+  experimentalFlags,
+  showAppDir = false,
+  showFunctionsDir = false,
 }) => {
   const primaryColor = '#08d2a1'
   const bgPrimary = chalk.bgHex(primaryColor)
@@ -40,11 +42,11 @@ export const logWelcome = ({
     console.log(fgPrimary('{}'), chalk.gray('Running in development mode...'))
   }
   console.log(fgPrimary('↙↗'), chalk.gray(wordWrap(`Selected server(s): ${servers.join(', ')}`, { width: 37, indent: '   ' }).trim()))
-  if (dir !== process.cwd()) {
+  if (showAppDir) {
     console.log(fgPrimary('./'), chalk.gray(wordWrap(`App directory: ${dir}`, { width: 37, indent: '   ', cut: true }).trim()))
   }
-  if (functionsDir !== path.resolve(process.cwd(), 'functions')) {
-    console.log(fgPrimary('𝑓×'), chalk.gray(wordWrap(`Functions directory: ${dir}`, { width: 37, indent: '   ', cut: true }).trim()))
+  if (showFunctionsDir) {
+    console.log(fgPrimary('𝑓×'), chalk.gray(wordWrap(`Functions directory: ${functionsDir}`, { width: 37, indent: '   ', cut: true }).trim()))
   }
   if (experimentalFlags.has('JAVA')) {
     console.log(emojis.unicode(':coffee:'), fgWarning('Java experimental support has been enabled'))
@@ -52,11 +54,19 @@ export const logWelcome = ({
   console.log(chalk.gray('─'.repeat(40)))
 }
 
-export const logLineWithIcon = (icon, text, { iconColor = 'cyan', textColor = '#999', highlightedWords = [], disableEmojis = false } = {}) => {
+export const logEmptyLines = (amount) => {
+  for (let i = 0; i < amount; i++) {
+    console.log('')
+  }
+}
+
+export const logLineWithIcon = (icon, text, { iconColor = 'cyan', textColor = '#999', highlightedWords = [], disableEmojis = false, emptyLinesBefore = 0, emptyLinesAfter = 0 } = {}) => {
   const iconColorFn = chalk[iconColor] || chalk.hex(iconColor)
   const textColorFn = chalk[textColor] || chalk.hex(textColor)
   icon = !disableEmojis ? emojis.unicode(icon) : icon
+  if (emptyLinesBefore) logEmptyLines(emptyLinesBefore)
   console.log(iconColorFn(icon), textColorFn(highlightWords(highlightedWords, text)))
+  if (emptyLinesAfter) logEmptyLines(emptyLinesAfter)
 }
 
 export const logInfoMessage = (text, { highlightedWords = [] } = {}) => {
