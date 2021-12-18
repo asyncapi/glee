@@ -16,20 +16,21 @@ import logger from './middlewares/logger.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
 import { startRuntimeServers, triggerFunction } from './lib/runtimes/index.js'
-import { setConfigs } from './lib/configs.js'
+import { initializeConfigs } from './lib/configs.js'
 import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
 
 dotenvExpand(dotenv.config())
 
-export default async function GleeAppInitializer (config = {}) {
+export default async function GleeAppInitializer () {
+  const config = await initializeConfigs()
   const {
     GLEE_DIR,
     GLEE_PROJECT_DIR,
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
     ASYNCAPI_FILE_PATH
-  } = await setConfigs(config)
+  } = config
 
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
