@@ -11,16 +11,19 @@
     "glee": "./dist/cli/index.js"
   },
   "scripts": {
-    "dev": "tsc --watch",
     "build": "tsc",
-    "test": "echo \"No test specified\"",
-    "lint": "eslint --max-warnings 5 --config .eslintrc .",
+    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
+    "dev": "tsc --watch",
     "docs": "jsdoc2md \"src/lib/glee.js\" -f \"src/lib/*.js\" > docs/api.md",
-    "release": "semantic-release",
     "get:version": "echo $npm_package_version",
     "get:name": "echo $npm_package_name",
     "generate:assets": "npm run docs",
-    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
+    "lint": "eslint --max-warnings 5 --config .eslintrc .",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
+    "pretest:coverage": "npm run build",
+    "release": "semantic-release",
+    "test": "echo \"No test specified\""
   },
   "keywords": [
     "asyncapi",
