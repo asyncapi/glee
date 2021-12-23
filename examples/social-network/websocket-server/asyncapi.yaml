@@ -1,0 +1,95 @@
+asyncapi: 2.2.0
+info:
+  title: The Social Network
+  version: 0.1.0
+
+servers:
+  websockets:
+    url: ws://0.0.0.0:3001
+    protocol: ws
+  mosquitto:
+    url: mqtt://test.mosquitto.org
+    protocol: mqtt
+    bindings:
+      mqtt:
+        clientId: the-social-network
+
+channels:
+  /:
+    publish:
+      operationId: onLikeDislike
+      message:
+        $ref: '#/components/messages/likeOrDislike'
+    subscribe:
+      message:
+        $ref: '#/components/messages/likeCountUpdated'
+    servers:
+      - websockets
+  post/liked:
+    subscribe:
+      message:
+        $ref: '#/components/messages/notifyPostLiked'
+    servers:
+      - mosquitto
+
+components:
+  messages:
+    likeOrDislike:
+      payload:
+        type: object
+        required:
+          - type
+        properties:
+          type:
+            type: string
+            description: Type of the message
+            enum:
+              - like
+              - dislike
+          data:
+            type: object
+            required:
+              - postId
+              - userId
+            properties:
+              postId:
+                type: integer
+                description: The id of the post the user (dis)liked.
+              userId:
+                type: integer
+                description: The user who clicked the Like button.
+    likeCountUpdated:
+      payload:
+        type: object
+        required:
+          - type
+        properties:
+          type:
+            type: string
+            description: Type of the message
+          data:
+            type: object
+            required:
+              - postId
+              - totalCount
+            properties:
+              postId:
+                type: integer
+                description: The id of the post which likes count has been updated.
+              totalCount:
+                type: integer
+                description: The number of likes for this post.
+    notifyPostLiked:
+      payload:
+        type: object
+        required:
+          - postId
+          - userId
+        additionalProperties: false
+        properties:
+          postId:
+            type: integer
+            description: The id of the post that has been liked.
+          userId:
+            type: integer
+            description: The user who liked the post.
