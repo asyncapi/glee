@@ -10,6 +10,7 @@ export { chalk }
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
+const TSLogo = chalk.bgHex('#3178C6').white(' TS')
 
 const highlightWords = (words, text) => {
   let result = text
@@ -37,6 +38,7 @@ export const logWelcome = ({
   
   const pkg = JSON.parse(readFileSync(path.resolve(__dirname, '../../package.json')))
 
+  logEmptyLines(1)
   console.log(bgPrimary.black(` Glee ${pkg.version} \n`))
   if (dev) {
     console.log(fgPrimary('{}'), chalk.gray('Running in development mode...'))
@@ -119,4 +121,14 @@ export const logError = (error, options = {}) => {
   if (showStack && error.stack) {
     console.error(chalk.gray(error.stack.substr(error.stack.indexOf('\n') + 1)))
   }
+}
+
+export const logTypeScriptMessage = (message) => {
+  console.log(TSLogo, message)
+}
+
+export const logTypeScriptError = (code, message, fileName, line, character) => {
+  const fileInfo = `${chalk.cyan(fileName)}:${chalk.yellow(line + 1)}:${chalk.yellow(character + 1)}`
+  const error = `${chalk.red('error')} ${chalk.gray(`TS${code}:`)}`
+  console.error(`${TSLogo} ${fileInfo} - ${error} ${message}`)
 }

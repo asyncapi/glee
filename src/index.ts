@@ -6,7 +6,7 @@ import { logWelcome, logLineWithIcon } from './lib/logger.js'
 import experimentalFlags from './lib/experimentalFlags.js'
 import registerAdapters from './registerAdapters.js'
 import { register as registerLifecycleEvents, run as runLifecycleEvents } from './lib/lifecycleEvents.js'
-import { register as registerFunctions } from './lib/functions.js'
+import { register as registerFunctions, trigger as triggerFunction } from './lib/functions.js'
 import buffer2string from './middlewares/buffer2string.js'
 import string2json from './middlewares/string2json.js'
 import json2string from './middlewares/json2string.js'
@@ -15,7 +15,6 @@ import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import logger from './middlewares/logger.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
-import { startRuntimeServers, triggerFunction } from './lib/runtimes/index.js'
 import { initializeConfigs } from './lib/configs.js'
 import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
@@ -29,7 +28,6 @@ export default async function GleeAppInitializer () {
     GLEE_PROJECT_DIR,
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
-    ASYNCAPI_FILE_PATH
   } = config
 
   logWelcome({
@@ -42,7 +40,6 @@ export default async function GleeAppInitializer () {
     showFunctionsDir: GLEE_FUNCTIONS_DIR !== resolve(GLEE_DIR, 'functions'),
   })
 
-  await startRuntimeServers(GLEE_FUNCTIONS_DIR, ASYNCAPI_FILE_PATH)
   await registerFunctions(GLEE_FUNCTIONS_DIR)
   await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
 
