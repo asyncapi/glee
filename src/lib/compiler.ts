@@ -1,4 +1,4 @@
-import { relative, resolve } from 'path'
+import { relative } from 'path'
 import ts from 'typescript'
 import { logTypeScriptError } from './logger.js'
 
