@@ -1,4 +1,4 @@
-import { relative } from 'path'
+import { relative, resolve } from 'path'
 import ts from 'typescript'
 import { logTypeScriptError } from './logger.js'
 
@@ -36,7 +36,10 @@ export function compileAndWatch({
 
   const host = ts.createWatchCompilerHost(
     configPath,
-    {},
+    {
+      allowJs: true,
+      outDir: '.glee',
+    },
     ts.sys,
     createProgram,
     reportDiagnostic,

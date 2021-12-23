@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": ".glee",
     "allowJs": true,
     "target": "ESNext",
     "esModuleInterop": true,
