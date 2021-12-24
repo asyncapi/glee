@@ -9,11 +9,11 @@ interface IGleeConnectionConstructor {
 }
 
 class GleeConnection {
-  public rawConnection: any
-  public channels: string[]
-  public serverName: string
-  public AsyncAPIServer: AsyncAPIServer
-  public parsedAsyncAPI: AsyncAPIDocument
+  private _rawConnection: any
+  private _channels: string[]
+  private _serverName: string
+  private _AsyncAPIServer: AsyncAPIServer
+  private _parsedAsyncAPI: AsyncAPIDocument
 
   /**
    * Instantiates a Glee connection.
@@ -26,17 +26,31 @@ class GleeConnection {
    * @param {AsyncAPIDocument} options.parsedAsyncAPI The AsyncAPI document.
    */
   constructor({ connection, channels, serverName, server, parsedAsyncAPI }: IGleeConnectionConstructor) {
-    if (!connection) throw new Error('Please provide a connection object to create the connection representation.')
-    if (!Array.isArray(channels) || !channels.length) throw new Error('Please provide a list of channels to create the connection.')
-    if (!serverName) throw new Error('Please provide a server name to create the connection.')
-    if (!server) throw new Error('Please provide a server object to create the connection.')
-    if (!parsedAsyncAPI) throw new Error('Please provide a parsed AsyncAPI document to create the connection.')
+    this._rawConnection = connection
+    this._channels = channels
+    this._serverName = serverName
+    this._AsyncAPIServer = server
+    this._parsedAsyncAPI = parsedAsyncAPI
+  }
 
-    this.rawConnection = connection
-    this.channels = channels
-    this.serverName = serverName
-    this.AsyncAPIServer = server
-    this.parsedAsyncAPI = parsedAsyncAPI
+  get rawConnection(): any {
+    return this._rawConnection
+  }
+
+  get channels(): string[] {
+    return this._channels
+  }
+
+  get serverName(): string {
+    return this._serverName
+  }
+
+  get AsyncAPIServer(): AsyncAPIServer {
+    return this._AsyncAPIServer
+  }
+
+  get parsedAsyncAPI(): AsyncAPIDocument {
+    return this._parsedAsyncAPI
   }
 
   /**

@@ -17,15 +17,14 @@ interface IReply {
 }
 
 class GleeMessage extends EventEmitter {
-  public payload: any
-  public headers: Map<string, string>
-  public channel: string
-  public serverName: string
-  public connection: GleeConnection
-  public broadcast: boolean
-  public __isGleeMessage: boolean
-  public inbound: boolean
-  public outbound: boolean
+  private _payload: any
+  private _headers: Map<string, string>
+  private _channel: string
+  private _serverName: string
+  private _connection: GleeConnection
+  private _broadcast: boolean
+  private _inbound: boolean
+  private _outbound: boolean
 
   /**
    * Instantiates a new GleeMessage.
@@ -48,14 +47,37 @@ class GleeMessage extends EventEmitter {
   }: IGleeMessageConstructor) {
     super()
 
-    if (payload) this.payload = payload
-    if (headers) this.headers = headers
-    if (channel) this.channel = channel
-    if (serverName) this.serverName = serverName
-    if (connection) this.connection = connection
-    if (broadcast) this.broadcast = !!broadcast
+    if (payload) this._payload = payload
+    if (headers) this._headers = headers
+    if (channel) this._channel = channel
+    if (serverName) this._serverName = serverName
+    if (connection) this._connection = connection
+    if (broadcast) this._broadcast = !!broadcast
+  }
 
-    this.__isGleeMessage = true
+  get payload(): any {
+    return this._payload
+  }
+
+  get headers(): Map<string, string> {
+    return this._headers
+  }
+
+  get channel(): string {
+    return this._channel
+  }
+
+
+  get serverName(): string {
+    return this._serverName
+  }
+
+  get connection(): GleeConnection {
+    return this._connection
+  }
+
+  get broadcast(): boolean {
+    return this._broadcast
   }
 
   /**
@@ -67,19 +89,19 @@ class GleeMessage extends EventEmitter {
    * @param {String} [options.channel] The channel where the reply should go to.
    */
   reply ({ payload, headers, channel } : IReply) {
-    if (payload) this.payload = payload
+    if (payload) this._payload = payload
 
     if (headers !== undefined) {
       if (headers === null) {
-        this.headers = undefined
+        this._headers = undefined
       } else {
-        this.headers = headers
+        this._headers = headers
       }
     }
 
     if (channel !== undefined) {
       if (typeof channel === 'string') {
-        this.channel = channel
+        this._channel = channel
       } else {
         return console.error('GleeMessage.reply(): when specified, "channel" must be a string.')
       }
@@ -92,22 +114,36 @@ class GleeMessage extends EventEmitter {
    * Makes the message suitable only for the inbound pipeline.
    */
   setInbound() {
-    this.inbound = true
-    this.outbound = false
+    this._inbound = true
+    this._outbound = false
   }
   
   /**
    * Makes the message suitable only for the outbound pipeline.
    */
   setOutbound() {
-    this.inbound = false
-    this.outbound = true
+    this._inbound = false
+    this._outbound = true
+  }
+  
+  /**
+   * Checks if it's an inbound message.
+   */
+  isInbound() {
+    return this._inbound && !this._outbound
+  }
+  
+  /**
+   * Checks if it's an outbound message.
+   */
+  isOutbound() {
+    return this._outbound && !this._inbound
   }
 
   /**
    * Tells Glee to send the message.
    */
-  send () {
+  send() {
     this.emit('send', this)
   }
 }
