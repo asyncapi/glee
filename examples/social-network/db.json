@@ -1,0 +1,46 @@
+{
+  "likes": [
+  ],
+  "users": {
+    "1": {
+      "id": 1,
+      "slackId": "<@U34F2JRRS>",
+      "coverImageUrl": "https://pbs.twimg.com/profile_banners/87489271/1617659258/1500x500",
+      "imageUrl": "https://pbs.twimg.com/profile_images/1373387614238179328/cB1gp6Lh_400x400.jpg",
+      "name": "Fran Mendez"
+    },
+    "2": {
+      "id": 2,
+      "slackId": "<@UD698Q5LM>",
+      "coverImageUrl": "https://pbs.twimg.com/profile_banners/407861759/1632725036/1500x500",
+      "imageUrl": "https://pbs.twimg.com/profile_images/1435858354967093254/carWrDQa_400x400.jpg",
+      "name": "Lukasz Gornicki"
+    }
+  },
+  "posts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "imageUrl": "https://images.unsplash.com/photo-1466637574441-749b8f19452f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80",
+      "text": "Cooking at home with some friends and good wine 🍷"
+    },
+    {
+      "id": 11,
+      "userId": 2,
+      "imageUrl": "https://images.unsplash.com/photo-1502599213010-875782f9bf52?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=697&q=80",
+      "text": "The best of working remotely? Hacking on my favorite coffee-shop 🥤🤙🏽<br /><br /><strong>#lifestyle</strong>"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "imageUrl": "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80",
+      "text": "Going to the forest 🌳🦌 with my little homie 👧🏻"
+    },
+    {
+      "id": 10,
+      "userId": 2,
+      "imageUrl": "https://images.unsplash.com/photo-1586348943529-beaae6c28db9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
+      "text": "I was missing a bit of this. Holidays, finally!"
+    }
+  ]
+}
