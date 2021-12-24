@@ -9,11 +9,11 @@ interface IGleeConnectionConstructor {
 }
 
 class GleeConnection {
-  private rawConnection: any
-  private channels: string[]
-  private serverName: string
-  private AsyncAPIServer: AsyncAPIServer
-  private parsedAsyncAPI: AsyncAPIDocument
+  public rawConnection: any
+  public channels: string[]
+  public serverName: string
+  public AsyncAPIServer: AsyncAPIServer
+  public parsedAsyncAPI: AsyncAPIDocument
 
   /**
    * Instantiates a Glee connection.

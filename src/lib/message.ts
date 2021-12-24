@@ -17,15 +17,15 @@ interface IReply {
 }
 
 class GleeMessage extends EventEmitter {
-  private payload: any
-  private headers: Map<string, string>
-  private channel: string
-  private serverName: string
-  private connection: GleeConnection
-  private broadcast: boolean
-  private __isGleeMessage: boolean
-  private inbound: boolean
-  private outbound: boolean
+  public payload: any
+  public headers: Map<string, string>
+  public channel: string
+  public serverName: string
+  public connection: GleeConnection
+  public broadcast: boolean
+  public __isGleeMessage: boolean
+  public inbound: boolean
+  public outbound: boolean
 
   /**
    * Instantiates a new GleeMessage.
