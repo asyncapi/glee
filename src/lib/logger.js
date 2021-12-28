@@ -22,6 +22,12 @@ const highlightWords = (words, text) => {
   return result
 }
 
+export const logEmptyLines = (amount) => {
+  for (let i = 0; i < amount; i++) {
+    console.log('')
+  }
+}
+
 export const logWelcome = ({
   dev,
   servers,
@@ -54,12 +60,6 @@ export const logWelcome = ({
     console.log(emojis.unicode(':coffee:'), fgWarning('Java experimental support has been enabled'))
   }
   console.log(chalk.gray('─'.repeat(40)))
-}
-
-export const logEmptyLines = (amount) => {
-  for (let i = 0; i < amount; i++) {
-    console.log('')
-  }
 }
 
 export const logLineWithIcon = (icon, text, { iconColor = 'cyan', textColor = '#999', highlightedWords = [], disableEmojis = false, emptyLinesBefore = 0, emptyLinesAfter = 0 } = {}) => {

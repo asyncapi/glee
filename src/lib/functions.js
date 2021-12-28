@@ -1,8 +1,11 @@
-import { basename, extname } from 'path'
+import { basename, extname, relative, join } from 'path'
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import Glee from './glee.js'
+import { getConfigs } from './configs.js'
+import { logWarningMessage } from './logger.js'
 
+const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
 export const functions = {}
 
 export async function register(dir) {
@@ -74,9 +77,9 @@ export async function trigger({
     }
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
-      const functionsPath = path.relative(GLEE_DIR, GLEE_FUNCTIONS_DIR)
-      const missingFile = path.relative(GLEE_FUNCTIONS_DIR, `${filePath}.js`)
-      const missingPath = path.join(functionsPath, missingFile)
+      const functionsPath = relative(GLEE_DIR, GLEE_FUNCTIONS_DIR)
+      const missingFile = relative(GLEE_FUNCTIONS_DIR, `${operationId}.js`)
+      const missingPath = join(functionsPath, missingFile)
       logWarningMessage(`Missing function file ${missingPath}.`, {
         highlightedWords: [missingPath],
       })
