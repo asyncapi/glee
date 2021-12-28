@@ -1,7 +1,6 @@
 import { basename, extname, relative, join } from 'path'
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
-import Glee from './glee.js'
 import { getConfigs } from './configs.js'
 import { logWarningMessage } from './logger.js'
 import GleeMessage from './message.js'
