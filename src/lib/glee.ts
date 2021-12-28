@@ -221,7 +221,4 @@ class Glee extends EventEmitter {
   }
 }
 
-export const Message = GleeMessage
-export const Adapter = GleeAdapter
-export const Router = GleeRouter
 export default Glee

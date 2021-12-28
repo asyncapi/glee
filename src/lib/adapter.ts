@@ -120,6 +120,30 @@ class GleeAdapter extends EventEmitter {
     })
   }
 
+  get glee(): Glee {
+    return this._glee
+  }
+
+  get serverName(): string {
+    return this._serverName
+  }
+
+  get AsyncAPIServer(): Server {
+    return this._AsyncAPIServer
+  }
+
+  get parsedAsyncAPI(): AsyncAPIDocument {
+    return this._parsedAsyncAPI
+  }
+
+  get channelNames(): string[] {
+    return this._channelNames
+  }
+
+  get connections(): GleeConnection[] {
+    return this._connections
+  }
+
   get serverUrlExpanded(): string {
     return this._serverUrlExpanded
   }

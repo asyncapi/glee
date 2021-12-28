@@ -60,8 +60,16 @@ class GleeMessage extends EventEmitter {
     return this._payload
   }
 
+  set payload(value: any) {
+    this._payload = value
+  }
+
   get headers(): Map<string, string> {
     return this._headers
+  }
+
+  set headers(value: Map<string, string>) {
+    this._headers = value
   }
 
   get channel(): string {
