@@ -1,17 +1,17 @@
 import { ErrorMiddleware, Middleware } from '../middlewares'
 
-type ChannelMiddlewareTuple = {
+export type ChannelMiddlewareTuple = {
   channel: string,
   fn: Middleware,
 }
 
-type ChannelErrorMiddlewareTuple = {
+export type ChannelErrorMiddlewareTuple = {
   channel: string,
   fn: ErrorMiddleware,
 }
 
-type GenericMiddleware = Middleware | ErrorMiddleware
-type GenericChannelMiddlewareTuple = ChannelMiddlewareTuple | ChannelErrorMiddlewareTuple
+export type GenericMiddleware = Middleware | ErrorMiddleware
+export type GenericChannelMiddlewareTuple = ChannelMiddlewareTuple | ChannelErrorMiddlewareTuple
 
 class GleeRouter {
   private middlewares:ChannelMiddlewareTuple[];
@@ -34,10 +34,17 @@ class GleeRouter {
    * this function will make use of inbound and outbound middlewares.
    *
    * @param {String} [channel] The channel you want to scope the middleware to.
-   * @param {Function|GleeRouter} ...middlewares A function or GleeRouter to use as a middleware.
+   * @param {GenericMiddleware} middleware A middleware function.
    */
-  use(channel?: string, ...middlewares: GenericMiddleware[]) : void {
-    const mws: GenericChannelMiddlewareTuple[] = middlewares.map(fn => ({ channel, fn } as GenericChannelMiddlewareTuple))
+  use(...middlewares: GenericMiddleware[]) : void;
+  use(channel: string, ...middlewares: GenericMiddleware[]) : void;
+  use(channel: string | GenericMiddleware, ...middlewares: GenericMiddleware[]) : void {
+    const realChannel = typeof channel === 'string' ? channel : undefined
+    const allMiddlewares: GenericMiddleware[] = realChannel ? middlewares : [channel as GenericMiddleware].concat(middlewares)
+    const mws: GenericChannelMiddlewareTuple[] = allMiddlewares.map(fn => ({
+      channel: realChannel,
+      fn,
+    } as GenericChannelMiddlewareTuple))
 
     mws.forEach(mw => {
       if (mw.fn.length <= 2) {
@@ -54,8 +61,15 @@ class GleeRouter {
    * @param {String} [channel] The channel you want to scope the middleware to.
    * @param {Function|GleeRouter} ...middlewares A function or GleeRouter to use as a middleware.
    */
-  useOutbound(channel?: string, ...middlewares: GenericMiddleware[]) {
-    const mws = middlewares.map(fn => ({ channel, fn }))
+  useOutbound(...middlewares: GenericMiddleware[]): void;
+  useOutbound(channel: string, ...middlewares: GenericMiddleware[]): void;
+  useOutbound(channel: string | GenericMiddleware, ...middlewares: GenericMiddleware[]) {
+    const realChannel = typeof channel === 'string' ? channel : undefined
+    const allMiddlewares: GenericMiddleware[] = realChannel ? middlewares : [channel as GenericMiddleware].concat(middlewares)
+    const mws = allMiddlewares.map(fn => ({
+      channel: realChannel,
+      fn,
+    } as GenericChannelMiddlewareTuple))
 
     mws.forEach(mw => {
       if (mw.fn.length <= 2) {

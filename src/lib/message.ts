@@ -25,6 +25,7 @@ class GleeMessage extends EventEmitter {
   private _broadcast: boolean
   private _inbound: boolean
   private _outbound: boolean
+  private _params: Map<string, any>
 
   /**
    * Instantiates a new GleeMessage.
@@ -67,17 +68,36 @@ class GleeMessage extends EventEmitter {
     return this._channel
   }
 
+  set channel(value: string) {
+    this._channel = value
+  }
 
   get serverName(): string {
     return this._serverName
+  }
+  
+  set serverName(value: string) {
+    this._serverName = value
   }
 
   get connection(): GleeConnection {
     return this._connection
   }
+  
+  set connection(value: GleeConnection) {
+    this._connection = value
+  }
 
   get broadcast(): boolean {
     return this._broadcast
+  }
+
+  get params(): Map<string, string> {
+    return this._params
+  }
+
+  set params(value: Map<string, string>) {
+    this._params = value
   }
 
   /**
