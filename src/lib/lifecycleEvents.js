@@ -2,6 +2,7 @@ import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import Glee from './glee.js'
 import { logInfoMessage } from './logger.js'
+import GleeMessage from './message.js'
 import { arrayHasDuplicates } from './util.js'
 
 export const events = {}
@@ -75,7 +76,7 @@ export async function run (lifecycleEvent, params) {
       if (res && Array.isArray(res.send)) {
         res.send.forEach((event) => {
           try {
-            params.glee.send(new Glee.Message({
+            params.glee.send(new GleeMessage({
               payload: event.payload,
               headers: event.headers,
               channel: event.channel,

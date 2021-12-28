@@ -4,6 +4,7 @@ import walkdir from 'walkdir'
 import Glee from './glee.js'
 import { getConfigs } from './configs.js'
 import { logWarningMessage } from './logger.js'
+import GleeMessage from './message.js'
 
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
 export const functions = {}
@@ -45,7 +46,7 @@ export async function trigger({
 
     if (Array.isArray(res.send)) {
       res.send.forEach((msg) => {
-        app.send(new Glee.Message({
+        app.send(new GleeMessage({
           payload: msg.payload,
           headers: msg.headers,
           channel: msg.channel || message.channel,
@@ -66,7 +67,7 @@ export async function trigger({
 
     if (res && Array.isArray(res.broadcast)) {
       res.broadcast.forEach((msg) => {
-        app.send(new Glee.Message({
+        app.send(new GleeMessage({
           payload: msg.payload,
           headers: msg.headers,
           channel: msg.channel || message.channel,

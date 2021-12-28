@@ -1,5 +1,6 @@
+import GleeMessage from "../lib/message"
 
-export default (event, next) => {
+export default (event: GleeMessage, next: Function) => {
   if (!event.connection) return next()
   const { connection, channel } = event
   if (!connection.hasChannel(channel)) {
