@@ -3,7 +3,7 @@ import GleeConnection from './connection'
 
 interface IGleeMessageConstructor {
   payload?: any,
-  headers?: Map<string, string>,
+  headers?: { [key: string]: string },
   channel?: string,
   serverName?: string,
   connection?: GleeConnection,
@@ -12,20 +12,20 @@ interface IGleeMessageConstructor {
 
 interface IReply {
   payload?: any,
-  headers?: Map<string, string>,
+  headers?: { [key: string]: string },
   channel?: string,
 }
 
 class GleeMessage extends EventEmitter {
   private _payload: any
-  private _headers: Map<string, string>
+  private _headers: { [key: string]: string }
   private _channel: string
   private _serverName: string
   private _connection: GleeConnection
   private _broadcast: boolean
   private _inbound: boolean
   private _outbound: boolean
-  private _params: Map<string, any>
+  private _params: { [key: string]: string }
 
   /**
    * Instantiates a new GleeMessage.
@@ -64,11 +64,11 @@ class GleeMessage extends EventEmitter {
     this._payload = value
   }
 
-  get headers(): Map<string, string> {
+  get headers(): { [key: string]: string } {
     return this._headers
   }
 
-  set headers(value: Map<string, string>) {
+  set headers(value: { [key: string]: string }) {
     this._headers = value
   }
 
@@ -100,11 +100,11 @@ class GleeMessage extends EventEmitter {
     return this._broadcast
   }
 
-  get params(): Map<string, string> {
+  get params(): { [key: string]: string } {
     return this._params
   }
 
-  set params(value: Map<string, string>) {
+  set params(value: { [key: string]: string }) {
     this._params = value
   }
 

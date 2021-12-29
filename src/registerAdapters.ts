@@ -1,9 +1,12 @@
+import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import MqttAdapter from './adapters/mqtt/index.js'
 import WebSocketAdapter from './adapters/ws/index.js'
 import SocketIOAdapter from './adapters/socket.io/index.js'
 import { getSelectedServerNames } from './lib/servers.js'
+import Glee from './lib/glee.js'
+import { GleeConfig } from './lib/index.js'
 
-export default async (app, parsedAsyncAPI, config) => {
+export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) => {
   const serverNames = await getSelectedServerNames()
 
   serverNames.forEach(serverName => {
@@ -17,7 +20,7 @@ export default async (app, parsedAsyncAPI, config) => {
   })
 }
 
-function registerAdapterForServer(serverName, server, app, parsedAsyncAPI, config) {
+function registerAdapterForServer(serverName: string, server: Server, app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) {
   const protocol = server.protocol()
   if (['mqtt', 'mqtts', 'secure-mqtt'].includes(protocol)) {
     app.addAdapter(MqttAdapter, {

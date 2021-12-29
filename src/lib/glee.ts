@@ -19,7 +19,7 @@ type AdapterRecord = {
   parsedAsyncAPI: AsyncAPIDocument,
 }
 
-class Glee extends EventEmitter {
+export default class Glee extends EventEmitter {
   private _options: GleeConfig
   private _router: GleeRouter
   private _adapters: AdapterRecord[]  
@@ -220,5 +220,3 @@ class Glee extends EventEmitter {
     })
   }
 }
-
-export default Glee

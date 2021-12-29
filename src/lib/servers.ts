@@ -1,6 +1,6 @@
 import { getParsedAsyncAPI } from './asyncapiFile.js'
 
-export async function getSelectedServerNames() {
+export async function getSelectedServerNames(): Promise<string[]> {
   const parsedAsyncAPI = await getParsedAsyncAPI()
   
   if (!process.env.GLEE_SERVER_NAMES) {

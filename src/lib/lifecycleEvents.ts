@@ -1,12 +1,18 @@
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
+import { GleeFunctionEvent, GleeFunctionReturn, GleeFunctionReturnSend } from './index.js'
 import { logInfoMessage } from './logger.js'
 import GleeMessage from './message.js'
 import { arrayHasDuplicates } from './util.js'
 
-export const events = {}
+interface IEvent {
+  fn: (event: GleeFunctionEvent) => GleeFunctionReturn,
+  channels: string[],
+  servers: string[],
+}
+export const events: {[key: string]: IEvent[]} = {}
 
-export async function register (dir) {
+export async function register (dir: string) {
   try {
     const statsDir = await stat(dir)
     if (!statsDir.isDirectory()) return
@@ -41,7 +47,7 @@ export async function register (dir) {
   }
 }
 
-export async function run (lifecycleEvent, params) {
+export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
   if (!Array.isArray(events[lifecycleEvent])) return
   
   try {
@@ -72,8 +78,8 @@ export async function run (lifecycleEvent, params) {
     const responses = await Promise.all(handlers.map(info => info.fn(params)))
     
     responses.forEach(res => {
-      if (res && Array.isArray(res.send)) {
-        res.send.forEach((event) => {
+      if (res.send) {
+        res.send.forEach((event: GleeFunctionReturnSend) => {
           try {
             params.glee.send(new GleeMessage({
               payload: event.payload,

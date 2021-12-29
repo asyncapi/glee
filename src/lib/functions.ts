@@ -4,11 +4,18 @@ import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
 import { logWarningMessage } from './logger.js'
 import GleeMessage from './message.js'
+import { GleeFunction } from './index.js'
+import Glee from './glee.js'
+import { gleeMessageToFunctionEvent } from './util.js'
+
+interface FunctionInfo {
+  run: GleeFunction,
+}
 
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
-export const functions = {}
+export const functions: {[key: string]: FunctionInfo} = {}
 
-export async function register(dir) {
+export async function register(dir: string) {
   try {
     const statsDir = await stat(dir)
     if (!statsDir.isDirectory()) return
@@ -39,11 +46,16 @@ export async function trigger({
   operationId,
   messageId,
   message
+} : {
+  app: Glee,
+  operationId: string,
+  messageId?: string,
+  message: GleeMessage,
 }) {
   try {
-    const res = await functions[operationId].run(message)
+    const res = await functions[operationId].run(gleeMessageToFunctionEvent(message, app))
 
-    if (Array.isArray(res.send)) {
+    if (res?.send) {
       res.send.forEach((msg) => {
         app.send(new GleeMessage({
           payload: msg.payload,
@@ -54,7 +66,7 @@ export async function trigger({
       })
     }
 
-    if (res && Array.isArray(res.reply)) {
+    if (res?.reply) {
       res.reply.forEach((msg) => {
         message.reply({
           payload: msg.payload,
@@ -64,7 +76,7 @@ export async function trigger({
       })
     }
 
-    if (res && Array.isArray(res.broadcast)) {
+    if (res?.broadcast) {
       res.broadcast.forEach((msg) => {
         app.send(new GleeMessage({
           payload: msg.payload,

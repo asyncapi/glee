@@ -5,7 +5,7 @@ import GleeConnection from './connection.js'
 import Glee from './glee.js'
 import GleeMessage from './message.js'
 
-type EnrichedEvent = {
+export type EnrichedEvent = {
   connection?: GleeConnection,
   serverName: string,
   server: Server,
