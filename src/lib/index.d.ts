@@ -12,6 +12,7 @@ export type GleeConfig = {
   websocket?: {
     httpServer?: any,
     adapter?: WebSocketServerType | typeof GleeAdapter,
+    port?: number,
   }
 }
 

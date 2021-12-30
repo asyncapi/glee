@@ -6,7 +6,7 @@ import chalk from 'chalk'
 import emojis from 'emojis'
 import wordWrap from 'word-wrap'
 import GleeMessage from './message'
-import ValidationError from '../errors/validation.js'
+import GleeError from '../errors/glee-error.js'
 
 export { chalk }
 
@@ -128,11 +128,11 @@ export const logErrorLine = (message: string, { highlightedWords = [] }: ILogOpt
   console.error(`${icon} ${msg}`)
 }
 
-export const logError = (error: ValidationError | Error, options: ILogErrorOptions = {}) => {
+export const logError = (error: GleeError | Error, options: ILogErrorOptions = {}) => {
   const { showStack = true } = options
   logErrorLine(error.message, options)
   
-  if (error instanceof ValidationError) {
+  if (error instanceof GleeError) {
     if (typeof error.details === 'string') {
       console.error(chalk.gray(emojis.unicode(error.details)))
     } else if (typeof error.details === 'object') {

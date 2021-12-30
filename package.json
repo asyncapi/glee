@@ -66,6 +66,7 @@
     "@semantic-release/release-notes-generator": "^9.0.1",
     "@types/async": "^3.2.11",
     "@types/debug": "^4.1.7",
+    "@types/socket.io": "^3.0.2",
     "@types/uri-templates": "^0.1.31",
     "all-contributors-cli": "^6.14.2",
     "conventional-changelog-conventionalcommits": "^4.4.0",

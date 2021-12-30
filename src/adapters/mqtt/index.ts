@@ -1,22 +1,33 @@
 import fs from 'fs'
-import mqtt from 'mqtt'
+import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
 import Adapter from '../../lib/adapter.js'
-import Message from '../../lib/message.js'
+import GleeMessage from '../../lib/message.js'
+
+interface IMQTTHeaders {
+  cmd?: string,
+  retain?: boolean,
+  qos: QoS,
+  dup: boolean,
+  length: number,
+}
 
 class MqttAdapter extends Adapter {
-  name () {
+  private client: MqttClient
+  private firstConnect: boolean
+
+  name(): string {
     return 'MQTT adapter'
   }
 
-  async connect () {
+  async connect(): Promise<this> {
     return this._connect()
   }
 
-  async send (message) {
+  async send (message: GleeMessage) {
     return this._send(message)
   }
 
-  _connect () {
+  _connect(): Promise<this> {
     return new Promise((resolve) => {
       const subscribedChannels = this.getSubscribedChannels()
       const serverBinding = this.AsyncAPIServer.binding('mqtt')
@@ -93,7 +104,7 @@ class MqttAdapter extends Adapter {
     })
   }
 
-  _send (message) {
+  _send(message: GleeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
       const operation = this.parsedAsyncAPI.channel(message.channel).subscribe()
       const binding = operation ? operation.binding('mqtt') : undefined
@@ -111,8 +122,8 @@ class MqttAdapter extends Adapter {
     })
   }
 
-  _createMessage (packet) {
-    const headers = {
+  _createMessage(packet: IPublishPacket): GleeMessage {
+    const headers: IMQTTHeaders = {
       cmd: packet.cmd,
       retain: packet.retain,
       qos: packet.qos,
@@ -120,7 +131,7 @@ class MqttAdapter extends Adapter {
       length: packet.length
     }
 
-    return new Message({
+    return new GleeMessage({
       payload: packet.payload,
       headers,
       channel: packet.topic,

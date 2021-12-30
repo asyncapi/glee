@@ -1,9 +1,11 @@
 import EventEmitter from 'events'
 import GleeConnection from './connection'
 
+type MessageHeaders = { [key: string]: any }
+
 interface IGleeMessageConstructor {
   payload?: any,
-  headers?: { [key: string]: string },
+  headers?: MessageHeaders,
   channel?: string,
   serverName?: string,
   connection?: GleeConnection,
@@ -12,7 +14,7 @@ interface IGleeMessageConstructor {
 
 interface IReply {
   payload?: any,
-  headers?: { [key: string]: string },
+  headers?: { [key: string]: any },
   channel?: string,
 }
 

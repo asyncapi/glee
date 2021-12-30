@@ -1,29 +1,30 @@
 import { Server } from 'socket.io'
 import Adapter from '../../lib/adapter.js'
-import Message from '../../lib/message.js'
-import GleeConnection from '../../lib/connection.js'
+import GleeMessage from '../../lib/message.js'
 
 class SocketIOAdapter extends Adapter {
-  name () {
+  private server: Server
+
+  name(): string {
     return 'Socket.IO adapter'
   }
 
-  async connect () {
+  async connect(): Promise<this> {
     return this._connect()
   }
 
-  async send (message) {
+  async send(message: GleeMessage): Promise<void> {
     return this._send(message)
   }
 
-  _connect () {
+  _connect(): Promise<this> {
     return new Promise((resolve) => {
-      const serverUrl = new URL(this.serverUrlExpanded)
-      const asyncapiServerPort = serverUrl.port || 80
-      const optionsPort = this.glee.options?.websocket?.port
-      const port = optionsPort || asyncapiServerPort
+      const serverUrl: URL = new URL(this.serverUrlExpanded)
+      const asyncapiServerPort: number = serverUrl.port ? Number(serverUrl.port) : 80
+      const optionsPort: number = this.glee.options?.websocket?.port
+      const port:number = optionsPort || asyncapiServerPort
 
-      const serverOptions = {
+      const serverOptions: {[key:string]:any} = {
         path: serverUrl.pathname || '/',
         serveClient: false,
         transports: ['websocket'],
@@ -63,30 +64,26 @@ class SocketIOAdapter extends Adapter {
     })
   }
 
-  _send (message) {
-    return new Promise((resolve, reject) => {
-      try {
-        if (message.broadcast) {
-          this
-            .connections
-            .filter(({ channels }) => channels.includes(message.channel))
-            .forEach((connection) => {
-              connection.getRaw().emit(message.channel, message.payload)
-            })
-        } else {
-          if (!message.connection) throw new Error('There is no Socket.IO connection to send the message yet.')
-          if (!(message.connection instanceof GleeConnection)) throw new Error('Connection object is not of GleeConnection type.')
-          message.connection.getRaw().emit(message.channel, message.payload)
-        }
-        resolve()
-      } catch (err) {
-        reject(err)
+  async _send(message: GleeMessage): Promise<void> {
+    try {
+      if (message.broadcast) {
+        this
+          .connections
+          .filter(({ channels }) => channels.includes(message.channel))
+          .forEach((connection) => {
+            connection.getRaw().emit(message.channel, message.payload)
+          })
+      } else {
+        if (!message.connection) throw new Error('There is no Socket.IO connection to send the message yet.')
+        message.connection.getRaw().emit(message.channel, message.payload)
       }
-    })
+    } catch (err) {
+      throw err
+    }
   }
 
-  _createMessage (eventName, payload) {
-    return new Message({
+  _createMessage (eventName: string, payload: any) {
+    return new GleeMessage({
       payload,
       channel: eventName
     })

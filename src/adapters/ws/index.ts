@@ -2,23 +2,24 @@ import WebSocket from 'ws'
 import http from 'http'
 import { validateData } from '../../lib/util.js'
 import Adapter from '../../lib/adapter.js'
-import Message from '../../lib/message.js'
 import GleeConnection from '../../lib/connection.js'
+import GleeMessage from '../../lib/message.js'
+import GleeError from '../../errors/glee-error'
 
 class WebSocketsAdapter extends Adapter {
-  name () {
+  name(): string {
     return 'WebSockets adapter'
   }
 
-  async connect () {
+  async connect(): Promise<this> {
     return this._connect()
   }
 
-  async send (message) {
+  async send(message: GleeMessage): Promise<void> {
     return this._send(message)
   }
 
-  _connect () {
+  _connect(): Promise<this> {
     return new Promise((resolve, reject) => {
       const serverUrl = new URL(this.serverUrlExpanded)
       const wsHttpServer = this.glee.options?.websocket?.httpServer || http.createServer()
@@ -73,10 +74,9 @@ class WebSocketsAdapter extends Adapter {
             searchParams.forEach((value, key) => {
               queryParams[key] = value
             })
-            const { isValid, humanReadableError } = validateData(queryParams, query)
+            const { isValid, humanReadableError, errors } = validateData(queryParams, query)
             if (!isValid) {
-              const err = new Error('Invalid query params. Check details below:')
-              err.details = humanReadableError
+              const err = new GleeError({ humanReadableError, errors })
               this.emit('error', err)
               socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
               return
@@ -84,10 +84,9 @@ class WebSocketsAdapter extends Adapter {
           }
 
           if (headers) {
-            const { isValid, humanReadableError } = validateData(request.headers, headers)
+            const { isValid, humanReadableError, errors } = validateData(request.headers, headers)
             if (!isValid) {
-              const err = new Error('Invalid headers. Check details below:')
-              err.details = humanReadableError
+              const err = new GleeError({ humanReadableError, errors })
               this.emit('error', err)
               socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
               return
@@ -121,30 +120,27 @@ class WebSocketsAdapter extends Adapter {
     })
   }
 
-  _send (message) {
-    return new Promise((resolve, reject) => {
-      try {
-        if (message.broadcast) {
-          this
-            .connections
-            .filter(({channels}) => channels.includes(message.channel))
-            .forEach((connection) => {
-              connection.getRaw().send(message.payload)
-            })
-        } else {
-          if (!message.connection) throw new Error('There is no WebSocket connection to send the message yet.')
-          if (!(message.connection instanceof GleeConnection)) throw new Error('Connection object is not of GleeConnection type.')
-          message.connection.getRaw().send(message.payload)
-        }
-        resolve()
-      } catch (err) {
-        reject(err)
+  async _send(message: GleeMessage): Promise<void> {
+    try {
+      if (message.broadcast) {
+        this
+          .connections
+          .filter(({channels}) => channels.includes(message.channel))
+          .forEach((connection) => {
+            connection.getRaw().send(message.payload)
+          })
+      } else {
+        if (!message.connection) throw new Error('There is no WebSocket connection to send the message yet.')
+        if (!(message.connection instanceof GleeConnection)) throw new Error('Connection object is not of GleeConnection type.')
+        message.connection.getRaw().send(message.payload)
       }
-    })
+    } catch (err) {
+      throw err
+    }
   }
 
-  _createMessage (eventName, payload) {
-    return new Message({
+  _createMessage(eventName: string, payload: any): GleeMessage {
+    return new GleeMessage({
       payload,
       channel: eventName
     })
