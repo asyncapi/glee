@@ -31,7 +31,7 @@
 
 #### Defined in
 
-[src/lib/util.ts:107](https://github.com/fmvilas/glee/blob/5924dda/src/lib/util.ts#L107)
+[src/lib/util.ts:107](https://github.com/fmvilas/glee/blob/039da07/src/lib/util.ts#L107)
 
 ___
 
@@ -53,7 +53,7 @@ Duplicates a GleeMessage.
 
 #### Defined in
 
-[src/lib/util.ts:46](https://github.com/fmvilas/glee/blob/5924dda/src/lib/util.ts#L46)
+[src/lib/util.ts:46](https://github.com/fmvilas/glee/blob/039da07/src/lib/util.ts#L46)
 
 ___
 
@@ -76,7 +76,7 @@ Determines if a path matches a channel, and returns the matching params and its 
 
 #### Defined in
 
-[src/lib/util.ts:24](https://github.com/fmvilas/glee/blob/5924dda/src/lib/util.ts#L24)
+[src/lib/util.ts:24](https://github.com/fmvilas/glee/blob/039da07/src/lib/util.ts#L24)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:111](https://github.com/fmvilas/glee/blob/5924dda/src/lib/util.ts#L111)
+[src/lib/util.ts:111](https://github.com/fmvilas/glee/blob/039da07/src/lib/util.ts#L111)
 
 ___
 
@@ -120,7 +120,7 @@ Determines if a path matches a channel.
 
 #### Defined in
 
-[src/lib/util.ts:73](https://github.com/fmvilas/glee/blob/5924dda/src/lib/util.ts#L73)
+[src/lib/util.ts:73](https://github.com/fmvilas/glee/blob/039da07/src/lib/util.ts#L73)
 
 ___
 
@@ -145,4 +145,4 @@ Object
 
 #### Defined in
 
-[src/lib/util.ts:85](https://github.com/fmvilas/glee/blob/5924dda/src/lib/util.ts#L85)
+[src/lib/util.ts:85](https://github.com/fmvilas/glee/blob/039da07/src/lib/util.ts#L85)

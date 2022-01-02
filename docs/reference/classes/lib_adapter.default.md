@@ -10,6 +10,12 @@
 
   ↳ **`default`**
 
+  ↳↳ [`default`](adapters_mqtt.default.md)
+
+  ↳↳ [`default`](adapters_socket_io.default.md)
+
+  ↳↳ [`default`](adapters_ws.default.md)
+
 ## Table of contents
 
 ### Constructors
@@ -88,7 +94,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/adapter.ts:31](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L31)
+[src/lib/adapter.ts:31](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L31)
 
 ## Properties
 
@@ -98,7 +104,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/adapter.ts:17](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L17)
+[src/lib/adapter.ts:17](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L17)
 
 ___
 
@@ -108,7 +114,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:19](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L19)
+[src/lib/adapter.ts:19](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L19)
 
 ___
 
@@ -118,7 +124,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:20](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L20)
+[src/lib/adapter.ts:20](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L20)
 
 ___
 
@@ -128,7 +134,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:15](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L15)
+[src/lib/adapter.ts:15](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L15)
 
 ___
 
@@ -138,7 +144,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:18](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L18)
+[src/lib/adapter.ts:18](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L18)
 
 ___
 
@@ -148,7 +154,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:16](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L16)
+[src/lib/adapter.ts:16](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L16)
 
 ___
 
@@ -158,13 +164,13 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:21](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L21)
+[src/lib/adapter.ts:21](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L21)
 
 ___
 
 ### captureRejectionSymbol
 
-▪ `Static` `Readonly` **captureRejectionSymbol**: typeof [`captureRejectionSymbol`](lib_adapter.default.md#capturerejectionsymbol)
+▪ `Static` `Readonly` **captureRejectionSymbol**: typeof [`captureRejectionSymbol`](adapters_mqtt.default.md#capturerejectionsymbol)
 
 #### Inherited from
 
@@ -208,7 +214,7 @@ ___
 
 ### errorMonitor
 
-▪ `Static` `Readonly` **errorMonitor**: typeof [`errorMonitor`](lib_adapter.default.md#errormonitor)
+▪ `Static` `Readonly` **errorMonitor**: typeof [`errorMonitor`](adapters_mqtt.default.md#errormonitor)
 
 This symbol shall be used to install a listener for only monitoring `'error'`
 events. Listeners installed using this symbol are called before the regular
@@ -238,7 +244,7 @@ node_modules/@types/node/events.d.ts:272
 
 #### Defined in
 
-[src/lib/adapter.ts:131](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L131)
+[src/lib/adapter.ts:131](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L131)
 
 ___
 
@@ -252,7 +258,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:139](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L139)
+[src/lib/adapter.ts:139](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L139)
 
 ___
 
@@ -266,7 +272,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:143](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L143)
+[src/lib/adapter.ts:143](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L143)
 
 ___
 
@@ -280,7 +286,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:123](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L123)
+[src/lib/adapter.ts:123](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L123)
 
 ___
 
@@ -294,7 +300,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:135](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L135)
+[src/lib/adapter.ts:135](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L135)
 
 ___
 
@@ -308,7 +314,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:127](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L127)
+[src/lib/adapter.ts:127](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L127)
 
 ___
 
@@ -322,7 +328,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:147](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L147)
+[src/lib/adapter.ts:147](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L147)
 
 ## Methods
 
@@ -367,7 +373,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/lib/adapter.ts:168](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L168)
+[src/lib/adapter.ts:168](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L168)
 
 ___
 
@@ -507,7 +513,7 @@ Returns a list of the channels a given adapter has to subscribe to.
 
 #### Defined in
 
-[src/lib/adapter.ts:154](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L154)
+[src/lib/adapter.ts:154](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L154)
 
 ___
 
@@ -995,7 +1001,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/lib/adapter.ts:177](https://github.com/fmvilas/glee/blob/5924dda/src/lib/adapter.ts#L177)
+[src/lib/adapter.ts:177](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L177)
 
 ___
 

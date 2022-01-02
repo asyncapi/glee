@@ -6,7 +6,11 @@
 
 ### Modules
 
+- [adapters/mqtt](modules/adapters_mqtt.md)
+- [adapters/socket.io](modules/adapters_socket_io.md)
+- [adapters/ws](modules/adapters_ws.md)
 - [errors/glee-error](modules/errors_glee_error.md)
+- [index](modules/index.md)
 - [lib](modules/lib.md)
 - [lib/adapter](modules/lib_adapter.md)
 - [lib/asyncapiFile](modules/lib_asyncapiFile.md)
@@ -31,3 +35,5 @@
 - [middlewares/string2json](modules/middlewares_string2json.md)
 - [middlewares/validate](modules/middlewares_validate.md)
 - [middlewares/validateConnection](modules/middlewares_validateConnection.md)
+- [moduleIndex](modules/moduleIndex.md)
+- [registerAdapters](modules/registerAdapters.md)

@@ -1,12 +1,12 @@
-[@asyncapi/glee](../README.md) / [lib/glee](../modules/lib_glee.md) / default
+[@asyncapi/glee](../README.md) / [adapters/ws](../modules/adapters_ws.md) / default
 
 # Class: default
 
-[lib/glee](../modules/lib_glee.md).default
+[adapters/ws](../modules/adapters_ws.md).default
 
 ## Hierarchy
 
-- `EventEmitter`
+- [`default`](lib_adapter.default.md)
 
   ↳ **`default`**
 
@@ -14,108 +14,80 @@
 
 ### Constructors
 
-- [constructor](lib_glee.default.md#constructor)
+- [constructor](adapters_ws.default.md#constructor)
 
 ### Properties
 
-- [\_adapters](lib_glee.default.md#_adapters)
-- [\_options](lib_glee.default.md#_options)
-- [\_router](lib_glee.default.md#_router)
-- [captureRejectionSymbol](lib_glee.default.md#capturerejectionsymbol)
-- [captureRejections](lib_glee.default.md#capturerejections)
-- [defaultMaxListeners](lib_glee.default.md#defaultmaxlisteners)
-- [errorMonitor](lib_glee.default.md#errormonitor)
+- [captureRejectionSymbol](adapters_ws.default.md#capturerejectionsymbol)
+- [captureRejections](adapters_ws.default.md#capturerejections)
+- [defaultMaxListeners](adapters_ws.default.md#defaultmaxlisteners)
+- [errorMonitor](adapters_ws.default.md#errormonitor)
 
 ### Accessors
 
-- [options](lib_glee.default.md#options)
+- [AsyncAPIServer](adapters_ws.default.md#asyncapiserver)
+- [channelNames](adapters_ws.default.md#channelnames)
+- [connections](adapters_ws.default.md#connections)
+- [glee](adapters_ws.default.md#glee)
+- [parsedAsyncAPI](adapters_ws.default.md#parsedasyncapi)
+- [serverName](adapters_ws.default.md#servername)
+- [serverUrlExpanded](adapters_ws.default.md#serverurlexpanded)
 
 ### Methods
 
-- [\_execErrorMiddleware](lib_glee.default.md#_execerrormiddleware)
-- [\_processError](lib_glee.default.md#_processerror)
-- [\_processMessage](lib_glee.default.md#_processmessage)
-- [addAdapter](lib_glee.default.md#addadapter)
-- [addListener](lib_glee.default.md#addlistener)
-- [connect](lib_glee.default.md#connect)
-- [emit](lib_glee.default.md#emit)
-- [eventNames](lib_glee.default.md#eventnames)
-- [getMaxListeners](lib_glee.default.md#getmaxlisteners)
-- [injectError](lib_glee.default.md#injecterror)
-- [injectMessage](lib_glee.default.md#injectmessage)
-- [listen](lib_glee.default.md#listen)
-- [listenerCount](lib_glee.default.md#listenercount)
-- [listeners](lib_glee.default.md#listeners)
-- [off](lib_glee.default.md#off)
-- [on](lib_glee.default.md#on)
-- [once](lib_glee.default.md#once)
-- [prependListener](lib_glee.default.md#prependlistener)
-- [prependOnceListener](lib_glee.default.md#prependoncelistener)
-- [rawListeners](lib_glee.default.md#rawlisteners)
-- [removeAllListeners](lib_glee.default.md#removealllisteners)
-- [removeListener](lib_glee.default.md#removelistener)
-- [send](lib_glee.default.md#send)
-- [setMaxListeners](lib_glee.default.md#setmaxlisteners)
-- [use](lib_glee.default.md#use)
-- [useOutbound](lib_glee.default.md#useoutbound)
-- [getEventListeners](lib_glee.default.md#geteventlisteners)
-- [listenerCount](lib_glee.default.md#listenercount)
-- [on](lib_glee.default.md#on)
-- [once](lib_glee.default.md#once)
+- [\_connect](adapters_ws.default.md#_connect)
+- [\_createMessage](adapters_ws.default.md#_createmessage)
+- [\_send](adapters_ws.default.md#_send)
+- [addListener](adapters_ws.default.md#addlistener)
+- [connect](adapters_ws.default.md#connect)
+- [emit](adapters_ws.default.md#emit)
+- [eventNames](adapters_ws.default.md#eventnames)
+- [getMaxListeners](adapters_ws.default.md#getmaxlisteners)
+- [getSubscribedChannels](adapters_ws.default.md#getsubscribedchannels)
+- [listenerCount](adapters_ws.default.md#listenercount)
+- [listeners](adapters_ws.default.md#listeners)
+- [name](adapters_ws.default.md#name)
+- [off](adapters_ws.default.md#off)
+- [on](adapters_ws.default.md#on)
+- [once](adapters_ws.default.md#once)
+- [prependListener](adapters_ws.default.md#prependlistener)
+- [prependOnceListener](adapters_ws.default.md#prependoncelistener)
+- [rawListeners](adapters_ws.default.md#rawlisteners)
+- [removeAllListeners](adapters_ws.default.md#removealllisteners)
+- [removeListener](adapters_ws.default.md#removelistener)
+- [send](adapters_ws.default.md#send)
+- [setMaxListeners](adapters_ws.default.md#setmaxlisteners)
+- [getEventListeners](adapters_ws.default.md#geteventlisteners)
+- [listenerCount](adapters_ws.default.md#listenercount)
+- [on](adapters_ws.default.md#on)
+- [once](adapters_ws.default.md#once)
 
 ## Constructors
 
 ### constructor
 
-• **new default**(`options?`)
+• **new default**(`glee`, `serverName`, `server`, `parsedAsyncAPI`)
 
-Instantiates Glee.
+Instantiates a Glee adapter.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`GleeConfig`](../modules/lib.md#gleeconfig) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `glee` | [`default`](lib_glee.default.md) | A reference to the Glee app. |
+| `serverName` | `string` | The name of the AsyncAPI server to use for the connection. |
+| `server` | `Server` | The AsyncAPI server to use for the connection. |
+| `parsedAsyncAPI` | `AsyncAPIDocument` | The AsyncAPI document. |
 
-#### Overrides
+#### Inherited from
 
-EventEmitter.constructor
+[default](lib_adapter.default.md).[constructor](lib_adapter.default.md#constructor)
 
 #### Defined in
 
-[src/lib/glee.ts:32](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L32)
+[src/lib/adapter.ts:31](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L31)
 
 ## Properties
-
-### \_adapters
-
-• `Private` **\_adapters**: `AdapterRecord`[]
-
-#### Defined in
-
-[src/lib/glee.ts:25](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L25)
-
-___
-
-### \_options
-
-• `Private` **\_options**: [`GleeConfig`](../modules/lib.md#gleeconfig)
-
-#### Defined in
-
-[src/lib/glee.ts:23](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L23)
-
-___
-
-### \_router
-
-• `Private` **\_router**: [`default`](lib_router.default.md)
-
-#### Defined in
-
-[src/lib/glee.ts:24](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L24)
-
-___
 
 ### captureRejectionSymbol
 
@@ -123,7 +95,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.captureRejectionSymbol
+[default](lib_adapter.default.md).[captureRejectionSymbol](lib_adapter.default.md#capturerejectionsymbol)
 
 #### Defined in
 
@@ -139,7 +111,7 @@ Sets or gets the default captureRejection value for all emitters.
 
 #### Inherited from
 
-EventEmitter.captureRejections
+[default](lib_adapter.default.md).[captureRejections](lib_adapter.default.md#capturerejections)
 
 #### Defined in
 
@@ -153,7 +125,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.defaultMaxListeners
+[default](lib_adapter.default.md).[defaultMaxListeners](lib_adapter.default.md#defaultmaxlisteners)
 
 #### Defined in
 
@@ -175,7 +147,7 @@ regular `'error'` listener is installed.
 
 #### Inherited from
 
-EventEmitter.errorMonitor
+[default](lib_adapter.default.md).[errorMonitor](lib_adapter.default.md#errormonitor)
 
 #### Defined in
 
@@ -183,120 +155,190 @@ node_modules/@types/node/events.d.ts:272
 
 ## Accessors
 
-### options
+### AsyncAPIServer
 
-• `get` **options**(): [`GleeConfig`](../modules/lib.md#gleeconfig)
+• `get` **AsyncAPIServer**(): `Server`
 
 #### Returns
 
-[`GleeConfig`](../modules/lib.md#gleeconfig)
+`Server`
+
+#### Inherited from
+
+Adapter.AsyncAPIServer
 
 #### Defined in
 
-[src/lib/glee.ts:40](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L40)
+[src/lib/adapter.ts:131](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L131)
+
+___
+
+### channelNames
+
+• `get` **channelNames**(): `string`[]
+
+#### Returns
+
+`string`[]
+
+#### Inherited from
+
+Adapter.channelNames
+
+#### Defined in
+
+[src/lib/adapter.ts:139](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L139)
+
+___
+
+### connections
+
+• `get` **connections**(): [`default`](lib_connection.default.md)[]
+
+#### Returns
+
+[`default`](lib_connection.default.md)[]
+
+#### Inherited from
+
+Adapter.connections
+
+#### Defined in
+
+[src/lib/adapter.ts:143](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L143)
+
+___
+
+### glee
+
+• `get` **glee**(): [`default`](lib_glee.default.md)
+
+#### Returns
+
+[`default`](lib_glee.default.md)
+
+#### Inherited from
+
+Adapter.glee
+
+#### Defined in
+
+[src/lib/adapter.ts:123](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L123)
+
+___
+
+### parsedAsyncAPI
+
+• `get` **parsedAsyncAPI**(): `AsyncAPIDocument`
+
+#### Returns
+
+`AsyncAPIDocument`
+
+#### Inherited from
+
+Adapter.parsedAsyncAPI
+
+#### Defined in
+
+[src/lib/adapter.ts:135](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L135)
+
+___
+
+### serverName
+
+• `get` **serverName**(): `string`
+
+#### Returns
+
+`string`
+
+#### Inherited from
+
+Adapter.serverName
+
+#### Defined in
+
+[src/lib/adapter.ts:127](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L127)
+
+___
+
+### serverUrlExpanded
+
+• `get` **serverUrlExpanded**(): `string`
+
+#### Returns
+
+`string`
+
+#### Inherited from
+
+Adapter.serverUrlExpanded
+
+#### Defined in
+
+[src/lib/adapter.ts:147](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L147)
 
 ## Methods
 
-### \_execErrorMiddleware
+### \_connect
 
-▸ **_execErrorMiddleware**(`emws`, `index`, `error`, `message`): `void`
+▸ **_connect**(): `Promise`<[`default`](adapters_ws.default.md)\>
+
+#### Returns
+
+`Promise`<[`default`](adapters_ws.default.md)\>
+
+#### Defined in
+
+[src/adapters/ws/index.ts:22](https://github.com/fmvilas/glee/blob/039da07/src/adapters/ws/index.ts#L22)
+
+___
+
+### \_createMessage
+
+▸ **_createMessage**(`eventName`, `payload`): [`default`](lib_message.default.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `emws` | [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[] |
-| `index` | `number` |
-| `error` | `Error` |
+| `eventName` | `string` |
+| `payload` | `any` |
+
+#### Returns
+
+[`default`](lib_message.default.md)
+
+#### Defined in
+
+[src/adapters/ws/index.ts:142](https://github.com/fmvilas/glee/blob/039da07/src/adapters/ws/index.ts#L142)
+
+___
+
+### \_send
+
+▸ **_send**(`message`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
 | `message` | [`default`](lib_message.default.md) |
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 #### Defined in
 
-[src/lib/glee.ts:216](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L216)
-
-___
-
-### \_processError
-
-▸ `Private` **_processError**(`errorMiddlewares`, `error`, `message`): `void`
-
-Starts executing the middlewares for the given error and message.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `errorMiddlewares` | [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[] | The error middlewares chain to execute. |
-| `error` | `Error` | The error to pass to the middleware. |
-| `message` | [`default`](lib_message.default.md) | The message to pass to the middlewares. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:209](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L209)
-
-___
-
-### \_processMessage
-
-▸ `Private` **_processMessage**(`middlewares`, `errorMiddlewares`, `message`): `void`
-
-Starts executing the middlewares for the given message.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `middlewares` | [`ChannelMiddlewareTuple`](../modules/lib_router.md#channelmiddlewaretuple)[] | The middleware chain to execute. |
-| `errorMiddlewares` | [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[] | The middlewares chain to execute in case of error. |
-| `message` | [`default`](lib_message.default.md) | The message to pass to the middlewares. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:155](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L155)
-
-___
-
-### addAdapter
-
-▸ **addAdapter**(`Adapter`, `__namedParameters`): `void`
-
-Adds a connection adapter.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `Adapter` | typeof [`default`](lib_adapter.default.md) |
-| `__namedParameters` | `Object` |
-| `__namedParameters.parsedAsyncAPI` | `AsyncAPIDocument` |
-| `__namedParameters.server` | `Server` |
-| `__namedParameters.serverName` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:52](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L52)
+[src/adapters/ws/index.ts:123](https://github.com/fmvilas/glee/blob/039da07/src/adapters/ws/index.ts#L123)
 
 ___
 
 ### addListener
 
-▸ **addListener**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **addListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
 
 Alias for `emitter.on(eventName, listener)`.
 
@@ -311,11 +353,11 @@ Alias for `emitter.on(eventName, listener)`.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](adapters_ws.default.md)
 
 #### Inherited from
 
-EventEmitter.addListener
+[default](lib_adapter.default.md).[addListener](lib_adapter.default.md#addlistener)
 
 #### Defined in
 
@@ -325,17 +367,21 @@ ___
 
 ### connect
 
-▸ **connect**(): `Promise`<`any`[]\>
+▸ **connect**(): `Promise`<[`default`](adapters_ws.default.md)\>
 
-Tells the adapters to connect.
+Connects to the remote server.
 
 #### Returns
 
-`Promise`<`any`[]\>
+`Promise`<[`default`](adapters_ws.default.md)\>
+
+#### Overrides
+
+[default](lib_adapter.default.md).[connect](lib_adapter.default.md#connect)
 
 #### Defined in
 
-[src/lib/glee.ts:96](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L96)
+[src/adapters/ws/index.ts:14](https://github.com/fmvilas/glee/blob/039da07/src/adapters/ws/index.ts#L14)
 
 ___
 
@@ -396,7 +442,7 @@ myEmitter.emit('event', 1, 2, 3, 4, 5);
 
 #### Inherited from
 
-EventEmitter.emit
+[default](lib_adapter.default.md).[emit](lib_adapter.default.md#emit)
 
 #### Defined in
 
@@ -432,7 +478,7 @@ console.log(myEE.eventNames());
 
 #### Inherited from
 
-EventEmitter.eventNames
+[default](lib_adapter.default.md).[eventNames](lib_adapter.default.md#eventnames)
 
 #### Defined in
 
@@ -445,7 +491,7 @@ ___
 ▸ **getMaxListeners**(): `number`
 
 Returns the current max listener value for the `EventEmitter` which is either
-set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](lib_glee.default.md#defaultmaxlisteners).
+set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapters_ws.default.md#defaultmaxlisteners).
 
 **`since`** v1.0.0
 
@@ -455,7 +501,7 @@ set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](lib_gle
 
 #### Inherited from
 
-EventEmitter.getMaxListeners
+[default](lib_adapter.default.md).[getMaxListeners](lib_adapter.default.md#getmaxlisteners)
 
 #### Defined in
 
@@ -463,66 +509,23 @@ node_modules/@types/node/events.d.ts:471
 
 ___
 
-### injectError
+### getSubscribedChannels
 
-▸ **injectError**(`error`, `channel?`): `void`
+▸ **getSubscribedChannels**(): `string`[]
 
-Injects an error into the Glee inbound error middleware chain.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `error` | `Error` | The error. |
-| `channel?` | `string` | - |
+Returns a list of the channels a given adapter has to subscribe to.
 
 #### Returns
 
-`void`
+`string`[]
+
+#### Inherited from
+
+[default](lib_adapter.default.md).[getSubscribedChannels](lib_adapter.default.md#getsubscribedchannels)
 
 #### Defined in
 
-[src/lib/glee.ts:139](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L139)
-
-___
-
-### injectMessage
-
-▸ **injectMessage**(`message`, `serverName`, `connection`): `void`
-
-Injects a message into the Glee inbound middleware chain.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `message` | [`default`](lib_message.default.md) | The message you want to send. |
-| `serverName` | `string` | The name of the server this message is coming from. |
-| `connection` | [`default`](lib_connection.default.md) | - |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:121](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L121)
-
-___
-
-### listen
-
-▸ **listen**(): `Promise`<`any`[]\>
-
-Alias for `connect`.
-
-#### Returns
-
-`Promise`<`any`[]\>
-
-#### Defined in
-
-[src/lib/glee.ts:110](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L110)
+[src/lib/adapter.ts:154](https://github.com/fmvilas/glee/blob/039da07/src/lib/adapter.ts#L154)
 
 ___
 
@@ -546,7 +549,7 @@ Returns the number of listeners listening to the event named `eventName`.
 
 #### Inherited from
 
-EventEmitter.listenerCount
+[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount)
 
 #### Defined in
 
@@ -582,7 +585,7 @@ console.log(util.inspect(server.listeners('connection')));
 
 #### Inherited from
 
-EventEmitter.listeners
+[default](lib_adapter.default.md).[listeners](lib_adapter.default.md#listeners)
 
 #### Defined in
 
@@ -590,9 +593,23 @@ node_modules/@types/node/events.d.ts:484
 
 ___
 
+### name
+
+▸ **name**(): `string`
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[src/adapters/ws/index.ts:10](https://github.com/fmvilas/glee/blob/039da07/src/adapters/ws/index.ts#L10)
+
+___
+
 ### off
 
-▸ **off**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **off**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
 
 Alias for `emitter.removeListener()`.
 
@@ -607,11 +624,11 @@ Alias for `emitter.removeListener()`.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](adapters_ws.default.md)
 
 #### Inherited from
 
-EventEmitter.off
+[default](lib_adapter.default.md).[off](lib_adapter.default.md#off)
 
 #### Defined in
 
@@ -621,7 +638,7 @@ ___
 
 ### on
 
-▸ **on**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **on**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
 
 Adds the `listener` function to the end of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -660,11 +677,11 @@ myEE.emit('foo');
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](adapters_ws.default.md)
 
 #### Inherited from
 
-EventEmitter.on
+[default](lib_adapter.default.md).[on](lib_adapter.default.md#on)
 
 #### Defined in
 
@@ -674,7 +691,7 @@ ___
 
 ### once
 
-▸ **once**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **once**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName`. The
 next time `eventName` is triggered, this listener is removed and then invoked.
@@ -711,11 +728,11 @@ myEE.emit('foo');
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](adapters_ws.default.md)
 
 #### Inherited from
 
-EventEmitter.once
+[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
 
 #### Defined in
 
@@ -725,7 +742,7 @@ ___
 
 ### prependListener
 
-▸ **prependListener**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **prependListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
 
 Adds the `listener` function to the _beginning_ of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -751,11 +768,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](adapters_ws.default.md)
 
 #### Inherited from
 
-EventEmitter.prependListener
+[default](lib_adapter.default.md).[prependListener](lib_adapter.default.md#prependlistener)
 
 #### Defined in
 
@@ -765,7 +782,7 @@ ___
 
 ### prependOnceListener
 
-▸ **prependOnceListener**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **prependOnceListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName` to the_beginning_ of the listeners array. The next time `eventName` is triggered, this
 listener is removed, and then invoked.
@@ -789,11 +806,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](adapters_ws.default.md)
 
 #### Inherited from
 
-EventEmitter.prependOnceListener
+[default](lib_adapter.default.md).[prependOnceListener](lib_adapter.default.md#prependoncelistener)
 
 #### Defined in
 
@@ -846,7 +863,7 @@ emitter.emit('log');
 
 #### Inherited from
 
-EventEmitter.rawListeners
+[default](lib_adapter.default.md).[rawListeners](lib_adapter.default.md#rawlisteners)
 
 #### Defined in
 
@@ -856,7 +873,7 @@ ___
 
 ### removeAllListeners
 
-▸ **removeAllListeners**(`event?`): [`default`](lib_glee.default.md)
+▸ **removeAllListeners**(`event?`): [`default`](adapters_ws.default.md)
 
 Removes all listeners, or those of the specified `eventName`.
 
@@ -876,11 +893,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](adapters_ws.default.md)
 
 #### Inherited from
 
-EventEmitter.removeAllListeners
+[default](lib_adapter.default.md).[removeAllListeners](lib_adapter.default.md#removealllisteners)
 
 #### Defined in
 
@@ -890,7 +907,7 @@ ___
 
 ### removeListener
 
-▸ **removeListener**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **removeListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
 
 Removes the specified `listener` from the listener array for the event named`eventName`.
 
@@ -980,11 +997,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](adapters_ws.default.md)
 
 #### Inherited from
 
-EventEmitter.removeListener
+[default](lib_adapter.default.md).[removeListener](lib_adapter.default.md#removelistener)
 
 #### Defined in
 
@@ -994,29 +1011,33 @@ ___
 
 ### send
 
-▸ **send**(`message`): `void`
+▸ **send**(`message`): `Promise`<`void`\>
 
-Send a message to the adapters.
+Sends a message to the remote server.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `message` | [`default`](lib_message.default.md) | The payload of the message you want to send. |
+| Name | Type |
+| :------ | :------ |
+| `message` | [`default`](lib_message.default.md) |
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
+
+#### Overrides
+
+[default](lib_adapter.default.md).[send](lib_adapter.default.md#send)
 
 #### Defined in
 
-[src/lib/glee.ts:83](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L83)
+[src/adapters/ws/index.ts:18](https://github.com/fmvilas/glee/blob/039da07/src/adapters/ws/index.ts#L18)
 
 ___
 
 ### setMaxListeners
 
-▸ **setMaxListeners**(`n`): [`default`](lib_glee.default.md)
+▸ **setMaxListeners**(`n`): [`default`](adapters_ws.default.md)
 
 By default `EventEmitter`s will print a warning if more than `10` listeners are
 added for a particular event. This is a useful default that helps finding
@@ -1035,93 +1056,15 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](adapters_ws.default.md)
 
 #### Inherited from
 
-EventEmitter.setMaxListeners
+[default](lib_adapter.default.md).[setMaxListeners](lib_adapter.default.md#setmaxlisteners)
 
 #### Defined in
 
 node_modules/@types/node/events.d.ts:465
-
-___
-
-### use
-
-▸ **use**(...`middlewares`): `void`
-
-Use a middleware for inbound messages.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...middlewares` | [`GenericMiddleware`](../modules/lib_router.md#genericmiddleware)[] |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:61](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L61)
-
-▸ **use**(`channel`, ...`middlewares`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `channel` | `string` |
-| `...middlewares` | [`GenericMiddleware`](../modules/lib_router.md#genericmiddleware)[] |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:62](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L62)
-
-___
-
-### useOutbound
-
-▸ **useOutbound**(...`middlewares`): `void`
-
-Use a middleware for outbound messages.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...middlewares` | [`GenericMiddleware`](../modules/lib_router.md#genericmiddleware)[] |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:72](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L72)
-
-▸ **useOutbound**(`channel`, ...`middlewares`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `channel` | `string` |
-| `...middlewares` | [`GenericMiddleware`](../modules/lib_router.md#genericmiddleware)[] |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:73](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L73)
 
 ___
 
@@ -1169,7 +1112,7 @@ const { getEventListeners, EventEmitter } = require('events');
 
 #### Inherited from
 
-EventEmitter.getEventListeners
+[default](lib_adapter.default.md).[getEventListeners](lib_adapter.default.md#geteventlisteners)
 
 #### Defined in
 
@@ -1209,7 +1152,7 @@ console.log(listenerCount(myEmitter, 'event'));
 
 #### Inherited from
 
-EventEmitter.listenerCount
+[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount)
 
 #### Defined in
 
@@ -1293,7 +1236,7 @@ that iterates `eventName` events emitted by the `emitter`
 
 #### Inherited from
 
-EventEmitter.on
+[default](lib_adapter.default.md).[on](lib_adapter.default.md#on)
 
 #### Defined in
 
@@ -1401,7 +1344,7 @@ ee.emit('foo'); // Prints: Waiting for the event was canceled!
 
 #### Inherited from
 
-EventEmitter.once
+[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
 
 #### Defined in
 
@@ -1423,7 +1366,7 @@ node_modules/@types/node/events.d.ts:157
 
 #### Inherited from
 
-EventEmitter.once
+[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
 
 #### Defined in
 

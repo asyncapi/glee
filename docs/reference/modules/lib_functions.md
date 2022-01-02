@@ -25,7 +25,7 @@
 
 #### Defined in
 
-[src/lib/functions.ts:16](https://github.com/fmvilas/glee/blob/5924dda/src/lib/functions.ts#L16)
+[src/lib/functions.ts:16](https://github.com/fmvilas/glee/blob/039da07/src/lib/functions.ts#L16)
 
 ## Functions
 
@@ -45,7 +45,7 @@
 
 #### Defined in
 
-[src/lib/functions.ts:18](https://github.com/fmvilas/glee/blob/5924dda/src/lib/functions.ts#L18)
+[src/lib/functions.ts:18](https://github.com/fmvilas/glee/blob/039da07/src/lib/functions.ts#L18)
 
 ___
 
@@ -69,4 +69,4 @@ ___
 
 #### Defined in
 
-[src/lib/functions.ts:44](https://github.com/fmvilas/glee/blob/5924dda/src/lib/functions.ts#L44)
+[src/lib/functions.ts:44](https://github.com/fmvilas/glee/blob/039da07/src/lib/functions.ts#L44)

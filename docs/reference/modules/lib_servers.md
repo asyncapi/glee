@@ -20,4 +20,4 @@
 
 #### Defined in
 
-[src/lib/servers.ts:3](https://github.com/fmvilas/glee/blob/5924dda/src/lib/servers.ts#L3)
+[src/lib/servers.ts:3](https://github.com/fmvilas/glee/blob/039da07/src/lib/servers.ts#L3)

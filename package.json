@@ -14,7 +14,7 @@
     "build": "tsc",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
     "dev": "tsc --watch",
-    "docs": "typedoc --readme none --githubPages false --out docs/reference src/**/*.ts",
+    "docs": "typedoc --readme none --githubPages false --out docs/reference --entryPointStrategy expand ./src",
     "get:version": "echo $npm_package_version",
     "get:name": "echo $npm_package_name",
     "generate:assets": "npm run docs",

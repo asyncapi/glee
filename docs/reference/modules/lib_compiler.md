@@ -26,4 +26,4 @@
 
 #### Defined in
 
-[src/lib/compiler.ts:19](https://github.com/fmvilas/glee/blob/5924dda/src/lib/compiler.ts#L19)
+[src/lib/compiler.ts:19](https://github.com/fmvilas/glee/blob/039da07/src/lib/compiler.ts#L19)

@@ -41,7 +41,7 @@ Instantiates a GleeRouter.
 
 #### Defined in
 
-[src/lib/router.ts:25](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L25)
+[src/lib/router.ts:25](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L25)
 
 ## Properties
 
@@ -51,7 +51,7 @@ Instantiates a GleeRouter.
 
 #### Defined in
 
-[src/lib/router.ts:19](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L19)
+[src/lib/router.ts:19](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L19)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:17](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L17)
+[src/lib/router.ts:17](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L17)
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:20](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L20)
+[src/lib/router.ts:20](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L20)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:18](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L18)
+[src/lib/router.ts:18](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L18)
 
 ## Methods
 
@@ -105,7 +105,7 @@ Adds a normalized middleware to a target collection.
 
 #### Defined in
 
-[src/lib/router.ts:123](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L123)
+[src/lib/router.ts:123](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L123)
 
 ___
 
@@ -128,7 +128,7 @@ Adds a normalized middleware to the inbound error middlewares collection.
 
 #### Defined in
 
-[src/lib/router.ts:160](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L160)
+[src/lib/router.ts:160](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L160)
 
 ___
 
@@ -151,7 +151,7 @@ Adds a normalized middleware to the inbound middlewares collection.
 
 #### Defined in
 
-[src/lib/router.ts:140](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L140)
+[src/lib/router.ts:140](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L140)
 
 ___
 
@@ -174,7 +174,7 @@ Adds a normalized middleware to the outbound error middlewares collection.
 
 #### Defined in
 
-[src/lib/router.ts:170](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L170)
+[src/lib/router.ts:170](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L170)
 
 ___
 
@@ -197,7 +197,7 @@ Adds a normalized middleware to the outbound middlewares collection.
 
 #### Defined in
 
-[src/lib/router.ts:150](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L150)
+[src/lib/router.ts:150](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L150)
 
 ___
 
@@ -213,7 +213,7 @@ Returns all the inbound error middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:103](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L103)
+[src/lib/router.ts:103](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L103)
 
 ___
 
@@ -229,7 +229,7 @@ Returns all the inbound middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:87](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L87)
+[src/lib/router.ts:87](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L87)
 
 ___
 
@@ -245,7 +245,7 @@ Returns all the outbound error middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:111](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L111)
+[src/lib/router.ts:111](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L111)
 
 ___
 
@@ -261,7 +261,7 @@ Returns all the outbound middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:95](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L95)
+[src/lib/router.ts:95](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L95)
 
 ___
 
@@ -284,7 +284,7 @@ this function will make use of inbound and outbound middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:39](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L39)
+[src/lib/router.ts:39](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L39)
 
 ▸ **use**(`channel`, ...`middlewares`): `void`
 
@@ -301,7 +301,7 @@ this function will make use of inbound and outbound middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:40](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L40)
+[src/lib/router.ts:40](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L40)
 
 ___
 
@@ -323,7 +323,7 @@ Use a middleware for outbound messages.
 
 #### Defined in
 
-[src/lib/router.ts:64](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L64)
+[src/lib/router.ts:64](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L64)
 
 ▸ **useOutbound**(`channel`, ...`middlewares`): `void`
 
@@ -340,4 +340,4 @@ Use a middleware for outbound messages.
 
 #### Defined in
 
-[src/lib/router.ts:65](https://github.com/fmvilas/glee/blob/5924dda/src/lib/router.ts#L65)
+[src/lib/router.ts:65](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L65)

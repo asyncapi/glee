@@ -33,7 +33,7 @@
 
 #### Defined in
 
-[src/middlewares/index.d.ts:4](https://github.com/fmvilas/glee/blob/5924dda/src/middlewares/index.d.ts#L4)
+[src/middlewares/index.d.ts:4](https://github.com/fmvilas/glee/blob/039da07/src/middlewares/index.d.ts#L4)
 
 ___
 
@@ -58,4 +58,4 @@ ___
 
 #### Defined in
 
-[src/middlewares/index.d.ts:3](https://github.com/fmvilas/glee/blob/5924dda/src/middlewares/index.d.ts#L3)
+[src/middlewares/index.d.ts:3](https://github.com/fmvilas/glee/blob/039da07/src/middlewares/index.d.ts#L3)

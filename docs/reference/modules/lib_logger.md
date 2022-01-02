@@ -60,7 +60,7 @@ node_modules/chalk/index.d.ts:405
 
 #### Defined in
 
-[src/lib/logger.ts:45](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L45)
+[src/lib/logger.ts:45](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L45)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:131](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L131)
+[src/lib/logger.ts:131](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L131)
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:125](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L125)
+[src/lib/logger.ts:125](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L125)
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:112](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L112)
+[src/lib/logger.ts:112](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L112)
 
 ___
 
@@ -143,7 +143,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:94](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L94)
+[src/lib/logger.ts:94](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L94)
 
 ___
 
@@ -165,7 +165,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:107](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L107)
+[src/lib/logger.ts:107](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L107)
 
 ___
 
@@ -187,7 +187,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:85](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L85)
+[src/lib/logger.ts:85](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L85)
 
 ___
 
@@ -207,7 +207,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:117](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L117)
+[src/lib/logger.ts:117](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L117)
 
 ___
 
@@ -231,7 +231,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:152](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L152)
+[src/lib/logger.ts:152](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L152)
 
 ___
 
@@ -251,7 +251,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:148](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L148)
+[src/lib/logger.ts:148](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L148)
 
 ___
 
@@ -272,7 +272,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:100](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L100)
+[src/lib/logger.ts:100](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L100)
 
 ___
 
@@ -292,4 +292,4 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:51](https://github.com/fmvilas/glee/blob/5924dda/src/lib/logger.ts#L51)
+[src/lib/logger.ts:51](https://github.com/fmvilas/glee/blob/039da07/src/lib/logger.ts#L51)

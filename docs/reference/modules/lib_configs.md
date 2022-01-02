@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[src/lib/configs.ts:52](https://github.com/fmvilas/glee/blob/5924dda/src/lib/configs.ts#L52)
+[src/lib/configs.ts:52](https://github.com/fmvilas/glee/blob/039da07/src/lib/configs.ts#L52)
 
 ___
 
@@ -41,4 +41,4 @@ ___
 
 #### Defined in
 
-[src/lib/configs.ts:15](https://github.com/fmvilas/glee/blob/5924dda/src/lib/configs.ts#L15)
+[src/lib/configs.ts:15](https://github.com/fmvilas/glee/blob/039da07/src/lib/configs.ts#L15)
