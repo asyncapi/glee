@@ -14,7 +14,7 @@
     "build": "tsc",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
     "dev": "tsc --watch",
-    "docs": "jsdoc2md \"src/lib/glee.js\" -f \"src/lib/*.js\" > docs/api.md",
+    "docs": "typedoc --readme none --githubPages false --out docs/reference src/**/*.ts",
     "get:version": "echo $npm_package_version",
     "get:name": "echo $npm_package_name",
     "generate:assets": "npm run docs",
@@ -79,6 +79,8 @@
     "rimraf": "^3.0.2",
     "semantic-release": "^17.2.2",
     "tsc-watch": "^4.5.0",
+    "typedoc": "^0.22.10",
+    "typedoc-plugin-markdown": "^3.11.8",
     "typescript": "^4.5.4",
     "unixify": "^1.0.0"
   }

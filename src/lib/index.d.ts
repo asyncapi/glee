@@ -3,10 +3,7 @@ import GleeAdapter from "./adapter"
 import GleeConnection from "./connection"
 import Glee from "./glee"
 
-declare enum WebSocketServerType {
-  Native = "native",
-  SocketIO = "socket.io",
-}
+type WebSocketServerType = "native" | "socket.io"
 
 export type GleeConfig = {
   websocket?: {
