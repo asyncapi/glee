@@ -5,10 +5,6 @@
 <dd></dd>
 <dt><a href="#GleeAdapter">GleeAdapter</a></dt>
 <dd></dd>
-<dt><a href="#GleeConnection">GleeConnection</a></dt>
-<dd></dd>
-<dt><a href="#GleeMessage">GleeMessage</a></dt>
-<dd></dd>
 <dt><a href="#GleeRouter">GleeRouter</a></dt>
 <dd></dd>
 </dl>
@@ -94,7 +90,7 @@ Send a message to the adapters.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| message | <code>Object</code> \| [<code>GleeMessage</code>](#GleeMessage) | The payload of the message you want to send. |
+| message | <code>Object</code> \| <code>GleeMessage</code> | The payload of the message you want to send. |
 
 <a name="Glee+connect"></a>
 
@@ -117,7 +113,7 @@ Injects a message into the Glee inbound middleware chain.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| message | [<code>GleeMessage</code>](#GleeMessage) | The message you want to send. |
+| message | <code>GleeMessage</code> | The message you want to send. |
 | serverName | <code>String</code> | The name of the server this message is coming from. |
 | [connection] | <code>Unknown</code> | The connection used when receiving the message. Its type is unknown and must be handled by the adapters. |
 
@@ -178,109 +174,8 @@ Sends a message to the remote server.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| message | [<code>GleeMessage</code>](#GleeMessage) | The message to send. |
+| message | <code>GleeMessage</code> | The message to send. |
 
-<a name="GleeConnection"></a>
-
-## GleeConnection
-**Kind**: global class  
-
-* [GleeConnection](#GleeConnection)
-    * [new GleeConnection(options)](#new_GleeConnection_new)
-    * [.hasChannel(channelName)](#GleeConnection+hasChannel) ⇒ <code>Boolean</code>
-    * [.getRaw()](#GleeConnection+getRaw) ⇒ <code>Any</code>
-
-<a name="new_GleeConnection_new"></a>
-
-### new GleeConnection(options)
-Instantiates a Glee connection.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>Object</code> |  |
-| options.channels | <code>Array.&lt;String&gt;</code> | The name of the channels associated to this connection. |
-| options.serverName | <code>String</code> | The name of the AsyncAPI server the connection is pointing to. |
-| options.server | <code>AsyncAPIServer</code> | The AsyncAPI server the connection is pointing to. |
-| options.parsedAsyncAPI | <code>AsyncAPIDocument</code> | The AsyncAPI document. |
-
-<a name="GleeConnection+hasChannel"></a>
-
-### gleeConnection.hasChannel(channelName) ⇒ <code>Boolean</code>
-Checks whether a channel is associated with this connection.
-
-**Kind**: instance method of [<code>GleeConnection</code>](#GleeConnection)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| channelName | <code>String</code> | The name of the channel. |
-
-<a name="GleeConnection+getRaw"></a>
-
-### gleeConnection.getRaw() ⇒ <code>Any</code>
-Returns the real connection object.
-
-**Kind**: instance method of [<code>GleeConnection</code>](#GleeConnection)  
-<a name="GleeMessage"></a>
-
-## GleeMessage
-**Kind**: global class  
-
-* [GleeMessage](#GleeMessage)
-    * [new GleeMessage(options)](#new_GleeMessage_new)
-    * [.reply(options)](#GleeMessage+reply)
-    * [.setInbound()](#GleeMessage+setInbound)
-    * [.setOutbound()](#GleeMessage+setOutbound)
-    * [.send()](#GleeMessage+send)
-
-<a name="new_GleeMessage_new"></a>
-
-### new GleeMessage(options)
-Instantiates a new GleeMessage.
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| options | <code>Object</code> |  |  |
-| [options.payload] | <code>Any</code> |  | Message payload. |
-| [options.headers] | <code>Object</code> |  | Message headers. |
-| [options.channel] | <code>String</code> |  | Message channel. |
-| [options.serverName] | <code>String</code> |  | The name of the associated AsyncAPI server. |
-| [options.connection] | [<code>GleeConnection</code>](#GleeConnection) |  | The connection through which the message will be sent or has been received. |
-| [options.broadcast] | <code>Boolean</code> | <code>false</code> | Whether the message should be broadcasted or not. |
-
-<a name="GleeMessage+reply"></a>
-
-### gleeMessage.reply(options)
-Sends the message back to the server/broker.
-
-**Kind**: instance method of [<code>GleeMessage</code>](#GleeMessage)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>Object</code> |  |
-| [options.payload] | <code>Any</code> | The new message payload. Pass falsy value if you don't want to change it. |
-| [options.headers] | <code>Object</code> \| <code>null</code> | The new message headers. Pass null if you want to remove them. |
-| [options.channel] | <code>String</code> | The channel where the reply should go to. |
-
-<a name="GleeMessage+setInbound"></a>
-
-### gleeMessage.setInbound()
-Makes the message suitable only for the inbound pipeline.
-
-**Kind**: instance method of [<code>GleeMessage</code>](#GleeMessage)  
-<a name="GleeMessage+setOutbound"></a>
-
-### gleeMessage.setOutbound()
-Makes the message suitable only for the outbound pipeline.
-
-**Kind**: instance method of [<code>GleeMessage</code>](#GleeMessage)  
-<a name="GleeMessage+send"></a>
-
-### gleeMessage.send()
-Tells Glee to send the message.
-
-**Kind**: instance method of [<code>GleeMessage</code>](#GleeMessage)  
 <a name="GleeRouter"></a>
 
 ## GleeRouter
