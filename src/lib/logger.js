@@ -10,6 +10,7 @@ export { chalk }
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
+const TSLogo = chalk.bgHex('#3178C6').white(' TS')
 
 const highlightWords = (words, text) => {
   let result = text
@@ -21,12 +22,20 @@ const highlightWords = (words, text) => {
   return result
 }
 
+export const logEmptyLines = (amount) => {
+  for (let i = 0; i < amount; i++) {
+    console.log('')
+  }
+}
+
 export const logWelcome = ({
   dev,
   servers,
   dir,
   functionsDir,
-  experimentalFlags = [],
+  experimentalFlags,
+  showAppDir = false,
+  showFunctionsDir = false,
 }) => {
   const primaryColor = '#08d2a1'
   const bgPrimary = chalk.bgHex(primaryColor)
@@ -35,16 +44,17 @@ export const logWelcome = ({
   
   const pkg = JSON.parse(readFileSync(path.resolve(__dirname, '../../package.json')))
 
+  logEmptyLines(1)
   console.log(bgPrimary.black(` Glee ${pkg.version} \n`))
   if (dev) {
     console.log(fgPrimary('{}'), chalk.gray('Running in development mode...'))
   }
   console.log(fgPrimary('↙↗'), chalk.gray(wordWrap(`Selected server(s): ${servers.join(', ')}`, { width: 37, indent: '   ' }).trim()))
-  if (dir !== process.cwd()) {
+  if (showAppDir) {
     console.log(fgPrimary('./'), chalk.gray(wordWrap(`App directory: ${dir}`, { width: 37, indent: '   ', cut: true }).trim()))
   }
-  if (functionsDir !== path.resolve(process.cwd(), 'functions')) {
-    console.log(fgPrimary('𝑓×'), chalk.gray(wordWrap(`Functions directory: ${dir}`, { width: 37, indent: '   ', cut: true }).trim()))
+  if (showFunctionsDir) {
+    console.log(fgPrimary('𝑓×'), chalk.gray(wordWrap(`Functions directory: ${functionsDir}`, { width: 37, indent: '   ', cut: true }).trim()))
   }
   if (experimentalFlags.has('JAVA')) {
     console.log(emojis.unicode(':coffee:'), fgWarning('Java experimental support has been enabled'))
@@ -52,11 +62,13 @@ export const logWelcome = ({
   console.log(chalk.gray('─'.repeat(40)))
 }
 
-export const logLineWithIcon = (icon, text, { iconColor = 'cyan', textColor = '#999', highlightedWords = [], disableEmojis = false } = {}) => {
+export const logLineWithIcon = (icon, text, { iconColor = 'cyan', textColor = '#999', highlightedWords = [], disableEmojis = false, emptyLinesBefore = 0, emptyLinesAfter = 0 } = {}) => {
   const iconColorFn = chalk[iconColor] || chalk.hex(iconColor)
   const textColorFn = chalk[textColor] || chalk.hex(textColor)
   icon = !disableEmojis ? emojis.unicode(icon) : icon
+  if (emptyLinesBefore) logEmptyLines(emptyLinesBefore)
   console.log(iconColorFn(icon), textColorFn(highlightWords(highlightedWords, text)))
+  if (emptyLinesAfter) logEmptyLines(emptyLinesAfter)
 }
 
 export const logInfoMessage = (text, { highlightedWords = [] } = {}) => {
@@ -109,4 +121,14 @@ export const logError = (error, options = {}) => {
   if (showStack && error.stack) {
     console.error(chalk.gray(error.stack.substr(error.stack.indexOf('\n') + 1)))
   }
+}
+
+export const logTypeScriptMessage = (message) => {
+  console.log(TSLogo, message)
+}
+
+export const logTypeScriptError = (code, message, fileName, line, character) => {
+  const fileInfo = `${chalk.cyan(fileName)}:${chalk.yellow(line + 1)}:${chalk.yellow(character + 1)}`
+  const error = `${chalk.red('error')} ${chalk.gray(`TS${code}:`)}`
+  console.error(`${TSLogo} ${fileInfo} - ${error} ${message}`)
 }

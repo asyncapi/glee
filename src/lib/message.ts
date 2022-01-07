@@ -1,6 +1,32 @@
 import EventEmitter from 'events'
+import GleeConnection from './connection'
+
+interface IGleeMessageConstructor {
+  payload?: any,
+  headers?: Map<string, string>,
+  channel?: string,
+  serverName?: string,
+  connection?: GleeConnection,
+  broadcast?: boolean,
+}
+
+interface IReply {
+  payload?: any,
+  headers?: Map<string, string>,
+  channel?: string,
+}
 
 class GleeMessage extends EventEmitter {
+  public payload: any
+  public headers: Map<string, string>
+  public channel: string
+  public serverName: string
+  public connection: GleeConnection
+  public broadcast: boolean
+  public __isGleeMessage: boolean
+  public inbound: boolean
+  public outbound: boolean
+
   /**
    * Instantiates a new GleeMessage.
    *
@@ -19,7 +45,7 @@ class GleeMessage extends EventEmitter {
     serverName,
     connection,
     broadcast = false,
-  }) {
+  }: IGleeMessageConstructor) {
     super()
 
     if (payload) this.payload = payload
@@ -40,7 +66,7 @@ class GleeMessage extends EventEmitter {
    * @param {Object|null} [options.headers] The new message headers. Pass null if you want to remove them.
    * @param {String} [options.channel] The channel where the reply should go to.
    */
-  reply ({ payload, headers, channel }) {
+  reply ({ payload, headers, channel } : IReply) {
     if (payload) this.payload = payload
 
     if (headers !== undefined) {
