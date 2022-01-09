@@ -1,4 +1,4 @@
-import { relative } from 'path'
+import { relative, resolve } from 'path'
 import ts from 'typescript'
 import { logTypeScriptError } from './logger.js'
 
@@ -23,22 +23,26 @@ export function compileAndWatch({
   onCompilationFailed = () => {},
   onCompilationDone = () => {},
 } : ICompileAndWatch) {
-  const configPath = ts.findConfigFile(
-    /*searchPath*/ projectDir,
-    ts.sys.fileExists,
-    'tsconfig.json'
-  )
-  if (!configPath) {
-    throw new Error('Could not find a valid "tsconfig.json".')
+  const tsConfigPath = resolve(projectDir, 'tsconfig.json')
+  if (!ts.sys.fileExists(tsConfigPath)) {
+    ts.sys.writeFile(tsConfigPath, JSON.stringify({
+      compilerOptions: {
+        allowJs: true,
+        target: 'esnext',
+        esModuleInterop: true,
+        moduleResolution: 'node',
+      }
+    }, undefined, 2))
   }
 
   const createProgram = ts.createSemanticDiagnosticsBuilderProgram
-
+  
   const host = ts.createWatchCompilerHost(
-    configPath,
+    tsConfigPath,
     {
       allowJs: true,
       outDir: '.glee',
+      rootDir: projectDir,
     },
     ts.sys,
     createProgram,

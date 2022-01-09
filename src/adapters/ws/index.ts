@@ -4,7 +4,7 @@ import { validateData } from '../../lib/util.js'
 import Adapter from '../../lib/adapter.js'
 import GleeConnection from '../../lib/connection.js'
 import GleeMessage from '../../lib/message.js'
-import GleeError from '../../errors/glee-error'
+import GleeError from '../../errors/glee-error.js'
 
 class WebSocketsAdapter extends Adapter {
   name(): string {
