@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "allowJs": true,
-    "target": "es2021",
+    "allowJs": false,
+    "target": "esnext",
     "esModuleInterop": true,
     "moduleResolution": "node",
     "module": "es2022",
