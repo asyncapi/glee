@@ -72,16 +72,15 @@ export function compileAndWatch({
 
   function onWatchStatusChanged(diagnostic: ts.Diagnostic, newLine: string, options: ts.CompilerOptions, errorCount?: number) {
     switch (diagnostic.code) {
-      case 6031: // Starting compilation
-        return onStart()
-      case 6032: // File change detected
-        return onFileChanged()
-      case 6194: // Found x errors. Watching for file changes...
-        if (errorCount === 0) {
-          return onCompilationDone()
-        } else {
-          return onCompilationFailed(ts.flattenDiagnosticMessageText(diagnostic.messageText, ts.sys.newLine), diagnostic)
-        }
+    case 6031: // Starting compilation
+      return onStart()
+    case 6032: // File change detected
+      return onFileChanged()
+    case 6194: // Found x errors. Watching for file changes...
+      if (errorCount === 0) {
+        return onCompilationDone()
+      } 
+      return onCompilationFailed(ts.flattenDiagnosticMessageText(diagnostic.messageText, ts.sys.newLine), diagnostic)
     }
   }
 }

@@ -1,9 +1,9 @@
-import { Server } from "@asyncapi/parser"
-import GleeAdapter from "./adapter"
-import GleeConnection from "./connection"
-import Glee from "./glee"
+import { Server } from '@asyncapi/parser'
+import GleeAdapter from './adapter'
+import GleeConnection from './connection'
+import Glee from './glee'
 
-type WebSocketServerType = "native" | "socket.io"
+type WebSocketServerType = 'native' | 'socket.io'
 
 export type GleeConfig = {
   websocket?: {

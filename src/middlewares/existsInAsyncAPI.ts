@@ -1,5 +1,5 @@
-import { AsyncAPIDocument } from "@asyncapi/parser"
-import GleeMessage from "../lib/message"
+import { AsyncAPIDocument } from '@asyncapi/parser'
+import GleeMessage from '../lib/message'
 
 export default (asyncapi: AsyncAPIDocument) => (event: GleeMessage, next: Function) => {
   if (typeof event.channel !== 'string') return next(new Error(`Invalid channel name: ${event.channel}.`))

@@ -44,7 +44,7 @@ class GleeAdapter extends EventEmitter {
       const [localServerName, variable, value] = t.split(':')
       if (localServerName === this._serverName) uriTemplateValues[variable] = value
     })
-    this._serverUrlExpanded  = uriTemplates(this._AsyncAPIServer.url()).fill(uriTemplateValues)
+    this._serverUrlExpanded = uriTemplates(this._AsyncAPIServer.url()).fill(uriTemplateValues)
 
     this.on('error', err => { this._glee.injectError(err) })
     this.on('message', (message, connection) => {      

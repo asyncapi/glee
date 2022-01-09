@@ -1,4 +1,4 @@
-import GleeMessage from "../lib/message"
+import GleeMessage from '../lib/message'
 
 export default (event: GleeMessage, next: Function) => {
   if (!event.connection) return next()

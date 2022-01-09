@@ -1,4 +1,4 @@
-import GleeMessage from "../lib/message"
+import GleeMessage from '../lib/message'
 
 export default (message: GleeMessage, next: Function) => {
   if (message.payload instanceof Buffer) {

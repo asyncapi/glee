@@ -14,10 +14,10 @@ export type GenericMiddleware = Middleware | ErrorMiddleware
 export type GenericChannelMiddlewareTuple = ChannelMiddlewareTuple | ChannelErrorMiddlewareTuple
 
 class GleeRouter {
-  private middlewares:ChannelMiddlewareTuple[];
-  private outboundMiddlewares:ChannelMiddlewareTuple[];
-  private errorMiddlewares:ChannelErrorMiddlewareTuple[];
-  private outboundErrorMiddlewares:ChannelErrorMiddlewareTuple[];
+  private middlewares:ChannelMiddlewareTuple[]
+  private outboundMiddlewares:ChannelMiddlewareTuple[]
+  private errorMiddlewares:ChannelErrorMiddlewareTuple[]
+  private outboundErrorMiddlewares:ChannelErrorMiddlewareTuple[]
 
   /**
    * Instantiates a GleeRouter.
