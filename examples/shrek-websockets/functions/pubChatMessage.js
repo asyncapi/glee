@@ -18,6 +18,9 @@ export default async function (event) {
   if (botAnswer) {
     const wrongQuestionAnswer = 'Is it you Donkey!? Ask a better question!'
     const answerObject = await botAnswer.json()
+    if (answerObject.error) {
+      throw new Error(answerObject.error)
+    }
     let firstTraitValue
 
     for (const [, v] of Object.entries(answerObject.traits)) {

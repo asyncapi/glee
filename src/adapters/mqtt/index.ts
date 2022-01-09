@@ -80,7 +80,7 @@ class MqttAdapter extends Adapter {
       })
 
       this.client.on('message', (channel, message, mqttPacket) => {
-        const msg = this._createMessage(mqttPacket)
+        const msg = this._createMessage(mqttPacket as IPublishPacket)
         this.emit('message', msg, this.client)
       })
 
