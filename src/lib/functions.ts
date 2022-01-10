@@ -7,6 +7,7 @@ import GleeMessage from './message.js'
 import { GleeFunction } from './index.js'
 import Glee from './glee.js'
 import { gleeMessageToFunctionEvent } from './util.js'
+import { pathToFileURL } from 'url'
 
 interface FunctionInfo {
   run: GleeFunction,
@@ -28,7 +29,7 @@ export async function register(dir: string) {
     return await Promise.all(Object.keys(files).map(async (filePath) => {
       try {
         const functionName = basename(filePath, extname(filePath))
-        const { default: fn } = await import(filePath)
+        const { default: fn } = await import(pathToFileURL(filePath).href)
         functions.set(functionName, {
           run: fn,
         })
