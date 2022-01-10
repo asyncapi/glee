@@ -36,7 +36,7 @@ const highlightWords = (words: string[], text: string) => {
   let result = text
 
   words.filter(Boolean).forEach(word => {
-    result = result.replaceAll(word, chalk.white(word))
+    result = result.split(word).join(chalk.white(word))
   })
 
   return result
