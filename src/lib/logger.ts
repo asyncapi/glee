@@ -36,7 +36,7 @@ const highlightWords = (words: string[], text: string) => {
   let result = text
 
   words.filter(Boolean).forEach(word => {
-    result = result.replace(new RegExp(word, 'g'), chalk.white(word))
+    result = result.replaceAll(word, chalk.white(word))
   })
 
   return result
@@ -82,9 +82,9 @@ export const logWelcome = ({
   console.log(chalk.gray('─'.repeat(40)))
 }
 
-export const logLineWithIcon = (icon: string, text: string, { iconColor = 'cyan', textColor = '#999', highlightedWords = [], disableEmojis = false, emptyLinesBefore = 0, emptyLinesAfter = 0 }: ILogLineWithIconOptions = {}) => {
-  const iconColorFn = chalk[iconColor] || chalk.hex(iconColor)
-  const textColorFn = chalk[textColor] || chalk.hex(textColor)
+export const logLineWithIcon = (icon: string, text: string, { iconColor = '#0ff', textColor = '#999', highlightedWords = [], disableEmojis = false, emptyLinesBefore = 0, emptyLinesAfter = 0 }: ILogLineWithIconOptions = {}) => {
+  const iconColorFn = chalk.hex(iconColor)
+  const textColorFn = chalk.hex(textColor)
   icon = !disableEmojis ? emojis.unicode(icon) : icon
   if (emptyLinesBefore) logEmptyLines(emptyLinesBefore)
   console.log(iconColorFn(icon), textColorFn(highlightWords(highlightedWords, text)))
@@ -100,7 +100,7 @@ export const logInfoMessage = (text: string, { highlightedWords = [] }: ILogOpti
 export const logWarningMessage = (text: string, { highlightedWords = [] }: ILogOptions = {}) => {
   logLineWithIcon(':warning: ', text, {
     highlightedWords,
-    textColor: 'yellow',
+    textColor: '#fa0',
   })
 }
 

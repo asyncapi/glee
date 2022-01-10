@@ -13,7 +13,7 @@ interface FunctionInfo {
 }
 
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
-export const functions: {[key: string]: FunctionInfo} = {}
+export const functions: Map<string, FunctionInfo> = new Map()
 
 export async function register(dir: string) {
   try {
@@ -29,9 +29,9 @@ export async function register(dir: string) {
       try {
         const functionName = basename(filePath, extname(filePath))
         const { default: fn } = await import(filePath)
-        functions[functionName] = {
+        functions.set(functionName, {
           run: fn,
-        }
+        })
       } catch (e) {
         console.error(e)
       }
@@ -44,16 +44,14 @@ export async function register(dir: string) {
 export async function trigger({
   app,
   operationId,
-  messageId,
   message
 } : {
   app: Glee,
   operationId: string,
-  messageId?: string,
   message: GleeMessage,
 }) {
   try {
-    const res = await functions[operationId].run(gleeMessageToFunctionEvent(message, app))
+    const res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
 
     if (res?.send) {
       res.send.forEach((msg) => {

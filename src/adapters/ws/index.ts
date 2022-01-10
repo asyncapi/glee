@@ -32,9 +32,9 @@ class WebSocketsAdapter extends Adapter {
         process.exit(1)
       }
 
-      const servers = {}
+      const servers = new Map()
       this.channelNames.forEach(channelName => {
-        servers[channelName] = new WebSocket.Server({ noServer: true })
+        servers.set(channelName, new WebSocket.Server({ noServer: true }))
       })
 
       wsHttpServer.on('upgrade', (request, socket, head) => {
@@ -48,13 +48,13 @@ class WebSocketsAdapter extends Adapter {
         }
 
         if (serverUrl.pathname !== '/') {
-          pathname = pathname.substr(serverUrl.pathname.length)
+          pathname = pathname.substring(serverUrl.pathname.length)
         }
 
         // If pathname is /something but AsyncAPI file says the channel name is "something"
         // then we convert pathname to "something".
-        if (pathname.startsWith('/') && !servers[pathname] && servers[pathname.substr(1)]) {
-          pathname = pathname.substr(1)
+        if (pathname.startsWith('/') && !servers.has(pathname) && servers.has(pathname.substring(1))) {
+          pathname = pathname.substring(1)
         }
 
         if (!this.parsedAsyncAPI.channel(pathname)) {
@@ -70,11 +70,11 @@ class WebSocketsAdapter extends Adapter {
         if (wsChannelBinding) {
           const { query, headers } = wsChannelBinding
           if (query) {
-            const queryParams = {}
+            const queryParams = new Map()
             searchParams.forEach((value, key) => {
-              queryParams[key] = value
+              queryParams.set(key, value)
             })
-            const { isValid, humanReadableError, errors } = validateData(queryParams, query)
+            const { isValid, humanReadableError, errors } = validateData(Object.fromEntries(queryParams.entries()), query)
             if (!isValid) {
               const err = new GleeError({ humanReadableError, errors })
               this.emit('error', err)
@@ -94,9 +94,9 @@ class WebSocketsAdapter extends Adapter {
           }
         }
         
-        if (servers[pathname]) {
-          servers[pathname].handleUpgrade(request, socket, head, (ws) => {
-            servers[pathname].emit('server:connection:open', ws, request)
+        if (servers.has(pathname)) {
+          servers.get(pathname).handleUpgrade(request, socket, head, (ws) => {
+            servers.get(pathname).emit('server:connection:open', ws, request)
             
             ws.on('message', (payload) => {
               const msg = this._createMessage(pathname, payload)
@@ -121,21 +121,17 @@ class WebSocketsAdapter extends Adapter {
   }
 
   async _send(message: GleeMessage): Promise<void> {
-    try {
-      if (message.broadcast) {
-        this
-          .connections
-          .filter(({channels}) => channels.includes(message.channel))
-          .forEach((connection) => {
-            connection.getRaw().send(message.payload)
-          })
-      } else {
-        if (!message.connection) throw new Error('There is no WebSocket connection to send the message yet.')
-        if (!(message.connection instanceof GleeConnection)) throw new Error('Connection object is not of GleeConnection type.')
-        message.connection.getRaw().send(message.payload)
-      }
-    } catch (err) {
-      throw err
+    if (message.broadcast) {
+      this
+        .connections
+        .filter(({channels}) => channels.includes(message.channel))
+        .forEach((connection) => {
+          connection.getRaw().send(message.payload)
+        })
+    } else {
+      if (!message.connection) throw new Error('There is no WebSocket connection to send the message yet.')
+      if (!(message.connection instanceof GleeConnection)) throw new Error('Connection object is not of GleeConnection type.')
+      message.connection.getRaw().send(message.payload)
     }
   }
 

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef, security/detect-object-injection */
+
 import fetch from 'node-fetch'
 import { Low, JSONFile } from 'lowdb'
 const db = new Low(new JSONFile('../db.json'))

@@ -39,12 +39,12 @@ class GleeAdapter extends EventEmitter {
     this._channelNames = this._parsedAsyncAPI.channelNames()
     this._connections = []
 
-    const uriTemplateValues = {}
+    const uriTemplateValues = new Map()
     process.env.GLEE_SERVER_VARIABLES?.split(',').forEach(t => {
       const [localServerName, variable, value] = t.split(':')
-      if (localServerName === this._serverName) uriTemplateValues[variable] = value
+      if (localServerName === this._serverName) uriTemplateValues.set(variable, value)
     })
-    this._serverUrlExpanded = uriTemplates(this._AsyncAPIServer.url()).fill(uriTemplateValues)
+    this._serverUrlExpanded = uriTemplates(this._AsyncAPIServer.url()).fill(Object.fromEntries(uriTemplateValues.entries()))
 
     this.on('error', err => { this._glee.injectError(err) })
     this.on('message', (message, connection) => {      
@@ -174,7 +174,7 @@ class GleeAdapter extends EventEmitter {
    *
    * @param {GleeMessage} message The message to send.
    */
-  async send(message: GleeMessage): Promise<any> {
+  async send(message: GleeMessage): Promise<any> { // eslint-disable-line @typescript-eslint/no-unused-vars
     throw new Error('Method `send` is not implemented.')
   }
 }

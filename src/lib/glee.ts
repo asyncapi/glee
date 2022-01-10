@@ -8,6 +8,7 @@ import GleeMessage from './message.js'
 import { matchChannel, duplicateMessage, getParams } from './util.js'
 import { GleeConfig } from './index.js'
 import GleeConnection from './connection.js'
+import { MiddlewareCallback } from '../middlewares/index.js'
 
 const debug = Debug('glee')
 
@@ -60,8 +61,8 @@ export default class Glee extends EventEmitter {
    */
   use(...middlewares: GenericMiddleware[]): void;
   use(channel: string, ...middlewares: GenericMiddleware[]): void;
-  use(channel: string | GenericMiddleware, ...middlewares: GenericMiddleware[]): void {
-    this._router.use(...arguments)
+  use(channel: string | GenericMiddleware, ...middlewares: GenericMiddleware[]): void { // eslint-disable-line @typescript-eslint/no-unused-vars
+    this._router.use(...arguments) // eslint-disable-line prefer-rest-params
   }
 
   /**
@@ -71,8 +72,8 @@ export default class Glee extends EventEmitter {
    */
   useOutbound(...middlewares: GenericMiddleware[]): void;
   useOutbound(channel: string, ...middlewares: GenericMiddleware[]): void;
-  useOutbound(channel: string | GenericMiddleware, ...middlewares: GenericMiddleware[]): void {
-    this._router.useOutbound(...arguments)
+  useOutbound(channel: string | GenericMiddleware, ...middlewares: GenericMiddleware[]): void { // eslint-disable-line @typescript-eslint/no-unused-vars
+    this._router.useOutbound(...arguments) // eslint-disable-line prefer-rest-params
   }
 
   /**
@@ -156,7 +157,7 @@ export default class Glee extends EventEmitter {
     const mws =
       middlewares
         .filter(mw => matchChannel(mw.channel, message.channel))
-        .map(mw => (msg: GleeMessage, next: Function) => {
+        .map(mw => (msg: GleeMessage, next: MiddlewareCallback) => {
           const msgForMiddleware: GleeMessage = duplicateMessage(msg)
           msgForMiddleware.params = getParams(mw.channel, msgForMiddleware.channel)
 
@@ -214,7 +215,7 @@ export default class Glee extends EventEmitter {
   }
 
   _execErrorMiddleware (emws: ChannelErrorMiddlewareTuple[], index: number, error: Error, message: GleeMessage) {
-    emws[index].fn(error, message, (err: Error) => {
+    emws.at(index).fn(error, message, (err: Error) => {
       if (!emws[index+1]) return
       this._execErrorMiddleware.call(null, emws, index+1, err, message)
     })

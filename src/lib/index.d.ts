@@ -1,4 +1,3 @@
-import { Server } from '@asyncapi/parser'
 import GleeAdapter from './adapter'
 import GleeConnection from './connection'
 import Glee from './glee'

@@ -16,16 +16,18 @@ interface ICompileAndWatch {
   onCompilationDone?: () => void,
 }
 
+const noop = function() { /* Do nothing */ }
+
 export function compileAndWatch({
   projectDir,
-  onStart = () => {},
-  onFileChanged = () => {},
-  onCompilationFailed = () => {},
-  onCompilationDone = () => {},
+  onStart = noop,
+  onFileChanged = noop,
+  onCompilationFailed = noop,
+  onCompilationDone = noop,
 } : ICompileAndWatch) {
   const tsConfigPath = resolve(projectDir, 'tsconfig.json')
   if (!ts.sys.fileExists(tsConfigPath)) {
-    ts.sys.writeFile(tsConfigPath, JSON.stringify({
+    ts.sys.writeFile(tsConfigPath, JSON.stringify({ // eslint-disable-line security/detect-non-literal-fs-filename
       compilerOptions: {
         allowJs: true,
         target: 'esnext',
@@ -57,7 +59,7 @@ export function compileAndWatch({
   const origPostProgramCreate = host.afterProgramCreate
 
   host.afterProgramCreate = program => {
-    origPostProgramCreate!(program)
+    origPostProgramCreate(program)
   }
 
   ts.createWatchProgram(host)
@@ -65,7 +67,7 @@ export function compileAndWatch({
   function reportDiagnostic(diagnostic: ts.Diagnostic) {
     const fileName = relative(process.cwd(), diagnostic.file.getSourceFile().fileName)
     const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(
-      diagnostic.start!
+      diagnostic.start
     )
     logTypeScriptError(diagnostic.code, ts.flattenDiagnosticMessageText(diagnostic.messageText, formatHost.getNewLine()), fileName, line, character)
   }

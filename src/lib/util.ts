@@ -1,8 +1,6 @@
-import { Server } from '@asyncapi/parser'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
-import GleeConnection from './connection.js'
 import Glee from './glee.js'
 import { GleeFunctionEvent } from './index.js'
 import GleeMessage from './message.js'

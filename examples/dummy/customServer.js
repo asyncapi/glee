@@ -1,3 +1,5 @@
+/* eslint-disable no-undef, security/detect-non-literal-fs-filename */
+
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
 import fs from 'fs'

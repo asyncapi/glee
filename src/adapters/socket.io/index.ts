@@ -65,20 +65,16 @@ class SocketIOAdapter extends Adapter {
   }
 
   async _send(message: GleeMessage): Promise<void> {
-    try {
-      if (message.broadcast) {
-        this
-          .connections
-          .filter(({ channels }) => channels.includes(message.channel))
-          .forEach((connection) => {
-            connection.getRaw().emit(message.channel, message.payload)
-          })
-      } else {
-        if (!message.connection) throw new Error('There is no Socket.IO connection to send the message yet.')
-        message.connection.getRaw().emit(message.channel, message.payload)
-      }
-    } catch (err) {
-      throw err
+    if (message.broadcast) {
+      this
+        .connections
+        .filter(({ channels }) => channels.includes(message.channel))
+        .forEach((connection) => {
+          connection.getRaw().emit(message.channel, message.payload)
+        })
+    } else {
+      if (!message.connection) throw new Error('There is no Socket.IO connection to send the message yet.')
+      message.connection.getRaw().emit(message.channel, message.payload)
     }
   }
 

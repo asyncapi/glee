@@ -39,12 +39,7 @@ class GleeRouter {
   use(...middlewares: GenericMiddleware[]) : void;
   use(channel: string, ...middlewares: GenericMiddleware[]) : void;
   use(channel: string | GenericMiddleware, ...middlewares: GenericMiddleware[]) : void {
-    const realChannel = typeof channel === 'string' ? channel : undefined
-    const allMiddlewares: GenericMiddleware[] = realChannel ? middlewares : [channel as GenericMiddleware].concat(middlewares)
-    const mws: GenericChannelMiddlewareTuple[] = allMiddlewares.map(fn => ({
-      channel: realChannel,
-      fn,
-    } as GenericChannelMiddlewareTuple))
+    const mws: GenericChannelMiddlewareTuple[] = this.middlewaresToChannelMiddlewaresTuples(channel, ...middlewares)
 
     mws.forEach(mw => {
       if (mw.fn.length <= 2) {
@@ -64,12 +59,7 @@ class GleeRouter {
   useOutbound(...middlewares: GenericMiddleware[]): void;
   useOutbound(channel: string, ...middlewares: GenericMiddleware[]): void;
   useOutbound(channel: string | GenericMiddleware, ...middlewares: GenericMiddleware[]) {
-    const realChannel = typeof channel === 'string' ? channel : undefined
-    const allMiddlewares: GenericMiddleware[] = realChannel ? middlewares : [channel as GenericMiddleware].concat(middlewares)
-    const mws = allMiddlewares.map(fn => ({
-      channel: realChannel,
-      fn,
-    } as GenericChannelMiddlewareTuple))
+    const mws: GenericChannelMiddlewareTuple[] = this.middlewaresToChannelMiddlewaresTuples(channel, ...middlewares)
 
     mws.forEach(mw => {
       if (mw.fn.length <= 2) {
@@ -78,6 +68,15 @@ class GleeRouter {
         this.addOutboundErrorMiddlewares([mw as ChannelErrorMiddlewareTuple])
       }
     })
+  }
+
+  private middlewaresToChannelMiddlewaresTuples(channel: string | GenericMiddleware, ...middlewares: GenericMiddleware[]): GenericChannelMiddlewareTuple[] {
+    const realChannel = typeof channel === 'string' ? channel : undefined
+    const allMiddlewares: GenericMiddleware[] = realChannel ? middlewares : [channel as GenericMiddleware].concat(middlewares)
+    return allMiddlewares.map(fn => ({
+      channel: realChannel,
+      fn,
+    } as GenericChannelMiddlewareTuple))
   }
 
   /**

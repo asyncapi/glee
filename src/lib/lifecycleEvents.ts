@@ -10,7 +10,7 @@ interface IEvent {
   channels: string[],
   servers: string[],
 }
-export const events: {[key: string]: IEvent[]} = {}
+export const events: Map<string, IEvent[]> = new Map()
 
 export async function register (dir: string) {
   try {
@@ -31,13 +31,13 @@ export async function register (dir: string) {
           servers
         } = await import(filePath)
 
-        if (!events[lifecycleEvent]) events[lifecycleEvent] = []
+        if (!events.has(lifecycleEvent)) events.set(lifecycleEvent, [])
         
-        events[lifecycleEvent].push({
+        events.set(lifecycleEvent, [...events.get(lifecycleEvent), {
           fn,
           channels,
           servers,
-        })
+        }])
       } catch (e) {
         console.error(e)
       }
@@ -48,12 +48,12 @@ export async function register (dir: string) {
 }
 
 export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
-  if (!Array.isArray(events[lifecycleEvent])) return
+  if (!Array.isArray(events.get(lifecycleEvent))) return
   
   try {
     const connectionChannels = params.connection.channels
     const connectionServer = params.connection.serverName
-    const handlers = events[lifecycleEvent]
+    const handlers = events.get(lifecycleEvent)
       .filter(info => {
         if (info.channels && !arrayHasDuplicates([
           ...connectionChannels,

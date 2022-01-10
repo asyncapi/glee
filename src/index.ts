@@ -67,12 +67,10 @@ export default async function GleeAppInitializer () {
       const operationId = channel.publish().json('operationId')
       if (operationId) {
         const schema = channel.publish().message().payload().json()
-        const messageId = channel.publish().message().ext('x-parser-message-name')
         app.use(channelName, validate(schema), (event, next) => {
           triggerFunction({
             app,
             operationId,
-            messageId,
             message: event,
           }).then(next).catch(next)
         })
@@ -98,7 +96,7 @@ export default async function GleeAppInitializer () {
   app.on('adapter:reconnect', (e: EnrichedEvent) => {
     logLineWithIcon('↪', `Reconnected to server ${e.serverName}.`, {
       highlightedWords: [e.serverName],
-      iconColor: 'green',
+      iconColor: '#0f0',
     })
     runLifecycleEvents('onReconnect', {
       glee: app,
@@ -110,7 +108,7 @@ export default async function GleeAppInitializer () {
   app.on('adapter:close', (e: EnrichedEvent) => {
     logLineWithIcon('x', `Closed connection with server ${e.serverName}.`, {
       highlightedWords: [e.serverName],
-      iconColor: 'red',
+      iconColor: '#f00',
       disableEmojis: true,
     })
     runLifecycleEvents('onDisconnect', {
