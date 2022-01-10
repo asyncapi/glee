@@ -1,5 +1,4 @@
 node_modules
-runtimes
 examples/social-network/frontend
 dist
 .glee
