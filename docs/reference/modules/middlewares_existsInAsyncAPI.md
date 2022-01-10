@@ -12,11 +12,11 @@
 
 ### default
 
-• **default**: (`asyncapi`: `AsyncAPIDocument`) => (`event`: [`default`](../classes/lib_message.default.md), `next`: `Function`) => `any`
+• **default**: (`asyncapi`: `AsyncAPIDocument`) => (`event`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
 
 #### Type declaration
 
-▸ (`asyncapi`): (`event`: [`default`](../classes/lib_message.default.md), `next`: `Function`) => `any`
+▸ (`asyncapi`): (`event`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
 
 ##### Parameters
 
@@ -28,15 +28,15 @@
 
 `fn`
 
-▸ (`event`, `next`): `any`
+▸ (`event`, `next`): `void`
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `event` | [`default`](../classes/lib_message.default.md) |
-| `next` | `Function` |
+| `next` | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
 
 ##### Returns
 
-`any`
+`void`

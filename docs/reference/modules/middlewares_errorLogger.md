@@ -12,7 +12,7 @@
 
 ### default
 
-• **default**: (`err`: `Error`, `message`: [`default`](../classes/lib_message.default.md), `next`: `Function`) => `void`
+• **default**: (`err`: `Error`, `message`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
 
 #### Type declaration
 
@@ -24,7 +24,7 @@
 | :------ | :------ |
 | `err` | `Error` |
 | `message` | [`default`](../classes/lib_message.default.md) |
-| `next` | `Function` |
+| `next` | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
 
 ##### Returns
 

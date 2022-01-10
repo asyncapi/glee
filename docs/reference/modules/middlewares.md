@@ -8,12 +8,13 @@
 
 - [ErrorMiddleware](middlewares.md#errormiddleware)
 - [Middleware](middlewares.md#middleware)
+- [MiddlewareCallback](middlewares.md#middlewarecallback)
 
 ## Type aliases
 
 ### ErrorMiddleware
 
-Ƭ **ErrorMiddleware**: (`error`: `Error`, `message`: [`default`](../classes/lib_message.default.md), `next`: `Function`) => `void`
+Ƭ **ErrorMiddleware**: (`error`: `Error`, `message`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
 
 #### Type declaration
 
@@ -25,7 +26,7 @@
 | :------ | :------ |
 | `error` | `Error` |
 | `message` | [`default`](../classes/lib_message.default.md) |
-| `next` | `Function` |
+| `next` | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
 
 ##### Returns
 
@@ -33,13 +34,13 @@
 
 #### Defined in
 
-[src/middlewares/index.d.ts:4](https://github.com/fmvilas/glee/blob/039da07/src/middlewares/index.d.ts#L4)
+[src/middlewares/index.d.ts:4](https://github.com/asyncapi/glee/blob/7dab58f/src/middlewares/index.d.ts#L4)
 
 ___
 
 ### Middleware
 
-Ƭ **Middleware**: (`message`: [`default`](../classes/lib_message.default.md), `next`: `Function`) => `void`
+Ƭ **Middleware**: (`message`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
 
 #### Type declaration
 
@@ -50,7 +51,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `message` | [`default`](../classes/lib_message.default.md) |
-| `next` | `Function` |
+| `next` | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
 
 ##### Returns
 
@@ -58,4 +59,29 @@ ___
 
 #### Defined in
 
-[src/middlewares/index.d.ts:3](https://github.com/fmvilas/glee/blob/039da07/src/middlewares/index.d.ts#L3)
+[src/middlewares/index.d.ts:3](https://github.com/asyncapi/glee/blob/7dab58f/src/middlewares/index.d.ts#L3)
+
+___
+
+### MiddlewareCallback
+
+Ƭ **MiddlewareCallback**: (`error?`: `Error`, `message?`: [`default`](../classes/lib_message.default.md)) => `void`
+
+#### Type declaration
+
+▸ (`error?`, `message?`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `error?` | `Error` |
+| `message?` | [`default`](../classes/lib_message.default.md) |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[src/middlewares/index.d.ts:5](https://github.com/asyncapi/glee/blob/7dab58f/src/middlewares/index.d.ts#L5)
