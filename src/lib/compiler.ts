@@ -1,4 +1,4 @@
-import { relative } from 'path'
+import { relative, resolve } from 'path'
 import ts from 'typescript'
 import { logTypeScriptError } from './logger.js'
 
@@ -16,29 +16,35 @@ interface ICompileAndWatch {
   onCompilationDone?: () => void,
 }
 
+const noop = function() { /* Do nothing */ }
+
 export function compileAndWatch({
   projectDir,
-  onStart = () => {},
-  onFileChanged = () => {},
-  onCompilationFailed = () => {},
-  onCompilationDone = () => {},
+  onStart = noop,
+  onFileChanged = noop,
+  onCompilationFailed = noop,
+  onCompilationDone = noop,
 } : ICompileAndWatch) {
-  const configPath = ts.findConfigFile(
-    /*searchPath*/ projectDir,
-    ts.sys.fileExists,
-    'tsconfig.json'
-  )
-  if (!configPath) {
-    throw new Error('Could not find a valid "tsconfig.json".')
+  const tsConfigPath = resolve(projectDir, 'tsconfig.json')
+  if (!ts.sys.fileExists(tsConfigPath)) {
+    ts.sys.writeFile(tsConfigPath, JSON.stringify({ // eslint-disable-line security/detect-non-literal-fs-filename
+      compilerOptions: {
+        allowJs: true,
+        target: 'esnext',
+        esModuleInterop: true,
+        moduleResolution: 'node',
+      }
+    }, undefined, 2))
   }
 
   const createProgram = ts.createSemanticDiagnosticsBuilderProgram
-
+  
   const host = ts.createWatchCompilerHost(
-    configPath,
+    tsConfigPath,
     {
       allowJs: true,
       outDir: '.glee',
+      rootDir: projectDir,
     },
     ts.sys,
     createProgram,
@@ -53,7 +59,7 @@ export function compileAndWatch({
   const origPostProgramCreate = host.afterProgramCreate
 
   host.afterProgramCreate = program => {
-    origPostProgramCreate!(program)
+    origPostProgramCreate(program)
   }
 
   ts.createWatchProgram(host)
@@ -61,23 +67,22 @@ export function compileAndWatch({
   function reportDiagnostic(diagnostic: ts.Diagnostic) {
     const fileName = relative(process.cwd(), diagnostic.file.getSourceFile().fileName)
     const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(
-      diagnostic.start!
+      diagnostic.start
     )
     logTypeScriptError(diagnostic.code, ts.flattenDiagnosticMessageText(diagnostic.messageText, formatHost.getNewLine()), fileName, line, character)
   }
 
   function onWatchStatusChanged(diagnostic: ts.Diagnostic, newLine: string, options: ts.CompilerOptions, errorCount?: number) {
     switch (diagnostic.code) {
-      case 6031: // Starting compilation
-        return onStart()
-      case 6032: // File change detected
-        return onFileChanged()
-      case 6194: // Found x errors. Watching for file changes...
-        if (errorCount === 0) {
-          return onCompilationDone()
-        } else {
-          return onCompilationFailed(ts.flattenDiagnosticMessageText(diagnostic.messageText, ts.sys.newLine), diagnostic)
-        }
+    case 6031: // Starting compilation
+      return onStart()
+    case 6032: // File change detected
+      return onFileChanged()
+    case 6194: // Found x errors. Watching for file changes...
+      if (errorCount === 0) {
+        return onCompilationDone()
+      } 
+      return onCompilationFailed(ts.flattenDiagnosticMessageText(diagnostic.messageText, ts.sys.newLine), diagnostic)
     }
   }
 }

@@ -18,6 +18,7 @@ import validateConnection from './middlewares/validateConnection.js'
 import { initializeConfigs } from './lib/configs.js'
 import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
+import { EnrichedEvent } from './lib/adapter.js'
 
 dotenvExpand(dotenv.config())
 
@@ -66,12 +67,10 @@ export default async function GleeAppInitializer () {
       const operationId = channel.publish().json('operationId')
       if (operationId) {
         const schema = channel.publish().message().payload().json()
-        const messageId = channel.publish().message().ext('x-parser-message-name')
         app.use(channelName, validate(schema), (event, next) => {
           triggerFunction({
             app,
             operationId,
-            messageId,
             message: event,
           }).then(next).catch(next)
         })
@@ -83,70 +82,64 @@ export default async function GleeAppInitializer () {
     }
   })
 
-  app.on('adapter:connect', (e) => {
+  app.on('adapter:connect', (e: EnrichedEvent) => {
     logLineWithIcon(':zap:', `Connected to server ${e.serverName}.`, {
       highlightedWords: [e.serverName],
     })
     runLifecycleEvents('onConnect', {
       glee: app,
       serverName: e.serverName,
-      server: e.server,
       connection: e.connection,
     })
   })
   
-  app.on('adapter:reconnect', (e) => {
+  app.on('adapter:reconnect', (e: EnrichedEvent) => {
     logLineWithIcon('↪', `Reconnected to server ${e.serverName}.`, {
       highlightedWords: [e.serverName],
-      iconColor: 'green',
+      iconColor: '#0f0',
     })
     runLifecycleEvents('onReconnect', {
       glee: app,
       serverName: e.serverName,
-      server: e.server,
       connection: e.connection,
     })
   })
   
-  app.on('adapter:close', (e) => {
+  app.on('adapter:close', (e: EnrichedEvent) => {
     logLineWithIcon('x', `Closed connection with server ${e.serverName}.`, {
       highlightedWords: [e.serverName],
-      iconColor: 'red',
+      iconColor: '#f00',
       disableEmojis: true,
     })
     runLifecycleEvents('onDisconnect', {
       glee: app,
       serverName: e.serverName,
-      server: e.server,
       connection: e.connection,
     })
   })
 
-  app.on('adapter:server:ready', (e) => {
+  app.on('adapter:server:ready', (e: EnrichedEvent) => {
     logLineWithIcon(':zap:', `Server ${e.serverName} is ready to accept connections.`, {
       highlightedWords: [e.serverName],
     })
     runLifecycleEvents('onServerReady', {
       glee: app,
       serverName: e.serverName,
-      server: e.server,
     })
   })
 
-  app.on('adapter:server:connection:open', (e) => {
+  app.on('adapter:server:connection:open', (e: EnrichedEvent) => {
     runLifecycleEvents('onServerConnectionOpen', {
       glee: app,
       serverName: e.serverName,
-      server: e.server,
       connection: e.connection,
     })
   })
   
-  app.on('adapter:server:connection:close', (e) => {
+  app.on('adapter:server:connection:close', (e: EnrichedEvent) => {
     runLifecycleEvents('onServerConnectionClose', {
       glee: app,
       serverName: e.serverName,
-      server: e.server,
       connection: e.connection,
     })
   })

@@ -16,4 +16,4 @@ channels:
     publish:
       operationId: onPostLiked
       message:
-        $ref: '../server/asyncapi.yaml#/components/messages/notifyPostLiked'
+        $ref: '../websocket-server/asyncapi.yaml#/components/messages/notifyPostLiked'

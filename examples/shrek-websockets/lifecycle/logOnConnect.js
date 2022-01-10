@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 export default async function () {
   console.log('Connection with Shrek established')
 }

@@ -1,8 +1,10 @@
+/* eslint-disable no-undef */
+
 import dummyjson from 'dummy-json'
 import { Message } from '@asyncapi/glee'
 
 export default async function ({ glee, connection }) {
-  ;(function myLoop(i) {
+  (function myLoop(i) {
     setTimeout(() => {
       glee.send(new Message({
         channel: '/travel/status',
