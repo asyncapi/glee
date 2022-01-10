@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:8](https://github.com/fmvilas/glee/blob/039da07/src/lib/index.d.ts#L8)
+[src/lib/index.d.ts:7](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/index.d.ts#L7)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:41](https://github.com/fmvilas/glee/blob/039da07/src/lib/index.d.ts#L41)
+[src/lib/index.d.ts:40](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/index.d.ts#L40)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:22](https://github.com/fmvilas/glee/blob/039da07/src/lib/index.d.ts#L22)
+[src/lib/index.d.ts:21](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/index.d.ts#L21)
 
 ___
 
@@ -95,7 +95,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:16](https://github.com/fmvilas/glee/blob/039da07/src/lib/index.d.ts#L16)
+[src/lib/index.d.ts:15](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/index.d.ts#L15)
 
 ___
 
@@ -105,7 +105,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:39](https://github.com/fmvilas/glee/blob/039da07/src/lib/index.d.ts#L39)
+[src/lib/index.d.ts:38](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/index.d.ts#L38)
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:38](https://github.com/fmvilas/glee/blob/039da07/src/lib/index.d.ts#L38)
+[src/lib/index.d.ts:37](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/index.d.ts#L37)
 
 ___
 
@@ -134,7 +134,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:31](https://github.com/fmvilas/glee/blob/039da07/src/lib/index.d.ts#L31)
+[src/lib/index.d.ts:30](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/index.d.ts#L30)
 
 ___
 
@@ -144,4 +144,4 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:6](https://github.com/fmvilas/glee/blob/039da07/src/lib/index.d.ts#L6)
+[src/lib/index.d.ts:5](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/index.d.ts#L5)

@@ -28,6 +28,7 @@
 - [getMiddlewares](lib_router.default.md#getmiddlewares)
 - [getOutboundErrorMiddlewares](lib_router.default.md#getoutbounderrormiddlewares)
 - [getOutboundMiddlewares](lib_router.default.md#getoutboundmiddlewares)
+- [middlewaresToChannelMiddlewaresTuples](lib_router.default.md#middlewarestochannelmiddlewarestuples)
 - [use](lib_router.default.md#use)
 - [useOutbound](lib_router.default.md#useoutbound)
 
@@ -41,7 +42,7 @@ Instantiates a GleeRouter.
 
 #### Defined in
 
-[src/lib/router.ts:25](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L25)
+[src/lib/router.ts:25](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L25)
 
 ## Properties
 
@@ -51,7 +52,7 @@ Instantiates a GleeRouter.
 
 #### Defined in
 
-[src/lib/router.ts:19](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L19)
+[src/lib/router.ts:19](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L19)
 
 ___
 
@@ -61,7 +62,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:17](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L17)
+[src/lib/router.ts:17](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L17)
 
 ___
 
@@ -71,7 +72,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:20](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L20)
+[src/lib/router.ts:20](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L20)
 
 ___
 
@@ -81,7 +82,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:18](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L18)
+[src/lib/router.ts:18](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L18)
 
 ## Methods
 
@@ -105,7 +106,7 @@ Adds a normalized middleware to a target collection.
 
 #### Defined in
 
-[src/lib/router.ts:123](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L123)
+[src/lib/router.ts:122](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L122)
 
 ___
 
@@ -128,7 +129,7 @@ Adds a normalized middleware to the inbound error middlewares collection.
 
 #### Defined in
 
-[src/lib/router.ts:160](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L160)
+[src/lib/router.ts:159](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L159)
 
 ___
 
@@ -151,7 +152,7 @@ Adds a normalized middleware to the inbound middlewares collection.
 
 #### Defined in
 
-[src/lib/router.ts:140](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L140)
+[src/lib/router.ts:139](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L139)
 
 ___
 
@@ -174,7 +175,7 @@ Adds a normalized middleware to the outbound error middlewares collection.
 
 #### Defined in
 
-[src/lib/router.ts:170](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L170)
+[src/lib/router.ts:169](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L169)
 
 ___
 
@@ -197,7 +198,7 @@ Adds a normalized middleware to the outbound middlewares collection.
 
 #### Defined in
 
-[src/lib/router.ts:150](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L150)
+[src/lib/router.ts:149](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L149)
 
 ___
 
@@ -213,7 +214,7 @@ Returns all the inbound error middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:103](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L103)
+[src/lib/router.ts:102](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L102)
 
 ___
 
@@ -229,7 +230,7 @@ Returns all the inbound middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:87](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L87)
+[src/lib/router.ts:86](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L86)
 
 ___
 
@@ -245,7 +246,7 @@ Returns all the outbound error middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:111](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L111)
+[src/lib/router.ts:110](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L110)
 
 ___
 
@@ -261,7 +262,28 @@ Returns all the outbound middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:95](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L95)
+[src/lib/router.ts:94](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L94)
+
+___
+
+### middlewaresToChannelMiddlewaresTuples
+
+▸ `Private` **middlewaresToChannelMiddlewaresTuples**(`channel`, ...`middlewares`): [`GenericChannelMiddlewareTuple`](../modules/lib_router.md#genericchannelmiddlewaretuple)[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `channel` | `string` \| [`GenericMiddleware`](../modules/lib_router.md#genericmiddleware) |
+| `...middlewares` | [`GenericMiddleware`](../modules/lib_router.md#genericmiddleware)[] |
+
+#### Returns
+
+[`GenericChannelMiddlewareTuple`](../modules/lib_router.md#genericchannelmiddlewaretuple)[]
+
+#### Defined in
+
+[src/lib/router.ts:73](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L73)
 
 ___
 
@@ -284,7 +306,7 @@ this function will make use of inbound and outbound middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:39](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L39)
+[src/lib/router.ts:39](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L39)
 
 ▸ **use**(`channel`, ...`middlewares`): `void`
 
@@ -301,7 +323,7 @@ this function will make use of inbound and outbound middlewares.
 
 #### Defined in
 
-[src/lib/router.ts:40](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L40)
+[src/lib/router.ts:40](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L40)
 
 ___
 
@@ -323,7 +345,7 @@ Use a middleware for outbound messages.
 
 #### Defined in
 
-[src/lib/router.ts:64](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L64)
+[src/lib/router.ts:59](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L59)
 
 ▸ **useOutbound**(`channel`, ...`middlewares`): `void`
 
@@ -340,4 +362,4 @@ Use a middleware for outbound messages.
 
 #### Defined in
 
-[src/lib/router.ts:65](https://github.com/fmvilas/glee/blob/039da07/src/lib/router.ts#L65)
+[src/lib/router.ts:60](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/router.ts#L60)

@@ -17,15 +17,11 @@
 
 ### functions
 
-• **functions**: `Object` = `{}`
-
-#### Index signature
-
-▪ [key: `string`]: `FunctionInfo`
+• **functions**: `Map`<`string`, `FunctionInfo`\>
 
 #### Defined in
 
-[src/lib/functions.ts:16](https://github.com/fmvilas/glee/blob/039da07/src/lib/functions.ts#L16)
+[src/lib/functions.ts:16](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/functions.ts#L16)
 
 ## Functions
 
@@ -45,7 +41,7 @@
 
 #### Defined in
 
-[src/lib/functions.ts:18](https://github.com/fmvilas/glee/blob/039da07/src/lib/functions.ts#L18)
+[src/lib/functions.ts:18](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/functions.ts#L18)
 
 ___
 
@@ -60,7 +56,6 @@ ___
 | `__namedParameters` | `Object` |
 | `__namedParameters.app` | [`default`](../classes/lib_glee.default.md) |
 | `__namedParameters.message` | [`default`](../classes/lib_message.default.md) |
-| `__namedParameters.messageId?` | `string` |
 | `__namedParameters.operationId` | `string` |
 
 #### Returns
@@ -69,4 +64,4 @@ ___
 
 #### Defined in
 
-[src/lib/functions.ts:44](https://github.com/fmvilas/glee/blob/039da07/src/lib/functions.ts#L44)
+[src/lib/functions.ts:44](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/functions.ts#L44)

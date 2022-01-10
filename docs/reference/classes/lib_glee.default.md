@@ -83,7 +83,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/glee.ts:32](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L32)
+[src/lib/glee.ts:33](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L33)
 
 ## Properties
 
@@ -93,7 +93,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/glee.ts:25](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L25)
+[src/lib/glee.ts:26](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L26)
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:23](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L23)
+[src/lib/glee.ts:24](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L24)
 
 ___
 
@@ -113,7 +113,7 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:24](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L24)
+[src/lib/glee.ts:25](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L25)
 
 ___
 
@@ -193,7 +193,7 @@ node_modules/@types/node/events.d.ts:272
 
 #### Defined in
 
-[src/lib/glee.ts:40](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L40)
+[src/lib/glee.ts:41](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L41)
 
 ## Methods
 
@@ -216,7 +216,7 @@ node_modules/@types/node/events.d.ts:272
 
 #### Defined in
 
-[src/lib/glee.ts:216](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L216)
+[src/lib/glee.ts:217](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L217)
 
 ___
 
@@ -240,7 +240,7 @@ Starts executing the middlewares for the given error and message.
 
 #### Defined in
 
-[src/lib/glee.ts:209](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L209)
+[src/lib/glee.ts:210](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L210)
 
 ___
 
@@ -264,7 +264,7 @@ Starts executing the middlewares for the given message.
 
 #### Defined in
 
-[src/lib/glee.ts:155](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L155)
+[src/lib/glee.ts:156](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L156)
 
 ___
 
@@ -290,7 +290,7 @@ Adds a connection adapter.
 
 #### Defined in
 
-[src/lib/glee.ts:52](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L52)
+[src/lib/glee.ts:53](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L53)
 
 ___
 
@@ -335,7 +335,7 @@ Tells the adapters to connect.
 
 #### Defined in
 
-[src/lib/glee.ts:96](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L96)
+[src/lib/glee.ts:97](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L97)
 
 ___
 
@@ -482,7 +482,7 @@ Injects an error into the Glee inbound error middleware chain.
 
 #### Defined in
 
-[src/lib/glee.ts:139](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L139)
+[src/lib/glee.ts:140](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L140)
 
 ___
 
@@ -506,7 +506,7 @@ Injects a message into the Glee inbound middleware chain.
 
 #### Defined in
 
-[src/lib/glee.ts:121](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L121)
+[src/lib/glee.ts:122](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L122)
 
 ___
 
@@ -522,7 +522,7 @@ Alias for `connect`.
 
 #### Defined in
 
-[src/lib/glee.ts:110](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L110)
+[src/lib/glee.ts:111](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L111)
 
 ___
 
@@ -1010,7 +1010,7 @@ Send a message to the adapters.
 
 #### Defined in
 
-[src/lib/glee.ts:83](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L83)
+[src/lib/glee.ts:84](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L84)
 
 ___
 
@@ -1065,7 +1065,7 @@ Use a middleware for inbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:61](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L61)
+[src/lib/glee.ts:62](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L62)
 
 ▸ **use**(`channel`, ...`middlewares`): `void`
 
@@ -1082,7 +1082,7 @@ Use a middleware for inbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:62](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L62)
+[src/lib/glee.ts:63](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L63)
 
 ___
 
@@ -1104,7 +1104,7 @@ Use a middleware for outbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:72](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L72)
+[src/lib/glee.ts:73](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L73)
 
 ▸ **useOutbound**(`channel`, ...`middlewares`): `void`
 
@@ -1121,7 +1121,7 @@ Use a middleware for outbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:73](https://github.com/fmvilas/glee/blob/039da07/src/lib/glee.ts#L73)
+[src/lib/glee.ts:74](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/glee.ts#L74)
 
 ___
 
