@@ -1,9 +1,9 @@
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import EventEmitter from 'events'
 import uriTemplates from 'uri-templates'
-import GleeConnection from './connection.js'
-import Glee from './glee.js'
-import GleeMessage from './message.js'
+import GleeConnection from './connection'
+import Glee from './glee'
+import GleeMessage from './message'
 
 export type EnrichedEvent = {
   connection?: GleeConnection,

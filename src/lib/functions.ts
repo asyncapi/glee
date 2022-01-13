@@ -1,12 +1,12 @@
 import { basename, extname, relative, join } from 'path'
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
-import { getConfigs } from './configs.js'
-import { logWarningMessage } from './logger.js'
-import GleeMessage from './message.js'
-import { GleeFunction } from './index.js'
-import Glee from './glee.js'
-import { gleeMessageToFunctionEvent } from './util.js'
+import { getConfigs } from './configs'
+import { logWarningMessage } from './logger'
+import GleeMessage from './message'
+import { GleeFunction } from './index'
+import Glee from './glee'
+import { gleeMessageToFunctionEvent } from './util'
 
 interface FunctionInfo {
   run: GleeFunction,

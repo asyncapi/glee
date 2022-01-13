@@ -1,7 +1,7 @@
 import fs from 'fs'
 import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
-import Adapter from '../../lib/adapter.js'
-import GleeMessage from '../../lib/message.js'
+import Adapter from '../../lib/adapter'
+import GleeMessage from '../../lib/message'
 
 interface IMQTTHeaders {
   cmd?: string,

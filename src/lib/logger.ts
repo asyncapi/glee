@@ -6,7 +6,7 @@ import chalk from 'chalk'
 import emojis from 'emojis'
 import wordWrap from 'word-wrap'
 import GleeMessage from './message'
-import GleeError from '../errors/glee-error.js'
+import GleeError from '../errors/glee-error'
 
 export { chalk }
 
@@ -28,8 +28,8 @@ interface ILogErrorOptions {
   showStack?: boolean,
 }
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+// const __filename = fileURLToPath(import.meta.url)
+// const __dirname = dirname(__filename)
 const TSLogo = chalk.bgHex('#3178C6').white(' TS')
 
 const highlightWords = (words: string[], text: string) => {
@@ -62,7 +62,7 @@ export const logWelcome = ({
   const fgPrimary = chalk.hex(primaryColor)
   const fgWarning = chalk.yellow
   
-  const pkg = JSON.parse(readFileSync(path.resolve(__dirname, '../../package.json')).toString())
+  const pkg = JSON.parse(readFileSync('../../package.json').toString())
 
   logEmptyLines(1)
   console.log(bgPrimary.black(` Glee ${pkg.version} \n`))

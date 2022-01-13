@@ -1,4 +1,4 @@
-import { getParsedAsyncAPI } from './asyncapiFile.js'
+import { getParsedAsyncAPI } from './asyncapiFile'
 
 export async function getSelectedServerNames(): Promise<string[]> {
   const parsedAsyncAPI = await getParsedAsyncAPI()
