@@ -5,7 +5,7 @@
     "target": "es6",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "commonjs"
   },
   "include": [
     "./src/**/*"

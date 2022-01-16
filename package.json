@@ -22,7 +22,7 @@
     "prepublishOnly": "npm run build",
     "release": "semantic-release",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:dev": "jest --watch"
   },
   "keywords": [
     "asyncapi",
@@ -80,6 +80,7 @@
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^27.4.7",
+    "jest-extended": "^1.2.0",
     "jsdoc-to-markdown": "^5.0.3",
     "markdown-toc": "^1.2.0",
     "rimraf": "^3.0.2",

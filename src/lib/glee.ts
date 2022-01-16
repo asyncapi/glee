@@ -153,7 +153,7 @@ export default class Glee extends EventEmitter {
    * @param {GleeMessage} message The message to pass to the middlewares.
    * @private
    */
-  _processMessage (middlewares: ChannelMiddlewareTuple[], errorMiddlewares: ChannelErrorMiddlewareTuple[], message: GleeMessage): void {
+  private _processMessage (middlewares: ChannelMiddlewareTuple[], errorMiddlewares: ChannelErrorMiddlewareTuple[], message: GleeMessage): void {
     const mws =
       middlewares
         .filter(mw => matchChannel(mw.channel, message.channel))
@@ -207,14 +207,15 @@ export default class Glee extends EventEmitter {
    * @param {GleeMessage} message The message to pass to the middlewares.
    * @private
    */
-  _processError (errorMiddlewares: ChannelErrorMiddlewareTuple[], error: Error, message: GleeMessage): void {
+  private _processError (errorMiddlewares: ChannelErrorMiddlewareTuple[], error: Error, message: GleeMessage): void {
     const emws = errorMiddlewares.filter(emw => matchChannel(emw.channel, message.channel))
+    console.log(emws)
     if (!emws.length) return
 
     this._execErrorMiddleware(emws, 0, error, message)
   }
 
-  _execErrorMiddleware (emws: ChannelErrorMiddlewareTuple[], index: number, error: Error, message: GleeMessage) {
+  private _execErrorMiddleware (emws: ChannelErrorMiddlewareTuple[], index: number, error: Error, message: GleeMessage) {
     emws.at(index).fn(error, message, (err: Error) => {
       if (!emws[index+1]) return
       this._execErrorMiddleware.call(null, emws, index+1, err, message)
