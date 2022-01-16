@@ -60,6 +60,7 @@ export async function trigger({
           headers: msg.headers,
           channel: msg.channel || message.channel,
           serverName: msg.server,
+          broadcast: true,
         }))
       })
     }
@@ -71,18 +72,6 @@ export async function trigger({
           headers: msg.headers,
           channel: msg.channel,
         })
-      })
-    }
-
-    if (res?.broadcast) {
-      res.broadcast.forEach((msg) => {
-        app.send(new GleeMessage({
-          payload: msg.payload,
-          headers: msg.headers,
-          channel: msg.channel || message.channel,
-          serverName: msg.server,
-          broadcast: true,
-        }))
       })
     }
   } catch (err) {
