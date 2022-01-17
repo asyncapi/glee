@@ -6,6 +6,7 @@
   <em>The AsyncAPI framework that will make you smile again.</em>
 </p>
 
+[![Coverage Status](https://coveralls.io/repos/github/asyncapi/glee/badge.svg?branch=master)](https://coveralls.io/github/asyncapi/glee?branch=master)
 
 > :warning: Glee is still under development, it didn't reach v1.0.0 and therefore is not suitable for production use yet.
 
