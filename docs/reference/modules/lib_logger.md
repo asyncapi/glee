@@ -60,7 +60,7 @@ node_modules/chalk/index.d.ts:405
 
 #### Defined in
 
-[src/lib/logger.ts:45](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L45)
+[src/lib/logger.ts:41](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L41)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:131](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L131)
+[src/lib/logger.ts:127](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L127)
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:125](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L125)
+[src/lib/logger.ts:121](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L121)
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:112](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L112)
+[src/lib/logger.ts:108](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L108)
 
 ___
 
@@ -143,7 +143,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:94](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L94)
+[src/lib/logger.ts:90](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L90)
 
 ___
 
@@ -165,7 +165,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:107](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L107)
+[src/lib/logger.ts:103](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L103)
 
 ___
 
@@ -187,7 +187,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:85](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L85)
+[src/lib/logger.ts:81](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L81)
 
 ___
 
@@ -207,7 +207,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:117](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L117)
+[src/lib/logger.ts:113](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L113)
 
 ___
 
@@ -231,7 +231,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:152](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L152)
+[src/lib/logger.ts:148](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L148)
 
 ___
 
@@ -251,7 +251,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:148](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L148)
+[src/lib/logger.ts:144](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L144)
 
 ___
 
@@ -272,7 +272,7 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:100](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L100)
+[src/lib/logger.ts:96](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L96)
 
 ___
 
@@ -292,4 +292,4 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:51](https://github.com/asyncapi/glee/blob/7dab58f/src/lib/logger.ts#L51)
+[src/lib/logger.ts:47](https://github.com/asyncapi/glee/blob/d0cc5dc/src/lib/logger.ts#L47)
