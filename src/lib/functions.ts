@@ -22,6 +22,7 @@ export async function register(dir: string) {
     if (!statsDir.isDirectory()) return
   } catch (e) {
     if (e.code === 'ENOENT') return
+    throw e
   }
 
   try {

@@ -1,6 +1,6 @@
 import { Server } from 'socket.io'
-import Adapter from '../../lib/adapter.js'
-import GleeMessage from '../../lib/message.js'
+import Adapter from '../../lib/adapter'
+import GleeMessage from '../../lib/message'
 
 class SocketIOAdapter extends Adapter {
   private server: Server

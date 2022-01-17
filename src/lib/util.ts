@@ -1,10 +1,10 @@
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
-import Glee from './glee.js'
-import { GleeFunctionEvent } from './index.js'
-import GleeMessage from './message.js'
-import Message from './message.js'
+import Glee from './glee'
+import { GleeFunctionEvent } from './index'
+import GleeMessage from './message'
+import Message from './message'
 
 interface IValidateDataReturn {
   errors?: void | betterAjvErrors.IOutputError[],
