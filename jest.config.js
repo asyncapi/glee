@@ -6,4 +6,4 @@ module.exports = {
   collectCoverage: true,
   setupFiles: ['core-js'],
   silent: false,
-};
+}

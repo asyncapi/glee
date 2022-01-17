@@ -1,13 +1,9 @@
 #!/usr/bin/env node
 
-import { fileURLToPath } from 'url'
-import { dirname, resolve } from 'path'
 import { compileAndWatch } from '../lib/compiler'
 import spawn from 'cross-spawn'
 import { logLineWithIcon, logTypeScriptMessage } from '../lib/logger'
 
-// const __filename = fileURLToPath(import.meta.url)
-// const __dirname = dirname(__filename)
 const args = process.argv.splice(2)
 const command = args[0]
 let devChildProcess

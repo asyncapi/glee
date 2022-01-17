@@ -1,6 +1,4 @@
 import { readFileSync } from 'fs'
-import path, { dirname } from 'path'
-import { fileURLToPath } from 'url'
 import util from 'util'
 import chalk from 'chalk'
 import emojis from 'emojis'
@@ -28,8 +26,6 @@ interface ILogErrorOptions {
   showStack?: boolean,
 }
 
-// const __filename = fileURLToPath(import.meta.url)
-// const __dirname = dirname(__filename)
 const TSLogo = chalk.bgHex('#3178C6').white(' TS')
 
 const highlightWords = (words: string[], text: string) => {
