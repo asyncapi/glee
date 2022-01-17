@@ -47,7 +47,7 @@ class GleeAdapter extends EventEmitter {
     this._serverUrlExpanded = uriTemplates(this._AsyncAPIServer.url()).fill(Object.fromEntries(uriTemplateValues.entries()))
 
     this.on('error', err => { this._glee.injectError(err) })
-    this.on('message', (message, connection) => {      
+    this.on('message', (message, connection) => {
       const conn = new GleeConnection({
         connection,
         channels: this._connections.find(c => c.rawConnection === connection).channels,

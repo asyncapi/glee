@@ -34,7 +34,7 @@ describe('functions', () => {
 
   beforeEach(restoreDefaultValues)
   
-  describe('register', () => {
+  describe('register()', () => {
     it('fails to register functions if the functions directory is not a directory', async () => {
       isDirectoryReturnValue = false
       await register('test-functions')

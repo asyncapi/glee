@@ -41,6 +41,10 @@ export default class Glee extends EventEmitter {
   get options(): GleeConfig {
     return this._options
   }
+  
+  get adapters(): AdapterRecord[] {
+    return this._adapters
+  }
 
   /**
    * Adds a connection adapter.
@@ -209,7 +213,6 @@ export default class Glee extends EventEmitter {
    */
   private _processError (errorMiddlewares: ChannelErrorMiddlewareTuple[], error: Error, message: GleeMessage): void {
     const emws = errorMiddlewares.filter(emw => matchChannel(emw.channel, message.channel))
-    console.log(emws)
     if (!emws.length) return
 
     this._execErrorMiddleware(emws, 0, error, message)
