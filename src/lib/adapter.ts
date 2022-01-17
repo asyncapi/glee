@@ -1,9 +1,9 @@
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import EventEmitter from 'events'
 import uriTemplates from 'uri-templates'
-import GleeConnection from './connection.js'
-import Glee from './glee.js'
-import GleeMessage from './message.js'
+import GleeConnection from './connection'
+import Glee from './glee'
+import GleeMessage from './message'
 
 export type EnrichedEvent = {
   connection?: GleeConnection,
@@ -47,7 +47,7 @@ class GleeAdapter extends EventEmitter {
     this._serverUrlExpanded = uriTemplates(this._AsyncAPIServer.url()).fill(Object.fromEntries(uriTemplateValues.entries()))
 
     this.on('error', err => { this._glee.injectError(err) })
-    this.on('message', (message, connection) => {      
+    this.on('message', (message, connection) => {
       const conn = new GleeConnection({
         connection,
         channels: this._connections.find(c => c.rawConnection === connection).channels,

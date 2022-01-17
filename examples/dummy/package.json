@@ -2,7 +2,6 @@
   "name": "glee-example",
   "version": "0.1.0",
   "description": "An example of the AsyncAPI Glee framework",
-  "type": "module",
   "scripts": {
     "dev": "glee dev",
     "start": "glee start"

@@ -2,13 +2,13 @@ import EventEmitter from 'events'
 import async from 'async'
 import Debug from 'debug'
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
-import GleeAdapter from './adapter.js'
-import GleeRouter, { ChannelErrorMiddlewareTuple, ChannelMiddlewareTuple, GenericMiddleware } from './router.js'
-import GleeMessage from './message.js'
-import { matchChannel, duplicateMessage, getParams } from './util.js'
-import { GleeConfig } from './index.js'
-import GleeConnection from './connection.js'
-import { MiddlewareCallback } from '../middlewares/index.js'
+import GleeAdapter from './adapter'
+import GleeRouter, { ChannelErrorMiddlewareTuple, ChannelMiddlewareTuple, GenericMiddleware } from './router'
+import GleeMessage from './message'
+import { matchChannel, duplicateMessage, getParams } from './util'
+import { GleeConfig } from './index'
+import GleeConnection from './connection'
+import { MiddlewareCallback } from '../middlewares/index'
 
 const debug = Debug('glee')
 
@@ -40,6 +40,10 @@ export default class Glee extends EventEmitter {
 
   get options(): GleeConfig {
     return this._options
+  }
+  
+  get adapters(): AdapterRecord[] {
+    return this._adapters
   }
 
   /**
@@ -153,7 +157,7 @@ export default class Glee extends EventEmitter {
    * @param {GleeMessage} message The message to pass to the middlewares.
    * @private
    */
-  _processMessage (middlewares: ChannelMiddlewareTuple[], errorMiddlewares: ChannelErrorMiddlewareTuple[], message: GleeMessage): void {
+  private _processMessage (middlewares: ChannelMiddlewareTuple[], errorMiddlewares: ChannelErrorMiddlewareTuple[], message: GleeMessage): void {
     const mws =
       middlewares
         .filter(mw => matchChannel(mw.channel, message.channel))
@@ -207,14 +211,14 @@ export default class Glee extends EventEmitter {
    * @param {GleeMessage} message The message to pass to the middlewares.
    * @private
    */
-  _processError (errorMiddlewares: ChannelErrorMiddlewareTuple[], error: Error, message: GleeMessage): void {
+  private _processError (errorMiddlewares: ChannelErrorMiddlewareTuple[], error: Error, message: GleeMessage): void {
     const emws = errorMiddlewares.filter(emw => matchChannel(emw.channel, message.channel))
     if (!emws.length) return
 
     this._execErrorMiddleware(emws, 0, error, message)
   }
 
-  _execErrorMiddleware (emws: ChannelErrorMiddlewareTuple[], index: number, error: Error, message: GleeMessage) {
+  private _execErrorMiddleware (emws: ChannelErrorMiddlewareTuple[], index: number, error: Error, message: GleeMessage) {
     emws.at(index).fn(error, message, (err: Error) => {
       if (!emws[index+1]) return
       this._execErrorMiddleware.call(null, emws, index+1, err, message)

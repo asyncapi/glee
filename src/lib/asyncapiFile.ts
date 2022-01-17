@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises'
 import asyncapi, { AsyncAPIDocument } from '@asyncapi/parser'
-import { getConfigs } from './configs.js'
+import { getConfigs } from './configs'
 
 export async function getParsedAsyncAPI(): Promise<AsyncAPIDocument> {
   const { ASYNCAPI_FILE_PATH } = getConfigs()

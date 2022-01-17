@@ -1,9 +1,9 @@
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
-import { GleeFunctionEvent, GleeFunctionReturn, GleeFunctionReturnSend } from './index.js'
-import { logInfoMessage } from './logger.js'
-import GleeMessage from './message.js'
-import { arrayHasDuplicates } from './util.js'
+import { GleeFunctionEvent, GleeFunctionReturn, GleeFunctionReturnSend } from './index'
+import { logInfoMessage } from './logger'
+import GleeMessage from './message'
+import { arrayHasDuplicates } from './util'
 
 interface IEvent {
   fn: (event: GleeFunctionEvent) => GleeFunctionReturn,

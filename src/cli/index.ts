@@ -1,13 +1,9 @@
 #!/usr/bin/env node
 
-import { fileURLToPath } from 'url'
-import { dirname, resolve } from 'path'
-import { compileAndWatch } from '../lib/compiler.js'
+import { compileAndWatch } from '../lib/compiler'
 import spawn from 'cross-spawn'
-import { logLineWithIcon, logTypeScriptMessage } from '../lib/logger.js'
+import { logLineWithIcon, logTypeScriptMessage } from '../lib/logger'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 const args = process.argv.splice(2)
 const command = args[0]
 let devChildProcess
@@ -28,7 +24,7 @@ if (command === 'dev') {
     },
     onCompilationDone() {
       killDevChildProcess()
-      devChildProcess = spawn('node', [resolve(__dirname, 'start.js')], {
+      devChildProcess = spawn('node', ['./node_modules/@asyncapi/glee/dist/cli/start.js'], {
         stdio: 'inherit',
         env: {
           ...process.env,

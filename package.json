@@ -3,7 +3,6 @@
   "version": "0.7.0",
   "description": "The AsyncAPI framework",
   "exports": "./dist/moduleIndex.js",
-  "type": "module",
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   },
@@ -21,10 +20,9 @@
     "lint": "eslint --max-warnings 2 --config .eslintrc .",
     "lint:fix": "eslint --max-warnings 2 --config .eslintrc . --fix",
     "prepublishOnly": "npm run build",
-    "pretest": "npm run build",
-    "pretest:coverage": "npm run build",
     "release": "semantic-release",
-    "test": "echo \"No test specified\""
+    "test": "jest",
+    "test:dev": "jest --watch"
   },
   "keywords": [
     "asyncapi",
@@ -55,6 +53,7 @@
     "path-to-regexp": "^6.2.0",
     "socket.io": "^4.1.2",
     "terminal-image": "^2.0.0",
+    "typescript": "^4.5.4",
     "uri-templates": "^0.2.0",
     "utf-8-validate": "^5.0.5",
     "uuid": "^8.3.2",
@@ -67,8 +66,10 @@
     "@semantic-release/github": "^7.0.4",
     "@semantic-release/npm": "^7.0.6",
     "@semantic-release/release-notes-generator": "^9.0.1",
+    "@tsconfig/node14": "^1.0.1",
     "@types/async": "^3.2.11",
     "@types/debug": "^4.1.7",
+    "@types/jest": "^27.4.0",
     "@types/socket.io": "^3.0.2",
     "@types/uri-templates": "^0.1.31",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
@@ -78,15 +79,16 @@
     "eslint": "^8.6.0",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-sonarjs": "^0.5.0",
-    "jest": "^25.5.0",
+    "jest": "^27.4.7",
+    "jest-extended": "^1.2.0",
     "jsdoc-to-markdown": "^5.0.3",
     "markdown-toc": "^1.2.0",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.2.2",
+    "ts-jest": "^27.1.2",
     "tsc-watch": "^4.5.0",
     "typedoc": "^0.22.10",
     "typedoc-plugin-markdown": "^3.11.8",
-    "typescript": "^4.5.4",
     "unixify": "^1.0.0"
   }
 }

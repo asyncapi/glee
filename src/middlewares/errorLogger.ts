@@ -1,7 +1,7 @@
-import { logError } from '../lib/logger.js'
-import GleeError from '../errors/glee-error.js'
-import GleeMessage from '../lib/message.js'
-import { MiddlewareCallback } from './index.js'
+import { logError } from '../lib/logger'
+import GleeError from '../errors/glee-error'
+import GleeMessage from '../lib/message'
+import { MiddlewareCallback } from './index'
 
 export default (err: Error, message: GleeMessage, next: MiddlewareCallback) => {
   if (err instanceof GleeError) {
