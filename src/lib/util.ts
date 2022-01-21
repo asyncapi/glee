@@ -49,6 +49,7 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
     serverName: message.serverName,
     connection: message.connection,
     broadcast: message.broadcast,
+    cluster: message.cluster
   })
 
   if (message.isInbound()) {

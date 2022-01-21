@@ -66,6 +66,8 @@ class SocketIOAdapter extends Adapter {
 
   async _send(message: GleeMessage): Promise<void> {
     if (message.broadcast) {
+      this.glee.syncCluster(message)
+      
       this
         .connections
         .filter(({ channels }) => channels.includes(message.channel))

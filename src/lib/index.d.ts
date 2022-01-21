@@ -1,15 +1,23 @@
 import GleeAdapter from './adapter'
+import GleeClusterAdapter from './clusterAdapter'
 import GleeConnection from './connection'
 import Glee from './glee'
 
 type WebSocketServerType = 'native' | 'socket.io'
+
+export type GleeClusterAdapterConfig = {
+  adapter?: string | typeof GleeClusterAdapter,
+  name?: string,
+  url: string
+}
 
 export type GleeConfig = {
   websocket?: {
     httpServer?: any,
     adapter?: WebSocketServerType | typeof GleeAdapter,
     port?: number,
-  }
+  },
+  cluster?: GleeClusterAdapterConfig
 }
 
 export type GleeFunctionReturn = {

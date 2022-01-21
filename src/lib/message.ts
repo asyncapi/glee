@@ -10,6 +10,7 @@ interface IGleeMessageConstructor {
   serverName?: string,
   connection?: GleeConnection,
   broadcast?: boolean,
+  cluster?: boolean,
 }
 
 interface IReply {
@@ -27,6 +28,7 @@ class GleeMessage extends EventEmitter {
   private _broadcast: boolean
   private _inbound: boolean
   private _outbound: boolean
+  private _cluster: boolean
   private _params: { [key: string]: string }
 
   /**
@@ -39,6 +41,7 @@ class GleeMessage extends EventEmitter {
    * @param {String} [options.serverName] The name of the associated AsyncAPI server.
    * @param {GleeConnection} [options.connection] The connection through which the message will be sent or has been received.
    * @param {Boolean} [options.broadcast=false] Whether the message should be broadcasted or not.
+   * @param {Boolean} [options.cluster=false] Whether the message is from a cluster adapter or not.
    */
   constructor ({
     payload,
@@ -47,6 +50,7 @@ class GleeMessage extends EventEmitter {
     serverName,
     connection,
     broadcast = false,
+    cluster = false
   }: IGleeMessageConstructor) {
     super()
 
@@ -56,6 +60,7 @@ class GleeMessage extends EventEmitter {
     if (serverName) this._serverName = serverName
     if (connection) this._connection = connection
     if (broadcast) this._broadcast = !!broadcast
+    if (cluster) this._cluster = !!cluster
   }
 
   get payload(): any {
@@ -108,6 +113,14 @@ class GleeMessage extends EventEmitter {
 
   set params(value: { [key: string]: string }) {
     this._params = value
+  }
+
+  get cluster(): boolean {
+    return this._cluster
+  }
+
+  set cluster(value: boolean) {
+    this._cluster = value
   }
 
   /**
