@@ -19,6 +19,7 @@ import { initializeConfigs } from './lib/configs'
 import { getParsedAsyncAPI } from './lib/asyncapiFile'
 import { getSelectedServerNames } from './lib/servers'
 import { EnrichedEvent } from './lib/adapter'
+import { ClusterEvent } from './lib/cluster'
 
 dotenvExpand(dotenv.config())
 
@@ -144,22 +145,22 @@ export default async function GleeAppInitializer () {
     })
   })
 
-  app.on('adapter:cluster:connect', (serverName: string) => {
-    logLineWithIcon(':zap:', `Connected to ${this._serverName} for clusterization.`, {
-      highlightedWords: [serverName],
+  app.on('adapter:cluster:connect', (e: ClusterEvent) => {
+    logLineWithIcon(':zap:', `Connected to cluster ${e.serverName}.`, {
+      highlightedWords: [e.serverName],
     })
   })
 
-  app.on('adapter:cluster:reconnect', (serverName: string) => {
-    logLineWithIcon('↪', `Reconnected to ${this._serverName}.`, {
-      highlightedWords: [this._serverName],
+  app.on('adapter:cluster:reconnect', (e: ClusterEvent) => {
+    logLineWithIcon('↪', `Reconnected to cluster ${e.serverName}.`, {
+      highlightedWords: [e.serverName],
       iconColor: '#0f0',
     })
   })
 
-  app.on('adapter:cluster:close', (serverName: string) => {
-    logLineWithIcon('x', `Closed connection with ${this._serverName}.`, {
-      highlightedWords: [this._serverName],
+  app.on('adapter:cluster:close', (e: ClusterEvent) => {
+    logLineWithIcon('x', `Closed connection with cluster ${e.serverName}.`, {
+      highlightedWords: [e.serverName],
       iconColor: '#f00',
       disableEmojis: true,
     })

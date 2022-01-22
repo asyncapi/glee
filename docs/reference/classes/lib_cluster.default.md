@@ -1,93 +1,130 @@
-[@asyncapi/glee](../README.md) / [adapters/ws](../modules/adapters_ws.md) / default
+[@asyncapi/glee](../README.md) / [lib/cluster](../modules/lib_cluster.md) / default
 
 # Class: default
 
-[adapters/ws](../modules/adapters_ws.md).default
+[lib/cluster](../modules/lib_cluster.md).default
 
 ## Hierarchy
 
-- [`default`](lib_adapter.default.md)
+- `EventEmitter`
 
   ↳ **`default`**
+
+  ↳↳ [`default`](adapters_cluster_redis.default.md)
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](adapters_ws.default.md#constructor)
+- [constructor](lib_cluster.default.md#constructor)
 
 ### Properties
 
-- [captureRejectionSymbol](adapters_ws.default.md#capturerejectionsymbol)
-- [captureRejections](adapters_ws.default.md#capturerejections)
-- [defaultMaxListeners](adapters_ws.default.md#defaultmaxlisteners)
-- [errorMonitor](adapters_ws.default.md#errormonitor)
+- [\_glee](lib_cluster.default.md#_glee)
+- [\_instanceId](lib_cluster.default.md#_instanceid)
+- [\_serverName](lib_cluster.default.md#_servername)
+- [\_serverUrlExpanded](lib_cluster.default.md#_serverurlexpanded)
+- [captureRejectionSymbol](lib_cluster.default.md#capturerejectionsymbol)
+- [captureRejections](lib_cluster.default.md#capturerejections)
+- [defaultMaxListeners](lib_cluster.default.md#defaultmaxlisteners)
+- [errorMonitor](lib_cluster.default.md#errormonitor)
 
 ### Accessors
 
-- [AsyncAPIServer](adapters_ws.default.md#asyncapiserver)
-- [channelNames](adapters_ws.default.md#channelnames)
-- [connections](adapters_ws.default.md#connections)
-- [glee](adapters_ws.default.md#glee)
-- [parsedAsyncAPI](adapters_ws.default.md#parsedasyncapi)
-- [serverName](adapters_ws.default.md#servername)
-- [serverUrlExpanded](adapters_ws.default.md#serverurlexpanded)
+- [glee](lib_cluster.default.md#glee)
+- [instanceId](lib_cluster.default.md#instanceid)
+- [serverName](lib_cluster.default.md#servername)
+- [serverUrlExpanded](lib_cluster.default.md#serverurlexpanded)
 
 ### Methods
 
-- [\_connect](adapters_ws.default.md#_connect)
-- [\_createMessage](adapters_ws.default.md#_createmessage)
-- [\_send](adapters_ws.default.md#_send)
-- [addListener](adapters_ws.default.md#addlistener)
-- [connect](adapters_ws.default.md#connect)
-- [emit](adapters_ws.default.md#emit)
-- [eventNames](adapters_ws.default.md#eventnames)
-- [getMaxListeners](adapters_ws.default.md#getmaxlisteners)
-- [getSubscribedChannels](adapters_ws.default.md#getsubscribedchannels)
-- [listenerCount](adapters_ws.default.md#listenercount)
-- [listeners](adapters_ws.default.md#listeners)
-- [name](adapters_ws.default.md#name)
-- [off](adapters_ws.default.md#off)
-- [on](adapters_ws.default.md#on)
-- [once](adapters_ws.default.md#once)
-- [prependListener](adapters_ws.default.md#prependlistener)
-- [prependOnceListener](adapters_ws.default.md#prependoncelistener)
-- [rawListeners](adapters_ws.default.md#rawlisteners)
-- [removeAllListeners](adapters_ws.default.md#removealllisteners)
-- [removeListener](adapters_ws.default.md#removelistener)
-- [send](adapters_ws.default.md#send)
-- [setMaxListeners](adapters_ws.default.md#setmaxlisteners)
-- [getEventListeners](adapters_ws.default.md#geteventlisteners)
-- [listenerCount](adapters_ws.default.md#listenercount)
-- [on](adapters_ws.default.md#on)
-- [once](adapters_ws.default.md#once)
+- [addListener](lib_cluster.default.md#addlistener)
+- [connect](lib_cluster.default.md#connect)
+- [deserializeMessage](lib_cluster.default.md#deserializemessage)
+- [emit](lib_cluster.default.md#emit)
+- [eventNames](lib_cluster.default.md#eventnames)
+- [getMaxListeners](lib_cluster.default.md#getmaxlisteners)
+- [listenerCount](lib_cluster.default.md#listenercount)
+- [listeners](lib_cluster.default.md#listeners)
+- [off](lib_cluster.default.md#off)
+- [on](lib_cluster.default.md#on)
+- [once](lib_cluster.default.md#once)
+- [prependListener](lib_cluster.default.md#prependlistener)
+- [prependOnceListener](lib_cluster.default.md#prependoncelistener)
+- [rawListeners](lib_cluster.default.md#rawlisteners)
+- [removeAllListeners](lib_cluster.default.md#removealllisteners)
+- [removeListener](lib_cluster.default.md#removelistener)
+- [send](lib_cluster.default.md#send)
+- [serializeMessage](lib_cluster.default.md#serializemessage)
+- [setMaxListeners](lib_cluster.default.md#setmaxlisteners)
+- [getEventListeners](lib_cluster.default.md#geteventlisteners)
+- [listenerCount](lib_cluster.default.md#listenercount)
+- [on](lib_cluster.default.md#on)
+- [once](lib_cluster.default.md#once)
 
 ## Constructors
 
 ### constructor
 
-• **new default**(`glee`, `serverName`, `server`, `parsedAsyncAPI`)
+• **new default**(`glee`)
 
-Instantiates a Glee adapter.
+Instantiates a Glee Cluster adapter.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `glee` | [`default`](lib_glee.default.md) | A reference to the Glee app. |
-| `serverName` | `string` | The name of the AsyncAPI server to use for the connection. |
-| `server` | `Server` | The AsyncAPI server to use for the connection. |
-| `parsedAsyncAPI` | `AsyncAPIDocument` | The AsyncAPI document. |
 
-#### Inherited from
+#### Overrides
 
-[default](lib_adapter.default.md).[constructor](lib_adapter.default.md#constructor)
+EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/adapter.ts:31](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L31)
+[src/lib/cluster.ts:46](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L46)
 
 ## Properties
+
+### \_glee
+
+• `Private` **\_glee**: [`default`](lib_glee.default.md)
+
+#### Defined in
+
+[src/lib/cluster.ts:36](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L36)
+
+___
+
+### \_instanceId
+
+• `Private` **\_instanceId**: `string`
+
+#### Defined in
+
+[src/lib/cluster.ts:39](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L39)
+
+___
+
+### \_serverName
+
+• `Private` **\_serverName**: `string`
+
+#### Defined in
+
+[src/lib/cluster.ts:37](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L37)
+
+___
+
+### \_serverUrlExpanded
+
+• `Private` **\_serverUrlExpanded**: `string`
+
+#### Defined in
+
+[src/lib/cluster.ts:38](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L38)
+
+___
 
 ### captureRejectionSymbol
 
@@ -95,7 +132,7 @@ Instantiates a Glee adapter.
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[captureRejectionSymbol](lib_adapter.default.md#capturerejectionsymbol)
+EventEmitter.captureRejectionSymbol
 
 #### Defined in
 
@@ -111,7 +148,7 @@ Sets or gets the default captureRejection value for all emitters.
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[captureRejections](lib_adapter.default.md#capturerejections)
+EventEmitter.captureRejections
 
 #### Defined in
 
@@ -125,7 +162,7 @@ ___
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[defaultMaxListeners](lib_adapter.default.md#defaultmaxlisteners)
+EventEmitter.defaultMaxListeners
 
 #### Defined in
 
@@ -147,67 +184,13 @@ regular `'error'` listener is installed.
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[errorMonitor](lib_adapter.default.md#errormonitor)
+EventEmitter.errorMonitor
 
 #### Defined in
 
 node_modules/@types/node/events.d.ts:272
 
 ## Accessors
-
-### AsyncAPIServer
-
-• `get` **AsyncAPIServer**(): `Server`
-
-#### Returns
-
-`Server`
-
-#### Inherited from
-
-Adapter.AsyncAPIServer
-
-#### Defined in
-
-[src/lib/adapter.ts:131](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L131)
-
-___
-
-### channelNames
-
-• `get` **channelNames**(): `string`[]
-
-#### Returns
-
-`string`[]
-
-#### Inherited from
-
-Adapter.channelNames
-
-#### Defined in
-
-[src/lib/adapter.ts:139](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L139)
-
-___
-
-### connections
-
-• `get` **connections**(): [`default`](lib_connection.default.md)[]
-
-#### Returns
-
-[`default`](lib_connection.default.md)[]
-
-#### Inherited from
-
-Adapter.connections
-
-#### Defined in
-
-[src/lib/adapter.ts:143](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L143)
-
-___
 
 ### glee
 
@@ -217,31 +200,23 @@ ___
 
 [`default`](lib_glee.default.md)
 
-#### Inherited from
-
-Adapter.glee
-
 #### Defined in
 
-[src/lib/adapter.ts:123](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L123)
+[src/lib/cluster.ts:93](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L93)
 
 ___
 
-### parsedAsyncAPI
+### instanceId
 
-• `get` **parsedAsyncAPI**(): `AsyncAPIDocument`
+• `get` **instanceId**(): `string`
 
 #### Returns
 
-`AsyncAPIDocument`
-
-#### Inherited from
-
-Adapter.parsedAsyncAPI
+`string`
 
 #### Defined in
 
-[src/lib/adapter.ts:135](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L135)
+[src/lib/cluster.ts:105](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L105)
 
 ___
 
@@ -253,13 +228,9 @@ ___
 
 `string`
 
-#### Inherited from
-
-Adapter.serverName
-
 #### Defined in
 
-[src/lib/adapter.ts:127](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L127)
+[src/lib/cluster.ts:97](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L97)
 
 ___
 
@@ -271,74 +242,15 @@ ___
 
 `string`
 
-#### Inherited from
-
-Adapter.serverUrlExpanded
-
 #### Defined in
 
-[src/lib/adapter.ts:147](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L147)
+[src/lib/cluster.ts:101](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L101)
 
 ## Methods
 
-### \_connect
-
-▸ **_connect**(): `Promise`<[`default`](adapters_ws.default.md)\>
-
-#### Returns
-
-`Promise`<[`default`](adapters_ws.default.md)\>
-
-#### Defined in
-
-[src/adapters/ws/index.ts:22](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L22)
-
-___
-
-### \_createMessage
-
-▸ **_createMessage**(`eventName`, `payload`): [`default`](lib_message.default.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `string` |
-| `payload` | `any` |
-
-#### Returns
-
-[`default`](lib_message.default.md)
-
-#### Defined in
-
-[src/adapters/ws/index.ts:140](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L140)
-
-___
-
-### \_send
-
-▸ **_send**(`message`): `Promise`<`void`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `message` | [`default`](lib_message.default.md) |
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[src/adapters/ws/index.ts:123](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L123)
-
-___
-
 ### addListener
 
-▸ **addListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **addListener**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Alias for `emitter.on(eventName, listener)`.
 
@@ -353,11 +265,11 @@ Alias for `emitter.on(eventName, listener)`.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[addListener](lib_adapter.default.md#addlistener)
+EventEmitter.addListener
 
 #### Defined in
 
@@ -367,21 +279,41 @@ ___
 
 ### connect
 
-▸ **connect**(): `Promise`<[`default`](adapters_ws.default.md)\>
+▸ **connect**(): `Promise`<`any`\>
 
 Connects to the remote server.
 
 #### Returns
 
-`Promise`<[`default`](adapters_ws.default.md)\>
-
-#### Overrides
-
-[default](lib_adapter.default.md).[connect](lib_adapter.default.md#connect)
+`Promise`<`any`\>
 
 #### Defined in
 
-[src/adapters/ws/index.ts:14](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L14)
+[src/lib/cluster.ts:112](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L112)
+
+___
+
+### deserializeMessage
+
+▸ **deserializeMessage**(`serialized`): [`default`](lib_message.default.md)
+
+Deserializes the serialized message.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `serialized` | `string` | The serialized message |
+
+#### Returns
+
+[`default`](lib_message.default.md)
+
+The deserialized message.
+
+#### Defined in
+
+[src/lib/cluster.ts:151](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L151)
 
 ___
 
@@ -442,7 +374,7 @@ myEmitter.emit('event', 1, 2, 3, 4, 5);
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[emit](lib_adapter.default.md#emit)
+EventEmitter.emit
 
 #### Defined in
 
@@ -478,7 +410,7 @@ console.log(myEE.eventNames());
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[eventNames](lib_adapter.default.md#eventnames)
+EventEmitter.eventNames
 
 #### Defined in
 
@@ -491,7 +423,7 @@ ___
 ▸ **getMaxListeners**(): `number`
 
 Returns the current max listener value for the `EventEmitter` which is either
-set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapters_ws.default.md#defaultmaxlisteners).
+set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](lib_cluster.default.md#defaultmaxlisteners).
 
 **`since`** v1.0.0
 
@@ -501,31 +433,11 @@ set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapter
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[getMaxListeners](lib_adapter.default.md#getmaxlisteners)
+EventEmitter.getMaxListeners
 
 #### Defined in
 
 node_modules/@types/node/events.d.ts:471
-
-___
-
-### getSubscribedChannels
-
-▸ **getSubscribedChannels**(): `string`[]
-
-Returns a list of the channels a given adapter has to subscribe to.
-
-#### Returns
-
-`string`[]
-
-#### Inherited from
-
-[default](lib_adapter.default.md).[getSubscribedChannels](lib_adapter.default.md#getsubscribedchannels)
-
-#### Defined in
-
-[src/lib/adapter.ts:154](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L154)
 
 ___
 
@@ -549,7 +461,7 @@ Returns the number of listeners listening to the event named `eventName`.
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount)
+EventEmitter.listenerCount
 
 #### Defined in
 
@@ -585,7 +497,7 @@ console.log(util.inspect(server.listeners('connection')));
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[listeners](lib_adapter.default.md#listeners)
+EventEmitter.listeners
 
 #### Defined in
 
@@ -593,23 +505,9 @@ node_modules/@types/node/events.d.ts:484
 
 ___
 
-### name
-
-▸ **name**(): `string`
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[src/adapters/ws/index.ts:10](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L10)
-
-___
-
 ### off
 
-▸ **off**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **off**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Alias for `emitter.removeListener()`.
 
@@ -624,11 +522,11 @@ Alias for `emitter.removeListener()`.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[off](lib_adapter.default.md#off)
+EventEmitter.off
 
 #### Defined in
 
@@ -638,7 +536,7 @@ ___
 
 ### on
 
-▸ **on**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **on**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Adds the `listener` function to the end of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -677,11 +575,11 @@ myEE.emit('foo');
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[on](lib_adapter.default.md#on)
+EventEmitter.on
 
 #### Defined in
 
@@ -691,7 +589,7 @@ ___
 
 ### once
 
-▸ **once**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **once**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName`. The
 next time `eventName` is triggered, this listener is removed and then invoked.
@@ -728,11 +626,11 @@ myEE.emit('foo');
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
+EventEmitter.once
 
 #### Defined in
 
@@ -742,7 +640,7 @@ ___
 
 ### prependListener
 
-▸ **prependListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **prependListener**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Adds the `listener` function to the _beginning_ of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -768,11 +666,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[prependListener](lib_adapter.default.md#prependlistener)
+EventEmitter.prependListener
 
 #### Defined in
 
@@ -782,7 +680,7 @@ ___
 
 ### prependOnceListener
 
-▸ **prependOnceListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **prependOnceListener**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName` to the_beginning_ of the listeners array. The next time `eventName` is triggered, this
 listener is removed, and then invoked.
@@ -806,11 +704,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[prependOnceListener](lib_adapter.default.md#prependoncelistener)
+EventEmitter.prependOnceListener
 
 #### Defined in
 
@@ -863,7 +761,7 @@ emitter.emit('log');
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[rawListeners](lib_adapter.default.md#rawlisteners)
+EventEmitter.rawListeners
 
 #### Defined in
 
@@ -873,7 +771,7 @@ ___
 
 ### removeAllListeners
 
-▸ **removeAllListeners**(`event?`): [`default`](adapters_ws.default.md)
+▸ **removeAllListeners**(`event?`): [`default`](lib_cluster.default.md)
 
 Removes all listeners, or those of the specified `eventName`.
 
@@ -893,11 +791,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[removeAllListeners](lib_adapter.default.md#removealllisteners)
+EventEmitter.removeAllListeners
 
 #### Defined in
 
@@ -907,7 +805,7 @@ ___
 
 ### removeListener
 
-▸ **removeListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **removeListener**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Removes the specified `listener` from the listener array for the event named`eventName`.
 
@@ -997,11 +895,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[removeListener](lib_adapter.default.md#removelistener)
+EventEmitter.removeListener
 
 #### Defined in
 
@@ -1011,33 +909,53 @@ ___
 
 ### send
 
-▸ **send**(`message`): `Promise`<`void`\>
+▸ **send**(`message`): `Promise`<`any`\>
 
 Sends a message to the remote server.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | [`default`](lib_message.default.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `message` | [`default`](lib_message.default.md) | The message to send. |
 
 #### Returns
 
-`Promise`<`void`\>
-
-#### Overrides
-
-[default](lib_adapter.default.md).[send](lib_adapter.default.md#send)
+`Promise`<`any`\>
 
 #### Defined in
 
-[src/adapters/ws/index.ts:18](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L18)
+[src/lib/cluster.ts:121](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L121)
+
+___
+
+### serializeMessage
+
+▸ **serializeMessage**(`message`): `string`
+
+Serialize a message into JSON.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `message` | [`default`](lib_message.default.md) | The message to serialize. |
+
+#### Returns
+
+`string`
+
+The serialized message,
+
+#### Defined in
+
+[src/lib/cluster.ts:131](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L131)
 
 ___
 
 ### setMaxListeners
 
-▸ **setMaxListeners**(`n`): [`default`](adapters_ws.default.md)
+▸ **setMaxListeners**(`n`): [`default`](lib_cluster.default.md)
 
 By default `EventEmitter`s will print a warning if more than `10` listeners are
 added for a particular event. This is a useful default that helps finding
@@ -1056,11 +974,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[setMaxListeners](lib_adapter.default.md#setmaxlisteners)
+EventEmitter.setMaxListeners
 
 #### Defined in
 
@@ -1112,7 +1030,7 @@ const { getEventListeners, EventEmitter } = require('events');
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[getEventListeners](lib_adapter.default.md#geteventlisteners)
+EventEmitter.getEventListeners
 
 #### Defined in
 
@@ -1152,7 +1070,7 @@ console.log(listenerCount(myEmitter, 'event'));
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount)
+EventEmitter.listenerCount
 
 #### Defined in
 
@@ -1236,7 +1154,7 @@ that iterates `eventName` events emitted by the `emitter`
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[on](lib_adapter.default.md#on)
+EventEmitter.on
 
 #### Defined in
 
@@ -1344,7 +1262,7 @@ ee.emit('foo'); // Prints: Waiting for the event was canceled!
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
+EventEmitter.once
 
 #### Defined in
 
@@ -1366,7 +1284,7 @@ node_modules/@types/node/events.d.ts:157
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
+EventEmitter.once
 
 #### Defined in
 

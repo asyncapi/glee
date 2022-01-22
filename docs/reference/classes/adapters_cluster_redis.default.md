@@ -1,12 +1,12 @@
-[@asyncapi/glee](../README.md) / [adapters/ws](../modules/adapters_ws.md) / default
+[@asyncapi/glee](../README.md) / [adapters/cluster/redis](../modules/adapters_cluster_redis.md) / default
 
 # Class: default
 
-[adapters/ws](../modules/adapters_ws.md).default
+[adapters/cluster/redis](../modules/adapters_cluster_redis.md).default
 
 ## Hierarchy
 
-- [`default`](lib_adapter.default.md)
+- [`default`](lib_cluster.default.md)
 
   ↳ **`default`**
 
@@ -14,80 +14,96 @@
 
 ### Constructors
 
-- [constructor](adapters_ws.default.md#constructor)
+- [constructor](adapters_cluster_redis.default.md#constructor)
 
 ### Properties
 
-- [captureRejectionSymbol](adapters_ws.default.md#capturerejectionsymbol)
-- [captureRejections](adapters_ws.default.md#capturerejections)
-- [defaultMaxListeners](adapters_ws.default.md#defaultmaxlisteners)
-- [errorMonitor](adapters_ws.default.md#errormonitor)
+- [\_channelName](adapters_cluster_redis.default.md#_channelname)
+- [\_publisher](adapters_cluster_redis.default.md#_publisher)
+- [captureRejectionSymbol](adapters_cluster_redis.default.md#capturerejectionsymbol)
+- [captureRejections](adapters_cluster_redis.default.md#capturerejections)
+- [defaultMaxListeners](adapters_cluster_redis.default.md#defaultmaxlisteners)
+- [errorMonitor](adapters_cluster_redis.default.md#errormonitor)
 
 ### Accessors
 
-- [AsyncAPIServer](adapters_ws.default.md#asyncapiserver)
-- [channelNames](adapters_ws.default.md#channelnames)
-- [connections](adapters_ws.default.md#connections)
-- [glee](adapters_ws.default.md#glee)
-- [parsedAsyncAPI](adapters_ws.default.md#parsedasyncapi)
-- [serverName](adapters_ws.default.md#servername)
-- [serverUrlExpanded](adapters_ws.default.md#serverurlexpanded)
+- [glee](adapters_cluster_redis.default.md#glee)
+- [instanceId](adapters_cluster_redis.default.md#instanceid)
+- [serverName](adapters_cluster_redis.default.md#servername)
+- [serverUrlExpanded](adapters_cluster_redis.default.md#serverurlexpanded)
 
 ### Methods
 
-- [\_connect](adapters_ws.default.md#_connect)
-- [\_createMessage](adapters_ws.default.md#_createmessage)
-- [\_send](adapters_ws.default.md#_send)
-- [addListener](adapters_ws.default.md#addlistener)
-- [connect](adapters_ws.default.md#connect)
-- [emit](adapters_ws.default.md#emit)
-- [eventNames](adapters_ws.default.md#eventnames)
-- [getMaxListeners](adapters_ws.default.md#getmaxlisteners)
-- [getSubscribedChannels](adapters_ws.default.md#getsubscribedchannels)
-- [listenerCount](adapters_ws.default.md#listenercount)
-- [listeners](adapters_ws.default.md#listeners)
-- [name](adapters_ws.default.md#name)
-- [off](adapters_ws.default.md#off)
-- [on](adapters_ws.default.md#on)
-- [once](adapters_ws.default.md#once)
-- [prependListener](adapters_ws.default.md#prependlistener)
-- [prependOnceListener](adapters_ws.default.md#prependoncelistener)
-- [rawListeners](adapters_ws.default.md#rawlisteners)
-- [removeAllListeners](adapters_ws.default.md#removealllisteners)
-- [removeListener](adapters_ws.default.md#removelistener)
-- [send](adapters_ws.default.md#send)
-- [setMaxListeners](adapters_ws.default.md#setmaxlisteners)
-- [getEventListeners](adapters_ws.default.md#geteventlisteners)
-- [listenerCount](adapters_ws.default.md#listenercount)
-- [on](adapters_ws.default.md#on)
-- [once](adapters_ws.default.md#once)
+- [\_connect](adapters_cluster_redis.default.md#_connect)
+- [\_send](adapters_cluster_redis.default.md#_send)
+- [addListener](adapters_cluster_redis.default.md#addlistener)
+- [connect](adapters_cluster_redis.default.md#connect)
+- [deserializeMessage](adapters_cluster_redis.default.md#deserializemessage)
+- [emit](adapters_cluster_redis.default.md#emit)
+- [eventNames](adapters_cluster_redis.default.md#eventnames)
+- [getMaxListeners](adapters_cluster_redis.default.md#getmaxlisteners)
+- [listenerCount](adapters_cluster_redis.default.md#listenercount)
+- [listeners](adapters_cluster_redis.default.md#listeners)
+- [name](adapters_cluster_redis.default.md#name)
+- [off](adapters_cluster_redis.default.md#off)
+- [on](adapters_cluster_redis.default.md#on)
+- [once](adapters_cluster_redis.default.md#once)
+- [prependListener](adapters_cluster_redis.default.md#prependlistener)
+- [prependOnceListener](adapters_cluster_redis.default.md#prependoncelistener)
+- [rawListeners](adapters_cluster_redis.default.md#rawlisteners)
+- [removeAllListeners](adapters_cluster_redis.default.md#removealllisteners)
+- [removeListener](adapters_cluster_redis.default.md#removelistener)
+- [send](adapters_cluster_redis.default.md#send)
+- [serializeMessage](adapters_cluster_redis.default.md#serializemessage)
+- [setMaxListeners](adapters_cluster_redis.default.md#setmaxlisteners)
+- [getEventListeners](adapters_cluster_redis.default.md#geteventlisteners)
+- [listenerCount](adapters_cluster_redis.default.md#listenercount)
+- [on](adapters_cluster_redis.default.md#on)
+- [once](adapters_cluster_redis.default.md#once)
 
 ## Constructors
 
 ### constructor
 
-• **new default**(`glee`, `serverName`, `server`, `parsedAsyncAPI`)
+• **new default**(`glee`)
 
-Instantiates a Glee adapter.
+Instantiates a Glee Cluster adapter.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `glee` | [`default`](lib_glee.default.md) | A reference to the Glee app. |
-| `serverName` | `string` | The name of the AsyncAPI server to use for the connection. |
-| `server` | `Server` | The AsyncAPI server to use for the connection. |
-| `parsedAsyncAPI` | `AsyncAPIDocument` | The AsyncAPI document. |
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[constructor](lib_adapter.default.md#constructor)
+[default](lib_cluster.default.md).[constructor](lib_cluster.default.md#constructor)
 
 #### Defined in
 
-[src/lib/adapter.ts:31](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L31)
+[src/lib/cluster.ts:46](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L46)
 
 ## Properties
+
+### \_channelName
+
+• `Private` **\_channelName**: `string`
+
+#### Defined in
+
+[src/adapters/cluster/redis/index.ts:9](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L9)
+
+___
+
+### \_publisher
+
+• `Private` **\_publisher**: `RedisClientType`<{ `bf`: { `ADD`: `__module` ; `EXISTS`: `__module` ; `INFO`: `__module` ; `INSERT`: `__module` ; `LOADCHUNK`: `__module` ; `MADD`: `__module` ; `MEXISTS`: `__module` ; `RESERVE`: `__module` ; `SCANDUMP`: `__module` ; `add`: `__module` ; `exists`: `__module` ; `info`: `__module` ; `insert`: `__module` ; `loadChunk`: `__module` ; `mAdd`: `__module` ; `mExists`: `__module` ; `reserve`: `__module` ; `scanDump`: `__module`  } ; `cf`: { `ADD`: `__module` ; `ADDNX`: `__module` ; `COUNT`: `__module` ; `DEL`: `__module` ; `EXISTS`: `__module` ; `INFO`: `__module` ; `INSERT`: `__module` ; `INSERTNX`: `__module` ; `LOADCHUNK`: `__module` ; `RESERVE`: `__module` ; `SCANDUMP`: `__module` ; `add`: `__module` ; `addNX`: `__module` ; `count`: `__module` ; `del`: `__module` ; `exists`: `__module` ; `info`: `__module` ; `insert`: `__module` ; `insertNX`: `__module` ; `loadChunk`: `__module` ; `reserve`: `__module` ; `scanDump`: `__module`  } ; `cms`: { `INCRBY`: `__module` ; `INFO`: `__module` ; `INITBYDIM`: `__module` ; `INITBYPROB`: `__module` ; `MERGE`: `__module` ; `QUERY`: `__module` ; `incrBy`: `__module` ; `info`: `__module` ; `initByDim`: `__module` ; `initByProb`: `__module` ; `merge`: `__module` ; `query`: `__module`  } ; `ft`: { `AGGREGATE`: `__module` ; `ALIASADD`: `__module` ; `ALIASDEL`: `__module` ; `ALIASUPDATE`: `__module` ; `ALTER`: `__module` ; `CONFIG_GET`: `__module` ; `CONFIG_SET`: `__module` ; `CREATE`: `__module` ; `DICTADD`: `__module` ; `DICTDEL`: `__module` ; `DICTDUMP`: `__module` ; `DROPINDEX`: `__module` ; `EXPLAIN`: `__module` ; `EXPLAINCLI`: `__module` ; `INFO`: `__module` ; `PROFILEAGGREGATE`: `__module` ; `PROFILESEARCH`: `__module` ; `SEARCH`: `__module` ; `SPELLCHECK`: `__module` ; `SUGADD`: `__module` ; `SUGDEL`: `__module` ; `SUGGET`: `__module` ; `SUGGET_WITHPAYLOADS`: `__module` ; `SUGGET_WITHSCORES`: `__module` ; `SUGGET_WITHSCORES_WITHPAYLOADS`: `__module` ; `SUGLEN`: `__module` ; `SYNDUMP`: `__module` ; `SYNUPDATE`: `__module` ; `TAGVALS`: `__module` ; `_LIST`: `__module` ; `_list`: `__module` ; `aggregate`: `__module` ; `aliasAdd`: `__module` ; `aliasDel`: `__module` ; `aliasUpdate`: `__module` ; `alter`: `__module` ; `configGet`: `__module` ; `configSet`: `__module` ; `create`: `__module` ; `dictAdd`: `__module` ; `dictDel`: `__module` ; `dictDump`: `__module` ; `dropIndex`: `__module` ; `explain`: `__module` ; `explainCli`: `__module` ; `info`: `__module` ; `profileAggregate`: `__module` ; `profileSearch`: `__module` ; `search`: `__module` ; `spellCheck`: `__module` ; `sugAdd`: `__module` ; `sugDel`: `__module` ; `sugGet`: `__module` ; `sugGetWithPayloads`: `__module` ; `sugGetWithScores`: `__module` ; `sugGetWithScoresWithPayloads`: `__module` ; `sugLen`: `__module` ; `synDump`: `__module` ; `synUpdate`: `__module` ; `tagVals`: `__module`  } ; `json`: { `ARRAPPEND`: `__module` ; `ARRINDEX`: `__module` ; `ARRINSERT`: `__module` ; `ARRLEN`: `__module` ; `ARRPOP`: `__module` ; `ARRTRIM`: `__module` ; `DEBUG_MEMORY`: `__module` ; `DEL`: `__module` ; `FORGET`: `__module` ; `GET`: `__module` ; `MGET`: `__module` ; `NUMINCRBY`: `__module` ; `NUMMULTBY`: `__module` ; `OBJKEYS`: `__module` ; `OBJLEN`: `__module` ; `RESP`: `__module` ; `SET`: `__module` ; `STRAPPEND`: `__module` ; `STRLEN`: `__module` ; `TYPE`: `__module` ; `arrAppend`: `__module` ; `arrIndex`: `__module` ; `arrInsert`: `__module` ; `arrLen`: `__module` ; `arrPop`: `__module` ; `arrTrim`: `__module` ; `debugMemory`: `__module` ; `del`: `__module` ; `forget`: `__module` ; `get`: `__module` ; `mGet`: `__module` ; `numIncrBy`: `__module` ; `numMultBy`: `__module` ; `objKeys`: `__module` ; `objLen`: `__module` ; `resp`: `__module` ; `set`: `__module` ; `strAppend`: `__module` ; `strLen`: `__module` ; `type`: `__module`  } ; `topK`: { `ADD`: `__module` ; `COUNT`: `__module` ; `INCRBY`: `__module` ; `INFO`: `__module` ; `LIST`: `__module` ; `QUERY`: `__module` ; `RESERVE`: `__module` ; `add`: `__module` ; `count`: `__module` ; `incrBy`: `__module` ; `info`: `__module` ; `list`: `__module` ; `query`: `__module` ; `reserve`: `__module`  } ; `ts`: { `ADD`: `__module` ; `ALTER`: `__module` ; `CREATE`: `__module` ; `CREATERULE`: `__module` ; `DECRBY`: `__module` ; `DEL`: `__module` ; `DELETERULE`: `__module` ; `GET`: `__module` ; `INCRBY`: `__module` ; `INFO`: `__module` ; `INFO_DEBUG`: `__module` ; `MADD`: `__module` ; `MGET`: `__module` ; `MGET_WITHLABELS`: `__module` ; `MRANGE`: `__module` ; `MRANGE_WITHLABELS`: `__module` ; `MREVRANGE`: `__module` ; `MREVRANGE_WITHLABELS`: `__module` ; `QUERYINDEX`: `__module` ; `RANGE`: `__module` ; `REVRANGE`: `__module` ; `add`: `__module` ; `alter`: `__module` ; `create`: `__module` ; `createRule`: `__module` ; `decrBy`: `__module` ; `del`: `__module` ; `deleteRule`: `__module` ; `get`: `__module` ; `incrBy`: `__module` ; `info`: `__module` ; `infoDebug`: `__module` ; `mAdd`: `__module` ; `mGet`: `__module` ; `mGetWithLabels`: `__module` ; `mRange`: `__module` ; `mRangeWithLabels`: `__module` ; `mRevRange`: `__module` ; `mRevRangeWithLabels`: `__module` ; `queryIndex`: `__module` ; `range`: `__module` ; `revRange`: `__module`  }  }, `RedisScripts`\>
+
+#### Defined in
+
+[src/adapters/cluster/redis/index.ts:10](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L10)
+
+___
 
 ### captureRejectionSymbol
 
@@ -95,7 +111,7 @@ Instantiates a Glee adapter.
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[captureRejectionSymbol](lib_adapter.default.md#capturerejectionsymbol)
+[default](lib_cluster.default.md).[captureRejectionSymbol](lib_cluster.default.md#capturerejectionsymbol)
 
 #### Defined in
 
@@ -111,7 +127,7 @@ Sets or gets the default captureRejection value for all emitters.
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[captureRejections](lib_adapter.default.md#capturerejections)
+[default](lib_cluster.default.md).[captureRejections](lib_cluster.default.md#capturerejections)
 
 #### Defined in
 
@@ -125,7 +141,7 @@ ___
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[defaultMaxListeners](lib_adapter.default.md#defaultmaxlisteners)
+[default](lib_cluster.default.md).[defaultMaxListeners](lib_cluster.default.md#defaultmaxlisteners)
 
 #### Defined in
 
@@ -147,67 +163,13 @@ regular `'error'` listener is installed.
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[errorMonitor](lib_adapter.default.md#errormonitor)
+[default](lib_cluster.default.md).[errorMonitor](lib_cluster.default.md#errormonitor)
 
 #### Defined in
 
 node_modules/@types/node/events.d.ts:272
 
 ## Accessors
-
-### AsyncAPIServer
-
-• `get` **AsyncAPIServer**(): `Server`
-
-#### Returns
-
-`Server`
-
-#### Inherited from
-
-Adapter.AsyncAPIServer
-
-#### Defined in
-
-[src/lib/adapter.ts:131](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L131)
-
-___
-
-### channelNames
-
-• `get` **channelNames**(): `string`[]
-
-#### Returns
-
-`string`[]
-
-#### Inherited from
-
-Adapter.channelNames
-
-#### Defined in
-
-[src/lib/adapter.ts:139](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L139)
-
-___
-
-### connections
-
-• `get` **connections**(): [`default`](lib_connection.default.md)[]
-
-#### Returns
-
-[`default`](lib_connection.default.md)[]
-
-#### Inherited from
-
-Adapter.connections
-
-#### Defined in
-
-[src/lib/adapter.ts:143](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L143)
-
-___
 
 ### glee
 
@@ -219,29 +181,29 @@ ___
 
 #### Inherited from
 
-Adapter.glee
+ClusterAdapter.glee
 
 #### Defined in
 
-[src/lib/adapter.ts:123](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L123)
+[src/lib/cluster.ts:93](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L93)
 
 ___
 
-### parsedAsyncAPI
+### instanceId
 
-• `get` **parsedAsyncAPI**(): `AsyncAPIDocument`
+• `get` **instanceId**(): `string`
 
 #### Returns
 
-`AsyncAPIDocument`
+`string`
 
 #### Inherited from
 
-Adapter.parsedAsyncAPI
+ClusterAdapter.instanceId
 
 #### Defined in
 
-[src/lib/adapter.ts:135](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L135)
+[src/lib/cluster.ts:105](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L105)
 
 ___
 
@@ -255,11 +217,11 @@ ___
 
 #### Inherited from
 
-Adapter.serverName
+ClusterAdapter.serverName
 
 #### Defined in
 
-[src/lib/adapter.ts:127](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L127)
+[src/lib/cluster.ts:97](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L97)
 
 ___
 
@@ -273,46 +235,25 @@ ___
 
 #### Inherited from
 
-Adapter.serverUrlExpanded
+ClusterAdapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/adapter.ts:147](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L147)
+[src/lib/cluster.ts:101](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L101)
 
 ## Methods
 
 ### \_connect
 
-▸ **_connect**(): `Promise`<[`default`](adapters_ws.default.md)\>
+▸ **_connect**(): `Promise`<[`default`](adapters_cluster_redis.default.md)\>
 
 #### Returns
 
-`Promise`<[`default`](adapters_ws.default.md)\>
+`Promise`<[`default`](adapters_cluster_redis.default.md)\>
 
 #### Defined in
 
-[src/adapters/ws/index.ts:22](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L22)
-
-___
-
-### \_createMessage
-
-▸ **_createMessage**(`eventName`, `payload`): [`default`](lib_message.default.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `string` |
-| `payload` | `any` |
-
-#### Returns
-
-[`default`](lib_message.default.md)
-
-#### Defined in
-
-[src/adapters/ws/index.ts:140](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L140)
+[src/adapters/cluster/redis/index.ts:24](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L24)
 
 ___
 
@@ -332,13 +273,13 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/index.ts:123](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L123)
+[src/adapters/cluster/redis/index.ts:67](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L67)
 
 ___
 
 ### addListener
 
-▸ **addListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **addListener**(`eventName`, `listener`): [`default`](adapters_cluster_redis.default.md)
 
 Alias for `emitter.on(eventName, listener)`.
 
@@ -353,11 +294,11 @@ Alias for `emitter.on(eventName, listener)`.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](adapters_cluster_redis.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[addListener](lib_adapter.default.md#addlistener)
+[default](lib_cluster.default.md).[addListener](lib_cluster.default.md#addlistener)
 
 #### Defined in
 
@@ -367,21 +308,49 @@ ___
 
 ### connect
 
-▸ **connect**(): `Promise`<[`default`](adapters_ws.default.md)\>
+▸ **connect**(): `Promise`<[`default`](adapters_cluster_redis.default.md)\>
 
 Connects to the remote server.
 
 #### Returns
 
-`Promise`<[`default`](adapters_ws.default.md)\>
+`Promise`<[`default`](adapters_cluster_redis.default.md)\>
 
 #### Overrides
 
-[default](lib_adapter.default.md).[connect](lib_adapter.default.md#connect)
+[default](lib_cluster.default.md).[connect](lib_cluster.default.md#connect)
 
 #### Defined in
 
-[src/adapters/ws/index.ts:14](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L14)
+[src/adapters/cluster/redis/index.ts:16](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L16)
+
+___
+
+### deserializeMessage
+
+▸ **deserializeMessage**(`serialized`): [`default`](lib_message.default.md)
+
+Deserializes the serialized message.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `serialized` | `string` | The serialized message |
+
+#### Returns
+
+[`default`](lib_message.default.md)
+
+The deserialized message.
+
+#### Inherited from
+
+[default](lib_cluster.default.md).[deserializeMessage](lib_cluster.default.md#deserializemessage)
+
+#### Defined in
+
+[src/lib/cluster.ts:151](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L151)
 
 ___
 
@@ -442,7 +411,7 @@ myEmitter.emit('event', 1, 2, 3, 4, 5);
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[emit](lib_adapter.default.md#emit)
+[default](lib_cluster.default.md).[emit](lib_cluster.default.md#emit)
 
 #### Defined in
 
@@ -478,7 +447,7 @@ console.log(myEE.eventNames());
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[eventNames](lib_adapter.default.md#eventnames)
+[default](lib_cluster.default.md).[eventNames](lib_cluster.default.md#eventnames)
 
 #### Defined in
 
@@ -491,7 +460,7 @@ ___
 ▸ **getMaxListeners**(): `number`
 
 Returns the current max listener value for the `EventEmitter` which is either
-set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapters_ws.default.md#defaultmaxlisteners).
+set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapters_cluster_redis.default.md#defaultmaxlisteners).
 
 **`since`** v1.0.0
 
@@ -501,31 +470,11 @@ set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapter
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[getMaxListeners](lib_adapter.default.md#getmaxlisteners)
+[default](lib_cluster.default.md).[getMaxListeners](lib_cluster.default.md#getmaxlisteners)
 
 #### Defined in
 
 node_modules/@types/node/events.d.ts:471
-
-___
-
-### getSubscribedChannels
-
-▸ **getSubscribedChannels**(): `string`[]
-
-Returns a list of the channels a given adapter has to subscribe to.
-
-#### Returns
-
-`string`[]
-
-#### Inherited from
-
-[default](lib_adapter.default.md).[getSubscribedChannels](lib_adapter.default.md#getsubscribedchannels)
-
-#### Defined in
-
-[src/lib/adapter.ts:154](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L154)
 
 ___
 
@@ -549,7 +498,7 @@ Returns the number of listeners listening to the event named `eventName`.
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount)
+[default](lib_cluster.default.md).[listenerCount](lib_cluster.default.md#listenercount)
 
 #### Defined in
 
@@ -585,7 +534,7 @@ console.log(util.inspect(server.listeners('connection')));
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[listeners](lib_adapter.default.md#listeners)
+[default](lib_cluster.default.md).[listeners](lib_cluster.default.md#listeners)
 
 #### Defined in
 
@@ -603,13 +552,13 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/index.ts:10](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L10)
+[src/adapters/cluster/redis/index.ts:12](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L12)
 
 ___
 
 ### off
 
-▸ **off**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **off**(`eventName`, `listener`): [`default`](adapters_cluster_redis.default.md)
 
 Alias for `emitter.removeListener()`.
 
@@ -624,11 +573,11 @@ Alias for `emitter.removeListener()`.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](adapters_cluster_redis.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[off](lib_adapter.default.md#off)
+[default](lib_cluster.default.md).[off](lib_cluster.default.md#off)
 
 #### Defined in
 
@@ -638,7 +587,7 @@ ___
 
 ### on
 
-▸ **on**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **on**(`eventName`, `listener`): [`default`](adapters_cluster_redis.default.md)
 
 Adds the `listener` function to the end of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -677,11 +626,11 @@ myEE.emit('foo');
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](adapters_cluster_redis.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[on](lib_adapter.default.md#on)
+[default](lib_cluster.default.md).[on](lib_cluster.default.md#on)
 
 #### Defined in
 
@@ -691,7 +640,7 @@ ___
 
 ### once
 
-▸ **once**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **once**(`eventName`, `listener`): [`default`](adapters_cluster_redis.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName`. The
 next time `eventName` is triggered, this listener is removed and then invoked.
@@ -728,11 +677,11 @@ myEE.emit('foo');
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](adapters_cluster_redis.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
+[default](lib_cluster.default.md).[once](lib_cluster.default.md#once)
 
 #### Defined in
 
@@ -742,7 +691,7 @@ ___
 
 ### prependListener
 
-▸ **prependListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **prependListener**(`eventName`, `listener`): [`default`](adapters_cluster_redis.default.md)
 
 Adds the `listener` function to the _beginning_ of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -768,11 +717,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](adapters_cluster_redis.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[prependListener](lib_adapter.default.md#prependlistener)
+[default](lib_cluster.default.md).[prependListener](lib_cluster.default.md#prependlistener)
 
 #### Defined in
 
@@ -782,7 +731,7 @@ ___
 
 ### prependOnceListener
 
-▸ **prependOnceListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **prependOnceListener**(`eventName`, `listener`): [`default`](adapters_cluster_redis.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName` to the_beginning_ of the listeners array. The next time `eventName` is triggered, this
 listener is removed, and then invoked.
@@ -806,11 +755,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](adapters_cluster_redis.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[prependOnceListener](lib_adapter.default.md#prependoncelistener)
+[default](lib_cluster.default.md).[prependOnceListener](lib_cluster.default.md#prependoncelistener)
 
 #### Defined in
 
@@ -863,7 +812,7 @@ emitter.emit('log');
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[rawListeners](lib_adapter.default.md#rawlisteners)
+[default](lib_cluster.default.md).[rawListeners](lib_cluster.default.md#rawlisteners)
 
 #### Defined in
 
@@ -873,7 +822,7 @@ ___
 
 ### removeAllListeners
 
-▸ **removeAllListeners**(`event?`): [`default`](adapters_ws.default.md)
+▸ **removeAllListeners**(`event?`): [`default`](adapters_cluster_redis.default.md)
 
 Removes all listeners, or those of the specified `eventName`.
 
@@ -893,11 +842,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](adapters_cluster_redis.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[removeAllListeners](lib_adapter.default.md#removealllisteners)
+[default](lib_cluster.default.md).[removeAllListeners](lib_cluster.default.md#removealllisteners)
 
 #### Defined in
 
@@ -907,7 +856,7 @@ ___
 
 ### removeListener
 
-▸ **removeListener**(`eventName`, `listener`): [`default`](adapters_ws.default.md)
+▸ **removeListener**(`eventName`, `listener`): [`default`](adapters_cluster_redis.default.md)
 
 Removes the specified `listener` from the listener array for the event named`eventName`.
 
@@ -997,11 +946,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](adapters_cluster_redis.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[removeListener](lib_adapter.default.md#removelistener)
+[default](lib_cluster.default.md).[removeListener](lib_cluster.default.md#removelistener)
 
 #### Defined in
 
@@ -1027,17 +976,45 @@ Sends a message to the remote server.
 
 #### Overrides
 
-[default](lib_adapter.default.md).[send](lib_adapter.default.md#send)
+[default](lib_cluster.default.md).[send](lib_cluster.default.md#send)
 
 #### Defined in
 
-[src/adapters/ws/index.ts:18](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/ws/index.ts#L18)
+[src/adapters/cluster/redis/index.ts:20](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L20)
+
+___
+
+### serializeMessage
+
+▸ **serializeMessage**(`message`): `string`
+
+Serialize a message into JSON.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `message` | [`default`](lib_message.default.md) | The message to serialize. |
+
+#### Returns
+
+`string`
+
+The serialized message,
+
+#### Inherited from
+
+[default](lib_cluster.default.md).[serializeMessage](lib_cluster.default.md#serializemessage)
+
+#### Defined in
+
+[src/lib/cluster.ts:131](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L131)
 
 ___
 
 ### setMaxListeners
 
-▸ **setMaxListeners**(`n`): [`default`](adapters_ws.default.md)
+▸ **setMaxListeners**(`n`): [`default`](adapters_cluster_redis.default.md)
 
 By default `EventEmitter`s will print a warning if more than `10` listeners are
 added for a particular event. This is a useful default that helps finding
@@ -1056,11 +1033,11 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](adapters_ws.default.md)
+[`default`](adapters_cluster_redis.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[setMaxListeners](lib_adapter.default.md#setmaxlisteners)
+[default](lib_cluster.default.md).[setMaxListeners](lib_cluster.default.md#setmaxlisteners)
 
 #### Defined in
 
@@ -1112,7 +1089,7 @@ const { getEventListeners, EventEmitter } = require('events');
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[getEventListeners](lib_adapter.default.md#geteventlisteners)
+[default](lib_cluster.default.md).[getEventListeners](lib_cluster.default.md#geteventlisteners)
 
 #### Defined in
 
@@ -1152,7 +1129,7 @@ console.log(listenerCount(myEmitter, 'event'));
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount)
+[default](lib_cluster.default.md).[listenerCount](lib_cluster.default.md#listenercount)
 
 #### Defined in
 
@@ -1236,7 +1213,7 @@ that iterates `eventName` events emitted by the `emitter`
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[on](lib_adapter.default.md#on)
+[default](lib_cluster.default.md).[on](lib_cluster.default.md#on)
 
 #### Defined in
 
@@ -1344,7 +1321,7 @@ ee.emit('foo'); // Prints: Waiting for the event was canceled!
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
+[default](lib_cluster.default.md).[once](lib_cluster.default.md#once)
 
 #### Defined in
 
@@ -1366,7 +1343,7 @@ node_modules/@types/node/events.d.ts:157
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
+[default](lib_cluster.default.md).[once](lib_cluster.default.md#once)
 
 #### Defined in
 

@@ -95,6 +95,42 @@ describe('clusterAdapter', () => {
     })
   })
 
+  describe('on("connect")', () => {
+    it('notifies the Glee app', async () => {
+      const app = new Glee(fakeConfig)
+      const adapter = new GleeClusterAdapter(app)
+      app.on('adapter:cluster:connect', (ev) => {
+        expect(ev.serverName).toStrictEqual(TEST_SERVER_NAME)
+        expect(ev.adapter).toStrictEqual(adapter)
+      })
+      adapter.emit('connect', { name: TEST_SERVER_NAME, adapter: adapter })
+    })
+  })
+
+  describe('on("reconnect")', () => {
+    it('notifies the Glee app', async () => {
+      const app = new Glee(fakeConfig)
+      const adapter = new GleeClusterAdapter(app)
+      app.on('adapter:cluster:reconnect', (ev) => {
+        expect(ev.serverName).toStrictEqual(TEST_SERVER_NAME)
+        expect(ev.adapter).toStrictEqual(adapter)
+      })
+      adapter.emit('reconnect', { name: TEST_SERVER_NAME, adapter: adapter })
+    })
+  })
+
+  describe('on("close")', () => {
+    it('notifies the Glee app', async () => {
+      const app = new Glee(fakeConfig)
+      const adapter = new GleeClusterAdapter(app)
+      app.on('adapter:cluster:close', (ev) => {
+        expect(ev.serverName).toStrictEqual(TEST_SERVER_NAME)
+        expect(ev.adapter).toStrictEqual(adapter)
+      })
+      adapter.emit('close', { name: TEST_SERVER_NAME, adapter: adapter })
+    })
+  })
+
   describe('connect()', () => {
     it('throws', async () => {
       const app = new Glee(fakeConfig)

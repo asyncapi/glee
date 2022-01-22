@@ -22,7 +22,7 @@ class RedisClusterAdapter extends ClusterAdapter {
   }
 
   async _connect(): Promise<this> {
-    this._channelName = 'redis-cluster-channel'
+    this._channelName = `${this.serverName}-channel`
 
     this._publisher = createClient({
         url: this.serverUrlExpanded

@@ -6,6 +6,11 @@ import GleeMessage from './message'
 import { validateData } from './util'
 import GleeError from '../errors/glee-error'
 
+export type ClusterEvent = {
+  serverName: string,
+  adapter: GleeClusterAdapter
+}
+
 const ClusterMessageSchema = {
   type: 'object',
   properties: {
@@ -27,7 +32,6 @@ const ClusterMessageSchema = {
   additionalProperties: false
 }
 
-// TODO: Logging, Documentation, example, Streams maybe, Errors in error middleware, custom adapter
 class GleeClusterAdapter extends EventEmitter {
   private _glee: Glee
   private _serverName: string
@@ -35,17 +39,17 @@ class GleeClusterAdapter extends EventEmitter {
   private _instanceId: string
 
   /**
-   * Instantiates a Glee adapter.
+   * Instantiates a Glee Cluster adapter.
    *
    * @param {Glee} glee  A reference to the Glee app.
-   * @param {String} serverName  The name of the AsyncAPI server to use for the connection.
    */
   constructor (glee: Glee) {
     super()
 
     this._instanceId = uuidv4()
     this._glee = glee
-    this._serverName = this._glee.options?.cluster?.name || 'cluster'
+    const serverName = this._glee.options?.cluster?.name || 'cluster'
+    this._serverName = serverName
     const url = this._glee.options?.cluster?.url
 
     if ( !url ) {
@@ -60,22 +64,29 @@ class GleeClusterAdapter extends EventEmitter {
     })
     this._serverUrlExpanded = uriTemplates(url).fill(Object.fromEntries(uriTemplateValues.entries()))
 
+    function genClusterEvent(ev): ClusterEvent {
+      return {
+        ...ev,
+        serverName
+      }
+    }
+
     this.on('error', err => { this._glee.injectError(err) })
     this.on('message', message => {
       message.cluster = true
       this._glee.send(message)
     })
 
-    this.on('connect', () => {
-      this._glee.emit('adapter:cluster:connect', this._serverName)
+    this.on('connect', ev => {
+      this._glee.emit('adapter:cluster:connect', genClusterEvent(ev))
     })
 
-    this.on('reconnect', () => {
-      this._glee.emit('adapter:cluster:reconnect', this._serverName)
+    this.on('reconnect', ev => {
+      this._glee.emit('adapter:cluster:reconnect', genClusterEvent(ev))
     })
     
-    this.on('close', () => {   
-      this._glee.emit('adapter:cluster:close', this._serverName)   
+    this.on('close', ev => {   
+      this._glee.emit('adapter:cluster:close', genClusterEvent(ev))
     })
   }
 
@@ -111,6 +122,12 @@ class GleeClusterAdapter extends EventEmitter {
     throw new Error('Method `send` is not implemented.')
   }
 
+  /**
+   * Serialize a message into JSON.
+   *
+   * @param {GleeMessage} message The message to serialize.
+   * @returns {String} The serialized message,
+   */
   serializeMessage(message: GleeMessage): string {
     return JSON.stringify({
       instanceId: this._instanceId,
@@ -125,6 +142,12 @@ class GleeClusterAdapter extends EventEmitter {
     })
   }
 
+  /**
+   * Deserializes the serialized message.
+   *
+   * @param {String} serialized The serialized message
+   * @returns {GleeMessage} The deserialized message.
+   */
   deserializeMessage(serialized: string): GleeMessage {
     let messageData
     try {
@@ -142,6 +165,7 @@ class GleeClusterAdapter extends EventEmitter {
     try {
       payload = JSON.parse(messageData.payload)
     } catch ( e ) {
+      // payload isn't JSON
     }
 
     if ( messageData.instanceId === this._instanceId ) return

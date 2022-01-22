@@ -19,6 +19,7 @@
 ### Properties
 
 - [\_adapters](lib_glee.default.md#_adapters)
+- [\_clusterAdapter](lib_glee.default.md#_clusteradapter)
 - [\_options](lib_glee.default.md#_options)
 - [\_router](lib_glee.default.md#_router)
 - [captureRejectionSymbol](lib_glee.default.md#capturerejectionsymbol)
@@ -29,6 +30,7 @@
 ### Accessors
 
 - [adapters](lib_glee.default.md#adapters)
+- [clusterAdapter](lib_glee.default.md#clusteradapter)
 - [options](lib_glee.default.md#options)
 
 ### Methods
@@ -56,7 +58,9 @@
 - [removeAllListeners](lib_glee.default.md#removealllisteners)
 - [removeListener](lib_glee.default.md#removelistener)
 - [send](lib_glee.default.md#send)
+- [setClusterAdapter](lib_glee.default.md#setclusteradapter)
 - [setMaxListeners](lib_glee.default.md#setmaxlisteners)
+- [syncCluster](lib_glee.default.md#synccluster)
 - [use](lib_glee.default.md#use)
 - [useOutbound](lib_glee.default.md#useoutbound)
 - [getEventListeners](lib_glee.default.md#geteventlisteners)
@@ -84,7 +88,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/glee.ts:33](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L33)
+[src/lib/glee.ts:40](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L40)
 
 ## Properties
 
@@ -94,7 +98,17 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/glee.ts:26](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L26)
+[src/lib/glee.ts:32](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L32)
+
+___
+
+### \_clusterAdapter
+
+• `Private` **\_clusterAdapter**: `ClusterAdapterRecord`
+
+#### Defined in
+
+[src/lib/glee.ts:33](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L33)
 
 ___
 
@@ -104,7 +118,7 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:24](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L24)
+[src/lib/glee.ts:30](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L30)
 
 ___
 
@@ -114,13 +128,13 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:25](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L25)
+[src/lib/glee.ts:31](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L31)
 
 ___
 
 ### captureRejectionSymbol
 
-▪ `Static` `Readonly` **captureRejectionSymbol**: typeof [`captureRejectionSymbol`](adapters_mqtt.default.md#capturerejectionsymbol)
+▪ `Static` `Readonly` **captureRejectionSymbol**: typeof [`captureRejectionSymbol`](adapters_cluster_redis.default.md#capturerejectionsymbol)
 
 #### Inherited from
 
@@ -164,7 +178,7 @@ ___
 
 ### errorMonitor
 
-▪ `Static` `Readonly` **errorMonitor**: typeof [`errorMonitor`](adapters_mqtt.default.md#errormonitor)
+▪ `Static` `Readonly` **errorMonitor**: typeof [`errorMonitor`](adapters_cluster_redis.default.md#errormonitor)
 
 This symbol shall be used to install a listener for only monitoring `'error'`
 events. Listeners installed using this symbol are called before the regular
@@ -194,7 +208,21 @@ node_modules/@types/node/events.d.ts:272
 
 #### Defined in
 
-[src/lib/glee.ts:45](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L45)
+[src/lib/glee.ts:52](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L52)
+
+___
+
+### clusterAdapter
+
+• `get` **clusterAdapter**(): `ClusterAdapterRecord`
+
+#### Returns
+
+`ClusterAdapterRecord`
+
+#### Defined in
+
+[src/lib/glee.ts:56](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L56)
 
 ___
 
@@ -208,7 +236,7 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:41](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L41)
+[src/lib/glee.ts:48](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L48)
 
 ## Methods
 
@@ -231,7 +259,7 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:221](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L221)
+[src/lib/glee.ts:261](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L261)
 
 ___
 
@@ -255,7 +283,7 @@ Starts executing the middlewares for the given error and message.
 
 #### Defined in
 
-[src/lib/glee.ts:214](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L214)
+[src/lib/glee.ts:254](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L254)
 
 ___
 
@@ -279,7 +307,7 @@ Starts executing the middlewares for the given message.
 
 #### Defined in
 
-[src/lib/glee.ts:160](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L160)
+[src/lib/glee.ts:200](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L200)
 
 ___
 
@@ -305,7 +333,7 @@ Adds a connection adapter.
 
 #### Defined in
 
-[src/lib/glee.ts:57](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L57)
+[src/lib/glee.ts:68](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L68)
 
 ___
 
@@ -350,7 +378,7 @@ Tells the adapters to connect.
 
 #### Defined in
 
-[src/lib/glee.ts:101](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L101)
+[src/lib/glee.ts:123](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L123)
 
 ___
 
@@ -497,7 +525,7 @@ Injects an error into the Glee inbound error middleware chain.
 
 #### Defined in
 
-[src/lib/glee.ts:144](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L144)
+[src/lib/glee.ts:171](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L171)
 
 ___
 
@@ -521,7 +549,7 @@ Injects a message into the Glee inbound middleware chain.
 
 #### Defined in
 
-[src/lib/glee.ts:126](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L126)
+[src/lib/glee.ts:153](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L153)
 
 ___
 
@@ -537,7 +565,7 @@ Alias for `connect`.
 
 #### Defined in
 
-[src/lib/glee.ts:115](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L115)
+[src/lib/glee.ts:142](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L142)
 
 ___
 
@@ -1025,7 +1053,29 @@ Send a message to the adapters.
 
 #### Defined in
 
-[src/lib/glee.ts:88](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L88)
+[src/lib/glee.ts:110](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L110)
+
+___
+
+### setClusterAdapter
+
+▸ **setClusterAdapter**(`Adapter`): `void`
+
+Sets the cluster adapter to use.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Adapter` | typeof [`default`](lib_cluster.default.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/lib/glee.ts:77](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L77)
 
 ___
 
@@ -1062,6 +1112,28 @@ node_modules/@types/node/events.d.ts:465
 
 ___
 
+### syncCluster
+
+▸ **syncCluster**(`message`): `void`
+
+Synchronizes the other instances in the cluster with the message.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | [`default`](lib_message.default.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/lib/glee.ts:184](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L184)
+
+___
+
 ### use
 
 ▸ **use**(...`middlewares`): `void`
@@ -1080,7 +1152,7 @@ Use a middleware for inbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:66](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L66)
+[src/lib/glee.ts:88](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L88)
 
 ▸ **use**(`channel`, ...`middlewares`): `void`
 
@@ -1097,7 +1169,7 @@ Use a middleware for inbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:67](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L67)
+[src/lib/glee.ts:89](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L89)
 
 ___
 
@@ -1119,7 +1191,7 @@ Use a middleware for outbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:77](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L77)
+[src/lib/glee.ts:99](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L99)
 
 ▸ **useOutbound**(`channel`, ...`middlewares`): `void`
 
@@ -1136,7 +1208,7 @@ Use a middleware for outbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:78](https://github.com/asyncapi/glee/blob/411ab09/src/lib/glee.ts#L78)
+[src/lib/glee.ts:100](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/glee.ts#L100)
 
 ___
 
