@@ -3,7 +3,7 @@ import async from 'async'
 import Debug from 'debug'
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import GleeAdapter from './adapter'
-import GleeClusterAdapter from './clusterAdapter'
+import GleeClusterAdapter from './cluster'
 import GleeRouter, { ChannelErrorMiddlewareTuple, ChannelMiddlewareTuple, GenericMiddleware } from './router'
 import GleeMessage from './message'
 import { matchChannel, duplicateMessage, getParams } from './util'
@@ -181,7 +181,7 @@ export default class Glee extends EventEmitter {
    * 
    * @param {GleeMessage} message 
    */
-  syncCluster (message: GleeMessage) {
+  syncCluster (message: GleeMessage): void {
     if ( this._clusterAdapter && !message.cluster ) {
       this._clusterAdapter.instance.send(message).catch((e: Error) => {
         this._processError(this._router.getErrorMiddlewares(), e, message)

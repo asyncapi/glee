@@ -1,5 +1,5 @@
 import GleeAdapter from './adapter'
-import GleeClusterAdapter from './clusterAdapter'
+import GleeClusterAdapter from './cluster'
 import GleeConnection from './connection'
 import Glee from './glee'
 

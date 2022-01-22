@@ -3,7 +3,6 @@ import uriTemplates from 'uri-templates'
 import { v4 as uuidv4 } from 'uuid'
 import Glee from './glee'
 import GleeMessage from './message'
-import { logLineWithIcon } from './logger'
 import { validateData } from './util'
 import GleeError from '../errors/glee-error'
 
@@ -28,7 +27,7 @@ const ClusterMessageSchema = {
   additionalProperties: false
 }
 
-// TODO: Logging
+// TODO: Logging, Documentation, example, Streams maybe, Errors in error middleware, custom adapter
 class GleeClusterAdapter extends EventEmitter {
   private _glee: Glee
   private _serverName: string
@@ -68,24 +67,15 @@ class GleeClusterAdapter extends EventEmitter {
     })
 
     this.on('connect', () => {
-      logLineWithIcon(':zap:', `Connected to ${this._serverName} for clusterization.`, {
-        highlightedWords: [this._serverName],
-      })
+      this._glee.emit('adapter:cluster:connect', this._serverName)
     })
 
     this.on('reconnect', () => {
-      logLineWithIcon('↪', `Reconnected to ${this._serverName}.`, {
-        highlightedWords: [this._serverName],
-        iconColor: '#0f0',
-      })
+      this._glee.emit('adapter:cluster:reconnect', this._serverName)
     })
     
-    this.on('close', () => {      
-      logLineWithIcon('x', `Closed connection with ${this._serverName}.`, {
-        highlightedWords: [this._serverName],
-        iconColor: '#f00',
-        disableEmojis: true,
-      })
+    this.on('close', () => {   
+      this._glee.emit('adapter:cluster:close', this._serverName)   
     })
   }
 
@@ -99,6 +89,10 @@ class GleeClusterAdapter extends EventEmitter {
 
   get serverUrlExpanded(): string {
     return this._serverUrlExpanded
+  }
+
+  get instanceId(): string {
+    return this._instanceId
   }
 
   /**
@@ -131,22 +125,26 @@ class GleeClusterAdapter extends EventEmitter {
     })
   }
 
-  deserializeMessage(serialized: string): GleeMessage | boolean {
-    let messageData, payload
+  deserializeMessage(serialized: string): GleeMessage {
+    let messageData
     try {
       messageData = JSON.parse(serialized)
       const { errors, humanReadableError, isValid } = validateData(messageData, ClusterMessageSchema)
       if ( !isValid ) {
         throw new GleeError({ humanReadableError, errors })
       }
-
-      payload = JSON.parse(messageData.payload)
     } catch ( e ) {
       this._glee.injectError(e)
-      return false
+      return
     }
 
-    if ( messageData.instanceId === this._instanceId ) return false
+    let payload = messageData.payload
+    try {
+      payload = JSON.parse(messageData.payload)
+    } catch ( e ) {
+    }
+
+    if ( messageData.instanceId === this._instanceId ) return
 
     const message = new GleeMessage({
       payload: payload,

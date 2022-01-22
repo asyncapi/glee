@@ -144,6 +144,27 @@ export default async function GleeAppInitializer () {
     })
   })
 
+  app.on('adapter:cluster:connect', (serverName: string) => {
+    logLineWithIcon(':zap:', `Connected to ${this._serverName} for clusterization.`, {
+      highlightedWords: [serverName],
+    })
+  })
+
+  app.on('adapter:cluster:reconnect', (serverName: string) => {
+    logLineWithIcon('↪', `Reconnected to ${this._serverName}.`, {
+      highlightedWords: [this._serverName],
+      iconColor: '#0f0',
+    })
+  })
+
+  app.on('adapter:cluster:close', (serverName: string) => {
+    logLineWithIcon('x', `Closed connection with ${this._serverName}.`, {
+      highlightedWords: [this._serverName],
+      iconColor: '#f00',
+      disableEmojis: true,
+    })
+  })
+
   app
     .listen()
     .catch(console.error)

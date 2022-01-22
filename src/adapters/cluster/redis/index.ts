@@ -1,5 +1,5 @@
 import { createClient } from 'redis'
-import ClusterAdapter from '../../../lib/clusterAdapter'
+import ClusterAdapter from '../../../lib/cluster'
 import GleeMessage from '../../../lib/message'
 
 const client = createClient()
