@@ -3,6 +3,7 @@ import async from 'async'
 import Debug from 'debug'
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import GleeAdapter from './adapter'
+import GleeClusterAdapter from './cluster'
 import GleeRouter, { ChannelErrorMiddlewareTuple, ChannelMiddlewareTuple, GenericMiddleware } from './router'
 import GleeMessage from './message'
 import { matchChannel, duplicateMessage, getParams } from './util'
@@ -20,10 +21,16 @@ type AdapterRecord = {
   parsedAsyncAPI: AsyncAPIDocument,
 }
 
+type ClusterAdapterRecord = {
+  Adapter: typeof GleeClusterAdapter,
+  instance?: GleeClusterAdapter
+}
+
 export default class Glee extends EventEmitter {
   private _options: GleeConfig
   private _router: GleeRouter
-  private _adapters: AdapterRecord[]  
+  private _adapters: AdapterRecord[]
+  private _clusterAdapter: ClusterAdapterRecord
 
   /**
    * Instantiates Glee.
@@ -46,6 +53,10 @@ export default class Glee extends EventEmitter {
     return this._adapters
   }
 
+  get clusterAdapter(): ClusterAdapterRecord {
+    return this._clusterAdapter
+  }
+
   /**
    * Adds a connection adapter.
    *
@@ -56,6 +67,17 @@ export default class Glee extends EventEmitter {
    */
   addAdapter(Adapter: typeof GleeAdapter, { serverName, server, parsedAsyncAPI }: { serverName: string, server: Server, parsedAsyncAPI: AsyncAPIDocument }) {
     this._adapters.push({Adapter, serverName, server, parsedAsyncAPI})
+  }
+
+  /**
+   * Sets the cluster adapter to use.
+   *
+   * @param {GleeClusterAdapter} adapter The adapter.
+   */
+  setClusterAdapter(Adapter: typeof GleeClusterAdapter) {
+    this._clusterAdapter = {
+      Adapter
+    }
   }
 
   /**
@@ -106,6 +128,11 @@ export default class Glee extends EventEmitter {
       promises.push(a.instance.connect())
     })
 
+    if ( this._clusterAdapter ) {
+      this._clusterAdapter.instance = new this._clusterAdapter.Adapter(this)
+      promises.push(this._clusterAdapter.instance.connect())
+    }
+
     return Promise.all(promises)
   }
 
@@ -149,6 +176,19 @@ export default class Glee extends EventEmitter {
     )
   }
 
+  /**
+   * Synchronizes the other instances in the cluster with the message.
+   * 
+   * @param {GleeMessage} message 
+   */
+  syncCluster (message: GleeMessage): void {
+    if ( this._clusterAdapter && !message.cluster ) {
+      this._clusterAdapter.instance.send(message).catch((e: Error) => {
+        this._processError(this._router.getErrorMiddlewares(), e, message)
+      })
+    }
+  }
+ 
   /**
    * Starts executing the middlewares for the given message.
    *

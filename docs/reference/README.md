@@ -6,6 +6,7 @@
 
 ### Modules
 
+- [adapters/cluster/redis](modules/adapters_cluster_redis.md)
 - [adapters/mqtt](modules/adapters_mqtt.md)
 - [adapters/socket.io](modules/adapters_socket_io.md)
 - [adapters/ws](modules/adapters_ws.md)
@@ -14,6 +15,7 @@
 - [lib](modules/lib.md)
 - [lib/adapter](modules/lib_adapter.md)
 - [lib/asyncapiFile](modules/lib_asyncapiFile.md)
+- [lib/cluster](modules/lib_cluster.md)
 - [lib/compiler](modules/lib_compiler.md)
 - [lib/configs](modules/lib_configs.md)
 - [lib/connection](modules/lib_connection.md)
