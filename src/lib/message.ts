@@ -60,7 +60,7 @@ class GleeMessage extends EventEmitter {
     if (serverName) this._serverName = serverName
     if (connection) this._connection = connection
     if (broadcast) this._broadcast = !!broadcast
-    if (cluster) this._cluster = !!cluster
+    if (cluster) this._cluster = cluster
   }
 
   get payload(): any {
