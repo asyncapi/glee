@@ -28,4 +28,4 @@
 
 #### Defined in
 
-[src/lib/adapter.ts:8](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/adapter.ts#L8)
+[src/lib/adapter.ts:8](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/lib/adapter.ts#L8)

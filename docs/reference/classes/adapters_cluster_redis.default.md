@@ -81,7 +81,7 @@ Instantiates a Glee Cluster adapter.
 
 #### Defined in
 
-[src/lib/cluster.ts:46](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L46)
+[src/lib/cluster.ts:46](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/lib/cluster.ts#L46)
 
 ## Properties
 
@@ -91,7 +91,7 @@ Instantiates a Glee Cluster adapter.
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:9](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L9)
+[src/adapters/cluster/redis/index.ts:9](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/adapters/cluster/redis/index.ts#L9)
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:10](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L10)
+[src/adapters/cluster/redis/index.ts:10](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/adapters/cluster/redis/index.ts#L10)
 
 ___
 
@@ -185,7 +185,7 @@ ClusterAdapter.glee
 
 #### Defined in
 
-[src/lib/cluster.ts:93](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L93)
+[src/lib/cluster.ts:93](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/lib/cluster.ts#L93)
 
 ___
 
@@ -203,7 +203,7 @@ ClusterAdapter.instanceId
 
 #### Defined in
 
-[src/lib/cluster.ts:105](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L105)
+[src/lib/cluster.ts:105](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/lib/cluster.ts#L105)
 
 ___
 
@@ -221,7 +221,7 @@ ClusterAdapter.serverName
 
 #### Defined in
 
-[src/lib/cluster.ts:97](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L97)
+[src/lib/cluster.ts:97](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/lib/cluster.ts#L97)
 
 ___
 
@@ -239,7 +239,7 @@ ClusterAdapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/cluster.ts:101](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L101)
+[src/lib/cluster.ts:101](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/lib/cluster.ts#L101)
 
 ## Methods
 
@@ -253,7 +253,7 @@ ClusterAdapter.serverUrlExpanded
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:24](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L24)
+[src/adapters/cluster/redis/index.ts:24](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/adapters/cluster/redis/index.ts#L24)
 
 ___
 
@@ -273,7 +273,7 @@ ___
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:67](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L67)
+[src/adapters/cluster/redis/index.ts:67](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/adapters/cluster/redis/index.ts#L67)
 
 ___
 
@@ -322,7 +322,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:16](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L16)
+[src/adapters/cluster/redis/index.ts:16](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/adapters/cluster/redis/index.ts#L16)
 
 ___
 
@@ -350,7 +350,7 @@ The deserialized message.
 
 #### Defined in
 
-[src/lib/cluster.ts:151](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L151)
+[src/lib/cluster.ts:151](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/lib/cluster.ts#L151)
 
 ___
 
@@ -552,7 +552,7 @@ ___
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:12](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L12)
+[src/adapters/cluster/redis/index.ts:12](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/adapters/cluster/redis/index.ts#L12)
 
 ___
 
@@ -980,7 +980,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:20](https://github.com/sudoshreyansh/glee/blob/09824b8/src/adapters/cluster/redis/index.ts#L20)
+[src/adapters/cluster/redis/index.ts:20](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/adapters/cluster/redis/index.ts#L20)
 
 ___
 
@@ -1008,7 +1008,7 @@ The serialized message,
 
 #### Defined in
 
-[src/lib/cluster.ts:131](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L131)
+[src/lib/cluster.ts:131](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/lib/cluster.ts#L131)
 
 ___
 

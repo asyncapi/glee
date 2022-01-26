@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[src/lib/cluster.ts:9](https://github.com/sudoshreyansh/glee/blob/09824b8/src/lib/cluster.ts#L9)
+[src/lib/cluster.ts:9](https://github.com/sudoshreyansh/glee/blob/8a5a06a/src/lib/cluster.ts#L9)
