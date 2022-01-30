@@ -2,9 +2,10 @@ import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import MqttAdapter from './adapters/mqtt/index'
 import WebSocketAdapter from './adapters/ws/index'
 import SocketIOAdapter from './adapters/socket.io/index'
+import RedisClusterAdapter from './adapters/cluster/redis'
 import { getSelectedServerNames } from './lib/servers'
 import Glee from './lib/glee'
-import { GleeConfig } from './lib/index'
+import { GleeConfig, GleeClusterAdapterConfig } from './lib/index'
 
 export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) => {
   const serverNames = await getSelectedServerNames()
@@ -18,6 +19,8 @@ export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeC
 
     registerAdapterForServer(serverName, server, app, parsedAsyncAPI, config)
   })
+
+  if ( config.cluster ) registerAdapterForCluster(app, config.cluster)
 }
 
 function registerAdapterForServer(serverName: string, server: Server, app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) {
@@ -56,5 +59,17 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
   } else {
     // TODO: Improve error message with link to repo encouraging the developer to contribute.
     throw new Error(`Protocol "${server.protocol()}" is not supported yet.`)
+  }
+}
+
+function registerAdapterForCluster(app: Glee, config: GleeClusterAdapterConfig) {
+  const adapter = config.adapter
+
+  if ( !adapter || adapter === 'redis' ) {
+    app.setClusterAdapter(RedisClusterAdapter)
+  } else if ( typeof adapter === 'function' ) {
+    app.setClusterAdapter(adapter)
+  } else {
+    throw new Error(`Unknown value for cluster.adapter in glee.config.js`)
   }
 }

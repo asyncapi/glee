@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[src/middlewares/index.d.ts:4](https://github.com/asyncapi/glee/blob/d0cc5dc/src/middlewares/index.d.ts#L4)
+[src/middlewares/index.d.ts:4](https://github.com/asyncapi/glee/blob/912e7de/src/middlewares/index.d.ts#L4)
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 #### Defined in
 
-[src/middlewares/index.d.ts:3](https://github.com/asyncapi/glee/blob/d0cc5dc/src/middlewares/index.d.ts#L3)
+[src/middlewares/index.d.ts:3](https://github.com/asyncapi/glee/blob/912e7de/src/middlewares/index.d.ts#L3)
 
 ___
 
@@ -84,4 +84,4 @@ ___
 
 #### Defined in
 
-[src/middlewares/index.d.ts:5](https://github.com/asyncapi/glee/blob/d0cc5dc/src/middlewares/index.d.ts#L5)
+[src/middlewares/index.d.ts:5](https://github.com/asyncapi/glee/blob/912e7de/src/middlewares/index.d.ts#L5)

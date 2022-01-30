@@ -1,8 +1,8 @@
-[@asyncapi/glee](../README.md) / [lib/glee](../modules/lib_glee.md) / default
+[@asyncapi/glee](../README.md) / [lib/cluster](../modules/lib_cluster.md) / default
 
 # Class: default
 
-[lib/glee](../modules/lib_glee.md).default
+[lib/cluster](../modules/lib_cluster.md).default
 
 ## Hierarchy
 
@@ -10,77 +10,71 @@
 
   ↳ **`default`**
 
+  ↳↳ [`default`](adapters_cluster_redis.default.md)
+
 ## Table of contents
 
 ### Constructors
 
-- [constructor](lib_glee.default.md#constructor)
+- [constructor](lib_cluster.default.md#constructor)
 
 ### Properties
 
-- [\_adapters](lib_glee.default.md#_adapters)
-- [\_clusterAdapter](lib_glee.default.md#_clusteradapter)
-- [\_options](lib_glee.default.md#_options)
-- [\_router](lib_glee.default.md#_router)
-- [captureRejectionSymbol](lib_glee.default.md#capturerejectionsymbol)
-- [captureRejections](lib_glee.default.md#capturerejections)
-- [defaultMaxListeners](lib_glee.default.md#defaultmaxlisteners)
-- [errorMonitor](lib_glee.default.md#errormonitor)
+- [\_glee](lib_cluster.default.md#_glee)
+- [\_instanceId](lib_cluster.default.md#_instanceid)
+- [\_serverName](lib_cluster.default.md#_servername)
+- [\_serverUrlExpanded](lib_cluster.default.md#_serverurlexpanded)
+- [captureRejectionSymbol](lib_cluster.default.md#capturerejectionsymbol)
+- [captureRejections](lib_cluster.default.md#capturerejections)
+- [defaultMaxListeners](lib_cluster.default.md#defaultmaxlisteners)
+- [errorMonitor](lib_cluster.default.md#errormonitor)
 
 ### Accessors
 
-- [adapters](lib_glee.default.md#adapters)
-- [clusterAdapter](lib_glee.default.md#clusteradapter)
-- [options](lib_glee.default.md#options)
+- [glee](lib_cluster.default.md#glee)
+- [instanceId](lib_cluster.default.md#instanceid)
+- [serverName](lib_cluster.default.md#servername)
+- [serverUrlExpanded](lib_cluster.default.md#serverurlexpanded)
 
 ### Methods
 
-- [\_execErrorMiddleware](lib_glee.default.md#_execerrormiddleware)
-- [\_processError](lib_glee.default.md#_processerror)
-- [\_processMessage](lib_glee.default.md#_processmessage)
-- [addAdapter](lib_glee.default.md#addadapter)
-- [addListener](lib_glee.default.md#addlistener)
-- [connect](lib_glee.default.md#connect)
-- [emit](lib_glee.default.md#emit)
-- [eventNames](lib_glee.default.md#eventnames)
-- [getMaxListeners](lib_glee.default.md#getmaxlisteners)
-- [injectError](lib_glee.default.md#injecterror)
-- [injectMessage](lib_glee.default.md#injectmessage)
-- [listen](lib_glee.default.md#listen)
-- [listenerCount](lib_glee.default.md#listenercount)
-- [listeners](lib_glee.default.md#listeners)
-- [off](lib_glee.default.md#off)
-- [on](lib_glee.default.md#on)
-- [once](lib_glee.default.md#once)
-- [prependListener](lib_glee.default.md#prependlistener)
-- [prependOnceListener](lib_glee.default.md#prependoncelistener)
-- [rawListeners](lib_glee.default.md#rawlisteners)
-- [removeAllListeners](lib_glee.default.md#removealllisteners)
-- [removeListener](lib_glee.default.md#removelistener)
-- [send](lib_glee.default.md#send)
-- [setClusterAdapter](lib_glee.default.md#setclusteradapter)
-- [setMaxListeners](lib_glee.default.md#setmaxlisteners)
-- [syncCluster](lib_glee.default.md#synccluster)
-- [use](lib_glee.default.md#use)
-- [useOutbound](lib_glee.default.md#useoutbound)
-- [getEventListeners](lib_glee.default.md#geteventlisteners)
-- [listenerCount](lib_glee.default.md#listenercount)
-- [on](lib_glee.default.md#on)
-- [once](lib_glee.default.md#once)
+- [addListener](lib_cluster.default.md#addlistener)
+- [connect](lib_cluster.default.md#connect)
+- [deserializeMessage](lib_cluster.default.md#deserializemessage)
+- [emit](lib_cluster.default.md#emit)
+- [eventNames](lib_cluster.default.md#eventnames)
+- [getMaxListeners](lib_cluster.default.md#getmaxlisteners)
+- [listenerCount](lib_cluster.default.md#listenercount)
+- [listeners](lib_cluster.default.md#listeners)
+- [off](lib_cluster.default.md#off)
+- [on](lib_cluster.default.md#on)
+- [once](lib_cluster.default.md#once)
+- [prependListener](lib_cluster.default.md#prependlistener)
+- [prependOnceListener](lib_cluster.default.md#prependoncelistener)
+- [rawListeners](lib_cluster.default.md#rawlisteners)
+- [removeAllListeners](lib_cluster.default.md#removealllisteners)
+- [removeListener](lib_cluster.default.md#removelistener)
+- [send](lib_cluster.default.md#send)
+- [serializeMessage](lib_cluster.default.md#serializemessage)
+- [setMaxListeners](lib_cluster.default.md#setmaxlisteners)
+- [getEventListeners](lib_cluster.default.md#geteventlisteners)
+- [listenerCount](lib_cluster.default.md#listenercount)
+- [on](lib_cluster.default.md#on)
+- [once](lib_cluster.default.md#once)
 
 ## Constructors
 
 ### constructor
 
-• **new default**(`options?`)
+• **new default**(`glee`)
 
-Instantiates Glee.
+Instantiates a Glee Cluster adapter.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`GleeConfig`](../modules/lib.md#gleeconfig) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `glee` | [`default`](lib_glee.default.md) | A reference to the Glee app. |
 
 #### Overrides
 
@@ -88,47 +82,47 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/glee.ts:40](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L40)
+[src/lib/cluster.ts:46](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L46)
 
 ## Properties
 
-### \_adapters
+### \_glee
 
-• `Private` **\_adapters**: `AdapterRecord`[]
+• `Private` **\_glee**: [`default`](lib_glee.default.md)
 
 #### Defined in
 
-[src/lib/glee.ts:32](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L32)
+[src/lib/cluster.ts:36](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L36)
 
 ___
 
-### \_clusterAdapter
+### \_instanceId
 
-• `Private` **\_clusterAdapter**: `ClusterAdapterRecord`
+• `Private` **\_instanceId**: `string`
 
 #### Defined in
 
-[src/lib/glee.ts:33](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L33)
+[src/lib/cluster.ts:39](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L39)
 
 ___
 
-### \_options
+### \_serverName
 
-• `Private` **\_options**: [`GleeConfig`](../modules/lib.md#gleeconfig)
+• `Private` **\_serverName**: `string`
 
 #### Defined in
 
-[src/lib/glee.ts:30](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L30)
+[src/lib/cluster.ts:37](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L37)
 
 ___
 
-### \_router
+### \_serverUrlExpanded
 
-• `Private` **\_router**: [`default`](lib_router.default.md)
+• `Private` **\_serverUrlExpanded**: `string`
 
 #### Defined in
 
-[src/lib/glee.ts:31](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L31)
+[src/lib/cluster.ts:38](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L38)
 
 ___
 
@@ -198,148 +192,65 @@ node_modules/@types/node/events.d.ts:272
 
 ## Accessors
 
-### adapters
+### glee
 
-• `get` **adapters**(): `AdapterRecord`[]
+• `get` **glee**(): [`default`](lib_glee.default.md)
 
 #### Returns
 
-`AdapterRecord`[]
+[`default`](lib_glee.default.md)
 
 #### Defined in
 
-[src/lib/glee.ts:52](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L52)
+[src/lib/cluster.ts:93](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L93)
 
 ___
 
-### clusterAdapter
+### instanceId
 
-• `get` **clusterAdapter**(): `ClusterAdapterRecord`
+• `get` **instanceId**(): `string`
 
 #### Returns
 
-`ClusterAdapterRecord`
+`string`
 
 #### Defined in
 
-[src/lib/glee.ts:56](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L56)
+[src/lib/cluster.ts:105](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L105)
 
 ___
 
-### options
+### serverName
 
-• `get` **options**(): [`GleeConfig`](../modules/lib.md#gleeconfig)
+• `get` **serverName**(): `string`
 
 #### Returns
 
-[`GleeConfig`](../modules/lib.md#gleeconfig)
+`string`
 
 #### Defined in
 
-[src/lib/glee.ts:48](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L48)
+[src/lib/cluster.ts:97](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L97)
+
+___
+
+### serverUrlExpanded
+
+• `get` **serverUrlExpanded**(): `string`
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[src/lib/cluster.ts:101](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L101)
 
 ## Methods
 
-### \_execErrorMiddleware
-
-▸ `Private` **_execErrorMiddleware**(`emws`, `index`, `error`, `message`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `emws` | [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[] |
-| `index` | `number` |
-| `error` | `Error` |
-| `message` | [`default`](lib_message.default.md) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:261](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L261)
-
-___
-
-### \_processError
-
-▸ `Private` **_processError**(`errorMiddlewares`, `error`, `message`): `void`
-
-Starts executing the middlewares for the given error and message.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `errorMiddlewares` | [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[] | The error middlewares chain to execute. |
-| `error` | `Error` | The error to pass to the middleware. |
-| `message` | [`default`](lib_message.default.md) | The message to pass to the middlewares. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:254](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L254)
-
-___
-
-### \_processMessage
-
-▸ `Private` **_processMessage**(`middlewares`, `errorMiddlewares`, `message`): `void`
-
-Starts executing the middlewares for the given message.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `middlewares` | [`ChannelMiddlewareTuple`](../modules/lib_router.md#channelmiddlewaretuple)[] | The middleware chain to execute. |
-| `errorMiddlewares` | [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[] | The middlewares chain to execute in case of error. |
-| `message` | [`default`](lib_message.default.md) | The message to pass to the middlewares. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:200](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L200)
-
-___
-
-### addAdapter
-
-▸ **addAdapter**(`Adapter`, `__namedParameters`): `void`
-
-Adds a connection adapter.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `Adapter` | typeof [`default`](lib_adapter.default.md) |
-| `__namedParameters` | `Object` |
-| `__namedParameters.parsedAsyncAPI` | `AsyncAPIDocument` |
-| `__namedParameters.server` | `Server` |
-| `__namedParameters.serverName` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:68](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L68)
-
-___
-
 ### addListener
 
-▸ **addListener**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **addListener**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Alias for `emitter.on(eventName, listener)`.
 
@@ -354,7 +265,7 @@ Alias for `emitter.on(eventName, listener)`.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
@@ -368,17 +279,41 @@ ___
 
 ### connect
 
-▸ **connect**(): `Promise`<`any`[]\>
+▸ **connect**(): `Promise`<`any`\>
 
-Tells the adapters to connect.
+Connects to the remote server.
 
 #### Returns
 
-`Promise`<`any`[]\>
+`Promise`<`any`\>
 
 #### Defined in
 
-[src/lib/glee.ts:123](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L123)
+[src/lib/cluster.ts:112](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L112)
+
+___
+
+### deserializeMessage
+
+▸ **deserializeMessage**(`serialized`): [`default`](lib_message.default.md)
+
+Deserializes the serialized message.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `serialized` | `string` | The serialized message |
+
+#### Returns
+
+[`default`](lib_message.default.md)
+
+The deserialized message.
+
+#### Defined in
+
+[src/lib/cluster.ts:151](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L151)
 
 ___
 
@@ -488,7 +423,7 @@ ___
 ▸ **getMaxListeners**(): `number`
 
 Returns the current max listener value for the `EventEmitter` which is either
-set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](lib_glee.default.md#defaultmaxlisteners).
+set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](lib_cluster.default.md#defaultmaxlisteners).
 
 **`since`** v1.0.0
 
@@ -503,69 +438,6 @@ EventEmitter.getMaxListeners
 #### Defined in
 
 node_modules/@types/node/events.d.ts:471
-
-___
-
-### injectError
-
-▸ **injectError**(`error`, `channel?`): `void`
-
-Injects an error into the Glee inbound error middleware chain.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `error` | `Error` | The error. |
-| `channel?` | `string` | - |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:171](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L171)
-
-___
-
-### injectMessage
-
-▸ **injectMessage**(`message`, `serverName`, `connection`): `void`
-
-Injects a message into the Glee inbound middleware chain.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `message` | [`default`](lib_message.default.md) | The message you want to send. |
-| `serverName` | `string` | The name of the server this message is coming from. |
-| `connection` | [`default`](lib_connection.default.md) | - |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:153](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L153)
-
-___
-
-### listen
-
-▸ **listen**(): `Promise`<`any`[]\>
-
-Alias for `connect`.
-
-#### Returns
-
-`Promise`<`any`[]\>
-
-#### Defined in
-
-[src/lib/glee.ts:142](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L142)
 
 ___
 
@@ -635,7 +507,7 @@ ___
 
 ### off
 
-▸ **off**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **off**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Alias for `emitter.removeListener()`.
 
@@ -650,7 +522,7 @@ Alias for `emitter.removeListener()`.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
@@ -664,7 +536,7 @@ ___
 
 ### on
 
-▸ **on**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **on**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Adds the `listener` function to the end of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -703,7 +575,7 @@ myEE.emit('foo');
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
@@ -717,7 +589,7 @@ ___
 
 ### once
 
-▸ **once**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **once**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName`. The
 next time `eventName` is triggered, this listener is removed and then invoked.
@@ -754,7 +626,7 @@ myEE.emit('foo');
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
@@ -768,7 +640,7 @@ ___
 
 ### prependListener
 
-▸ **prependListener**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **prependListener**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Adds the `listener` function to the _beginning_ of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -794,7 +666,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
@@ -808,7 +680,7 @@ ___
 
 ### prependOnceListener
 
-▸ **prependOnceListener**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **prependOnceListener**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName` to the_beginning_ of the listeners array. The next time `eventName` is triggered, this
 listener is removed, and then invoked.
@@ -832,7 +704,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
@@ -899,7 +771,7 @@ ___
 
 ### removeAllListeners
 
-▸ **removeAllListeners**(`event?`): [`default`](lib_glee.default.md)
+▸ **removeAllListeners**(`event?`): [`default`](lib_cluster.default.md)
 
 Removes all listeners, or those of the specified `eventName`.
 
@@ -919,7 +791,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
@@ -933,7 +805,7 @@ ___
 
 ### removeListener
 
-▸ **removeListener**(`eventName`, `listener`): [`default`](lib_glee.default.md)
+▸ **removeListener**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
 Removes the specified `listener` from the listener array for the event named`eventName`.
 
@@ -1023,7 +895,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
@@ -1037,51 +909,53 @@ ___
 
 ### send
 
-▸ **send**(`message`): `void`
+▸ **send**(`message`): `Promise`<`any`\>
 
-Send a message to the adapters.
+Sends a message to the remote server.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `message` | [`default`](lib_message.default.md) | The payload of the message you want to send. |
+| `message` | [`default`](lib_message.default.md) | The message to send. |
 
 #### Returns
 
-`void`
+`Promise`<`any`\>
 
 #### Defined in
 
-[src/lib/glee.ts:110](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L110)
+[src/lib/cluster.ts:121](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L121)
 
 ___
 
-### setClusterAdapter
+### serializeMessage
 
-▸ **setClusterAdapter**(`Adapter`): `void`
+▸ **serializeMessage**(`message`): `string`
 
-Sets the cluster adapter to use.
+Serialize a message into JSON.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `Adapter` | typeof [`default`](lib_cluster.default.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `message` | [`default`](lib_message.default.md) | The message to serialize. |
 
 #### Returns
 
-`void`
+`string`
+
+The serialized message,
 
 #### Defined in
 
-[src/lib/glee.ts:77](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L77)
+[src/lib/cluster.ts:131](https://github.com/asyncapi/glee/blob/912e7de/src/lib/cluster.ts#L131)
 
 ___
 
 ### setMaxListeners
 
-▸ **setMaxListeners**(`n`): [`default`](lib_glee.default.md)
+▸ **setMaxListeners**(`n`): [`default`](lib_cluster.default.md)
 
 By default `EventEmitter`s will print a warning if more than `10` listeners are
 added for a particular event. This is a useful default that helps finding
@@ -1100,7 +974,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Returns
 
-[`default`](lib_glee.default.md)
+[`default`](lib_cluster.default.md)
 
 #### Inherited from
 
@@ -1109,106 +983,6 @@ EventEmitter.setMaxListeners
 #### Defined in
 
 node_modules/@types/node/events.d.ts:465
-
-___
-
-### syncCluster
-
-▸ **syncCluster**(`message`): `void`
-
-Synchronizes the other instances in the cluster with the message.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `message` | [`default`](lib_message.default.md) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:184](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L184)
-
-___
-
-### use
-
-▸ **use**(...`middlewares`): `void`
-
-Use a middleware for inbound messages.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...middlewares` | [`GenericMiddleware`](../modules/lib_router.md#genericmiddleware)[] |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:88](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L88)
-
-▸ **use**(`channel`, ...`middlewares`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `channel` | `string` |
-| `...middlewares` | [`GenericMiddleware`](../modules/lib_router.md#genericmiddleware)[] |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:89](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L89)
-
-___
-
-### useOutbound
-
-▸ **useOutbound**(...`middlewares`): `void`
-
-Use a middleware for outbound messages.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...middlewares` | [`GenericMiddleware`](../modules/lib_router.md#genericmiddleware)[] |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:99](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L99)
-
-▸ **useOutbound**(`channel`, ...`middlewares`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `channel` | `string` |
-| `...middlewares` | [`GenericMiddleware`](../modules/lib_router.md#genericmiddleware)[] |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/lib/glee.ts:100](https://github.com/asyncapi/glee/blob/912e7de/src/lib/glee.ts#L100)
 
 ___
 
