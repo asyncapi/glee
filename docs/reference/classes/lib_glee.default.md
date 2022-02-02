@@ -88,7 +88,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/glee.ts:40](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L40)
+[src/lib/glee.ts:40](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L40)
 
 ## Properties
 
@@ -98,7 +98,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/glee.ts:32](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L32)
+[src/lib/glee.ts:32](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L32)
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:33](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L33)
+[src/lib/glee.ts:33](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L33)
 
 ___
 
@@ -118,7 +118,7 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:30](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L30)
+[src/lib/glee.ts:30](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L30)
 
 ___
 
@@ -128,7 +128,7 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:31](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L31)
+[src/lib/glee.ts:31](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L31)
 
 ___
 
@@ -208,7 +208,7 @@ node_modules/@types/node/events.d.ts:272
 
 #### Defined in
 
-[src/lib/glee.ts:52](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L52)
+[src/lib/glee.ts:52](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L52)
 
 ___
 
@@ -222,7 +222,7 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:56](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L56)
+[src/lib/glee.ts:56](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L56)
 
 ___
 
@@ -236,7 +236,7 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:48](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L48)
+[src/lib/glee.ts:48](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L48)
 
 ## Methods
 
@@ -259,7 +259,7 @@ ___
 
 #### Defined in
 
-[src/lib/glee.ts:261](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L261)
+[src/lib/glee.ts:261](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L261)
 
 ___
 
@@ -283,7 +283,7 @@ Starts executing the middlewares for the given error and message.
 
 #### Defined in
 
-[src/lib/glee.ts:254](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L254)
+[src/lib/glee.ts:254](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L254)
 
 ___
 
@@ -307,7 +307,7 @@ Starts executing the middlewares for the given message.
 
 #### Defined in
 
-[src/lib/glee.ts:200](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L200)
+[src/lib/glee.ts:200](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L200)
 
 ___
 
@@ -333,7 +333,7 @@ Adds a connection adapter.
 
 #### Defined in
 
-[src/lib/glee.ts:68](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L68)
+[src/lib/glee.ts:68](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L68)
 
 ___
 
@@ -378,7 +378,7 @@ Tells the adapters to connect.
 
 #### Defined in
 
-[src/lib/glee.ts:123](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L123)
+[src/lib/glee.ts:123](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L123)
 
 ___
 
@@ -525,7 +525,7 @@ Injects an error into the Glee inbound error middleware chain.
 
 #### Defined in
 
-[src/lib/glee.ts:171](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L171)
+[src/lib/glee.ts:171](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L171)
 
 ___
 
@@ -549,7 +549,7 @@ Injects a message into the Glee inbound middleware chain.
 
 #### Defined in
 
-[src/lib/glee.ts:153](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L153)
+[src/lib/glee.ts:153](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L153)
 
 ___
 
@@ -565,7 +565,7 @@ Alias for `connect`.
 
 #### Defined in
 
-[src/lib/glee.ts:142](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L142)
+[src/lib/glee.ts:142](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L142)
 
 ___
 
@@ -1053,7 +1053,7 @@ Send a message to the adapters.
 
 #### Defined in
 
-[src/lib/glee.ts:110](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L110)
+[src/lib/glee.ts:110](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L110)
 
 ___
 
@@ -1075,7 +1075,7 @@ Sets the cluster adapter to use.
 
 #### Defined in
 
-[src/lib/glee.ts:77](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L77)
+[src/lib/glee.ts:77](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L77)
 
 ___
 
@@ -1130,7 +1130,7 @@ Synchronizes the other instances in the cluster with the message.
 
 #### Defined in
 
-[src/lib/glee.ts:184](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L184)
+[src/lib/glee.ts:184](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L184)
 
 ___
 
@@ -1152,7 +1152,7 @@ Use a middleware for inbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:88](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L88)
+[src/lib/glee.ts:88](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L88)
 
 ▸ **use**(`channel`, ...`middlewares`): `void`
 
@@ -1169,7 +1169,7 @@ Use a middleware for inbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:89](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L89)
+[src/lib/glee.ts:89](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L89)
 
 ___
 
@@ -1191,7 +1191,7 @@ Use a middleware for outbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:99](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L99)
+[src/lib/glee.ts:99](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L99)
 
 ▸ **useOutbound**(`channel`, ...`middlewares`): `void`
 
@@ -1208,7 +1208,7 @@ Use a middleware for outbound messages.
 
 #### Defined in
 
-[src/lib/glee.ts:100](https://github.com/asyncapi/glee/blob/7f9d541/src/lib/glee.ts#L100)
+[src/lib/glee.ts:100](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/glee.ts#L100)
 
 ___
 
