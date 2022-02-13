@@ -1,6 +1,7 @@
 {
   "name": "notifications-service",
   "version": "0.1.0",
+  "type": "module",
   "engines": {
     "node": ">=14.15.1"
   },

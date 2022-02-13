@@ -1,10 +1,11 @@
 import 'jest-extended'
 import AsyncAPIDocument from '@asyncapi/parser/lib/models/asyncapi'
-import Server from '@asyncapi/parser/lib/models/server'
-import GleeConnection from '../../src/lib/connection'
-import Glee from '../../src/lib/glee'
-import GleeMessage from '../../src/lib/message'
-import GleeAdapter from '../../src/lib/adapter'
+import {jest} from '@jest/globals'
+import {Server} from '@asyncapi/parser'
+import GleeConnection from '../../src/lib/connection.js'
+import Glee from '../../src/lib/glee.js'
+import GleeMessage from '../../src/lib/message.js'
+import GleeAdapter from '../../src/lib/adapter.js'
 
 const TEST_SERVER_NAME = 'test'
 const ANOTHER_TEST_SERVER_NAME = 'another'
@@ -61,7 +62,7 @@ describe('glee', () => {
         payload: 'test'
       })
       const middlewareFn = jest.fn()
-      const middlewareFn2 = jest.fn()
+      const middlewareFn2:any = jest.fn()
       const outboundMiddlewareFn = jest.fn()
       const app = new Glee()
       app.use(middlewareFn)
@@ -78,7 +79,7 @@ describe('glee', () => {
     it('registers inbound error middlewares in order', async () => {
       const middlewareFn = jest.fn()
       const errorMiddlewareFn = jest.fn(async (err, message, next) => next)
-      const errorMiddlewareFn2 = jest.fn(async (err, message, next) => next)
+      const errorMiddlewareFn2:any = jest.fn(async (err, message, next) => next)
       const outboundMiddlewareFn = jest.fn(async (err, message, next) => next)
       const app = new Glee()
       app.use(middlewareFn)
@@ -101,7 +102,7 @@ describe('glee', () => {
         payload: 'test'
       })
       const middlewareFn = jest.fn()
-      const middlewareFn2 = jest.fn()
+      const middlewareFn2:any = jest.fn()
       const inboundMiddlewareFn = jest.fn()
       const app = new Glee()
       app.use(inboundMiddlewareFn)
@@ -119,10 +120,10 @@ describe('glee', () => {
       const msg = new GleeMessage({
         payload: 'test'
       })
-      const middlewareFn = jest.fn((message, next) => next(new Error('fake-error')))
-      const errorMiddlewareFn = jest.fn(async (err, message, next) => next(err))
-      const errorMiddlewareFn2 = jest.fn(async (err, message, next) => next(err))
-      const inboundMiddlewareFn = jest.fn(async (err, message, next) => next(err))
+      const middlewareFn = jest.fn((message, next:any) => next(new Error('fake-error')))
+      const errorMiddlewareFn = jest.fn(async (err, message, next:any) => next(err))
+      const errorMiddlewareFn2: any = jest.fn(async (err, message, next:any) => next(err))
+      const inboundMiddlewareFn = jest.fn(async (err, message, next:any) => next(err))
       const app = new Glee()
       app.useOutbound(middlewareFn)
       app.useOutbound(errorMiddlewareFn)

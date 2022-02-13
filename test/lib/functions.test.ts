@@ -1,5 +1,6 @@
 import fs from 'fs/promises'
-import { register } from '../../src/lib/functions'
+import { register } from '../../src/lib/functions.js'
+import {jest} from '@jest/globals'
 
 let statDoesNotExist: boolean
 let statErrorCode: string

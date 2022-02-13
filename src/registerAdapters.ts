@@ -1,11 +1,11 @@
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
-import MqttAdapter from './adapters/mqtt/index'
-import WebSocketAdapter from './adapters/ws/index'
-import SocketIOAdapter from './adapters/socket.io/index'
-import RedisClusterAdapter from './adapters/cluster/redis'
-import { getSelectedServerNames } from './lib/servers'
-import Glee from './lib/glee'
-import { GleeConfig, GleeClusterAdapterConfig } from './lib/index'
+import MqttAdapter from './adapters/mqtt/index.js'
+import WebSocketAdapter from './adapters/ws/index.js'
+import SocketIOAdapter from './adapters/socket.io/index.js'
+import RedisClusterAdapter from './adapters/cluster/redis/index.js'
+import { getSelectedServerNames } from './lib/servers.js'
+import Glee from './lib/glee.js'
+import { GleeConfig, GleeClusterAdapterConfig } from './lib/index.d'
 
 export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) => {
   const serverNames = await getSelectedServerNames()

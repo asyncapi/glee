@@ -1,12 +1,13 @@
 import { basename, extname, relative, join } from 'path'
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
-import { getConfigs } from './configs'
-import { logWarningMessage } from './logger'
-import GleeMessage from './message'
-import { GleeFunction } from './index'
-import Glee from './glee'
-import { gleeMessageToFunctionEvent } from './util'
+import { getConfigs } from './configs.js'
+import { logWarningMessage } from './logger.js'
+import GleeMessage from './message.js'
+import { GleeFunction } from './index.d'
+import Glee from './glee.js'
+import { gleeMessageToFunctionEvent } from './util.js'
+import { pathToFileURL } from 'url'
 
 interface FunctionInfo {
   run: GleeFunction,
@@ -29,7 +30,7 @@ export async function register(dir: string) {
     return await Promise.all(Object.keys(files).map(async (filePath) => {
       try {
         const functionName = basename(filePath, extname(filePath))
-        const { default: fn } = await import(filePath)
+        const { default: fn } = await import(pathToFileURL(filePath).href)
         functions.set(functionName, {
           run: fn,
         })

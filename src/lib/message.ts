@@ -1,5 +1,5 @@
 import EventEmitter from 'events'
-import GleeConnection from './connection'
+import GleeConnection from './connection.js'
 
 type MessageHeaders = { [key: string]: any }
 

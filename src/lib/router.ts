@@ -1,4 +1,4 @@
-import { ErrorMiddleware, Middleware } from '../middlewares'
+import { ErrorMiddleware, Middleware } from '../middlewares/index.d'
 
 export type ChannelMiddlewareTuple = {
   channel: string,

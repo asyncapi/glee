@@ -1,6 +1,6 @@
-import { logInboundMessage, logOutboundMessage } from '../lib/logger'
-import GleeMessage from '../lib/message'
-import { MiddlewareCallback } from './index'
+import { logInboundMessage, logOutboundMessage } from '../lib/logger.js'
+import GleeMessage from '../lib/message.js'
+import { MiddlewareCallback } from './index.d'
 
 export default (message: GleeMessage, next: MiddlewareCallback) => {
   if (message.isInbound()) {

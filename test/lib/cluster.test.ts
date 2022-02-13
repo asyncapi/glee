@@ -1,9 +1,10 @@
 import 'jest-extended'
 import Glee from '../../src/lib/glee'
-import GleeClusterAdapter from '../../src/lib/cluster'
+import GleeClusterAdapter from '../../src/lib/cluster.js'
 import {validate as uuidValidate, version as uuidVersion} from 'uuid'
-import GleeMessage from '../../src/lib/message'
-import { MiddlewareCallback } from '../../src/middlewares'
+import GleeMessage from '../../src/lib/message.js'
+import { MiddlewareCallback } from '../../src/middlewares/index.d'
+import {jest} from '@jest/globals'
 
 const TEST_SERVER_NAME = 'test'
 class TEST_ADAPTER extends GleeClusterAdapter {

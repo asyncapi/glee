@@ -1,5 +1,6 @@
 import { existsSync } from 'fs'
 import path from 'path'
+import { pathToFileURL } from 'url'
 
 interface Config {
   functionsDir?: string,
@@ -33,7 +34,7 @@ export async function initializeConfigs(config: Config = {}): Promise<{ [key: st
 async function loadConfigsFromFile() {
   if (!existsSync(GLEE_CONFIG_FILE_PATH)) return 
   try {
-    let { default: projectConfigs } = await import(GLEE_CONFIG_FILE_PATH)
+    let { default: projectConfigs } = await import(pathToFileURL(GLEE_CONFIG_FILE_PATH).href)
     if (typeof projectConfigs === 'function') projectConfigs = await projectConfigs()
     if (!projectConfigs) return
 

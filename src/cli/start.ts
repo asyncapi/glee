@@ -1,2 +1,2 @@
-import glee from '../index'
+import glee from '../index.js'
 glee().catch(console.error)

@@ -1,7 +1,7 @@
-import GleeAdapter from './adapter'
-import GleeClusterAdapter from './cluster'
-import GleeConnection from './connection'
-import Glee from './glee'
+import GleeAdapter from './adapter.js'
+import GleeClusterAdapter from './cluster.js'
+import GleeConnection from './connection.js'
+import Glee from './glee.js'
 
 type WebSocketServerType = 'native' | 'socket.io'
 

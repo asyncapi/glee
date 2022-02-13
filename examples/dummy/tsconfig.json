@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "target": "ESNext",
+    "target": "es6",
     "esModuleInterop": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "node",
+    "module":"es2020"
   }
 }

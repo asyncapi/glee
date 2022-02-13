@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import { compileAndWatch } from '../lib/compiler'
+import { compileAndWatch } from '../lib/compiler.js'
 import spawn from 'cross-spawn'
-import { logLineWithIcon, logTypeScriptMessage } from '../lib/logger'
+import { logLineWithIcon, logTypeScriptMessage } from '../lib/logger.js'
 
 const args = process.argv.splice(2)
 const command = args[0]
