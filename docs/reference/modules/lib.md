@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:8](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/index.d.ts#L8)
+[src/lib/index.d.ts:8](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/index.d.ts#L8)
 
 ___
 
@@ -45,14 +45,14 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `cluster?` | [`GleeClusterAdapterConfig`](lib.md#gleeclusteradapterconfig) |
-| `websocket?` | `Object` |
+| `websocket?` | { `adapter?`: [`WebSocketServerType`](lib.md#websocketservertype) \| typeof [`default`](../classes/lib_adapter.default.md) ; `httpServer?`: `any` ; `port?`: `number`  } |
 | `websocket.adapter?` | [`WebSocketServerType`](lib.md#websocketservertype) \| typeof [`default`](../classes/lib_adapter.default.md) |
 | `websocket.httpServer?` | `any` |
 | `websocket.port?` | `number` |
 
 #### Defined in
 
-[src/lib/index.d.ts:14](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/index.d.ts#L14)
+[src/lib/index.d.ts:14](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/index.d.ts#L14)
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:48](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/index.d.ts#L48)
+[src/lib/index.d.ts:48](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/index.d.ts#L48)
 
 ___
 
@@ -91,13 +91,13 @@ ___
 | `channel?` | `string` |
 | `connection?` | [`default`](../classes/lib_connection.default.md) |
 | `glee` | [`default`](../classes/lib_glee.default.md) |
-| `headers?` | `Object` |
+| `headers?` | { [key: string]: `string`;  } |
 | `payload?` | `any` |
 | `serverName` | `string` |
 
 #### Defined in
 
-[src/lib/index.d.ts:29](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/index.d.ts#L29)
+[src/lib/index.d.ts:29](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/index.d.ts#L29)
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:23](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/index.d.ts#L23)
+[src/lib/index.d.ts:23](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/index.d.ts#L23)
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:46](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/index.d.ts#L46)
+[src/lib/index.d.ts:46](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/index.d.ts#L46)
 
 ___
 
@@ -135,7 +135,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:45](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/index.d.ts#L45)
+[src/lib/index.d.ts:45](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/index.d.ts#L45)
 
 ___
 
@@ -148,13 +148,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `channel?` | `string` |
-| `headers?` | `Object` |
+| `headers?` | { [key: string]: `string`;  } |
 | `payload?` | `any` |
 | `server?` | `string` |
 
 #### Defined in
 
-[src/lib/index.d.ts:38](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/index.d.ts#L38)
+[src/lib/index.d.ts:38](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/index.d.ts#L38)
 
 ___
 
@@ -164,4 +164,4 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:6](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/index.d.ts#L6)
+[src/lib/index.d.ts:6](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/index.d.ts#L6)
