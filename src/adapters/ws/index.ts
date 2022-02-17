@@ -1,10 +1,10 @@
 import WebSocket from 'ws'
 import http from 'http'
-import { validateData } from '../../lib/util'
-import Adapter from '../../lib/adapter'
-import GleeConnection from '../../lib/connection'
-import GleeMessage from '../../lib/message'
-import GleeError from '../../errors/glee-error'
+import { validateData } from '../../lib/util.js'
+import Adapter from '../../lib/adapter.js'
+import GleeConnection from '../../lib/connection.js'
+import GleeMessage from '../../lib/message.js'
+import GleeError from '../../errors/glee-error.js'
 
 class WebSocketsAdapter extends Adapter {
   name(): string {

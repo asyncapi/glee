@@ -1,10 +1,12 @@
 import { readFileSync } from 'fs'
+import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
 import util from 'util'
 import chalk from 'chalk'
 import emojis from 'emojis'
 import wordWrap from 'word-wrap'
-import GleeMessage from './message'
-import GleeError from '../errors/glee-error'
+import GleeMessage from './message.js'
+import GleeError from '../errors/glee-error.js'
 
 export { chalk }
 
@@ -58,7 +60,7 @@ export const logWelcome = ({
   const fgPrimary = chalk.hex(primaryColor)
   const fgWarning = chalk.yellow
   
-  const pkg = JSON.parse(readFileSync('../../package.json').toString())
+  const pkg = JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '../../package.json')).toString())
 
   logEmptyLines(1)
   console.log(bgPrimary.black(` Glee ${pkg.version} \n`))

@@ -1,9 +1,10 @@
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
-import { GleeFunctionEvent, GleeFunctionReturn, GleeFunctionReturnSend } from './index'
-import { logInfoMessage } from './logger'
-import GleeMessage from './message'
-import { arrayHasDuplicates } from './util'
+import { GleeFunctionEvent, GleeFunctionReturn, GleeFunctionReturnSend } from './index.d'
+import { logInfoMessage } from './logger.js'
+import GleeMessage from './message.js'
+import { arrayHasDuplicates } from './util.js'
+import { pathToFileURL } from 'url'
 
 interface IEvent {
   fn: (event: GleeFunctionEvent) => GleeFunctionReturn,
@@ -29,7 +30,7 @@ export async function register (dir: string) {
           lifecycleEvent,
           channels,
           servers
-        } = await import(filePath)
+        } = await import(pathToFileURL(filePath).href)
 
         if (!events.has(lifecycleEvent)) events.set(lifecycleEvent, [])
         

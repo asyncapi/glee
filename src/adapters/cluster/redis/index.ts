@@ -1,6 +1,6 @@
 import { createClient } from 'redis'
-import ClusterAdapter from '../../../lib/cluster'
-import GleeMessage from '../../../lib/message'
+import ClusterAdapter from '../../../lib/cluster.js'
+import GleeMessage from '../../../lib/message.js'
 
 const client = createClient()
 type RedisClientType = typeof client

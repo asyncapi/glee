@@ -1,10 +1,10 @@
 import EventEmitter from 'events'
 import uriTemplates from 'uri-templates'
 import { v4 as uuidv4 } from 'uuid'
-import Glee from './glee'
-import GleeMessage from './message'
-import { validateData } from './util'
-import GleeError from '../errors/glee-error'
+import Glee from './glee.js'
+import GleeMessage from './message.js'
+import { validateData } from './util.js'
+import GleeError from '../errors/glee-error.js'
 
 export type ClusterEvent = {
   serverName: string,

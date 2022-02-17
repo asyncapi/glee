@@ -1,6 +1,6 @@
 import { relative, resolve } from 'path'
 import ts from 'typescript'
-import { logTypeScriptError } from './logger'
+import { logTypeScriptError } from './logger.js'
 
 const formatHost: ts.FormatDiagnosticsHost = {
   getCanonicalFileName: path => path,
@@ -46,8 +46,8 @@ export function compileAndWatch({
       allowJs: true,
       outDir: '.glee',
       rootDir: projectDir,
-      module: 'commonjs',
-      target: 'es6',
+      target: ts.ScriptTarget.ES2016,
+      module: ts.ModuleKind.ES2020,
       esModuleInterop: true,
     } as {[key: string]: any},
     ts.sys,
