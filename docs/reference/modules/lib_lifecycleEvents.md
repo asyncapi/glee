@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[src/lib/lifecycleEvents.ts:13](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/lifecycleEvents.ts#L13)
+[src/lib/lifecycleEvents.ts:14](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/lifecycleEvents.ts#L14)
 
 ## Functions
 
@@ -41,7 +41,7 @@
 
 #### Defined in
 
-[src/lib/lifecycleEvents.ts:15](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/lifecycleEvents.ts#L15)
+[src/lib/lifecycleEvents.ts:16](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/lifecycleEvents.ts#L16)
 
 ___
 
@@ -62,4 +62,4 @@ ___
 
 #### Defined in
 
-[src/lib/lifecycleEvents.ts:50](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/lifecycleEvents.ts#L50)
+[src/lib/lifecycleEvents.ts:51](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/lifecycleEvents.ts#L51)

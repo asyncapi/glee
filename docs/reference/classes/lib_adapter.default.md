@@ -70,6 +70,7 @@
 - [listenerCount](lib_adapter.default.md#listenercount)
 - [on](lib_adapter.default.md#on)
 - [once](lib_adapter.default.md#once)
+- [setMaxListeners](lib_adapter.default.md#setmaxlisteners)
 
 ## Constructors
 
@@ -94,7 +95,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/adapter.ts:31](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L31)
+[src/lib/adapter.ts:31](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L31)
 
 ## Properties
 
@@ -104,7 +105,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/adapter.ts:17](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L17)
+[src/lib/adapter.ts:17](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L17)
 
 ___
 
@@ -114,7 +115,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:19](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L19)
+[src/lib/adapter.ts:19](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L19)
 
 ___
 
@@ -124,7 +125,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:20](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L20)
+[src/lib/adapter.ts:20](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L20)
 
 ___
 
@@ -134,7 +135,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:15](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L15)
+[src/lib/adapter.ts:15](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L15)
 
 ___
 
@@ -144,7 +145,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:18](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L18)
+[src/lib/adapter.ts:18](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L18)
 
 ___
 
@@ -154,7 +155,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:16](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L16)
+[src/lib/adapter.ts:16](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L16)
 
 ___
 
@@ -164,7 +165,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:21](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L21)
+[src/lib/adapter.ts:21](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L21)
 
 ___
 
@@ -178,7 +179,7 @@ EventEmitter.captureRejectionSymbol
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:273
+node_modules/@types/node/events.d.ts:301
 
 ___
 
@@ -194,7 +195,7 @@ EventEmitter.captureRejections
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:278
+node_modules/@types/node/events.d.ts:306
 
 ___
 
@@ -208,7 +209,7 @@ EventEmitter.defaultMaxListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:279
+node_modules/@types/node/events.d.ts:307
 
 ___
 
@@ -230,7 +231,7 @@ EventEmitter.errorMonitor
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:272
+node_modules/@types/node/events.d.ts:300
 
 ## Accessors
 
@@ -244,7 +245,7 @@ node_modules/@types/node/events.d.ts:272
 
 #### Defined in
 
-[src/lib/adapter.ts:131](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L131)
+[src/lib/adapter.ts:131](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L131)
 
 ___
 
@@ -258,7 +259,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:139](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L139)
+[src/lib/adapter.ts:139](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L139)
 
 ___
 
@@ -272,7 +273,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:143](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L143)
+[src/lib/adapter.ts:143](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L143)
 
 ___
 
@@ -286,7 +287,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:123](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L123)
+[src/lib/adapter.ts:123](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L123)
 
 ___
 
@@ -300,7 +301,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:135](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L135)
+[src/lib/adapter.ts:135](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L135)
 
 ___
 
@@ -314,7 +315,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:127](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L127)
+[src/lib/adapter.ts:127](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L127)
 
 ___
 
@@ -328,7 +329,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:147](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L147)
+[src/lib/adapter.ts:147](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L147)
 
 ## Methods
 
@@ -357,7 +358,7 @@ EventEmitter.addListener
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:299
+node_modules/@types/node/events.d.ts:327
 
 ___
 
@@ -373,7 +374,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/lib/adapter.ts:168](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L168)
+[src/lib/adapter.ts:168](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L168)
 
 ___
 
@@ -438,7 +439,7 @@ EventEmitter.emit
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:555
+node_modules/@types/node/events.d.ts:583
 
 ___
 
@@ -474,7 +475,7 @@ EventEmitter.eventNames
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:614
+node_modules/@types/node/events.d.ts:642
 
 ___
 
@@ -497,7 +498,7 @@ EventEmitter.getMaxListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:471
+node_modules/@types/node/events.d.ts:499
 
 ___
 
@@ -513,7 +514,7 @@ Returns a list of the channels a given adapter has to subscribe to.
 
 #### Defined in
 
-[src/lib/adapter.ts:154](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L154)
+[src/lib/adapter.ts:154](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L154)
 
 ___
 
@@ -541,7 +542,7 @@ EventEmitter.listenerCount
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:561
+node_modules/@types/node/events.d.ts:589
 
 ___
 
@@ -577,7 +578,7 @@ EventEmitter.listeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:484
+node_modules/@types/node/events.d.ts:512
 
 ___
 
@@ -606,7 +607,7 @@ EventEmitter.off
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:444
+node_modules/@types/node/events.d.ts:472
 
 ___
 
@@ -659,7 +660,7 @@ EventEmitter.on
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:330
+node_modules/@types/node/events.d.ts:358
 
 ___
 
@@ -710,7 +711,7 @@ EventEmitter.once
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:359
+node_modules/@types/node/events.d.ts:387
 
 ___
 
@@ -750,7 +751,7 @@ EventEmitter.prependListener
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:579
+node_modules/@types/node/events.d.ts:607
 
 ___
 
@@ -788,7 +789,7 @@ EventEmitter.prependOnceListener
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:595
+node_modules/@types/node/events.d.ts:623
 
 ___
 
@@ -841,7 +842,7 @@ EventEmitter.rawListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:514
+node_modules/@types/node/events.d.ts:542
 
 ___
 
@@ -875,7 +876,7 @@ EventEmitter.removeAllListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:455
+node_modules/@types/node/events.d.ts:483
 
 ___
 
@@ -979,7 +980,7 @@ EventEmitter.removeListener
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:439
+node_modules/@types/node/events.d.ts:467
 
 ___
 
@@ -1001,7 +1002,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/lib/adapter.ts:177](https://github.com/asyncapi/glee/blob/6cebeaa/src/lib/adapter.ts#L177)
+[src/lib/adapter.ts:177](https://github.com/asyncapi/glee/blob/036ed6c/src/lib/adapter.ts#L177)
 
 ___
 
@@ -1034,7 +1035,7 @@ EventEmitter.setMaxListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:465
+node_modules/@types/node/events.d.ts:493
 
 ___
 
@@ -1086,7 +1087,7 @@ EventEmitter.getEventListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:262
+node_modules/@types/node/events.d.ts:270
 
 ___
 
@@ -1126,7 +1127,7 @@ EventEmitter.listenerCount
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:234
+node_modules/@types/node/events.d.ts:242
 
 ___
 
@@ -1210,7 +1211,7 @@ EventEmitter.on
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:217
+node_modules/@types/node/events.d.ts:221
 
 ___
 
@@ -1340,4 +1341,48 @@ EventEmitter.once
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:158
+node_modules/@types/node/events.d.ts:162
+
+___
+
+### setMaxListeners
+
+▸ `Static` **setMaxListeners**(`n?`, ...`eventTargets`): `void`
+
+By default `EventEmitter`s will print a warning if more than `10` listeners are
+added for a particular event. This is a useful default that helps finding
+memory leaks. The `EventEmitter.setMaxListeners()` method allows the default limit to be
+modified (if eventTargets is empty) or modify the limit specified in every `EventTarget` | `EventEmitter` passed as arguments.
+The value can be set to`Infinity` (or `0`) to indicate an unlimited number of listeners.
+
+```js
+EventEmitter.setMaxListeners(20);
+// Equivalent to
+EventEmitter.defaultMaxListeners = 20;
+
+const eventTarget = new EventTarget();
+// Only way to increase limit for `EventTarget` instances
+// as these doesn't expose its own `setMaxListeners` method
+EventEmitter.setMaxListeners(20, eventTarget);
+```
+
+**`since`** v15.3.0, v14.17.0
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `n?` | `number` |
+| `...eventTargets` | (`DOMEventTarget` \| `EventEmitter`)[] |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+EventEmitter.setMaxListeners
+
+#### Defined in
+
+node_modules/@types/node/events.d.ts:290
