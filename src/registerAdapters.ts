@@ -1,6 +1,7 @@
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import MqttAdapter from './adapters/mqtt/index.js'
-import WebSocketAdapter from './adapters/ws/index.js'
+import WSClientAdapter from './adapters/ws-client/index.js'
+import WSServerAdapter from './adapters/ws-server/index.js'
 import SocketIOAdapter from './adapters/socket.io/index.js'
 import RedisClusterAdapter from './adapters/cluster/redis/index.js'
 import { getSelectedServerNames } from './lib/servers.js'
@@ -25,6 +26,7 @@ export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeC
 
 function registerAdapterForServer(serverName: string, server: Server, app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) {
   const protocol = server.protocol()
+  const x_kind: "local"|"remote"|undefined = parsedAsyncAPI.server(serverName).json()["x-kind"]
   if (['mqtt', 'mqtts', 'secure-mqtt'].includes(protocol)) {
     app.addAdapter(MqttAdapter, {
       serverName,
@@ -36,11 +38,19 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
   } else if (['ws', 'wss'].includes(protocol)) {
     const configWsAdapter = config?.websocket?.adapter
     if (!configWsAdapter || configWsAdapter === 'native') {
-      app.addAdapter(WebSocketAdapter, {
+	if (x_kind === "local") {
+        app.addAdapter(WSServerAdapter, {
+        serverName,
+        server,
+        parsedAsyncAPI,
+       })
+    } else if(x_kind === "remote"||x_kind === undefined){
+        app.addAdapter(WSClientAdapter, {
         serverName,
         server,
         parsedAsyncAPI,
       })
+	}
     } else if (configWsAdapter === 'socket.io') {
       app.addAdapter(SocketIOAdapter, {
         serverName,
