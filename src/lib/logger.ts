@@ -113,8 +113,8 @@ export const logInboundMessage = (message: GleeMessage) => {
 }
 
 export const logOutboundMessage = (message: GleeMessage) => {
-  var verb: string;
-  const event = message.eventNames()[0];
+  let verb: string
+  const event = message.eventNames()[0]
   const icon = message.broadcast ? '⇶' : '↗'
   if (message.serverName === 'websockets' && event !== 'reply') {
     verb = 'broadcasted'
