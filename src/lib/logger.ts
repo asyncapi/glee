@@ -113,8 +113,14 @@ export const logInboundMessage = (message: GleeMessage) => {
 }
 
 export const logOutboundMessage = (message: GleeMessage) => {
+  var verb: string;
+  const event = message.eventNames()[0];
   const icon = message.broadcast ? '⇶' : '↗'
-  const verb = message.broadcast ? 'broadcasted' : 'sent'
+  if (message.serverName === 'websockets' && event !== 'reply') {
+    verb = 'broadcasted'
+  } else {
+    verb = 'sent'
+  }
   const serverName = message.serverName || 'all servers'
   console.log(chalk.reset.magenta(icon), chalk.yellow(message.channel), 'was', verb ,'to', chalk.gray(serverName))
   logJSON(message.payload)

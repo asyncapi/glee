@@ -33,6 +33,18 @@ export default async function (event) {
         },
       }
     }],
+    reply: [
+      {
+        channel: '/',
+        payload: {
+          type: 'likes_count_updated',
+          data: {
+            postId,
+            totalCount
+          }
+        }
+      }
+    ],
     ...(
       type === 'like' && {
         send: [{
