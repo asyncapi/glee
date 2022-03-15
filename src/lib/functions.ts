@@ -54,8 +54,10 @@ export async function trigger({
 }) {
   try {
     const res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
+    let value = res === undefined
 
     if (res?.send) {
+      value = true
       res.send.forEach((msg) => {
         app.send(new GleeMessage({
           payload: msg.payload,
@@ -68,12 +70,19 @@ export async function trigger({
     }
 
     if (res?.reply) {
+      value = true
       res.reply.forEach((msg) => {
         message.reply({
           payload: msg.payload,
           headers: msg.headers,
           channel: msg.channel,
         })
+      })
+    }
+
+    if ( !value ) {
+      logWarningMessage(`Function ${operationId} returned invalid data`, {
+        highlightedWords: [operationId]
       })
     }
   } catch (err) {
