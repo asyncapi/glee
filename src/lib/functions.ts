@@ -6,11 +6,44 @@ import { logWarningMessage } from './logger.js'
 import GleeMessage from './message.js'
 import { GleeFunction } from './index.d'
 import Glee from './glee.js'
-import { gleeMessageToFunctionEvent } from './util.js'
+import { gleeMessageToFunctionEvent, validateData } from './util.js'
 import { pathToFileURL } from 'url'
 
 interface FunctionInfo {
   run: GleeFunction,
+}
+
+const OutboundMessageSchema = {
+  type: 'object',
+  properties: {
+    payload: { type: ['string', 'object'] },
+    headers: {
+      type: 'object',
+      propertyNames: { type: 'string' },
+      additionProperties: { type: 'string' }
+    },
+    channel: { type: 'string' },
+    server: { type: 'string' },
+  }
+}
+
+const FunctionReturnSchema = {
+  type: 'object',
+  properties: {
+    send: {
+      type: 'array',
+      items: OutboundMessageSchema
+    },
+    reply: {
+      type: 'array',
+      items: OutboundMessageSchema
+    }
+  },
+  additionalProperties: false,
+  anyOf: [
+    { required: ['send'] },
+    { required: ['reply'] }
+  ]
 }
 
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
@@ -54,10 +87,17 @@ export async function trigger({
 }) {
   try {
     const res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
-    let valid = res === undefined
+    const { isValid } = validateData(res, FunctionReturnSchema)
+
+    if ( !isValid ) {
+      logWarningMessage(`Function ${operationId} returned invalid data`, {
+        highlightedWords: [operationId]
+      })
+
+      return
+    }
 
     if (res?.send) {
-      valid = true
       res.send.forEach((msg) => {
         app.send(new GleeMessage({
           payload: msg.payload,
@@ -70,19 +110,12 @@ export async function trigger({
     }
 
     if (res?.reply) {
-      valid = true
       res.reply.forEach((msg) => {
         message.reply({
           payload: msg.payload,
           headers: msg.headers,
           channel: msg.channel,
         })
-      })
-    }
-
-    if ( !valid ) {
-      logWarningMessage(`Function ${operationId} returned invalid data`, {
-        highlightedWords: [operationId]
       })
     }
   } catch (err) {
