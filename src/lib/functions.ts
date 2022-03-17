@@ -2,12 +2,13 @@ import { basename, extname, relative, join } from 'path'
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
-import { logWarningMessage } from './logger.js'
+import { logWarningMessage, logError } from './logger.js'
 import GleeMessage from './message.js'
 import { GleeFunction } from './index.d'
 import Glee from './glee.js'
 import { gleeMessageToFunctionEvent, validateData } from './util.js'
 import { pathToFileURL } from 'url'
+import GleeError from '../errors/glee-error.js'
 
 interface FunctionInfo {
   run: GleeFunction,
@@ -16,11 +17,11 @@ interface FunctionInfo {
 const OutboundMessageSchema = {
   type: 'object',
   properties: {
-    payload: { type: ['string', 'object'] },
+    payload: {},
     headers: {
       type: 'object',
       propertyNames: { type: 'string' },
-      additionProperties: { type: 'string' }
+      additionalProperties: { type: 'string' }
     },
     channel: { type: 'string' },
     server: { type: 'string' },
@@ -87,10 +88,16 @@ export async function trigger({
 }) {
   try {
     const res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
-    const { isValid } = validateData(res, FunctionReturnSchema)
+    const { humanReadableError, errors, isValid } = validateData(res, FunctionReturnSchema)
 
     if ( !isValid ) {
-      logWarningMessage(`Function ${operationId} returned invalid data`, {
+      const err = new GleeError({
+        humanReadableError,
+        errors,
+      })
+      err.message = `Function ${operationId} returned invalid data.`
+      
+      logError(err, {
         highlightedWords: [operationId]
       })
 
