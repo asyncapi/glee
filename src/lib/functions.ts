@@ -2,15 +2,49 @@ import { basename, extname, relative, join } from 'path'
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
-import { logWarningMessage } from './logger.js'
+import { logWarningMessage, logError } from './logger.js'
 import GleeMessage from './message.js'
 import { GleeFunction } from './index.d'
 import Glee from './glee.js'
-import { gleeMessageToFunctionEvent } from './util.js'
+import { gleeMessageToFunctionEvent, validateData } from './util.js'
 import { pathToFileURL } from 'url'
+import GleeError from '../errors/glee-error.js'
 
 interface FunctionInfo {
   run: GleeFunction,
+}
+
+const OutboundMessageSchema = {
+  type: 'object',
+  properties: {
+    payload: {},
+    headers: {
+      type: 'object',
+      propertyNames: { type: 'string' },
+      additionalProperties: { type: 'string' }
+    },
+    channel: { type: 'string' },
+    server: { type: 'string' },
+  }
+}
+
+const FunctionReturnSchema = {
+  type: 'object',
+  properties: {
+    send: {
+      type: 'array',
+      items: OutboundMessageSchema
+    },
+    reply: {
+      type: 'array',
+      items: OutboundMessageSchema
+    }
+  },
+  additionalProperties: false,
+  anyOf: [
+    { required: ['send'] },
+    { required: ['reply'] }
+  ]
 }
 
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
@@ -54,6 +88,21 @@ export async function trigger({
 }) {
   try {
     const res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
+    const { humanReadableError, errors, isValid } = validateData(res, FunctionReturnSchema)
+
+    if ( !isValid ) {
+      const err = new GleeError({
+        humanReadableError,
+        errors,
+      })
+      err.message = `Function ${operationId} returned invalid data.`
+      
+      logError(err, {
+        highlightedWords: [operationId]
+      })
+
+      return
+    }
 
     if (res?.send) {
       res.send.forEach((msg) => {
