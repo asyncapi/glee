@@ -1,8 +1,9 @@
-module.exports = async (event) => {
-    console.log(event.payload);
+export default function (event) {
+    const user = event.payload;
+    console.log('[FROM SIMPLE]', user);
     return {
         reply: [{
-            payload: 'Hello'
-        }]
-    }
+                payload: `Hello ${user.name}`
+            }]
+    };
 }

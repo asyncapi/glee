@@ -1,9 +1,9 @@
 export default function (event) {
     const user = event.payload;
-    console.log(user);
+    console.log('[FROM SIMPLE]', user);
     return {
         reply: [{
-            payload: 'Hello'
+            payload: `Hello ${user.name}`
         }]
     }
 }

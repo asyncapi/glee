@@ -9,9 +9,19 @@ servers:
     protocol: http
 channels:
   test:
+    bindings:
+      http:
+        bindingVersion: 0.1.0
+        type: request
+        method: GET
+        query:
+          type: object
+          properties:
+            name:
+              type: string
     subscribe:
       message:
-        $ref: '#/components/messages/testMessage'
+        $ref: '#/components/messages/testReply'
     publish:
       operationId: onTest
       message:
@@ -19,6 +29,12 @@ channels:
 components:
   messages:
     testMessage:
+      payload:
+        type: object
+        properties:
+          query:
+            type: string
+    testReply:
       payload:
         type: string
 
