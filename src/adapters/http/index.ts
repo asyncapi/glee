@@ -3,6 +3,7 @@ import GleeMessage from '../../lib/message.js';
 import http from 'http';
 import { validateData } from '../../lib/util.js';
 import GleeError from '../../errors/glee-error.js';
+import * as url from 'url';
 
 class HttpAdapter extends Adapter {
     private res: any
@@ -27,7 +28,6 @@ class HttpAdapter extends Adapter {
             const asyncapiServerPort = serverUrl.port || 80;
             const optionsPort = this.glee.options?.websocket?.port;
             const port = optionsPort || asyncapiServerPort;
-            const queryParams = {}
 
             httpServer.on('request', (req, res) => {
                 this.res = res;
@@ -44,16 +44,22 @@ class HttpAdapter extends Adapter {
                     return reject(err)
                 }
 
-                const { searchParams } = new URL(req.url, `http://${req.headers.host}`);
+                const {query: searchParams} = url.parse(req.url, true);
                 const httpChannelBinding = this.parsedAsyncAPI.channel(pathname).binding('http');
 
                 if (httpChannelBinding) {
-                    const { query } = httpChannelBinding;
+                    const { query, method } = httpChannelBinding;
+
+                    if(method) {
+                        if(req.method !== method) {
+                            this.emit('error', new Error(`${req.method} is not allowed for this url`));
+                            res.end('HTTP/1/1 400 Bad Request\r\n\r\n');
+                            return;
+                        }
+                    }
+
                     if (query) {
-                        searchParams.forEach((value, key) => {
-                            queryParams[key] = value;
-                        })
-                        const {isValid, humanReadableError, errors} = validateData(queryParams, query);
+                        const {isValid, humanReadableError, errors} = validateData(searchParams, query);
                         if(!isValid){
                             const err = new GleeError({humanReadableError, errors});
                             console.log('ERROR', err);
@@ -71,8 +77,7 @@ class HttpAdapter extends Adapter {
                     channel: pathname
                 })
 
-                // this message is something I should be getting from the my function
-                const msg = this._createMessage(pathname, queryParams);
+                const msg = this._createMessage(pathname, searchParams);
                 this.emit('message', msg, http);
 
             })

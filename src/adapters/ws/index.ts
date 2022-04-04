@@ -74,7 +74,7 @@ class WebSocketsAdapter extends Adapter {
             searchParams.forEach((value, key) => {
               queryParams.set(key, value)
             })
-            const { isValid, humanReadableError, errors } = validateData(Object.entries(queryParams.entries()), query)
+            const { isValid, humanReadableError, errors } = validateData(Object.fromEntries(queryParams.entries()), query)
             if (!isValid) {
               const err = new GleeError({ humanReadableError, errors })
               this.emit('error', err)
