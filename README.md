@@ -1,10 +1,4 @@
-<h5 align="center">
-  <br>
-  <img src="./assets/glee.svg" alt="Glee logo" width="250">
-</h5>
-<p align="center">
-  <em>The AsyncAPI framework that will make you smile again.</em>
-</p>
+![Glee — The AsyncAPI framework that will make you smile again.](assets/readme-banner.png)
 
 [![Coverage Status](https://coveralls.io/repos/github/asyncapi/glee/badge.svg?branch=master)](https://coveralls.io/github/asyncapi/glee?branch=master)
 
