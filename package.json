@@ -35,7 +35,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/generator": "^1.8.0",
+    "@asyncapi/generator": "^1.9.2",
     "@asyncapi/parser": "^1.13.1",
     "@types/jest": "^27.4.0",
     "ajv": "^6.12.6",
