@@ -86,7 +86,7 @@ Instantiates a Glee adapter.
 
 #### Defined in
 
-[src/lib/adapter.ts:31](https://github.com/asyncapi/glee/blob/33a5804/src/lib/adapter.ts#L31)
+[src/lib/adapter.ts:31](https://github.com/asyncapi/glee/blob/2831232/src/lib/adapter.ts#L31)
 
 ## Properties
 
@@ -170,7 +170,7 @@ Adapter.AsyncAPIServer
 
 #### Defined in
 
-[src/lib/adapter.ts:131](https://github.com/asyncapi/glee/blob/33a5804/src/lib/adapter.ts#L131)
+[src/lib/adapter.ts:131](https://github.com/asyncapi/glee/blob/2831232/src/lib/adapter.ts#L131)
 
 ___
 
@@ -188,7 +188,7 @@ Adapter.channelNames
 
 #### Defined in
 
-[src/lib/adapter.ts:139](https://github.com/asyncapi/glee/blob/33a5804/src/lib/adapter.ts#L139)
+[src/lib/adapter.ts:139](https://github.com/asyncapi/glee/blob/2831232/src/lib/adapter.ts#L139)
 
 ___
 
@@ -206,7 +206,7 @@ Adapter.connections
 
 #### Defined in
 
-[src/lib/adapter.ts:143](https://github.com/asyncapi/glee/blob/33a5804/src/lib/adapter.ts#L143)
+[src/lib/adapter.ts:143](https://github.com/asyncapi/glee/blob/2831232/src/lib/adapter.ts#L143)
 
 ___
 
@@ -224,7 +224,7 @@ Adapter.glee
 
 #### Defined in
 
-[src/lib/adapter.ts:123](https://github.com/asyncapi/glee/blob/33a5804/src/lib/adapter.ts#L123)
+[src/lib/adapter.ts:123](https://github.com/asyncapi/glee/blob/2831232/src/lib/adapter.ts#L123)
 
 ___
 
@@ -242,7 +242,7 @@ Adapter.parsedAsyncAPI
 
 #### Defined in
 
-[src/lib/adapter.ts:135](https://github.com/asyncapi/glee/blob/33a5804/src/lib/adapter.ts#L135)
+[src/lib/adapter.ts:135](https://github.com/asyncapi/glee/blob/2831232/src/lib/adapter.ts#L135)
 
 ___
 
@@ -260,7 +260,7 @@ Adapter.serverName
 
 #### Defined in
 
-[src/lib/adapter.ts:127](https://github.com/asyncapi/glee/blob/33a5804/src/lib/adapter.ts#L127)
+[src/lib/adapter.ts:127](https://github.com/asyncapi/glee/blob/2831232/src/lib/adapter.ts#L127)
 
 ___
 
@@ -278,7 +278,7 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/adapter.ts:147](https://github.com/asyncapi/glee/blob/33a5804/src/lib/adapter.ts#L147)
+[src/lib/adapter.ts:147](https://github.com/asyncapi/glee/blob/2831232/src/lib/adapter.ts#L147)
 
 ## Methods
 
@@ -292,7 +292,7 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/adapters/ws/index.ts:22](https://github.com/asyncapi/glee/blob/33a5804/src/adapters/ws/index.ts#L22)
+[src/adapters/ws/index.ts:22](https://github.com/asyncapi/glee/blob/2831232/src/adapters/ws/index.ts#L22)
 
 ___
 
@@ -313,7 +313,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/index.ts:140](https://github.com/asyncapi/glee/blob/33a5804/src/adapters/ws/index.ts#L140)
+[src/adapters/ws/index.ts:140](https://github.com/asyncapi/glee/blob/2831232/src/adapters/ws/index.ts#L140)
 
 ___
 
@@ -333,7 +333,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/index.ts:123](https://github.com/asyncapi/glee/blob/33a5804/src/adapters/ws/index.ts#L123)
+[src/adapters/ws/index.ts:123](https://github.com/asyncapi/glee/blob/2831232/src/adapters/ws/index.ts#L123)
 
 ___
 
@@ -382,7 +382,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/adapters/ws/index.ts:14](https://github.com/asyncapi/glee/blob/33a5804/src/adapters/ws/index.ts#L14)
+[src/adapters/ws/index.ts:14](https://github.com/asyncapi/glee/blob/2831232/src/adapters/ws/index.ts#L14)
 
 ___
 
@@ -526,7 +526,7 @@ Returns a list of the channels a given adapter has to subscribe to.
 
 #### Defined in
 
-[src/lib/adapter.ts:154](https://github.com/asyncapi/glee/blob/33a5804/src/lib/adapter.ts#L154)
+[src/lib/adapter.ts:154](https://github.com/asyncapi/glee/blob/2831232/src/lib/adapter.ts#L154)
 
 ___
 
@@ -604,7 +604,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/index.ts:10](https://github.com/asyncapi/glee/blob/33a5804/src/adapters/ws/index.ts#L10)
+[src/adapters/ws/index.ts:10](https://github.com/asyncapi/glee/blob/2831232/src/adapters/ws/index.ts#L10)
 
 ___
 
@@ -1032,7 +1032,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/adapters/ws/index.ts:18](https://github.com/asyncapi/glee/blob/33a5804/src/adapters/ws/index.ts#L18)
+[src/adapters/ws/index.ts:18](https://github.com/asyncapi/glee/blob/2831232/src/adapters/ws/index.ts#L18)
 
 ___
 
