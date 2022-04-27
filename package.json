@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/glee",
-  "version": "0.10.14",
+  "version": "0.10.15",
   "description": "The AsyncAPI framework",
   "exports": "./dist/moduleIndex.js",
   "type": "module",
