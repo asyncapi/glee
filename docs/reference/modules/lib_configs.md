@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[src/lib/configs.ts:53](https://github.com/asyncapi/glee/blob/182abde/src/lib/configs.ts#L53)
+[src/lib/configs.ts:53](https://github.com/asyncapi/glee/blob/33a5804/src/lib/configs.ts#L53)
 
 ___
 
@@ -41,4 +41,4 @@ ___
 
 #### Defined in
 
-[src/lib/configs.ts:16](https://github.com/asyncapi/glee/blob/182abde/src/lib/configs.ts#L16)
+[src/lib/configs.ts:16](https://github.com/asyncapi/glee/blob/33a5804/src/lib/configs.ts#L16)
