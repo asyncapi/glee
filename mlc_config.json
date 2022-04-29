@@ -4,7 +4,7 @@
       "pattern": "^https://github.com/asyncapi/glee/blob/086c449/src"
     },
     {
-      "pattern": "^https://asyncapi.org/glee/docs"
+      "pattern": "^https://www.github.com/asyncapi/glee"
     }
   ]
 }
