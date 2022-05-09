@@ -1,7 +1,7 @@
 {
   "ignorePatterns": [
     {
-      "pattern": "^https://github.com/asyncapi/glee/blob/*./src"
+      "pattern": "^https://github.com/asyncapi/glee/blob/.*/src"
     }
   ]
 }
