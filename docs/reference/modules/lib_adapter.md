@@ -28,4 +28,4 @@
 
 #### Defined in
 
-[src/lib/adapter.ts:8](https://github.com/asyncapi/glee/blob/388e335/src/lib/adapter.ts#L8)
+[src/lib/adapter.ts:8](https://github.com/asyncapi/glee/blob/f20a3f8/src/lib/adapter.ts#L8)
