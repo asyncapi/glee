@@ -1,6 +1,7 @@
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import MqttAdapter from './adapters/mqtt/index.js'
 import WebSocketAdapter from './adapters/ws/index.js'
+import WebsocketClientAdapter from './adapters/ws/client.js';
 import SocketIOAdapter from './adapters/socket.io/index.js'
 import RedisClusterAdapter from './adapters/cluster/redis/index.js'
 import { getSelectedServerNames } from './lib/servers.js'
@@ -35,7 +36,21 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
     // TODO: Implement AMQP support
   } else if (['ws', 'wss'].includes(protocol)) {
     const configWsAdapter = config?.websocket?.adapter
-    if (!configWsAdapter || configWsAdapter === 'native') {
+    /**
+     * We access the `x-kind` parameter from server object
+     */
+    const kind = server.json('x-kind');
+    /**
+     * If the server is remote we create client adapter otherwise 
+     * we create server adapter. 
+     */
+    if (kind === 'remote') {
+      app.addAdapter(WebsocketClientAdapter, {
+        serverName, 
+        server, 
+        parsedAsyncAPI
+      })
+    } else if (!configWsAdapter || configWsAdapter === 'native') {
       app.addAdapter(WebSocketAdapter, {
         serverName,
         server,
