@@ -20,6 +20,7 @@ import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
+import generateDocs from './middlewares/generateDocs.js';
 
 dotenvExpand(dotenv.config())
 
@@ -120,6 +121,7 @@ export default async function GleeAppInitializer () {
   })
 
   app.on('adapter:server:ready', (e: EnrichedEvent) => {
+        generateDocs(parsedAsyncAPI);
     logLineWithIcon(':zap:', `Server ${e.serverName} is ready to accept connections.`, {
       highlightedWords: [e.serverName],
     })

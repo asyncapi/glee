@@ -13,7 +13,7 @@ if (command === 'dev') {
   compileAndWatch({
     projectDir,
     onStart() {
-      logTypeScriptMessage('Compiling TypeScript sources...')
+      logTypeScriptMessage('Compiling TypeScript sources...');
     },
     onFileChanged() {
       logLineWithIcon('⟳ ', 'File change detected. Starting incremental compilation...')
