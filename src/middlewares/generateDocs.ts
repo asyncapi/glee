@@ -17,7 +17,7 @@ export default async (data, filePath) => {
     config && config.template
       ? `@asyncapi/${config.template}`
       : '@asyncapi/markdown-template',
-    path.resolve("./", config.folder ? config.folder : 'docs')
+    path.resolve("./", config && config.folder ? config.folder : 'docs')
   )
   generator
     .generateFromString(JSON.stringify(resolvedData))
