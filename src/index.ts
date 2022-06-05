@@ -13,6 +13,7 @@ import json2string from './middlewares/json2string.js'
 import validate from './middlewares/validate.js'
 import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import logger from './middlewares/logger.js'
+import generateDocs from './middlewares/generateDocs.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
 import { initializeConfigs } from './lib/configs.js'
@@ -20,7 +21,6 @@ import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
-import generateDocs from './middlewares/generateDocs.js';
 
 dotenvExpand(dotenv.config())
 
@@ -31,6 +31,7 @@ export default async function GleeAppInitializer () {
     GLEE_PROJECT_DIR,
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
+    GLEE_CONFIG_FILE_PATH,
   } = config
 
   logWelcome({
@@ -121,7 +122,7 @@ export default async function GleeAppInitializer () {
   })
 
   app.on('adapter:server:ready', (e: EnrichedEvent) => {
-        generateDocs(parsedAsyncAPI);
+    generateDocs(parsedAsyncAPI, GLEE_CONFIG_FILE_PATH)
     logLineWithIcon(':zap:', `Server ${e.serverName} is ready to accept connections.`, {
       highlightedWords: [e.serverName],
     })
