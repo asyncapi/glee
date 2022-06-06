@@ -3,8 +3,8 @@ import { pathToFileURL } from 'url'
 import { logInfoMessage, logLineWithIcon } from '../lib/logger.js'
 import Generator from '@asyncapi/generator'
 
-async function readConfig(path) {
-  const { default: fn } = await import(pathToFileURL(path).href)
+async function readConfig(filePath) {
+  const { default: fn } = await import(pathToFileURL(filePath).href)
   const { generator } = await fn()
   return generator
 }
