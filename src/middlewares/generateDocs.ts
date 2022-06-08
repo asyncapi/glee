@@ -1,23 +1,17 @@
 import path from 'path'
-import { pathToFileURL } from 'url'
 import { logInfoMessage, logLineWithIcon } from '../lib/logger.js'
 import Generator from '@asyncapi/generator'
 
-async function readConfig(filePath) {
-  const { default: fn } = await import(pathToFileURL(filePath).href)
-  const { generator } = await fn()
-  return generator
-}
 
-export default async (data, filePath) => {
+export default async (spec, config) => {
   logInfoMessage(`Generating docs for your parsed specification...`)
-  const config = await readConfig(filePath)
-  const resolvedData = data._json
+  const configData  = config.generator
+  const resolvedData = spec._json
   const generator = new Generator(
-    config && config.template
-      ? `@asyncapi/${config.template}`
+    configData && configData.template
+      ? `@asyncapi/${configData.template}`
       : '@asyncapi/markdown-template',
-    path.resolve("./", config && config.folder ? config.folder : 'docs')
+    path.resolve("./", configData && configData.folder ? configData.folder : 'docs')
   )
   generator
     .generateFromString(JSON.stringify(resolvedData))

@@ -4,6 +4,7 @@ import dotenvExpand from 'dotenv-expand'
 import Glee from './lib/glee.js'
 import { logWelcome, logLineWithIcon } from './lib/logger.js'
 import experimentalFlags from './lib/experimentalFlags.js'
+import {readGleeConfig} from './lib/util.js'
 import registerAdapters from './registerAdapters.js'
 import { register as registerLifecycleEvents, run as runLifecycleEvents } from './lib/lifecycleEvents.js'
 import { register as registerFunctions, trigger as triggerFunction } from './lib/functions.js'
@@ -43,7 +44,7 @@ export default async function GleeAppInitializer () {
     showAppDir: GLEE_PROJECT_DIR !== process.cwd(),
     showFunctionsDir: GLEE_FUNCTIONS_DIR !== resolve(GLEE_DIR, 'functions'),
   })
-
+  const gleeDocs = await readGleeConfig(GLEE_CONFIG_FILE_PATH)
   await registerFunctions(GLEE_FUNCTIONS_DIR)
   await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
 
@@ -122,7 +123,7 @@ export default async function GleeAppInitializer () {
   })
 
   app.on('adapter:server:ready', (e: EnrichedEvent) => {
-    generateDocs(parsedAsyncAPI, GLEE_CONFIG_FILE_PATH)
+    generateDocs(parsedAsyncAPI, gleeDocs)
     logLineWithIcon(':zap:', `Server ${e.serverName} is ready to accept connections.`, {
       highlightedWords: [e.serverName],
     })

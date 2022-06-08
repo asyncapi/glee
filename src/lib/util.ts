@@ -1,4 +1,5 @@
 import Ajv from 'ajv'
+import { pathToFileURL } from "url"
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
@@ -116,4 +117,10 @@ export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): Gle
     serverName: message.serverName,
     glee,
   } as GleeFunctionEvent
+}
+
+
+export const readGleeConfig = async (filePath:string) => {
+  const { default: fn } = await import(pathToFileURL(filePath).href)
+  return await fn()
 }
