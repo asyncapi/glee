@@ -28,7 +28,7 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
       },
     },
   },
-});
+})
 
 const CONFIG_TEST_DATA = {
   websocket: {
@@ -44,16 +44,16 @@ const CONFIG_TEST_DATA = {
     folder: 'output',
     template: 'markdown-template',
   },
-};
+}
 describe('generateDocs', () => {
   it('should generate documentation', async () => {
-    const testDir = tmpdir() +`/${CONFIG_TEST_DATA.generator.folder}`;
+    const testDir = tmpdir() +`/${CONFIG_TEST_DATA.generator.folder}`
     fs.emptyDirSync(testDir)
     const result = await generateDocs(
       TEST_ASYNCAPI_DOCUMENT,
       CONFIG_TEST_DATA,
       tmpdir()
-    );
+    )
     expect(result).toBe('done')
   }, 100000)
-});
+})
