@@ -1,5 +1,5 @@
 import 'jest-extended'
-import { tmpdir } from "os"
+import { tmpdir } from 'os'
 import fs from 'fs-extra'
 import generateDocs from '../../src/middlewares/generateDocs'
 import AsyncAPIDocument from '@asyncapi/parser/lib/models/asyncapi'

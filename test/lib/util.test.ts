@@ -55,23 +55,23 @@ describe('util', () => {
     it('validates glee file path', () => {
       const CONFIG_TEST_DATA = {
         websocket: {
-          httpServer: "customServer",
-          adapter: "native", // Default. Can also be 'socket.io' or a reference to a custom adapter.
+          httpServer: 'customServer',
+          adapter: 'native', // Default. Can also be 'socket.io' or a reference to a custom adapter.
         },
         cluster: {
-          adapter: "redis",
-          name: "gleeCluster",
-          url: "redis://localhost:6379",
+          adapter: 'redis',
+          name: 'gleeCluster',
+          url: 'redis://localhost:6379',
         },
         generator: {
-          folder: "output",
-          template: "html-template",
+          folder: 'output',
+          template: 'html-template',
         },
-      };
-      const gleePath = tmpdir() + '/glee.config.js';
-      writeFileSync(gleePath, JSON.stringify(CONFIG_TEST_DATA), { encoding: "ascii" });
-      const result = JSON.parse(readFileSync(gleePath, { encoding: "ascii" }));
-      expect(result).toStrictEqual(CONFIG_TEST_DATA);
+      }
+      const gleePath = tmpdir() + '/glee.config.js'
+      writeFileSync(gleePath, JSON.stringify(CONFIG_TEST_DATA), { encoding: 'ascii' })
+      const result = JSON.parse(readFileSync(gleePath, { encoding: 'ascii' }))
+      expect(result).toStrictEqual(CONFIG_TEST_DATA)
     })
   })
 })
