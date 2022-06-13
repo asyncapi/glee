@@ -123,7 +123,7 @@ export default async function GleeAppInitializer () {
   })
 
   app.on('adapter:server:ready', (e: EnrichedEvent) => {
-    generateDocs(parsedAsyncAPI, gleeDocs)
+    generateDocs(parsedAsyncAPI, gleeDocs, null)
     logLineWithIcon(':zap:', `Server ${e.serverName} is ready to accept connections.`, {
       highlightedWords: [e.serverName],
     })

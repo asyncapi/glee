@@ -50,6 +50,7 @@
     "emojis": "^1.0.10",
     "eslint-plugin-github": "^4.3.5",
     "eslint-plugin-security": "^1.4.0",
+    "fs-extra": "^10.1.0",
     "mqtt": "^4.2.6",
     "path-to-regexp": "^6.2.0",
     "redis": "^4.0.2",

@@ -53,7 +53,7 @@ describe('util', () => {
   })
   describe('readGleeConfig', () => {
     it('validates glee file path', () => {
-      const data = {
+      const CONFIG_TEST_DATA = {
         websocket: {
           httpServer: "customServer",
           adapter: "native", // Default. Can also be 'socket.io' or a reference to a custom adapter.
@@ -69,9 +69,9 @@ describe('util', () => {
         },
       };
       const gleePath = tmpdir() + '/glee.config.js';
-      writeFileSync(gleePath, JSON.stringify(data), { encoding: "ascii" });
+      writeFileSync(gleePath, JSON.stringify(CONFIG_TEST_DATA), { encoding: "ascii" });
       const result = JSON.parse(readFileSync(gleePath, { encoding: "ascii" }));
-      expect(result).toStrictEqual(data);
+      expect(result).toStrictEqual(CONFIG_TEST_DATA);
     })
   })
 })
