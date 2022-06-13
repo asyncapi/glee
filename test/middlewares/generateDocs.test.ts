@@ -42,7 +42,7 @@ const CONFIG_TEST_DATA = {
   },
   generator: {
     folder: 'output',
-    template: 'markdown-template',
+    template: 'html-template',
   },
 }
 describe('generateDocs', () => {
