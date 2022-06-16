@@ -1,0 +1,27 @@
+asyncapi: 2.0.0
+info:
+  title: something 
+  version: 1.0.0
+  description: placeholder
+servers:
+  websocket:
+    url: ws://localhost:4000/listen
+    protocol: ws
+    x-kind: remote
+channels:
+  listen:
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+    publish:
+      operationId: greet
+      message:
+        $ref: '#/components/messages/greet'
+components:
+  messages:
+    greet:
+      payload:
+        type: object
+        properties:
+          message:
+            type: string

@@ -24,7 +24,7 @@ class WsClientAdapter extends Adapter {
     _connect(): Promise<this> {
         return new Promise((resolve) => {
 
-            const subscribeChannel = this.getSubscribedChannels();
+            const subscribedChannels = this.getSubscribedChannels();
             const serverBinding = this.AsyncAPIServer.binding('ws');
             const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
                 const secName = Object.keys(sec.json())[0]
@@ -35,7 +35,8 @@ class WsClientAdapter extends Adapter {
              * We do not spin up a server and just create a ws client 
              * to connect to a existing ws server. 
              */
-            const url = new URL(this.AsyncAPIServer.url());
+            const url = new URL(this.AsyncAPIServer.url() );
+            console.log(this.serverUrlExpanded);
             this.client = new ws(url);
 
             this.client.on('open', () => {
@@ -49,7 +50,7 @@ class WsClientAdapter extends Adapter {
                  * For POC I used hard coded chanel name,
                  * we need to dynamically figure this out. 
                  */
-                const msg = this._createMessage('testClient', data);
+                const msg = this._createMessage('listen', data);
                 this.emit('message', msg, this.client);
             })
 
