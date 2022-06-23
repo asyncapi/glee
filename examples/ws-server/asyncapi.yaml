@@ -5,11 +5,11 @@ info:
   description: placeholder
 servers:
   websocket:
-    url: ws://localhost:4000/listen
+    url: ws://localhost:4000
     protocol: ws
     x-kind: remote
 channels:
-  listen:
+  /listen:
     bindings:
       ws:
         bindingVersion: 0.1.0

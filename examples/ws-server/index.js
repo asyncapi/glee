@@ -1,7 +1,7 @@
 /* eslint-disable no-undef, security/detect-non-literal-fs-filename */
-import { WebSocketServer } from 'ws'
-import { parse } from 'url'
-import { createServer, request } from 'http'
+const { WebSocketServer } = require=('ws')
+const { parse } = require('url')
+const { createServer, request } = require('http')
 
 const server = createServer()
 const wss = new WebSocketServer({ noServer: true })

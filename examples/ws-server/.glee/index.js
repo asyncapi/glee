@@ -1,4 +1,5 @@
-const { WebSocketServer } = require('ws');
+/* eslint-disable no-undef, security/detect-non-literal-fs-filename */
+const { WebSocketServer } = require = ('ws');
 const { parse } = require('url');
 const { createServer, request } = require('http');
 const server = createServer();
@@ -12,7 +13,7 @@ wss.on('connection', (ws) => {
         });
     });
 });
-css.on('connection', (ws) => {
+css.on('connection', () => {
     console.log('New Connection on /listen channel');
 });
 server.on('upgrade', (req, socket, head) => {
