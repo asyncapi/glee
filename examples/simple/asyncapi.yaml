@@ -1,0 +1,39 @@
+asyncapi: 2.0.0
+info:
+  title: Account Service
+  version: 1.0.0
+  description: This service is in charge of the process 
+servers:
+  http:
+    url: http://localhost:8080
+    protocol: http
+channels:
+  test:
+    bindings:
+      http:
+        bindingVersion: 0.1.0
+        type: request
+        method: GET
+        query:
+          type: object
+          properties:
+            name:
+              type: string
+    subscribe:
+      message:
+        $ref: '#/components/messages/testReply'
+    publish:
+      operationId: onTest
+      message:
+        $ref: '#/components/messages/testMessage'
+components:
+  messages:
+    testMessage:
+      payload:
+        type: object
+        properties:
+          query:
+            type: string
+    testReply:
+      payload:
+        type: string
