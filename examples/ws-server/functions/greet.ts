@@ -3,6 +3,6 @@ module.exports = (event) => {
     console.log('> ', message.message)
 
     return {
-        reply: []
+        send: []
     }
 }

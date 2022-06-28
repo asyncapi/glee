@@ -1,5 +1,5 @@
 /* eslint-disable no-undef, security/detect-non-literal-fs-filename */
-const { WebSocketServer } = require=('ws')
+const { WebSocketServer } = require('ws')
 const { parse } = require('url')
 const { createServer, request } = require('http')
 

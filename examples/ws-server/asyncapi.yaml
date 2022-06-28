@@ -17,6 +17,14 @@ channels:
       operationId: greet
       message:
         $ref: '#/components/messages/greet'
+  /send:
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+    publish:
+      operationId: send
+      message:
+        $ref: '#/components/messages/greet'
 components:
   messages:
     greet:

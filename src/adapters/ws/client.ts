@@ -5,9 +5,15 @@ import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import ws from 'ws'
 
+interface Client {
+    channel: string
+    client: ws
+    binding?: any
+}
+
 
 class WsClientAdapter extends Adapter {
-    private clients: Array<{channel: string, client: ws}> = []
+    private clients: Array<Client> = []
 
     name(): string {
         return 'WS adapter'
@@ -21,30 +27,24 @@ class WsClientAdapter extends Adapter {
         return this._send(message)
     }
 
-    _connect(): Promise<this> {
+    private _connect(): Promise<this> {
         return new Promise((resolve) => {
 
             const subscribedChannels = this.getSubscribedChannels()
-            //const serverBinding = this.AsyncAPIServer.binding('ws')
-            // const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
-            //     const secName = Object.keys(sec.json())[0]
-            //     return this.parsedAsyncAPI.components().securityScheme(secName)
-            // })
-
-            console.log(subscribedChannels, this.AsyncAPIServer.url());
 
             for(const channel of subscribedChannels) {
                 const url = new URL(this.AsyncAPIServer.url() + channel);
                 this.clients.push({
                     channel,
-                    client: new ws(url)
+                    client: new ws(url),
+                    binding: this.parsedAsyncAPI.channel(channel).binding('ws')
                 })
             }
 
             for (const {client, channel} of this.clients) {
                 client.on('open', () => {
-                    console.log(this.channelNames);
                     this.emit('connect', {name: this.name(), adapter: this, connection: client, channels: this.channelNames})
+                    resolve(this)
                 })
 
                 client.on('message', (data) => {
@@ -52,33 +52,9 @@ class WsClientAdapter extends Adapter {
                     const msg = this._createMessage(channel, data);
                     this.emit('message', msg, client);
                 })
+
             }
 
-            /**
-             * We do not spin up a server and just create a ws client 
-             * to connect to a existing ws server. 
-             */
-
-            // const url = new URL(this.AsyncAPIServer.url() )
-            // console.log(this.serverUrlExpanded)
-            // this.client = new ws(url)
-
-            // this.client.on('open', () => {
-            //     this.emit('connect', {name: this.name(), adapter: this, connection: this.client, channels: this.channelNames})
-
-            // })
-
-
-            // this.client.on('message', (data) => {
-            //     /**
-            //      * For POC I used hard coded chanel name,
-            //      * we need to dynamically figure this out. 
-            //      */
-            //     const msg = this._createMessage('listen', data)
-            //     this.emit('message', msg, this.client)
-            // })
-
-            resolve(this)
         })
     }
 
