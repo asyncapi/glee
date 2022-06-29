@@ -42,18 +42,28 @@ const CONFIG_TEST_DATA = {
   },
   generator: {
     folder: 'output',
-    template: 'html-template',
+    template: 'markdown-template',
   },
 }
+
 describe('generateDocs', () => {
   it('should generate documentation', async () => {
-    const testDir = tmpdir() +`/${CONFIG_TEST_DATA.generator.folder}`
-    fs.emptyDirSync(testDir)
-    const result = await generateDocs(
-      TEST_ASYNCAPI_DOCUMENT,
-      CONFIG_TEST_DATA,
-      tmpdir()
-    )
-    expect(result).toBe('done')
-  }, 100000)
-})
+    const testDir = tmpdir() + `/${CONFIG_TEST_DATA.generator.folder}`;
+    fs.emptyDirSync(testDir);
+    let err: Error | undefined = undefined;
+
+    try {
+      const result = await generateDocs(
+        TEST_ASYNCAPI_DOCUMENT,
+        CONFIG_TEST_DATA,
+        testDir
+      );
+      expect(result).toBe('done');
+    } catch (e) {
+      err = e;
+    }
+
+    expect(err).toBeUndefined();
+    fs.emptyDirSync(testDir);
+  }, 100000);
+});
