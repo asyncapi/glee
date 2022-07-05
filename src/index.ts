@@ -31,7 +31,6 @@ export default async function GleeAppInitializer () {
     GLEE_PROJECT_DIR,
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
-    GLEE_CONFIG_FILE_PATH,
   } = config
 
   logWelcome({
@@ -43,8 +42,7 @@ export default async function GleeAppInitializer () {
     showAppDir: GLEE_PROJECT_DIR !== process.cwd(),
     showFunctionsDir: GLEE_FUNCTIONS_DIR !== resolve(GLEE_DIR, 'functions'),
   })
-  console.log(config)
-  // const gleeDocs = await readGleeConfig(GLEE_CONFIG_FILE_PATH)
+
   await registerFunctions(GLEE_FUNCTIONS_DIR)
   await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
 
@@ -123,7 +121,7 @@ export default async function GleeAppInitializer () {
   })
 
   app.on('adapter:server:ready', (e: EnrichedEvent) => {
-    generateDocs(parsedAsyncAPI, gleeDocs, null)
+    generateDocs(parsedAsyncAPI, config, null)
     logLineWithIcon(':zap:', `Server ${e.serverName} is ready to accept connections.`, {
       highlightedWords: [e.serverName],
     })
