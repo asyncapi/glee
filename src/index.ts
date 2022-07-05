@@ -62,6 +62,7 @@ export default async function GleeAppInitializer () {
   app.useOutbound(logger)
   app.use(errorLogger)
   app.useOutbound(errorLogger)
+  generateDocs(parsedAsyncAPI, config, null)
 
   channelNames.forEach((channelName) => {
     const channel = parsedAsyncAPI.channel(channelName)
@@ -121,7 +122,6 @@ export default async function GleeAppInitializer () {
   })
 
   app.on('adapter:server:ready', (e: EnrichedEvent) => {
-    generateDocs(parsedAsyncAPI, config, null)
     logLineWithIcon(':zap:', `Server ${e.serverName} is ready to accept connections.`, {
       highlightedWords: [e.serverName],
     })
