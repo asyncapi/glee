@@ -1,5 +1,5 @@
 import path from 'path'
-import { logInfoMessage, logLineWithIcon, logErrorLine } from '../lib/logger.js'
+import { logInfoMessage, logLineWithIcon, logError } from '../lib/logger.js'
 import Generator from '@asyncapi/generator'
 
 export default async (spec, config, resDir) => {
@@ -17,15 +17,10 @@ export default async (spec, config, resDir) => {
   )
   try {
     await generator.generateFromString(JSON.stringify(resolvedData))
-    logLineWithIcon(
-      ':zap:',
-      'Successfully generated docs for your specification'
-    )
+    logLineWithIcon(":zap:", "Successfully generated docs")
     return 'done'
   } catch (error) {
-    logErrorLine(
-      `Failed to generate docs for your specs due to the following reason: ${error}`,
-    )
+    logError(error)
     return error
   }
 }
