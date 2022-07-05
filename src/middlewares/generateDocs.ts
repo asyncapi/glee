@@ -1,5 +1,5 @@
 import path from 'path'
-import { logInfoMessage, logLineWithIcon } from '../lib/logger.js'
+import { logInfoMessage, logLineWithIcon, logErrorLine } from '../lib/logger.js'
 import Generator from '@asyncapi/generator'
 
 export default async (spec, config, resDir) => {
@@ -23,13 +23,8 @@ export default async (spec, config, resDir) => {
     )
     return 'done'
   } catch (error) {
-    logLineWithIcon(
-      'x',
+    logErrorLine(
       `Failed to generate docs for your specs due to the following reason: ${error}`,
-      {
-        iconColor: '#f00',
-        disableEmojis: true,
-      }
     )
     return error
   }
