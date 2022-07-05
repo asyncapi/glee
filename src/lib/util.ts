@@ -1,5 +1,4 @@
 import Ajv from 'ajv'
-import { pathToFileURL } from "url"
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
