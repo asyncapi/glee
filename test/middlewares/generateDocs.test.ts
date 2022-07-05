@@ -64,6 +64,5 @@ describe('generateDocs', () => {
     }
 
     expect(err).toBeUndefined();
-    fs.emptyDirSync(testDir);
   }, 100000);
 });

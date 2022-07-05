@@ -118,9 +118,3 @@ export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): Gle
     glee,
   } as GleeFunctionEvent
 }
-
-
-export const readGleeConfig = async (filePath: string) => {
-  const { default: fn } = await import(pathToFileURL(filePath).href)
-  return await fn()
-}
