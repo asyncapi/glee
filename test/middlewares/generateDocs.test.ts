@@ -50,7 +50,7 @@ describe('generateDocs', () => {
   it('should generate documentation', async () => {
     const testDir = tmpdir() + `/${CONFIG_TEST_DATA.generator.folder}`;
     fs.emptyDirSync(testDir);
-    let err: Error | undefined = undefined;
+    let err: Error | undefined;
 
     try {
       const result = await generateDocs(
