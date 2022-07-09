@@ -259,7 +259,7 @@ export default class Glee extends EventEmitter {
   }
 
   private _execErrorMiddleware (emws: ChannelErrorMiddlewareTuple[], index: number, error: Error, message: GleeMessage) {
-    emws.at(index).fn(error, message, (err: Error) => {
+    emws[index].fn(error, message, (err: Error) => {
       if (!emws[index+1]) return
       this._execErrorMiddleware.call(null, emws, index+1, err, message)
     })
