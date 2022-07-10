@@ -17,14 +17,13 @@ class HttpAdapter extends Adapter {
     }
 
     async send(message: GleeMessage): Promise<void> {
-        console.log('control reached send');
         return this._send(message);
     }
 
     _connect(): Promise<this> {
         return new Promise((resolve, reject) => {
             const serverUrl = new URL(this.serverUrlExpanded);
-            const httpServer = this.glee.options?.websocket?.httpServer || http.createServer();
+            const httpServer = this.glee.options?.http?.server || http.createServer();
             const asyncapiServerPort = serverUrl.port || 80;
             const optionsPort = this.glee.options?.websocket?.port;
             const port = optionsPort || asyncapiServerPort;
@@ -50,12 +49,10 @@ class HttpAdapter extends Adapter {
                 if (httpChannelBinding) {
                     const { query, method } = httpChannelBinding;
 
-                    if(method) {
-                        if(req.method !== method) {
-                            this.emit('error', new Error(`${req.method} is not allowed for this url`));
-                            res.end('HTTP/1/1 400 Bad Request\r\n\r\n');
-                            return;
-                        }
+                    if(method && req.method !== method) {
+                        this.emit('error', new Error(`Cannot ${req.method} ${pathname}`));
+                        res.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+                        return;
                     }
 
                     if (query) {
@@ -97,10 +94,10 @@ class HttpAdapter extends Adapter {
         this.res.end();
     }
 
-    _createMessage(eventName: string, payload: any) {
+    _createMessage(pathName: string, payload: any) {
         return new GleeMessage({
             payload,
-            channel: eventName
+            channel: pathName
         })
     }
 }
