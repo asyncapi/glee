@@ -30,10 +30,10 @@ class WsClientAdapter extends Adapter {
     private _connect(): Promise<this> {
         return new Promise((resolve) => {
 
-            const channelOnThisServer = this.getWsChannels();
+            const channelOnThisServer = this.getWsChannels()
 
             for (const channel of channelOnThisServer) {
-                const url = new URL(this.AsyncAPIServer.url() + channel);
+                const url = new URL(this.AsyncAPIServer.url() + channel)
                 this.clients.push({
                     channel,
                     client: new ws(url),
@@ -48,9 +48,9 @@ class WsClientAdapter extends Adapter {
                 })
 
                 client.on('message', (data) => {
-                    console.log(channel, data);
-                    const msg = this._createMessage(channel, data);
-                    this.emit('message', msg, client);
+                    console.log(channel, data)
+                    const msg = this._createMessage(channel, data)
+                    this.emit('message', msg, client)
                 })
 
             }
@@ -59,20 +59,20 @@ class WsClientAdapter extends Adapter {
     }
 
     private getWsChannels() {
-        const channels = [];
+        const channels = []
         for(const channel of this.channelNames) {
             if (this.parsedAsyncAPI.channel(channel).hasBinding('ws')) {
                 if (this.parsedAsyncAPI.channel(channel).hasServers()) {
                     if (this.parsedAsyncAPI.channel(channel).servers().includes(this.serverName)) {
-                        channels.push(channel);
+                        channels.push(channel)
                     }
                 } else {
-                    channels.push(channel);
+                    channels.push(channel)
                 }
             }
         }
 
-        return channels;
+        return channels
     }
 
     _send(message: GleeMessage): Promise<void> {

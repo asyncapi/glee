@@ -1,5 +1,6 @@
 node_modules
 examples/social-network/frontend
+examples/ws-server
 dist
 .glee
 test
