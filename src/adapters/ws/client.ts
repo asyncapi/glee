@@ -30,9 +30,9 @@ class WsClientAdapter extends Adapter {
     private _connect(): Promise<this> {
         return new Promise((resolve) => {
 
-            const subscribedChannels = this.getSubscribedChannels()
+            const channelOnThisServer = this.getWsChannels();
 
-            for(const channel of subscribedChannels) {
+            for (const channel of channelOnThisServer) {
                 const url = new URL(this.AsyncAPIServer.url() + channel);
                 this.clients.push({
                     channel,
@@ -56,6 +56,23 @@ class WsClientAdapter extends Adapter {
             }
 
         })
+    }
+
+    private getWsChannels() {
+        const channels = [];
+        for(const channel of this.channelNames) {
+            if (this.parsedAsyncAPI.channel(channel).hasBinding('ws')) {
+                if (this.parsedAsyncAPI.channel(channel).hasServers()) {
+                    if (this.parsedAsyncAPI.channel(channel).servers().includes(this.serverName)) {
+                        channels.push(channel);
+                    }
+                } else {
+                    channels.push(channel);
+                }
+            }
+        }
+
+        return channels;
     }
 
     _send(message: GleeMessage): Promise<void> {

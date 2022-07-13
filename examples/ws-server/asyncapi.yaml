@@ -1,4 +1,4 @@
-asyncapi: 2.0.0
+asyncapi: 2.4.0
 info:
   title: something 
   version: 1.0.0
@@ -9,7 +9,13 @@ servers:
     protocol: ws
     x-kind: remote
 channels:
+  /something:
+    subscribe:
+      message:
+        $ref: '#/components/messages/greet'
   /listen:
+    servers:
+      - websocket
     bindings:
       ws:
         bindingVersion: 0.1.0
