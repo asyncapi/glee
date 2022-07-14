@@ -19,7 +19,7 @@ channels:
     bindings:
       ws:
         bindingVersion: 0.1.0
-    publish:
+    subscribe:
       operationId: greet
       message:
         $ref: '#/components/messages/greet'
@@ -27,7 +27,7 @@ channels:
     bindings:
       ws:
         bindingVersion: 0.1.0
-    publish:
+    subscribe:
       operationId: send
       message:
         $ref: '#/components/messages/greet'
