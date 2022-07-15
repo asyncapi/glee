@@ -9,7 +9,7 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
   info: {
     title: 'Account Service',
     version: '1.0.0',
-    description: 'lorem ipsum'
+    description: 'lorem ipsum',
   },
   servers: {
     test: {
@@ -48,21 +48,13 @@ const CONFIG_TEST_DATA = {
 
 describe('generateDocs', () => {
   it('should generate documentation', async () => {
-    const testDir = tmpdir() + `/${CONFIG_TEST_DATA.generator.folder}`;
-    fs.emptyDirSync(testDir);
-    let err: Error | undefined;
-
-    try {
-      const result = await generateDocs(
-        TEST_ASYNCAPI_DOCUMENT,
-        CONFIG_TEST_DATA,
-        testDir
-      );
-      expect(result).toBe('done');
-    } catch (e) {
-      err = e;
-    }
-
-    expect(err).toBeUndefined();
-  }, 100000);
-});
+    const testDir = tmpdir() + `/${CONFIG_TEST_DATA.generator.folder}`
+    fs.emptyDirSync(testDir)
+    const result = await generateDocs(
+      TEST_ASYNCAPI_DOCUMENT,
+      CONFIG_TEST_DATA,
+      testDir
+    )
+    expect(result).toBe('done')
+  }, 100000)
+})
