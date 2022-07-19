@@ -6,6 +6,7 @@ import RedisClusterAdapter from './adapters/cluster/redis/index.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import Glee from './lib/glee.js'
 import { GleeConfig, GleeClusterAdapterConfig } from './lib/index.d'
+import HttpAdapter from './adapters/http/index.js'
 
 export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) => {
   const serverNames = await getSelectedServerNames()
@@ -56,7 +57,15 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
     } else {
       throw new Error(`Unknown value for websocket.adapter found in glee.config.js: ${config.websocket.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`)
     }
-  } else {
+  } if (['http', 'https'].includes(protocol)) {
+    app.addAdapter(HttpAdapter, {
+      serverName,
+      server,
+      parsedAsyncAPI
+    })
+  }
+  
+  else {
     // TODO: Improve error message with link to repo encouraging the developer to contribute.
     throw new Error(`Protocol "${server.protocol()}" is not supported yet.`)
   }
