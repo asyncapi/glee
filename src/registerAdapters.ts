@@ -1,6 +1,7 @@
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import MqttAdapter from './adapters/mqtt/index.js'
 import WebSocketAdapter from './adapters/ws/index.js'
+import WebsocketClientAdapter from './adapters/ws/client.js'
 import SocketIOAdapter from './adapters/socket.io/index.js'
 import RedisClusterAdapter from './adapters/cluster/redis/index.js'
 import { getSelectedServerNames } from './lib/servers.js'
@@ -20,7 +21,7 @@ export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeC
     registerAdapterForServer(serverName, server, app, parsedAsyncAPI, config)
   })
 
-  if ( config.cluster ) registerAdapterForCluster(app, config.cluster)
+  if (config.cluster) registerAdapterForCluster(app, config.cluster)
 }
 
 function registerAdapterForServer(serverName: string, server: Server, app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) {
@@ -35,26 +36,36 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
     // TODO: Implement AMQP support
   } else if (['ws', 'wss'].includes(protocol)) {
     const configWsAdapter = config?.websocket?.adapter
-    if (!configWsAdapter || configWsAdapter === 'native') {
-      app.addAdapter(WebSocketAdapter, {
-        serverName,
-        server,
-        parsedAsyncAPI,
-      })
-    } else if (configWsAdapter === 'socket.io') {
-      app.addAdapter(SocketIOAdapter, {
-        serverName,
-        server,
-        parsedAsyncAPI,
-      })
-    } else if (typeof configWsAdapter === 'object') {
-      app.addAdapter(configWsAdapter, {
-        serverName,
-        server,
-        parsedAsyncAPI,
-      })
+    const kind = server.json('x-kind')
+
+    if (kind === 'local') {
+      if (!configWsAdapter || configWsAdapter === 'native') {
+        app.addAdapter(WebSocketAdapter, {
+          serverName,
+          server,
+          parsedAsyncAPI,
+        })
+      } else if (configWsAdapter === 'socket.io') {
+        app.addAdapter(SocketIOAdapter, {
+          serverName,
+          server,
+          parsedAsyncAPI,
+        })
+      } else if (typeof configWsAdapter === 'object') {
+        app.addAdapter(configWsAdapter, {
+          serverName,
+          server,
+          parsedAsyncAPI,
+        })
+      } else {
+        throw new Error(`Unknown value for websocket.adapter found in glee.config.js: ${config.websocket.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`)
+      }
     } else {
-      throw new Error(`Unknown value for websocket.adapter found in glee.config.js: ${config.websocket.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`)
+      app.addAdapter(WebsocketClientAdapter, {
+        serverName,
+        server,
+        parsedAsyncAPI
+      })
     }
   } else {
     // TODO: Improve error message with link to repo encouraging the developer to contribute.
@@ -65,9 +76,9 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
 function registerAdapterForCluster(app: Glee, config: GleeClusterAdapterConfig) {
   const adapter = config.adapter
 
-  if ( !adapter || adapter === 'redis' ) {
+  if (!adapter || adapter === 'redis') {
     app.setClusterAdapter(RedisClusterAdapter)
-  } else if ( typeof adapter === 'function' ) {
+  } else if (typeof adapter === 'function') {
     app.setClusterAdapter(adapter)
   } else {
     throw new Error(`Unknown value for cluster.adapter in glee.config.js`)
