@@ -48,6 +48,9 @@ class MqttAdapter extends Adapter {
         protocol: url.protocol.substr(0, url.protocol.length - 1),
         clientId: serverBinding && serverBinding.clientId,
         clean: serverBinding && serverBinding.cleanSession,
+        properties: {
+          sessionExpiryInterval: serverBinding && serverBinding.sessionExpiryInterval
+        },
         will: serverBinding && serverBinding.will && {
           topic: serverBinding && serverBinding.lastWill && serverBinding.lastWill.topic ? serverBinding.lastWill.topic : undefined,
           qos: serverBinding && serverBinding.lastWill && serverBinding.lastWill.qos ? serverBinding.lastWill.qos : undefined,
@@ -62,13 +65,15 @@ class MqttAdapter extends Adapter {
         customHandleAcks: this._customAckHandler.bind(this),
       })
 
-      this.client.on('connect', () => {
+      this.client.on('connect', connAckPacket => {
+        const isSessionResume = connAckPacket.sessionPresent && false;
+
         if (!this.firstConnect) {
           this.firstConnect = true
           this.emit('connect', { name: this.name(), adapter: this, connection: this.client, channels: this.channelNames })
         }
 
-        if (Array.isArray(subscribedChannels)) {
+        if (!isSessionResume && Array.isArray(subscribedChannels)) {
           subscribedChannels.forEach((channel) => {
             const operation = this.parsedAsyncAPI.channel(channel).publish()
             const binding = operation.binding('mqtt')
