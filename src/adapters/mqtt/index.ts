@@ -66,7 +66,7 @@ class MqttAdapter extends Adapter {
       })
 
       this.client.on('connect', connAckPacket => {
-        const isSessionResume = connAckPacket.sessionPresent && false;
+        const isSessionResume = connAckPacket.sessionPresent
 
         if (!this.firstConnect) {
           this.firstConnect = true
@@ -87,8 +87,8 @@ class MqttAdapter extends Adapter {
       })
 
       this.client.on('message', (channel, message, mqttPacket) => {
-        const qos = mqttPacket.qos;
-        if ( qos > 0 ) return;   // ignore higher qos messages. already processed
+        const qos = mqttPacket.qos
+        if ( qos > 0 ) return   // ignore higher qos messages. already processed
 
         const msg = this._createMessage(mqttPacket as IPublishPacket)
         this.emit('message', msg, this.client)
