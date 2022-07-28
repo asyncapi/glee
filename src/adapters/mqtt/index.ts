@@ -58,6 +58,8 @@ class MqttAdapter extends Adapter {
         username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
         password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined,
         ca: X509SecurityReq ? certs : undefined,
+        protocolVersion: 5,
+        customHandleAcks: this._customAckHandler.bind(this),
       })
 
       this.client.on('connect', () => {
@@ -80,6 +82,9 @@ class MqttAdapter extends Adapter {
       })
 
       this.client.on('message', (channel, message, mqttPacket) => {
+        const qos = mqttPacket.qos;
+        if ( qos > 0 ) return;   // ignore higher qos messages. already processed
+
         const msg = this._createMessage(mqttPacket as IPublishPacket)
         this.emit('message', msg, this.client)
       })
@@ -136,6 +141,15 @@ class MqttAdapter extends Adapter {
       headers,
       channel: packet.topic,
     })
+  }
+
+  _customAckHandler(channel, message, mqttPacket, done) {
+    const msg = this._createMessage(mqttPacket as IPublishPacket)
+
+    msg.on('success', () => done(0))
+    msg.on('failure', () => done(0x80))
+
+    this.emit('message', msg, this.client)
   }
 }
 
