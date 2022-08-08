@@ -7,29 +7,39 @@ servers:
   websocket:
     url: ws://localhost:4000
     protocol: ws
-    x-kind: remote
+  wsServer:
+    url: ws://localhost:3000
+    protocol: ws
+    x-kind: local
 channels:
-  /something:
-    subscribe:
-      message:
-        $ref: '#/components/messages/greet'
   /listen:
     servers:
       - websocket
     bindings:
       ws:
         bindingVersion: 0.1.0
-    subscribe:
+    publish:
       operationId: greet
       message:
         $ref: '#/components/messages/greet'
+  /ping:
+    servers:
+      - wsServer
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+    publish:
+      operationId: ping
+      message:
+        $ref: '#/components/messages/greet'
   /send:
+    servers:
+      - websocket
     bindings:
       ws:
         bindingVersion: 0.1.0
     subscribe:
-      operationId: send
-      message:
+      message: 
         $ref: '#/components/messages/greet'
 components:
   messages:

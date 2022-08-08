@@ -48,7 +48,6 @@ class WsClientAdapter extends Adapter {
                 })
 
                 client.on('message', (data) => {
-                    console.log(channel, data)
                     const msg = this._createMessage(channel, data)
                     this.emit('message', msg, client)
                 })
@@ -77,9 +76,8 @@ class WsClientAdapter extends Adapter {
 
     _send(message: GleeMessage): Promise<void> {
         return new Promise((resolve) => {
-
-            message.connection.getRaw().send(message.payload)
-
+            const client = this.clients.find(cl => cl.channel === message.channel)
+            client.client.send(message.payload)
             resolve()
         })
     }
