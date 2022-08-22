@@ -4,7 +4,6 @@ export default {
   testEnvironment: 'node',
   setupFilesAfterEnv: ['./jest.setup.ts'],
   collectCoverage: true,
-  setupFiles: ['core-js'],
   silent: false,
   testPathIgnorePatterns: ['functions.test.ts'],
   globals: {
