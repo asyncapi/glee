@@ -79,7 +79,7 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
     const responses = await Promise.all(handlers.map(info => info.fn(params)))
     
     responses.forEach(res => {
-      if (res.send) {
+      if (res?.send) {
         res.send.forEach((event: GleeFunctionReturnSend) => {
           try {
             params.glee.send(new GleeMessage({
