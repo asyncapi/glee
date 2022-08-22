@@ -58,7 +58,7 @@ class MqttAdapter extends Adapter {
         username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
         password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined,
         ca: X509SecurityReq ? certs : undefined,
-      })
+      } as any)
 
       this.client.on('connect', () => {
         if (!this.firstConnect) {
