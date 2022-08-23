@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 //@ts-ignore
-import { Message } from '@asyncapi/glee';
+import { Message } from '@asyncapi/glee'
 
 export default async function ({ glee, connection }) {
     let status = 'transit'
@@ -15,7 +15,7 @@ export default async function ({ glee, connection }) {
         }else {
             status = 'intransit'
         }
-        const date = new Date();
+        const date = new Date()
         setTimeout(() => {
             glee.send(new Message({
                 channel: '/price',
@@ -35,13 +35,13 @@ export default async function ({ glee, connection }) {
     const getPrice = () => {
         const HighOrLow = between(1,10)
         if (HighOrLow >= 4) {
-            currentPrice = currentPrice + (between(0,5) * 10);
+            currentPrice = currentPrice + (between(0,5) * 10)
         }else {
-            currentPrice = currentPrice - (between(0,5) * 10);
+            currentPrice = currentPrice - (between(0,5) * 10)
         }
-        return currentPrice;
+        return currentPrice
     }
-};
+}
 
 
 export const lifecycleEvent = 'onServerConnectionOpen'

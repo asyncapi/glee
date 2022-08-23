@@ -8,18 +8,18 @@ export default async function (event) {
     const dbPath = path.resolve('./db.json')
     const read = () => JSON.parse(fs.readFileSync(dbPath, 'utf-8'))
     const write = (data) => { fs.writeFileSync(dbPath, data, { encoding: 'utf-8' }) }
-    let db;
+    let db
     switch (payload.status) {
         case 'started':
-            write(JSON.stringify([payload]));
-            break;
+            write(JSON.stringify([payload]))
+            break
         case 'intransit':
             db = read()
             write(JSON.stringify([...db, payload]))
-            break;
+            break
         case 'finished':
             db = read()
-            const values = [...db, payload];
+            const values = [...db, payload]
             console.log(asciichart.plot(values.map(v => v.price), {height: 8}))
             
     }
