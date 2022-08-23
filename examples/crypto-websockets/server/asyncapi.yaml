@@ -3,23 +3,18 @@ info:
   title: asyncapicoin server
   version: 1.0.0
   description: |
-    This app creates a dummy server that would stream the index graph
-    of a fake crpytocerency.
+    This app creates a dummy server that would stream the price of a fake crypto currency
 servers:
   websocket:
     url: ws://localhost:3000
     protocol: ws
     x-kind: local
 channels:
-  /index:
+  /price:
     bindings:
       ws:
         bindingVersion: 0.1.0
     subscribe:
-      operationId: updateCryptoPrice
-      message:
-        $ref: '#/components/messages/indexGraph'
-    publish:
       message:
         $ref: '#/components/messages/indexGraph'
 components:
@@ -29,7 +24,9 @@ components:
       payload:
         type: object
         properties:
+          status:
+            type: string
           time:
-            type: string
+            type: number
           price:
-            type: string
+            type: number
