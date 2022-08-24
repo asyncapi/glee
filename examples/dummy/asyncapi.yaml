@@ -18,21 +18,7 @@ servers:
   websockets:
     url: ws://localhost:3005/ws
     protocol: ws
-    x-kind: local
-
-  clientWs:
-    url: ws://localhost:4000
-    protocol: ws
-    x-kind: remote
 channels:
-  testClient:
-    bindings:
-      ws:
-        bindingVersion: 0.1.0
-    subscribe:
-      operationId: testClient
-      message:
-        $ref: '#/components/messages/testWsMessage'
   user/signedup:
     bindings:
       ws:
@@ -74,9 +60,6 @@ components:
     X509Certificate:
       type: X509
   messages:
-    testWsMessage:
-      payload:
-        type: string
     UserSignedUp:
       payload:
         type: object

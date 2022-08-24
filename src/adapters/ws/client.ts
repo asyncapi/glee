@@ -74,7 +74,7 @@ class WsClientAdapter extends Adapter {
         return channels
     }
 
-    _send(message: GleeMessage): Promise<void> {
+    async _send(message: GleeMessage): Promise<void> {
         return new Promise((resolve) => {
             const client = this.clients.find(cl => cl.channel === message.channel)
             client.client.send(message.payload)
