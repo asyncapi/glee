@@ -33,10 +33,16 @@ class WsClientAdapter extends Adapter {
             const channelOnThisServer = this.getWsChannels()
 
             for (const channel of channelOnThisServer) {
+                const wsBindings = this.parsedAsyncAPI.channel(channel).binding('ws')
                 const url = new URL(this.AsyncAPIServer.url() + channel)
+                if (wsBindings.query) {
+                    for (const key of Object.keys(wsBindings.query)) {
+                        url.searchParams.append(key, wsBindings.query[key])
+                    }
+                }
                 this.clients.push({
                     channel,
-                    client: new ws(url),
+                    client: new ws(url, wsBindings.headers),
                     binding: this.parsedAsyncAPI.channel(channel).binding('ws')
                 })
             }
