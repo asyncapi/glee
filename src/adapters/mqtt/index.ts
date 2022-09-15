@@ -11,6 +11,9 @@ interface IMQTTHeaders {
   length: number,
 }
 
+const MQTT_UNSPECIFIED_ERROR_REASON = 0x80
+const MQTT_SUCCESS_REASON = 0
+
 class MqttAdapter extends Adapter {
   private client: MqttClient
   private firstConnect: boolean
@@ -30,7 +33,8 @@ class MqttAdapter extends Adapter {
   _connect(): Promise<this> {
     return new Promise((resolve) => {
       const subscribedChannels = this.getSubscribedChannels()
-      const serverBinding = this.AsyncAPIServer.binding('mqtt')
+      const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
+      const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
       const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
         const secName = Object.keys(sec.json())[0]
         return this.parsedAsyncAPI.components().securityScheme(secName)
@@ -41,6 +45,9 @@ class MqttAdapter extends Adapter {
 
       const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
       const certs = certsConfig?.filter(tuple => tuple[0] === this.serverName)?.map(t => fs.readFileSync(t[1])) // eslint-disable-line security/detect-non-literal-fs-filename
+
+      const serverBinding = mqttServerBinding
+      const protocolVersion = mqtt5ServerBinding ? 5 : 4
 
       this.client = mqtt.connect({
         host: url.host,
@@ -61,7 +68,7 @@ class MqttAdapter extends Adapter {
         username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
         password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined,
         ca: X509SecurityReq ? certs : undefined,
-        protocolVersion: 5,
+        protocolVersion,
         customHandleAcks: this._customAckHandler.bind(this),
       })
 
@@ -88,7 +95,7 @@ class MqttAdapter extends Adapter {
 
       this.client.on('message', (channel, message, mqttPacket) => {
         const qos = mqttPacket.qos
-        if ( qos > 0 ) return   // ignore higher qos messages. already processed
+        if ( protocolVersion === 5 && qos > 0 ) return   // ignore higher qos messages. already processed
 
         const msg = this._createMessage(mqttPacket as IPublishPacket)
         this.emit('message', msg, this.client)
@@ -151,8 +158,8 @@ class MqttAdapter extends Adapter {
   _customAckHandler(channel, message, mqttPacket, done) {
     const msg = this._createMessage(mqttPacket as IPublishPacket)
 
-    msg.on('success', () => done(0))
-    msg.on('failure', () => done(0x80))
+    msg.on('successfullyProcessed', () => done(MQTT_SUCCESS_REASON))
+    msg.on('failedProcessing', () => done(MQTT_UNSPECIFIED_ERROR_REASON))
 
     this.emit('message', msg, this.client)
   }
