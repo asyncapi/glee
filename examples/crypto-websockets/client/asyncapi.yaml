@@ -15,6 +15,8 @@ channels:
     bindings:
       ws:
         bindingVersion: 0.1.0
+        headerValues:
+          Authorization: 'bearer $TOKEN'
     publish:
       operationId: index
       message:

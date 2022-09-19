@@ -84,6 +84,9 @@ class WebSocketsAdapter extends Adapter {
           }
 
           if (headers) {
+            console.log(headers)
+            console.log('CONTROL IS IN HEADERS')
+            console.log(request.headers)
             const { isValid, humanReadableError, errors } = validateData(request.headers, headers)
             if (!isValid) {
               const err = new GleeError({ humanReadableError, errors })
