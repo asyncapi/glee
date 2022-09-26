@@ -4,6 +4,7 @@
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import ws from 'ws'
+import qs from 'qs'
 
 interface Client {
     channel: string
@@ -34,13 +35,10 @@ class WsClientAdapter extends Adapter {
 
             for (const channel of channelOnThisServer) {
                 const wsBindings = this.parsedAsyncAPI.channel(channel).binding('ws')
-                const url = new URL(this.AsyncAPIServer.url() + channel)
                 const { queryValues, headerValues } = wsBindings
                 const { query, headers } = this.getBindingValues(queryValues, headerValues)
 
-                for (const key of Object.keys(query)) {
-                    url.searchParams.append(key, query[`${key}`])
-                }
+                const url = new URL(this.AsyncAPIServer.url() + channel + '?' + qs.stringify(query))
 
                 this.clients.push({
                     channel,
@@ -90,26 +88,32 @@ class WsClientAdapter extends Adapter {
         const query = {}
         const headers = {}
 
+        const injectEnv = (keyString: string) => {
+            let resolvedKey = keyString
+            const envTokens = resolvedKey.match(/\$(\w+)/gm)
+            if (envTokens === null) return resolvedKey
+            for (const envToken of envTokens) {
+                resolvedKey = resolvedKey.replace(envToken, process.env[`${envToken.slice(1)}`])
+            }
+
+            return resolvedKey
+        }
+
         if (queryValues) {
             for (const key of Object.keys(queryValues)) {
-                let keyString = queryValues[`${key}`]
-                const envKeys = keyString.match(/\$(\w+)/gm)
-                for (const envKey of envKeys) {
-                    keyString = keyString.replace(envKey, process.env[`${envKey.slice(1)}`])
+                const keyString = queryValues[`${key}`]
+                if (Array.isArray(keyString)) {
+                    query[`${key}`] = keyString.map(key => injectEnv(key))
+                } else {
+                    query[`${key}`] = injectEnv(keyString)
                 }
-                query[`${key}`] = keyString
             }
         }
 
         if (headerValues) {
             for (const key of Object.keys(headerValues)) {
-                let keyString = headerValues[`${key}`]
-                const envkeys = keyString.match(/\$(\w+)/gm)
-                for (const envKey of envkeys) {
-                    keyString = keyString.replace(envKey, process.env[`${envKey.slice(1)}`])
-                }
-
-                headers[`${key}`] = keyString
+                const keyString = headerValues[`${key}`]
+                headers[`${key}`] = injectEnv(keyString)
             }
         }
 

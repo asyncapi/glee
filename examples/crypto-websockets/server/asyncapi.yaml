@@ -16,9 +16,7 @@ channels:
         bindingVersion: 0.1.0
         headers:
           type: object
-          required: [
-            'Authorization'
-          ]
+          required: ['Authorization']
           properties:
             Authorization:
               type: string

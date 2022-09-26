@@ -1,6 +1,6 @@
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import MqttAdapter from './adapters/mqtt/index.js'
-import WebSocketAdapter from './adapters/ws/index.js'
+import WebSocketServerAdapter from './adapters/ws/server.js'
 import WebsocketClientAdapter from './adapters/ws/client.js'
 import SocketIOAdapter from './adapters/socket.io/index.js'
 import RedisClusterAdapter from './adapters/cluster/redis/index.js'
@@ -40,7 +40,7 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
 
     if (kind === 'local') {
       if (!configWsAdapter || configWsAdapter === 'native') {
-        app.addAdapter(WebSocketAdapter, {
+        app.addAdapter(WebSocketServerAdapter, {
           serverName,
           server,
           parsedAsyncAPI,

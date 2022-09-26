@@ -1,5 +1,6 @@
 import WebSocket from 'ws'
 import http from 'http'
+import qs from 'qs'
 import { validateData } from '../../lib/util.js'
 import Adapter from '../../lib/adapter.js'
 import GleeConnection from '../../lib/connection.js'
@@ -26,7 +27,7 @@ class WebSocketsAdapter extends Adapter {
       const asyncapiServerPort = serverUrl.port || 80
       const optionsPort = this.glee.options?.websocket?.port
       const port = optionsPort || asyncapiServerPort
-      
+
       if (!optionsPort && this.glee.options?.websocket?.httpServer && String(wsHttpServer.address().port) !== String(port)) {
         console.error(`Your custom HTTP server is listening on port ${wsHttpServer.address().port} but your AsyncAPI file says it must listen on ${port}. Please fix the inconsistency.`)
         process.exit(1)
@@ -64,17 +65,15 @@ class WebSocketsAdapter extends Adapter {
           return reject(err)
         }
 
-        const { searchParams } = new URL(request.url, `ws://${request.headers.host}`)
+        const { search } = new URL(request.url, `ws://${request.headers.host}`)
         const wsChannelBinding = this.parsedAsyncAPI.channel(pathname).binding('ws')
 
         if (wsChannelBinding) {
           const { query, headers } = wsChannelBinding
+
           if (query) {
-            const queryParams = new Map()
-            searchParams.forEach((value, key) => {
-              queryParams.set(key, value)
-            })
-            const { isValid, humanReadableError, errors } = validateData(Object.fromEntries(queryParams.entries()), query)
+            const queryParams = qs.parse(search.slice(1))
+            const { isValid, humanReadableError, errors } = validateData(queryParams, query)
             if (!isValid) {
               const err = new GleeError({ humanReadableError, errors })
               this.emit('error', err)
@@ -84,10 +83,7 @@ class WebSocketsAdapter extends Adapter {
           }
 
           if (headers) {
-            console.log(headers)
-            console.log('CONTROL IS IN HEADERS')
-            console.log(request.headers)
-            const { isValid, humanReadableError, errors } = validateData(request.headers, headers)
+            const { isValid, humanReadableError, errors } = validateData(request.headers, this.caseInsensitiveHeaders(headers))
             if (!isValid) {
               const err = new GleeError({ humanReadableError, errors })
               this.emit('error', err)
@@ -96,11 +92,11 @@ class WebSocketsAdapter extends Adapter {
             }
           }
         }
-        
+
         if (servers.has(pathname)) {
           servers.get(pathname).handleUpgrade(request, socket, head, (ws) => {
             servers.get(pathname).emit('connection', ws, request)
-            
+
             ws.on('message', (payload) => {
               const msg = this._createMessage(pathname, payload)
               this.emit('message', msg, ws)
@@ -116,20 +112,31 @@ class WebSocketsAdapter extends Adapter {
       if (!this.glee.options?.websocket?.httpServer) {
         wsHttpServer.listen(port)
       }
-      
+
       this.emit('server:ready', { name: this.name(), adapter: this })
-      
+
       resolve(this)
     })
+  }
+
+  private caseInsensitiveHeaders(headers: Record<string, any>) {
+    if (!headers.required) {
+      return headers
+    }
+
+    return {
+      ...headers,
+      required: headers.required.map((property: string) => property.toLowerCase())
+    }
   }
 
   async _send(message: GleeMessage): Promise<void> {
     if (message.broadcast) {
       this.glee.syncCluster(message)
-      
+
       this
         .connections
-        .filter(({channels}) => channels.includes(message.channel))
+        .filter(({ channels }) => channels.includes(message.channel))
         .forEach((connection) => {
           connection.getRaw().send(message.payload)
         })
