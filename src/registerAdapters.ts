@@ -1,5 +1,6 @@
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import MqttAdapter from './adapters/mqtt/index.js'
+import KafkaAdapter from './adapters/kafka/index.js'
 import WebSocketAdapter from './adapters/ws/index.js'
 import SocketIOAdapter from './adapters/socket.io/index.js'
 import RedisClusterAdapter from './adapters/cluster/redis/index.js'
@@ -27,6 +28,12 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
   const protocol = server.protocol()
   if (['mqtt', 'mqtts', 'secure-mqtt'].includes(protocol)) {
     app.addAdapter(MqttAdapter, {
+      serverName,
+      server,
+      parsedAsyncAPI,
+    })
+  } else if (['kafka'].includes(protocol)) {
+    app.addAdapter(KafkaAdapter, {
       serverName,
       server,
       parsedAsyncAPI,
