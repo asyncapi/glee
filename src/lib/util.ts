@@ -4,7 +4,6 @@ import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
 import { GleeFunctionEvent } from './index.d'
 import GleeMessage from './message.js'
-import Message from './message.js'
 
 interface IValidateDataReturn {
   errors?: void | betterAjvErrors.IOutputError[],
