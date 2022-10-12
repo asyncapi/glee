@@ -3,7 +3,7 @@ info:
   title: asyncapicoin server
   version: 1.0.0
   description: |
-    This app creates a dummy server that would stream the price of a fake crypto currency
+    This app is a dummy server that would stream the price of a fake cryptocurrency
 servers:
   websocket:
     url: ws://localhost:3000

@@ -7,7 +7,7 @@ export default async function ({ glee, connection }) {
     let status = 'transit'
     let currentPrice = 100
     const count = 10
-    ;(function myLoop(i) {
+    ;(function priceChange(i) {
         if (i === count) {
             status = 'started'
         }else if (i === 1) {
@@ -22,7 +22,7 @@ export default async function ({ glee, connection }) {
                 connection,
                 payload: {time: date.getTime(), price: getPrice(), status}
             }))
-            if (--i) myLoop(i)
+            if (--i) priceChange(i)
         }, 1000)
     }(count))
 

@@ -2,7 +2,6 @@ import path from 'path'
 import fs from 'fs'
 import asciichart from 'asciichart'
 
-
 export default async function (event) {
     const payload = event.payload
     const dbPath = path.resolve('./db.json')
@@ -21,7 +20,6 @@ export default async function (event) {
             db = read()
             const values = [...db, payload]
             console.log(asciichart.plot(values.map(v => v.price), {height: 8}))
-            
     }
     return {
         send: []

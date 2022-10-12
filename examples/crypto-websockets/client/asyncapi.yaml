@@ -3,8 +3,7 @@ info:
   title: asyncapicoin client
   version: 1.0.0
   description: |
-    This app creates a client that would subscribe to the server for 
-    the price change.
+    This app creates a client that subscribes to the server for the price change.
 servers:
   websockets:
     url: ws://localhost:3000
