@@ -19,6 +19,7 @@ class GleeAdapter extends EventEmitter {
   private _channelNames: string[]
   private _connections: GleeConnection[]
   private _serverUrlExpanded: string
+  private _adapterConfig: {}
 
   /**
    * Instantiates a Glee adapter.
@@ -38,6 +39,7 @@ class GleeAdapter extends EventEmitter {
     this._parsedAsyncAPI = parsedAsyncAPI
     this._channelNames = this._parsedAsyncAPI.channelNames()
     this._connections = []
+    this._adapterConfig = {}
 
     const uriTemplateValues = new Map()
     process.env.GLEE_SERVER_VARIABLES?.split(',').forEach(t => {
@@ -146,6 +148,23 @@ class GleeAdapter extends EventEmitter {
 
   get serverUrlExpanded(): string {
     return this._serverUrlExpanded
+  }
+
+  async resolveConfig(protocol: string) {
+    if(!this.glee.options[protocol]) return undefined
+    const protocolConfig = {...this.glee.options[protocol]}
+    const resolve = async (config: any) => {
+      for (var key in config) {
+        if (typeof config[key] === 'object' && !Array.isArray(config[key])) {
+          resolve(config[key])
+        } else if (typeof config[key] === 'function') {
+          config[key] = await config[key]()
+        }
+      }
+    }
+
+    await resolve(protocolConfig)
+    return protocolConfig
   }
 
   /**

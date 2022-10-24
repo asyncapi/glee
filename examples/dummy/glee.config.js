@@ -11,5 +11,18 @@ export default async function () {
     //   name: 'gleeCluster',
     //   url: 'redis://localhost:6379'
     // }
+    websocket: {
+      server: {
+        adapter: 'native'
+      },
+      client: () => {
+        const token = 'usr123'
+        return {
+          authentication: {
+            token
+          }
+        }
+      }
+    }
   }
 }

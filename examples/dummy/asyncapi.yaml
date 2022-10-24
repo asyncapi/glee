@@ -17,7 +17,7 @@ servers:
         bindingVersion: 0.1.0
   websockets:
     url: ws://localhost:3005/ws
-    protocol: ws
+    protocol: w
 channels:
   user/signedup:
     bindings:

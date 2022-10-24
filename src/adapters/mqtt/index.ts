@@ -28,7 +28,8 @@ class MqttAdapter extends Adapter {
   }
 
   _connect(): Promise<this> {
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
+      const mqttOptions = await this.resolveConfig('mqtt')
       const subscribedChannels = this.getSubscribedChannels()
       const serverBinding = this.AsyncAPIServer.binding('mqtt')
       const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
@@ -46,7 +47,7 @@ class MqttAdapter extends Adapter {
         host: url.host,
         port: url.port || (url.protocol === 'mqtt:' ? 1883 : 8883),
         protocol: url.protocol.slice(0, url.protocol.length - 1),
-        clientId: serverBinding && serverBinding.clientId,
+        clientId: serverBinding && (serverBinding.clientId ? serverBinding.clientId : mqttOptions?.authentication?.clientId),
         clean: serverBinding && serverBinding.cleanSession,
         will: serverBinding && serverBinding.will && {
           topic: serverBinding && serverBinding.lastWill && serverBinding.lastWill.topic ? serverBinding.lastWill.topic : undefined,
@@ -55,9 +56,9 @@ class MqttAdapter extends Adapter {
           retain: serverBinding && serverBinding.lastWill && serverBinding.lastWill.retain ? serverBinding.lastWill.retain : undefined,
         },
         keepalive: serverBinding && serverBinding.keepAlive,
-        username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
-        password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined,
-        ca: X509SecurityReq ? certs : undefined,
+        username: userAndPasswordSecurityReq ? mqttOptions?.authentication?.userPassword.username : undefined,
+        password: userAndPasswordSecurityReq ? mqttOptions?.authentication?.userPassword.password : undefined,
+        ca: X509SecurityReq ? mqttOptions?.authentication?.cert : undefined,
       } as any)
 
       this.client.on('connect', () => {

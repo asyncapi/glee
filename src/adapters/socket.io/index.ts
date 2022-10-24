@@ -18,10 +18,11 @@ class SocketIOAdapter extends Adapter {
   }
 
   _connect(): Promise<this> {
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
+      const websocketOptions = (await this.resolveConfig('websocket')).server
       const serverUrl: URL = new URL(this.serverUrlExpanded)
       const asyncapiServerPort: number = serverUrl.port ? Number(serverUrl.port) : 80
-      const optionsPort: number = this.glee.options?.websocket?.port
+      const optionsPort: number = websocketOptions?.port
       const port:number = optionsPort || asyncapiServerPort
 
       const serverOptions: {[key:string]:any} = {
@@ -30,8 +31,8 @@ class SocketIOAdapter extends Adapter {
         transports: ['websocket'],
       }
 
-      if (this.glee.options.websocket.httpServer) {
-        const server = this.glee.options.websocket.httpServer
+      if (websocketOptions.httpServer) {
+        const server = websocketOptions.httpServer
         if (!optionsPort && String(server.address().port) !== String(port)) {
           console.error(`Your custom HTTP server is listening on port ${server.address().port} but your AsyncAPI file says it must listen on ${port}. Please fix the inconsistency.`)
           process.exit(1)
@@ -57,7 +58,7 @@ class SocketIOAdapter extends Adapter {
         })
       })
 
-      if (!this.glee.options.websocket.httpServer) {
+      if (!websocketOptions.httpServer) {
         this.server.listen(port)
       }
       resolve(this)
