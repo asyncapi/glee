@@ -45,7 +45,7 @@ class MqttAdapter extends Adapter {
       this.client = mqtt.connect({
         host: url.host,
         port: url.port || (url.protocol === 'mqtt:' ? 1883 : 8883),
-        protocol: url.protocol.substr(0, url.protocol.length - 1),
+        protocol: url.protocol.slice(0, url.protocol.length - 1),
         clientId: serverBinding && serverBinding.clientId,
         clean: serverBinding && serverBinding.cleanSession,
         will: serverBinding && serverBinding.will && {
@@ -58,7 +58,7 @@ class MqttAdapter extends Adapter {
         username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
         password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined,
         ca: X509SecurityReq ? certs : undefined,
-      })
+      } as any)
 
       this.client.on('connect', () => {
         if (!this.firstConnect) {
