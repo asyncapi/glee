@@ -19,7 +19,7 @@ class SocketIOAdapter extends Adapter {
 
   _connect(): Promise<this> {
     return new Promise(async (resolve) => {
-      const websocketOptions = (await this.resolveConfig('websocket')).server
+      const websocketOptions = (await this.resolveConfig('websocket'))?.server
       const serverUrl: URL = new URL(this.serverUrlExpanded)
       const asyncapiServerPort: number = serverUrl.port ? Number(serverUrl.port) : 80
       const optionsPort: number = websocketOptions?.port

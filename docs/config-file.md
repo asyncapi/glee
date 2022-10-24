@@ -26,7 +26,7 @@ export default async function () {
 
 ```
 
-Here is an example of the `glee.config.js` file to refer to. 
+Here is an example of the `glee.config.js` file for refence: 
 ```js
 export default async function () {
   return {

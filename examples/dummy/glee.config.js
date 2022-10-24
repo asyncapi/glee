@@ -1,4 +1,5 @@
 // import customServer from './customServer.js'
+import fs from 'fs'
 
 export default async function () {
   return {
@@ -11,17 +12,9 @@ export default async function () {
     //   name: 'gleeCluster',
     //   url: 'redis://localhost:6379'
     // }
-    websocket: {
-      server: {
-        adapter: 'native'
-      },
-      client: () => {
-        const token = 'usr123'
-        return {
-          authentication: {
-            token
-          }
-        }
+    mqtt: {
+      authentication: {
+        cert: () => fs.readFileSync('./mosquitto.org.crt')
       }
     }
   }
