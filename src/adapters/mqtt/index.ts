@@ -1,4 +1,3 @@
-import fs from 'fs'
 import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
@@ -39,9 +38,6 @@ class MqttAdapter extends Adapter {
       const userAndPasswordSecurityReq = securityRequirements.find(sec => sec.type() === 'userPassword')
       const X509SecurityReq = securityRequirements.find(sec => sec.type() === 'X509')
       const url = new URL(this.AsyncAPIServer.url())
-
-      const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
-      const certs = certsConfig?.filter(tuple => tuple[0] === this.serverName)?.map(t => fs.readFileSync(t[1])) // eslint-disable-line security/detect-non-literal-fs-filename
 
       this.client = mqtt.connect({
         host: url.host,
