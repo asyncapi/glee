@@ -116,7 +116,7 @@ class MqttAdapter extends Adapter {
     })
 
 
-    const connectClient = () => {
+    const connectClient = (): Promise<this> => {
       return new Promise((resolve) => {
         this.client.on("connect", () => {
           if (!this.firstConnect) {
