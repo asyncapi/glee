@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import EventEmitter from 'events'
 import uriTemplates from 'uri-templates'

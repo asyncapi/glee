@@ -5,6 +5,7 @@ import Adapter from '../../lib/adapter.js'
 import GleeConnection from '../../lib/connection.js'
 import GleeMessage from '../../lib/message.js'
 import GleeError from '../../errors/glee-error.js'
+import {WebsocketAdapterConfig} from '../../lib/index'
 
 class WebSocketsAdapter extends Adapter {
   name(): string {
@@ -20,8 +21,9 @@ class WebSocketsAdapter extends Adapter {
   }
 
   _connect(): Promise<this> {
-    return new Promise(async (resolve, reject) => {
-      const websocketOptions = (await this.resolveConfig('websocket'))?.server
+    return new Promise((resolve, reject) => {
+      this.resolveConfig('websocket').then((config: WebsocketAdapterConfig) => {
+      const websocketOptions = config?.server
       const serverUrl = new URL(this.serverUrlExpanded)
       const wsHttpServer = websocketOptions?.httpServer || http.createServer()
       const asyncapiServerPort = serverUrl.port || 80
@@ -118,6 +120,7 @@ class WebSocketsAdapter extends Adapter {
       this.emit('server:ready', { name: this.name(), adapter: this })
       
       resolve(this)
+      }).catch(e => reject(e))
     })
   }
 
