@@ -33,7 +33,7 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
       server,
       parsedAsyncAPI,
     })
-  } else if (['kafka'].includes(protocol)) {
+  } else if (['kafka', 'kafka-secure'].includes(protocol)) {
     app.addAdapter(KafkaAdapter, {
       serverName,
       server,
