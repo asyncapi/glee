@@ -3,7 +3,6 @@ import { Kafka, Consumer } from 'kafkajs'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 
-
 class KafkaAdapter extends Adapter {
   private kafka: Kafka
   private firstConnect: boolean = true
@@ -12,10 +11,10 @@ class KafkaAdapter extends Adapter {
   }
 
   async connect() {
-    const broker = this.AsyncAPIServer.url()
+    const brokerUrl = this.AsyncAPIServer.url()
     this.kafka = new Kafka({
       clientId: 'glee-app',  // clientID: hardcoded need to change afterwards 
-      brokers: [broker],
+      brokers: [brokerUrl],
     })
     const consumer = this.kafka.consumer({ groupId: 'glee-group' })   // groupID: hardcoded need to change afterwards
     consumer.on('consumer.connect', () => {
