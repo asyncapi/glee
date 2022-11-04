@@ -6,7 +6,7 @@ import GleeError from '../../errors/glee-error.js';
 import * as url from 'url';
 
 class HttpAdapter extends Adapter {
-    private res: any
+    private res: any[] = []
 
     name(): string {
         return 'HTTP server'
@@ -25,11 +25,11 @@ class HttpAdapter extends Adapter {
             const serverUrl = new URL(this.serverUrlExpanded);
             const httpServer = this.glee.options?.http?.server || http.createServer();
             const asyncapiServerPort = serverUrl.port || 80;
-            const optionsPort = this.glee.options?.websocket?.port;
+            const optionsPort = this.glee.options?.http?.serverPort;
             const port = optionsPort || asyncapiServerPort;
 
             httpServer.on('request', (req, res) => {
-                this.res = res;
+                this.res.push(res);
                 let { pathname } = new URL(req.url, serverUrl);
 
                 if (pathname.startsWith('/')) {
@@ -90,8 +90,10 @@ class HttpAdapter extends Adapter {
     }
 
     async _send(message: GleeMessage): Promise<void> {
-        this.res.write(message.payload);
-        this.res.end();
+        this.res.forEach((res)=>{
+            res.write(message.payload);
+            res.end();
+        })
     }
 
     _createMessage(pathName: string, payload: any) {
