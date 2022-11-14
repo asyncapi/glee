@@ -6,16 +6,37 @@ import GleeMessage from '../../lib/message.js'
 class KafkaAdapter extends Adapter {
   private kafka: Kafka
   private firstConnect: boolean = true
+  producer: any
   name(): string {
     return 'Kafka adapter'
   }
 
   async connect() {
     const brokerUrl = this.AsyncAPIServer.url()
+    // creating client with broker Url
     this.kafka = new Kafka({
       clientId: 'glee-app',  // clientID: hardcoded need to change afterwards 
       brokers: [brokerUrl],
     })
+
+    // Kafka requires that the transactional producer have the following configuration to guarantee EoS-exactly once semantics, 
+    // Configure the producer client with maxInFlightRequests: 1, idempotent: true and a transactionalId to guarantee EOS
+
+    this.producer = this.kafka.producer({
+      transactionalId: 'my-transactional-producer',
+      maxInFlightRequests: 1,
+      idempotent: true
+    })
+
+    // Within a transaction, we can produce one or more messages. If transaction.abort is called, all messages will be rolled back
+    // const transaction = await this.producer.transaction()
+    // try {
+    //   await transaction.send({ topic, messages })
+    //   await transaction.commit()
+    // } catch (e) {
+    //   await transaction.abort()
+    // }
+
     const consumer = this.kafka.consumer({ groupId: 'glee-group' })   // groupID: hardcoded need to change afterwards
     consumer.on('consumer.connect', () => {
       if (this.firstConnect) {
@@ -44,6 +65,15 @@ class KafkaAdapter extends Adapter {
 
   async send (message: GleeMessage) {
     return this._send(message)
+      const producer = this.kafka.producer()
+      await producer.connect()
+      await producer.send({
+        topic: 'glee-topic',
+        messages: [
+          { key: 'key1', value: 'Hello KafkaJS user!', partition: 1 }, //pass a key-value pair
+        ],
+      })
+      await producer.disconnect()
   }
 
   // async _connect() {  
@@ -59,7 +89,7 @@ class KafkaAdapter extends Adapter {
   //     const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
   //     const certs = certsConfig?.filter(tuple => tuple[0] === this.serverName)?.map(t => fs.readFileSync(t[1])) // eslint-disable-line security/detect-non-literal-fs-filename
 
-  //     this.kafkaConsumer = Kafka.connect({
+  //     this.kafka = Kafka.connect({
   //       host: url.host,
   //       port: url.port || (url.protocol === 'kafka:' ? 1883 : 8883),
   //       protocol: url.protocol.substr(0, url.protocol.length - 1),
@@ -78,12 +108,10 @@ class KafkaAdapter extends Adapter {
   //     })
 
   //     this.kafka.on('connect', () => {
-        
-
   //       if (Array.isArray(subscribedChannels)) {
   //         subscribedChannels.forEach((topic) => {
   //           const operation = this.parsedAsyncAPI.channel(channel).publish()
-  //           const binding = operation.binding('mqtt')
+  //           const binding = operation.binding('kafka')
   //           this.kafka.subscribe(channel, {
   //             qos: binding && binding.qos ? binding.qos : 0,
   //           })
@@ -117,48 +145,38 @@ class KafkaAdapter extends Adapter {
   //     })
   // }
 
-  _send(message: GleeMessage): Promise<void> {
-    return new Promise((resolve, reject) => {
-      // const producer = kafka.producer()
-      // await producer.connect()
-      // await producer.send({
-      //   topic: 'glee-topic',
-      //   messages: [
-      //     { value: 'Hello KafkaJS user!' }, //pass a key-value pair
-      //   ],
-      // })
-      // await producer.disconnect()
+  async _send(message: GleeMessage): Promise<void> {
+    // return new Promise((resolve, reject) => {
+    //   const operation = this.parsedAsyncAPI.channel(message.channel).subscribe()
+    //   const binding = operation ? operation.binding('kafka') : undefined
+    //   this.kafka.publish(message.channel, message.payload, {
+    //     qos: binding && binding.qos ? binding.qos : 2,
+    //     retain: binding && binding.retain ? binding.retain : false
+    //   }, (err) => {
+    //     if (err) {
+    //       reject(err)
+    //       return
+    //     }
 
-      // const operation = this.parsedAsyncAPI.channel(message.channel).subscribe()
-      // const binding = operation ? operation.binding('kafka') : undefined
-      // this.kafka.publish(message.channel, message.payload, {
-      //   qos: binding && binding.qos ? binding.qos : 2,
-      //   retain: binding && binding.retain ? binding.retain : false
-      // }, (err) => {
-      //   if (err) {
-      //     reject(err)
-      //     return
-      //   }
-
-      //   resolve()
-      // })
-    })
+    //     resolve()
+    //   })
+    // })
   }
 
-  // _createMessage(packet: IPublishPacket): GleeMessage {
-    // pass key-value pair inside the headers
-    // const headers: IMQTTHeaders = {
-    //   cmd: packet.cmd,
-    //   retain: packet.retain,
-    //   qos: packet.qos,
-    //   dup: packet.dup,
-    //   length: packet.length
-    // }
+  // async _createMessage(packet: IPublishPacket): GleeMessage {
+  //   // pass key-value pair inside the headers
+  //   const headers: IMQTTHeaders = {
+  //     cmd: packet.cmd,
+  //     retain: packet.retain,
+  //     qos: packet.qos,
+  //     dup: packet.dup,
+  //     length: packet.length
+  //   }
 
-    // return new GleeMessage({
-    //   payload: packet.payload,
-    //   channel: packet.topic,
-    // })
+  //   return new GleeMessage({
+  //     payload: packet.payload,
+  //     channel: packet.topic,
+  //   })
   // }
 }
 
