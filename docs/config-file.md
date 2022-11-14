@@ -12,7 +12,7 @@ export default async function () {
 }
 ```
 
-This function must return an object with protocol specific configuration which would look like this: 
+This function must return an object with the following shape:
 
 
 ```js
@@ -26,7 +26,7 @@ export default async function () {
 
 ```
 
-Here is an example of the `glee.config.js` file for refence: 
+Here is an example of a `glee.config.js` file for reference: 
 ```js
 export default async function () {
   return {
@@ -38,10 +38,7 @@ export default async function () {
       },
       client: {
         authentication: {
-          http: () => {
-            const token = process.env.TOKEN
-            return token
-          }
+          token: () => process.token
         }
       }
     },
@@ -65,16 +62,21 @@ export default async function () {
 ```
 Every protocol has different configuration needs so each protocol has unique configurations:
 
-### Websockets
+### Websocket Server
 |Field|Description|
 |--|--|
-|websocket.server|Websocket server specific configuration|
-|websocet.client| Websocket client specific configuration|
-|wesocket.server.adapter| The Glee adapter to use for the WebSocket server. Defaults to a "native" WebSocket implementation. Other allowed values are `socket.io` (to use the [Socket.IO](https://socket.io/) Glee adapter) or a reference to a custom adapter.|
+|websocket.server|Websocket server-specific configuration|
+|websocket.server.adapter| The Glee adapter to use for the WebSocket server. Defaults to a "native" WebSocket implementation. Other allowed values are `socket.io` (to use the [Socket.IO](https://socket.io/) Glee adapter) or a reference to a custom adapter.|
 |websocket.server.httpServer|  A custom HTTP server of your own. E.g., an [Express](https://expressjs.com/en/4x/api.html) server or any object that implements the [http.Server](https://nodejs.org/api/http.html#http_class_http_server) interface.   |
-|webocket.server.port| The port to use when binding the WebSocket server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.|
-|websocket.client.authentication.http| The http token to send for authentication of glee application.
+|websocket.server.port| The port to use when binding the WebSocket server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.|
 
+
+### Websocket Client
+
+|Field|Description|
+|----|------|
+|websocket.client|Websocket client-specific configuration|
+|websocket.client.authentication.token| The http token to send for authentication of glee application.|
 
 ### Cluster 
 |Field|Description|
@@ -87,9 +89,9 @@ Every protocol has different configuration needs so each protocol has unique con
 
 |Field|Description|
 |---|---|
-|mqtt.authentication| mqtt authentication configuratation|
+|mqtt.authentication| MQTT authentication configuration|
 |mqtt.authentication.cert| Client certificate
-|mqtt.authentication.clientId| mqtt client Id for authentication
-|mqtt.authentication.userPassword| username and password paramters for authentication|
+|mqtt.authentication.clientId| MQTT client Id for authentication
+|mqtt.authentication.userPassword| username and password parameters for authentication|
 |mqtt.authentication.userPassword.username| username parameter
 |mqtt.authentication.userPassword.password| password parameter
