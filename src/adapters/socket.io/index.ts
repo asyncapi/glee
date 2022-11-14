@@ -1,7 +1,6 @@
 import { Server } from 'socket.io'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
-import { WebsocketAdapterConfig } from '../../lib/index'
 
 class SocketIOAdapter extends Adapter {
   private server: Server
