@@ -19,7 +19,7 @@ class WebSocketsAdapter extends Adapter {
     return this._send(message)
   }
 
-  async _connect(): Promise<this> {
+  async _connect(): Promise<this> { // NOSONAR
     const config = await this.resolveConfig('websocket')
     const websocketOptions = config?.server
     const serverUrl = new URL(this.serverUrlExpanded)
