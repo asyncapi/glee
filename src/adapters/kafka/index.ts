@@ -13,19 +13,34 @@ class KafkaAdapter extends Adapter {
 
   async connect() {
     const brokerUrl = this.AsyncAPIServer.url()
-    // creating client with broker Url
+    // creating client with broker Url & initiating Kafkajs client by pointing it towards at least one broker
     this.kafka = new Kafka({
       clientId: 'glee-app',  // clientID: hardcoded need to change afterwards 
       brokers: [brokerUrl],
+      ssl: {
+        rejectUnauthorized: false,
+        ca: [fs.readFileSync('/my/custom/ca.crt', 'utf-8')],
+        key: fs.readFileSync('/my/custom/client-key.pem', 'utf-8'),
+        cert: fs.readFileSync('/my/custom/client-cert.pem', 'utf-8')
+      },
     })
 
-    // Kafka requires that the transactional producer have the following configuration to guarantee EoS-exactly once semantics, 
+    // creating a producer using the client to produce a message to a topic 
+    // Kafka requires that the transactional producer should have the following configuration to guarantee EoS-exactly once semantics, 
     // Configure the producer client with maxInFlightRequests: 1, idempotent: true and a transactionalId to guarantee EOS
 
-    this.producer = this.kafka.producer({
+    const producer = this.kafka.producer({
       transactionalId: 'my-transactional-producer',
       maxInFlightRequests: 1,
       idempotent: true
+    })
+
+    await producer.connect()
+    await producer.send({
+      topic: 'test-topic',
+      messages: [
+        { value: 'Hello KafkaJS user!' },
+      ],
     })
 
     // Within a transaction, we can produce one or more messages. If transaction.abort is called, all messages will be rolled back
@@ -37,6 +52,7 @@ class KafkaAdapter extends Adapter {
     //   await transaction.abort()
     // }
 
+    // creating consumer to verify that our message has been produced to the topic
     const consumer = this.kafka.consumer({ groupId: 'glee-group' })   // groupID: hardcoded need to change afterwards
     consumer.on('consumer.connect', () => {
       if (this.firstConnect) {
@@ -49,9 +65,7 @@ class KafkaAdapter extends Adapter {
         })
       }
     })
-
-    await consumer.connect()
-    
+    await consumer.connect() 
     const subscribedChannels = this.getSubscribedChannels()
     await consumer.subscribe({ topics: subscribedChannels, fromBeginning: true })
 
@@ -61,6 +75,71 @@ class KafkaAdapter extends Adapter {
         console.log(`- ${prefix} ${message.key}#${message.value}`)
       },
     })
+
+    const serverBinding = this.AsyncAPIServer.binding('Kafka')
+      const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
+        const secName = Object.keys(sec.json())[0]
+        return this.parsedAsyncAPI.components().securityScheme(secName)
+      })
+      const userAndPasswordSecurityReq = securityRequirements.find(sec => sec.type() === 'userPassword')
+      const X509SecurityReq = securityRequirements.find(sec => sec.type() === 'X509')
+      const url = new URL(this.AsyncAPIServer.url())
+
+      const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
+      const certs = certsConfig?.filter(tuple => tuple[0] === this.serverName)?.map(t => fs.readFileSync(t[1])) // eslint-disable-line security/detect-non-literal-fs-filename
+
+      // this.kafka = consumer.connect({
+      //   host: url.host,
+      //   port: url.port || (url.protocol === 'kafka:' ? 1883 : 8883),
+      //   protocol: url.protocol.substr(0, url.protocol.length - 1),
+      //   clientId: serverBinding && serverBinding.clientId,
+      //   clean: serverBinding && serverBinding.cleanSession,
+      //   will: serverBinding && serverBinding.will && {
+      //     topic: serverBinding && serverBinding.lastWill && serverBinding.lastWill.topic ? serverBinding.lastWill.topic : undefined,
+      //     qos: serverBinding && serverBinding.lastWill && serverBinding.lastWill.qos ? serverBinding.lastWill.qos : undefined,
+      //     payload: serverBinding && serverBinding.lastWill && serverBinding.lastWill.message ? serverBinding.lastWill.message : undefined,
+      //     retain: serverBinding && serverBinding.lastWill && serverBinding.lastWill.retain ? serverBinding.lastWill.retain : undefined,
+      //   },
+      //   keepalive: serverBinding && serverBinding.keepAlive,
+      //   username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
+      //   password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined,
+      //   ca: X509SecurityReq ? certs : undefined,
+      // })
+
+      this.kafka.on('connect', () => {
+        if (Array.isArray(subscribedChannels)) {
+          subscribedChannels.forEach((topic) => {
+            const operation = this.parsedAsyncAPI.channel(channel).publish()
+            const binding = operation.binding('kafka')
+            this.kafka.subscribe(channel, {
+              qos: binding && binding.qos ? binding.qos : 0,
+            })
+          })
+        }
+      })
+
+      // this.kafka.on('message', (topic, partition, message) => {
+      //   const msg = this._createMessage(message as IPublishPacket)
+      //   this.emit('message', msg, this.kafka)
+      // })
+
+      this.kafka.on('reconnect', () => {
+        this.emit('reconnect', {
+          connection: this.kafka,
+          channels: this.channelNames,
+        })
+      })
+      
+      this.kafka.on('close', () => {
+        this.emit('close', {
+          connection: this.kafka,
+          channels: this.channelNames,
+        })
+      })
+
+      this.kafka.on('error', (error) => {
+        this.emit('error', error)
+      })
   }
 
   async send (message: GleeMessage) {
@@ -76,74 +155,9 @@ class KafkaAdapter extends Adapter {
       await producer.disconnect()
   }
 
-  // async _connect() {  
-  //     const serverBinding = this.AsyncAPIServer.binding('Kafka')
-  //     const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
-  //       const secName = Object.keys(sec.json())[0]
-  //       return this.parsedAsyncAPI.components().securityScheme(secName)
-  //     })
-  //     const userAndPasswordSecurityReq = securityRequirements.find(sec => sec.type() === 'userPassword')
-  //     const X509SecurityReq = securityRequirements.find(sec => sec.type() === 'X509')
-  //     const url = new URL(this.AsyncAPIServer.url())
-
-  //     const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
-  //     const certs = certsConfig?.filter(tuple => tuple[0] === this.serverName)?.map(t => fs.readFileSync(t[1])) // eslint-disable-line security/detect-non-literal-fs-filename
-
-  //     this.kafka = Kafka.connect({
-  //       host: url.host,
-  //       port: url.port || (url.protocol === 'kafka:' ? 1883 : 8883),
-  //       protocol: url.protocol.substr(0, url.protocol.length - 1),
-  //       clientId: serverBinding && serverBinding.clientId,
-  //       clean: serverBinding && serverBinding.cleanSession,
-  //       will: serverBinding && serverBinding.will && {
-  //         topic: serverBinding && serverBinding.lastWill && serverBinding.lastWill.topic ? serverBinding.lastWill.topic : undefined,
-  //         qos: serverBinding && serverBinding.lastWill && serverBinding.lastWill.qos ? serverBinding.lastWill.qos : undefined,
-  //         payload: serverBinding && serverBinding.lastWill && serverBinding.lastWill.message ? serverBinding.lastWill.message : undefined,
-  //         retain: serverBinding && serverBinding.lastWill && serverBinding.lastWill.retain ? serverBinding.lastWill.retain : undefined,
-  //       },
-  //       keepalive: serverBinding && serverBinding.keepAlive,
-  //       username: userAndPasswordSecurityReq ? process.env.GLEE_USERNAME : undefined,
-  //       password: userAndPasswordSecurityReq ? process.env.GLEE_PASSWORD : undefined,
-  //       ca: X509SecurityReq ? certs : undefined,
-  //     })
-
-  //     this.kafka.on('connect', () => {
-  //       if (Array.isArray(subscribedChannels)) {
-  //         subscribedChannels.forEach((topic) => {
-  //           const operation = this.parsedAsyncAPI.channel(channel).publish()
-  //           const binding = operation.binding('kafka')
-  //           this.kafka.subscribe(channel, {
-  //             qos: binding && binding.qos ? binding.qos : 0,
-  //           })
-  //         })
-  //       }
-
-  //       resolve(this)
-  //     })
-
-  //     this.kafka.on('message', (topic, partition, message) => {
-  //       const msg = this._createMessage(message as IPublishPacket)
-  //       this.emit('message', msg, this.kafka)
-  //     })
-
-  //     this.kafka.on('reconnect', () => {
-  //       this.emit('reconnect', {
-  //         connection: this.kafka,
-  //         channels: this.channelNames,
-  //       })
-  //     })
+  async _connect() {  
       
-  //     this.kafka.on('close', () => {
-  //       this.emit('close', {
-  //         connection: this.kafka,
-  //         channels: this.channelNames,
-  //       })
-  //     })
-
-  //     this.kafka.on('error', (error) => {
-  //       this.emit('error', error)
-  //     })
-  // }
+  }
 
   async _send(message: GleeMessage): Promise<void> {
     // return new Promise((resolve, reject) => {
