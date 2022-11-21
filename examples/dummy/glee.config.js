@@ -14,7 +14,7 @@ export default async function () {
     // }
     mqtt: {
       authentication: {
-        cert: () => fs.readFileSync('./mosquitto.org.crt')
+        cert: async () => fs.readFileSync('./mosquitto.org.crt')
       }
     }
   }

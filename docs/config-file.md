@@ -44,7 +44,7 @@ export default async function () {
     },
     mqtt: {
       authentication: {
-        cert: () => fs.readFileSync('./cert')
+        cert: async () => fs.readFileSync('./cert')
         clientId: '123',
         userPassword: {
           username: 'user1',

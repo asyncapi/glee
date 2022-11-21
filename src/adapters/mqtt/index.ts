@@ -19,7 +19,7 @@ class MqttAdapter extends Adapter {
   }
 
   async connect(): Promise<this> {
-    return await this._connect()
+    return this._connect()
   }
 
   async send(message: GleeMessage) {
@@ -27,7 +27,7 @@ class MqttAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> { // NOSONAR
-    const mqttOptions = await this.resolveConfig('mqtt')
+    const mqttOptions = await this.resolveProtocolConfig('mqtt')
     const subscribedChannels = this.getSubscribedChannels()
     const serverBinding = this.AsyncAPIServer.binding('mqtt')
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(
@@ -48,40 +48,15 @@ class MqttAdapter extends Adapter {
       host: url.host,
       port: url.port || (url.protocol === 'mqtt:' ? 1883 : 8883),
       protocol: url.protocol.slice(0, url.protocol.length - 1),
-      clientId:
-        serverBinding &&
-        (serverBinding.clientId
-          ? serverBinding.clientId
-          : mqttOptions?.authentication?.clientId),
-      clean: serverBinding && serverBinding.cleanSession,
-      will: serverBinding &&
-        serverBinding.will && {
-        topic:
-          serverBinding &&
-            serverBinding.lastWill &&
-            serverBinding.lastWill.topic
-            ? serverBinding.lastWill.topic
-            : undefined,
-        qos:
-          serverBinding &&
-            serverBinding.lastWill &&
-            serverBinding.lastWill.qos
-            ? serverBinding.lastWill.qos
-            : undefined,
-        payload:
-          serverBinding &&
-            serverBinding.lastWill &&
-            serverBinding.lastWill.message
-            ? serverBinding.lastWill.message
-            : undefined,
-        retain:
-          serverBinding &&
-            serverBinding.lastWill &&
-            serverBinding.lastWill.retain
-            ? serverBinding.lastWill.retain
-            : undefined,
+      clientId: serverBinding?.clientId ?? mqttOptions?.authentication?.clientId,
+      clean: serverBinding?.cleanSession,
+      will: serverBinding?.will && {
+        topic: serverBinding?.lastWill?.topic,
+        qos: serverBinding?.lastWill?.qos,
+        payload: serverBinding?.lastWill?.message,
+        retain: serverBinding?.lastWill?.retain
       },
-      keepalive: serverBinding && serverBinding.keepAlive,
+      keepalive: serverBinding?.keepAlive,
       username: userAndPasswordSecurityReq
         ? mqttOptions?.authentication?.userPassword.username
         : undefined,

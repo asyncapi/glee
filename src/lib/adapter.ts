@@ -149,7 +149,7 @@ class GleeAdapter extends EventEmitter {
     return this._serverUrlExpanded
   }
 
-  async resolveConfig(protocol: string) {
+  async resolveProtocolConfig(protocol: string) {
     if(!this.glee.options[protocol]) return undefined
     const protocolConfig = {...this.glee.options[protocol]}
     const resolve = async (config: any) => {

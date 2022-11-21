@@ -12,7 +12,7 @@ class WebSocketsAdapter extends Adapter {
   }
 
   async connect(): Promise<this> {
-    return await this._connect()
+    return this._connect()
   }
 
   async send(message: GleeMessage): Promise<void> {
@@ -20,7 +20,7 @@ class WebSocketsAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> { // NOSONAR
-    const config = await this.resolveConfig('websocket')
+    const config = await this.resolveProtocolConfig('websocket')
     const websocketOptions = config?.server
     const serverUrl = new URL(this.serverUrlExpanded)
     const wsHttpServer = websocketOptions?.httpServer || http.createServer()
