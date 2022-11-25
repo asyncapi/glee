@@ -149,6 +149,7 @@ export const logTypeScriptMessage = (message: string) => {
 
 export const logTypeScriptError = (code: number, message: string, fileName: string, line: number, character: number) => {
   const fileInfo = `${chalk.cyan(fileName)}:${chalk.yellow(line + 1)}:${chalk.yellow(character + 1)}`
-  const error = `${chalk.red('error')} ${chalk.gray(`TS${code}:`)}`
-  console.error(`${TSLogo} ${fileInfo} - ${error} ${message}`)
+  const error = chalk.red('error')
+  const errorCode = chalk.gray(`TS${code}:`)
+  console.error(`${TSLogo} ${fileInfo} - ${error} ${errorCode} ${message}`)
 }
