@@ -9,23 +9,34 @@ servers:
     protocol: http
 channels:
   test:
-    bindings:
-      http:
-        bindingVersion: 0.1.0
-        type: request
-        method: GET
-        query:
-          type: object
-          properties:
-            name:
-              type: string
     subscribe:
       message:
         $ref: '#/components/messages/testReply'
+        bindings:
+          http:
+            type: request
+            method: GET
+            query:
+              type: object
+              properties:
+                name:
+                  type: string
+              additionalProperties: false
+            bindingVersion: 0.1.0
     publish:
-      operationId: onTest
-      message:
+      message: 
         $ref: '#/components/messages/testMessage'
+        bindings:
+          http:
+            type: request
+            method: GET
+            query:
+              type: object
+              properties:
+                name:
+                  type: string
+              additionalProperties: false
+            bindingVersion: 0.1.0
 components:
   messages:
     testMessage:
