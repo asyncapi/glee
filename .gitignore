@@ -3,4 +3,4 @@ node_modules
 dist
 coverage
 .vscode
-examples/simple/.glee
+examples/**/.glee
