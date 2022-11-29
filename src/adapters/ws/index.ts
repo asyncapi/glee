@@ -105,9 +105,7 @@ class WebSocketsAdapter extends Adapter {
 
             this.emit('server:connection:open', { name: this.name(), adapter: this, connection: ws, channel: pathname, request })
           })
-
-          this.emit('connect', { name: this.name(), adapter: this, connection: ws, channel: pathname })
-        })
+        }
       } else {
         socket.destroy()
       }
