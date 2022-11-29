@@ -67,7 +67,7 @@ export default async function GleeAppInitializer () {
     if (channel.hasPublish()) {
       const operationId = channel.publish().json('operationId')
       if (operationId) {
-        const schema = {oneOf: channel.publish().messages().map(message => message.payload().json())} as any;
+        const schema = {oneOf: channel.publish().messages().map(message => message.payload().json())} as any
         app.use(channelName, validate(schema), (event, next) => {
           triggerFunction({
             app,
