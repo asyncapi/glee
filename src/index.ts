@@ -78,7 +78,7 @@ export default async function GleeAppInitializer () {
       }
     }
     if (channel.hasSubscribe()) {
-      const schema = {oneOf: channel.subscribe().messages().map(message => message.payload().json())} as any;
+      const schema = {oneOf: channel.subscribe().messages().map(message => message.payload().json())} as any
       app.useOutbound(channelName, validate(schema), json2string)
     }
   })
