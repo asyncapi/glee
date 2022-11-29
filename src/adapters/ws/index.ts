@@ -93,19 +93,18 @@ class WebSocketsAdapter extends Adapter {
             return
           }
         }
-        
-        if (servers.has(pathname)) {
-          servers.get(pathname).handleUpgrade(request, socket, head, (ws) => {
-            servers.get(pathname).emit('connect', ws, request)
-            
-            ws.on('message', (payload) => {
-              const msg = this._createMessage(pathname, payload)
-              this.emit('message', msg, ws)
-            })
-
-            this.emit('server:connection:open', { name: this.name(), adapter: this, connection: ws, channel: pathname, request })
+      }
+      if (servers.has(pathname)) {
+        servers.get(pathname).handleUpgrade(request, socket, head, (ws) => {
+          servers.get(pathname).emit('connect', ws, request)
+          
+          ws.on('message', (payload) => {
+            const msg = this._createMessage(pathname, payload)
+            this.emit('message', msg, ws)
           })
-        }
+
+          this.emit('server:connection:open', { name: this.name(), adapter: this, connection: ws, channel: pathname, request })
+        })
       } else {
         socket.destroy()
       }
