@@ -44,7 +44,7 @@ async function loadConfigsFromFile() {
     ASYNCAPI_FILE_PATH = projectConfigs.ASYNCAPI_FILE_PATH ? path.resolve(GLEE_DIR, projectConfigs.ASYNCAPI_FILE_PATH) : ASYNCAPI_FILE_PATH
     return projectConfigs
   } catch (e) {
-      return console.error(e)
+    return console.error(e)
   }
 }
 
