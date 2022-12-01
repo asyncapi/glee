@@ -104,27 +104,23 @@ export async function trigger({
       return
     }
 
-    if (res?.send) {
-      res.send.forEach((msg) => {
-        app.send(new GleeMessage({
-          payload: msg.payload,
-          headers: msg.headers,
-          channel: msg.channel || message.channel,
-          serverName: msg.server,
-          broadcast: true,
-        }))
-      })
-    }
+    res?.send?.forEach((msg) => {
+      app.send(new GleeMessage({
+        payload: msg.payload,
+        headers: msg.headers,
+        channel: msg.channel || message.channel,
+        serverName: msg.server,
+        broadcast: true,
+      }))
+    })
 
-    if (res?.reply) {
-      res.reply.forEach((msg) => {
-        message.reply({
-          payload: msg.payload,
-          headers: msg.headers,
-          channel: msg.channel,
-        })
+    res?.reply?.forEach((msg) => {
+      message.reply({
+        payload: msg.payload,
+        headers: msg.headers,
+        channel: msg.channel,
       })
-    }
+    })
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
       const functionsPath = relative(GLEE_DIR, GLEE_FUNCTIONS_DIR)
