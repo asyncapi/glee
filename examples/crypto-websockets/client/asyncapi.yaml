@@ -8,14 +8,13 @@ servers:
   websockets:
     url: ws://localhost:3000
     protocol: ws
-    x-kind: remote
+x-remoteServers:
+  - websockets
 channels:
   /price:
     bindings:
       ws:
         bindingVersion: 0.1.0
-        headerValues:
-          Authorization: 'bearer $TOKEN'
     publish:
       operationId: index
       message:

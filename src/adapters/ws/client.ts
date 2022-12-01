@@ -33,50 +33,51 @@ class WsClientAdapter extends Adapter {
     return this._send(message)
   }
 
-  private _connect(): Promise<this> {
-    return new Promise((resolve) => {
-      const channelsOnThisServer = this.getWsChannels()
+  private async _connect(): Promise<this> {
+    const channelsOnThisServer = this.getWsChannels()
 
-      for (const channel of channelsOnThisServer) {
-        const wsBindings = this.parsedAsyncAPI.channel(channel).binding("ws")
-        const { queryValues, headerValues } = wsBindings
-        const { query, headers } = this.getBindingValues(
-          queryValues,
-          headerValues
-        )
+    for (const channel of channelsOnThisServer) {
+      const config = await this.resolveProtocolConfig('ws')
+      const clientConfig = config?.client;
+      const wsBindings = this.parsedAsyncAPI.channel(channel).binding("ws")
+      const { queryValues, headerValues } = wsBindings
+      const { query, headers } = this.getBindingValues(
+        queryValues,
+        headerValues
+      )
 
-        const url = new URL(
-          this.AsyncAPIServer.url() + channel + "?" + qs.stringify(query)
-        )
+      const url = new URL(
+        this.AsyncAPIServer.url() + channel + "?" + qs.stringify(query)
+      )
 
-        this.clients.push({
-          channel,
-          client: new ws(url, { headers }),
-          binding: this.parsedAsyncAPI.channel(channel).binding("ws"),
+      this.clients.push({
+        channel,
+        client: new ws(url, { headers }),
+        binding: this.parsedAsyncAPI.channel(channel).binding("ws"),
+      })
+    }
+
+    for (const { client, channel } of this.clients) {
+      client.on("open", () => {
+        this.emit("connect", {
+          name: this.name(),
+          adapter: this,
+          connection: client,
+          channels: this.channelNames,
         })
-      }
+      })
 
-      for (const { client, channel } of this.clients) {
-        client.on("open", () => {
-          this.emit("connect", {
-            name: this.name(),
-            adapter: this,
-            connection: client,
-            channels: this.channelNames,
-          })
-          resolve(this)
-        })
+      client.on("message", (data) => {
+        const msg = this._createMessage(channel, data)
+        this.emit("message", msg, client)
+      })
 
-        client.on("message", (data) => {
-          const msg = this._createMessage(channel, data)
-          this.emit("message", msg, client)
-        })
-
-        client.on("error", (err) => {
-          this.emit("error", err)
-        })
-      }
-    })
+      client.on("error", (err) => {
+        console.log('GETING ERROR')
+        this.emit("error", err)
+      })
+    }
+    return this
   }
 
   private getWsChannels() {

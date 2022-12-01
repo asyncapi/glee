@@ -26,6 +26,7 @@ export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeC
 
 function registerAdapterForServer(serverName: string, server: Server, app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) {
   const protocol = server.protocol()
+  const remoteServers = parsedAsyncAPI.extensions()['x-remoteServers']
   if (['mqtt', 'mqtts', 'secure-mqtt'].includes(protocol)) {
     app.addAdapter(MqttAdapter, {
       serverName,
@@ -36,9 +37,13 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
     // TODO: Implement AMQP support
   } else if (['ws', 'wss'].includes(protocol)) {
     const configWsAdapter = config?.websocket?.server.adapter
-    const kind = server.json('x-kind')
-
-    if (kind === 'local') {
+    if (remoteServers && remoteServers.includes(serverName)) {
+      app.addAdapter(WebsocketClientAdapter, {
+        serverName,
+        server,
+        parsedAsyncAPI
+      })
+    } else {
       if (!configWsAdapter || configWsAdapter === 'native') {
         app.addAdapter(WebSocketServerAdapter, {
           serverName,
@@ -60,12 +65,7 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
       } else {
         throw new Error(`Unknown value for websocket.adapter found in glee.config.js: ${config.websocket.server.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`)
       }
-    } else {
-      app.addAdapter(WebsocketClientAdapter, {
-        serverName,
-        server,
-        parsedAsyncAPI
-      })
+
     }
   } else {
     // TODO: Improve error message with link to repo encouraging the developer to contribute.

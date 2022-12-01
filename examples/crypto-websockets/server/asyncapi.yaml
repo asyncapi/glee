@@ -8,18 +8,11 @@ servers:
   websocket:
     url: ws://localhost:3000
     protocol: ws
-    x-kind: local
 channels:
   /price:
     bindings:
       ws:
         bindingVersion: 0.1.0
-        headers:
-          type: object
-          required: ['Authorization']
-          properties:
-            Authorization:
-              type: string
     subscribe:
       message:
         $ref: '#/components/messages/indexGraph'
