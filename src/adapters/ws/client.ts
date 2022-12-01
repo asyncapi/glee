@@ -2,7 +2,8 @@
 import Adapter from "../../lib/adapter.js"
 import GleeMessage from "../../lib/message.js"
 import ws from "ws"
-import qs from "qs"
+import qs from 'qs'
+import { WebsocketAdapterConfig } from "../../lib/index.js"
 
 interface Client {
   channel: string;
@@ -37,17 +38,14 @@ class WsClientAdapter extends Adapter {
     const channelsOnThisServer = this.getWsChannels()
 
     for (const channel of channelsOnThisServer) {
-      const config = await this.resolveProtocolConfig('ws')
-      const clientConfig = config?.client;
-      const wsBindings = this.parsedAsyncAPI.channel(channel).binding("ws")
-      const { queryValues, headerValues } = wsBindings
-      const { query, headers } = this.getBindingValues(
-        queryValues,
-        headerValues
-      )
+      const headers = {}
+      const config: WebsocketAdapterConfig = await this.resolveProtocolConfig('ws')
+      const clientConfig = config?.client
+      headers['Authenticaton'] = clientConfig?.authentication?.token
+      const queryString = qs.stringify(clientConfig?.query)
 
       const url = new URL(
-        this.AsyncAPIServer.url() + channel + "?" + qs.stringify(query)
+        this.AsyncAPIServer.url() + channel + '?' + queryString
       )
 
       this.clients.push({

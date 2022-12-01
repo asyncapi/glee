@@ -26,7 +26,7 @@ export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeC
 
 function registerAdapterForServer(serverName: string, server: Server, app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) {
   const protocol = server.protocol()
-  const remoteServers = parsedAsyncAPI.extensions()['x-remoteServers']
+  const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
   if (['mqtt', 'mqtts', 'secure-mqtt'].includes(protocol)) {
     app.addAdapter(MqttAdapter, {
       serverName,
