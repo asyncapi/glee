@@ -11,7 +11,7 @@ channels:
   test:
     subscribe:
       message:
-        $ref: '#/components/messages/sale'
+        $ref: '#/components/messages/sale' 
         bindings:
           http:
             type: request
