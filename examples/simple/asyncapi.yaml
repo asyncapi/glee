@@ -1,8 +1,8 @@
 asyncapi: 2.4.0
 info:
-  title: Test Payload
+  title: asyncapimart client
   version: 1.0.0
-  description: Test payload schema
+  description: This app creates a client that subscribes to the server for sale of different products.
 servers:
   http:
     url: http://localhost:8080
@@ -11,7 +11,7 @@ channels:
   test:
     subscribe:
       message:
-        $ref: '#/components/messages/testReply'
+        $ref: '#/components/messages/sale'
         bindings:
           http:
             type: request
@@ -25,7 +25,7 @@ channels:
             bindingVersion: 0.1.0
     publish:
       message: 
-        $ref: '#/components/messages/testMessage'
+        $ref: '#/components/messages/sale'
         bindings:
           http:
             type: request
