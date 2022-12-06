@@ -6,10 +6,11 @@
     "dev": "glee dev",
     "start": "glee start"
   },
+  "type": "module",
   "author": "Fran Mendez",
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/glee": "../..",
+    "@asyncapi/glee": "^0.10.7",
     "dummy-json": "^3.0.4",
     "node-fetch": "^2.6.1"
   }

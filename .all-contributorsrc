@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "sudoshreyansh",
+      "name": "sudoshreyansh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44190883?v=4",
+      "profile": "https://github.com/sudoshreyansh",
+      "contributions": [
+        "test"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "glee",
+  "projectOwner": "asyncapi",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
