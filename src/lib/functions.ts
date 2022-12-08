@@ -6,7 +6,7 @@ import { logWarningMessage, logError } from './logger.js'
 import GleeMessage from './message.js'
 import { GleeFunction } from './index.d'
 import Glee from './glee.js'
-import { gleeMessageToFunctionEvent, validateData } from './util.js'
+import { gleeMessageToFunctionEvent, validateData, isRemoteServer } from './util.js'
 import { pathToFileURL } from 'url'
 import GleeError from '../errors/glee-error.js'
 import {getParsedAsyncAPI} from './asyncapiFile.js'
@@ -107,13 +107,13 @@ export async function trigger({
     }
 
     res?.send?.forEach((msg) => {
-      const isBroadcast = parsedAsyncAPI.server(msg.server).protocol() === 'ws' && (parsedAsyncAPI.extension('x-remoteServers') && !parsedAsyncAPI.extension('x-remoteServers').includes(msg.server) )
+      const isBroadcast = parsedAsyncAPI.server(msg.server).protocol() === 'ws' && !isRemoteServer(parsedAsyncAPI, msg.server)
       app.send(new GleeMessage({
         payload: msg.payload,
         headers: msg.headers,
         channel: msg.channel || message.channel,
         serverName: msg.server,
-        broadcast: isBroadcast,
+        broadcast: isBroadcast
       }))
     })
 

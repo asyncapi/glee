@@ -11,14 +11,6 @@ interface Client {
   binding?: any;
 }
 
-interface IQueryValues {
-  [name: string]: string;
-}
-
-interface IHeaderValues {
-  [name: string]: string;
-}
-
 class WsClientAdapter extends Adapter {
   private clients: Array<Client> = []
 

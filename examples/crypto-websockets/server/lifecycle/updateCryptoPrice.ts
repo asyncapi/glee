@@ -20,7 +20,8 @@ export default async function ({ glee, connection }) {
             glee.send(new Message({
                 channel: '/price',
                 connection,
-                payload: {time: date.getTime(), price: getPrice(), status}
+                payload: {time: date.getTime(), price: getPrice(), status},
+                serverName: 'websocket'
             }))
             if (--i) priceChange(i)
         }, 1000)
