@@ -1,5 +1,12 @@
 {
   "likes": [
+    {
+      "postId": 1
+    },
+    {
+      "postId": 1,
+      "userId": 1
+    }
   ],
   "users": {
     "1": {
