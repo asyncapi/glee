@@ -9,6 +9,7 @@ import Glee from './glee.js'
 import { gleeMessageToFunctionEvent, validateData } from './util.js'
 import { pathToFileURL } from 'url'
 import GleeError from '../errors/glee-error.js'
+import {getParsedAsyncAPI} from './asyncapiFile.js'
 
 interface FunctionInfo {
   run: GleeFunction,
@@ -87,6 +88,7 @@ export async function trigger({
   message: GleeMessage,
 }) {
   try {
+    const parsedAsyncAPI = await getParsedAsyncAPI()
     const res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
     const { humanReadableError, errors, isValid } = validateData(res, FunctionReturnSchema)
 
@@ -105,12 +107,13 @@ export async function trigger({
     }
 
     res?.send?.forEach((msg) => {
+      const isBroadcast = parsedAsyncAPI.server(msg.server).protocol() === 'ws' && (parsedAsyncAPI.extension('x-remoteServers') && !parsedAsyncAPI.extension('x-remoteServers').includes(msg.server) )
       app.send(new GleeMessage({
         payload: msg.payload,
         headers: msg.headers,
         channel: msg.channel || message.channel,
         serverName: msg.server,
-        broadcast: true,
+        broadcast: isBroadcast,
       }))
     })
 

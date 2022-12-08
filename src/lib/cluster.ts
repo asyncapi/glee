@@ -176,7 +176,7 @@ class GleeClusterAdapter extends EventEmitter {
       channel: messageData.channel,
       serverName: messageData.serverName,
       broadcast: messageData.broadcast,
-      cluster: messageData.cluster
+      cluster: messageData.cluster,
     })
 
     if (messageData.inbound && !messageData.outbound) {
