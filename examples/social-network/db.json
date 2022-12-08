@@ -6,6 +6,14 @@
     {
       "postId": 1,
       "userId": 1
+    },
+    {
+      "postId": 3,
+      "userId": 1
+    },
+    {
+      "postId": 11,
+      "userId": 1
     }
   ],
   "users": {
