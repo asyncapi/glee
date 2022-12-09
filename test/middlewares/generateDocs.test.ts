@@ -32,10 +32,10 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
 
 const CONFIG_TEST_DATA = {
   generator: {
-    folder: 'output',
-    template: 'markdown-template',
+    folder: "output",
+    template: "@asyncapi/markdown-template",
   },
-}
+};
 
 describe('generateDocs', () => {
   it('should generate documentation', async () => {
