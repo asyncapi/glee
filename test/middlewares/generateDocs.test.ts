@@ -31,15 +31,6 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
 })
 
 const CONFIG_TEST_DATA = {
-  websocket: {
-    httpServer: 'customServer',
-    adapter: 'native', // Default. Can also be 'socket.io' or a reference to a custom adapter.
-  },
-  cluster: {
-    adapter: 'redis',
-    name: 'gleeCluster',
-    url: 'redis://localhost:6379',
-  },
   generator: {
     folder: 'output',
     template: 'markdown-template',
@@ -55,6 +46,6 @@ describe('generateDocs', () => {
       CONFIG_TEST_DATA,
       testDir
     )
-    expect(result).toBe('done')
+    expect(result).toBe(JSON.stringify(result))
   }, 100000)
 })
