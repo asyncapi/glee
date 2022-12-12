@@ -3,8 +3,9 @@ import { logInfoMessage, logError } from '../lib/logger.js'
 import Generator from '@asyncapi/generator'
 
 export default async (spec, config, resDir) => {
+  const configData = config.docs
+  if(configData && configData.generate){
   logInfoMessage(`Generating docs for your parsed specification...`)
-  const configData = config.generator
   const resolvedData = spec.json()
   const generator = new Generator(
     configData && configData.template
@@ -15,11 +16,12 @@ export default async (spec, config, resDir) => {
       configData && configData.folder ? configData.folder : 'docs'
     )
   )
-  try {
-    await generator.generateFromString(JSON.stringify(resolvedData))
-    logInfoMessage('Successfully generated docs')
-  } catch (error) {
-    logError(error)
-    return error
+    try {
+      await generator.generateFromString(JSON.stringify(resolvedData))
+      logInfoMessage('Successfully generated docs')
+    } catch (error) {
+      logError(error)
+      return error
+    }
   }
 }

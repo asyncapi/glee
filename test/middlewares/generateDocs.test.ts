@@ -31,7 +31,8 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
 })
 
 const CONFIG_TEST_DATA = {
-  generator: {
+  docs: {
+    generate: false,
     folder: "output",
     template: "@asyncapi/markdown-template",
   },
@@ -39,7 +40,7 @@ const CONFIG_TEST_DATA = {
 
 describe('generateDocs', () => {
   it('should generate documentation', async () => {
-    const testDir = tmpdir() + `/${CONFIG_TEST_DATA.generator.folder}`
+    const testDir = tmpdir() + `/${CONFIG_TEST_DATA.docs.folder}`
     fs.emptyDirSync(testDir)
     const result = await generateDocs(
       TEST_ASYNCAPI_DOCUMENT,
