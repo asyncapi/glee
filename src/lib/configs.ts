@@ -29,9 +29,6 @@ export async function initializeConfigs(config: Config = {}): Promise<{ [key: st
 }
 
 /**
- * See if we 
- */
-/**
  * Loads the configuration from glee project.
  */
 async function loadConfigsFromFile() {

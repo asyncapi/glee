@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import { findSpecFile } from '../../src/lib/configs.js';
+import fs from 'fs'
+import path from 'path'
+import { findSpecFile } from '../../src/lib/configs.js'
 
 describe('Test resolving the AsyncAPI file path.', () => {
     afterEach(async () => {
