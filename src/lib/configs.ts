@@ -19,7 +19,7 @@ export async function initializeConfigs(config: Config = {}): Promise<{ [key: st
   GLEE_LIFECYCLE_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'lifecycle')
   GLEE_FUNCTIONS_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'functions')
   GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
-  ASYNCAPI_FILE_PATH = path.resolve(GLEE_PROJECT_DIR, 'asyncapi.yaml')
+  ASYNCAPI_FILE_PATH = findSpecFile(GLEE_PROJECT_DIR)
   const configsFromFile = await loadConfigsFromFile()
   
   return {
@@ -28,6 +28,9 @@ export async function initializeConfigs(config: Config = {}): Promise<{ [key: st
   }
 }
 
+/**
+ * See if we 
+ */
 /**
  * Loads the configuration from glee project.
  */
@@ -50,6 +53,26 @@ async function loadConfigsFromFile() {
   }
 }
 
+export function findSpecFile(baseDir): string{
+  const files = ['asyncapi.yaml', 'asyncapi.json', 'asyncapi.yml']
+  let indexOfFoundFile = -1
+
+  for (let index = 0; index < files.length; index++) {
+    const file = files[index]
+    if(existsSync(path.resolve(baseDir, file))){
+      if(indexOfFoundFile === -1){
+      indexOfFoundFile = index
+      } else {
+        throw new Error('Multiple AsyncAPI files found. Please make sure to choose one in your config file.')
+      }
+    }
+  }
+  
+  if(indexOfFoundFile === -1){
+    throw new Error('AsyncAPI file was not found. you can set its path in config file.')
+  }
+  return path.resolve(baseDir, files[indexOfFoundFile])
+}
 export function getConfigs(): { [key: string]: string } {
   return {
     GLEE_DIR,
