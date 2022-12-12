@@ -107,7 +107,9 @@ export async function trigger({
     }
 
     res?.send?.forEach((msg) => {
-      const isBroadcast = parsedAsyncAPI.server(msg.server).protocol() === 'ws' && !isRemoteServer(parsedAsyncAPI, msg.server)
+      const localServerProtocols = ['ws', 'wss', 'http', 'https']
+      const serverProtocol = parsedAsyncAPI.server(msg.server).protocol().toLowerCase()
+      const isBroadcast = localServerProtocols.includes(serverProtocol) && !isRemoteServer(parsedAsyncAPI, msg.server)
       app.send(new GleeMessage({
         payload: msg.payload,
         headers: msg.headers,
