@@ -11,6 +11,14 @@ interface Client {
   binding?: any;
 }
 
+interface IQueryValues {
+  [name: string]: string;
+}
+
+interface IHeaderValues {
+  [name: string]: string;
+}
+
 class WsClientAdapter extends Adapter {
   private clients: Array<Client> = []
 
@@ -31,9 +39,9 @@ class WsClientAdapter extends Adapter {
 
     for (const channel of channelsOnThisServer) {
       const headers = {}
-      const config: WebsocketAdapterConfig = await this.resolveProtocolConfig('websocket')
+      const config: WebsocketAdapterConfig = await this.resolveProtocolConfig('ws')
       const clientConfig = config?.client
-      headers['Authentication'] = clientConfig?.authentication?.token
+      headers['Authenticaton'] = clientConfig?.authentication?.token
       const queryString = qs.stringify(clientConfig?.query)
 
       const url = new URL(
@@ -90,6 +98,48 @@ class WsClientAdapter extends Adapter {
     }
 
     return channels
+  }
+
+  private getBindingValues(
+    queryValues: IQueryValues,
+    headerValues: IHeaderValues
+  ) {
+    const query = {}
+    const headers = {}
+
+    const injectEnv = (keyString: string) => {
+      let resolvedKey = keyString
+      const envTokens = resolvedKey.match(/\$\b[A-Z0-9_]+\b/g)
+      if (envTokens === null) return resolvedKey
+      for (const envToken of envTokens) {
+        resolvedKey = resolvedKey.replace(
+          envToken,
+          process.env[`${envToken.slice(1)}`]
+        )
+      }
+
+      return resolvedKey
+    }
+
+    if (queryValues) {
+      for (const key of Object.keys(queryValues)) {
+        const keyString = queryValues[key]
+        if (Array.isArray(keyString)) {
+          query[key] = keyString.map((key) => injectEnv(key))
+        } else {
+          query[key] = injectEnv(keyString)
+        }
+      }
+    }
+
+    if (headerValues) {
+      for (const key of Object.keys(headerValues)) {
+        const keyString = headerValues[key]
+        headers[key] = injectEnv(keyString)
+      }
+    }
+
+    return { query, headers }
   }
 
   async _send(message: GleeMessage): Promise<void> {
