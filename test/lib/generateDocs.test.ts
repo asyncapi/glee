@@ -1,7 +1,7 @@
 import 'jest-extended'
 import { tmpdir } from 'os'
 import fs from 'fs-extra'
-import generateDocs from '../../src/middlewares/generateDocs'
+import generateDocs from '../../src/lib/docs'
 import AsyncAPIDocument from '@asyncapi/parser/lib/models/asyncapi'
 
 const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
