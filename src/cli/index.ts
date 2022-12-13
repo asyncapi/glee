@@ -3,9 +3,7 @@
 import { compileAndWatch } from '../lib/compiler.js'
 import spawn from 'cross-spawn'
 import { logLineWithIcon, logTypeScriptMessage } from '../lib/logger.js'
-import { initializeConfigs } from '../lib/configs.js'
-import { getParsedAsyncAPI } from '../lib/asyncapiFile.js'
-import generateDocs from '../middlewares/generateDocs.js'
+import generateDocs from './triggerDocs'
 
 const args = process.argv.splice(2)
 const command = args[0]
@@ -46,13 +44,9 @@ if (command === 'dev') {
 } else if (command === 'start') {
   import('./start.js')
 } else if (command === 'docs') {
-  (async () => {
-    const config = await initializeConfigs()
-    const parsedAsyncAPI = await getParsedAsyncAPI()
-    generateDocs(parsedAsyncAPI, config, null)
-  })()
+ generateDocs();
 } else {
-  console.error(`Unknown command '${args[0]}'`)
+  console.error(`Unknown command "${args[0]}"`)
 }
 
 function killDevChildProcess() {

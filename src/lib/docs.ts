@@ -4,18 +4,18 @@ import Generator from '@asyncapi/generator'
 
 export default async (spec, config, resDir) => {
   const configData = config.docs
-  if(configData && configData.generate){
-  logInfoMessage(`Generating docs for your parsed specification...`)
-  const resolvedData = spec.json()
-  const generator = new Generator(
-    configData && configData.template
-      ? configData.template
-      : '@asyncapi/markdown-template',
-    path.resolve(
-      resDir ? resDir : './',
-      configData && configData.folder ? configData.folder : 'docs'
+  if (configData?.enabled) {
+    logInfoMessage(`Generating docs for your parsed specification...`)
+    const resolvedData = spec.json()
+    const generator = new Generator(
+      configData && configData.template
+        ? configData.template
+        : '@asyncapi/markdown-template',
+      path.resolve(
+        resDir ? resDir : './',
+        configData && configData.folder ? configData.folder : 'docs'
+      )
     )
-  )
     try {
       await generator.generateFromString(JSON.stringify(resolvedData))
       logInfoMessage('Successfully generated docs')

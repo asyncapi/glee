@@ -32,7 +32,7 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
 
 const CONFIG_TEST_DATA = {
   docs: {
-    generate: false,
+    enabled: false,
     folder: "output",
     template: "@asyncapi/markdown-template",
   },
