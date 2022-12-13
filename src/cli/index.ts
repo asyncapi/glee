@@ -3,7 +3,7 @@
 import { compileAndWatch } from '../lib/compiler.js'
 import spawn from 'cross-spawn'
 import { logLineWithIcon, logTypeScriptMessage } from '../lib/logger.js'
-import generateDocs from './triggerDocs'
+import docs from "../docs.js"
 
 const args = process.argv.splice(2)
 const command = args[0]
@@ -44,7 +44,7 @@ if (command === 'dev') {
 } else if (command === 'start') {
   import('./start.js')
 } else if (command === 'docs') {
- generateDocs();
+  docs()
 } else {
   console.error(`Unknown command "${args[0]}"`)
 }

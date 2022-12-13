@@ -1,5 +1,5 @@
 import path from 'path'
-import { logInfoMessage, logError } from '../lib/logger.js'
+import { logInfoMessage, logError } from './logger.js'
 import Generator from '@asyncapi/generator'
 
 export default async (spec, config, resDir) => {
