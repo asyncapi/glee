@@ -36,7 +36,7 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
   } else if (['amqp', 'amqps'].includes(protocol)) {
     // TODO: Implement AMQP support
   } else if (['ws', 'wss'].includes(protocol)) {
-    const configWsAdapter = config?.websocket?.server.adapter
+    const configWsAdapter = config?.websocket?.server?.adapter
     if (remoteServers && remoteServers.includes(serverName)) {
       app.addAdapter(WebsocketClientAdapter, {
         serverName,
