@@ -114,8 +114,8 @@ export const logInboundMessage = (message: GleeMessage) => {
 
 export const logOutboundMessage = (message: GleeMessage) => {
   const icon = message.broadcast ? '⇶' : '↗'
-  const verb = message.broadcast ? 'broadcasted' : 'sent'
   const serverName = message.serverName || 'all servers'
+  const verb = message.broadcast ? 'broadcasted' : 'sent'
   console.log(chalk.reset.magenta(icon), chalk.yellow(message.channel), 'was', verb ,'to', chalk.gray(serverName))
   logJSON(message.payload)
 }
@@ -149,6 +149,7 @@ export const logTypeScriptMessage = (message: string) => {
 
 export const logTypeScriptError = (code: number, message: string, fileName: string, line: number, character: number) => {
   const fileInfo = `${chalk.cyan(fileName)}:${chalk.yellow(line + 1)}:${chalk.yellow(character + 1)}`
-  const error = `${chalk.red('error')} ${chalk.gray(`TS${code}:`)}`
-  console.error(`${TSLogo} ${fileInfo} - ${error} ${message}`)
+  const error = chalk.red('error')
+  const errorCode = chalk.gray(`TS${code}:`)
+  console.error(`${TSLogo} ${fileInfo} - ${error} ${errorCode} ${message}`)
 }

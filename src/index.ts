@@ -69,7 +69,7 @@ export default async function GleeAppInitializer () {
     if (channel.hasPublish()) {
       const operationId = channel.publish().json('operationId')
       if (operationId) {
-        const schema = channel.publish().message().payload().json()
+        const schema = {oneOf: channel.publish().messages().map(message => message.payload().json())} as any
         app.use(channelName, validate(schema), (event, next) => {
           triggerFunction({
             app,
@@ -80,7 +80,7 @@ export default async function GleeAppInitializer () {
       }
     }
     if (channel.hasSubscribe()) {
-      const schema = channel.subscribe().message().payload().json()
+      const schema = {oneOf: channel.subscribe().messages().map(message => message.payload().json())} as any
       app.useOutbound(channelName, validate(schema), json2string)
     }
   })

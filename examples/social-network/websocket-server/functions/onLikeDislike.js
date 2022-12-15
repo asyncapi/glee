@@ -23,7 +23,7 @@ export default async function (event) {
   const totalCount = likes.filter(like => like.postId === postId).length
 
   return {
-    broadcast: [{
+    send: [{
       server: 'websockets',
       payload: {
         type: 'likes_count_updated',
@@ -33,6 +33,18 @@ export default async function (event) {
         },
       }
     }],
+    reply: [
+      {
+        channel: '/',
+        payload: {
+          type: 'likes_count_updated',
+          data: {
+            postId,
+            totalCount
+          }
+        }
+      }
+    ],
     ...(
       type === 'like' && {
         send: [{
