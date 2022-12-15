@@ -17,6 +17,11 @@ This function must return an object with the following shape:
 ```js
 export default async function () {
   return {
+    docs: {
+    enabled: false // Enable/Disable documentation generation
+    folder: 'output' // Folder where you want the output of your docs to reside.
+    template: '@asyncapi/markdown-template' // Type of template you want to use.
+    },
     websocket: {
       httpServer: customServer, // A custom HTTP server of your own.
       adapter: 'native', // Default. Can also be 'socket.io' or a reference to a custom adapter.
@@ -33,6 +38,9 @@ export default async function () {
 
 |Field|Description|
 |---|---|
+|docs.enabled|This flag enables/disables the docs generation functionality.
+|docs.folder|The dedicated folder you want your generated docs to reside.
+|docs.template|The AsyncAPI template you wanna use for generating your documentation.
 |websocket.adapter|The Glee adapter to use for the WebSocket server. Defaults to a "native" WebSocket implementation. Other allowed values are `socket.io` (to use the [Socket.IO](https://socket.io/) Glee adapter) or a reference to a custom adapter.
 |websocket.httpServer|A custom HTTP server of your own. E.g., an [Express](https://expressjs.com/en/4x/api.html) server or any object that implements the [http.Server](https://nodejs.org/api/http.html#http_class_http_server) interface.
 |websocket.port|The port to use when binding the WebSocket server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.
