@@ -27,12 +27,6 @@ type ClusterAdapterRecord = {
 }
 
 export default class Glee extends EventEmitter {
-  static createMessage(value: any) {
-    throw new Error('Method not implemented.')
-  }
-  private _createMessage(value: any) {
-    throw new Error('Method not implemented.')
-  }
   private _options: GleeConfig
   private _router: GleeRouter
   private _adapters: AdapterRecord[]
