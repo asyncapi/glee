@@ -26,7 +26,7 @@ class KafkaAdapter extends Adapter {
     })
 
     const consumer = kafka.consumer({ groupId: 'glee-group' })   // groupID: hardcoded need to change afterwards
-    const producer = kafka.producer();
+  
     consumer.on('consumer.connect', () => {
       if (this.firstConnect) {
         this.firstConnect = false
@@ -41,7 +41,6 @@ class KafkaAdapter extends Adapter {
     await consumer.connect() 
     const subscribedChannels = this.getSubscribedChannels()
     await consumer.subscribe({ topics: subscribedChannels, fromBeginning: true })
-    await producer.connect();
     await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
         const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`
