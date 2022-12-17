@@ -1,0 +1,18 @@
+asyncapi: 2.0.0
+info:
+  title: Kafka test
+  version: 1
+servers:
+  mykafka:
+    url: https://pkc-6ojv2.us-west4.gcp.confluent.cloud:443
+    protocol: kafka-secure
+channels:
+  test:
+    publish:
+      operationId: onTest
+      message:
+        payload:
+          type: object
+          properties:
+            test:
+              type: string

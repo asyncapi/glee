@@ -1,0 +1,15 @@
+<script>
+  const serverAnnounceSocket = new WebSocket('ws://localhost:3005/ws/server/announce')
+  const userSignedUpSocket = new WebSocket('ws://localhost:3005/ws/user/signedup?salutation=Hola')
+
+  function logMessage (event) {
+    console.log(JSON.parse(event.data))
+  }
+
+  serverAnnounceSocket.addEventListener('message', logMessage)
+  userSignedUpSocket.addEventListener('message', logMessage)
+  
+  userSignedUpSocket.addEventListener('open', () => {
+    //  userSignedUpSocket.send('{"displayName": "Fran Mendez", "email": "fmvilas@gmail.com"}')
+  })
+</script>
