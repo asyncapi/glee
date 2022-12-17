@@ -42,24 +42,23 @@ class KafkaAdapter extends Adapter {
     await consumer.subscribe({ topics: subscribedChannels, fromBeginning: true })
     await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
-        const msg = this._createMessage(message.value)
+        const msg = this._createMessage(topic, message)
         this.emit('message', msg)
       },
     }) 
   }
 
-  _createMessage(message) {
-    const gleeMessage = new GleeMessage({
+  _createMessage(topic, message) {
+    return new GleeMessage({
+      channel: topic,
       payload: message.value,
       headers: {
-        'x-kafka-partition': message.partition,
-        'x-kafka-offset': message.offset,
+        partition: message.partition,
+        key: message.key,
+        offset: message.offset,
+        timestamp: message.timestamp,
+        ...message.headers,
       },
-    })
-
-    return new GleeMessage({
-      payload: message.payload,
-      channel: message.topic,
     })
   }
 }
