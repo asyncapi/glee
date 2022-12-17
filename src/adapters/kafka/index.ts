@@ -1,8 +1,10 @@
 import { Kafka, Consumer, Producer } from 'kafkajs'
 import Adapter from '../../lib/adapter.js'
+import glee from '../../lib/glee.js'
 import GleeMessage from '../../lib/message.js'
 
 class KafkaAdapter extends Adapter {
+  private kafka: Kafka
   private firstConnect: boolean = true
   producer: any
   name(): string {
@@ -12,7 +14,7 @@ class KafkaAdapter extends Adapter {
   async connect() {
     const brokerUrl = new URL(this.AsyncAPIServer.url())
     // kafka client
-    const kafka = new Kafka({
+    const kafka: Kafka = new Kafka({
       clientId: 'glee-app',  // clientID: hardcoded need to change afterwards 
       brokers: [brokerUrl.host],
       ssl: true,
@@ -42,20 +44,14 @@ class KafkaAdapter extends Adapter {
     await producer.connect();
     await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
-        const gleemessage = new GleeMessage({
-          // topic: topic,
-          // partition: partition,
-          // value: message.value.toString(),
-          // key: message.key,
-          // offset: message.offset,
-          // timestamp: message.timestamp,
-          // headers: message.headers,
-        });
         const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`
         console.log(`- ${prefix} ${message.key}#${message.value}`)
-
-        gleemessage.send();
       },
+    })
+
+    kafka.on('message', (channel, message) => {
+      const gleeMessage = glee.createMessage(message.value)
+      this.emit('message', message, kafka)
     })
   }
 }
