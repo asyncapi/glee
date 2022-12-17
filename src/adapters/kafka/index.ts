@@ -1,6 +1,5 @@
 import { Kafka, Consumer, Producer } from 'kafkajs'
 import Adapter from '../../lib/adapter.js'
-import glee from '../../lib/glee.js'
 import GleeMessage from '../../lib/message.js'
 
 class KafkaAdapter extends Adapter {
@@ -43,14 +42,24 @@ class KafkaAdapter extends Adapter {
     await consumer.subscribe({ topics: subscribedChannels, fromBeginning: true })
     await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
-        const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`
-        console.log(`- ${prefix} ${message.key}#${message.value}`)
+        const msg = this._createMessage(message.value)
+        this.emit('message', msg)
+      },
+    }) 
+  }
+
+  _createMessage(message) {
+    const gleeMessage = new GleeMessage({
+      payload: message.value,
+      headers: {
+        'x-kafka-partition': message.partition,
+        'x-kafka-offset': message.offset,
       },
     })
 
-    kafka.on('message', (channel, message) => {
-      const gleeMessage = glee.createMessage(message.value)
-      this.emit('message', message, kafka)
+    return new GleeMessage({
+      payload: message.payload,
+      channel: message.topic,
     })
   }
 }
