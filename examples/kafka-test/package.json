@@ -7,7 +7,7 @@
     "dev": "glee dev",
     "start": "glee start"
   },
-  "author": "Fran Mendez",
+  "author": "Ruchi Pakhle",
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/glee": "file:../.."

@@ -33,7 +33,7 @@ class KafkaAdapter extends Adapter {
           name: this.name(),
           adapter: this,
           connection: consumer,
-          channels: this.channelNames
+          channels: this.getSubscribedChannels()
         })
       }
     })
@@ -43,7 +43,7 @@ class KafkaAdapter extends Adapter {
     await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
         const msg = this._createMessage(topic, message)
-        this.emit('message', msg)
+        this.emit('message', msg, consumer)
       },
     }) 
   }
