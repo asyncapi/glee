@@ -4,9 +4,6 @@ info:
   version: 1.0.0
   description: This service is in charge of processing user signups
 servers:
-  mykafka:
-    url: https://pkc-6ojv2.us-west4.gcp.confluent.cloud:443
-    protocol: kafka-secure
   mosquitto:
     url: mqtts://test.mosquitto.org
     protocol: mqtts
