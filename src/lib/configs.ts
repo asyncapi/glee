@@ -60,13 +60,13 @@ export function findSpecFile(baseDir): string{
       if(indexOfFoundFile === -1){
       indexOfFoundFile = index
       } else {
-        throw new Error('Multiple AsyncAPI files found. Please make sure to choose one in your config file.')
+        throw new Error('Multiple AsyncAPI files found at the root of your project. Please make sure to choose one in your config file.')
       }
     }
   }
   
   if(indexOfFoundFile === -1){
-    throw new Error('AsyncAPI file was not found. you can set its path in config file.')
+    throw new Error('AsyncAPI file was not found at the root of your project. you can set its path in config file.')
   }
   return path.resolve(baseDir, files[indexOfFoundFile])
 }
