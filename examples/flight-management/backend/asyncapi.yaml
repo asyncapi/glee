@@ -17,11 +17,6 @@ channels:
         oneOf:
           - $ref: '#/components/messages/updateFlight'
           - $ref: '#/components/messages/getFlights'
-    subscribe:
-      operationId: processMessage
-      message:
-        oneOf:
-          - $ref: '#/components/messages/any'
     bindings:
       ws:
         query:
