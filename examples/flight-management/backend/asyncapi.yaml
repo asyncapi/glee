@@ -1,0 +1,64 @@
+asyncapi: 2.4.0
+info:
+  title: Flight Board
+  version: 0.0.1
+  description: Flight Board offers real-time flight info on all of the screens at an airport. This AsyncAPI file is only for the real time communication. We are using glee to manage the websocket server as well as the REST API server which is being created with Expressjs.
+
+servers:
+  websockets:
+    url: ws://localhost:3000
+    protocol: ws
+    description: this Websocket server is available without authorization. It recieves the changes that is made by different sources and updates the database and Flight Boards.
+channels:
+  /:
+    publish:
+      operationId: sendMessage
+      message:
+        oneOf:
+          - $ref: '#/components/messages/updateFlight'
+          - $ref: '#/components/messages/getFlights'
+    subscribe:
+      operationId: processMessage
+      message:
+        oneOf:
+          - $ref: '#/components/messages/any'
+    bindings:
+      ws:
+        query:
+          additionalProperties: false
+          properties:
+            airport:
+              type: string
+components:
+  messages:
+    any:
+      summary: this message is used to skip validating and is just for testing purposes.
+      payload: 
+        type: object
+    getFlights:
+      summary: this message should be published when a board wants to recieve all of the flights that departure or arrive at that airport.
+      payload:
+        type: object
+        additionalProperties: false
+        properties:
+          name:
+            $ref: '#/components/schemas/eventName'
+          airportCode:
+            type: string
+            maxLength: 3
+            minLength: 3
+    updateFlight:
+      summary: this message is used for both subscribe and publish.
+      payload:
+        type: object
+        additionalProperties: false
+        properties:
+          name:
+            $ref: '#/components/schemas/eventName'
+          updatedFlight:
+            type: object
+  schemas:
+    eventName:
+      type: string
+      description: the name of the event.
+      enum: ['allFlights', 'updateFlight']
