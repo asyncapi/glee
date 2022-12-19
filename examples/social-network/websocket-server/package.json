@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/asyncapi/glee-hello-world#readme",
   "dependencies": {
-    "@asyncapi/glee": "^0.10.15",
-    "@asyncapi/parser": "^1.17.0",
+    "@asyncapi/glee": "file:../../..",
+    "@asyncapi/parser": "^1.17.2",
     "flat-file-db": "^1.0.0",
     "lowdb": "^3.0.0"
   }
