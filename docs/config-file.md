@@ -17,6 +17,7 @@ This function must return an object with the following shape:
 ```js
 export default async function () {
   return {
+    glee: {},
     websocket: {},
     mqtt: {},
     cluster: {}
@@ -30,6 +31,11 @@ Here is an example of a `glee.config.js` file for reference:
 ```js
 export default async function () {
   return {
+    glee: { // Glee core configurations
+      lifecycleDir: './lifecycle',
+      functionsDir: './functions',
+      asyncapiFilePath: './asyncapi.json'
+    }
     websocket: {
       server: {
         httpServer: customServer, // A custom HTTP server of your own.
@@ -63,6 +69,17 @@ export default async function () {
   };
 }
 ```
+### Glee Core Config
+
+These configs are not bound to any specific protocol but to the glee itself.
+
+|Field|Default|Description|
+|--|--|--|
+|glee.gleeDir|.glee|set the glee directory. your sources will be compiled here.|
+|glee.lifecycleDir|./lifecycle|path to the directory that your lifecycle events are stored. read more on lifecycle events [here](./lifecycle-events.md)|
+|glee.functionsDir|./functions| path to the directory that your functions  are stored. read more on functions [here](./functions.md)|
+|glee.asyncapiFilePath|./asyncapi.(yaml | yml | json)| the path of your AsyncAPI file. |
+
 
 Every protocol has different configuration needs so each protocol has unique configurations:
 

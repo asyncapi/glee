@@ -39,10 +39,10 @@ async function loadConfigsFromFile() {
     if (typeof projectConfigs === 'function') projectConfigs = await projectConfigs()
     if (!projectConfigs) return
 
-    GLEE_DIR = projectConfigs.GLEE_DIR || GLEE_DIR 
-    GLEE_LIFECYCLE_DIR = projectConfigs.GLEE_LIFECYCLE_DIR ? path.resolve(GLEE_DIR, projectConfigs.GLEE_LIFECYCLE_DIR) : GLEE_LIFECYCLE_DIR 
-    GLEE_FUNCTIONS_DIR = projectConfigs.GLEE_FUNCTIONS_DIR ? path.resolve(GLEE_DIR, projectConfigs.GLEE_FUNCTIONS_DIR) : GLEE_FUNCTIONS_DIR 
-    ASYNCAPI_FILE_PATH = projectConfigs.ASYNCAPI_FILE_PATH ? projectConfigs.ASYNCAPI_FILE_PATH : ASYNCAPI_FILE_PATH
+    GLEE_DIR = projectConfigs.glee?.gleeDir || GLEE_DIR 
+    GLEE_LIFECYCLE_DIR = projectConfigs.glee?.lifecycleDir ? path.resolve(GLEE_DIR, projectConfigs.glee?.lifecycleDir) : GLEE_LIFECYCLE_DIR 
+    GLEE_FUNCTIONS_DIR = projectConfigs.glee?.functionsDir ? path.resolve(GLEE_DIR, projectConfigs.glee?.functionsDir) : GLEE_FUNCTIONS_DIR 
+    ASYNCAPI_FILE_PATH = projectConfigs.glee?.asyncapiFilePath ? projectConfigs.glee?.asyncapiFilePath : ASYNCAPI_FILE_PATH
     if(!ASYNCAPI_FILE_PATH){
       logErrorLine("Unable to load the AsyncAPI file. please set its path in your glee config file. ()")
     }
