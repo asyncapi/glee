@@ -8,14 +8,14 @@ describe('Test resolving the AsyncAPI file path.', () => {
         await Promise.allSettled(promises)
     })
 
-    test('Should throw error if AsyncAPI file doesn\'t exists.', async () => {
-        expect(() => findSpecFile("")).toThrowError('AsyncAPI file was not found at the root of your project. you can set its path in config file.')
+    test('Should return undefined if AsyncAPI file doesn\'t exists.', async () => {
+        expect(findSpecFile("")).toBe(undefined)
     })
 
-    test('Should throw error if there are multiple AsyncAPI spec files.', async () => {
+    test('Should return undefined if there are multiple AsyncAPI spec files.', async () => {
         fs.writeFileSync(path.resolve('./asyncapi.json'), '')
         fs.writeFileSync(path.resolve('./asyncapi.yaml'), '')
-        expect(() => findSpecFile("")).toThrowError('Multiple AsyncAPI files found at the root of your project. Please make sure to choose one in your config file.')
+        expect(findSpecFile("")).toBe(undefined)
     })
 
     test('Should succeed in finding AsyncAPI spec if there is only one.', async () => {
