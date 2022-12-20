@@ -1,0 +1,31 @@
+asyncapi: 2.4.0
+info:
+  title: asyncapicoin server
+  version: 1.0.0
+  description: |
+    This app is a dummy server that would stream the price of a fake cryptocurrency
+servers:
+  websocket:
+    url: ws://localhost:3000
+    protocol: ws
+channels:
+  /price:
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+    subscribe:
+      message:
+        $ref: '#/components/messages/indexGraph'
+components:
+  messages:
+    indexGraph:
+      summary: Data required for drawing index graph
+      payload:
+        type: object
+        properties:
+          status:
+            type: string
+          time:
+            type: number
+          price:
+            type: number

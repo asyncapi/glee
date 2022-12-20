@@ -6,9 +6,10 @@ import { logWarningMessage, logError } from './logger.js'
 import GleeMessage from './message.js'
 import { GleeFunction } from './index.d'
 import Glee from './glee.js'
-import { gleeMessageToFunctionEvent, validateData } from './util.js'
+import { gleeMessageToFunctionEvent, validateData, isRemoteServer } from './util.js'
 import { pathToFileURL } from 'url'
 import GleeError from '../errors/glee-error.js'
+import {getParsedAsyncAPI} from './asyncapiFile.js'
 
 interface FunctionInfo {
   run: GleeFunction,
@@ -87,6 +88,7 @@ export async function trigger({
   message: GleeMessage,
 }) {
   try {
+    const parsedAsyncAPI = await getParsedAsyncAPI()
     const res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
     const { humanReadableError, errors, isValid } = validateData(res, FunctionReturnSchema)
 
@@ -104,27 +106,26 @@ export async function trigger({
       return
     }
 
-    if (res?.send) {
-      res.send.forEach((msg) => {
-        app.send(new GleeMessage({
-          payload: msg.payload,
-          headers: msg.headers,
-          channel: msg.channel || message.channel,
-          serverName: msg.server,
-          broadcast: true,
-        }))
-      })
-    }
+    res?.send?.forEach((msg) => {
+      const localServerProtocols = ['ws', 'wss', 'http', 'https']
+      const serverProtocol = parsedAsyncAPI.server(msg.server).protocol().toLowerCase()
+      const isBroadcast = localServerProtocols.includes(serverProtocol) && !isRemoteServer(parsedAsyncAPI, msg.server)
+      app.send(new GleeMessage({
+        payload: msg.payload,
+        headers: msg.headers,
+        channel: msg.channel || message.channel,
+        serverName: msg.server,
+        broadcast: isBroadcast
+      }))
+    })
 
-    if (res?.reply) {
-      res.reply.forEach((msg) => {
-        message.reply({
-          payload: msg.payload,
-          headers: msg.headers,
-          channel: msg.channel,
-        })
+    res?.reply?.forEach((msg) => {
+      message.reply({
+        payload: msg.payload,
+        headers: msg.headers,
+        channel: msg.channel,
       })
-    }
+    })
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
       const functionsPath = relative(GLEE_DIR, GLEE_FUNCTIONS_DIR)

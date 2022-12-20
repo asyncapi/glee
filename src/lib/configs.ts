@@ -48,9 +48,7 @@ async function loadConfigsFromFile() {
     }
     return projectConfigs
   } catch (e) {
-    if (e.code !== 'ERR_MODULE_NOT_FOUND') {
-      return console.error(e)
-    }
+    return console.error(e)
   }
 }
 

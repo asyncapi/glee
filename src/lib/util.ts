@@ -1,3 +1,4 @@
+import { AsyncAPIDocument } from '@asyncapi/parser'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
@@ -115,4 +116,9 @@ export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): Gle
     serverName: message.serverName,
     glee,
   } as GleeFunctionEvent
+}
+
+export const isRemoteServer = (parsedAsyncAPI: AsyncAPIDocument, serverName: string): boolean => {
+  const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
+  return remoteServers && remoteServers.includes(serverName)
 }

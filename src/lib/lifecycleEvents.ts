@@ -79,22 +79,20 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
     const responses = await Promise.all(handlers.map(info => info.fn(params)))
     
     responses.forEach(res => {
-      if (res.send) {
-        res.send.forEach((event: GleeFunctionReturnSend) => {
-          try {
-            params.glee.send(new GleeMessage({
-              payload: event.payload,
-              headers: event.headers,
-              channel: event.channel,
-              serverName: event.server,
-              connection: params.connection,
-            }))
-          } catch (e) {
-            console.error(`The ${lifecycleEvent} lifecycle function failed to send an event to channel ${event.channel}.`)
-            console.error(e)
-          }
-        })
-      }
+      res?.send?.forEach((event: GleeFunctionReturnSend) => {
+        try {
+          params.glee.send(new GleeMessage({
+            payload: event.payload,
+            headers: event.headers,
+            channel: event.channel,
+            serverName: event.server,
+            connection: params.connection,
+          }))
+        } catch (e) {
+          console.error(`The ${lifecycleEvent} lifecycle function failed to send an event to channel ${event.channel}.`)
+          console.error(e)
+        }
+      })
     })
   } catch (e) {
     console.error(e)

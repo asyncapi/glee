@@ -114,8 +114,8 @@ export const logInboundMessage = (message: GleeMessage) => {
 
 export const logOutboundMessage = (message: GleeMessage) => {
   const icon = message.broadcast ? '⇶' : '↗'
-  const verb = message.broadcast ? 'broadcasted' : 'sent'
   const serverName = message.serverName || 'all servers'
+  const verb = message.broadcast ? 'broadcasted' : 'sent'
   console.log(chalk.reset.magenta(icon), chalk.yellow(message.channel), 'was', verb ,'to', chalk.gray(serverName))
   logJSON(message.payload)
 }

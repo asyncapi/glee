@@ -50,7 +50,7 @@ const fakeConnection = new GleeConnection({
 describe('glee', () => {
   describe('options', () => {
     it('returns options passed on constructor', async () => {
-      const fakeOptions = { websocket: { port: 7000 } }
+      const fakeOptions = { websocket: { server: {port: 7000} } }
       const app = new Glee(fakeOptions)
       expect(app.options).toStrictEqual(fakeOptions)
     })
