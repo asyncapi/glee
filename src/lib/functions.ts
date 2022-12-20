@@ -30,7 +30,7 @@ const OutboundMessageSchema = {
 }
 
 const FunctionReturnSchema = {
-  type: 'object',
+  type: ['object', 'null'],
   properties: {
     send: {
       type: 'array',
@@ -89,7 +89,8 @@ export async function trigger({
 }) {
   try {
     const parsedAsyncAPI = await getParsedAsyncAPI()
-    const res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
+    let res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
+    if (res === undefined) res = null
     const { humanReadableError, errors, isValid } = validateData(res, FunctionReturnSchema)
 
     if ( !isValid ) {
