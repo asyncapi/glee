@@ -1,9 +1,8 @@
-import { Kafka, Consumer, Producer } from 'kafkajs'
+import { Kafka } from 'kafkajs'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 
 class KafkaAdapter extends Adapter {
-  private kafka: Kafka
   private firstConnect: boolean = true
   producer: any
   name(): string {
@@ -12,7 +11,6 @@ class KafkaAdapter extends Adapter {
  
   async connect() {
     const brokerUrl = new URL(this.AsyncAPIServer.url())
-    // kafka client
     const kafka: Kafka = new Kafka({
       clientId: 'glee-app',  // clientID: hardcoded need to change afterwards 
       brokers: [brokerUrl.host],
@@ -25,7 +23,7 @@ class KafkaAdapter extends Adapter {
     })
 
     const consumer = kafka.consumer({ groupId: 'glee-group' })   // groupID: hardcoded need to change afterwards
-  
+
     consumer.on('consumer.connect', () => {
       if (this.firstConnect) {
         this.firstConnect = false
@@ -42,18 +40,29 @@ class KafkaAdapter extends Adapter {
     await consumer.subscribe({ topics: subscribedChannels, fromBeginning: true })
     await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
-        const msg = this._createMessage(topic, message)
+        const msg = this._createMessage(topic, partition, message)
         this.emit('message', msg, consumer)
       },
-    }) 
+    })
+    
+    const producer = kafka.producer()
+    await producer.connect()
+    await producer.send({
+      topic: 'glee-topic',
+      messages: [{ value: 'Hello, Glee!' }],
+    })
   }
 
-  _createMessage(topic, message) {
+  async send(message: GleeMessage) {
+    
+  }
+
+  _createMessage(topic, partition, message) {
     return new GleeMessage({
       channel: topic,
       payload: message.value,
       headers: {
-        partition: message.partition,
+        partition,
         key: message.key,
         offset: message.offset,
         timestamp: message.timestamp,
