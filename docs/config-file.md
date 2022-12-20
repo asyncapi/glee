@@ -75,10 +75,10 @@ These configs are not bound to any specific protocol but to the glee itself.
 
 |Field|Default|Description|
 |--|--|--|
-|glee.gleeDir|.glee|set the glee directory. your sources will be compiled here.|
-|glee.lifecycleDir|./lifecycle|path to the directory that your lifecycle events are stored. read more on lifecycle events [here](./lifecycle-events.md)|
-|glee.functionsDir|./functions| path to the directory that your functions  are stored. read more on functions [here](./functions.md)|
-|glee.asyncapiFilePath|./asyncapi.(yaml | yml | json)| the path of your AsyncAPI file. |
+|glee.gleeDir|`.glee`|set the glee directory. your sources will be compiled here.|
+|glee.lifecycleDir|`lifecycle`|path to the directory that your [lifecycle events](./lifecycle-events.md) are stored.|
+|glee.functionsDir|`functions`| path to the directory that your [functions](./functions.md)  are stored.|
+|glee.asyncapiFilePath|`asyncapi.(yaml \| yml \| json)`| the path of your AsyncAPI file. |
 
 
 Every protocol has different configuration needs so each protocol has unique configurations:
