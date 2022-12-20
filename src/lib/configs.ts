@@ -52,23 +52,15 @@ async function loadConfigsFromFile() {
 
 export function findSpecFile(baseDir): string{
   const files = ['asyncapi.yaml', 'asyncapi.json', 'asyncapi.yml']
-  let indexOfFoundFile = -1
-
-  for (let index = 0; index < files.length; index++) {
-    const file = files[index]
-    if(existsSync(path.resolve(baseDir, file))){
-      if(indexOfFoundFile === -1){
-      indexOfFoundFile = index
-      } else {
-        throw new Error('Multiple AsyncAPI files found at the root of your project. Please make sure to choose one in your config file.')
-      }
-    }
-  }
+  const foundFiles = files.filter(file => existsSync(path.resolve(baseDir, file)))
   
-  if(indexOfFoundFile === -1){
+  if (foundFiles.length === 1) {
+    return path.resolve(baseDir, files[indexOfFoundFile])
+  } else if (foundFiles.length === 0) {
     throw new Error('AsyncAPI file was not found at the root of your project. you can set its path in config file.')
+  } else {
+    throw new Error('Multiple AsyncAPI files found at the root of your project. Please make sure to choose one in your config file.')
   }
-  return path.resolve(baseDir, files[indexOfFoundFile])
 }
 export function getConfigs(): { [key: string]: string } {
   return {
