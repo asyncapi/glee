@@ -1,5 +1,4 @@
-import { STATUS_CODES } from 'http';
-import React from 'react';
+import React from 'react'
 
 export default function Flight({ info }: any) {
   const {
@@ -11,19 +10,19 @@ export default function Flight({ info }: any) {
     origin_city,
     destin_city,
     status,
-  } = info;
+  } = info
 
-  let statusClass = 'text-white';
+  let statusClass = 'text-white'
   switch (status) {
     case 'ON TIME':
-      statusClass = 'text-green-500';
-      break;
+      statusClass = 'text-green-500'
+      break
     case 'DELAYED':
-      statusClass = 'text-yellow-500';
-      break;
+      statusClass = 'text-yellow-500'
+      break
     case 'CANCELED':
-      statusClass = 'text-red-500';
-      break;
+      statusClass = 'text-red-500'
+      break
   }
   return (
     <div className='flex justify-between gap-3 px-2'>
@@ -37,5 +36,5 @@ export default function Flight({ info }: any) {
         {destin_terminal || origin_terminal}
       </p>
     </div>
-  );
+  )
 }

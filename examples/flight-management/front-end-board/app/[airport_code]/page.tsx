@@ -1,11 +1,8 @@
-import axios from 'axios';
-import Flights from '../../components/Flights';
-import useWebSocket from 'react-use-websocket';
-import { useEffect, useState } from 'react';
+import Flights from '../../components/Flights'
 
 export default async function HomePage({ params }: any) {
 
-  const airportCode = params.airport_code;
+  const airportCode = params.airport_code
 
   return (
     <div>
@@ -13,5 +10,5 @@ export default async function HomePage({ params }: any) {
        airportCode={airportCode}
       />
     </div>
-  );
+  )
 }

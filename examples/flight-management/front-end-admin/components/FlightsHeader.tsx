@@ -1,5 +1,5 @@
-import React from 'react';
-import Image from 'next/image';
+import React from 'react'
+import Image from 'next/image'
 
 interface props {
   icon: string;
@@ -19,5 +19,5 @@ export default function FlightsHeader({ icon, text }: props) {
         <h1 className=' text-4xl'>{text}</h1>
       </div>
     </header>
-  );
+  )
 }

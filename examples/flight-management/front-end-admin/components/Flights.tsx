@@ -1,24 +1,24 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import Flight from './Flight';
-import Header from './FlightsHeader';
-import useWebSocket from 'react-use-websocket';
+'use client'
+import React, { useEffect, useState } from 'react'
+import Flight from './Flight'
+import Header from './FlightsHeader'
+import useWebSocket from 'react-use-websocket'
 
 export default function Flights({ _icon, _title, airportCode }: any) {
-  const {sendJsonMessage, lastMessage } = useWebSocket('ws://localhost:3000');
-  const [flights, setFlights] = useState([]);
+  const {sendJsonMessage, lastMessage } = useWebSocket('ws://localhost:3000')
+  const [flights, setFlights] = useState([])
 
   useEffect(()=> sendJsonMessage({name: 'allFlights', airportCode}), [])
 
   useEffect(() => {
     if (lastMessage !== null) {
-      const jsonMessage = JSON.parse(lastMessage.data);
-      console.log(jsonMessage);
+      const jsonMessage = JSON.parse(lastMessage.data)
+      console.log(jsonMessage)
       if(jsonMessage.name === 'allFlights'){
         setFlights(jsonMessage.flights)
       }
     }
-  }, [lastMessage, setFlights]);
+  }, [lastMessage, setFlights])
 
   return (
     <section className=' bg-slate-800 text-white font-mono '>
@@ -44,11 +44,11 @@ export default function Flights({ _icon, _title, airportCode }: any) {
                 <tr key={flight.id} className='text-black'>
                   <Flight _flight={flight} sendJsonMessage={sendJsonMessage} />
                 </tr>
-              );
+              )
             })}
           </tbody>
         </table>
       </div>
     </section>
-  );
+  )
 }

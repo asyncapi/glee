@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 export default function Home() {
-  return <div>Main page</div>;
+  return <div>Please follow the url by the airport code. for example: <a href='/DBX'>localhost/DBX</a></div>
 }

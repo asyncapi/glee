@@ -1,16 +1,14 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
-  theme: {
-    extend: {
-      fontFamily: {
-        mono: ['Roboto Mono'],
-      },
+export const content = [
+  './app/**/*.{js,ts,jsx,tsx}',
+  './pages/**/*.{js,ts,jsx,tsx}',
+  './components/**/*.{js,ts,jsx,tsx}',
+]
+export const theme = {
+  extend: {
+    fontFamily: {
+      mono: ['Roboto Mono'],
     },
   },
-  plugins: [],
-};
+}
+export const plugins = []

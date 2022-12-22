@@ -1,6 +1,5 @@
-import Flights from '../../components/Flights';
+import Flights from '../../components/Flights'
 export default async function HomePage({ params }: any) {
-  const airportCode = params.airport_code;
   return (
     <div>
       <Flights
@@ -9,5 +8,5 @@ export default async function HomePage({ params }: any) {
         _title='Admin Dashboard'
       />
     </div>
-  );
+  )
 }
