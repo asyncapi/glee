@@ -3,6 +3,7 @@ import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 
 class KafkaAdapter extends Adapter {
+  private kafka: Kafka
   private firstConnect: boolean = true
   name(): string {
     return 'Kafka adapter'
@@ -10,7 +11,7 @@ class KafkaAdapter extends Adapter {
  
   async connect() {
     const brokerUrl = new URL(this.AsyncAPIServer.url())
-    const kafka: Kafka = new Kafka({
+    this.kafka = new Kafka({
       clientId: 'glee-app',  // clientID: hardcoded need to change afterwards 
       brokers: [brokerUrl.host],
       ssl: true,
@@ -21,7 +22,7 @@ class KafkaAdapter extends Adapter {
       },
     })
 
-    const consumer = kafka.consumer({ groupId: 'glee-group' })   // groupID: hardcoded need to change afterwards
+    const consumer = this.kafka.consumer({ groupId: 'glee-group' })   // groupID: hardcoded need to change afterwards
 
     consumer.on('consumer.connect', () => {
       if (this.firstConnect) {
@@ -46,16 +47,14 @@ class KafkaAdapter extends Adapter {
   }
 
   async send(message: GleeMessage) {
-    const producer = kafka.producer()
+    const producer = this.kafka.producer()
     await producer.connect()
     await producer.send({
       topic: message.channel,
       messages: [{
         key: message.key,
         value: message.payload,
-        offset: message.offset,
         timestamp: message.timestamp,
-        headers:{} 
       }],
     })
     await producer.disconnect()
