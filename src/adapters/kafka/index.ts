@@ -4,7 +4,6 @@ import GleeMessage from '../../lib/message.js'
 
 class KafkaAdapter extends Adapter {
   private firstConnect: boolean = true
-  producer: any
   name(): string {
     return 'Kafka adapter'
   }
@@ -44,17 +43,22 @@ class KafkaAdapter extends Adapter {
         this.emit('message', msg, consumer)
       },
     })
-    
-    const producer = kafka.producer()
-    await producer.connect()
-    await producer.send({
-      topic: 'glee-topic',
-      messages: [{ value: 'Hello, Glee!' }],
-    })
   }
 
   async send(message: GleeMessage) {
-    
+    const producer = kafka.producer()
+    await producer.connect()
+    await producer.send({
+      topic: message.channel,
+      messages: [{
+        key: message.key,
+        value: message.payload,
+        offset: message.offset,
+        timestamp: message.timestamp,
+        headers:{} 
+      }],
+    })
+    await producer.disconnect()
   }
 
   _createMessage(topic, partition, message) {
