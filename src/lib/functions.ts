@@ -21,7 +21,6 @@ const OutboundMessageSchema = {
     headers: {
       type: 'object',
       propertyNames: { type: 'string' },
-      additionalProperties: { type: 'string' }
     },
     channel: { type: 'string' },
     server: { type: 'string' },

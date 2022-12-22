@@ -20,7 +20,6 @@ interface IReply {
 }
 
 class GleeMessage extends EventEmitter {
-  [x: string]: any
   private _payload: any
   private _headers: { [key: string]: string }
   private _channel: string
@@ -31,6 +30,8 @@ class GleeMessage extends EventEmitter {
   private _outbound: boolean
   private _cluster: boolean
   private _params: { [key: string]: string }
+  key: string | Buffer
+  timestamp: string
 
   /**
    * Instantiates a new GleeMessage.
