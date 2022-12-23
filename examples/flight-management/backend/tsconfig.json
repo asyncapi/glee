@@ -3,7 +3,7 @@
     "allowJs": true,
     "target": "ES6",
     "esModuleInterop": true,
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Node",
     "module": "commonjs"
   }
 }

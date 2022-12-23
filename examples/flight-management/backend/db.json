@@ -18,11 +18,11 @@
       "flight_no": "IQ111",
       "arrival": "2022-10-10T03:04",
       "departure": "2022-01-02 23:55:00",
-      "origin_terminal": "A4",
+      "origin_terminal": "Z1",
       "origin_city": "Dubai",
       "origin_code": "DBX",
       "destin_city": "Paris",
-      "destin_terminal": "B5",
+      "destin_terminal": "B3",
       "destin_code": "CDG",
       "status": "ON TIME"
     },

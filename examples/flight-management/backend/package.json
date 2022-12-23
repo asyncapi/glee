@@ -1,14 +1,14 @@
 {
-  "name": "glee-hello-world",
+  "name": "bckend",
   "version": "0.1.0",
-  "description": "Hello world app to improve Glee onboarding ",
+  "description": "This is a websocket server which acts as a backend for the flight-management system.",
   "type": "module",
   "engines": {
     "node": ">=14.15.1"
   },
   "scripts": {
     "db": "json-server db.json --port 3004",
-    "dev": "concurrently \"glee dev\" \"npm run db\"",
+    "dev": "glee dev",
     "start": "glee start"
   },
   "repository": {
@@ -18,22 +18,19 @@
   "keywords": [
     "glee"
   ],
-  "author": "Fran Mendez",
+  "author": "Khudadad Nomani",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/asyncapi/glee-hello-world/issues"
   },
   "homepage": "https://github.com/asyncapi/glee-hello-world#readme",
   "dependencies": {
-    "@asyncapi/glee": "^0.11.2",
-    "axios": "^1.2.1",
-    "concurrently": "^7.6.0",
-    "cross-fetch": "^3.1.5",
-    "express": "^4.18.2",
-    "json-server": "^0.17.1"
+    "@asyncapi/glee": "file:../../..",
+    "lowdb": "^4.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",
-    "@types/node": "^18.11.9"
+    "@types/node": "^18.11.9",
+    "typescript": "^5.0.0-dev.20221223"
   }
 }

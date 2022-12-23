@@ -15,7 +15,7 @@ export default function Flights({ airportCode }: any) {
       const jsonMessage = JSON.parse(lastMessage.data)
       if(jsonMessage.name === 'allFlights'){
         setFlights(jsonMessage.flights)
-      } else if(jsonMessage.name === 'updateFlight' && jsonMessage.status){
+      } else if(jsonMessage.name === 'updateFlight'){
         setFlights(flights.map(flight=> {return flight.id===jsonMessage.flight.id ? jsonMessage.flight : flight}))
       }
     }
