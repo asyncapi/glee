@@ -3,8 +3,6 @@ type Data = {
   flights: any[];
 }
 export default class DatabaseManager {
-  
-
   db: Low<Data>
   private static instance: DatabaseManager
 

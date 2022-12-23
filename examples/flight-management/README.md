@@ -27,7 +27,7 @@ npm run dev
 cd ./front-end-board
 npm run dev
 ```
-2) Run the admin dashboard project:
+3) Run the admin dashboard project:
 
 ```
 cd ./front-end-admin

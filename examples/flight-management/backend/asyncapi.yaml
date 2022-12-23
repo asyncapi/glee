@@ -2,13 +2,13 @@ asyncapi: 2.4.0
 info:
   title: Flight Board
   version: 0.0.1
-  description: Flight Board offers real-time flight info on all of the screens at an airport. This AsyncAPI file is only for the real time communication. We are using Glee to manage the WebSocket server as well as the REST API server which is being created with Express.js.
+  description: Flight Board offers real time flight info on all of the screens at an airport. This AsyncAPI file is only for the real time communication. We are using Glee to manage the WebSocket server as well as the REST API server, which is being created with Express.js.
 
 servers:
   websockets:
     url: ws://localhost:3000
     protocol: ws
-    description: this Websocket server is available without authorization. It recieves the changes that is made by different sources and updates the database and Flight Boards.
+    description: This Websocket server is available without authorization. It receives the changes that are made by different sources and updates the database and Flight Boards.
 channels:
   /:
     publish:
@@ -27,7 +27,7 @@ channels:
 components:
   messages:
     getFlights:
-      summary: This message should be published when a board wants to receive all of the flights that departure or arrive at that airport.
+      summary: This message should be published when a board wants to receive all of the flights that depart or arrive at that airport.
       payload:
         type: object
         additionalProperties: false
@@ -39,7 +39,7 @@ components:
             maxLength: 3
             minLength: 3
     updateFlight:
-      summary: this message is used for both subscribe and publish.
+      summary: This message is used for both subscribe and publish.
       payload:
         type: object
         additionalProperties: false
