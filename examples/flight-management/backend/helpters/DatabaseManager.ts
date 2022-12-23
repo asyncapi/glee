@@ -13,7 +13,6 @@ export default class DatabaseManager {
 
   async getFlights(airportCode: string) {
     const response = await this.api.get('/flights')
-    console.log(response)
     return response.data.filter((flight) => flight.destin_code === airportCode || flight.origin_code === airportCode)
   }
 
