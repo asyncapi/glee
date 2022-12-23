@@ -55,5 +55,5 @@ components:
   schemas:
     eventName:
       type: string
-      description: the name of the event.
+      description: The name of the event.
       enum: ['allFlights', 'updateFlight']
