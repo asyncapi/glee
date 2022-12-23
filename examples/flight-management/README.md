@@ -1,6 +1,6 @@
 # Flight Management Example
 
-This example was created to dimunstrate the usage of glee with websockets and Nextjs.
+This example was created to demonstrate the usage of Glee with WebSockets and Next.js.
 
 # Architecture
 
