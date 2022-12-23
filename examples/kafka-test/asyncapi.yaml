@@ -11,8 +11,16 @@ channels:
     publish:
       operationId: onTest
       message:
-        payload:
-          type: object
-          properties:
-            test:
-              type: string
+        $ref: '#/components/messages/testMessage'
+  produce:
+    subscribe:
+      message:
+        $ref: '#/components/messages/testMessage'
+components:
+  messages:
+    testMessage:
+      payload:
+        type: object
+        properties:
+          test:
+            type: string
