@@ -69,16 +69,16 @@ export default async function () {
   };
 }
 ```
-### Glee Core Config
+### Glee Core Configurations
 
-These configs are not bound to any specific protocol but to the glee itself.
+These configurations apply to Glee itself, rather than any specific protocol.
 
 |Field|Default|Description|
 |--|--|--|
-|glee.gleeDir|`.glee`|set the glee directory. your sources will be compiled here.|
-|glee.lifecycleDir|`lifecycle`|path to the directory that your [lifecycle events](./lifecycle-events.md) are stored.|
-|glee.functionsDir|`functions`| path to the directory that your [functions](./functions.md)  are stored.|
-|glee.asyncapiFilePath|`asyncapi.(yaml \| yml \| json)`| the path of your AsyncAPI file. |
+|glee.gleeDir|`.glee`|Sets the Glee directory. Your sources will be compiled here.|
+|glee.lifecycleDir|`lifecycle`|Path to the directory that stores your [lifecycle events](./lifecycle-events.md).|
+|glee.functionsDir|`functions`| Path to the directory that stores your [functions](./functions.md).|
+|glee.asyncapiFilePath|`asyncapi.(yaml \| yml \| json)`| Path to your AsyncAPI file. |
 
 
 Every protocol has different configuration needs so each protocol has unique configurations:
