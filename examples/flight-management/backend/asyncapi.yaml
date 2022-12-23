@@ -27,7 +27,7 @@ channels:
 components:
   messages:
     getFlights:
-      summary: this message should be published when a board wants to recieve all of the flights that departure or arrive at that airport.
+      summary: This message should be published when a board wants to receive all of the flights that departure or arrive at that airport.
       payload:
         type: object
         additionalProperties: false
