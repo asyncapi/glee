@@ -4,7 +4,7 @@ import Generator from '@asyncapi/generator'
 
 export default async (spec, config, resDir) => {
   const configData = config.docs
-  if (!configData || configData?.enabled) {
+  if(configData?.enabled === false) return
     logInfoMessage(`Generating docs for your parsed specification...`)
     const resolvedData = spec.json()
     const generator = new Generator(
@@ -23,5 +23,4 @@ export default async (spec, config, resDir) => {
       logError(error)
       return error
     }
-  }
 }
