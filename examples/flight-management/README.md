@@ -21,7 +21,7 @@ You can edit flight info here to see them change in your board project in real t
 cd ./backend
 npm run dev
 ```
-2) run the board project.
+2) Run the board project:
 
 ```
 cd ./front-end-board
