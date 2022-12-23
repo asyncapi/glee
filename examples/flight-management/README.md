@@ -4,7 +4,7 @@ This example was created to demonstrate the usage of Glee with WebSockets and Ne
 
 # Architecture
 
-this project consists of three parts.
+This project consists of three parts: backend, board, and admin front-end.
 ## Backend
 the backend is developed with glee and uses a json server to store data. if you want to add more flights you can add them to the `db.json` file in ./backend folder.
 
