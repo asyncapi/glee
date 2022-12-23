@@ -11,7 +11,7 @@ The backend is developed with Glee and uses a JSON server to store data. If you 
 ## Board
 this will show a list of flights for an specific airport. see the flights for an specific airport by using this url format `http://localhost:{PORT}/{AIRPORT_CODE}`.
 ## Admin Front-End
-You can edit flight info here to see them change in your board project in real-time. you can use `http://localhost:{PORT}/{AIRPORT_CODE}` to see and edit flight info.
+You can edit flight info here to see them change in your board project in real time. Browse `http://localhost:{PORT}/{AIRPORT_CODE}` to see and edit flight info.
 
 ## Run it
 
