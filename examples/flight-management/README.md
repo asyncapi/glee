@@ -15,7 +15,7 @@ You can edit flight info here to see them change in your board project in real t
 
 ## Run it
 
-1) run the backend.
+1) Run the backend:
 
 ```
 cd ./backend
