@@ -3,7 +3,6 @@ export default class DatabaseManager {
   api = axios.create({ baseURL: 'http://localhost:3004' })
   private static instance: DatabaseManager | undefined
 
-  private constructor(){/* */}
 
   public static getInstance() {
     if (!this.instance) {
