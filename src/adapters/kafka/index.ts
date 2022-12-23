@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { Kafka } from 'kafkajs'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
@@ -14,7 +15,12 @@ class KafkaAdapter extends Adapter {
     this.kafka = new Kafka({
       clientId: 'glee-app',  // clientID: hardcoded need to change afterwards 
       brokers: [brokerUrl.host],
-      ssl: true,
+      ssl: {
+        rejectUnauthorized: true,
+        ca: [fs.readFileSync('ca.pem')],
+        key: fs.readFileSync('client.key'),
+        cert: fs.readFileSync('client.pem')
+      },
       sasl: {
         mechanism: 'plain',
         username: process.env.KAFKA_USERNAME,
@@ -22,8 +28,19 @@ class KafkaAdapter extends Adapter {
       },
     })
 
-    const consumer = this.kafka.consumer({ groupId: 'glee-group' })   // groupID: hardcoded need to change afterwards
+    const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
+      const secName = Object.keys(sec.json())[0]
+      return this.parsedAsyncAPI.components().securityScheme(secName)
+    })
+    const userAndPasswordSecurityReq = securityRequirements.find(sec => sec.type() === 'userPassword')
+    const X509SecurityReq = securityRequirements.find(sec => sec.type() === 'X509')
+    const url = new URL(this.AsyncAPIServer.url())
 
+    const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
+    const certs = certsConfig?.filter(tuple => tuple[0] === this.serverName)?.map(t => fs.readFileSync(t[1]))
+    
+
+    const consumer = this.kafka.consumer({ groupId: 'glee-group' })   // groupID: hardcoded need to change afterwards
     consumer.on('consumer.connect', () => {
       if (this.firstConnect) {
         this.firstConnect = false
