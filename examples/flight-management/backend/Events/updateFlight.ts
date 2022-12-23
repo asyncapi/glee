@@ -5,10 +5,11 @@ export default async function updateFlight(flight):Promise<GleeFunctionReturn> {
   if(isSuccessful){
     return {
       send: [{
-        payload: {
+        server: 'websockets',
+        payload: JSON.stringify({
           name: 'updateFlight',
           flight,
-      }
+      })
       }]
     }
   } else return {}

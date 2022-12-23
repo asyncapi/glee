@@ -5,9 +5,9 @@ export default async function getFlights(airportCode: string): Promise<GleeFunct
   const flights = await DatabaseManager.getInstance().getFlights(airportCode)
   return {
     reply: [{
-      payload: {      
+      payload: JSON.stringify({      
         name: 'allFlights',
-        flights: flights,}
+        flights: flights,})
     }]
   }
 }

@@ -22,7 +22,7 @@ export default class DatabaseManager {
   }
 
   async getFlights(airportCode: string) {
-    this.db.read()
+    await this.db.read()
     return this.db.data.flights.filter((flight) => flight.destin_code === airportCode || flight.origin_code === airportCode)
 
   }
