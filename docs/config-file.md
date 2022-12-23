@@ -69,6 +69,7 @@ export default async function () {
   };
 }
 ```
+Inside the return statement, you can specify the following options:
 ### Glee Core Configurations
 
 These configurations apply to Glee itself, rather than any specific protocol.
@@ -79,9 +80,6 @@ These configurations apply to Glee itself, rather than any specific protocol.
 |glee.lifecycleDir|`lifecycle`|Path to the directory that stores your [lifecycle events](./lifecycle-events.md).|
 |glee.functionsDir|`functions`| Path to the directory that stores your [functions](./functions.md).|
 |glee.asyncapiFilePath|`asyncapi.(yaml \| yml \| json)`| Path to your AsyncAPI file. |
-
-
-Every protocol has different configuration needs so each protocol has unique configurations:
 
 ### Websocket Server
 
