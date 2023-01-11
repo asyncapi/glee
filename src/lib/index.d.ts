@@ -18,8 +18,9 @@ export type WebsocketAdapterConfig = {
     port?: number,
   },
   client?: {
+    query?: any
     authentication?: {
-      http: string
+      token?: string
     }
   }
 }

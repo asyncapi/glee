@@ -1,7 +1,7 @@
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import MqttAdapter from './adapters/mqtt/index.js'
-import KafkaAdapter from './adapters/kafka/index.js'
-import WebSocketAdapter from './adapters/ws/index.js'
+import WebSocketServerAdapter from './adapters/ws/server.js'
+import WebsocketClientAdapter from './adapters/ws/client.js'
 import SocketIOAdapter from './adapters/socket.io/index.js'
 import RedisClusterAdapter from './adapters/cluster/redis/index.js'
 import { getSelectedServerNames } from './lib/servers.js'
@@ -42,15 +42,36 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
   } else if (['amqp', 'amqps'].includes(protocol)) {
     // TODO: Implement AMQP support
   } else if (['ws', 'wss'].includes(protocol)) {
-    const configWsAdapter = config?.websocket?.server?.adapter
-    if (!configWsAdapter || configWsAdapter === 'native') {
-      app.addAdapter(WebSocketAdapter, {
+    const configWsAdapter = config?.websocket?.server.adapter
+    if (remoteServers && remoteServers.includes(serverName)) {
+      app.addAdapter(WebsocketClientAdapter, {
         serverName,
         server,
         parsedAsyncAPI
       })
     } else {
-      throw new Error(`Unknown value for websocket.adapter found in glee.config.js: ${config.websocket.server.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`)
+      if (!configWsAdapter || configWsAdapter === 'native') {
+        app.addAdapter(WebSocketServerAdapter, {
+          serverName,
+          server,
+          parsedAsyncAPI,
+        })
+      } else if (configWsAdapter === 'socket.io') {
+        app.addAdapter(SocketIOAdapter, {
+          serverName,
+          server,
+          parsedAsyncAPI,
+        })
+      } else if (typeof configWsAdapter === 'object') {
+        app.addAdapter(configWsAdapter, {
+          serverName,
+          server,
+          parsedAsyncAPI,
+        })
+      } else {
+        throw new Error(`Unknown value for websocket.adapter found in glee.config.js: ${config.websocket.server.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`)
+      }
+
     }
   } else {
     // TODO: Improve error message with link to repo encouraging the developer to contribute.

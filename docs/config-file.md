@@ -14,7 +14,6 @@ export default async function () {
 
 This function must return an object with the following shape:
 
-
 ```js
 export default async function () {
   return {
@@ -26,7 +25,8 @@ export default async function () {
 
 ```
 
-Here is an example of a `glee.config.js` file for reference: 
+Here is an example of a `glee.config.js` file for reference:
+
 ```js
 export default async function () {
   return {
@@ -53,6 +53,14 @@ export default async function () {
         httpServer: customServer, // A custom HTTP server of your own.
         adapter: "native", // Default. Can also be 'socket.io' or a reference to a custom adapter.
         port: process.env.PORT,
+      },
+      client: {
+        authentication: {
+          token: process.env.TOKEN
+        },
+        query: {
+          foo: 'bar'
+        }
       }
     },
     cluster: {
@@ -73,17 +81,24 @@ export default async function () {
   };
 }
 ```
+
 Every protocol has different configuration needs so each protocol has unique configurations:
 
 ### Websocket Server
+
 |Field|Description|
 |--|--|
-|websocket.server|Websocket server-specific configuration|
+|websocket.server|Websocket server-specific configurations|
+|websocekt.client|Websocket client-specific configurations|
 |websocket.server.adapter| The Glee adapter to use for the WebSocket server. Defaults to a "native" WebSocket implementation. Other allowed values are `socket.io` (to use the [Socket.IO](https://socket.io/) Glee adapter) or a reference to a custom adapter.|
 |websocket.server.httpServer|  A custom HTTP server of your own. E.g., an [Express](https://expressjs.com/en/4x/api.html) server or any object that implements the [http.Server](https://nodejs.org/api/http.html#http_class_http_server) interface.   |
 |websocket.server.port| The port to use when binding the WebSocket server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.|
+|websocket.client.authetication| Authentication variables for client|
+|websocket.client.authentication.token| HTTP Authentication header|
+|websocket.client.query| Query object for the client to send
 
-### Cluster 
+### Cluster
+
 |Field|Description|
 |--|--|
 |cluster.adapter| The Glee cluster adapter to use for communication between instances. Defaults to Redis Pub/Sub ("redis"). Can be a reference to a custom adapter.|
