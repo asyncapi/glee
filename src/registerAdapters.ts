@@ -43,35 +43,14 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
     // TODO: Implement AMQP support
   } else if (['ws', 'wss'].includes(protocol)) {
     const configWsAdapter = config?.websocket?.server?.adapter
-    if (remoteServers && remoteServers.includes(serverName)) {
-      app.addAdapter(WebsocketClientAdapter, {
+    if (!configWsAdapter || configWsAdapter === 'native') {
+      app.addAdapter(WebSocketAdapter, {
         serverName,
         server,
         parsedAsyncAPI
       })
     } else {
-      if (!configWsAdapter || configWsAdapter === 'native') {
-        app.addAdapter(WebSocketServerAdapter, {
-          serverName,
-          server,
-          parsedAsyncAPI,
-        })
-      } else if (configWsAdapter === 'socket.io') {
-        app.addAdapter(SocketIOAdapter, {
-          serverName,
-          server,
-          parsedAsyncAPI,
-        })
-      } else if (typeof configWsAdapter === 'object') {
-        app.addAdapter(configWsAdapter, {
-          serverName,
-          server,
-          parsedAsyncAPI,
-        })
-      } else {
-        throw new Error(`Unknown value for websocket.adapter found in glee.config.js: ${config.websocket.server.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`)
-      }
-
+      throw new Error(`Unknown value for websocket.adapter found in glee.config.js: ${config.websocket.server.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`)
     }
   } else {
     // TODO: Improve error message with link to repo encouraging the developer to contribute.
