@@ -15,7 +15,20 @@ interface FunctionInfo {
   run: GleeFunction,
 }
 
-const OutboundMessageSchema = {
+const ReplyOutboundMessageSchema = {
+  type: 'object',
+  properties: {
+    payload: {},
+    headers: {
+      type: 'object',
+      propertyNames: { type: 'string' },
+      additionalProperties: { type: 'string' }
+    },
+    channel: { type: 'string' },
+  }
+}
+
+const SendOutBoundMessageSchema = {
   type: 'object',
   properties: {
     payload: {},
@@ -26,7 +39,8 @@ const OutboundMessageSchema = {
     },
     channel: { type: 'string' },
     server: { type: 'string' },
-  }
+  },
+  required: ['server']
 }
 
 const FunctionReturnSchema = {
@@ -34,11 +48,11 @@ const FunctionReturnSchema = {
   properties: {
     send: {
       type: 'array',
-      items: OutboundMessageSchema
+      items: SendOutBoundMessageSchema
     },
     reply: {
       type: 'array',
-      items: OutboundMessageSchema
+      items: ReplyOutboundMessageSchema
     }
   },
   additionalProperties: false,

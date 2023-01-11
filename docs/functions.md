@@ -46,7 +46,7 @@ export default async function (event) {
 |payload|string|The payload/body of the message you want to send.
 |headers|object&lt;string,string&gt;|The headers/metadata of the message you want to send.
 |channel|string|The channel/topic you want to send the message to. Defaults to `event.channel`, i.e., the same channel as the received event.
-|server|string|The server/broker you want to send the message to. Defaults to `event.serverName`, i.e., the same server as the received event.
+|server|string|The server/broker you want to send the message to. Must be present when function returns a `send` event.
 
 ## How does Glee know which function it should execute?
 
