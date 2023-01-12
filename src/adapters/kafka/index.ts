@@ -18,9 +18,8 @@ class KafkaAdapter extends Adapter {
       brokers: [brokerUrl.host],
       ssl: {
         rejectUnauthorized: true,
-        ca: [fs.readFileSync('ca.pem')],
         key: fs.readFileSync('client.key'),
-        cert: fs.readFileSync('client.pem')
+        cert: undefined
       },
       sasl: {
         mechanism: 'plain',
