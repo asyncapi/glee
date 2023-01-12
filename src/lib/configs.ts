@@ -1,4 +1,4 @@
-import { existsSync } from 'fs'
+import { accessSync, statSync, constants } from 'fs'
 import path from 'path'
 import { pathToFileURL } from 'url'
 import { logErrorLine } from './logger.js'
@@ -33,12 +33,20 @@ export async function initializeConfigs(config: Config = {}): Promise<{ [key: st
     ...getConfigs()
   }
 }
+function isFileReadable(filePath: string){
+  try {
+    accessSync(filePath,constants.R_OK)
+    return statSync(filePath).isFile()
+  } catch (err){
 
+    return false
+  }
+}
 /**
  * Loads the configuration from glee project.
  */
 async function loadConfigsFromFile() {
-  if (!existsSync(GLEE_CONFIG_FILE_PATH)) return 
+  if (!isFileReadable(GLEE_CONFIG_FILE_PATH)) return 
   try {
     let { default: projectConfigs } = await import(pathToFileURL(GLEE_CONFIG_FILE_PATH).href)
     if (typeof projectConfigs === 'function') projectConfigs = await projectConfigs()
@@ -56,7 +64,7 @@ async function loadConfigsFromFile() {
 
 export function findSpecFile(baseDir: string): string{
   const files = ['asyncapi.yaml', 'asyncapi.json', 'asyncapi.yml']
-  const foundFiles = files.filter(file => existsSync(path.resolve(baseDir, file)))
+  const foundFiles = files.filter(file => isFileReadable(path.resolve(baseDir, file)))
   
   if (foundFiles.length === 1) {
     return path.resolve(baseDir, foundFiles[0])

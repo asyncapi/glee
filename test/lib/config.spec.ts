@@ -2,9 +2,11 @@ import fs from 'fs'
 import path from 'path'
 import { findSpecFile } from '../../src/lib/configs.js'
 
-describe('Test resolving the AsyncAPI file path.', () => {
+const yamlPath = path.resolve('./asyncapi.yaml')
+const jsonPath = path.resolve('./asyncapi.json')
+describe('Tests resolving the AsyncAPI file path.', () => {
     afterEach(async () => {
-        const promises = ['./asyncapi.yaml', './asyncapi.json'].map(async (file) => fs.unlinkSync(path.resolve(file)))
+        const promises = [jsonPath, yamlPath].map(async (file) => fs.unlinkSync(file))
         await Promise.allSettled(promises)
     })
 
@@ -13,14 +15,20 @@ describe('Test resolving the AsyncAPI file path.', () => {
     })
 
     test('Should return undefined if there are multiple AsyncAPI spec files.', async () => {
-        fs.writeFileSync(path.resolve('./asyncapi.json'), '')
-        fs.writeFileSync(path.resolve('./asyncapi.yaml'), '')
+        fs.writeFileSync(jsonPath, '')
+        fs.writeFileSync(yamlPath, '')
         expect(findSpecFile("")).toBe(undefined)
     })
 
+    test('Should fails if asyncapi.json is a folder.', async () => {
+        fs.mkdirSync(jsonPath)
+        expect(findSpecFile("")).toBe(undefined)
+        fs.rmdirSync(jsonPath)
+    })
+
     test('Should succeed in finding AsyncAPI spec if there is only one.', async () => {
-        fs.writeFileSync(path.resolve('./asyncapi.json'), '')
+        fs.writeFileSync(jsonPath, '')
         const resultingPath = findSpecFile('')
-        expect(resultingPath).toBe(path.resolve('./asyncapi.json'))
+        expect(resultingPath).toBe(jsonPath)
     })
 })
