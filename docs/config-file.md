@@ -30,6 +30,11 @@ Here is an example of a `glee.config.js` file for reference:
 ```js
 export default async function () {
   return {
+    docs: {
+      enabled: true, // Enable/Disable documentation generation
+      folder: 'docs', // Folder where you want the output of your docs to reside.
+      template: '@asyncapi/markdown-template' // Type of template you want to use.
+    }
     websocket: {
       server: {
         httpServer: customServer, // A custom HTTP server of your own.
@@ -65,6 +70,14 @@ export default async function () {
 ```
 
 Every protocol has different configuration needs so each protocol has unique configurations:
+
+### Generating Documentation
+
+|Field|Description|
+|--|--|
+|docs.enabled|This flag enables/disables the docs generation functionality.
+|docs.folder|The dedicated folder you want your generated docs to reside.
+|docs.template|The AsyncAPI template you wanna use for generating your documentation.
 
 ### Websocket Server
 
