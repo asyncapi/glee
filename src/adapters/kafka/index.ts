@@ -11,6 +11,7 @@ class KafkaAdapter extends Adapter {
   }
  
   async connect() {
+    const kafkaOptions = await this.resolveProtocolConfig('kafka')
     const brokerUrl = new URL(this.AsyncAPIServer.url())
     this.kafka = new Kafka({
       clientId: 'glee-app',  // clientID: hardcoded need to change afterwards 
@@ -23,22 +24,14 @@ class KafkaAdapter extends Adapter {
       },
       sasl: {
         mechanism: 'plain',
-        username: process.env.KAFKA_USERNAME,
-        password: process.env.KAFKA_PASSWORD,
+        username: process.env.KAFKA_USERNAME
+        ? kafkaOptions?.authentication?.userPassword.username
+        : undefined,
+        password: process.env.KAFKA_PASSWORD
+        ? kafkaOptions?.authentication?.userPassword.username
+        : undefined,
       },
     })
-
-    const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
-      const secName = Object.keys(sec.json())[0]
-      return this.parsedAsyncAPI.components().securityScheme(secName)
-    })
-    const userAndPasswordSecurityReq = securityRequirements.find(sec => sec.type() === 'userPassword')
-    const X509SecurityReq = securityRequirements.find(sec => sec.type() === 'X509')
-    const url = new URL(this.AsyncAPIServer.url())
-
-    const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
-    const certs = certsConfig?.filter(tuple => tuple[0] === this.serverName)?.map(t => fs.readFileSync(t[1]))
-    
 
     const consumer = this.kafka.consumer({ groupId: 'glee-group' })   // groupID: hardcoded need to change afterwards
     consumer.on('consumer.connect', () => {
