@@ -38,7 +38,7 @@ function isFileReadable(filePath: string){
     accessSync(filePath,constants.R_OK)
     return statSync(filePath).isFile()
   } catch (err){
-
+    // No error logging is required since we expect accessSync to fail most of the time.
     return false
   }
 }
