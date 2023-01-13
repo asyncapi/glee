@@ -35,6 +35,10 @@ export default async function () {
       lifecycleDir: './lifecycle',
       functionsDir: './functions',
       asyncapiFilePath: './asyncapi.json'
+    docs: {
+      enabled: true, // Enable/Disable documentation generation
+      folder: 'docs', // Folder where you want the output of your docs to reside.
+      template: '@asyncapi/markdown-template' // Type of template you want to use.
     }
     websocket: {
       server: {
@@ -80,6 +84,14 @@ These configurations apply to Glee itself, rather than any specific protocol.
 |glee.lifecycleDir|`lifecycle`|Path to the directory that stores your [lifecycle events](./lifecycle-events.md).|
 |glee.functionsDir|`functions`| Path to the directory that stores your [functions](./functions.md).|
 |glee.asyncapiFilePath|`asyncapi.(yaml \| yml \| json)`| Path to your AsyncAPI file. |
+
+### Generating Documentation
+
+|Field|Description|
+|--|--|
+|docs.enabled|This flag enables/disables the docs generation functionality.
+|docs.folder|The dedicated folder you want your generated docs to reside.
+|docs.template|The AsyncAPI template you wanna use for generating your documentation.
 
 ### Websocket Server
 

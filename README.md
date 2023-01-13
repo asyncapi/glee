@@ -34,6 +34,16 @@ For more information on how to use `create-glee-app`, you can review [the `creat
 * :gear: [Configuring your application](docs/config-file.md): tweak Glee's default configuration.
 * :rocket: [Examples](./examples): see Glee in action.
 
+## Generating documentation
+
+When using spec-driven framework like Glee, it's always neccessary to have docs and code always in sync.
+Glee will automatically generate documentation for your application and you can also generate your documentation yourself by running:
+
+```bash
+glee docs
+```
+
+You can also tweak Glee's default configuration for generating documentation here [Configuring your application](docs/config-file.md)
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
