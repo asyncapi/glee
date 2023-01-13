@@ -9,7 +9,7 @@ class KafkaAdapter extends Adapter {
   name(): string {
     return 'Kafka adapter'
   }
- 
+
   async connect() {
     const kafkaOptions = await this.resolveProtocolConfig('kafka')
     const brokerUrl = new URL(this.AsyncAPIServer.url())
