@@ -71,7 +71,7 @@ export function findSpecFile(baseDir: string): string{
   }  else if(foundFiles.length > 1) {
     errorMessage = "Multiple AsyncAPI files found. Please choose one in you config file (https://github.com/asyncapi/glee/blob/master/docs/config-file.md)."
   } else {
-    errorMessage = "Unable fo find the AsyncAPI file. Please make sure it's in your project's directory or set its path in the config file(https://github.com/asyncapi/glee/blob/master/docs/config-file.md)."
+    errorMessage = "Unable fo find the AsyncAPI file. Please make sure it's in your project's directory or set its path in the config file (https://github.com/asyncapi/glee/blob/master/docs/config-file.md)."
   }
   return undefined
 }
