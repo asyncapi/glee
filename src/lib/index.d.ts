@@ -32,8 +32,14 @@ export type MqttAdapterConfig = {
     clientId?: string,
   }
 }
-
+export type CoreGleeConfig = {
+  gleeDir?: string,
+  lifecycleDir?: string,
+  functionsDir?: string,
+  asyncapiFilePath?: string,
+}
 export type GleeConfig = {
+  glee?: CoreGleeConfig,
   websocket?: WebsocketAdapterConfig,
   cluster?: GleeClusterAdapterConfig,
   mqtt?: MqttAdapterConfig,
