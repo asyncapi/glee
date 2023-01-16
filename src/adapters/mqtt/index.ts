@@ -46,8 +46,8 @@ class MqttAdapter extends Adapter {
       const certsConfig = process.env.GLEE_SERVER_CERTS?.split(',').map(t => t.split(':'))
       const certs = certsConfig?.filter(tuple => tuple[0] === this.serverName)?.map(t => fs.readFileSync(t[1])) // eslint-disable-line security/detect-non-literal-fs-filename
 
-      const serverBinding = mqttServerBinding
-      const protocolVersion = mqtt5ServerBinding ? 5 : 4
+      const protocolVersion = parseInt(this.AsyncAPIServer.protocolVersion() || '4')
+      const serverBinding = protocolVersion === 5 ? mqtt5ServerBinding : mqttServerBinding
 
       this.client = mqtt.connect({
         host: url.host,
@@ -158,8 +158,8 @@ class MqttAdapter extends Adapter {
   _customAckHandler(channel, message, mqttPacket, done) {
     const msg = this._createMessage(mqttPacket as IPublishPacket)
 
-    msg.on('successfullyProcessed', () => done(MQTT_SUCCESS_REASON))
-    msg.on('failedProcessing', () => done(MQTT_UNSPECIFIED_ERROR_REASON))
+    msg.on('processing:successful', () => done(MQTT_SUCCESS_REASON))
+    msg.on('processing:failed', () => done(MQTT_UNSPECIFIED_ERROR_REASON))
 
     this.emit('message', msg, this.client)
   }
