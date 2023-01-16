@@ -21,14 +21,13 @@ class WebSocketsAdapter extends Adapter {
 
   async _connect(): Promise<this> { // NOSONAR
     const config = await this.resolveProtocolConfig('websocket')
-    const websocketOptions = config?.server
     const serverUrl = new URL(this.serverUrlExpanded)
-    const wsHttpServer = websocketOptions?.httpServer || http.createServer()
+    const wsHttpServer = config?.httpServer || http.createServer()
     const asyncapiServerPort = serverUrl.port || 80
-    const optionsPort = websocketOptions?.port
+    const optionsPort = config?.port
     const port = optionsPort || asyncapiServerPort
 
-    if (!optionsPort && websocketOptions?.httpServer && String(wsHttpServer.address().port) !== String(port)) {
+    if (!optionsPort && config?.httpServer && String(wsHttpServer.address().port) !== String(port)) {
       console.error(`Your custom HTTP server is listening on port ${wsHttpServer.address().port} but your AsyncAPI file says it must listen on ${port}. Please fix the inconsistency.`)
       process.exit(1)
     }
@@ -110,7 +109,7 @@ class WebSocketsAdapter extends Adapter {
       }
     })
 
-    if (!websocketOptions?.httpServer) {
+    if (!config?.httpServer) {
       wsHttpServer.listen(port)
     }
 

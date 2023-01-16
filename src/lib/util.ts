@@ -122,3 +122,13 @@ export const isRemoteServer = (parsedAsyncAPI: AsyncAPIDocument, serverName: str
   const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
   return remoteServers && remoteServers.includes(serverName)
 }
+
+export const resolveFunctions = async (object: any) => {
+  for (const key in object) {
+    if (typeof object[key] === 'object' && !Array.isArray(object[key])) {
+      resolveFunctions(object[key])
+    } else if (typeof object[key] === 'function') {
+      object[key] = await object[key]()
+    }
+  }
+}

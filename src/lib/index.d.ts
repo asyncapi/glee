@@ -12,17 +12,13 @@ export type GleeClusterAdapterConfig = {
 }
 
 export type WebsocketAdapterConfig = {
-  server?: {
     httpServer?: any,
     adapter?: WebSocketServerType | typeof GleeAdapter,
     port?: number,
-  },
-  client?: {
     query?: any
     authentication?: {
       token?: string
     }
-  }
 }
 
 export type MqttAdapterConfig = {
@@ -34,9 +30,13 @@ export type MqttAdapterConfig = {
 }
 
 export type GleeConfig = {
-  websocket?: WebsocketAdapterConfig,
+  websocket?: {
+    [serverName: string]: WebsocketAdapterConfig
+  },
   cluster?: GleeClusterAdapterConfig,
-  mqtt?: MqttAdapterConfig,
+  mqtt?: {
+    [serverName: string]: MqttAdapterConfig
+  },
 }
 
 export type GleeFunctionReturn = {

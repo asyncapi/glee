@@ -5,6 +5,7 @@ import uriTemplates from 'uri-templates'
 import GleeConnection from './connection.js'
 import Glee from './glee.js'
 import GleeMessage from './message.js'
+import { resolveFunctions } from './util.js'
 
 export type EnrichedEvent = {
   connection?: GleeConnection,
@@ -152,18 +153,11 @@ class GleeAdapter extends EventEmitter {
   async resolveProtocolConfig(protocol: string) {
     if(!this.glee.options[protocol]) return undefined
     const protocolConfig = {...this.glee.options[protocol]}
-    const resolve = async (config: any) => {
-      for (const key in config) {
-        if (typeof config[key] === 'object' && !Array.isArray(config[key])) {
-          resolve(config[key])
-        } else if (typeof config[key] === 'function') {
-          config[key] = await config[key]()
-        }
-      }
-    }
+    const serverConfig = protocolConfig[this._serverName]
+    if (!serverConfig) return undefined
 
-    await resolve(protocolConfig)
-    return protocolConfig
+    await resolveFunctions(serverConfig)
+    return serverConfig
   }
 
   /**
