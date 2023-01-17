@@ -30,9 +30,6 @@ class GleeMessage extends EventEmitter {
   private _outbound: boolean
   private _cluster: boolean
   private _params: { [key: string]: string }
-  timestamp: string
-  key: string | Buffer
-
   /**
    * Instantiates a new GleeMessage.
    *

@@ -12,6 +12,15 @@ class KafkaAdapter extends Adapter {
 
   async connect() {
     const kafkaOptions = await this.resolveProtocolConfig('kafka')
+    const securityRequirements = (this.AsyncAPIServer.security() || []).map(
+      (sec) => {
+        const secName = Object.keys(sec.json())[0]
+        return this.parsedAsyncAPI.components().securityScheme(secName)
+      }
+    )
+    const userAndPasswordSecurityReq = securityRequirements.find(
+      (sec) => sec.type() === 'userPassword'
+    )
     const brokerUrl = new URL(this.AsyncAPIServer.url())
     this.kafka = new Kafka({
       clientId: 'glee-app',  // clientID: hardcoded need to change afterwards 
@@ -22,12 +31,12 @@ class KafkaAdapter extends Adapter {
         cert: undefined
       },
       sasl: {
-        mechanism: 'plain',
+        mechanism: 'scram-sha-512',
         username: process.env.KAFKA_USERNAME
-        ? kafkaOptions?.authentication?.userPassword.username
+        ? kafkaOptions?.authentication?.userPassword?.username
         : undefined,
         password: process.env.KAFKA_PASSWORD
-        ? kafkaOptions?.authentication?.userPassword.username
+        ? kafkaOptions?.authentication?.userPassword?.username
         : undefined,
       },
     })
@@ -61,9 +70,9 @@ class KafkaAdapter extends Adapter {
     await producer.send({
       topic: message.channel,
       messages: [{
-        key: message.key,
+        key: message.headers.key,
         value: message.payload,
-        timestamp: message.timestamp,
+        timestamp: message.headers.timestamp,
       }],
     })
     await producer.disconnect()
