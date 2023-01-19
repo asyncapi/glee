@@ -18,8 +18,8 @@ class KafkaAdapter extends Adapter {
         return this.parsedAsyncAPI.components().securityScheme(secName)
       }
     )
-    const userAndPasswordSecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'userPassword'
+    const scramSha256SecurityReq = securityRequirements.find(
+      (sec) => sec.type() === 'scramSha256'
     )
     const brokerUrl = new URL(this.AsyncAPIServer.url())
     this.kafka = new Kafka({
@@ -31,13 +31,9 @@ class KafkaAdapter extends Adapter {
         cert: undefined
       },
       sasl: {
-        mechanism: 'scram-sha-512',
-        username: process.env.KAFKA_USERNAME
-        ? kafkaOptions?.authentication?.userPassword?.username
-        : undefined,
-        password: process.env.KAFKA_PASSWORD
-        ? kafkaOptions?.authentication?.userPassword?.username
-        : undefined,
+        mechanism: 'scram-sha-256',
+        username: kafkaOptions?.authentication?.userPassword?.username,
+        password: kafkaOptions?.authentication?.userPassword?.username,
       },
     })
 

@@ -6,6 +6,8 @@ servers:
   mykafka:
     url: kafka://pkc-6ojv2.us-west4.gcp.confluent.cloud:9092
     protocol: kafka-secure
+    security:
+      - saslScramExample: []
 channels:
   test:
     publish:
@@ -17,10 +19,13 @@ channels:
       message:
         $ref: '#/components/messages/testMessage'
 components:
+  securitySchemes:
+      saslScramExample:
+        type: scramSha256
   messages:
     testMessage:
       payload:
         type: object
         properties:
           test:
-            type: string
+            type: string 
