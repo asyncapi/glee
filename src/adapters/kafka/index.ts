@@ -18,12 +18,19 @@ class KafkaAdapter extends Adapter {
         return this.parsedAsyncAPI.components().securityScheme(secName)
       }
     )
+    const userAndPasswordSecurityReq = securityRequirements.find(
+      (sec) => sec.type() === 'userPassword'
+    )
     const scramSha256SecurityReq = securityRequirements.find(
       (sec) => sec.type() === 'scramSha256'
     )
+    const scramSha512SecurityReq = securityRequirements.find(
+      (sec) => sec.type() === 'scramSha512'
+    )
+  
     const brokerUrl = new URL(this.AsyncAPIServer.url())
     this.kafka = new Kafka({
-      clientId: 'glee-app',  // clientID: hardcoded need to change afterwards 
+      clientId: 'glee-app', 
       brokers: [brokerUrl.host],
       ssl: {
         rejectUnauthorized: true,
@@ -31,13 +38,14 @@ class KafkaAdapter extends Adapter {
         cert: undefined
       },
       sasl: {
-        mechanism: 'scram-sha-256',
-        username: kafkaOptions?.authentication?.userPassword?.username,
-        password: kafkaOptions?.authentication?.userPassword?.username,
+        mechanism: (scramSha256SecurityReq? kafkaOptions?.authentication?.scramSha256?.mechanism : undefined) || 
+                   (scramSha512SecurityReq? kafkaOptions?.authentication?.scramSha512?.mechanism : undefined),
+        username: userAndPasswordSecurityReq? kafkaOptions?.authentication?.userPassword?.username : undefined,
+        password: userAndPasswordSecurityReq? kafkaOptions?.authentication?.userPassword?.password : undefined,
       },
     })
 
-    const consumer = this.kafka.consumer({ groupId: 'glee-group' })   // groupID: hardcoded need to change afterwards
+    const consumer = this.kafka.consumer({ groupId: 'glee-group' })   
     consumer.on('consumer.connect', () => {
       if (this.firstConnect) {
         this.firstConnect = false
