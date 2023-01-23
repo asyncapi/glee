@@ -25,12 +25,14 @@ export async function initializeConfigs(config: Config = {}): Promise<{ [key: st
 
   GLEE_CONFIG_FILE_PATH_TS = path.resolve(GLEE_DIR, 'glee.config.ts')
   GLEE_CONFIG_FILE_PATH_JS = path.resolve(GLEE_DIR, 'glee.config.js')
-  GLEE_CONFIG_FILE_PATH = existsSync(GLEE_CONFIG_FILE_PATH_TS) ? GLEE_CONFIG_FILE_PATH_TS : GLEE_CONFIG_FILE_PATH_JS
+  const configJSExists = existsSync(GLEE_CONFIG_FILE_PATH_JS)
+  const configTSExists = existsSync(GLEE_CONFIG_FILE_PATH_TS)
+  GLEE_CONFIG_FILE_PATH = configTSExists ? GLEE_CONFIG_FILE_PATH_TS : GLEE_CONFIG_FILE_PATH_JS
 
-  if(existsSync(GLEE_CONFIG_FILE_PATH_TS) && existsSync(GLEE_CONFIG_FILE_PATH_JS)) {
+  if(configTSExists && configJSExists) {
     logWarningMessage(
       `Both 'glee.config.js' and 'glee.config.ts' files were found at ${GLEE_DIR}. 
-      For IntelliSense support, 'glee.config.ts' will be used over 'glee.config.js'. 
+      The 'glee.config.ts' will be used and 'glee.config.js' will be ignored. 
       Consider migrating 'glee.config.js' to TypeScript or removing it.`, {
       highlightedWords: ['glee.config.js', 'glee.config.ts']
     })
