@@ -32,7 +32,7 @@ export async function initializeConfigs(config: Config = {}): Promise<{ [key: st
   if(configTSExists && configJSExists) {
     logWarningMessage(
       `Both 'glee.config.js' and 'glee.config.ts' files were found at ${GLEE_DIR}. 
-      The 'glee.config.ts' will be used and 'glee.config.js' will be ignored. 
+      The 'glee.config.ts' file will be used and 'glee.config.js' will be ignored. 
       Consider migrating 'glee.config.js' to TypeScript or removing it.`, {
       highlightedWords: ['glee.config.js', 'glee.config.ts']
     })
