@@ -1,7 +1,7 @@
-import { accessSync, statSync, constants } from 'fs'
+import { accessSync, statSync, constants, existsSync } from 'fs'
 import path from 'path'
 import { pathToFileURL } from 'url'
-import { logErrorLine } from './logger.js'
+import { logErrorLine, logWarningMessage } from './logger.js'
 
 interface Config {
   functionsDir?: string,
@@ -12,6 +12,8 @@ let GLEE_PROJECT_DIR: string
 let GLEE_LIFECYCLE_DIR: string
 let GLEE_FUNCTIONS_DIR: string
 let GLEE_CONFIG_FILE_PATH: string
+let GLEE_CONFIG_FILE_PATH_JS: string
+let GLEE_CONFIG_FILE_PATH_TS: string
 let ASYNCAPI_FILE_PATH: string
 
 let errorMessage: string 
@@ -20,7 +22,22 @@ export async function initializeConfigs(config: Config = {}): Promise<{ [key: st
   GLEE_DIR = path.resolve(GLEE_PROJECT_DIR, '.glee')
   GLEE_LIFECYCLE_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'lifecycle')
   GLEE_FUNCTIONS_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'functions')
-  GLEE_CONFIG_FILE_PATH = path.resolve(GLEE_DIR, 'glee.config.js')
+
+  GLEE_CONFIG_FILE_PATH_TS = path.resolve(GLEE_DIR, 'glee.config.ts')
+  GLEE_CONFIG_FILE_PATH_JS = path.resolve(GLEE_DIR, 'glee.config.js')
+  const configJSExists = existsSync(GLEE_CONFIG_FILE_PATH_JS)
+  const configTSExists = existsSync(GLEE_CONFIG_FILE_PATH_TS)
+  GLEE_CONFIG_FILE_PATH = configTSExists ? GLEE_CONFIG_FILE_PATH_TS : GLEE_CONFIG_FILE_PATH_JS
+
+  if(configTSExists && configJSExists) {
+    logWarningMessage(
+      `Both 'glee.config.js' and 'glee.config.ts' files were found at ${GLEE_DIR}. 
+      The 'glee.config.ts' file will be used and 'glee.config.js' will be ignored. 
+      Consider migrating 'glee.config.js' to TypeScript or removing it.`, {
+      highlightedWords: ['glee.config.js', 'glee.config.ts']
+    })
+  }
+
   ASYNCAPI_FILE_PATH = findSpecFile(GLEE_PROJECT_DIR)
   const configsFromFile = await loadConfigsFromFile()
 
