@@ -1,4 +1,3 @@
-import fs from 'fs'
 import { Kafka } from 'kafkajs'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
@@ -34,8 +33,8 @@ class KafkaAdapter extends Adapter {
       brokers: [brokerUrl.host],
       ssl: {
         rejectUnauthorized: true,
-        key: fs.readFileSync('client.key'),
-        cert: undefined
+        key: kafkaOptions?.authentication?.keyFilePath,
+        cert: kafkaOptions?.authentication?.cert,
       },
       sasl: {
         mechanism: (scramSha256SecurityReq? kafkaOptions?.authentication?.scramSha256?.mechanism : undefined) || 
