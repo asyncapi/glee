@@ -10,6 +10,7 @@
   "author": "Ruchi Pakhle",
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/glee": "file:../.."
+    "@asyncapi/glee": "file:../..",
+    "@asyncapi/parser": "^1.17.2"
   }
 }
