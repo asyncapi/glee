@@ -32,7 +32,7 @@ class KafkaAdapter extends Adapter {
       clientId: 'glee-app', 
       brokers: [brokerUrl.host],
       ssl: {
-        rejectUnauthorized: true,
+        rejectUnauthorized: kafkaOptions?.authentication?.rejectUnauthorized,
         key: kafkaOptions?.authentication?.keyFilePath,
         cert: kafkaOptions?.authentication?.cert,
       },

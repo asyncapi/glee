@@ -17,6 +17,8 @@ This function must return an object with the following shape:
 ```js
 export default async function () {
   return {
+    glee: {},
+    kafka: {},
     websocket: {},
     mqtt: {},
     cluster: {}
@@ -30,19 +32,10 @@ Here is an example of a `glee.config.js` file for reference:
 ```js
 export default async function () {
   return {
-    websocket: {},
-    mqtt: {},
-    cluster: {}
-  }
-}
-
-```
-
-Here is an example of a `glee.config.js` file for reference:
-
-```js
-export default async function () {
-  return {
+    glee: { // Glee core configurations
+      lifecycleDir: './lifecycle',
+      functionsDir: './functions',
+      asyncapiFilePath: './asyncapi.json'
     docs: {
       enabled: true, // Enable/Disable documentation generation
       folder: 'docs', // Folder where you want the output of your docs to reside.
@@ -81,33 +74,17 @@ export default async function () {
   };
 }
 ```
+Inside the return statement, you can specify the following options:
+### Glee Core Configurations
 
-Every protocol has different configuration needs so each protocol has unique configurations:
+These configurations apply to Glee itself, rather than any specific protocol.
 
-### Websocket Server
-
-|Field|Description|
-|--|--|
-|websocket.server|Websocket server-specific configurations|
-|websocekt.client|Websocket client-specific configurations|
-|websocket.server.adapter| The Glee adapter to use for the WebSocket server. Defaults to a "native" WebSocket implementation. Other allowed values are `socket.io` (to use the [Socket.IO](https://socket.io/) Glee adapter) or a reference to a custom adapter.|
-|websocket.server.httpServer|  A custom HTTP server of your own. E.g., an [Express](https://expressjs.com/en/4x/api.html) server or any object that implements the [http.Server](https://nodejs.org/api/http.html#http_class_http_server) interface.   |
-|websocket.server.port| The port to use when binding the WebSocket server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.|
-|websocket.client.authetication| Authentication variables for client|
-|websocket.client.authentication.token| HTTP Authentication header|
-|websocket.client.query| Query object for the client to send
-
-### Cluster
-
-|Field|Description|
-|--|--|
-|cluster.adapter| The Glee cluster adapter to use for communication between instances. Defaults to Redis Pub/Sub ("redis"). Can be a reference to a custom adapter.|
-|cluster.name|The name of the cluster. Defaults to "cluster".|
-|cluster.url|The url of the server to be used by the adapter. In case of "redis" adapter, it's the url of the Redis server.|
-
-### MQTT
-
-Every protocol has different configuration needs so each protocol has unique configurations:
+|Field|Default|Description|
+|--|--|--|
+|glee.gleeDir|`.glee`|Sets the Glee directory. Your sources will be compiled here.|
+|glee.lifecycleDir|`lifecycle`|Path to the directory that stores your [lifecycle events](./lifecycle-events.md).|
+|glee.functionsDir|`functions`| Path to the directory that stores your [functions](./functions.md).|
+|glee.asyncapiFilePath|`asyncapi.(yaml \| yml \| json)`| Path to your AsyncAPI file. |
 
 ### Generating Documentation
 
@@ -148,3 +125,18 @@ Every protocol has different configuration needs so each protocol has unique con
 |mqtt.authentication.userPassword| username and password parameters for authentication|
 |mqtt.authentication.userPassword.username| username parameter
 |mqtt.authentication.userPassword.password| password parameter
+
+### Kafka
+
+|Field|Description|
+|---|---|
+|kafka.authentication| Kafka authentication configuration|
+|kafka.authentication.key | Kafka Broker Key
+|kafka.authentication.cert| Client certificate
+|kafka.authentication.clientId| Kafka client Id for authentication
+|kafka.authentication.rejectUnauthorized | Boolean flag for accepting the valid SSL certificates
+|kafka.authentication.userPassword| username and password parameters for authentication|
+|kafka.authentication.userPassword.username| username parameter
+|kafka.authentication.userPassword.password| password parameter
+|kafka.authentication.scramSha256.mechanism | ScramSha256 SASL mechanism type for authentication
+|kafka.authentication.scramSha512.mechanism | ScramSha512 SASL mechanism type for authentication
