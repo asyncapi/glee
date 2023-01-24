@@ -37,6 +37,7 @@ export default async function (event) {
 |---|---|---|
 |send|array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt;|A list of outbound messages to send when the processing of the inbound event has finished. All clients subscribed to the given channel/topic will receive the message.
 |reply|array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt;|A list of outbound messages to send as a reply when the processing of the inbound event has finished. This is useful when the target of your message is the sender of the inbound event. Note, however, that this only works when you're running Glee as a server. For example, using `reply` when receiving a WebSocket message is fine and the reply will exclusively go to the client that sent the message. However, if you're receiving a message from an MQTT broker, `reply` will work exactly the same way as `send` above, and will send the message to all the clients subscribed to the given channel/topic.
+|invoke|array&lt;[InvokeRequest](#anatomy-of-an-invoke-message)&gt;|A list of requests for reaching an HTTP/HTTPS endpoint. This is useful when you have a software as a service (SaaS) function and want it to be treated as one of Glee's functions.
 
 
 ##### Anatomy of an outbound message
@@ -47,6 +48,17 @@ export default async function (event) {
 |headers|object&lt;string,string&gt;|The headers/metadata of the message you want to send.
 |channel|string|The channel/topic you want to send the message to. Defaults to `event.channel`, i.e., the same channel as the received event.
 |server|string|The server/broker you want to send the message to. Defaults to `event.serverName`, i.e., the same server as the received event.
+
+##### Anatomy of an invoke message
+
+|Attribute|Type|Description|
+|---|---|---|
+|url|string|The URL of your HTTP/SaaS end-point.
+|headers|object&lt;string,string&gt;|The headers/metadata of the message you want to send.
+|method|string|The HTTP method that you want your endpoint to be called with.
+|ignoreResponse|boolean|By default, Glee assumes that the response is in JSON format and adheres to the [Functions](#functions) return type structure. If you do not wish for Glee to process the response, you can set the this option to `false`.
+
+> NOTE: Glee uses [got](https://github.com/sindresorhus/got) under the hood. Therefore, you have the ability to personalize your request with any options that [got](https://github.com/sindresorhus/got#documentation) supports.
 
 ## How does Glee know which function it should execute?
 
