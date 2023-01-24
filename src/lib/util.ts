@@ -1,10 +1,10 @@
+import { AsyncAPIDocument } from '@asyncapi/parser'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
 import { GleeFunctionEvent } from './index.d'
 import GleeMessage from './message.js'
-import Message from './message.js'
 
 interface IValidateDataReturn {
   errors?: void | betterAjvErrors.IOutputError[],
@@ -42,7 +42,7 @@ export const getParams = (path: string, channel: string): {[key: string]: string
  * @return {GleeMessage}
  */
 export const duplicateMessage = (message: GleeMessage): GleeMessage => {
-  const newMessage = new Message({
+  const newMessage = new GleeMessage({
     payload: message.payload,
     headers: message.headers,
     channel: message.channel,
@@ -116,4 +116,9 @@ export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): Gle
     serverName: message.serverName,
     glee,
   } as GleeFunctionEvent
+}
+
+export const isRemoteServer = (parsedAsyncAPI: AsyncAPIDocument, serverName: string): boolean => {
+  const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
+  return remoteServers && remoteServers.includes(serverName)
 }

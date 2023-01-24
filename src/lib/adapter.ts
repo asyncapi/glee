@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import EventEmitter from 'events'
 import uriTemplates from 'uri-templates'
@@ -146,6 +147,23 @@ class GleeAdapter extends EventEmitter {
 
   get serverUrlExpanded(): string {
     return this._serverUrlExpanded
+  }
+
+  async resolveProtocolConfig(protocol: string) {
+    if(!this.glee.options[protocol]) return undefined
+    const protocolConfig = {...this.glee.options[protocol]}
+    const resolve = async (config: any) => {
+      for (const key in config) {
+        if (typeof config[key] === 'object' && !Array.isArray(config[key])) {
+          resolve(config[key])
+        } else if (typeof config[key] === 'function') {
+          config[key] = await config[key]()
+        }
+      }
+    }
+
+    await resolve(protocolConfig)
+    return protocolConfig
   }
 
   /**

@@ -6,6 +6,7 @@
     "dev": "glee dev",
     "start": "glee start"
   },
+  "type": "module",
   "author": "Fran Mendez",
   "license": "Apache-2.0",
   "dependencies": {

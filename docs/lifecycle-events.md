@@ -52,7 +52,7 @@ The above example makes Glee fire the lifecycle event only if it's coming from t
 Additionally, you may want to restrict the lifecycle event by channel/topic. To do that, add a line like the following to your lifecycle file:
 
 ```js
-export const servers = ['user/signedup']
+export const channels = ['user/signedup']
 ```
 
 The above example makes Glee fire the lifecycle event only if the connection has the channel `user/signedup` listed as one of its channels.
