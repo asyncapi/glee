@@ -7,6 +7,7 @@ import RedisClusterAdapter from './adapters/cluster/redis/index.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import Glee from './lib/glee.js'
 import { GleeConfig, GleeClusterAdapterConfig } from './lib/index.d'
+import KafkaAdapter from './adapters/kafka/index.js'
 
 export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) => {
   const serverNames = await getSelectedServerNames()
@@ -29,6 +30,12 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
   const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
   if (['mqtt', 'mqtts', 'secure-mqtt'].includes(protocol)) {
     app.addAdapter(MqttAdapter, {
+      serverName,
+      server,
+      parsedAsyncAPI,
+    })
+  } else if (['kafka', 'kafka-secure'].includes(protocol)) {
+    app.addAdapter(KafkaAdapter, {
       serverName,
       server,
       parsedAsyncAPI,

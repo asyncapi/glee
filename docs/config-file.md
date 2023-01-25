@@ -18,6 +18,7 @@ This function must return an object with the following shape:
 export default async function () {
   return {
     glee: {},
+    kafka: {},
     websocket: {},
     mqtt: {},
     cluster: {}
@@ -124,3 +125,15 @@ These configurations apply to Glee itself, rather than any specific protocol.
 |mqtt.authentication.userPassword| username and password parameters for authentication|
 |mqtt.authentication.userPassword.username| username parameter
 |mqtt.authentication.userPassword.password| password parameter
+
+### Kafka
+
+|Field|Description|
+|---|---|
+|kafka.authentication| Kafka authentication configuration|
+|kafka.authentication.key | Kafka Broker Key
+|kafka.authentication.cert| Client certificate
+|kafka.authentication.clientId| Kafka client Id for authentication
+|kafka.authentication.rejectUnauthorized | Boolean flag for accepting the valid SSL certificates
+|kafka.authentication.username| The username to use during authentication.
+|kafka.authentication.password| The password to use during authentication.
