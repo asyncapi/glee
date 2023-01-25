@@ -10,6 +10,9 @@ interface IMQTTHeaders {
   length: number;
 }
 
+const MQTT_UNSPECIFIED_ERROR_REASON = 0x80
+const MQTT_SUCCESS_REASON = 0
+
 class MqttAdapter extends Adapter {
   private client: MqttClient
   private firstConnect: boolean
@@ -29,9 +32,9 @@ class MqttAdapter extends Adapter {
   async _connect(): Promise<this> { // NOSONAR
     const mqttOptions = await this.resolveProtocolConfig('mqtt')
     const subscribedChannels = this.getSubscribedChannels()
-    const serverBinding = this.AsyncAPIServer.binding('mqtt')
-    const securityRequirements = (this.AsyncAPIServer.security() || []).map(
-      (sec) => {
+    const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
+    const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
+    const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
         const secName = Object.keys(sec.json())[0]
         return this.parsedAsyncAPI.components().securityScheme(secName)
       }
@@ -43,6 +46,9 @@ class MqttAdapter extends Adapter {
       (sec) => sec.type() === 'X509'
     )
     const url = new URL(this.AsyncAPIServer.url())
+
+    const protocolVersion = parseInt(this.AsyncAPIServer.protocolVersion() || '4')
+    const serverBinding = protocolVersion === 5 ? mqtt5ServerBinding : mqttServerBinding
 
     this.client = mqtt.connect({
       host: url.host,
@@ -64,20 +70,9 @@ class MqttAdapter extends Adapter {
         ? mqttOptions?.authentication?.userPassword.password
         : undefined,
       ca: X509SecurityReq ? mqttOptions?.authentication?.cert : undefined,
+      protocolVersion,
+      customHandleAcks: this._customAckHandler.bind(this),
     } as any)
-
-
-    this.client.on('message', (channel, message, mqttPacket) => {
-      const msg = this._createMessage(mqttPacket as IPublishPacket)
-      this.emit('message', msg, this.client)
-    })
-
-    this.client.on('reconnect', () => {
-      this.emit('reconnect', {
-        connection: this.client,
-        channels: this.channelNames,
-      })
-    })
 
     this.client.on('close', () => {
       this.emit('close', {
@@ -90,10 +85,19 @@ class MqttAdapter extends Adapter {
       this.emit('error', error)
     })
 
+    this.client.on('message', (channel, message, mqttPacket) => {
+      const qos = mqttPacket.qos
+      if ( protocolVersion === 5 && qos > 0 ) return   // ignore higher qos messages. already processed
+
+      const msg = this._createMessage(mqttPacket as IPublishPacket)
+      this.emit('message', msg, this.client)
+    })
 
     const connectClient = (): Promise<this> => {
       return new Promise((resolve) => {
-        this.client.on('connect', () => {
+        this.client.on('connect', connAckPacket => {
+          const isSessionResume = connAckPacket.sessionPresent
+
           if (!this.firstConnect) {
             this.firstConnect = true
             this.emit('connect', {
@@ -104,7 +108,7 @@ class MqttAdapter extends Adapter {
             })
           }
 
-          if (Array.isArray(subscribedChannels)) {
+          if (!isSessionResume && Array.isArray(subscribedChannels)) {
             subscribedChannels.forEach((channel) => {
               const operation = this.parsedAsyncAPI.channel(channel).publish()
               const binding = operation.binding('mqtt')
@@ -162,6 +166,16 @@ class MqttAdapter extends Adapter {
       headers,
       channel: packet.topic,
     })
+  }
+
+  _customAckHandler(channel, message, mqttPacket, done) {
+    const msg = this._createMessage(mqttPacket as IPublishPacket)
+    console.log('Hello World')
+
+    msg.on('processing:successful', () => done(MQTT_SUCCESS_REASON))
+    msg.on('processing:failed', () => done(MQTT_UNSPECIFIED_ERROR_REASON))
+
+    this.emit('message', msg, this.client)
   }
 }
 

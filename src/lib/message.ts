@@ -189,6 +189,20 @@ class GleeMessage extends EventEmitter {
   send() {
     this.emit('send', this)
   }
+
+  /**
+   * Indicates successfully processed the message
+   */
+  notifySuccessfulProcessing() {
+    this.emit('processing:successful')
+  }
+
+  /**
+   * Indicates failure in processing the message
+   */
+  notifyFailedProcessing() {
+    this.emit('processing:failed')
+  }
 }
 
 export default GleeMessage
