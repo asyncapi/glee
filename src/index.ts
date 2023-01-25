@@ -22,7 +22,7 @@ import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 
-dotenvExpand(dotenv.config())
+dotenvExpand(dotenv.config({ path: 'local.env' }))
 
 export default async function GleeAppInitializer () {
   const config = await initializeConfigs()
