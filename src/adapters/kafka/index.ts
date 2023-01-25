@@ -33,14 +33,13 @@ class KafkaAdapter extends Adapter {
       brokers: [brokerUrl.host],
       ssl: {
         rejectUnauthorized: kafkaOptions?.authentication?.rejectUnauthorized,
-        key: kafkaOptions?.authentication?.keyFilePath,
+        key: kafkaOptions?.authentication?.key,
         cert: kafkaOptions?.authentication?.cert,
       },
       sasl: {
-        mechanism: (scramSha256SecurityReq? kafkaOptions?.authentication?.scramSha256?.mechanism : undefined) || 
-                   (scramSha512SecurityReq? kafkaOptions?.authentication?.scramSha512?.mechanism : undefined),
-        username: userAndPasswordSecurityReq? kafkaOptions?.authentication?.userPassword?.username : undefined,
-        password: userAndPasswordSecurityReq? kafkaOptions?.authentication?.userPassword?.password : undefined,
+        mechanism: (scramSha256SecurityReq? 'scram-sha-256' : undefined) || (scramSha512SecurityReq? 'scram-sha-512' : undefined) || 'plain',
+        username: kafkaOptions?.authentication?.username,
+        password: kafkaOptions?.authentication?.password,
       },
     })
 

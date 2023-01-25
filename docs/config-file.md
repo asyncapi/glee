@@ -135,8 +135,5 @@ These configurations apply to Glee itself, rather than any specific protocol.
 |kafka.authentication.cert| Client certificate
 |kafka.authentication.clientId| Kafka client Id for authentication
 |kafka.authentication.rejectUnauthorized | Boolean flag for accepting the valid SSL certificates
-|kafka.authentication.userPassword| username and password parameters for authentication|
-|kafka.authentication.userPassword.username| username parameter
-|kafka.authentication.userPassword.password| password parameter
-|kafka.authentication.scramSha256.mechanism | ScramSha256 SASL mechanism type for authentication
-|kafka.authentication.scramSha512.mechanism | ScramSha512 SASL mechanism type for authentication
+|kafka.authentication.username| The username to use during authentication.
+|kafka.authentication.password| The password to use during authentication.
