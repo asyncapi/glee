@@ -4,7 +4,7 @@ import GleeMessage from '../../lib/message.js'
 
 class KafkaAdapter extends Adapter {
   private kafka: Kafka
-  private firstConnect: boolean = true
+  private firstConnect = true
   name(): string {
     return 'Kafka adapter'
   }
