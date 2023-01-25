@@ -1,4 +1,4 @@
-import { Kafka } from 'kafkajs'
+import { Kafka, SASLOptions } from 'kafkajs'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 
@@ -38,9 +38,9 @@ class KafkaAdapter extends Adapter {
       },
       sasl: {
         mechanism: (scramSha256SecurityReq? 'scram-sha-256' : undefined) || (scramSha512SecurityReq? 'scram-sha-512' : undefined) || 'plain',
-        username: kafkaOptions?.authentication?.username,
-        password: kafkaOptions?.authentication?.password,
-      },
+        username: userAndPasswordSecurityReq? kafkaOptions?.authentication?.username : undefined,
+        password: userAndPasswordSecurityReq? kafkaOptions?.authentication?.password : undefined,
+      } as SASLOptions,
     })
 
     const consumer = this.kafka.consumer({ groupId: 'glee-group' })   
