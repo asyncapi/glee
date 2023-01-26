@@ -13,6 +13,7 @@ import json2string from './middlewares/json2string.js'
 import validate from './middlewares/validate.js'
 import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import logger from './middlewares/logger.js'
+import generateDocs from './lib/docs.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
 import { initializeConfigs } from './lib/configs.js'
@@ -61,13 +62,14 @@ export default async function GleeAppInitializer () {
   app.useOutbound(logger)
   app.use(errorLogger)
   app.useOutbound(errorLogger)
+  generateDocs(parsedAsyncAPI, config, null)
 
   channelNames.forEach((channelName) => {
     const channel = parsedAsyncAPI.channel(channelName)
     if (channel.hasPublish()) {
       const operationId = channel.publish().json('operationId')
       if (operationId) {
-        const schema = channel.publish().message().payload().json()
+        const schema = {oneOf: channel.publish().messages().map(message => message.payload().json())} as any
         app.use(channelName, validate(schema), (event, next) => {
           triggerFunction({
             app,
@@ -78,7 +80,7 @@ export default async function GleeAppInitializer () {
       }
     }
     if (channel.hasSubscribe()) {
-      const schema = channel.subscribe().message().payload().json()
+      const schema = {oneOf: channel.subscribe().messages().map(message => message.payload().json())} as any
       app.useOutbound(channelName, validate(schema), json2string)
     }
   })

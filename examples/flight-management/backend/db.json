@@ -1,0 +1,82 @@
+{
+  "flights": [
+    {
+      "id": 1,
+      "flight_no": "IQA111",
+      "arrival": "2022-01-01 21:55:00",
+      "departure": "2022-01-01 23:55:00",
+      "origin_terminal": "A1",
+      "origin_city": "London",
+      "origin_code": "LHR",
+      "destin_city": "Paris",
+      "destin_terminal": "B1",
+      "destin_code": "CDG",
+      "status": "DELAYED"
+    },
+    {
+      "id": 2,
+      "flight_no": "IQ111",
+      "arrival": "2022-10-10T03:04",
+      "departure": "2022-01-02 23:55:00",
+      "origin_terminal": "Z2",
+      "origin_city": "Dubai",
+      "origin_code": "DBX",
+      "destin_city": "Paris",
+      "destin_terminal": "B8",
+      "destin_code": "CDG",
+      "status": "ON TIME"
+    },
+    {
+      "id": 3,
+      "flight_no": "IQA111",
+      "arrival": "2022-01-01 21:55:00",
+      "departure": "2022-01-01 23:55:00",
+      "origin_terminal": "A1",
+      "origin_city": "London",
+      "origin_code": "LHR",
+      "destin_city": "Paris",
+      "destin_terminal": "B1",
+      "destin_code": "CDG",
+      "status": "DELAYED"
+    },
+    {
+      "id": 4,
+      "flight_no": "QR1122",
+      "arrival": "2022-01-01 21:55:00",
+      "departure": "2022-01-01 23:55:00",
+      "origin_terminal": "A2",
+      "origin_city": "London",
+      "origin_code": "LHR",
+      "destin_city": "Dubai",
+      "destin_terminal": "A2",
+      "destin_code": "DBX",
+      "status": "CANCELLED"
+    },
+    {
+      "id": 5,
+      "flight_no": "BA112",
+      "arrival": "2022-01-01 22:55:00",
+      "departure": "2022-01-01 16:55:00",
+      "origin_terminal": "A2",
+      "origin_city": "Dubai",
+      "origin_code": "DBX",
+      "destin_city": "PUNE",
+      "destin_terminal": "A2",
+      "destin_code": "PNQ",
+      "status": "ON TIME"
+    },
+    {
+      "id": 6,
+      "flight_no": "BA112",
+      "arrival": "2022-01-01 22:55:00",
+      "departure": "2022-01-01 16:55:00",
+      "origin_terminal": "A3",
+      "origin_city": "DELHI",
+      "origin_code": "DEL",
+      "destin_city": "DUBAI",
+      "destin_terminal": "A1",
+      "destin_code": "DBX",
+      "status": "ON TIME"
+    }
+  ]
+}
