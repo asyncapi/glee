@@ -33,11 +33,7 @@ class HttpAdapter extends Adapter {
             httpServer.on('request', (req, res) => {
                 this.res.push(res);
                 let { pathname } = new URL(req.url, serverUrl);
-
-                if (pathname.startsWith('/')) {
-                    pathname = pathname.substring(1);
-                }
-
+                pathname = pathname.startsWith('/') ? pathname.substring(1) : pathname
                 if (!this.parsedAsyncAPI.channel(pathname)) {
                     res.end('HTTP/1.1 404 Not Found\r\n\r\n');
                     const err = new Error(`A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file.`)
