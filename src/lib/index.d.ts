@@ -4,6 +4,7 @@ import GleeConnection from './connection.js'
 import Glee from './glee.js'
 
 type WebSocketServerType = 'native' | 'socket.io'
+type HttpServerType = 'native' | 'socket.io'
 
 export type GleeClusterAdapterConfig = {
   adapter?: string | typeof GleeClusterAdapter,
@@ -25,6 +26,19 @@ export type WebsocketAdapterConfig = {
   }
 }
 
+export type HttpAdapterConfig = {
+  server: {
+    httpServer?: SyntaxError,
+    adapter?: HttpServerType | typeof GleeAdapter
+    port?: number
+  },
+  client?: {
+    query?: any
+    authentication?: {
+      token?: string
+    }
+  }
+}
 export type MqttAdapterConfig = {
   authentication?: {
     cert?: string

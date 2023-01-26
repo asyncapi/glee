@@ -21,11 +21,13 @@ class HttpAdapter extends Adapter {
     }
 
     _connect(): Promise<this> {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
+            const config = await this.resolveProtocolConfig('ws')
+            const httpOptions = config?.server
             const serverUrl = new URL(this.serverUrlExpanded);
-            const httpServer = this.glee.options?.http?.server || http.createServer();
+            const httpServer = httpOptions?.httpServer || http.createServer();
             const asyncapiServerPort = serverUrl.port || 80;
-            const optionsPort = this.glee.options?.http?.serverPort;
+            const optionsPort = httpOptions?.port;
             const port = optionsPort || asyncapiServerPort;
 
             httpServer.on('request', (req, res) => {
