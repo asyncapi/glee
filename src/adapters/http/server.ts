@@ -56,16 +56,16 @@ class HttpAdapter extends Adapter {
                         res.end('HTTP/1.1 400 Bad Request\r\n\r\n');
                         return;
                     }
-
-                    if (query) {
-                        const {isValid, humanReadableError, errors} = validateData(searchParams, query);
-                        if(!isValid){
-                            const err = new GleeError({humanReadableError, errors});
-                            console.log('ERROR', err);
-                            this.emit('error', err);
-                            res.end('HTTP/1.1 400 Bad Request\r\n\r\n');
-                            return;
-                        }
+                    if(!query){
+                      return
+                    }
+                    const {isValid, humanReadableError, errors} = validateData(searchParams, query);
+                    if(!isValid){
+                      const err = new GleeError({humanReadableError, errors});
+                      console.log('ERROR', err);
+                      this.emit('error', err);
+                      res.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+                      return;
                     }
                 }
 
