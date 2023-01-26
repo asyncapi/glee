@@ -1,17 +1,19 @@
 asyncapi: 2.4.0
 info:
-  title: asyncapimart client
+  title: asyncapiImdb client
   version: 1.0.0
-  description: This app creates a client that subscribes to the server for sale of different products.
+  description: This app creates a client that subscribes to the server for getting top 10 trending anime.
 servers:
   http:
     url: http://localhost:8080
     protocol: http
+x-remoteServer:
+  - http
 channels:
-  test:
+  /trendingAnime:
     subscribe:
       message:
-        $ref: '#/components/messages/sale' 
+        $ref: '#/components/messages/trendingAnime'
         bindings:
           http:
             type: request
@@ -24,8 +26,8 @@ channels:
               additionalProperties: false
             bindingVersion: 0.1.0
     publish:
-      message: 
-        $ref: '#/components/messages/sale'
+      message:
+        $ref: '#/components/messages/trendingAnime'
         bindings:
           http:
             type: request
@@ -39,12 +41,15 @@ channels:
             bindingVersion: 0.1.0
 components:
   messages:
-    testMessage:
+    trendingAnime:
       payload:
         type: object
         properties:
-          query:
+          name:
             type: string
-    testReply:
-      payload:
-        type: string
+          rating:
+            type: number
+          genre:
+            type: string
+          studio:
+            type: string

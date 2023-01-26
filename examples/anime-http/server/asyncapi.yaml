@@ -1,0 +1,32 @@
+asyncapi: 2.4.0
+info:
+  title: asyncapimart client
+  version: 1.0.0
+  description: This app is a dummy server that would stream the trending anime.
+servers:
+  http:
+    url: http://localhost:8080
+    protocol: http
+channels:
+  /trendingAnime:
+    binding:
+      ws:
+        bindingVersion: 0.1.0
+    subscriber:
+      message:
+        $ref: '#/components/messages/trendingAnime'
+components:
+  messages:
+    trendingAnime:
+      summary: Data required to populate trending anime
+      payload:
+        type: object
+        properties:
+          name:
+            type: string
+          rating:
+            type: number
+          genre:
+            type: string
+          studio:
+            type: string
