@@ -43,6 +43,7 @@
     "@types/qs": "^6.9.7",
     "ajv": "^6.12.6",
     "async": "^3.2.0",
+    "axios": "^1.2.5",
     "better-ajv-errors": "^0.7.0",
     "bufferutil": "^4.0.3",
     "chalk": "^4.1.1",

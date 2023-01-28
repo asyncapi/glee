@@ -35,7 +35,7 @@ class GleeAdapter extends EventEmitter {
     this._glee = glee
     this._serverName = serverName
     this._AsyncAPIServer = server
-    
+
     this._parsedAsyncAPI = parsedAsyncAPI
     this._channelNames = this._parsedAsyncAPI.channelNames()
     this._connections = []
@@ -90,11 +90,11 @@ class GleeAdapter extends EventEmitter {
         connection: conn,
       }))
     })
-    
+
     this.on('server:ready', (ev) => {
       this._glee.emit('adapter:server:ready', enrichEvent(ev))
     })
-    
+
     this.on('server:connection:open', (ev) => {
       const conn = createConnection(ev)
       this._connections.push(conn)
@@ -111,10 +111,10 @@ class GleeAdapter extends EventEmitter {
         connection: conn,
       }))
     })
-    
+
     this.on('close', (ev) => {
       const conn = createConnection(ev)
-      
+
       this._glee.emit('adapter:close', enrichEvent({
         connection: conn,
       }))
@@ -174,7 +174,7 @@ class GleeAdapter extends EventEmitter {
       .filter(channelName => {
         const channel = this._parsedAsyncAPI.channel(channelName)
         if (!channel.hasPublish()) return false
-        
+
         const channelServers = channel.hasServers() ? channel.servers() : channel.ext('x-servers') || this._parsedAsyncAPI.serverNames()
         return channelServers.includes(this._serverName)
       })

@@ -22,7 +22,7 @@ class HttpAdapter extends Adapter {
 
     _connect(): Promise<this> {
         return new Promise(async (resolve, reject) => {
-            const config = await this.resolveProtocolConfig('ws')
+            const config = await this.resolveProtocolConfig('http')
             const httpOptions = config?.server
             const serverUrl = new URL(this.serverUrlExpanded);
             const httpServer = httpOptions?.httpServer || http.createServer();

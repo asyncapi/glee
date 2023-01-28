@@ -33,10 +33,7 @@ export type HttpAdapterConfig = {
     port?: number
   },
   client?: {
-    query?: any
-    authentication?: {
-      token?: string
-    }
+    endpoint: any
   }
 }
 export type MqttAdapterConfig = {
@@ -57,6 +54,7 @@ export type GleeConfig = {
   websocket?: WebsocketAdapterConfig,
   cluster?: GleeClusterAdapterConfig,
   mqtt?: MqttAdapterConfig,
+  http?: HttpAdapterConfig
 }
 
 export type GleeFunctionReturn = {
