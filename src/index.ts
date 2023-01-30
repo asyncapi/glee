@@ -5,8 +5,15 @@ import Glee from './lib/glee.js'
 import { logWelcome, logLineWithIcon } from './lib/logger.js'
 import experimentalFlags from './lib/experimentalFlags.js'
 import registerAdapters from './registerAdapters.js'
-import { register as registerLifecycleEvents, run as runLifecycleEvents } from './lib/lifecycleEvents.js'
-import { register as registerFunctions, trigger as triggerFunction } from './lib/functions.js'
+import {
+  register as registerLifecycleEvents,
+  run as runLifecycleEvents,
+} from './lib/lifecycleEvents.js'
+import {
+  register as registerFunctions,
+  trigger as triggerFunction,
+  generate as generateFunctions,
+} from './lib/functions.js'
 import buffer2string from './middlewares/buffer2string.js'
 import string2json from './middlewares/string2json.js'
 import json2string from './middlewares/json2string.js'
@@ -21,17 +28,13 @@ import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
+import { isAValidHttpUrl, urlToFileName } from './lib/util.js'
 
 dotenvExpand(dotenv.config())
 
-export default async function GleeAppInitializer () {
+export default async function GleeAppInitializer() {
   const config = await initializeConfigs()
-  const {
-    GLEE_DIR,
-    GLEE_PROJECT_DIR,
-    GLEE_LIFECYCLE_DIR,
-    GLEE_FUNCTIONS_DIR,
-  } = config
+  const { GLEE_DIR, GLEE_PROJECT_DIR, GLEE_LIFECYCLE_DIR, GLEE_FUNCTIONS_DIR } = config
 
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
@@ -43,11 +46,12 @@ export default async function GleeAppInitializer () {
     showFunctionsDir: GLEE_FUNCTIONS_DIR !== resolve(GLEE_DIR, 'functions'),
   })
 
-  await registerFunctions(GLEE_FUNCTIONS_DIR)
-  await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
-
   const parsedAsyncAPI = await getParsedAsyncAPI()
   const channelNames = parsedAsyncAPI.channelNames()
+
+  await generateFunctions(parsedAsyncAPI, GLEE_DIR)
+  await registerFunctions(GLEE_FUNCTIONS_DIR)
+  await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
 
   const app = new Glee(config)
 
@@ -69,18 +73,30 @@ export default async function GleeAppInitializer () {
     if (channel.hasPublish()) {
       const operationId = channel.publish().json('operationId')
       if (operationId) {
-        const schema = {oneOf: channel.publish().messages().map(message => message.payload().json())} as any
+        const schema = {
+          oneOf: channel
+            .publish()
+            .messages()
+            .map((message) => message.payload().json()),
+        } as any
         app.use(channelName, validate(schema), (event, next) => {
           triggerFunction({
             app,
-            operationId,
+            operationId: isAValidHttpUrl(operationId) ? urlToFileName(operationId) : operationId,
             message: event,
-          }).then(next).catch(next)
+          })
+            .then(next)
+            .catch(next)
         })
       }
     }
     if (channel.hasSubscribe()) {
-      const schema = {oneOf: channel.subscribe().messages().map(message => message.payload().json())} as any
+      const schema = {
+        oneOf: channel
+          .subscribe()
+          .messages()
+          .map((message) => message.payload().json()),
+      } as any
       app.useOutbound(channelName, validate(schema), json2string)
     }
   })
@@ -95,7 +111,7 @@ export default async function GleeAppInitializer () {
       connection: e.connection,
     })
   })
-  
+
   app.on('adapter:reconnect', (e: EnrichedEvent) => {
     logLineWithIcon('↪', `Reconnected to server ${e.serverName}.`, {
       highlightedWords: [e.serverName],
@@ -107,7 +123,7 @@ export default async function GleeAppInitializer () {
       connection: e.connection,
     })
   })
-  
+
   app.on('adapter:close', (e: EnrichedEvent) => {
     logLineWithIcon('x', `Closed connection with server ${e.serverName}.`, {
       highlightedWords: [e.serverName],
@@ -138,7 +154,7 @@ export default async function GleeAppInitializer () {
       connection: e.connection,
     })
   })
-  
+
   app.on('adapter:server:connection:close', (e: EnrichedEvent) => {
     runLifecycleEvents('onServerConnectionClose', {
       glee: app,
@@ -168,7 +184,5 @@ export default async function GleeAppInitializer () {
     })
   })
 
-  app
-    .listen()
-    .catch(console.error)
+  app.listen().catch(console.error)
 }

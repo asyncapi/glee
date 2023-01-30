@@ -1,15 +1,18 @@
 import { AsyncAPIDocument } from '@asyncapi/parser'
+import { promises } from 'fs'
+import { join } from 'path'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
-import { GleeFunctionEvent } from './index.d'
+import { GleeFunctionEvent, GleeFunctionReturnInvoke } from './index.d'
 import GleeMessage from './message.js'
+import { logError } from './logger.js'
 
 interface IValidateDataReturn {
-  errors?: void | betterAjvErrors.IOutputError[],
-  humanReadableError?: void | betterAjvErrors.IOutputError[],
-  isValid: boolean | PromiseLike<any>,
+  errors?: void | betterAjvErrors.IOutputError[]
+  humanReadableError?: void | betterAjvErrors.IOutputError[]
+  isValid: boolean | PromiseLike<any>
 }
 
 /**
@@ -19,7 +22,7 @@ interface IValidateDataReturn {
  * @param {String} path The path.
  * @param {String} channel The channel.
  */
-export const getParams = (path: string, channel: string): {[key: string]: string} | null => {
+export const getParams = (path: string, channel: string): { [key: string]: string } | null => {
   if (path === undefined) return {}
 
   const keys = []
@@ -28,10 +31,15 @@ export const getParams = (path: string, channel: string): {[key: string]: string
 
   if (result === null) return null
 
-  return keys.map((key, index) => ({ [key.name]: result[index + 1] })).reduce((prev, val) => ({
-    ...prev,
-    ...val,
-  }), {})
+  return keys
+    .map((key, index) => ({ [key.name]: result[index + 1] }))
+    .reduce(
+      (prev, val) => ({
+        ...prev,
+        ...val,
+      }),
+      {}
+    )
 }
 
 /**
@@ -49,7 +57,7 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
     serverName: message.serverName,
     connection: message.connection,
     broadcast: message.broadcast,
-    cluster: message.cluster
+    cluster: message.cluster,
   })
 
   if (message.isInbound()) {
@@ -57,7 +65,7 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
   } else {
     newMessage.setOutbound()
   }
-  
+
   return newMessage
 }
 
@@ -70,12 +78,12 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
  * @return {Boolean}
  */
 export const matchChannel = (path: string, channel: string): boolean => {
-  return (getParams(path, channel) !== null)
+  return getParams(path, channel) !== null
 }
 
 /**
  * Validates data against a given JSON Schema definition
- * 
+ *
  * @private
  * @param {Any} data The data to validate
  * @param {Object} schema A JSON Schema definition
@@ -104,10 +112,10 @@ export const validateData = (data: any, schema: object): IValidateDataReturn => 
 }
 
 export const arrayHasDuplicates = (array: any[]) => {
-  return (new Set(array)).size !== array.length
+  return new Set(array).size !== array.length
 }
 
-export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): GleeFunctionEvent => {
+export const gleeMessageToFunctionEvent = (message: GleeMessage, glee: Glee): GleeFunctionEvent => {
   return {
     payload: message.payload,
     headers: message.headers,
@@ -121,4 +129,50 @@ export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): Gle
 export const isRemoteServer = (parsedAsyncAPI: AsyncAPIDocument, serverName: string): boolean => {
   const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
   return remoteServers && remoteServers.includes(serverName)
+}
+
+export const isAValidHttpUrl = (s: string) => {
+  if (!s) return false
+  try {
+    new URL(s)
+    return s.trim().startsWith('http')
+  } catch (err) {
+    return false
+  }
+}
+
+export const generateUrlFunction = async (
+  gleePath: string,
+  url: string,
+  options: GleeFunctionReturnInvoke
+) => {
+  const invokeOptions = { ...options, url }
+  const content = `
+  export default async function (event) {
+    return {
+      invoke: [
+        ${JSON.stringify(invokeOptions)}
+      ]
+    }
+  }
+  `
+  const path = join(gleePath, 'functions')
+  const name = `${urlToFileName(url)}.js`
+  await createFile(path, name, content)
+}
+
+async function createFile(path: string, name: string, content: string) {
+  try {
+    await promises.mkdir(path)
+    await promises.writeFile(join(path, name), content)
+  } catch (err) {
+    if (err.code === 'EEXIST') {
+      // Do nothing since the directory already exists.
+    } else {
+      logError(err)
+    }
+  }
+}
+export function urlToFileName(url: string) {
+  return url.replace(/[^a-zA-Z0-9]/g, '_')
 }

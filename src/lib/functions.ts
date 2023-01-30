@@ -2,15 +2,21 @@ import { basename, extname, relative, join } from 'path'
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
-import { logWarningMessage } from './logger.js'
+import { logError, logWarningMessage } from './logger.js'
 import GleeMessage from './message.js'
 import { GleeFunction, GleeFunctionReturn } from './index.d'
 import Glee from './glee.js'
-import { gleeMessageToFunctionEvent, isRemoteServer } from './util.js'
+import {
+  generateUrlFunction,
+  gleeMessageToFunctionEvent,
+  isAValidHttpUrl,
+  isRemoteServer,
+} from './util.js'
 import { pathToFileURL } from 'url'
 import { getParsedAsyncAPI } from './asyncapiFile.js'
-import httFetch from './httpFetch.js'
-import validate from './validateFunctionsReturn.js'
+import httpFetch from './httpFetch.js'
+import { validateGleeFunctionReturn, validateGleeInvokeOptions } from './jsonSchemaValidators.js'
+import { AsyncAPIDocument } from '@asyncapi/parser'
 
 interface FunctionInfo {
   run: GleeFunction
@@ -18,6 +24,21 @@ interface FunctionInfo {
 
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
 export const functions: Map<string, FunctionInfo> = new Map()
+
+export async function generate(parsedAsyncAPI: AsyncAPIDocument, gleeDir: string) {
+  parsedAsyncAPI.channelNames().forEach(async (channelName) => {
+    const channel = parsedAsyncAPI.channel(channelName)
+    if (!channel.hasPublish()) return
+    const operationId = channel.publish().json('operationId')
+    if (isAValidHttpUrl(operationId)) {
+      const gleeInvokeOptions = channel.publish().json('x-glee-invoke')
+      const isValid = validateGleeInvokeOptions(gleeInvokeOptions, operationId)
+      if (isValid) {
+        await generateUrlFunction(gleeDir, operationId, gleeInvokeOptions)
+      }
+    }
+  })
+}
 
 export async function register(dir: string) {
   try {
@@ -36,7 +57,7 @@ export async function register(dir: string) {
           const functionName = basename(filePath, extname(filePath))
           const { default: fn } = await import(pathToFileURL(filePath).href)
           functions.set(functionName, {
-            run: fn
+            run: fn,
           })
         } catch (e) {
           console.error(e)
@@ -51,7 +72,7 @@ export async function register(dir: string) {
 export async function trigger({
   app,
   operationId,
-  message
+  message,
 }: {
   app: Glee
   operationId: string
@@ -63,7 +84,7 @@ export async function trigger({
 
     // eslint-disable-next-line @typescript-eslint/no-extra-semi
     const handleResponse = (res: GleeFunctionReturn, source: string) => {
-      validate(res, source)
+      validateGleeFunctionReturn(res, source)
       res?.send?.forEach((msg) => {
         const localServerProtocols = ['ws', 'wss', 'http', 'https']
         const serverProtocol = parsedAsyncAPI.server(msg.server).protocol().toLowerCase()
@@ -76,7 +97,7 @@ export async function trigger({
             headers: msg.headers,
             channel: msg.channel || message.channel,
             serverName: msg.server,
-            broadcast: isBroadcast
+            broadcast: isBroadcast,
           })
         )
       })
@@ -85,11 +106,11 @@ export async function trigger({
         message.reply({
           payload: msg.payload,
           headers: msg.headers,
-          channel: msg.channel
+          channel: msg.channel,
         })
       })
       res?.invoke?.forEach((request) => {
-        httFetch(request, handleResponse)
+        httpFetch(request, handleResponse)
       })
     }
     handleResponse(res, operationId)
@@ -99,7 +120,7 @@ export async function trigger({
       const missingFile = relative(GLEE_FUNCTIONS_DIR, `${operationId}.js`)
       const missingPath = join(functionsPath, missingFile)
       logWarningMessage(`Missing function file ${missingPath}.`, {
-        highlightedWords: [missingPath]
+        highlightedWords: [missingPath],
       })
     } else {
       throw err
