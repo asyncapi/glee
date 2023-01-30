@@ -30,6 +30,7 @@ export type MqttAdapterConfig = {
 }
 
 export type GleeConfig = {
+  authentication?: Function
   websocket?: {
     [serverName: string]: WebsocketAdapterConfig
   },

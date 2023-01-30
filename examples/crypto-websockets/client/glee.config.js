@@ -1,11 +1,11 @@
 export default async function () {
-    return {
-        websocket: {
-            websockets: {
-                authentication: {
-                    token: process.env.TOKEN
-                }
-            }
-        }
-    }
+  return {
+    authentication: (servername) => {
+      if (servername === "websockets") {
+        return {
+          token: process.env.TOKEN,
+        };
+      }
+    },
+  };
 }

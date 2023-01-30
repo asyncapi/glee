@@ -27,7 +27,7 @@ class MqttAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> { // NOSONAR
-    const mqttOptions = await this.resolveProtocolConfig('mqtt')
+    const mqttOptions = await this.getAuthenticationConfig()
     const subscribedChannels = this.getSubscribedChannels()
     const serverBinding = this.AsyncAPIServer.binding('mqtt')
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(

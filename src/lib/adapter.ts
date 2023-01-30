@@ -150,6 +150,12 @@ class GleeAdapter extends EventEmitter {
     return this._serverUrlExpanded
   }
 
+  async getAuthenticationConfig() {
+    if(!this.glee.options.authentication) return undefined
+    const config = await this.glee.options.authentication(this._serverName, this.parsedAsyncAPI)
+    return config
+  }
+
   async resolveProtocolConfig(protocol: string) {
     if(!this.glee.options[protocol]) return undefined
     const protocolConfig = {...this.glee.options[protocol]}

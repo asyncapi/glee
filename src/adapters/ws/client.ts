@@ -2,20 +2,11 @@
 import Adapter from "../../lib/adapter.js"
 import GleeMessage from "../../lib/message.js"
 import ws from "ws"
-import { WebsocketAdapterConfig } from "../../lib/index.js"
 
 interface Client {
   channel: string;
   client: ws;
   binding?: any;
-}
-
-interface IQueryValues {
-  [name: string]: string;
-}
-
-interface IHeaderValues {
-  [name: string]: string;
 }
 
 class WsClientAdapter extends Adapter {
@@ -38,8 +29,8 @@ class WsClientAdapter extends Adapter {
 
     for (const channel of channelsOnThisServer) {
       const headers = {}
-      const config: WebsocketAdapterConfig = await this.resolveProtocolConfig('websocket')
-      headers['Authentication'] = `bearer ${config?.authentication?.token}`
+      const config = await this.getAuthenticationConfig()
+      headers['Authentication'] = `bearer ${config?.token}`
 
       const url = new URL(
         this.AsyncAPIServer.url() + channel
