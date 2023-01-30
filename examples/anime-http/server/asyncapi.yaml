@@ -8,13 +8,68 @@ servers:
     url: http://localhost:8080
     protocol: http
 channels:
-  /trendingAnime:
-    binding:
-      ws:
+  trendingAnime:
+    bindings:
+      http:
+        type: request
+        method: POST
+        query:
+          type: object
+          required:
+            - name
+            - genre
+          properties:
+            name:
+              type: string
+              description: name of the anime.
+            rating:
+              type: string
+              description: rating of the show \.
+            genre:
+              type: string
+              description: The genre of anime.
+            studio:
+              type: string
+              description: The studio of anime.
         bindingVersion: 0.1.0
-    subscriber:
+    publish:
+      operationId: trendingAnimeController
       message:
         $ref: '#/components/messages/trendingAnime'
+    subscribe:
+      message:
+        payload:
+          type: object
+  upcomingAnime:
+    bindings:
+      http:
+        type: request
+        method: POST
+        query:
+          type: object
+          required:
+            - name
+            - genre
+            - studio
+          properties:
+            name:
+              type: string
+              description: name of the anime.
+            genre:
+              type: string
+              description: The genre of anime.
+            studio:
+              type: string
+              description: The studio of anime.
+        bindingVersion: 0.1.0
+    publish:
+      operationId: upcomingAnimeController
+      message:
+        $ref: '#/components/messages/upcomingAnime'
+    subscribe:
+      message:
+        payload:
+          type: object
 components:
   messages:
     trendingAnime:
@@ -25,7 +80,18 @@ components:
           name:
             type: string
           rating:
-            type: number
+            type: string
+          genre:
+            type: string
+          studio:
+            type: string
+    upcomingAnime:
+      summary: Data required to populate trending anime
+      payload:
+        type: object
+        properties:
+          name:
+            type: string
           genre:
             type: string
           studio:

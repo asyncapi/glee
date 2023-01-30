@@ -43,7 +43,7 @@ class WebSocketsAdapter extends Adapter {
 
       if (!pathname.startsWith(serverUrl.pathname) && !pathname.startsWith(`/${serverUrl.pathname}`)) {
         socket.end('HTTP/1.1 404 Not Found\r\n\r\n')
-        const err = new Error(`A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file.`)
+        const err = new Error(`A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file. hello2`)
         this.emit('error', err)
         throw err
       }
@@ -97,7 +97,7 @@ class WebSocketsAdapter extends Adapter {
       if (servers.has(pathname)) {
         servers.get(pathname).handleUpgrade(request, socket, head, (ws) => {
           servers.get(pathname).emit('connect', ws, request)
-          
+
           ws.on('message', (payload) => {
             const msg = this._createMessage(pathname, payload)
             this.emit('message', msg, ws)

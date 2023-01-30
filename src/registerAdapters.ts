@@ -7,7 +7,7 @@ import RedisClusterAdapter from './adapters/cluster/redis/index.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import Glee from './lib/glee.js'
 import { GleeConfig, GleeClusterAdapterConfig } from './lib/index.d'
-import HttpAdapter from './adapters/http/server'
+import HttpAdapter from './adapters/http/server.js'
 import KafkaAdapter from './adapters/kafka/index.js'
 
 export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) => {
