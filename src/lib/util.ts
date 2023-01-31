@@ -1,5 +1,5 @@
 import { AsyncAPIDocument } from '@asyncapi/parser'
-import { promises } from 'fs'
+import { mkdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
@@ -141,7 +141,7 @@ export const isAValidHttpUrl = (s: string) => {
   }
 }
 
-export const generateUrlFunction = async (
+export const generateUrlFunction = (
   gleePath: string,
   url: string,
   options: GleeFunctionReturnInvoke
@@ -158,13 +158,13 @@ export const generateUrlFunction = async (
   `
   const path = join(gleePath, 'functions')
   const name = `${urlToFileName(url)}.js`
-  await createFile(path, name, content)
+  createFile(path, name, content)
 }
 
-async function createFile(path: string, name: string, content: string) {
+function createFile(path: string, name: string, content: string) {
   try {
-    await promises.mkdir(path)
-    await promises.writeFile(join(path, name), content)
+    mkdirSync(path)
+    writeFileSync(join(path, name), content)
   } catch (err) {
     if (err.code === 'EEXIST') {
       // Do nothing since the directory already exists.

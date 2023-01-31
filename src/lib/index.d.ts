@@ -57,8 +57,8 @@ export interface GleeFunctionReturnInvoke {
   url: string
   headers?: { [key: string]: string }
   method: Method
-  body: any
-  ignoreResponse: boolean
+  body?: any
+  ignoreResponse?: boolean
 }
 
 export type GleeFunctionEvent = {

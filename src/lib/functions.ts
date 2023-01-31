@@ -2,7 +2,7 @@ import { basename, extname, relative, join } from 'path'
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
-import { logError, logWarningMessage } from './logger.js'
+import { logWarningMessage } from './logger.js'
 import GleeMessage from './message.js'
 import { GleeFunction, GleeFunctionReturn } from './index.d'
 import Glee from './glee.js'
@@ -25,7 +25,7 @@ interface FunctionInfo {
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
 export const functions: Map<string, FunctionInfo> = new Map()
 
-export async function generate(parsedAsyncAPI: AsyncAPIDocument, gleeDir: string) {
+export function generate(parsedAsyncAPI: AsyncAPIDocument, gleeDir: string) {
   parsedAsyncAPI.channelNames().forEach(async (channelName) => {
     const channel = parsedAsyncAPI.channel(channelName)
     if (!channel.hasPublish()) return
@@ -34,7 +34,7 @@ export async function generate(parsedAsyncAPI: AsyncAPIDocument, gleeDir: string
       const gleeInvokeOptions = channel.publish().json('x-glee-invoke')
       const isValid = validateGleeInvokeOptions(gleeInvokeOptions, operationId)
       if (isValid) {
-        await generateUrlFunction(gleeDir, operationId, gleeInvokeOptions)
+        generateUrlFunction(gleeDir, operationId, gleeInvokeOptions)
       }
     }
   })
