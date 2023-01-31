@@ -77,7 +77,7 @@ Glee maps the `onHello` operation to the `functions/onHello.js` file.
 
 ## Using FaaS functions as glee functions
 
-Glee can treat your FaaS function as it's own. just set `operationId` to your function URL and customize it with `x-glee-invoke` extention:
+Glee can treat your FaaS function as its own by setting `operationId` to your function URL and customizing it with the `x-glee-invoke` extension:
 
 ```yaml
 channels:
@@ -88,7 +88,7 @@ channels:
         method: get
         headers:
           Content-Type: application/json
-        ignoreResponse: true
+        ignoreResponse: true # By default, Glee processes the response and raises an error if it does not conform to the format specified by [functions](#functions) return type.
       ...
 
 ```
