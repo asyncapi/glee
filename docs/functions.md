@@ -74,3 +74,22 @@ channels:
 ```
 
 Glee maps the `onHello` operation to the `functions/onHello.js` file.
+
+## Using FaaS functions as glee functions
+
+Glee can treat your FaaS function as it's own. just set `operationId` to your function URL and customize it with `x-glee-invoke` extention:
+
+```yaml
+channels:
+  hello:
+    publish:
+      operationId: https://domain.come/path/to/your/function
+      x-glee-invoke:
+        method: get
+        headers:
+          Content-Type: application/json
+        ignoreResponse: true
+      ...
+
+```
+> NOTE: Avoid including authentication details in the asyncapi file. Instead, use the invoke option in [functions](#functions) return to authenticate your call.
