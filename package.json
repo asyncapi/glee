@@ -66,7 +66,8 @@
     "uuid": "^8.3.2",
     "walkdir": "^0.4.1",
     "word-wrap": "^1.2.3",
-    "ws": "^7.4.6"
+    "ws": "^7.4.6",
+    "fs-extra": "^10.1.0"
   },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "^8.0.1",
@@ -87,7 +88,6 @@
     "eslint": "^8.6.0",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-sonarjs": "^0.5.0",
-    "fs-extra": "^10.1.0",
     "jest": "^27.4.7",
     "jest-extended": "^1.2.0",
     "jsdoc-to-markdown": "^5.0.3",
