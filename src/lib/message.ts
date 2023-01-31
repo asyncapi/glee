@@ -30,7 +30,7 @@ class GleeMessage extends EventEmitter {
   private _outbound: boolean
   private _cluster: boolean
   private _params: { [key: string]: string }
-
+  
   /**
    * Instantiates a new GleeMessage.
    *
@@ -188,6 +188,20 @@ class GleeMessage extends EventEmitter {
    */
   send() {
     this.emit('send', this)
+  }
+
+  /**
+   * Indicates successfully processed the message
+   */
+  notifySuccessfulProcessing() {
+    this.emit('processing:successful')
+  }
+
+  /**
+   * Indicates failure in processing the message
+   */
+  notifyFailedProcessing() {
+    this.emit('processing:failed')
   }
 }
 
