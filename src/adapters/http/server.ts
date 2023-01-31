@@ -4,9 +4,6 @@ import http from "http";
 import { validateData } from "../../lib/util.js";
 import GleeError from "../../errors/glee-error.js";
 import * as url from "url";
-import { isConditionalExpression } from "typescript";
-//------
-import express from "express";
 
 class HttpAdapter extends Adapter {
   private res: any[] = [];
@@ -16,37 +13,40 @@ class HttpAdapter extends Adapter {
   }
 
   async connect(): Promise<this> {
-    // console.log("---root here---");
     return this._connect();
   }
 
   async send(message: GleeMessage): Promise<void> {
-    // console.log("---send---");
     return this._send(message);
   }
 
   _connect(): Promise<this> {
-    console.log("---INSIDE CONNECT-- ");
     return new Promise(async (resolve, reject) => {
-      // console.log("--here1--");
       const config = await this.resolveProtocolConfig("http");
       const httpOptions = config?.server;
       const serverUrl = new URL(this.serverUrlExpanded);
-      const httpServer = httpOptions?.httpServer || http.createServer();
+      const httpServer = httpOptions?.httpServer || http.createServer((req, res) => {});
       const asyncapiServerPort = serverUrl.port || 80;
       const optionsPort = httpOptions?.port;
       const port = optionsPort || asyncapiServerPort;
 
       console.log("--channel names: ", this.channelNames);
 
-      // this.channelNames.forEach(() => {
       httpServer.on("request", (req, res) => {
-        console.log("--here22--");
+        // ======================================
+        const body = [];
+        req.on("data", (chunk) => {
+          body.push(chunk);
+        });
+        req.on("end", () => {
+          req["body"] = Buffer.concat(body).toString();
+          console.log("---request body", req.body);
+        });
+        // ======================================
 
         this.res.push(res);
         let { pathname } = new URL(req.url, serverUrl);
         pathname = pathname.startsWith("/") ? pathname.substring(1) : pathname;
-        // console.log("--pathname: ",pathname);
         if (!this.parsedAsyncAPI.channel(pathname)) {
           res.end("HTTP/1.1 404 Not Found1\r\n\r\n");
           const err = new Error(
@@ -55,15 +55,11 @@ class HttpAdapter extends Adapter {
           this.emit("error", err);
           return reject(err);
         }
-        // console.log("--here3--");
         const { query: searchParams } = url.parse(req.url, true);
-        // console.log("---search param: ",req.url);
         const httpChannelBinding = this.parsedAsyncAPI
           .channel(pathname)
           .binding("http");
-        // console.log("--here4--",httpChannelBinding);
         if (httpChannelBinding) {
-          // console.log("---httpBinding---");
           const { query, method } = httpChannelBinding;
           if (method && req.method !== method) {
             this.emit("error", new Error(`Cannot ${req.method} ${pathname}`));
@@ -76,7 +72,6 @@ class HttpAdapter extends Adapter {
               query
             );
             if (!isValid) {
-              // console.log("---isnotvalid");
               const err = new GleeError({ humanReadableError, errors });
               console.log("ERROR", err);
               this.emit("error", err);
@@ -95,10 +90,8 @@ class HttpAdapter extends Adapter {
         const msg = this._createMessage(pathname, searchParams);
         this.emit("message", msg, http);
       });
-      // });
 
       httpServer.listen(port);
-      console.log("--name: ", this.name());
       this.emit("server:ready", { name: this.name(), adapter: this });
 
       resolve(this);
@@ -106,15 +99,13 @@ class HttpAdapter extends Adapter {
   }
 
   async _send(message: GleeMessage): Promise<void> {
-    console.log("--inside _send", this.res);
     this.res.forEach((res) => {
       res.write(message.payload);
-      // res.end();
+      res.end();
     });
   }
 
   _createMessage(pathName: string, payload: any) {
-    console.log("---inside _createMessage", pathName);
     return new GleeMessage({
       payload: JSON.parse(JSON.stringify(payload)),
       channel: pathName,

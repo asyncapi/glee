@@ -5,14 +5,14 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "glee start",
-      "dev": "glee dev"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "glee start",
+        "dev": "glee dev"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "@asyncapi/glee": "file:../.."
+        "@asyncapi/glee": "file:../../.."
     }
 }
