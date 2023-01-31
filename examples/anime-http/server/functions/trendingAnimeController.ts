@@ -1,31 +1,18 @@
-export default async function(event) {
-  // console.log("---trendingAnime business logic: ",event );
-  // console.log("---payload: ",JSON.parse(JSON.stringify(event.payload)));
+export default async function (event) {
   const payload = event.payload;
   const channelName = event.channel;
-  if(channelName === 'trendingAnime'){
-    const animeData = {
-      name:payload.name,
-      rating: payload.rating,
-      genre: payload.genre,
-      studio: payload.studio
-    }
-    return {
-      reply: [{
-        payload: animeData
-      }]
-    }
+  const replyPayload = {};
+  if (payload.body && Object.keys.length) {
+    replyPayload["body"] = payload.body;
   }
-  else if(channelName === 'upcomingAnime'){
-    const animeData = {
-      name:payload.name,
-      genre: payload.genre,
-      studio: payload.studio
-    }
-    return {
-      reply: [{
-        payload: animeData
-      }]
-    }
+  if (payload.query && Object.keys.length) {
+    replyPayload["query"] = payload.query;
   }
+  return {
+    reply: [
+      {
+        payload: replyPayload,
+      },
+    ],
+  };
 }

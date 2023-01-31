@@ -13,29 +13,11 @@ channels:
       http:
         type: request
         method: POST
-        query:
-          type: object
-          required:
-            - name
-            - genre
-          properties:
-            name:
-              type: string
-              description: name of the anime.
-            rating:
-              type: string
-              description: rating of the show \.
-            genre:
-              type: string
-              description: The genre of anime.
-            studio:
-              type: string
-              description: The studio of anime.
         bindingVersion: 0.1.0
     publish:
       operationId: trendingAnimeController
       message:
-        $ref: '#/components/messages/trendingAnime'
+        $ref: "#/components/messages/trendingAnime"
     subscribe:
       message:
         payload:
@@ -65,7 +47,7 @@ channels:
     publish:
       operationId: upcomingAnimeController
       message:
-        $ref: '#/components/messages/upcomingAnime'
+        $ref: "#/components/messages/upcomingAnime"
     subscribe:
       message:
         payload:
@@ -76,15 +58,50 @@ components:
       summary: Data required to populate trending anime
       payload:
         type: object
+        required:
+          - query
+          - body
         properties:
-          name:
-            type: string
-          rating:
-            type: string
-          genre:
-            type: string
-          studio:
-            type: string
+          query:
+            type: object
+            required:
+              - name
+              - rating
+              - genre
+              - studio
+            properties:
+              name:
+                type: string
+                description: name of the anime.
+              rating:
+                type: string
+                description: rating of the show \.
+              genre:
+                type: string
+                description: The genre of anime.
+              studio:
+                type: string
+                description: The studio of anime.
+          body:
+            type: object
+            required:
+              - name
+              - rating
+              - genre
+              - studio
+            properties:
+              name:
+                type: string
+                description: name of the anime.
+              rating:
+                type: number
+                description: rating of the show \.
+              genre:
+                type: string
+                description: The genre of anime.
+              studio:
+                type: string
+                description: The studio of anime.
     upcomingAnime:
       summary: Data required to populate trending anime
       payload:
