@@ -15,20 +15,7 @@ interface FunctionInfo {
   run: GleeFunction,
 }
 
-const ReplyOutboundMessageSchema = {
-  type: 'object',
-  properties: {
-    payload: {},
-    headers: {
-      type: 'object',
-      propertyNames: { type: 'string' },
-      additionalProperties: { type: 'string' }
-    },
-    channel: { type: 'string' },
-  }
-}
-
-const SendOutBoundMessageSchema = {
+const OutboundMessageSchema = {
   type: 'object',
   properties: {
     payload: {},
@@ -39,20 +26,18 @@ const SendOutBoundMessageSchema = {
     },
     channel: { type: 'string' },
     server: { type: 'string' },
-  },
-  required: ['server']
+  }
 }
-
 const FunctionReturnSchema = {
   type: ['object', 'null'],
   properties: {
     send: {
       type: 'array',
-      items: SendOutBoundMessageSchema
+      items: OutboundMessageSchema
     },
     reply: {
       type: 'array',
-      items: ReplyOutboundMessageSchema
+      items: OutboundMessageSchema
     }
   },
   additionalProperties: false,
@@ -123,13 +108,17 @@ export async function trigger({
 
     res?.send?.forEach((msg) => {
       const localServerProtocols = ['ws', 'wss', 'http', 'https']
-      const serverProtocol = parsedAsyncAPI.server(msg.server).protocol().toLowerCase()
-      const isBroadcast = localServerProtocols.includes(serverProtocol) && !isRemoteServer(parsedAsyncAPI, msg.server)
+      let isBroadcast: boolean = true
+      if (msg.server) {
+        const serverProtocol = parsedAsyncAPI.server(msg.server).protocol().toLowerCase()
+        isBroadcast = localServerProtocols.includes(serverProtocol) && !isRemoteServer(parsedAsyncAPI, msg.server)
+      }
       app.send(new GleeMessage({
         payload: msg.payload,
         headers: msg.headers,
         channel: msg.channel || message.channel,
         serverName: msg.server,
+        connection: message.connection,
         broadcast: isBroadcast
       }))
     })
