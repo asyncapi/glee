@@ -1,6 +1,5 @@
 export default async function (event) {
   const payload = event.payload;
-  const channelName = event.channel;
   const replyPayload = {};
   if (payload.body && Object.keys.length) {
     replyPayload["body"] = payload.body;

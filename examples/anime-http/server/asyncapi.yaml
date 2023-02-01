@@ -4,8 +4,11 @@ info:
   version: 1.0.0
   description: This app is a dummy server that would stream the trending anime.
 servers:
-  http:
-    url: http://localhost:8080
+  trendingAnimeServer:
+    url: http://localhost:8081
+    protocol: http
+  upcomingAnimeServer:
+    url: http://localhost:8082
     protocol: http
 channels:
   trendingAnime:
@@ -27,22 +30,6 @@ channels:
       http:
         type: request
         method: POST
-        query:
-          type: object
-          required:
-            - name
-            - genre
-            - studio
-          properties:
-            name:
-              type: string
-              description: name of the anime.
-            genre:
-              type: string
-              description: The genre of anime.
-            studio:
-              type: string
-              description: The studio of anime.
         bindingVersion: 0.1.0
     publish:
       operationId: upcomingAnimeController
@@ -75,7 +62,7 @@ components:
                 description: name of the anime.
               rating:
                 type: string
-                description: rating of the show \.
+                description: rating of the show.
               genre:
                 type: string
                 description: The genre of anime.
@@ -95,7 +82,7 @@ components:
                 description: name of the anime.
               rating:
                 type: number
-                description: rating of the show \.
+                description: rating of the show.
               genre:
                 type: string
                 description: The genre of anime.
@@ -103,13 +90,42 @@ components:
                 type: string
                 description: The studio of anime.
     upcomingAnime:
-      summary: Data required to populate trending anime
+      summary: Data required to populate upcoming anime
       payload:
         type: object
+        required:
+          - query
+          - body
         properties:
-          name:
-            type: string
-          genre:
-            type: string
-          studio:
-            type: string
+          query:
+            type: object
+            required:
+              - name
+              - genre
+              - studio
+            properties:
+              name:
+                type: string
+                description: name of the anime.
+              genre:
+                type: string
+                description: The genre of anime.
+              studio:
+                type: string
+                description: The studio of anime.
+          body:
+            type: object
+            required:
+              - name
+              - genre
+              - studio
+            properties:
+              name:
+                type: string
+                description: name of the anime.
+              genre:
+                type: string
+                description: The genre of anime.
+              studio:
+                type: string
+                description: The studio of anime.

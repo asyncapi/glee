@@ -25,23 +25,19 @@ class HttpAdapter extends Adapter {
       const config = await this.resolveProtocolConfig("http");
       const httpOptions = config?.server;
       const serverUrl = new URL(this.serverUrlExpanded);
-      const httpServer =
-        httpOptions?.httpServer || http.createServer((req, res) => {});
+      const httpServer = httpOptions?.httpServer || http.createServer();
       const asyncapiServerPort = serverUrl.port || 80;
       const optionsPort = httpOptions?.port;
       const port = optionsPort || asyncapiServerPort;
 
-      console.log("--channel names: ", this.channelNames);
-
       httpServer.on("request", (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
+        res.setHeader("Content-Type", "application/json");
         const bodyBuffer = [];
         let body: object;
         req.on("data", (chunk) => {
           bodyBuffer.push(chunk);
         });
         req.on("end", () => {
-
           body = JSON.parse(Buffer.concat(bodyBuffer).toString());
 
           this.res.push(res);
