@@ -2,54 +2,132 @@ asyncapi: 2.4.0
 info:
   title: asyncapiImdb client
   version: 1.0.0
-  description: This app creates a client that subscribes to the server for getting top 10 trending anime.
+  description: This app creates a client that subscribes to the server for getting top 10 trending/upcoming anime.
 servers:
-  http:
-    url: http://localhost:8080
+  trendingAnimeServer:
+    url: http://localhost:8081
+    protocol: http
+  upcomingAnimeServer:
+    url: http://localhost:8082
     protocol: http
 x-remoteServer:
   - http
 channels:
-  /trendingAnime:
+  trendingAnime:
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.1.0
+    publish:
+      operationId: trendingAnimeListController
+      message:
+        $ref: "#/components/messages/trendingAnime"
     subscribe:
       message:
-        $ref: '#/components/messages/trendingAnime'
-        bindings:
-          http:
-            type: request
-            method: GET
-            query:
-              type: object
-              properties:
-                name:
-                  type: string
-              additionalProperties: false
-            bindingVersion: 0.1.0
+        payload:
+          type: object
+  upcomingAnime:
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.1.0
     publish:
+      operationId: upcomingAnimeListController
       message:
-        $ref: '#/components/messages/trendingAnime'
-        bindings:
-          http:
-            type: request
-            method: GET
-            query:
-              type: object
-              properties:
-                name:
-                  type: string
-              additionalProperties: false
-            bindingVersion: 0.1.0
+        $ref: "#/components/messages/upcomingAnime"
+    subscribe:
+      message:
+        payload:
+          type: object
 components:
   messages:
     trendingAnime:
+      summary: Data required to populate trending anime
       payload:
         type: object
+        required:
+          - query
+          - body
         properties:
-          name:
-            type: string
-          rating:
-            type: number
-          genre:
-            type: string
-          studio:
-            type: string
+          query:
+            type: object
+            required:
+              - name
+              - rating
+              - genre
+              - studio
+            properties:
+              name:
+                type: string
+                description: name of the anime.
+              rating:
+                type: string
+                description: rating of the show.
+              genre:
+                type: string
+                description: The genre of anime.
+              studio:
+                type: string
+                description: The studio of anime.
+          body:
+            type: object
+            required:
+              - name
+              - rating
+              - genre
+              - studio
+            properties:
+              name:
+                type: string
+                description: name of the anime.
+              rating:
+                type: number
+                description: rating of the show.
+              genre:
+                type: string
+                description: The genre of anime.
+              studio:
+                type: string
+                description: The studio of anime.
+    upcomingAnime:
+      summary: Data required to populate upcoming anime
+      payload:
+        type: object
+        required:
+          - query
+          - body
+        properties:
+          query:
+            type: object
+            required:
+              - name
+              - genre
+              - studio
+            properties:
+              name:
+                type: string
+                description: name of the anime.
+              genre:
+                type: string
+                description: The genre of anime.
+              studio:
+                type: string
+                description: The studio of anime.
+          body:
+            type: object
+            required:
+              - name
+              - genre
+              - studio
+            properties:
+              name:
+                type: string
+                description: name of the anime.
+              genre:
+                type: string
+                description: The genre of anime.
+              studio:
+                type: string
+                description: The studio of anime.

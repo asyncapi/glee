@@ -1,8 +1,8 @@
 asyncapi: 2.4.0
 info:
-  title: asyncapimart client
+  title: asyncapiImdb server
   version: 1.0.0
-  description: This app is a dummy server that would stream the trending anime.
+  description: This app is a dummy server that would stream the trending/upcoming anime.
 servers:
   trendingAnimeServer:
     url: http://localhost:8081
