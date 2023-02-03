@@ -1,4 +1,6 @@
+import { AsyncAPIDocument } from '@asyncapi/parser'
 import GleeAdapter from './adapter.js'
+import { AuthFunction, MqttAuthConfig, WsAuthConfig } from './auth.js'
 import GleeClusterAdapter from './cluster.js'
 import GleeConnection from './connection.js'
 import Glee from './glee.js'
@@ -12,32 +14,33 @@ export type GleeClusterAdapterConfig = {
 }
 
 export type WebsocketAdapterConfig = {
+  server?: {
     httpServer?: any,
     adapter?: WebSocketServerType | typeof GleeAdapter,
     port?: number,
+  },
+  client?: {
     query?: any
-    authentication?: {
-      token?: string
-    }
-}
-
-export type MqttAdapterConfig = {
-  authentication?: {
-    cert?: string
-    userPassword?: { username: string; password: string },
-    clientId?: string,
+    auth?: WsAuthConfig | AuthFunction<WsAuthConfig>
   }
 }
 
+export type MqttAdapterConfig = {
+  auth?: MqttAuthConfig | AuthFunction<MqttAuthConfig>
+}
+
+export type CoreGleeConfig = {
+  gleeDir?: string,
+  lifecycleDir?: string,
+  functionsDir?: string,
+  asyncapiFilePath?: string,
+}
+
 export type GleeConfig = {
-  authentication?: Function
-  websocket?: {
-    [serverName: string]: WebsocketAdapterConfig
-  },
+  glee: CoreGleeConfig
+  websocket?: WebsocketAdapterConfig,
   cluster?: GleeClusterAdapterConfig,
-  mqtt?: {
-    [serverName: string]: MqttAdapterConfig
-  },
+  mqtt?: MqttAdapterConfig,
 }
 
 export type GleeFunctionReturn = {

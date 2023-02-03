@@ -5,7 +5,7 @@ import uriTemplates from 'uri-templates'
 import GleeConnection from './connection.js'
 import Glee from './glee.js'
 import GleeMessage from './message.js'
-import { resolveFunctions } from './util.js'
+import { resolveFunctions, isRemoteServer } from './util.js'
 
 export type EnrichedEvent = {
   connection?: GleeConnection,
@@ -150,20 +150,13 @@ class GleeAdapter extends EventEmitter {
     return this._serverUrlExpanded
   }
 
-  async getAuthenticationConfig() {
-    if(!this.glee.options.authentication) return undefined
-    const config = await this.glee.options.authentication(this._serverName, this.parsedAsyncAPI)
-    return config
-  }
-
   async resolveProtocolConfig(protocol: string) {
     if(!this.glee.options[protocol]) return undefined
     const protocolConfig = {...this.glee.options[protocol]}
-    const serverConfig = protocolConfig[this._serverName]
-    if (!serverConfig) return undefined
+    if (!protocolConfig) return undefined
 
-    await resolveFunctions(serverConfig)
-    return serverConfig
+    await resolveFunctions(protocolConfig)
+    return protocolConfig
   }
 
   /**

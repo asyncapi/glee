@@ -2,6 +2,8 @@
 import Adapter from "../../lib/adapter.js"
 import GleeMessage from "../../lib/message.js"
 import ws from "ws"
+import {WebsocketAdapterConfig} from '../../lib/index.d'
+import { WsAuthConfig } from "../../lib/auth.js";
 
 interface Client {
   channel: string;
@@ -29,7 +31,7 @@ class WsClientAdapter extends Adapter {
 
     for (const channel of channelsOnThisServer) {
       const headers = {}
-      const config = await this.getAuthenticationConfig()
+      const config: WsAuthConfig = await this.resolveAuthConfigs()
       headers['Authentication'] = `bearer ${config?.token}`
 
       const url = new URL(
@@ -106,6 +108,18 @@ class WsClientAdapter extends Adapter {
       payload: payload,
       channel: eventName,
     })
+  }
+
+  private async resolveAuthConfigs(){
+    const config = this.glee.options?.websocket?.client
+    if(!config) return undefined
+    const auth = config?.auth
+    if (!auth) return undefined
+
+    if (typeof auth !== 'function') {
+      return auth
+    }
+    return auth({serverName: this.serverName, channelName: '', parsedAsyncAPI: this.parsedAsyncAPI})
   }
 }
 
