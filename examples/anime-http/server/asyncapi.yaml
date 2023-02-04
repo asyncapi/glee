@@ -17,6 +17,46 @@ channels:
         type: request
         method: POST
         bindingVersion: 0.1.0
+        query:
+          type: object
+          required:
+            - name
+            - rating
+            - genre
+            - studio
+          properties:
+            name:
+              type: string
+              description: name of the anime.
+            rating:
+              type: string
+              description: rating of the show.
+            genre:
+              type: string
+              description: The genre of anime.
+            studio:
+              type: string
+              description: The studio of anime.
+        body:
+          type: object
+          required:
+            - name
+            - rating
+            - genre
+            - studio
+          properties:
+            name:
+              type: string
+              description: name of the anime.
+            rating:
+              type: number
+              description: rating of the show.
+            genre:
+              type: string
+              description: The genre of anime.
+            studio:
+              type: string
+              description: The studio of anime.
     publish:
       operationId: trendingAnimeController
       message:
@@ -31,6 +71,38 @@ channels:
         type: request
         method: POST
         bindingVersion: 0.1.0
+        query:
+          type: object
+          required:
+            - name
+            - genre
+            - studio
+          properties:
+            name:
+              type: string
+              description: name of the anime.
+            genre:
+              type: string
+              description: The genre of anime.
+            studio:
+              type: string
+              description: The studio of anime.
+        body:
+          type: object
+          required:
+            - name
+            - genre
+            - studio
+          properties:
+            name:
+              type: string
+              description: name of the anime.
+            genre:
+              type: string
+              description: The genre of anime.
+            studio:
+              type: string
+              description: The studio of anime.
     publish:
       operationId: upcomingAnimeController
       message:

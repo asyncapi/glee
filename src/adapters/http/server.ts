@@ -6,7 +6,7 @@ import GleeError from "../../errors/glee-error.js";
 import * as url from "url";
 
 class HttpAdapter extends Adapter {
-  private res: any[] = [];
+  private res = new Map();
 
   name(): string {
     return "HTTP server";
@@ -40,7 +40,7 @@ class HttpAdapter extends Adapter {
         req.on("end", () => {
           body = JSON.parse(Buffer.concat(bodyBuffer).toString());
 
-          this.res.push(res);
+          this.res.set(this.serverName, res);
           let { pathname } = new URL(req.url, serverUrl);
           pathname = pathname.startsWith("/")
             ? pathname.substring(1)
@@ -62,7 +62,7 @@ class HttpAdapter extends Adapter {
             .channel(pathname)
             .binding("http");
           if (httpChannelBinding) {
-            const { query, method } = httpChannelBinding;
+            const { query, body ,method } = httpChannelBinding;
             if (method && req.method !== method) {
               this.emit("error", new Error(`Cannot ${req.method} ${pathname}`));
               res.end("HTTP/1.1 400 Bad Request\r\n\r\n");
@@ -70,12 +70,23 @@ class HttpAdapter extends Adapter {
             }
             if (query) {
               const { isValid, humanReadableError, errors } = validateData(
-                searchParams,
+                searchParams.query,
                 query
               );
               if (!isValid) {
                 const err = new GleeError({ humanReadableError, errors });
-                console.log("ERROR", err);
+                this.emit("error", err);
+                res.end("HTTP/1.1 400 Bad Request\r\n\r\n");
+                return;
+              }
+            }
+            if (body) {
+              const { isValid, humanReadableError, errors } = validateData(
+                searchParams.body,
+                body
+              );
+              if (!isValid) {
+                const err = new GleeError({ humanReadableError, errors });
                 this.emit("error", err);
                 res.end("HTTP/1.1 400 Bad Request\r\n\r\n");
                 return;
@@ -101,10 +112,9 @@ class HttpAdapter extends Adapter {
   }
 
   async _send(message: GleeMessage): Promise<void> {
-    this.res.forEach((res) => {
-      res.write(message.payload);
-      res.end();
-    });
+    const connection = this.res.get(message.serverName);
+    connection.write(message.payload);
+    connection.end();
   }
 
   _createMessage(pathName: string, payload: any) {

@@ -49,6 +49,7 @@ class GleeAdapter extends EventEmitter {
 
     this.on('error', err => { this._glee.injectError(err) })
     this.on('message', (message, connection) => {
+      console.log("--error message1--");
       const conn = new GleeConnection({
         connection,
         channels: this._connections.find(c => c.rawConnection === connection).channels,
