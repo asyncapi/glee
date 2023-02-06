@@ -1,11 +1,22 @@
 import { AsyncAPIDocument } from '@asyncapi/parser'
 import GleeAdapter from './adapter.js'
-import { AuthFunction, MqttAuthConfig, WsAuthConfig } from './auth.js'
 import GleeClusterAdapter from './cluster.js'
 import GleeConnection from './connection.js'
 import Glee from './glee.js'
 
 type WebSocketServerType = 'native' | 'socket.io'
+
+export type AuthFunction<T> = ({serverName, parsedAsyncAPI}: {serverName: string, parsedAsyncAPI: AsyncAPIDocument}) => Promise<T>
+
+export interface MqttAuthConfig {
+    cert?: string
+    userPassword?: {username: string, password: string}
+    clientId?: string
+}
+
+export interface WsAuthConfig {
+    token?: string
+}
 
 export type GleeClusterAdapterConfig = {
   adapter?: string | typeof GleeClusterAdapter,
@@ -37,8 +48,8 @@ export type CoreGleeConfig = {
 }
 
 export type GleeConfig = {
-  glee: CoreGleeConfig
-  websocket?: WebsocketAdapterConfig,
+  glee?: CoreGleeConfig
+  ws?: WebsocketAdapterConfig,
   cluster?: GleeClusterAdapterConfig,
   mqtt?: MqttAdapterConfig,
 }

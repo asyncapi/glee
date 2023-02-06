@@ -3,13 +3,15 @@ import fs from 'fs'
 
 export default async function () {
   return {
-    authentication: (servername) => {
-      if(servername === 'mosquitto') {
-        return {
-          cert: fs.readFileSync('./mosquitto.org.crt', 'utf-8')
+    mqtt: {
+      auth: async ({serverName}) => {
+        if(serverName === 'mosquitto') {
+          return {
+            cert: fs.readFileSync('./mosquitto.org.crt', 'utf-8')
+          }
         }
       }
-    },
+    }
     // websocket: {
     //   httpServer: customServer,
     //   adapter: 'native', // Default. Can also be 'socket.io' or a reference to a custom adapter.

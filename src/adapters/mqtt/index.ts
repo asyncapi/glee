@@ -1,6 +1,7 @@
 import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
+import {MqttAuthConfig} from '../../lib/index.d'
 
 interface IMQTTHeaders {
   cmd?: string;
@@ -27,7 +28,7 @@ class MqttAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> { // NOSONAR
-    const mqttOptions = await this.getAuthenticationConfig()
+    const mqttOptions: MqttAuthConfig = await this.resolveAuthConfig()
     const subscribedChannels = this.getSubscribedChannels()
     const serverBinding = this.AsyncAPIServer.binding('mqtt')
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(
@@ -48,7 +49,7 @@ class MqttAdapter extends Adapter {
       host: url.host,
       port: url.port || (url.protocol === 'mqtt:' ? 1883 : 8883),
       protocol: url.protocol.slice(0, url.protocol.length - 1),
-      clientId: serverBinding?.clientId ?? mqttOptions?.authentication?.clientId,
+      clientId: serverBinding?.clientId ?? mqttOptions?.clientId,
       clean: serverBinding?.cleanSession,
       will: serverBinding?.will && {
         topic: serverBinding?.lastWill?.topic,
@@ -58,12 +59,12 @@ class MqttAdapter extends Adapter {
       },
       keepalive: serverBinding?.keepAlive,
       username: userAndPasswordSecurityReq
-        ? mqttOptions?.authentication?.userPassword.username
+        ? mqttOptions?.userPassword.username
         : undefined,
       password: userAndPasswordSecurityReq
-        ? mqttOptions?.authentication?.userPassword.password
+        ? mqttOptions?.userPassword.password
         : undefined,
-      ca: X509SecurityReq ? mqttOptions?.authentication?.cert : undefined,
+      ca: X509SecurityReq ? mqttOptions?.cert : undefined,
     } as any)
 
 
@@ -163,6 +164,17 @@ class MqttAdapter extends Adapter {
       channel: packet.topic,
     })
   }
+
+  private async resolveAuthConfig() {
+    const auth = this.glee.options?.mqtt?.auth
+    if (!auth) return undefined
+    if (typeof auth !== 'function') {
+      return auth
+    }
+
+    return await auth({serverName: this.serverName, parsedAsyncAPI: this.parsedAsyncAPI})
+  }
+
 }
 
 export default MqttAdapter
