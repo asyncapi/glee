@@ -5,7 +5,7 @@ import uriTemplates from 'uri-templates'
 import GleeConnection from './connection.js'
 import Glee from './glee.js'
 import GleeMessage from './message.js'
-import { resolveFunctions, isRemoteServer } from './util.js'
+import { resolveFunctions } from './util.js'
 
 export type EnrichedEvent = {
   connection?: GleeConnection,

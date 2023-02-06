@@ -125,10 +125,10 @@ export const isRemoteServer = (parsedAsyncAPI: AsyncAPIDocument, serverName: str
 
 export const resolveFunctions = async (object: any) => {
   for (const key in object) {
-    if (typeof object[key] === 'object' && !Array.isArray(object[key])) {
-      resolveFunctions(object[key])
-    } else if (typeof object[key] === 'function') {
-      object[key] = await object[key]()
+    if (typeof object[String(key)] === 'object' && !Array.isArray(object[String(key)])) {
+      resolveFunctions(object[String(key)])
+    } else if (typeof object[String(key)] === 'function') {
+      object[String(key)] = await object[String(key)]()
     }
   }
 }
