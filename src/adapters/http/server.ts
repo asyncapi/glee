@@ -62,10 +62,11 @@ class HttpAdapter extends Adapter {
             .channel(pathname)
             .binding("http");
           if (httpChannelBinding) {
-            const { query, body ,method } = httpChannelBinding;
+            const { query, body, method } = httpChannelBinding;
             if (method && req.method !== method) {
-              this.emit("error", new Error(`Cannot ${req.method} ${pathname}`));
-              res.end("HTTP/1.1 400 Bad Request\r\n\r\n");
+              const err = new Error(`Cannot ${req.method} ${pathname}`)
+              this.emit("error", err );
+              res.end(err.message);
               return;
             }
             if (query) {
@@ -76,7 +77,7 @@ class HttpAdapter extends Adapter {
               if (!isValid) {
                 const err = new GleeError({ humanReadableError, errors });
                 this.emit("error", err);
-                res.end("HTTP/1.1 400 Bad Request\r\n\r\n");
+                res.end(JSON.stringify(err.errors));
                 return;
               }
             }
@@ -88,7 +89,8 @@ class HttpAdapter extends Adapter {
               if (!isValid) {
                 const err = new GleeError({ humanReadableError, errors });
                 this.emit("error", err);
-                res.end("HTTP/1.1 400 Bad Request\r\n\r\n");
+                res.end(JSON.stringify(err.errors));
+
                 return;
               }
             }

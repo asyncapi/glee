@@ -28,7 +28,7 @@ export type WebsocketAdapterConfig = {
 
 export type HttpAdapterConfig = {
   server: {
-    httpServer?: SyntaxError,
+    httpServer?: any,
     adapter?: HttpServerType | typeof GleeAdapter
     port?: number
   },
