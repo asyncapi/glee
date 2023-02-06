@@ -21,7 +21,8 @@ export default async function () {
     kafka: {},
     websocket: {},
     mqtt: {},
-    cluster: {}
+    cluster: {},
+    http: {}
   }
 }
 
@@ -70,6 +71,21 @@ export default async function () {
           password: 'pass12'
         }
       }
+    },
+    http: {
+      server: {
+        httpServer: customServer, // A custom HTTP server of your own.
+        adapter: "native", 
+        port: process.env.PORT,
+      },
+      client: {
+        query: {
+          foo: 'bar'
+        },
+        body: {
+          foo: 'bar'
+        }
+      }
     }
   };
 }
@@ -99,7 +115,7 @@ These configurations apply to Glee itself, rather than any specific protocol.
 |Field|Description|
 |--|--|
 |websocket.server|Websocket server-specific configurations|
-|websocekt.client|Websocket client-specific configurations|
+|websocket.client|Websocket client-specific configurations|
 |websocket.server.adapter| The Glee adapter to use for the WebSocket server. Defaults to a "native" WebSocket implementation. Other allowed values are `socket.io` (to use the [Socket.IO](https://socket.io/) Glee adapter) or a reference to a custom adapter.|
 |websocket.server.httpServer|  A custom HTTP server of your own. E.g., an [Express](https://expressjs.com/en/4x/api.html) server or any object that implements the [http.Server](https://nodejs.org/api/http.html#http_class_http_server) interface.   |
 |websocket.server.port| The port to use when binding the WebSocket server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.|
@@ -137,3 +153,15 @@ These configurations apply to Glee itself, rather than any specific protocol.
 |kafka.authentication.rejectUnauthorized | Boolean flag for accepting the valid SSL certificates
 |kafka.authentication.username| The username to use during authentication.
 |kafka.authentication.password| The password to use during authentication.
+
+### Http Server
+
+|Field|Description|
+|--|--|
+|http.server|Http server-specific configurations|
+|http.client|Http client-specific configurations|
+|http.server.adapter| The Glee adapter to use for the Http server. Defaults to a "native" Http implementation.|
+|websocket.server.port| The port to use when binding the Http server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.|
+|http.client.authetication| Authentication variables for client|
+|http.client.query| Query object for the client to send|
+|http.client.body| Body object for the client to send
