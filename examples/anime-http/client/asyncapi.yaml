@@ -10,7 +10,7 @@ servers:
   upcomingAnimeServer:
     url: http://localhost:8082
     protocol: http
-x-remoteServer:
+x-remoteServers:
   - http
 channels:
   trendingAnime:
