@@ -94,7 +94,7 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
 
   else {
     // TODO: Improve error message with link to repo encouraging the developer to contribute.
-    throw new Error(`Protocol "${server.protocol()}" is not supported yet.`)
+    throw new Error(`Proxptocol "${server.protocol()}" is not supported yet.`)
   }
 }
 

@@ -33,7 +33,8 @@ export type HttpAdapterConfig = {
     port?: number
   },
   client?: {
-    endpoint: any
+    query?: any,
+    body?: any
   }
 }
 export type MqttAdapterConfig = {

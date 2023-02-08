@@ -1,11 +1,11 @@
 export default async function (event) {
-  const payload = event.payload;
-  const replyPayload = {};
+  const payload = event.payload
+  const replyPayload = {}
   if (payload.body && Object.keys.length) {
-    replyPayload["body"] = payload.body;
+    replyPayload["body"] = payload.body
   }
   if (payload.query && Object.keys.length) {
-    replyPayload["query"] = payload.query;
+    replyPayload["query"] = payload.query
   }
   return {
     reply: [
@@ -13,5 +13,5 @@ export default async function (event) {
         payload: replyPayload,
       },
     ],
-  };
+  }
 }

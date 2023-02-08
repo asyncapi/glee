@@ -122,22 +122,22 @@ class GleeAdapter extends EventEmitter {
     })
     //? FOR HTTP CLIENT ADAPTER
     this.on("send", async (data) => {
-      const method = data.method; //get post put
-      const url = data.url;
-      const body = data.body;
-      const query = data.query;
+      const method = data.method //get post put
+      const url = data.url
+      const body = data.body
+      const query = data.query
       try {
         const response = await axios({
           method,
           url,
           data: body,
           params: query,
-        });
-        console.log("reponse: ", response.data);
+        })
+        console.log("reponse: ", response.data)
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
-    });
+    })
   }
 
   get glee(): Glee {
