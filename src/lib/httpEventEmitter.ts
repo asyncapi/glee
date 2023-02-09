@@ -67,7 +67,6 @@ class HttpEventEmitter extends EventEmitter {
         data: body,
         params: query,
       })
-      console.log("reponse: ", response)
     })
 
 

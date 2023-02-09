@@ -21,7 +21,6 @@ class HttpAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> { // NOSONAR
-    // return new Promise( (resolve, reject) => {
     const config = await this.resolveProtocolConfig("http")
     const httpOptions = config?.server
     const serverUrl = new URL(this.serverUrlExpanded)
@@ -106,9 +105,6 @@ class HttpAdapter extends Adapter {
 
     httpServer.listen(port)
     this.emit("server:ready", { name: this.name(), adapter: this })
-
-    // resolve(this)
-    // })
     return this
   }
 

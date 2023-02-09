@@ -1,7 +1,6 @@
-import GleeMessage from "../../lib/message.js"
-import Adapter from "../../lib/adapter.js"
+import HttpEventEmitter from "../../lib/httpEventEmitter.js"
 
-class HttpClientAdapter extends Adapter {
+class HttpClientAdapter extends HttpEventEmitter {
   async connect(): Promise<this> {
     return this._connect()
   }
@@ -23,11 +22,11 @@ class HttpClientAdapter extends Adapter {
           genre: "testgenre",
         }
       }
-      this.emit("send", requestObj)
+      this._send(requestObj);
       return this
     // });
   }
-  async _send(message: GleeMessage): Promise<void> {
+  async _send(message) {
     //? THE PAYLOAD EXAMPLE
     // const payload = {
     //   method: "POST",
@@ -45,7 +44,7 @@ class HttpClientAdapter extends Adapter {
     //     genre: "testgenre",
     //   }
     // };
-    this.emit("send", message.payload)
+    this.emit("send", message)
   }
 }
 
