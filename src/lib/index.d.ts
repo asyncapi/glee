@@ -18,6 +18,15 @@ export interface WsAuthConfig {
     token?: string
 }
 
+export interface KafkaAuthConfig {
+  key?: string
+  cert?: string
+  clientId?: string
+  rejectUnauthorized?: boolean
+  username?: string
+  password?: string
+}
+
 export type GleeClusterAdapterConfig = {
   adapter?: string | typeof GleeClusterAdapter,
   name?: string,
@@ -40,6 +49,10 @@ export type MqttAdapterConfig = {
   auth?: MqttAuthConfig | AuthFunction<MqttAuthConfig>
 }
 
+export type KafkaAdapterConfig = {
+  auth?: KafkaAuthConfig | AuthFunction<KafkaAuthConfig>
+}
+
 export type CoreGleeConfig = {
   gleeDir?: string,
   lifecycleDir?: string,
@@ -52,6 +65,7 @@ export type GleeConfig = {
   ws?: WebsocketAdapterConfig,
   cluster?: GleeClusterAdapterConfig,
   mqtt?: MqttAdapterConfig,
+  kafka?: KafkaAdapterConfig
 }
 
 export type GleeFunctionReturn = {

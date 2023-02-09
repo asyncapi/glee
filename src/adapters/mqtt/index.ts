@@ -1,7 +1,8 @@
 import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
-import {MqttAuthConfig} from '../../lib/index.d'
+import { MqttAuthConfig } from '../../lib/index.d'
+import { resolveFunctions } from '../../lib/util.js'
 
 interface IMQTTHeaders {
   cmd?: string;
@@ -36,9 +37,9 @@ class MqttAdapter extends Adapter {
     const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
     const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
-        const secName = Object.keys(sec.json())[0]
-        return this.parsedAsyncAPI.components().securityScheme(secName)
-      }
+      const secName = Object.keys(sec.json())[0]
+      return this.parsedAsyncAPI.components().securityScheme(secName)
+    }
     )
     const userAndPasswordSecurityReq = securityRequirements.find(
       (sec) => sec.type() === 'userPassword'
@@ -88,7 +89,7 @@ class MqttAdapter extends Adapter {
 
     this.client.on('message', (channel, message, mqttPacket) => {
       const qos = mqttPacket.qos
-      if ( protocolVersion === 5 && qos > 0 ) return   // ignore higher qos messages. already processed
+      if (protocolVersion === 5 && qos > 0) return   // ignore higher qos messages. already processed
 
       const msg = this._createMessage(mqttPacket as IPublishPacket)
       this.emit('message', msg, this.client)
@@ -173,10 +174,11 @@ class MqttAdapter extends Adapter {
     const auth = this.glee.options?.mqtt?.auth
     if (!auth) return undefined
     if (typeof auth !== 'function') {
+      await resolveFunctions(auth)
       return auth
     }
 
-    return await auth({serverName: this.serverName, parsedAsyncAPI: this.parsedAsyncAPI})
+    return await auth({ serverName: this.serverName, parsedAsyncAPI: this.parsedAsyncAPI })
   }
 
   _customAckHandler(channel, message, mqttPacket, done) {

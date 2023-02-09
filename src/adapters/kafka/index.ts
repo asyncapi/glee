@@ -1,6 +1,7 @@
 import { Kafka, SASLOptions } from 'kafkajs'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
+import { resolveFunctions } from '../../lib/util.js'
 
 class KafkaAdapter extends Adapter {
   private kafka: Kafka
@@ -10,7 +11,7 @@ class KafkaAdapter extends Adapter {
   }
 
   async connect() {
-    const kafkaOptions = await this.resolveProtocolConfig('kafka')
+    const kafkaOptions = await this.resolveAuthConfig()
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(
       (sec) => {
         const secName = Object.keys(sec.json())[0]
@@ -26,24 +27,24 @@ class KafkaAdapter extends Adapter {
     const scramSha512SecurityReq = securityRequirements.find(
       (sec) => sec.type() === 'scramSha512'
     )
-  
+
     const brokerUrl = new URL(this.AsyncAPIServer.url())
     this.kafka = new Kafka({
-      clientId: 'glee-app', 
+      clientId: 'glee-app',
       brokers: [brokerUrl.host],
       ssl: {
-        rejectUnauthorized: kafkaOptions?.authentication?.rejectUnauthorized,
-        key: kafkaOptions?.authentication?.key,
-        cert: kafkaOptions?.authentication?.cert,
+        rejectUnauthorized: kafkaOptions?.rejectUnauthorized,
+        key: kafkaOptions?.key,
+        cert: kafkaOptions?.cert,
       },
       sasl: {
-        mechanism: (scramSha256SecurityReq? 'scram-sha-256' : undefined) || (scramSha512SecurityReq? 'scram-sha-512' : undefined) || 'plain',
-        username: userAndPasswordSecurityReq? kafkaOptions?.authentication?.username : undefined,
-        password: userAndPasswordSecurityReq? kafkaOptions?.authentication?.password : undefined,
+        mechanism: (scramSha256SecurityReq ? 'scram-sha-256' : undefined) || (scramSha512SecurityReq ? 'scram-sha-512' : undefined) || 'plain',
+        username: userAndPasswordSecurityReq ? kafkaOptions?.username : undefined,
+        password: userAndPasswordSecurityReq ? kafkaOptions?.password : undefined,
       } as SASLOptions,
     })
 
-    const consumer = this.kafka.consumer({ groupId: 'glee-group' })   
+    const consumer = this.kafka.consumer({ groupId: 'glee-group' })
     consumer.on('consumer.connect', () => {
       if (this.firstConnect) {
         this.firstConnect = false
@@ -55,7 +56,7 @@ class KafkaAdapter extends Adapter {
         })
       }
     })
-    await consumer.connect() 
+    await consumer.connect()
     const subscribedChannels = this.getSubscribedChannels()
     await consumer.subscribe({ topics: subscribedChannels, fromBeginning: true })
     await consumer.run({
@@ -92,6 +93,20 @@ class KafkaAdapter extends Adapter {
         ...message.headers,
       },
     })
+  }
+
+  private async resolveAuthConfig() {
+    const config = this.glee.options?.kafka
+    if (!config) return undefined
+    const auth = config?.auth
+    if (!auth) return undefined
+
+    if (typeof auth !== 'function') {
+      await resolveFunctions(auth)
+      return auth
+    }
+
+    return await auth({ serverName: this.serverName, parsedAsyncAPI: this.parsedAsyncAPI })
   }
 }
 

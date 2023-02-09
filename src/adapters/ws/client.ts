@@ -2,7 +2,8 @@
 import Adapter from "../../lib/adapter.js"
 import GleeMessage from "../../lib/message.js"
 import ws from "ws"
-import {WsAuthConfig} from '../../lib/index.d'
+import { WsAuthConfig } from '../../lib/index.d'
+import { resolveFunctions } from '../../lib/util.js'
 
 interface Client {
   channel: string;
@@ -110,16 +111,17 @@ class WsClientAdapter extends Adapter {
     })
   }
 
-  private async resolveAuthConfigs(){
+  private async resolveAuthConfigs() {
     const config = this.glee.options?.ws?.client
-    if(!config) return undefined
+    if (!config) return undefined
     const auth = config?.auth
     if (!auth) return undefined
 
     if (typeof auth !== 'function') {
+      await resolveFunctions(auth)
       return auth
     }
-    return await auth({serverName: this.serverName, parsedAsyncAPI: this.parsedAsyncAPI})
+    return await auth({ serverName: this.serverName, parsedAsyncAPI: this.parsedAsyncAPI })
   }
 }
 
