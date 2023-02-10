@@ -22,7 +22,7 @@ class HttpClientAdapter extends HttpEventEmitter {
           genre: "testgenre",
         }
       }
-      this._send(requestObj);
+      this._send(requestObj)
       return this
     // });
   }

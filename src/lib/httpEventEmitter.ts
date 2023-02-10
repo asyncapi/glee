@@ -61,7 +61,7 @@ class HttpEventEmitter extends EventEmitter {
       const url = data.url
       const body = data.body
       const query = data.query
-      const response = await axios({
+      await axios({
         method,
         url,
         data: body,
