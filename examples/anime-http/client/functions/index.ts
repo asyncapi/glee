@@ -1,5 +1,3 @@
-
-
 export default async function (event) {
   console.log("==event==",event);
 
@@ -7,10 +5,7 @@ export default async function (event) {
     send: [
       {
         server: "trendingAnimeServer",
-        payload: {
-          query: {},
-          body: {},
-        },
+        payload: event.payload
       },
     ],
   };
