@@ -10,9 +10,21 @@ servers:
   upcomingAnimeServer:
     url: http://localhost:8082
     protocol: http
+  dummy:
+    url: ws://localhost:9000
+    protocol: ws
 x-remoteServers:
-  - http
+  - trendingAnimeServer
+  - upcomingAnimeServer
 channels:
+  /test:
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+    publish:
+      operationId: trendingAnimeListController
+      message:
+        $ref: '#/components/messages/test'
   trendingAnime:
     bindings:
       http:
@@ -20,7 +32,7 @@ channels:
         method: POST
         bindingVersion: 0.1.0
     publish:
-      operationId: trendingAnimeListController
+      operationId: trendingAnimeListController1
       message:
         $ref: "#/components/messages/trendingAnime"
     subscribe:
@@ -43,6 +55,12 @@ channels:
           type: object
 components:
   messages:
+    test:
+      payload:
+        type: object
+        properties:
+          name:
+            type: string
     trendingAnime:
       summary: Data required to populate trending anime
       payload:

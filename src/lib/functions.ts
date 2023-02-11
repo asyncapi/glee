@@ -52,6 +52,7 @@ const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
 export const functions: Map<string, FunctionInfo> = new Map()
 
 export async function register(dir: string) {
+
   try {
     const statsDir = await stat(dir)
     if (!statsDir.isDirectory()) return
@@ -89,6 +90,8 @@ export async function trigger({
 }) {
   try {
     const parsedAsyncAPI = await getParsedAsyncAPI()
+    console.log("---TRIGGER---",await functions.get(operationId));
+
     let res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
     if (res === undefined) res = null
     const { humanReadableError, errors, isValid } = validateData(res, FunctionReturnSchema)
@@ -99,7 +102,7 @@ export async function trigger({
         errors,
       })
       err.message = `Function ${operationId} returned invalid data.`
-      
+
       logError(err, {
         highlightedWords: [operationId]
       })
@@ -108,6 +111,7 @@ export async function trigger({
     }
 
     res?.send?.forEach((msg) => {
+      console.log("--here--")
       const localServerProtocols = ['ws', 'wss', 'http', 'https']
       const serverProtocol = parsedAsyncAPI.server(msg.server).protocol().toLowerCase()
       const isBroadcast = localServerProtocols.includes(serverProtocol) && !isRemoteServer(parsedAsyncAPI, msg.server)
