@@ -1,7 +1,7 @@
 
 
 export default async function (event) {
-  console.log("==event==",event);
+  console.log("==event==",event)
 
   return {
     send: [
@@ -13,5 +13,5 @@ export default async function (event) {
         },
       },
     ],
-  };
+  }
 }

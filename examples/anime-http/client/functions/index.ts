@@ -1,5 +1,5 @@
 export default async function (event) {
-  const payload = event.payload;
+  const payload = event.payload
 
   return {
     send: [
@@ -8,5 +8,5 @@ export default async function (event) {
         payload: payload
       },
     ],
-  };
+  }
 }
