@@ -1,61 +1,36 @@
-import Adapter from "../../lib/adapter.js"
-import GleeMessage from "../../lib/message.js"
+import Adapter from "../../lib/adapter.js";
+import GleeMessage from "../../lib/message.js";
+import axios from "axios";
 class HttpClientAdapter extends Adapter {
   async connect(): Promise<this> {
-    return this._connect()
+    return this._connect();
   }
 
   async send(message: GleeMessage): Promise<void> {
-    console.log("==send==")
-    return this._send(message)
+    return this._send(message);
   }
 
   async _connect(): Promise<this> {
-    console.log("==connected==");
-
-    // return new Promise(async (resolve, reject) => {
-      // const requestObj = {
-      //   method: "POST",
-      //   url: "http://localhost:8081/trendingAnime",
-      //   body: {
-      //     name: "trendingAnime",
-      //     rating: 5,
-      //     studio: "teststudio",
-      //     genre: "testgenre",
-      //   },
-      //   query:{
-      //     name: "trendingAnime",
-      //     rating: "5",
-      //     studio: "teststudio",
-      //     genre: "testgenre",
-      //   }
-      // }
-      // this._send(requestObj)
-      return this
-    // });
+    return this;
   }
-  async _send(message) {
-    console.log("==_send==")
-    //? THE PAYLOAD EXAMPLE
-    // const payload = {
-    //   method: "POST",
-    //   url: "http://localhost:8081/trendingAnime",
-    //   body: {
-    //     name: "trendingAnime",
-    //     rating: 5,
-    //     studio: "teststudio",
-    //     genre: "testgenre",
-    //   },
-    //   query:{
-    //     name: "trendingAnime",
-    //     rating: "5",
-    //     studio: "teststudio",
-    //     genre: "testgenre",
-    //   }
-    // };
-    console.log("---message: ",message);
-    // this.emit("send", message)
+  async _send(message: GleeMessage): Promise<void> {
+    const method = message.payload.method; //get post put
+    const url = `http://localhost:${message.payload.port}/${message.serverName}`;
+    const body = message.payload.body;
+    const query = message.payload.query;
+
+    try {
+      const response = await axios({
+        method,
+        url,
+        data: body,
+        params: query,
+      });
+      console.log("reponse: ", response.data);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
-export default HttpClientAdapter
+export default HttpClientAdapter;

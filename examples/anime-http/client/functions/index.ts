@@ -1,11 +1,11 @@
 export default async function (event) {
-  console.log("==event==",event);
+  const payload = event.payload;
 
   return {
     send: [
       {
-        server: "trendingAnimeServer",
-        payload: event.payload
+        server: "trendingAnime",
+        payload: payload
       },
     ],
   };

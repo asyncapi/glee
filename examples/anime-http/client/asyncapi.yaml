@@ -4,17 +4,17 @@ info:
   version: 1.0.0
   description: This app creates a client that subscribes to the server for getting top 10 trending/upcoming anime.
 servers:
-  trendingAnimeServer:
+  trendingAnime:
     url: http://localhost:8081
     protocol: http
-  upcomingAnimeServer:
+  upcomingAnime:
     url: http://localhost:8082
     protocol: http
-  dummy:
+  testwebhook:
     url: ws://localhost:9000
     protocol: ws
 x-remoteServers:
-  - trendingAnimeServer
+  - trendingAnime
   - upcomingAnimeServer
 channels:
   /test:
@@ -22,7 +22,7 @@ channels:
       ws:
         bindingVersion: 0.1.0
     publish:
-      operationId: trendingAnimeListController
+      operationId: index
       message:
         $ref: '#/components/messages/test'
   trendingAnime:
@@ -32,7 +32,7 @@ channels:
         method: POST
         bindingVersion: 0.1.0
     publish:
-      operationId: trendingAnimeListController1
+      operationId: trendingAnimeListController
       message:
         $ref: "#/components/messages/trendingAnime"
     subscribe:
@@ -58,9 +58,20 @@ components:
     test:
       payload:
         type: object
+        required:
+          - method
+          - port
+          - body
+          - query
         properties:
-          name:
+          method:
             type: string
+          port:
+            type: number
+          body:
+            type: object
+          query:
+            type: object
     trendingAnime:
       summary: Data required to populate trending anime
       payload:
