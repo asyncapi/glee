@@ -64,10 +64,8 @@ export default async function () {
           return {
             cert: async () => fs.readFileSync('./cert')
             clientId: '123',
-            userPassword: {
-              username: 'user1',
-              password: 'pass12'
-            }
+            username: 'user1'
+            password: 'pass12'
           }
         }
       }
@@ -124,9 +122,8 @@ These configurations apply to Glee itself, rather than any specific protocol.
 |mqtt.auth| MQTT authentication configuration|
 |mqtt.auth.cert| Client certificate
 |mqtt.auth.clientId| MQTT client Id for authentication
-|mqtt.auth.userPassword| username and password parameters for authentication|
-|mqtt.auth.userPassword.username| username parameter
-|mqtt.auth.userPassword.password| password parameter
+|mqtt.auth.username| username parameter
+|mqtt.auth.password| password parameter
 
 ### Kafka
 
@@ -162,7 +159,7 @@ export default async function() {
     auth: ({serverName, parsedAsyncAPI}) => {
       if (serverName === 'mqtt') {
         return {
-          cert: fs.readFileSync('./cert')
+          cert: fs.readFileSync('./cert', 'utf-8')
         }
       }
     }

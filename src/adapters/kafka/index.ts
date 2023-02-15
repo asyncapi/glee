@@ -97,9 +97,9 @@ class KafkaAdapter extends Adapter {
 
   private async resolveAuthConfig() {
     const config = this.glee.options?.kafka
-    if (!config) return undefined
+    if (!config) return 
     const auth = config?.auth
-    if (!auth) return undefined
+    if (!auth) return 
 
     if (typeof auth !== 'function') {
       await resolveFunctions(auth)

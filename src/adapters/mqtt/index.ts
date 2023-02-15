@@ -66,10 +66,10 @@ class MqttAdapter extends Adapter {
       },
       keepalive: serverBinding?.keepAlive,
       username: userAndPasswordSecurityReq
-        ? mqttOptions?.userPassword.username
+        ? mqttOptions?.username
         : undefined,
       password: userAndPasswordSecurityReq
-        ? mqttOptions?.userPassword.password
+        ? mqttOptions?.password
         : undefined,
       ca: X509SecurityReq ? mqttOptions?.cert : undefined,
       protocolVersion,

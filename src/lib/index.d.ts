@@ -10,7 +10,8 @@ export type AuthFunction<T> = ({serverName, parsedAsyncAPI}: {serverName: string
 
 export interface MqttAuthConfig {
     cert?: string
-    userPassword?: {username: string, password: string}
+    username?: string
+    password?: string
     clientId?: string
 }
 

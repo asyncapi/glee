@@ -113,9 +113,9 @@ class WsClientAdapter extends Adapter {
 
   private async resolveAuthConfigs() {
     const config = this.glee.options?.ws?.client
-    if (!config) return undefined
+    if (!config) return
     const auth = config?.auth
-    if (!auth) return undefined
+    if (!auth) return
 
     if (typeof auth !== 'function') {
       await resolveFunctions(auth)
