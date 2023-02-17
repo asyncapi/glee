@@ -1,6 +1,7 @@
 import Adapter from "../../lib/adapter.js"
 import GleeMessage from "../../lib/message.js"
 import axios from "axios"
+import { HttpAdapterConfig } from "../../lib/index.js"
 class HttpClientAdapter extends Adapter {
   async connect(): Promise<this> {
     return this._connect()
@@ -11,9 +12,14 @@ class HttpClientAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> {
+    const headers = {}
+      const config: HttpAdapterConfig = await this.resolveProtocolConfig('http')
+      const clientConfig = config?.client
+      headers['Authenticaton'] = clientConfig?.authentication?.token
     return this
   }
   async _send(message: GleeMessage): Promise<void> {
+
     const method = message.payload.method //get post put
     const url = `http://localhost:${message.payload.port}/${message.serverName}`
     const body = message.payload.body
@@ -26,9 +32,8 @@ class HttpClientAdapter extends Adapter {
         data: body,
         params: query,
       })
-      console.log("reponse: ", response.data)
     } catch (err) {
-      console.log(err)
+      this.emit('error', err)
     }
   }
 }
