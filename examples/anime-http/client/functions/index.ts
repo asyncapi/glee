@@ -12,8 +12,8 @@ export default async function (event) {
       studio: "teststudio",
       genre: "testgenre",
     }
-  };
-  console.log("event: ", event);
+  }
+  console.log("event: ", event)
 
   return {
     send: [
@@ -22,5 +22,5 @@ export default async function (event) {
         payload: payload,
       },
     ],
-  };
+  }
 }
