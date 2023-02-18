@@ -31,6 +31,8 @@ channels:
         type: request
         method: POST
         bindingVersion: 0.1.0
+    servers:
+      - trendingAnime
     publish:
       operationId: trendingAnimeListController
       message:
@@ -45,6 +47,8 @@ channels:
         type: request
         method: POST
         bindingVersion: 0.1.0
+    servers:
+      - upcomingAnime
     publish:
       operationId: upcomingAnimeListController
       message:
@@ -56,22 +60,23 @@ channels:
 components:
   messages:
     test:
+      summary: ping client
       payload:
         type: object
-        required:
-          - method
-          - port
-          - body
-          - query
-        properties:
-          method:
-            type: string
-          port:
-            type: number
-          body:
-            type: object
-          query:
-            type: object
+        # required:
+        #   - method
+        #   - port
+        #   - body
+        #   - query
+        # properties:
+        #   method:
+        #     type: string
+        #   port:
+        #     type: number
+        #   body:
+        #     type: object
+        #   query:
+        #     type: object
     trendingAnime:
       summary: Data required to populate trending anime
       payload:
