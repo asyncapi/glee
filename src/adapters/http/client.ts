@@ -2,8 +2,12 @@ import Adapter from "../../lib/adapter.js";
 import GleeMessage from "../../lib/message.js";
 import axios from "axios";
 import { HttpAdapterConfig } from "../../lib/index.js";
-import http from "http"
+import http from "http";
 class HttpClientAdapter extends Adapter {
+
+  name(): string {
+    return "HTTP client"
+  }
   async connect(): Promise<this> {
     return this._connect();
   }
@@ -17,10 +21,15 @@ class HttpClientAdapter extends Adapter {
     const config: HttpAdapterConfig = await this.resolveProtocolConfig("http");
     const clientConfig = config?.client;
     headers["Authenticaton"] = clientConfig?.authentication?.token;
+    this.emit("connect", {
+      name: this.name(),
+      adapter: this,
+      connection: http,
+      channel: this.channelNames,
+    });
     return this;
   }
   async _send(message: GleeMessage): Promise<void> {
-
     const serverUrl = this.serverUrlExpanded;
     this.channelNames.forEach(async (channelName) => {
       const channelInfo = this.parsedAsyncAPI.channel(channelName);
@@ -43,14 +52,21 @@ class HttpClientAdapter extends Adapter {
           params: query,
         })
           .then((res) => {
-            console.log("getting response: ", res);
-            //todo NOT ABLE TO FIGURE OUT 
-            this.emit("message",res,http)
+            console.log("getting response: ", res.data);
+            const msg = this._createMessage(channelName, res.data);
+            this.emit("message", msg, http);
           })
           .catch((err) => {
             this.emit("error", err);
           });
       }
+    });
+  }
+  _createMessage(channelName: string, payload: any) {
+
+    return new GleeMessage({
+      payload: JSON.parse(JSON.stringify(payload)),
+      channel: channelName,
     });
   }
 }

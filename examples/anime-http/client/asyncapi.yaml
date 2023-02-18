@@ -34,7 +34,7 @@ channels:
     servers:
       - trendingAnime
     publish:
-      operationId: trendingAnimeListController
+      operationId: trendingAnimeListRecieverController
       message:
         $ref: "#/components/messages/trendingAnime"
     subscribe:
