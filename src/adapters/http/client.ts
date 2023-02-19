@@ -44,7 +44,6 @@ class HttpClientAdapter extends Adapter {
         const body = message.payload.body
         const query = message.payload.query
 
-        //todo send message back to a operationId function
         axios({
           method,
           url,
