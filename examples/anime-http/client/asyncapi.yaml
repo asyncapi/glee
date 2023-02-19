@@ -7,15 +7,11 @@ servers:
   trendingAnime:
     url: http://localhost:8081
     protocol: http
-  upcomingAnime:
-    url: http://localhost:8082
-    protocol: http
   testwebhook:
     url: ws://localhost:9000
     protocol: ws
 x-remoteServers:
   - trendingAnime
-  - upcomingAnimeServer
 channels:
   /test:
     bindings:
@@ -41,42 +37,12 @@ channels:
       message:
         payload:
           type: object
-  upcomingAnime:
-    bindings:
-      http:
-        type: request
-        method: POST
-        bindingVersion: 0.1.0
-    servers:
-      - upcomingAnime
-    publish:
-      operationId: upcomingAnimeListController
-      message:
-        $ref: "#/components/messages/upcomingAnime"
-    subscribe:
-      message:
-        payload:
-          type: object
 components:
   messages:
     test:
       summary: ping client
       payload:
         type: object
-        # required:
-        #   - method
-        #   - port
-        #   - body
-        #   - query
-        # properties:
-        #   method:
-        #     type: string
-        #   port:
-        #     type: number
-        #   body:
-        #     type: object
-        #   query:
-        #     type: object
     trendingAnime:
       summary: Data required to populate trending anime
       payload:
@@ -119,46 +85,6 @@ components:
               rating:
                 type: number
                 description: rating of the show.
-              genre:
-                type: string
-                description: The genre of anime.
-              studio:
-                type: string
-                description: The studio of anime.
-    upcomingAnime:
-      summary: Data required to populate upcoming anime
-      payload:
-        type: object
-        required:
-          - query
-          - body
-        properties:
-          query:
-            type: object
-            required:
-              - name
-              - genre
-              - studio
-            properties:
-              name:
-                type: string
-                description: name of the anime.
-              genre:
-                type: string
-                description: The genre of anime.
-              studio:
-                type: string
-                description: The studio of anime.
-          body:
-            type: object
-            required:
-              - name
-              - genre
-              - studio
-            properties:
-              name:
-                type: string
-                description: name of the anime.
               genre:
                 type: string
                 description: The genre of anime.
