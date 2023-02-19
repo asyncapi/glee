@@ -17,10 +17,6 @@ class HttpClientAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> {
-    const headers = {}
-    const config: HttpAdapterConfig = await this.resolveProtocolConfig("http")
-    const clientConfig = config?.client
-    headers["Authenticaton"] = clientConfig?.authentication?.token
     this.emit("connect", {
       name: this.name(),
       adapter: this,
@@ -30,6 +26,10 @@ class HttpClientAdapter extends Adapter {
     return this
   }
   async _send(message: GleeMessage): Promise<void> {
+    const headers = {}
+    const config: HttpAdapterConfig = await this.resolveProtocolConfig("http")
+    const clientConfig = config?.client
+    headers["Authenticaton"] = clientConfig?.authentication?.token
     const serverUrl = this.serverUrlExpanded
     this.channelNames.forEach(async (channelName) => {
       const channelInfo = this.parsedAsyncAPI.channel(channelName)
