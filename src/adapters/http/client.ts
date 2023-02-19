@@ -52,7 +52,6 @@ class HttpClientAdapter extends Adapter {
           params: query,
         })
           .then((res) => {
-            console.log("getting response: ", res.data)
             const msg = this._createMessage(channelName, res.data)
             this.emit("message", msg, http)
           })

@@ -13,8 +13,6 @@ export default async function (event) {
       genre: "testgenre",
     }
   }
-  console.log("event: ", event)
-
   return {
     send: [
       {
