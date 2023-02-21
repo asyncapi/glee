@@ -1,8 +1,7 @@
 import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
-import { MqttAuthConfig } from '../../lib/index.d'
-import { resolveFunctions } from '../../lib/util.js'
+import { MqttAuthConfig, MqttAdapterConfig } from '../../lib/index.d'
 
 interface IMQTTHeaders {
   cmd?: string;
@@ -32,7 +31,8 @@ class MqttAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> { // NOSONAR
-    const mqttOptions: MqttAuthConfig = await this.resolveAuthConfig()
+    const mqttOptions: MqttAdapterConfig  = await this.resolveProtocolConfig('mqtt')
+    const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions.auth)
     const subscribedChannels = this.getSubscribedChannels()
     const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
     const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
@@ -56,7 +56,7 @@ class MqttAdapter extends Adapter {
       host: url.host,
       port: url.port || (url.protocol === 'mqtt:' ? 1883 : 8883),
       protocol: url.protocol.slice(0, url.protocol.length - 1),
-      clientId: serverBinding?.clientId ?? mqttOptions?.clientId,
+      clientId: serverBinding?.clientId ?? auth?.clientId,
       clean: serverBinding?.cleanSession,
       will: serverBinding?.will && {
         topic: serverBinding?.lastWill?.topic,
@@ -66,12 +66,12 @@ class MqttAdapter extends Adapter {
       },
       keepalive: serverBinding?.keepAlive,
       username: userAndPasswordSecurityReq
-        ? mqttOptions?.username
+        ? auth?.username
         : undefined,
       password: userAndPasswordSecurityReq
-        ? mqttOptions?.password
+        ? auth?.password
         : undefined,
-      ca: X509SecurityReq ? mqttOptions?.cert : undefined,
+      ca: X509SecurityReq ? auth?.cert : undefined,
       protocolVersion,
       customHandleAcks: this._customAckHandler.bind(this),
     } as any)
@@ -168,17 +168,6 @@ class MqttAdapter extends Adapter {
       headers,
       channel: packet.topic,
     })
-  }
-
-  private async resolveAuthConfig() {
-    const auth = this.glee.options?.mqtt?.auth
-    if (!auth) return undefined
-    if (typeof auth !== 'function') {
-      await resolveFunctions(auth)
-      return auth
-    }
-
-    return await auth({ serverName: this.serverName, parsedAsyncAPI: this.parsedAsyncAPI })
   }
 
   _customAckHandler(channel, message, mqttPacket, done) {

@@ -1,7 +1,7 @@
 import { Kafka, SASLOptions } from 'kafkajs'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
-import { resolveFunctions } from '../../lib/util.js'
+import {KafkaAdapterConfig, KafkaAuthConfig} from '../../lib/index.d'
 
 class KafkaAdapter extends Adapter {
   private kafka: Kafka
@@ -11,7 +11,8 @@ class KafkaAdapter extends Adapter {
   }
 
   async connect() {
-    const kafkaOptions = await this.resolveAuthConfig()
+    const kafkaOptions: KafkaAdapterConfig = await this.resolveProtocolConfig('kafka')
+    const auth: KafkaAuthConfig = await this.getAuthConfig(kafkaOptions.auth)
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(
       (sec) => {
         const secName = Object.keys(sec.json())[0]
@@ -33,14 +34,14 @@ class KafkaAdapter extends Adapter {
       clientId: 'glee-app',
       brokers: [brokerUrl.host],
       ssl: {
-        rejectUnauthorized: kafkaOptions?.rejectUnauthorized,
-        key: kafkaOptions?.key,
-        cert: kafkaOptions?.cert,
+        rejectUnauthorized: auth?.rejectUnauthorized,
+        key: auth?.key,
+        cert: auth?.cert,
       },
       sasl: {
         mechanism: (scramSha256SecurityReq ? 'scram-sha-256' : undefined) || (scramSha512SecurityReq ? 'scram-sha-512' : undefined) || 'plain',
-        username: userAndPasswordSecurityReq ? kafkaOptions?.username : undefined,
-        password: userAndPasswordSecurityReq ? kafkaOptions?.password : undefined,
+        username: userAndPasswordSecurityReq ? auth?.username : undefined,
+        password: userAndPasswordSecurityReq ? auth?.password : undefined,
       } as SASLOptions,
     })
 
@@ -93,20 +94,6 @@ class KafkaAdapter extends Adapter {
         ...message.headers,
       },
     })
-  }
-
-  private async resolveAuthConfig() {
-    const config = this.glee.options?.kafka
-    if (!config) return 
-    const auth = config?.auth
-    if (!auth) return 
-
-    if (typeof auth !== 'function') {
-      await resolveFunctions(auth)
-      return auth
-    }
-
-    return await auth({ serverName: this.serverName, parsedAsyncAPI: this.parsedAsyncAPI })
   }
 }
 

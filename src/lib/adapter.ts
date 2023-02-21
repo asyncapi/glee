@@ -159,6 +159,16 @@ class GleeAdapter extends EventEmitter {
     return protocolConfig
   }
 
+  async getAuthConfig(auth: any) {
+    if (!auth) return
+    if (typeof auth !== 'function') {
+      await resolveFunctions(auth)
+      return auth
+    }
+
+    return await auth({serverName: this._serverName, parsedAsyncAPI: this._parsedAsyncAPI})
+  }
+
   /**
    * Returns a list of the channels a given adapter has to subscribe to.
    */
