@@ -1,3 +1,5 @@
+/* eslint-disable no-undef, security/detect-non-literal-fs-filename */
+
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
 import fs from 'fs'
@@ -16,9 +18,9 @@ const server = createServer((req, res) => {
   }
 
   if (pathname === '/socket.io') {
-    res.end(fs.readFileSync(path.resolve(__dirname, 'socket.io.html'), { encoding: 'utf-8' }))
+    res.end(fs.readFileSync(path.resolve(__dirname, '../socket.io.html'), { encoding: 'utf-8' }))
   } else if (pathname === '/') {
-    res.end(fs.readFileSync(path.resolve(__dirname, 'index.html'), { encoding: 'utf-8' }))
+    res.end(fs.readFileSync(path.resolve(__dirname, '../index.html'), { encoding: 'utf-8' }))
   } else {
     res.writeHead(404).end()
   }

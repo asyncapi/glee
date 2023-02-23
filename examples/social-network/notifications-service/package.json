@@ -1,0 +1,30 @@
+{
+  "name": "notifications-service",
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=14.15.1"
+  },
+  "scripts": {
+    "dev": "glee dev",
+    "start": "glee start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asyncapi/glee-hello-world.git"
+  },
+  "keywords": [
+    "glee"
+  ],
+  "author": "Fran Mendez",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/asyncapi/glee-hello-world/issues"
+  },
+  "homepage": "https://github.com/asyncapi/glee-hello-world#readme",
+  "dependencies": {
+    "@asyncapi/glee": "file:../../..",
+    "lowdb": "^3.0.0",
+    "node-fetch": "^3.0.0"
+  }
+}

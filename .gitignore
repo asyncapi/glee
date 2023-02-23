@@ -1,3 +1,7 @@
 node_modules
 .DS_Store
-runtimes/**/generated
+dist
+coverage
+.vscode
+.glee
+.next

@@ -1,2 +1,7 @@
 node_modules
-runtimes
+examples/social-network/frontend
+examples/crypto-websockets
+dist
+.glee
+test
+jest.config.js

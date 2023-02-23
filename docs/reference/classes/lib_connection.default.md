@@ -1,0 +1,208 @@
+[@asyncapi/glee](../README.md) / [lib/connection](../modules/lib_connection.md) / default
+
+# Class: default
+
+[lib/connection](../modules/lib_connection.md).default
+
+## Table of contents
+
+### Constructors
+
+- [constructor](lib_connection.default.md#constructor)
+
+### Properties
+
+- [\_AsyncAPIServer](lib_connection.default.md#_asyncapiserver)
+- [\_channels](lib_connection.default.md#_channels)
+- [\_parsedAsyncAPI](lib_connection.default.md#_parsedasyncapi)
+- [\_rawConnection](lib_connection.default.md#_rawconnection)
+- [\_serverName](lib_connection.default.md#_servername)
+
+### Accessors
+
+- [AsyncAPIServer](lib_connection.default.md#asyncapiserver)
+- [channels](lib_connection.default.md#channels)
+- [parsedAsyncAPI](lib_connection.default.md#parsedasyncapi)
+- [rawConnection](lib_connection.default.md#rawconnection)
+- [serverName](lib_connection.default.md#servername)
+
+### Methods
+
+- [getRaw](lib_connection.default.md#getraw)
+- [hasChannel](lib_connection.default.md#haschannel)
+
+## Constructors
+
+### constructor
+
+• **new default**(`options`)
+
+Instantiates a Glee connection.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `IGleeConnectionConstructor` |
+
+#### Defined in
+
+[src/lib/connection.ts:28](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L28)
+
+## Properties
+
+### \_AsyncAPIServer
+
+• `Private` **\_AsyncAPIServer**: `Server`
+
+#### Defined in
+
+[src/lib/connection.ts:15](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L15)
+
+___
+
+### \_channels
+
+• `Private` **\_channels**: `string`[]
+
+#### Defined in
+
+[src/lib/connection.ts:13](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L13)
+
+___
+
+### \_parsedAsyncAPI
+
+• `Private` **\_parsedAsyncAPI**: `AsyncAPIDocument`
+
+#### Defined in
+
+[src/lib/connection.ts:16](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L16)
+
+___
+
+### \_rawConnection
+
+• `Private` **\_rawConnection**: `any`
+
+#### Defined in
+
+[src/lib/connection.ts:12](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L12)
+
+___
+
+### \_serverName
+
+• `Private` **\_serverName**: `string`
+
+#### Defined in
+
+[src/lib/connection.ts:14](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L14)
+
+## Accessors
+
+### AsyncAPIServer
+
+• `get` **AsyncAPIServer**(): `Server`
+
+#### Returns
+
+`Server`
+
+#### Defined in
+
+[src/lib/connection.ts:48](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L48)
+
+___
+
+### channels
+
+• `get` **channels**(): `string`[]
+
+#### Returns
+
+`string`[]
+
+#### Defined in
+
+[src/lib/connection.ts:40](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L40)
+
+___
+
+### parsedAsyncAPI
+
+• `get` **parsedAsyncAPI**(): `AsyncAPIDocument`
+
+#### Returns
+
+`AsyncAPIDocument`
+
+#### Defined in
+
+[src/lib/connection.ts:52](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L52)
+
+___
+
+### rawConnection
+
+• `get` **rawConnection**(): `any`
+
+#### Returns
+
+`any`
+
+#### Defined in
+
+[src/lib/connection.ts:36](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L36)
+
+___
+
+### serverName
+
+• `get` **serverName**(): `string`
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[src/lib/connection.ts:44](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L44)
+
+## Methods
+
+### getRaw
+
+▸ **getRaw**(): `any`
+
+Returns the real connection object.
+
+#### Returns
+
+`any`
+
+#### Defined in
+
+[src/lib/connection.ts:71](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L71)
+
+___
+
+### hasChannel
+
+▸ **hasChannel**(`channelName`): `boolean`
+
+Checks whether a channel is associated with this connection.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `channelName` | `string` | The name of the channel. |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[src/lib/connection.ts:62](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L62)
