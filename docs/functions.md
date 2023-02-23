@@ -56,7 +56,7 @@ export default async function (event) {
 |url|string|The URL of your HTTP/SaaS end-point.
 |headers|object&lt;string,string&gt;|The headers/metadata of the message you want to send.
 |method|string|The HTTP method that you want your endpoint to be called with.
-|ignoreResponse|boolean|By default, Glee assumes that the response is in JSON format and adheres to the [Functions](#functions) return type structure. If you do not wish for Glee to process the response, you can set the this option to `false`.
+|ignoreResponse|boolean|By default, Glee assumes that the response is in JSON format and adheres to the [Functions](#functions) return type structure. If you do not wish for Glee to process the response, you can set this option to `false`.
 
 > NOTE: Glee uses [got](https://github.com/sindresorhus/got) under the hood. Therefore, you have the ability to personalize your request with any options that [got](https://github.com/sindresorhus/got#documentation) supports.
 
