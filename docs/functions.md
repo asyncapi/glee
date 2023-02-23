@@ -75,7 +75,7 @@ channels:
 
 Glee maps the `onHello` operation to the `functions/onHello.js` file.
 
-## Using FaaS functions as glee functions
+## Using Serverless functions as Glee functions
 
 Glee can treat your FaaS function as its own by setting `operationId` to your function URL and customizing it with the `x-glee-invoke` extension:
 
