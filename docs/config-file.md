@@ -140,13 +140,10 @@ These configurations apply to Glee itself, rather than any specific protocol.
 
 ### Auth Config
 
-Most client like `ws`,`kafka` and `mqtt` has auth config which is used for passing auth parameters, all these config could be an object or an function that returns the specific object defined by each protocol.
-
+Most clients like `ws`,`kafka`, and `mqtt` have auth fields that are used for passing auth parameters. All these configurations can be an object or a function that returns the specific object defined by each protocol.
 
 
 ```js
-/** Both of these examples are correct **/
-
 export default async function() {
   ws: {
     client: {
