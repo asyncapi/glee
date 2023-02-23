@@ -37,7 +37,7 @@ export default async function (event) {
 |---|---|---|
 |send|array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt;|A list of outbound messages to send when the processing of the inbound event has finished. All clients subscribed to the given channel/topic will receive the message.
 |reply|array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt;|A list of outbound messages to send as a reply when the processing of the inbound event has finished. This is useful when the target of your message is the sender of the inbound event. Note, however, that this only works when you're running Glee as a server. For example, using `reply` when receiving a WebSocket message is fine and the reply will exclusively go to the client that sent the message. However, if you're receiving a message from an MQTT broker, `reply` will work exactly the same way as `send` above, and will send the message to all the clients subscribed to the given channel/topic.
-|invoke|array&lt;[InvokeRequest](#anatomy-of-an-invoke-message)&gt;|A list of requests for reaching an HTTP/HTTPS endpoint. This is useful when you have a software as a service (SaaS) function and want it to be treated as one of Glee's functions.
+|invoke|array&lt;[InvokeRequest](#anatomy-of-an-invoke-message)&gt;|A list of requests for reaching an HTTP/HTTPS endpoint. This is useful when you have a Serverless function and want it to be treated as one of Glee's functions.
 
 
 ##### Anatomy of an outbound message
