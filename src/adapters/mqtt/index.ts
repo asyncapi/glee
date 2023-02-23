@@ -1,6 +1,7 @@
 import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
+import { MqttAuthConfig, MqttAdapterConfig } from '../../lib/index.d'
 
 interface IMQTTHeaders {
   cmd?: string;
@@ -30,14 +31,15 @@ class MqttAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> { // NOSONAR
-    const mqttOptions = await this.resolveProtocolConfig('mqtt')
+    const mqttOptions: MqttAdapterConfig  = await this.resolveProtocolConfig('mqtt')
+    const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions.auth)
     const subscribedChannels = this.getSubscribedChannels()
     const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
     const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
-        const secName = Object.keys(sec.json())[0]
-        return this.parsedAsyncAPI.components().securityScheme(secName)
-      }
+      const secName = Object.keys(sec.json())[0]
+      return this.parsedAsyncAPI.components().securityScheme(secName)
+    }
     )
     const userAndPasswordSecurityReq = securityRequirements.find(
       (sec) => sec.type() === 'userPassword'
@@ -54,7 +56,7 @@ class MqttAdapter extends Adapter {
       host: url.host,
       port: url.port || (url.protocol === 'mqtt:' ? 1883 : 8883),
       protocol: url.protocol.slice(0, url.protocol.length - 1),
-      clientId: serverBinding?.clientId ?? mqttOptions?.authentication?.clientId,
+      clientId: serverBinding?.clientId ?? auth?.clientId,
       clean: serverBinding?.cleanSession,
       will: serverBinding?.will && {
         topic: serverBinding?.lastWill?.topic,
@@ -64,12 +66,12 @@ class MqttAdapter extends Adapter {
       },
       keepalive: serverBinding?.keepAlive,
       username: userAndPasswordSecurityReq
-        ? mqttOptions?.authentication?.userPassword.username
+        ? auth?.username
         : undefined,
       password: userAndPasswordSecurityReq
-        ? mqttOptions?.authentication?.userPassword.password
+        ? auth?.password
         : undefined,
-      ca: X509SecurityReq ? mqttOptions?.authentication?.cert : undefined,
+      ca: X509SecurityReq ? auth?.cert : undefined,
       protocolVersion,
       customHandleAcks: this._customAckHandler.bind(this),
     } as any)
@@ -87,7 +89,7 @@ class MqttAdapter extends Adapter {
 
     this.client.on('message', (channel, message, mqttPacket) => {
       const qos = mqttPacket.qos
-      if ( protocolVersion === 5 && qos > 0 ) return   // ignore higher qos messages. already processed
+      if (protocolVersion === 5 && qos > 0) return   // ignore higher qos messages. already processed
 
       const msg = this._createMessage(mqttPacket as IPublishPacket)
       this.emit('message', msg, this.client)
