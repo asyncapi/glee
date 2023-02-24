@@ -141,38 +141,18 @@ export const isAValidHttpUrl = (s: string) => {
   }
 }
 
-export const generateUrlFunction = (
-  gleePath: string,
-  url: string,
+export const getInvokeFunction = (
   options: GleeFunctionReturnInvoke
 ) => {
-  const invokeOptions = { ...options, url }
-  const content = `
-  export default async function (event) {
+  return async function (event: GleeFunctionEvent) {
+    const defaultOptions = {
+      method: 'POST',
+      body: event.payload
+    }
     return {
       invoke: [
-        ${JSON.stringify(invokeOptions)}
+        {defaultOptions ,...options}
       ]
     }
   }
-  `
-  const path = join(gleePath, 'functions')
-  const name = `${urlToFileName(url)}.js`
-  createFile(path, name, content)
-}
-
-function createFile(path: string, name: string, content: string) {
-  try {
-    mkdirSync(path)
-    writeFileSync(join(path, name), content)
-  } catch (err) {
-    if (err.code === 'EEXIST') {
-      // Do nothing since the directory already exists.
-    } else {
-      logError(err)
-    }
-  }
-}
-export function urlToFileName(url: string) {
-  return url.replace(/[^a-zA-Z0-9]/g, '_')
 }

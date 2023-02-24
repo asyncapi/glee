@@ -12,7 +12,6 @@ import {
 import {
   register as registerFunctions,
   trigger as triggerFunction,
-  generate as generateFunctions,
 } from './lib/functions.js'
 import buffer2string from './middlewares/buffer2string.js'
 import string2json from './middlewares/string2json.js'
@@ -28,7 +27,7 @@ import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
-import { isAValidHttpUrl, urlToFileName } from './lib/util.js'
+import { isAValidHttpUrl } from './lib/util.js'
 
 dotenvExpand(dotenv.config())
 
@@ -49,7 +48,6 @@ export default async function GleeAppInitializer() {
   const parsedAsyncAPI = await getParsedAsyncAPI()
   const channelNames = parsedAsyncAPI.channelNames()
 
-  await generateFunctions(parsedAsyncAPI, GLEE_DIR)
   await registerFunctions(GLEE_FUNCTIONS_DIR)
   await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
 
@@ -82,7 +80,7 @@ export default async function GleeAppInitializer() {
         app.use(channelName, validate(schema), (event, next) => {
           triggerFunction({
             app,
-            operationId: isAValidHttpUrl(operationId) ? urlToFileName(operationId) : operationId,
+            operationId,
             message: event,
           })
             .then(next)

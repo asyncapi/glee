@@ -7,7 +7,7 @@ import GleeMessage from './message.js'
 import { GleeFunction, GleeFunctionReturn } from './index.d'
 import Glee from './glee.js'
 import {
-  generateUrlFunction,
+  getInvokeFunction,
   gleeMessageToFunctionEvent,
   isAValidHttpUrl,
   isRemoteServer,
@@ -16,7 +16,6 @@ import { pathToFileURL } from 'url'
 import { getParsedAsyncAPI } from './asyncapiFile.js'
 import httpFetch from './httpFetch.js'
 import { validateGleeFunctionReturn, validateGleeInvokeOptions } from './jsonSchemaValidators.js'
-import { AsyncAPIDocument } from '@asyncapi/parser'
 
 interface FunctionInfo {
   run: GleeFunction
@@ -24,21 +23,6 @@ interface FunctionInfo {
 
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
 export const functions: Map<string, FunctionInfo> = new Map()
-
-export function generate(parsedAsyncAPI: AsyncAPIDocument, gleeDir: string) {
-  parsedAsyncAPI.channelNames().forEach(async (channelName) => {
-    const channel = parsedAsyncAPI.channel(channelName)
-    if (!channel.hasPublish()) return
-    const operationId = channel.publish().json('operationId')
-    if (isAValidHttpUrl(operationId)) {
-      const gleeInvokeOptions = channel.publish().json('x-glee-invoke')
-      const isValid = validateGleeInvokeOptions(gleeInvokeOptions, operationId)
-      if (isValid) {
-        generateUrlFunction(gleeDir, operationId, gleeInvokeOptions)
-      }
-    }
-  })
-}
 
 export async function register(dir: string) {
   try {
@@ -48,6 +32,22 @@ export async function register(dir: string) {
     if (e.code === 'ENOENT') return
     throw e
   }
+
+  const asyncapiFile = await getParsedAsyncAPI()
+  asyncapiFile.channelNames().forEach((channelName) => {
+    const channel = asyncapiFile.channel(channelName)
+    if(!channel.hasPublish()) return
+    const operationId = channel.publish().json('operationId')
+    if(isAValidHttpUrl(operationId)){
+      const gleeInvokeOptions = channel.publish().json('x-glee-invoke')
+      const isValid = validateGleeInvokeOptions(gleeInvokeOptions, operationId)
+      if(isValid){
+        functions.set(operationId, {
+          run: getInvokeFunction({...gleeInvokeOptions, url: operationId})
+        })
+      }
+    }
+  })
 
   try {
     const files = await walkdir.async(dir, { return_object: true })
