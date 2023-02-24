@@ -1,13 +1,10 @@
 import { AsyncAPIDocument } from '@asyncapi/parser'
-import { mkdirSync, writeFileSync } from 'fs'
-import { join } from 'path'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
 import { GleeFunctionEvent, GleeFunctionReturnInvoke } from './index.d'
 import GleeMessage from './message.js'
-import { logError } from './logger.js'
 
 interface IValidateDataReturn {
   errors?: void | betterAjvErrors.IOutputError[]
@@ -153,6 +150,15 @@ export const getInvokeFunction = (
       invoke: [
         {defaultOptions ,...options}
       ]
+    }
+  }
+}
+export const resolveFunctions = async (object: any) => {
+  for (const key in object) {
+    if (typeof object[String(key)] === 'object' && !Array.isArray(object[String(key)])) {
+      resolveFunctions(object[String(key)])
+    } else if (typeof object[String(key)] === 'function' && key !== 'auth') {
+      object[String(key)] = await object[String(key)]()
     }
   }
 }
