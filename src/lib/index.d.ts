@@ -1,3 +1,4 @@
+import { AsyncAPIDocument } from '@asyncapi/parser'
 import GleeAdapter from './adapter.js'
 import GleeClusterAdapter from './cluster.js'
 import GleeConnection from './connection.js'
@@ -5,6 +6,28 @@ import Glee from './glee.js'
 
 type WebSocketServerType = 'native' | 'socket.io'
 type HttpServerType = 'native' | 'socket.io'
+
+export type AuthFunction<T> = ({serverName, parsedAsyncAPI}: {serverName: string, parsedAsyncAPI: AsyncAPIDocument}) => Promise<T>
+
+export interface MqttAuthConfig {
+    cert?: string
+    username?: string
+    password?: string
+    clientId?: string
+}
+
+export interface WsAuthConfig {
+    token?: string
+}
+
+export interface KafkaAuthConfig {
+  key?: string
+  cert?: string
+  clientId?: string
+  rejectUnauthorized?: boolean
+  username?: string
+  password?: string
+}
 
 export type GleeClusterAdapterConfig = {
   adapter?: string | typeof GleeClusterAdapter,
@@ -20,9 +43,7 @@ export type WebsocketAdapterConfig = {
   },
   client?: {
     query?: any
-    authentication?: {
-      token?: string
-    }
+    auth?: WsAuthConfig | AuthFunction<WsAuthConfig>
   }
 }
 
@@ -41,24 +62,27 @@ export type HttpAdapterConfig = {
   }
 }
 export type MqttAdapterConfig = {
-  authentication?: {
-    cert?: string
-    userPassword?: { username: string; password: string },
-    clientId?: string,
-  }
+  auth?: MqttAuthConfig | AuthFunction<MqttAuthConfig>
 }
+
+export type KafkaAdapterConfig = {
+  auth?: KafkaAuthConfig | AuthFunction<KafkaAuthConfig>
+}
+
 export type CoreGleeConfig = {
   gleeDir?: string,
   lifecycleDir?: string,
   functionsDir?: string,
   asyncapiFilePath?: string,
 }
+
 export type GleeConfig = {
-  glee?: CoreGleeConfig,
-  websocket?: WebsocketAdapterConfig,
+  glee?: CoreGleeConfig
+  ws?: WebsocketAdapterConfig,
   cluster?: GleeClusterAdapterConfig,
   mqtt?: MqttAdapterConfig,
   http?: HttpAdapterConfig
+  kafka?: KafkaAdapterConfig
 }
 
 export type GleeFunctionReturn = {
