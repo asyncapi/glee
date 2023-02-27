@@ -4,7 +4,7 @@ import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
 import { logWarningMessage } from './logger.js'
 import GleeMessage from './message.js'
-import { GleeFunction, GleeFunctionReturn } from './index.d'
+import { GleeFunction, GleeFunctionReturn } from './index.js'
 import Glee from './glee.js'
 import {
   getInvokeFunction,

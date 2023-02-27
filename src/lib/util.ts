@@ -3,7 +3,7 @@ import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
-import { GleeFunctionEvent, GleeFunctionReturnInvoke } from './index.d'
+import { GleeFunctionEvent, GleeFunctionReturnInvoke } from './index.js'
 import GleeMessage from './message.js'
 
 interface IValidateDataReturn {
@@ -144,11 +144,11 @@ export const getInvokeFunction = (
   return async function (event: GleeFunctionEvent) {
     const defaultOptions = {
       method: 'POST',
-      body: event.payload
+      json: event.payload
     }
     return {
       invoke: [
-        {defaultOptions ,...options}
+        {...defaultOptions ,...options}
       ]
     }
   }

@@ -2,7 +2,7 @@
 import Adapter from "../../lib/adapter.js"
 import GleeMessage from "../../lib/message.js"
 import ws from "ws"
-import { WsAuthConfig, WebsocketAdapterConfig } from '../../lib/index.d'
+import { WsAuthConfig, WebsocketAdapterConfig } from '../../lib/index.js'
 
 interface Client {
   channel: string;

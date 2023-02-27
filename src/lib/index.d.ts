@@ -79,6 +79,7 @@ export type GleeConfig = {
 }
 
 export type GleeFunctionReturn = {
+  invoke: any
   send?: GleeFunctionReturnSend[],
   reply?: GleeFunctionReturnReply[],
   broadcast?: GleeFunctionReturnBroadcast[]

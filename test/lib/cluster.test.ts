@@ -3,7 +3,7 @@ import Glee from '../../src/lib/glee'
 import GleeClusterAdapter from '../../src/lib/cluster.js'
 import {validate as uuidValidate, version as uuidVersion} from 'uuid'
 import GleeMessage from '../../src/lib/message.js'
-import { MiddlewareCallback } from '../../src/middlewares/index.d'
+import { MiddlewareCallback } from '../../src/middlewares/index.js'
 import {jest} from '@jest/globals'
 
 const TEST_SERVER_NAME = 'test'

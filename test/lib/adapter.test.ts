@@ -5,7 +5,6 @@ import GleeConnection from '../../src/lib/connection.js'
 import Glee from '../../src/lib/glee.js'
 import GleeMessage from '../../src/lib/message.js'
 import GleeAdapter from '../../src/lib/adapter.js'
-import { MiddlewareCallback } from '../../src/middlewares/index.d'
 import {jest} from '@jest/globals'
 
 const TEST_SERVER_NAME = 'test'

@@ -4,7 +4,7 @@ export const HeadersSchema = {
   additionalProperties: { type: 'string' },
 }
 export const HttpOptionsSchema = {
-  type: 'object',
+  type: ['object', 'null'],
   additionalProperties: true,
   properties: {
     url: { type: 'string' },

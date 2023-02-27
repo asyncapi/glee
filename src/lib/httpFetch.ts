@@ -1,4 +1,4 @@
-import { GleeFunctionReturn, GleeFunctionReturnInvoke } from '.'
+import { GleeFunctionReturn, GleeFunctionReturnInvoke } from './index.js'
 import got, { Response } from 'got'
 import { logError } from './logger.js'
 
@@ -10,13 +10,6 @@ export default async function httpFetch(
   try {
     response = await got(undefined, {
       ...gotOptions,
-      retry: {
-        limit: 4,
-        statusCodes: [429],
-        calculateDelay: ({ computedValue }) => {
-          return computedValue
-        },
-      },
     })
     if (!ignoreResponse) {
       const responseJSON: GleeFunctionReturn = JSON.parse(response.body)
@@ -24,7 +17,7 @@ export default async function httpFetch(
     }
   } catch (err) {
     if (err instanceof SyntaxError) {
-      responseHandler(response.body as GleeFunctionReturn, gotOptions.url)
+      responseHandler(response.body as unknown as GleeFunctionReturn, gotOptions.url)
     } else logError(err)
   }
 }
