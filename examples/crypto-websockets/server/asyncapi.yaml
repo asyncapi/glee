@@ -13,6 +13,11 @@ channels:
     bindings:
       ws:
         bindingVersion: 0.1.0
+        headers:
+          type: object
+          properties:
+            token:
+              type: string
     subscribe:
       message:
         $ref: '#/components/messages/indexGraph'
