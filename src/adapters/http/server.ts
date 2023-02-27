@@ -59,38 +59,13 @@ class HttpAdapter extends Adapter {
           .channel(pathname)
           .binding("http")
         if (httpChannelBinding) {
-          const { query, body, method } = httpChannelBinding
-          if (method && req.method !== method) {
-            const err = new Error(`Cannot ${req.method} ${pathname}`)
-            this.emit("error", err)
-            res.end(err.message)
-            return
-          }
-          if (query) {
-            const { isValid, humanReadableError, errors } = validateData(
-              searchParams.query,
-              query
-            )
-            if (!isValid) {
-              const err = new GleeError({ humanReadableError, errors })
-              this.emit("error", err)
-              res.end(JSON.stringify(err.errors))
-              return
-            }
-          }
-          if (body) {
-            const { isValid, humanReadableError, errors } = validateData(
-              searchParams.body,
-              body
-            )
-            if (!isValid) {
-              const err = new GleeError({ humanReadableError, errors })
-              this.emit("error", err)
-              res.end(JSON.stringify(err.errors))
-
-              return
-            }
-          }
+          this._checkHttpBinding(
+            req,
+            res,
+            pathname,
+            httpChannelBinding,
+            searchParams
+          )
         }
         this.emit("connect", {
           name: this.name(),
@@ -107,7 +82,39 @@ class HttpAdapter extends Adapter {
     this.emit("server:ready", { name: this.name(), adapter: this })
     return this
   }
-
+  _checkHttpBinding(req, res, pathname, httpChannelBinding, searchParams) {
+    const { query, body, method } = httpChannelBinding
+    if (method && req.method !== method) {
+      const err = new Error(`Cannot ${req.method} ${pathname}`)
+      this.emit("error", err)
+      res.end(err.message)
+      return
+    }
+    if (query) {
+      const { isValid, humanReadableError, errors } = validateData(
+        searchParams.query,
+        query
+      )
+      if (!isValid) {
+        const err = new GleeError({ humanReadableError, errors })
+        this.emit("error", err)
+        res.end(JSON.stringify(err.errors))
+        return
+      }
+    }
+    if (body) {
+      const { isValid, humanReadableError, errors } = validateData(
+        searchParams.body,
+        body
+      )
+      if (!isValid) {
+        const err = new GleeError({ humanReadableError, errors })
+        this.emit("error", err)
+        res.end(JSON.stringify(err.errors))
+        return
+      }
+    }
+  }
   async _send(message: GleeMessage): Promise<void> {
     const connection = this.res.get(message.serverName)
     connection.write(message.payload)

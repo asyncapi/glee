@@ -1,4 +1,4 @@
-export default async function (event) {
+export default async function () {
   const payload = {
     body: {
       name: "tets",
