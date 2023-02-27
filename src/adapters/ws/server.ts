@@ -5,7 +5,7 @@ import Adapter from '../../lib/adapter.js'
 import GleeConnection from '../../lib/connection.js'
 import GleeMessage from '../../lib/message.js'
 import GleeError from '../../errors/glee-error.js'
-import {WebsocketAdapterConfig} from '../../lib/index.d'
+import {WebsocketAdapterConfig} from '../../lib/index.js'
 
 class WebSocketsAdapter extends Adapter {
   name(): string {
