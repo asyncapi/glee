@@ -1,7 +1,7 @@
 import { Kafka, SASLOptions } from 'kafkajs'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
-import {KafkaAdapterConfig, KafkaAuthConfig} from '../../lib/index.d'
+import {KafkaAdapterConfig, KafkaAuthConfig} from '../../lib/index.js'
 
 class KafkaAdapter extends Adapter {
   private kafka: Kafka

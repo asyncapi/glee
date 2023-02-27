@@ -1,6 +1,6 @@
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
-import { GleeFunctionEvent, GleeFunctionReturn, GleeFunctionReturnSend } from './index.d'
+import { GleeFunctionEvent, GleeFunctionReturn, GleeFunctionReturnSend } from './index.js'
 import { logInfoMessage } from './logger.js'
 import GleeMessage from './message.js'
 import { arrayHasDuplicates } from './util.js'

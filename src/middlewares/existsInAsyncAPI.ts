@@ -1,5 +1,5 @@
 import { AsyncAPIDocument } from '@asyncapi/parser'
-import { MiddlewareCallback } from '.'
+import { MiddlewareCallback } from './index.js'
 import GleeMessage from '../lib/message.js'
 
 export default (asyncapi: AsyncAPIDocument) => (event: GleeMessage, next: MiddlewareCallback) => {
