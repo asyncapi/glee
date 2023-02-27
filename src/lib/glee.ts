@@ -7,9 +7,9 @@ import GleeClusterAdapter from './cluster.js'
 import GleeRouter, { ChannelErrorMiddlewareTuple, ChannelMiddlewareTuple, GenericMiddleware } from './router.js'
 import GleeMessage from './message.js'
 import { matchChannel, duplicateMessage, getParams } from './util.js'
-import { GleeConfig } from './index.d'
+import { GleeConfig } from './index.js'
 import GleeConnection from './connection.js'
-import { MiddlewareCallback } from '../middlewares/index.d'
+import { MiddlewareCallback } from '../middlewares/index.js'
 
 const debug = Debug('glee')
 

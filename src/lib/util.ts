@@ -3,7 +3,7 @@ import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
-import { GleeFunctionEvent } from './index.d'
+import { GleeFunctionEvent } from './index.js'
 import GleeMessage from './message.js'
 
 interface IValidateDataReturn {
