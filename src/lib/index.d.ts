@@ -5,7 +5,7 @@ import GleeConnection from './connection.js'
 import Glee from './glee.js'
 
 type WebSocketServerType = 'native' | 'socket.io'
-type HttpServerType = 'native' | 'socket.io'
+type HttpServerType = 'native'
 
 export type AuthFunction<T> = ({serverName, parsedAsyncAPI}: {serverName: string, parsedAsyncAPI: AsyncAPIDocument}) => Promise<T>
 
