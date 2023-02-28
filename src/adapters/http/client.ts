@@ -29,7 +29,7 @@ class HttpClientAdapter extends Adapter {
     const headers = {}
     const config: HttpAdapterConfig = await this.resolveProtocolConfig("http")
     const clientConfig = config?.client
-    headers["Authentication"] = clientConfig?.auth?.token
+    headers["Authentication"] =  await this.getAuthConfig(clientConfig?.auth?.token)
     const serverUrl = this.serverUrlExpanded
     this.channelNames.forEach(async (channelName) => {
       const channelInfo = this.parsedAsyncAPI.channel(channelName)
