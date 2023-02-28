@@ -3,7 +3,7 @@ import GleeAdapter from './adapter.js'
 import GleeClusterAdapter from './cluster.js'
 import GleeConnection from './connection.js'
 import Glee from './glee.js'
-import { Method } from 'got'
+import type { OptionsOfJSONResponseBody } from 'got'
 
 type WebSocketServerType = 'native' | 'socket.io'
 
@@ -16,11 +16,7 @@ export interface MqttAuthConfig {
     clientId?: string
 }
 
-export interface GleeFunctionReturnInvoke {
-  url: string
-  headers?: { [key: string]: string }
-  method: Method
-  body?: any
+export interface GleeFunctionReturnInvoke extends OptionsOfJSONResponseBody {
   ignoreResponse?: boolean
 }
 
@@ -79,7 +75,7 @@ export type GleeConfig = {
 }
 
 export type GleeFunctionReturn = {
-  invoke: any
+  invoke?: GleeFunctionReturnInvoke
   send?: GleeFunctionReturnSend[],
   reply?: GleeFunctionReturnReply[],
   broadcast?: GleeFunctionReturnBroadcast[]

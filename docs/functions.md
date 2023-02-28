@@ -58,7 +58,40 @@ export default async function (event) {
 |method|string|The HTTP method that you want your endpoint to be called with.
 |ignoreResponse|boolean|By default, Glee assumes that the response is in JSON format and adheres to the [Functions](#functions) return type structure. If you do not wish for Glee to process the response, you can set this option to `false`.
 
-> NOTE: Glee uses [got](https://github.com/sindresorhus/got) under the hood. Therefore, you have the ability to personalize your request with any options that [got](https://github.com/sindresorhus/got#documentation) supports.
+###### Timeouts and retries
+Glee uses [got](https://github.com/sindresorhus/got) under the hood. Therefore, by default glee will retry on failure.
+you have the ability to personalize your request with any options that [got](https://github.com/sindresorhus/got#documentation) supports, you just have to pass the options in the invoke message options.
+
+For example, if you want to disable retry on failure, you can do it by setting `retry.limit` to 0.
+
+```js
+/* onHello.js */
+
+export default async function (event) {
+  return {
+    invoke: [{
+      url: 'http://localhost:3000/',
+      retry: {
+        limit: 0
+      }
+    }]
+  }
+}
+```
+
+Or do it in the asyncAPI file itself:
+```yaml
+channels:
+  hello:
+    publish:
+      operationId: https://domain.come/path/to/your/function
+      x-glee-invoke:
+        ignoreResponse: true
+        retry:
+          limit: 0
+      ...
+
+```
 
 ## How does Glee know which function it should execute?
 

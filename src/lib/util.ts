@@ -138,13 +138,21 @@ export const isAValidHttpUrl = (s: string) => {
   }
 }
 
+/**
+ * create an empty Glee function that calls an HTTP endpoint.
+ * @param options the HTTP/HTTPS options.
+ * @returns a function that can be used to invoke an endpoint by Glee.
+ */
 export const getInvokeFunction = (
   options: GleeFunctionReturnInvoke
 ) => {
   return async function (event: GleeFunctionEvent) {
     const defaultOptions = {
       method: 'POST',
-      json: event.payload
+      json: event.payload,
+      headers: {
+        'Content-Type': 'application/json'
+      }
     }
     return {
       invoke: [
