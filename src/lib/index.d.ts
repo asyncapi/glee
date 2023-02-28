@@ -20,6 +20,10 @@ export interface WsAuthConfig {
     token?: string
 }
 
+export interface HttpAuthConfig {
+  token?: string
+}
+
 export interface KafkaAuthConfig {
   key?: string
   cert?: string
@@ -50,13 +54,10 @@ export type WebsocketAdapterConfig = {
 export type HttpAdapterConfig = {
   server: {
     httpServer?: any,
-    adapter?: HttpServerType | typeof GleeAdapter
     port?: number
   },
   client?: {
-    auth?: {
-      token?: string
-    },
+    auth?:  HttpAuthConfig | AuthFunction<HttpAuthConfig>,
     query?: any,
     body?: any
   }

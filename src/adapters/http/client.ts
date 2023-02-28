@@ -1,7 +1,7 @@
 import Adapter from "../../lib/adapter.js"
 import GleeMessage from "../../lib/message.js"
 import got from "got"
-import { HttpAdapterConfig } from "../../lib/index.js"
+import { HttpAuthConfig, HttpAdapterConfig } from "../../lib/index.js"
 import http from "http"
 class HttpClientAdapter extends Adapter {
 
@@ -28,8 +28,8 @@ class HttpClientAdapter extends Adapter {
   async _send(message: GleeMessage): Promise<void> {
     const headers = {}
     const config: HttpAdapterConfig = await this.resolveProtocolConfig("http")
-    const clientConfig = config?.client
-    headers["Authentication"] =  await this.getAuthConfig(clientConfig?.auth?.token)
+    const auth: HttpAuthConfig = await this.getAuthConfig(config.client.auth)
+    headers["Authentication"] = auth?.token
     const serverUrl = this.serverUrlExpanded
     this.channelNames.forEach(async (channelName) => {
       const channelInfo = this.parsedAsyncAPI.channel(channelName)

@@ -165,6 +165,7 @@ These configurations apply to Glee itself, rather than any specific protocol.
 |http.server.adapter| The Glee adapter to use for the Http server. Defaults to a "native" Http implementation.|
 |websocket.server.port| The port to use when binding the Http server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.|
 |http.client.auth| Authentication variables for client|
+|http.client.auth.token| HTTP Authentication header|
 |http.client.query| Query object for the client to send|
 |http.client.body| Body object for the client to send
 
