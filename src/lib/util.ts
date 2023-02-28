@@ -1,9 +1,10 @@
 import { AsyncAPIDocument } from '@asyncapi/parser'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
+import { Method } from 'got'
 import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
-import { GleeFunctionEvent, GleeFunctionReturnInvoke } from './index.js'
+import { GleeFunction, GleeFunctionEvent, GleeFunctionReturn, GleeFunctionReturnInvoke } from './index.js'
 import GleeMessage from './message.js'
 
 interface IValidateDataReturn {
@@ -143,23 +144,23 @@ export const isAValidHttpUrl = (s: string) => {
  * @param options the HTTP/HTTPS options.
  * @returns a function that can be used to invoke an endpoint by Glee.
  */
-export const getInvokeFunction = (
-  options: GleeFunctionReturnInvoke
-) => {
-  return async function (event: GleeFunctionEvent) {
-    const defaultOptions = {
-      method: 'POST',
-      json: event.payload,
-      headers: {
-        'Content-Type': 'application/json'
+export const getInvokeFunction = (options: GleeFunctionReturnInvoke): GleeFunction => {
+
+  return async function (event) {
+    const method: Method = 'POST'
+      const defaultOptions = {
+        method,
+        json: event.payload,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      return {
+        invoke: [
+          {...defaultOptions ,...options}
+        ]
       }
     }
-    return {
-      invoke: [
-        {...defaultOptions ,...options}
-      ]
-    }
-  }
 }
 export const resolveFunctions = async (object: any) => {
   for (const key in object) {

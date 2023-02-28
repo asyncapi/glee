@@ -42,6 +42,8 @@ export async function register(dir: string) {
       const gleeInvokeOptions = channel.publish().json('x-glee-invoke')
       const isValid = validateGleeInvokeOptions(gleeInvokeOptions, operationId)
       if(isValid){
+
+        //Since we already have the logic of handling `invoke` in functions, we can reuse the logic for asyncapi `x-glee-invoke`.
         functions.set(operationId, {
           run: getInvokeFunction({...gleeInvokeOptions, url: operationId})
         })
