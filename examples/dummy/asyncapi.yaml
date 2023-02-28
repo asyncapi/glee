@@ -4,18 +4,98 @@ info:
   version: 1.0.0
   description: This service is in charge of processing user signups
 servers:
+  mosquitto:
+    url: mqtts://test.mosquitto.org
+    protocol: mqtts
+    security:
+      - X509Certificate: []
+    bindings:
+      mqtt:
+        clientId: guest
+        cleanSession: true
+        keepAlive: 60
+        bindingVersion: 0.1.0
   websockets:
     url: ws://localhost:3005/ws
     protocol: ws
 channels:
   user/signedup:
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+        query:
+          type: object
+          additionalProperties: false
+          properties:
+            salutation:
+              type: string
+              default: Hello
+        headers:
+          type: object
+          properties:
+            my-custom-header:
+              type: string
+              const: 'custom value'
+
     publish:
-      operationId: http://localhost:3000
+      operationId: onUserSignedUp
       message:
         $ref: '#/components/messages/UserSignedUp'
+      bindings:
+        mqtt:
+          qos: 2
+          retain: true
+          bindingVersion: 0.1.0
+    subscribe:
+      message:
+        $ref: '#/components/messages/UserSignedUp'  
+  server/announce:
+    subscribe:
+      message:
+        $ref: '#/components/messages/ServerAnnounce'
 components:
+  securitySchemes:
+    userAndPassword:
+      type: userPassword
+    X509Certificate:
+      type: X509
   messages:
     UserSignedUp:
       payload:
         type: object
-        additionalProperties: true
+        additionalProperties: false
+        required:
+          - displayName
+          - email
+        properties:
+          displayName:
+            type: string
+            description: Name of the user
+          email:
+            type: string
+            format: email
+            description: Email of the user
+    EmailSent:
+      payload:
+        type: object
+        additionalProperties: false
+        required:
+          - email
+          - timestamp
+        properties:
+          email:
+            type: string
+            format: email
+            description: Email of the user
+          timestamp:
+            type: string
+            format: date-time
+    ServerAnnounce:
+      payload:
+        type: object
+        additionalProperties: false
+        required:
+          - id
+        properties:
+          id:
+            type: string
