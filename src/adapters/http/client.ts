@@ -1,6 +1,6 @@
 import Adapter from "../../lib/adapter.js"
 import GleeMessage from "../../lib/message.js"
-import axios from "axios"
+import got from "got"
 import { HttpAdapterConfig } from "../../lib/index.js"
 import http from "http"
 class HttpClientAdapter extends Adapter {
@@ -29,7 +29,7 @@ class HttpClientAdapter extends Adapter {
     const headers = {}
     const config: HttpAdapterConfig = await this.resolveProtocolConfig("http")
     const clientConfig = config?.client
-    headers["Authenticaton"] = clientConfig?.authentication?.token
+    headers["Authentication"] = clientConfig?.auth?.token
     const serverUrl = this.serverUrlExpanded
     this.channelNames.forEach(async (channelName) => {
       const channelInfo = this.parsedAsyncAPI.channel(channelName)
@@ -44,14 +44,14 @@ class HttpClientAdapter extends Adapter {
         const body = message.payload.body
         const query = message.payload.query
 
-        axios({
+        got({
           method,
           url,
-          data: body,
-          params: query,
+          body: body,
+          searchParams: query,
         })
           .then((res) => {
-            const msg = this._createMessage(channelName, res.data)
+            const msg = this._createMessage(channelName, res.body)
             this.emit("message", msg, http)
           })
           .catch((err) => {

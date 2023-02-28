@@ -54,7 +54,7 @@ export type HttpAdapterConfig = {
     port?: number
   },
   client?: {
-    authentication?: {
+    auth?: {
       token?: string
     },
     query?: any,
