@@ -1,5 +1,5 @@
 import GleeMessage from '../lib/message.js'
-import { MiddlewareCallback } from './index.d'
+import { MiddlewareCallback } from './index.js'
 
 export default (message: GleeMessage, next: MiddlewareCallback) => {
   try {
