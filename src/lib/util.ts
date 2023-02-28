@@ -150,7 +150,7 @@ export const getInvokeFunction = (options: GleeFunctionReturnInvoke): GleeFuncti
     const method: Method = 'POST'
       const defaultOptions = {
         method,
-        json: event.payload,
+        json: options.method !== 'GET' ? event.payload : undefined,
         headers: {
           'Content-Type': 'application/json'
         }
