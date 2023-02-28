@@ -51,16 +51,16 @@ export default async function (event) {
 
 ##### Anatomy of an invoke message
 
+> NOTE: Glee uses [got](https://github.com/sindresorhus/got) under the hood. please see [got options](https://github.com/sindresorhus/got/blob/main/documentation/2-options.md) for an extensive list of attributes that you can pass here to customize your request.
+
+Glee specific options:
 |Attribute|Type|Description|
 |---|---|---|
-|url|string|The URL of your HTTP/SaaS end-point.
-|headers|object&lt;string,string&gt;|The headers/metadata of the message you want to send.
-|method|string|The HTTP method that you want your endpoint to be called with.
 |ignoreResponse|boolean|By default, Glee assumes that the response is in JSON format and adheres to the [Functions](#functions) return type structure. If you do not wish for Glee to process the response, you can set this option to `false`.
 
 ###### Timeouts and retries
-Glee uses [got](https://github.com/sindresorhus/got) under the hood. Therefore, by default glee will retry on failure.
-you have the ability to personalize your request with any options that [got](https://github.com/sindresorhus/got#documentation) supports, you just have to pass the options in the invoke message options.
+By default glee will retry on failure.
+you have the ability to customize the [timeouts](https://github.com/sindresorhus/got/blob/main/documentation/6-timeout.md) and [retries](https://github.com/sindresorhus/got/blob/main/documentation/7-retry.md) behaviour with any options that `got` supports, you just have to pass the options in the invoke message options.
 
 For example, if you want to disable retry on failure, you can do it by setting `retry.limit` to 0.
 
