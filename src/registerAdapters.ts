@@ -1,5 +1,6 @@
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
 import MqttAdapter from './adapters/mqtt/index.js'
+import AmqpAdapter from './adapters/amqp/index.js'
 import WebSocketServerAdapter from './adapters/ws/server.js'
 import WebsocketClientAdapter from './adapters/ws/client.js'
 import SocketIOAdapter from './adapters/socket.io/index.js'
@@ -41,7 +42,11 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
       parsedAsyncAPI,
     })
   } else if (['amqp', 'amqps'].includes(protocol)) {
-    // TODO: Implement AMQP support
+    app.addAdapter(AmqpAdapter, {
+      serverName,
+      server,
+      parsedAsyncAPI
+    })
   } else if (['ws', 'wss'].includes(protocol)) {
     const configWsAdapter = config?.ws?.server?.adapter
     if (remoteServers && remoteServers.includes(serverName)) {

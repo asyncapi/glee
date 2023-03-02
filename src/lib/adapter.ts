@@ -4,6 +4,7 @@ import EventEmitter from 'events'
 import uriTemplates from 'uri-templates'
 import GleeConnection from './connection.js'
 import Glee from './glee.js'
+import { logError } from './logger.js'
 import GleeMessage from './message.js'
 import { resolveFunctions } from './util.js'
 
@@ -50,9 +51,16 @@ class GleeAdapter extends EventEmitter {
 
     this.on('error', err => { this._glee.injectError(err) })
     this.on('message', (message, connection) => {
+      const connectionExists = !!this._connections.find(c => c.rawConnection === connection)
+      if(!connectionExists) {
+        const errorMessage = 'Received a message that doesn\'t belong to any connection. This is probably a problem with glee itself.'
+        logError( new Error(errorMessage))
+        return
+      }
+      const channels = connection.channels
       const conn = new GleeConnection({
         connection,
-        channels: this._connections.find(c => c.rawConnection === connection).channels,
+        channels,
         serverName,
         server,
         parsedAsyncAPI,
@@ -183,6 +191,18 @@ class GleeAdapter extends EventEmitter {
       })
   }
 
+    /**
+   * Returns a list of the channels a given adapter can publish or subscribe to.
+   */
+    getAllChannels(): string[] {
+      return this._channelNames
+        .filter(channelName => {
+          const channel = this._parsedAsyncAPI.channel(channelName)
+          const channelServers = channel.hasServers() ? channel.servers() : channel.ext('x-servers') || this._parsedAsyncAPI.serverNames()
+          return channelServers.includes(this._serverName)
+        })
+    }
+    
   /**
    * Connects to the remote server.
    */
