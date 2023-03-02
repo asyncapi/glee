@@ -53,7 +53,7 @@ class MqttAdapter extends Adapter {
     const serverBinding = protocolVersion === 5 ? mqtt5ServerBinding : mqttServerBinding
 
     this.client = mqtt.connect({
-      host: url.host,
+      host: url.hostname,
       port: url.port || (url.protocol === 'mqtt:' ? 1883 : 8883),
       protocol: url.protocol.slice(0, url.protocol.length - 1),
       clientId: serverBinding?.clientId ?? auth?.clientId,
