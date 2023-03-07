@@ -77,7 +77,7 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
 
     }
   }else if (['http', 'https'].includes(protocol)) {
-    if(remoteServers){
+    if(remoteServers && remoteServers.includes(serverName)){
       app.addAdapter(HttpClientAdapter, {
         serverName,
         server,

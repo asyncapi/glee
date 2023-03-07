@@ -1,6 +1,6 @@
 asyncapi: 2.4.0
 info:
-  title: asyncapiImdb server
+  title: AsyncAPI IMDB server
   version: 1.0.0
   description: This app is a dummy server that would stream the trending/upcoming anime.
 servers:
@@ -15,45 +15,9 @@ channels:
         method: POST
         bindingVersion: 0.1.0
         query:
-          type: object
-          required:
-            - name
-            - rating
-            - genre
-            - studio
-          properties:
-            name:
-              type: string
-              description: name of the anime.
-            rating:
-              type: string
-              description: rating of the show.
-            genre:
-              type: string
-              description: The genre of anime.
-            studio:
-              type: string
-              description: The studio of anime.
+          $ref: "#/components/schemas/request"
         body:
-          type: object
-          required:
-            - name
-            - rating
-            - genre
-            - studio
-          properties:
-            name:
-              type: string
-              description: name of the anime.
-            rating:
-              type: number
-              description: rating of the show.
-            genre:
-              type: string
-              description: The genre of anime.
-            studio:
-              type: string
-              description: The studio of anime.
+          $ref: "#/components/schemas/request"
     publish:
       operationId: trendingAnimeController
       message:
@@ -73,42 +37,27 @@ components:
           - body
         properties:
           query:
-            type: object
-            required:
-              - name
-              - rating
-              - genre
-              - studio
-            properties:
-              name:
-                type: string
-                description: name of the anime.
-              rating:
-                type: string
-                description: rating of the show.
-              genre:
-                type: string
-                description: The genre of anime.
-              studio:
-                type: string
-                description: The studio of anime.
+            $ref: "#/components/schemas/request"
           body:
-            type: object
-            required:
-              - name
-              - rating
-              - genre
-              - studio
-            properties:
-              name:
-                type: string
-                description: name of the anime.
-              rating:
-                type: number
-                description: rating of the show.
-              genre:
-                type: string
-                description: The genre of anime.
-              studio:
-                type: string
-                description: The studio of anime.
+            $ref: "#/components/schemas/request"
+  schemas:
+    request:
+      type: object
+      required:
+        - name
+        - rating
+        - genre
+        - studio
+      properties:
+        name:
+          type: string
+          description: Name of the anime.
+        rating:
+          type: string
+          description: Rating of the show.
+        genre:
+          type: string
+          description: The genre of anime.
+        studio:
+          type: string
+          description: The studio of anime.

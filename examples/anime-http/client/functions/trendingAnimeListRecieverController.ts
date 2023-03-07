@@ -1,3 +1,3 @@
 export default async function (event) {
-  console.log("trending Anime: ",event.payload)
+  console.log('Trending Anime:', event.payload)
 }

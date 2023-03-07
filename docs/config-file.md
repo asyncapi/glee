@@ -74,7 +74,7 @@ export default async function () {
     http: {
       server: {
         httpServer: customServer, // A custom HTTP server of your own.
-        adapter: "native", 
+        adapter: 'native', 
         port: process.env.PORT,
       },
       client: {
@@ -156,15 +156,15 @@ These configurations apply to Glee itself, rather than any specific protocol.
 |kafka.auth.username| The username to use during authentication.
 |kafka.auth.password| The password to use during authentication.
 
-### Http Server
+### HTTP Server
 
 |Field|Description|
 |--|--|
-|http.server|Http server-specific configurations|
-|http.client|Http client-specific configurations|
-|http.server.adapter| The Glee adapter to use for the Http server. Defaults to a "native" Http implementation.|
-|websocket.server.port| The port to use when binding the Http server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.|
-|http.client.auth| Authentication variables for client|
+|http.server|HTTP server-specific configurations|
+|http.client|HTTP client-specific configurations|
+|http.server.adapter| The Glee adapter to use for the HTTP server. Defaults to a "native" HTTP implementation.|
+|websocket.server.port| The port to use when binding the HTTP server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.|
+|http.client.auth| Authentication/Authorization configuration for the client|
 |http.client.auth.token| HTTP Authentication header|
 |http.client.query| Query object for the client to send|
 |http.client.body| Body object for the client to send

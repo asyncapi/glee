@@ -6,7 +6,7 @@ import GleeError from "../../errors/glee-error.js"
 import * as url from "url"
 
 class HttpAdapter extends Adapter {
-  private res = new Map()
+  private httpResponses = new Map()
 
   name(): string {
     return "HTTP server"
@@ -38,8 +38,7 @@ class HttpAdapter extends Adapter {
       })
       req.on("end", () => {
         body = JSON.parse(Buffer.concat(bodyBuffer).toString())
-
-        this.res.set(this.serverName, res)
+        this.httpResponses.set(this.serverName, res)
         let { pathname } = new URL(req.url, serverUrl)
         pathname = pathname.startsWith("/") ? pathname.substring(1) : pathname
         if (!this.parsedAsyncAPI.channel(pathname)) {
@@ -51,10 +50,8 @@ class HttpAdapter extends Adapter {
           return err
         }
         const { query: query } = url.parse(req.url, true)
-        const searchParams = {
-          query,
-          body,
-        }
+        const searchParams = { query }
+        const payload = body
         const httpChannelBinding = this.parsedAsyncAPI
           .channel(pathname)
           .binding("http")
@@ -64,7 +61,8 @@ class HttpAdapter extends Adapter {
             res,
             pathname,
             httpChannelBinding,
-            searchParams
+            searchParams,
+            payload
           )
         }
         this.emit("connect", {
@@ -73,7 +71,7 @@ class HttpAdapter extends Adapter {
           connection: http,
           channel: pathname,
         })
-        const msg = this._createMessage(pathname, searchParams)
+        const msg = this._createMessage(pathname, payload, searchParams)
         this.emit("message", msg, http)
       })
     })
@@ -82,7 +80,7 @@ class HttpAdapter extends Adapter {
     this.emit("server:ready", { name: this.name(), adapter: this })
     return this
   }
-  _checkHttpBinding(req, res, pathname, httpChannelBinding, searchParams) {
+  _checkHttpBinding(req, res, pathname, httpChannelBinding, searchParams, payload) {
     const { query, body, method } = httpChannelBinding
     if (method && req.method !== method) {
       const err = new Error(`Cannot ${req.method} ${pathname}`)
@@ -104,7 +102,7 @@ class HttpAdapter extends Adapter {
     }
     if (body) {
       const { isValid, humanReadableError, errors } = validateData(
-        searchParams.body,
+        payload,
         body
       )
       if (!isValid) {
@@ -116,12 +114,16 @@ class HttpAdapter extends Adapter {
     }
   }
   async _send(message: GleeMessage): Promise<void> {
-    const connection = this.res.get(message.serverName)
+    const connection = this.httpResponses.get(message.serverName)
     connection.write(message.payload)
     connection.end()
   }
 
-  _createMessage(pathName: string, payload: any) {
+  _createMessage(pathName: string, body: any, params: any) {
+    const payload = {
+      body: body,
+      query: params.query
+    }
     return new GleeMessage({
       payload: JSON.parse(JSON.stringify(payload)),
       channel: pathName,
