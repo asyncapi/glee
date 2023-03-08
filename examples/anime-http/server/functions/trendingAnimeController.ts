@@ -1,16 +1,11 @@
 export default async function (event) {
-  const payload = event.payload
-  const replyPayload = {}
-  if (payload.body && Object.keys.length) {
-    replyPayload['body'] = payload.body
-  }
-  if (payload.query && Object.keys.length) {
-    replyPayload['query'] = payload.query
-  }
+  const replyPayload = event.payload
+  const replyQuery = event.query
   return {
     reply: [
       {
         payload: replyPayload,
+        query: replyQuery
       },
     ],
   }

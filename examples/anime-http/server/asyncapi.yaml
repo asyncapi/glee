@@ -31,15 +31,7 @@ components:
     trendingAnime:
       summary: Data required to populate trending anime
       payload:
-        type: object
-        required:
-          - query
-          - body
-        properties:
-          query:
-            $ref: "#/components/schemas/request"
-          body:
-            $ref: "#/components/schemas/request"
+        $ref: "#/components/schemas/request"
   schemas:
     request:
       type: object

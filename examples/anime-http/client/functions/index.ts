@@ -1,13 +1,13 @@
 export default async function () {
   const payload = {
     body: {
-      name: 'test',
+      name: 'test12',
       rating: '5',
       studio: 'teststudio',
       genre: 'testgenre',
     },
     query: {
-      name: 'test',
+      name: 'test34',
       rating: '5',
       studio: 'teststudio',
       genre: 'testgenre',
@@ -17,7 +17,8 @@ export default async function () {
     send: [
       {
         server: 'trendingAnime',
-        payload: payload,
+        payload: payload.body,
+        query: payload.query
       },
     ],
   }

@@ -11,12 +11,14 @@ interface IGleeMessageConstructor {
   connection?: GleeConnection,
   broadcast?: boolean,
   cluster?: boolean,
+  query?: any
 }
 
 interface IReply {
   payload?: any,
   headers?: { [key: string]: any },
   channel?: string,
+  query?: any,
 }
 
 class GleeMessage extends EventEmitter {
@@ -30,7 +32,8 @@ class GleeMessage extends EventEmitter {
   private _outbound: boolean
   private _cluster: boolean
   private _params: { [key: string]: string }
-  
+  private _query: any
+
   /**
    * Instantiates a new GleeMessage.
    *
@@ -42,6 +45,7 @@ class GleeMessage extends EventEmitter {
    * @param {GleeConnection} [options.connection] The connection through which the message will be sent or has been received.
    * @param {Boolean} [options.broadcast=false] Whether the message should be broadcasted or not.
    * @param {Boolean} [options.cluster=false] Whether the message is from a cluster adapter or not.
+   * @param {Any} [options.query] Message query.
    */
   constructor ({
     payload,
@@ -50,7 +54,8 @@ class GleeMessage extends EventEmitter {
     serverName,
     connection,
     broadcast = false,
-    cluster = false
+    cluster = false,
+    query
   }: IGleeMessageConstructor) {
     super()
 
@@ -61,6 +66,7 @@ class GleeMessage extends EventEmitter {
     if (connection) this._connection = connection
     if (broadcast) this._broadcast = !!broadcast
     if (cluster) this._cluster = cluster
+    if (query) this._query = query
   }
 
   get payload(): any {
@@ -90,7 +96,7 @@ class GleeMessage extends EventEmitter {
   get serverName(): string {
     return this._serverName
   }
-  
+
   set serverName(value: string) {
     this._serverName = value
   }
@@ -98,7 +104,7 @@ class GleeMessage extends EventEmitter {
   get connection(): GleeConnection {
     return this._connection
   }
-  
+
   set connection(value: GleeConnection) {
     this._connection = value
   }
@@ -123,6 +129,13 @@ class GleeMessage extends EventEmitter {
     this._cluster = value
   }
 
+  get query(): any {
+    return this._query
+  }
+
+  set query(value: any) {
+    this._query = value
+  }
   /**
    * Sends the message back to the server/broker.
    *
@@ -130,9 +143,12 @@ class GleeMessage extends EventEmitter {
    * @param {Any} [options.payload] The new message payload. Pass falsy value if you don't want to change it.
    * @param {Object|null} [options.headers] The new message headers. Pass null if you want to remove them.
    * @param {String} [options.channel] The channel where the reply should go to.
+   * @param {Any} [options.query] The new message query. Pass falsy value if you don't want to change it.
    */
-  reply ({ payload, headers, channel } : IReply) {
+  reply ({ payload, headers, channel, query } : IReply) {
     if (payload) this._payload = payload
+
+    if (query) this._query = query
 
     if (headers !== undefined) {
       if (headers === null) {
@@ -160,7 +176,7 @@ class GleeMessage extends EventEmitter {
     this._inbound = true
     this._outbound = false
   }
-  
+
   /**
    * Makes the message suitable only for the outbound pipeline.
    */
@@ -168,14 +184,14 @@ class GleeMessage extends EventEmitter {
     this._inbound = false
     this._outbound = true
   }
-  
+
   /**
    * Checks if it's an inbound message.
    */
   isInbound() {
     return this._inbound && !this._outbound
   }
-  
+
   /**
    * Checks if it's an outbound message.
    */

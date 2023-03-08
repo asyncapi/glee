@@ -120,13 +120,10 @@ class HttpAdapter extends Adapter {
   }
 
   _createMessage(pathName: string, body: any, params: any) {
-    const payload = {
-      body: body,
-      query: params.query
-    }
     return new GleeMessage({
-      payload: JSON.parse(JSON.stringify(payload)),
+      payload: JSON.parse(JSON.stringify(body)),
       channel: pathName,
+      query: JSON.parse(JSON.stringify( params.query))
     })
   }
 }

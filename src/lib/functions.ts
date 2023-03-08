@@ -26,6 +26,7 @@ const OutboundMessageSchema = {
     },
     channel: { type: 'string' },
     server: { type: 'string' },
+    query: {}
   }
 }
 
@@ -115,6 +116,7 @@ export async function trigger({
       const isBroadcast = localServerProtocols.includes(serverProtocol) && !isRemoteServer(parsedAsyncAPI, msg.server)
       app.send(new GleeMessage({
         payload: msg.payload,
+        query: msg.query,
         headers: msg.headers,
         channel: msg.channel || message.channel,
         serverName: msg.server,
