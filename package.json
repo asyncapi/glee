@@ -21,7 +21,6 @@
     "lint": "eslint --max-warnings 10 --config .eslintrc .",
     "lint:fix": "eslint --max-warnings 10 --config .eslintrc . --fix",
     "prepublishOnly": "npm run build",
-    "release": "semantic-release",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:dev": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
   },
@@ -69,10 +68,6 @@
     "ws": "^7.4.6"
   },
   "devDependencies": {
-    "@semantic-release/commit-analyzer": "^8.0.1",
-    "@semantic-release/github": "^7.0.4",
-    "@semantic-release/npm": "^7.0.6",
-    "@semantic-release/release-notes-generator": "^9.0.1",
     "@tsconfig/node14": "^1.0.1",
     "@types/async": "^3.2.11",
     "@types/debug": "^4.1.7",
@@ -82,7 +77,6 @@
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
     "all-contributors-cli": "^6.14.2",
-    "conventional-changelog-conventionalcommits": "^4.4.0",
     "eslint": "^8.6.0",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-sonarjs": "^0.5.0",
@@ -92,7 +86,6 @@
     "jsdoc-to-markdown": "^5.0.3",
     "markdown-toc": "^1.2.0",
     "rimraf": "^3.0.2",
-    "semantic-release": "^17.2.2",
     "ts-jest": "^27.1.2",
     "tsc-watch": "^4.5.0",
     "typedoc": "^0.22.10",
