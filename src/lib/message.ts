@@ -11,14 +11,14 @@ interface IGleeMessageConstructor {
   connection?: GleeConnection,
   broadcast?: boolean,
   cluster?: boolean,
-  query?: any
+  query?: { [key: string]: string } | { [key: string]: string[] }
 }
 
 interface IReply {
   payload?: any,
   headers?: { [key: string]: any },
   channel?: string,
-  query?: any,
+  query?: { [key: string]: string } | { [key: string]: string[] },
 }
 
 class GleeMessage extends EventEmitter {
@@ -32,7 +32,7 @@ class GleeMessage extends EventEmitter {
   private _outbound: boolean
   private _cluster: boolean
   private _params: { [key: string]: string }
-  private _query: any
+  private _query: { [key: string]: string } | { [key: string]: string[] }
 
   /**
    * Instantiates a new GleeMessage.
@@ -45,7 +45,7 @@ class GleeMessage extends EventEmitter {
    * @param {GleeConnection} [options.connection] The connection through which the message will be sent or has been received.
    * @param {Boolean} [options.broadcast=false] Whether the message should be broadcasted or not.
    * @param {Boolean} [options.cluster=false] Whether the message is from a cluster adapter or not.
-   * @param {Any} [options.query] Message query.
+   * @param {{ [key: string]: string } | { [key: string]: string[] }} [options.query] Message query for accessing query params send via HTTP protocol.
    */
   constructor ({
     payload,
@@ -143,7 +143,7 @@ class GleeMessage extends EventEmitter {
    * @param {Any} [options.payload] The new message payload. Pass falsy value if you don't want to change it.
    * @param {Object|null} [options.headers] The new message headers. Pass null if you want to remove them.
    * @param {String} [options.channel] The channel where the reply should go to.
-   * @param {Any} [options.query] The new message query. Pass falsy value if you don't want to change it.
+   * @param {{ [key: string]: string } | { [key: string]: string[] }} [options.query] The new message query. Pass falsy value if you don't want to change it.
    */
   reply ({ payload, headers, channel, query } : IReply) {
     if (payload) this._payload = payload

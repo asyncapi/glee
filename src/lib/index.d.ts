@@ -97,14 +97,14 @@ export type GleeFunctionEvent = {
   serverName: string,
   connection?: GleeConnection,
   payload?: any,
-  query?: any,
+  query?: { [key: string]: string } | { [key: string]: string[] },
   headers?: { [key: string]: string },
   channel?: string
 }
 
 export type GleeFunctionReturnSend = {
   payload?: any,
-  query?: any,
+  query?: { [key: string]: string } | { [key: string]: string[] },
   headers?: { [key: string]: string },
   channel?: string,
   server?: string,
