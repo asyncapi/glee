@@ -6,6 +6,7 @@ import Glee from './glee.js'
 
 type WebSocketServerType = 'native' | 'socket.io'
 type HttpServerType = 'native'
+type QueryParam = { [key: string]: string } | { [key: string]: string[] }
 
 export type AuthFunction<T> = ({serverName, parsedAsyncAPI}: {serverName: string, parsedAsyncAPI: AsyncAPIDocument}) => Promise<T>
 
@@ -97,14 +98,14 @@ export type GleeFunctionEvent = {
   serverName: string,
   connection?: GleeConnection,
   payload?: any,
-  query?: { [key: string]: string } | { [key: string]: string[] },
+  query?: QueryParam,
   headers?: { [key: string]: string },
   channel?: string
 }
 
 export type GleeFunctionReturnSend = {
   payload?: any,
-  query?: { [key: string]: string } | { [key: string]: string[] },
+  query?: QueryParam,
   headers?: { [key: string]: string },
   channel?: string,
   server?: string,

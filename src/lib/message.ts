@@ -2,6 +2,7 @@ import EventEmitter from 'events'
 import GleeConnection from './connection.js'
 
 type MessageHeaders = { [key: string]: any }
+type QueryParam = { [key: string]: string } | { [key: string]: string[] }
 
 interface IGleeMessageConstructor {
   payload?: any,
@@ -11,14 +12,14 @@ interface IGleeMessageConstructor {
   connection?: GleeConnection,
   broadcast?: boolean,
   cluster?: boolean,
-  query?: { [key: string]: string } | { [key: string]: string[] }
+  query?: QueryParam
 }
 
 interface IReply {
   payload?: any,
   headers?: { [key: string]: any },
   channel?: string,
-  query?: { [key: string]: string } | { [key: string]: string[] },
+  query?: QueryParam,
 }
 
 class GleeMessage extends EventEmitter {
@@ -32,7 +33,7 @@ class GleeMessage extends EventEmitter {
   private _outbound: boolean
   private _cluster: boolean
   private _params: { [key: string]: string }
-  private _query: { [key: string]: string } | { [key: string]: string[] }
+  private _query: QueryParam
 
   /**
    * Instantiates a new GleeMessage.
@@ -45,7 +46,7 @@ class GleeMessage extends EventEmitter {
    * @param {GleeConnection} [options.connection] The connection through which the message will be sent or has been received.
    * @param {Boolean} [options.broadcast=false] Whether the message should be broadcasted or not.
    * @param {Boolean} [options.cluster=false] Whether the message is from a cluster adapter or not.
-   * @param {{ [key: string]: string } | { [key: string]: string[] }} [options.query] Message query for accessing query params send via HTTP protocol.
+   * @param {Object} [options.query] The query parameters to send or receive query when using the HTTP protocol.
    */
   constructor ({
     payload,
@@ -129,11 +130,11 @@ class GleeMessage extends EventEmitter {
     this._cluster = value
   }
 
-  get query(): any {
+  get query(): QueryParam {
     return this._query
   }
 
-  set query(value: any) {
+  set query(value: QueryParam) {
     this._query = value
   }
   /**
@@ -143,7 +144,7 @@ class GleeMessage extends EventEmitter {
    * @param {Any} [options.payload] The new message payload. Pass falsy value if you don't want to change it.
    * @param {Object|null} [options.headers] The new message headers. Pass null if you want to remove them.
    * @param {String} [options.channel] The channel where the reply should go to.
-   * @param {{ [key: string]: string } | { [key: string]: string[] }} [options.query] The new message query. Pass falsy value if you don't want to change it.
+   * @param {Object} [options.query] The new message query. Pass falsy value if you don't want to change it.
    */
   reply ({ payload, headers, channel, query } : IReply) {
     if (payload) this._payload = payload
