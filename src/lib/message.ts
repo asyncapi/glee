@@ -144,7 +144,7 @@ class GleeMessage extends EventEmitter {
    * @param {Any} [options.payload] The new message payload. Pass falsy value if you don't want to change it.
    * @param {Object|null} [options.headers] The new message headers. Pass null if you want to remove them.
    * @param {String} [options.channel] The channel where the reply should go to.
-   * @param {Object} [options.query] The new message query. Pass falsy value if you don't want to change it.
+   * @param {Object} [options.query] The new message query parameters. Pass a falsy value if you don't want to change them.
    */
   reply ({ payload, headers, channel, query } : IReply) {
     if (payload) this._payload = payload

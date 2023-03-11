@@ -49,7 +49,7 @@ class HttpAdapter extends Adapter {
           this.emit("error", err)
           return err
         }
-        const { query: query } = url.parse(req.url, true)
+        const { query } = url.parse(req.url, true)
         const searchParams = { query }
         const payload = body
         const httpChannelBinding = this.parsedAsyncAPI
@@ -80,7 +80,7 @@ class HttpAdapter extends Adapter {
     this.emit("server:ready", { name: this.name(), adapter: this })
     return this
   }
-  _checkHttpBinding(req, res, pathname, httpChannelBinding, searchParams, payload) {
+  _checkHttpBinding(req:any, res:any, pathname:any, httpChannelBinding:any, searchParams:any, payload:any) {
     const { query, body, method } = httpChannelBinding
     if (method && req.method !== method) {
       const err = new Error(`Cannot ${req.method} ${pathname}`)

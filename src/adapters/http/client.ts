@@ -35,12 +35,12 @@ class HttpClientAdapter extends Adapter {
         const method = httpChannelBinding.method
         const url = `${serverUrl}/${channelName}`
         const body:any = message.payload
-        const query: any = message.query
+        const query: { [key: string]: string } | { [key: string]: string[] } = message.query
         got({
           method,
           url,
           json: body,
-          searchParams: query,
+          searchParams: JSON.parse(JSON.stringify(query)),
         })
           .then((res) => {
             const msg = this.createMessage(channelName, res.body)

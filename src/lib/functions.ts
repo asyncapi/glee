@@ -26,7 +26,7 @@ const OutboundMessageSchema = {
     },
     channel: { type: 'string' },
     server: { type: 'string' },
-    query: {}
+    query: { type: 'object' } 
   }
 }
 

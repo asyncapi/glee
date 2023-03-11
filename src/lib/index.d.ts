@@ -59,7 +59,7 @@ export type HttpAdapterConfig = {
   },
   client?: {
     auth?:  HttpAuthConfig | AuthFunction<HttpAuthConfig>,
-    query?: any,
+    query?: QueryParam,
     body?: any
   }
 }
