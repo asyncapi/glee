@@ -40,7 +40,7 @@ class MqttAdapter extends Adapter {
     return this._send(message)
   }
 
-  async generateSecurityReqs() {
+  generateSecurityReqs() {
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
       const secName = Object.keys(sec.json())[0]
       return this.parsedAsyncAPI.components().securityScheme(secName)
@@ -121,6 +121,26 @@ class MqttAdapter extends Adapter {
     })
   }
 
+  checkFirstConnect() {
+    this.firstConnect = true
+    this.emit('connect', {
+      name: this.name(),
+      adapter: this,
+      connection: this.client,
+      channels: this.channelNames,
+    })
+  }
+
+  subscribedChannelsAction(channels: string[]) {
+    channels.forEach((channel) => {
+      const operation = this.parsedAsyncAPI.channel(channel).publish()
+      const binding = operation.binding('mqtt')
+      this.client.subscribe(channel, {
+        qos: binding && binding.qos ? binding.qos : 0,
+      })
+    })
+  }
+
   async _connect(): Promise<this> { // NOSONAR
     const mqttOptions: MqttAdapterConfig  = await this.resolveProtocolConfig('mqtt')
     const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions.auth)
@@ -128,7 +148,7 @@ class MqttAdapter extends Adapter {
     const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
     const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
 
-    const { userAndPasswordSecurityReq, X509SecurityReq } = await this.generateSecurityReqs()
+    const { userAndPasswordSecurityReq, X509SecurityReq } = this.generateSecurityReqs()
 
     const url = new URL(this.AsyncAPIServer.url())
 
@@ -144,7 +164,7 @@ class MqttAdapter extends Adapter {
       X509SecurityReq
     })
 
-    this.listenToEvents({ protocolVersion })
+    await this.listenToEvents({ protocolVersion })
 
     const connectClient = (): Promise<this> => {
       return new Promise((resolve) => {
@@ -152,23 +172,11 @@ class MqttAdapter extends Adapter {
           const isSessionResume = connAckPacket.sessionPresent
 
           if (!this.firstConnect) {
-            this.firstConnect = true
-            this.emit('connect', {
-              name: this.name(),
-              adapter: this,
-              connection: this.client,
-              channels: this.channelNames,
-            })
+            this.checkFirstConnect()
           }
 
           if (!isSessionResume && Array.isArray(subscribedChannels)) {
-            subscribedChannels.forEach((channel) => {
-              const operation = this.parsedAsyncAPI.channel(channel).publish()
-              const binding = operation.binding('mqtt')
-              this.client.subscribe(channel, {
-                qos: binding && binding.qos ? binding.qos : 0,
-              })
-            })
+            this.subscribedChannelsAction(subscribedChannels)
           }
 
           resolve(this)
