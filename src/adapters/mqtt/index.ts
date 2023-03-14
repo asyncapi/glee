@@ -40,7 +40,7 @@ class MqttAdapter extends Adapter {
     return this._send(message)
   }
 
-  generateSecurityReqs() {
+  private getSecurityReqs() {
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
       const secName = Object.keys(sec.json())[0]
       return this.parsedAsyncAPI.components().securityScheme(secName)
@@ -60,7 +60,7 @@ class MqttAdapter extends Adapter {
     }
   }
 
-  async generateClient(data: clientData) {
+  private async initializeClient(data: clientData) {
 
     const {
       url,
@@ -97,7 +97,7 @@ class MqttAdapter extends Adapter {
     } as any)
   }
 
-  async listenToEvents(data: clientData) {
+  private async listenToEvents(data: clientData) {
 
     const { protocolVersion } = data
 
@@ -121,7 +121,7 @@ class MqttAdapter extends Adapter {
     })
   }
 
-  checkFirstConnect() {
+  private checkFirstConnect() {
     this.firstConnect = true
     this.emit('connect', {
       name: this.name(),
@@ -131,7 +131,7 @@ class MqttAdapter extends Adapter {
     })
   }
 
-  subscribedChannelsAction(channels: string[]) {
+  private subscribe(channels: string[]) {
     channels.forEach((channel) => {
       const operation = this.parsedAsyncAPI.channel(channel).publish()
       const binding = operation.binding('mqtt')
@@ -141,21 +141,21 @@ class MqttAdapter extends Adapter {
     })
   }
 
-  async _connect(): Promise<this> { // NOSONAR
+  async _connect(): Promise<this> {
     const mqttOptions: MqttAdapterConfig  = await this.resolveProtocolConfig('mqtt')
     const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions.auth)
     const subscribedChannels = this.getSubscribedChannels()
     const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
     const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
 
-    const { userAndPasswordSecurityReq, X509SecurityReq } = this.generateSecurityReqs()
+    const { userAndPasswordSecurityReq, X509SecurityReq } = this.getSecurityReqs()
 
     const url = new URL(this.AsyncAPIServer.url())
 
     const protocolVersion = parseInt(this.AsyncAPIServer.protocolVersion() || '4')
     const serverBinding = protocolVersion === 5 ? mqtt5ServerBinding : mqttServerBinding
 
-    this.client = await this.generateClient({
+    this.client = await this.initializeClient({
       url,
       auth,
       serverBinding,
@@ -175,8 +175,10 @@ class MqttAdapter extends Adapter {
             this.checkFirstConnect()
           }
 
-          if (!isSessionResume && Array.isArray(subscribedChannels)) {
-            this.subscribedChannelsAction(subscribedChannels)
+          const shouldSubscribe = !isSessionResume && Array.isArray(subscribedChannels)
+
+          if (shouldSubscribe) {
+            this.subscribe(subscribedChannels)
           }
 
           resolve(this)
