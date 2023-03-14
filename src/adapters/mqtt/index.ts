@@ -12,7 +12,7 @@ interface IMQTTHeaders {
   length: number;
 }
 
-interface clientData {
+interface ClientData {
   url?: URL,
   auth?: MqttAuthConfig,
   serverBinding?: any,
@@ -60,7 +60,7 @@ class MqttAdapter extends Adapter {
     }
   }
 
-  private async initializeClient(data: clientData) {
+  private async initializeClient(data: ClientData) {
 
     const {
       url,
@@ -97,7 +97,7 @@ class MqttAdapter extends Adapter {
     } as any)
   }
 
-  private async listenToEvents(data: clientData) {
+  private async listenToEvents(data: ClientData) {
 
     const { protocolVersion } = data
 
