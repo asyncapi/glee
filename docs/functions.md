@@ -12,12 +12,12 @@ export default async function (event) {
 
 Functions take a single argument, which is the event received from a broker or a client, depending which kind of API you're building. The `event` argument has the following shape:
 
-|Attribute|Description|
-|----|----|
-|payload|The payload/body of the received event.
-|headers|The headers/metadata of the received event.
-|channel|The name of the channel/topic from which the event was read.
-|serverName|The name of the server/broker from which the event was received.
+| Attribute  | Description                                                      |
+| ---------- | ---------------------------------------------------------------- |
+| payload    | The payload/body of the received event.                          |
+| headers    | The headers/metadata of the received event.                      |
+| channel    | The name of the channel/topic from which the event was read.     |
+| serverName | The name of the server/broker from which the event was received. |
 
 Functions may return an object to tell Glee what to do next. For instance, the following example greets the user back:
 
@@ -26,27 +26,28 @@ Functions may return an object to tell Glee what to do next. For instance, the f
 
 export default async function (event) {
   return {
-    reply: [{
-      payload: 'Greetings! How is your day going?'
-    }]
+    reply: [
+      {
+        payload: 'Greetings! How is your day going?',
+      },
+    ],
   }
 }
 ```
 
-|Attribute|Type|Description|
-|---|---|---|
-|send|array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt;|A list of outbound messages to send when the processing of the inbound event has finished. All clients subscribed to the given channel/topic will receive the message.
-|reply|array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt;|A list of outbound messages to send as a reply when the processing of the inbound event has finished. This is useful when the target of your message is the sender of the inbound event. Note, however, that this only works when you're running Glee as a server. For example, using `reply` when receiving a WebSocket message is fine and the reply will exclusively go to the client that sent the message. However, if you're receiving a message from an MQTT broker, `reply` will work exactly the same way as `send` above, and will send the message to all the clients subscribed to the given channel/topic.
-
+| Attribute | Type                                                            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| --------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| send      | array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt; | A list of outbound messages to send when the processing of the inbound event has finished. All clients subscribed to the given channel/topic will receive the message.                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| reply     | array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt; | A list of outbound messages to send as a reply when the processing of the inbound event has finished. This is useful when the target of your message is the sender of the inbound event. Note, however, that this only works when you're running Glee as a server. For example, using `reply` when receiving a WebSocket message is fine and the reply will exclusively go to the client that sent the message. However, if you're receiving a message from an MQTT broker, `reply` will work exactly the same way as `send` above, and will send the message to all the clients subscribed to the given channel/topic. |
 
 ##### Anatomy of an outbound message
 
-|Attribute|Type|Description|
-|---|---|---|
-|payload|string|The payload/body of the message you want to send.
-|headers|object&lt;string,string&gt;|The headers/metadata of the message you want to send.
-|channel|string|The channel/topic you want to send the message to. Defaults to `event.channel`, i.e., the same channel as the received event.
-|server|string|The server/broker you want to send the message to. Defaults to `event.serverName`, i.e., the same server as the received event.
+| Attribute | Type                        | Description                                                                                                                     |
+| --------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| payload   | string                      | The payload/body of the message you want to send.                                                                               |
+| headers   | object&lt;string,string&gt; | The headers/metadata of the message you want to send.                                                                           |
+| channel   | string                      | The channel/topic you want to send the message to. Defaults to `event.channel`, i.e., the same channel as the received event.   |
+| server    | string                      | The server/broker you want to send the message to. Defaults to `event.serverName`, i.e., the same server as the received event. |
 
 ## How does Glee know which function it should execute?
 

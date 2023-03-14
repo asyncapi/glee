@@ -15,9 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/asyncapi/glee-hello-world.git"
   },
-  "keywords": [
-    "glee"
-  ],
+  "keywords": ["glee"],
   "author": "Khudadad Nomani",
   "license": "Apache-2.0",
   "bugs": {

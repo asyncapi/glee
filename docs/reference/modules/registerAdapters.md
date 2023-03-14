@@ -20,11 +20,11 @@
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `app` | [`default`](../classes/lib_glee.default.md) |
-| `parsedAsyncAPI` | `AsyncAPIDocument` |
-| `config` | [`GleeConfig`](lib.md#gleeconfig) |
+| Name             | Type                                        |
+| :--------------- | :------------------------------------------ |
+| `app`            | [`default`](../classes/lib_glee.default.md) |
+| `parsedAsyncAPI` | `AsyncAPIDocument`                          |
+| `config`         | [`GleeConfig`](lib.md#gleeconfig)           |
 
 ##### Returns
 

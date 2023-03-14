@@ -4,11 +4,11 @@ import GleeMessage from '../../lib/message.js'
 import { MqttAuthConfig, MqttAdapterConfig } from '../../lib/index.js'
 
 interface IMQTTHeaders {
-  cmd?: string;
-  retain?: boolean;
-  qos: QoS;
-  dup: boolean;
-  length: number;
+  cmd?: string
+  retain?: boolean
+  qos: QoS
+  dup: boolean
+  length: number
 }
 
 const MQTT_UNSPECIFIED_ERROR_REASON = 0x80
@@ -30,23 +30,19 @@ class MqttAdapter extends Adapter {
     return this._send(message)
   }
 
-  async _connect(): Promise<this> { // NOSONAR
-    const mqttOptions: MqttAdapterConfig  = await this.resolveProtocolConfig('mqtt')
+  async _connect(): Promise<this> {
+    // NOSONAR
+    const mqttOptions: MqttAdapterConfig = await this.resolveProtocolConfig('mqtt')
     const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions.auth)
     const subscribedChannels = this.getSubscribedChannels()
     const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
     const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
-    const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
+    const securityRequirements = (this.AsyncAPIServer.security() || []).map((sec) => {
       const secName = Object.keys(sec.json())[0]
       return this.parsedAsyncAPI.components().securityScheme(secName)
-    }
-    )
-    const userAndPasswordSecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'userPassword'
-    )
-    const X509SecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'X509'
-    )
+    })
+    const userAndPasswordSecurityReq = securityRequirements.find((sec) => sec.type() === 'userPassword')
+    const X509SecurityReq = securityRequirements.find((sec) => sec.type() === 'X509')
     const url = new URL(this.AsyncAPIServer.url())
 
     const protocolVersion = parseInt(this.AsyncAPIServer.protocolVersion() || '4')
@@ -62,15 +58,11 @@ class MqttAdapter extends Adapter {
         topic: serverBinding?.lastWill?.topic,
         qos: serverBinding?.lastWill?.qos,
         payload: serverBinding?.lastWill?.message,
-        retain: serverBinding?.lastWill?.retain
+        retain: serverBinding?.lastWill?.retain,
       },
       keepalive: serverBinding?.keepAlive,
-      username: userAndPasswordSecurityReq
-        ? auth?.username
-        : undefined,
-      password: userAndPasswordSecurityReq
-        ? auth?.password
-        : undefined,
+      username: userAndPasswordSecurityReq ? auth?.username : undefined,
+      password: userAndPasswordSecurityReq ? auth?.password : undefined,
       ca: X509SecurityReq ? auth?.cert : undefined,
       protocolVersion,
       customHandleAcks: this._customAckHandler.bind(this),
@@ -89,7 +81,7 @@ class MqttAdapter extends Adapter {
 
     this.client.on('message', (channel, message, mqttPacket) => {
       const qos = mqttPacket.qos
-      if (protocolVersion === 5 && qos > 0) return   // ignore higher qos messages. already processed
+      if (protocolVersion === 5 && qos > 0) return // ignore higher qos messages. already processed
 
       const msg = this._createMessage(mqttPacket as IPublishPacket)
       this.emit('message', msg, this.client)
@@ -97,7 +89,7 @@ class MqttAdapter extends Adapter {
 
     const connectClient = (): Promise<this> => {
       return new Promise((resolve) => {
-        this.client.on('connect', connAckPacket => {
+        this.client.on('connect', (connAckPacket) => {
           const isSessionResume = connAckPacket.sessionPresent
 
           if (!this.firstConnect) {
@@ -126,14 +118,11 @@ class MqttAdapter extends Adapter {
     }
 
     return connectClient()
-
   }
 
   _send(message: GleeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      const operation = this.parsedAsyncAPI
-        .channel(message.channel)
-        .subscribe()
+      const operation = this.parsedAsyncAPI.channel(message.channel).subscribe()
       const binding = operation ? operation.binding('mqtt') : undefined
       this.client.publish(
         message.channel,
@@ -149,7 +138,7 @@ class MqttAdapter extends Adapter {
           }
 
           resolve()
-        }
+        },
       )
     })
   }

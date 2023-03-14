@@ -1,11 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "sonarjs",
-    "security",
-    "github"
-  ],
+  "plugins": ["@typescript-eslint", "sonarjs", "security", "github"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -14,15 +9,9 @@
     "plugin:security/recommended"
   ],
   "rules": {
-    "curly": [
-      "error",
-      "multi-line"
-    ],
+    "curly": ["error", "multi-line"],
     "@typescript-eslint/no-explicit-any": "off",
-    "semi": [
-      "warn",
-      "never"
-    ],
+    "semi": ["warn", "never"],
     "sonarjs/cognitive-complexity": "warn"
   },
   "globals": {
@@ -30,11 +19,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "*.spec.ts",
-        "*.spec.tsx",
-        "src/help/command.ts"
-      ],
+      "files": ["*.spec.ts", "*.spec.tsx", "src/help/command.ts"],
       "rules": {
         "no-undef": "off",
         "security/detect-non-literal-fs-filename": "off",

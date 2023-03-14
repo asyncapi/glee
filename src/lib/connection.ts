@@ -1,11 +1,11 @@
 import { Server as AsyncAPIServer, AsyncAPIDocument } from '@asyncapi/parser'
 
 interface IGleeConnectionConstructor {
-  connection: any,
-  channels: string[],
-  serverName: string,
-  server: AsyncAPIServer,
-  parsedAsyncAPI: AsyncAPIDocument,
+  connection: any
+  channels: string[]
+  serverName: string
+  server: AsyncAPIServer
+  parsedAsyncAPI: AsyncAPIDocument
 }
 
 class GleeConnection {
@@ -59,16 +59,16 @@ class GleeConnection {
    * @param {String} channelName The name of the channel.
    * @return {Boolean}
    */
-  hasChannel (channelName: string): boolean {
+  hasChannel(channelName: string): boolean {
     return this.channels.includes(channelName)
   }
-  
+
   /**
    * Returns the real connection object.
    *
    * @return {Any}
    */
-  getRaw (): any {
+  getRaw(): any {
     return this.rawConnection
   }
 }

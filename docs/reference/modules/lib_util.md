@@ -21,7 +21,7 @@
 
 #### Parameters
 
-| Name | Type |
+| Name    | Type    |
 | :------ | :------ |
 | `array` | `any`[] |
 
@@ -33,7 +33,7 @@
 
 [src/lib/util.ts:106](https://github.com/asyncapi/glee/blob/388e335/src/lib/util.ts#L106)
 
-___
+---
 
 ### duplicateMessage
 
@@ -43,8 +43,8 @@ Duplicates a GleeMessage.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                           | Description               |
+| :-------- | :--------------------------------------------- | :------------------------ |
 | `message` | [`default`](../classes/lib_message.default.md) | The message to duplicate. |
 
 #### Returns
@@ -55,7 +55,7 @@ Duplicates a GleeMessage.
 
 [src/lib/util.ts:44](https://github.com/asyncapi/glee/blob/388e335/src/lib/util.ts#L44)
 
-___
+---
 
 ### getParams
 
@@ -65,9 +65,9 @@ Determines if a path matches a channel, and returns the matching params and its 
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `path` | `string` | The path. |
+| Name      | Type     | Description  |
+| :-------- | :------- | :----------- |
+| `path`    | `string` | The path.    |
 | `channel` | `string` | The channel. |
 
 #### Returns
@@ -78,7 +78,7 @@ Determines if a path matches a channel, and returns the matching params and its 
 
 [src/lib/util.ts:22](https://github.com/asyncapi/glee/blob/388e335/src/lib/util.ts#L22)
 
-___
+---
 
 ### gleeMessageToFunctionEvent
 
@@ -86,10 +86,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                           |
+| :-------- | :--------------------------------------------- |
 | `message` | [`default`](../classes/lib_message.default.md) |
-| `glee` | [`default`](../classes/lib_glee.default.md) |
+| `glee`    | [`default`](../classes/lib_glee.default.md)    |
 
 #### Returns
 
@@ -99,7 +99,7 @@ ___
 
 [src/lib/util.ts:110](https://github.com/asyncapi/glee/blob/388e335/src/lib/util.ts#L110)
 
-___
+---
 
 ### matchChannel
 
@@ -109,9 +109,9 @@ Determines if a path matches a channel.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `path` | `string` | The path. |
+| Name      | Type     | Description  |
+| :-------- | :------- | :----------- |
+| `path`    | `string` | The path.    |
 | `channel` | `string` | The channel. |
 
 #### Returns
@@ -122,7 +122,7 @@ Determines if a path matches a channel.
 
 [src/lib/util.ts:72](https://github.com/asyncapi/glee/blob/388e335/src/lib/util.ts#L72)
 
-___
+---
 
 ### validateData
 
@@ -132,9 +132,9 @@ Validates data against a given JSON Schema definition
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `data` | `any` | The data to validate |
+| Name     | Type     | Description              |
+| :------- | :------- | :----------------------- |
+| `data`   | `any`    | The data to validate     |
 | `schema` | `object` | A JSON Schema definition |
 
 #### Returns

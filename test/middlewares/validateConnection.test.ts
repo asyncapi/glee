@@ -20,11 +20,11 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
         message: {
           payload: {
             type: 'string',
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+  },
 })
 const TEST_SERVER = TEST_ASYNCAPI_DOCUMENT.server(TEST_SERVER_NAME)
 
@@ -37,36 +37,36 @@ const fakeConnection = new GleeConnection({
 })
 
 describe('validateConnection', () => {
-  it('validates channel in connection', done => {
+  it('validates channel in connection', (done) => {
     const message = new GleeMessage({
       connection: fakeConnection,
-      channel: TEST_CHANNEL
+      channel: TEST_CHANNEL,
     })
 
-    validateConnection(message, err => {
+    validateConnection(message, (err) => {
       expect(err).toBeUndefined()
       done()
     })
   })
 
-  it('error if channel does not exist', done => {
+  it('error if channel does not exist', (done) => {
     const message = new GleeMessage({
       connection: fakeConnection,
-      channel: 'fake-channel'
+      channel: 'fake-channel',
     })
 
-    validateConnection(message, err => {
+    validateConnection(message, (err) => {
       expect(err).toBeInstanceOf(Error)
       done()
     })
   })
 
-  it('ignored if no connection in message', done => {
+  it('ignored if no connection in message', (done) => {
     const message = new GleeMessage({
-      channel: 'fake-channel'
+      channel: 'fake-channel',
     })
 
-    validateConnection(message, err => {
+    validateConnection(message, (err) => {
       expect(err).toBeUndefined()
       done()
     })

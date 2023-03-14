@@ -4,7 +4,7 @@ import { pathToFileURL } from 'url'
 import { logErrorLine, logWarningMessage } from './logger.js'
 
 interface Config {
-  functionsDir?: string,
+  functionsDir?: string
 }
 
 let GLEE_DIR: string
@@ -16,7 +16,7 @@ let GLEE_CONFIG_FILE_PATH_JS: string
 let GLEE_CONFIG_FILE_PATH_TS: string
 let ASYNCAPI_FILE_PATH: string
 
-let errorMessage: string 
+let errorMessage: string
 export async function initializeConfigs(config: Config = {}): Promise<{ [key: string]: string }> {
   GLEE_PROJECT_DIR = process.cwd()
   GLEE_DIR = path.resolve(GLEE_PROJECT_DIR, '.glee')
@@ -29,32 +29,34 @@ export async function initializeConfigs(config: Config = {}): Promise<{ [key: st
   const configTSExists = existsSync(GLEE_CONFIG_FILE_PATH_TS)
   GLEE_CONFIG_FILE_PATH = configTSExists ? GLEE_CONFIG_FILE_PATH_TS : GLEE_CONFIG_FILE_PATH_JS
 
-  if(configTSExists && configJSExists) {
+  if (configTSExists && configJSExists) {
     logWarningMessage(
       `Both 'glee.config.js' and 'glee.config.ts' files were found at ${GLEE_DIR}. 
       The 'glee.config.ts' file will be used and 'glee.config.js' will be ignored. 
-      Consider migrating 'glee.config.js' to TypeScript or removing it.`, {
-      highlightedWords: ['glee.config.js', 'glee.config.ts']
-    })
+      Consider migrating 'glee.config.js' to TypeScript or removing it.`,
+      {
+        highlightedWords: ['glee.config.js', 'glee.config.ts'],
+      },
+    )
   }
 
   ASYNCAPI_FILE_PATH = findSpecFile(GLEE_PROJECT_DIR)
   const configsFromFile = await loadConfigsFromFile()
 
-  if(!ASYNCAPI_FILE_PATH){
+  if (!ASYNCAPI_FILE_PATH) {
     logErrorLine(errorMessage)
     process.exit(1)
   }
   return {
     ...configsFromFile,
-    ...getConfigs()
+    ...getConfigs(),
   }
 }
-function isFileReadable(filePath: string){
+function isFileReadable(filePath: string) {
   try {
-    accessSync(filePath,constants.R_OK)
+    accessSync(filePath, constants.R_OK)
     return statSync(filePath).isFile()
-  } catch (err){
+  } catch (err) {
     // No error logging is required since we expect accessSync to fail most of the time.
     return false
   }
@@ -63,15 +65,15 @@ function isFileReadable(filePath: string){
  * Loads the configuration from glee project.
  */
 async function loadConfigsFromFile() {
-  if (!isFileReadable(GLEE_CONFIG_FILE_PATH)) return 
+  if (!isFileReadable(GLEE_CONFIG_FILE_PATH)) return
   try {
     let { default: projectConfigs } = await import(pathToFileURL(GLEE_CONFIG_FILE_PATH).href)
     if (typeof projectConfigs === 'function') projectConfigs = await projectConfigs()
     if (!projectConfigs) return
 
-    GLEE_DIR = projectConfigs.glee?.gleeDir || GLEE_DIR 
-    GLEE_LIFECYCLE_DIR = projectConfigs.glee?.lifecycleDir ?? GLEE_LIFECYCLE_DIR 
-    GLEE_FUNCTIONS_DIR = projectConfigs.glee?.functionsDir ?? GLEE_FUNCTIONS_DIR 
+    GLEE_DIR = projectConfigs.glee?.gleeDir || GLEE_DIR
+    GLEE_LIFECYCLE_DIR = projectConfigs.glee?.lifecycleDir ?? GLEE_LIFECYCLE_DIR
+    GLEE_FUNCTIONS_DIR = projectConfigs.glee?.functionsDir ?? GLEE_FUNCTIONS_DIR
     ASYNCAPI_FILE_PATH = projectConfigs.glee?.asyncapiFilePath ?? ASYNCAPI_FILE_PATH
     return projectConfigs
   } catch (e) {
@@ -79,16 +81,18 @@ async function loadConfigsFromFile() {
   }
 }
 
-export function findSpecFile(baseDir: string): string{
+export function findSpecFile(baseDir: string): string {
   const files = ['asyncapi.yaml', 'asyncapi.json', 'asyncapi.yml']
-  const foundFiles = files.filter(file => isFileReadable(path.resolve(baseDir, file)))
-  
+  const foundFiles = files.filter((file) => isFileReadable(path.resolve(baseDir, file)))
+
   if (foundFiles.length === 1) {
     return path.resolve(baseDir, foundFiles[0])
-  }  else if(foundFiles.length > 1) {
-    errorMessage = "Multiple AsyncAPI files found. Please choose one in you config file (https://github.com/asyncapi/glee/blob/master/docs/config-file.md)."
+  } else if (foundFiles.length > 1) {
+    errorMessage =
+      'Multiple AsyncAPI files found. Please choose one in you config file (https://github.com/asyncapi/glee/blob/master/docs/config-file.md).'
   } else {
-    errorMessage = "Unable fo find the AsyncAPI file. Please make sure it's in your project's directory or set its path in the config file (https://github.com/asyncapi/glee/blob/master/docs/config-file.md)."
+    errorMessage =
+      "Unable fo find the AsyncAPI file. Please make sure it's in your project's directory or set its path in the config file (https://github.com/asyncapi/glee/blob/master/docs/config-file.md)."
   }
   return undefined
 }
@@ -100,6 +104,6 @@ export function getConfigs(): { [key: string]: string } {
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
     GLEE_CONFIG_FILE_PATH,
-    ASYNCAPI_FILE_PATH
+    ASYNCAPI_FILE_PATH,
   }
 }

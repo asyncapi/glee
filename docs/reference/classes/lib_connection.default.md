@@ -41,8 +41,8 @@ Instantiates a Glee connection.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                         |
+| :-------- | :--------------------------- |
 | `options` | `IGleeConnectionConstructor` |
 
 #### Defined in
@@ -59,7 +59,7 @@ Instantiates a Glee connection.
 
 [src/lib/connection.ts:15](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L15)
 
-___
+---
 
 ### \_channels
 
@@ -69,7 +69,7 @@ ___
 
 [src/lib/connection.ts:13](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L13)
 
-___
+---
 
 ### \_parsedAsyncAPI
 
@@ -79,7 +79,7 @@ ___
 
 [src/lib/connection.ts:16](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L16)
 
-___
+---
 
 ### \_rawConnection
 
@@ -89,7 +89,7 @@ ___
 
 [src/lib/connection.ts:12](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L12)
 
-___
+---
 
 ### \_serverName
 
@@ -113,7 +113,7 @@ ___
 
 [src/lib/connection.ts:48](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L48)
 
-___
+---
 
 ### channels
 
@@ -127,7 +127,7 @@ ___
 
 [src/lib/connection.ts:40](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L40)
 
-___
+---
 
 ### parsedAsyncAPI
 
@@ -141,7 +141,7 @@ ___
 
 [src/lib/connection.ts:52](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L52)
 
-___
+---
 
 ### rawConnection
 
@@ -155,7 +155,7 @@ ___
 
 [src/lib/connection.ts:36](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L36)
 
-___
+---
 
 ### serverName
 
@@ -185,7 +185,7 @@ Returns the real connection object.
 
 [src/lib/connection.ts:71](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L71)
 
-___
+---
 
 ### hasChannel
 
@@ -195,8 +195,8 @@ Checks whether a channel is associated with this connection.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name          | Type     | Description              |
+| :------------ | :------- | :----------------------- |
 | `channelName` | `string` | The name of the channel. |
 
 #### Returns

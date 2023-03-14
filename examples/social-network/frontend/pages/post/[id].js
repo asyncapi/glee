@@ -7,11 +7,7 @@ import db from '../../../db.json'
 
 export default function PostPage({ user, post }) {
   if (!user) {
-    return (
-      <div>
-        No user has been found with this id.
-      </div>
-    )
+    return <div>No user has been found with this id.</div>
   }
 
   if (typeof window !== 'undefined') {
@@ -41,7 +37,7 @@ export default function PostPage({ user, post }) {
 
 export async function getServerSideProps({ query }) {
   const { posts, users, likes } = db
-  const post = posts.find(p => p.id === Number(query.id))
+  const post = posts.find((p) => p.id === Number(query.id))
 
   return {
     props: {
@@ -50,9 +46,9 @@ export async function getServerSideProps({ query }) {
         ...post,
         ...{
           user: users[post.userId],
-          likes: likes.filter(l => l.postId === post.id),
-        }
-      }
-    }
+          likes: likes.filter((l) => l.postId === post.id),
+        },
+      },
+    },
   }
 }

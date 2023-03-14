@@ -1,6 +1,6 @@
 import fs from 'fs/promises'
 import { register } from '../../src/lib/functions.js'
-import {jest} from '@jest/globals'
+import { jest } from '@jest/globals'
 
 let statDoesNotExist: boolean
 let statErrorCode: string
@@ -21,9 +21,9 @@ function statIsDirectoryReturnsFalse() {
         throw { code: statErrorCode }
       }
       return {
-        isDirectory: () => false
+        isDirectory: () => false,
       }
-    })
+    }),
   }
 }
 jest.mock('fs/promises', statIsDirectoryReturnsFalse)
@@ -34,20 +34,20 @@ describe('functions', () => {
   })
 
   beforeEach(restoreDefaultValues)
-  
+
   describe('register()', () => {
     it('fails to register functions if the functions directory is not a directory', async () => {
       isDirectoryReturnValue = false
       await register('test-functions')
       expect(fs.stat).toHaveBeenCalled()
     })
-    
+
     it('fails to register functions if the directory does not exist', async () => {
       statDoesNotExist = true
       await register('test-functions')
       expect(fs.stat).toHaveBeenCalled()
     })
-    
+
     it('throws if an unexpected error happens calling fs.stat', async () => {
       statDoesNotExist = true
       statErrorCode = 'something-else'

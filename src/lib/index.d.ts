@@ -6,17 +6,23 @@ import Glee from './glee.js'
 
 type WebSocketServerType = 'native' | 'socket.io'
 
-export type AuthFunction<T> = ({serverName, parsedAsyncAPI}: {serverName: string, parsedAsyncAPI: AsyncAPIDocument}) => Promise<T>
+export type AuthFunction<T> = ({
+  serverName,
+  parsedAsyncAPI,
+}: {
+  serverName: string
+  parsedAsyncAPI: AsyncAPIDocument
+}) => Promise<T>
 
 export interface MqttAuthConfig {
-    cert?: string
-    username?: string
-    password?: string
-    clientId?: string
+  cert?: string
+  username?: string
+  password?: string
+  clientId?: string
 }
 
 export interface WsAuthConfig {
-    token?: string
+  token?: string
 }
 
 export interface KafkaAuthConfig {
@@ -29,17 +35,17 @@ export interface KafkaAuthConfig {
 }
 
 export type GleeClusterAdapterConfig = {
-  adapter?: string | typeof GleeClusterAdapter,
-  name?: string,
-  url: string,
+  adapter?: string | typeof GleeClusterAdapter
+  name?: string
+  url: string
 }
 
 export type WebsocketAdapterConfig = {
   server?: {
-    httpServer?: any,
-    adapter?: WebSocketServerType | typeof GleeAdapter,
-    port?: number,
-  },
+    httpServer?: any
+    adapter?: WebSocketServerType | typeof GleeAdapter
+    port?: number
+  }
   client?: {
     query?: any
     auth?: WsAuthConfig | AuthFunction<WsAuthConfig>
@@ -55,45 +61,43 @@ export type KafkaAdapterConfig = {
 }
 
 export type CoreGleeConfig = {
-  gleeDir?: string,
-  lifecycleDir?: string,
-  functionsDir?: string,
-  asyncapiFilePath?: string,
+  gleeDir?: string
+  lifecycleDir?: string
+  functionsDir?: string
+  asyncapiFilePath?: string
 }
 
 export type GleeConfig = {
   glee?: CoreGleeConfig
-  ws?: WebsocketAdapterConfig,
-  cluster?: GleeClusterAdapterConfig,
-  mqtt?: MqttAdapterConfig,
+  ws?: WebsocketAdapterConfig
+  cluster?: GleeClusterAdapterConfig
+  mqtt?: MqttAdapterConfig
   kafka?: KafkaAdapterConfig
 }
 
 export type GleeFunctionReturn = {
-  send?: GleeFunctionReturnSend[],
-  reply?: GleeFunctionReturnReply[],
+  send?: GleeFunctionReturnSend[]
+  reply?: GleeFunctionReturnReply[]
   broadcast?: GleeFunctionReturnBroadcast[]
 }
 
 export type GleeFunctionEvent = {
-  glee: Glee,
-  serverName: string,
-  connection?: GleeConnection,
-  payload?: any,
-  headers?: { [key: string]: string },
+  glee: Glee
+  serverName: string
+  connection?: GleeConnection
+  payload?: any
+  headers?: { [key: string]: string }
   channel?: string
 }
 
 export type GleeFunctionReturnSend = {
-  payload?: any,
-  headers?: { [key: string]: string },
-  channel?: string,
-  server?: string,
+  payload?: any
+  headers?: { [key: string]: string }
+  channel?: string
+  server?: string
 }
 
 export type GleeFunctionReturnReply = GleeFunctionReturnSend
 export type GleeFunctionReturnBroadcast = GleeFunctionReturnSend
 
-export type GleeFunction = (
-  event: GleeFunctionEvent
-) => Promise<GleeFunctionReturn>
+export type GleeFunction = (event: GleeFunctionEvent) => Promise<GleeFunctionReturn>

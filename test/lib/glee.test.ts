@@ -1,7 +1,7 @@
 import 'jest-extended'
 import AsyncAPIDocument from '@asyncapi/parser/lib/models/asyncapi'
-import {jest} from '@jest/globals'
-import {Server} from '@asyncapi/parser'
+import { jest } from '@jest/globals'
+import { Server } from '@asyncapi/parser'
 import GleeConnection from '../../src/lib/connection.js'
 import Glee from '../../src/lib/glee.js'
 import GleeMessage from '../../src/lib/message.js'
@@ -28,11 +28,11 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
         message: {
           payload: {
             type: 'string',
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+  },
 })
 const TEST_SERVER: Server = TEST_ASYNCAPI_DOCUMENT.server(TEST_SERVER_NAME)
 const ANOTHER_TEST_SERVER: Server = TEST_ASYNCAPI_DOCUMENT.server(ANOTHER_TEST_SERVER_NAME)
@@ -50,7 +50,7 @@ const fakeConnection = new GleeConnection({
 describe('glee', () => {
   describe('options', () => {
     it('returns options passed on constructor', async () => {
-      const fakeOptions = { ws: { server: {port: 7000} } }
+      const fakeOptions = { ws: { server: { port: 7000 } } }
       const app = new Glee(fakeOptions)
       expect(app.options).toStrictEqual(fakeOptions)
     })
@@ -59,10 +59,10 @@ describe('glee', () => {
   describe('use()', () => {
     it('registers inbound middlewares in order', async () => {
       const msg = new GleeMessage({
-        payload: 'test'
+        payload: 'test',
       })
       const middlewareFn = jest.fn()
-      const middlewareFn2:any = jest.fn()
+      const middlewareFn2: any = jest.fn()
       const outboundMiddlewareFn = jest.fn()
       const app = new Glee()
       app.use(middlewareFn)
@@ -75,11 +75,11 @@ describe('glee', () => {
       expect(outboundMiddlewareFn).not.toHaveBeenCalledOnce()
       expect(middlewareFn).toHaveBeenCalledBefore(middlewareFn2)
     })
-    
+
     it('registers inbound error middlewares in order', async () => {
       const middlewareFn = jest.fn()
       const errorMiddlewareFn = jest.fn(async (err, message, next) => next)
-      const errorMiddlewareFn2:any = jest.fn(async (err, message, next) => next)
+      const errorMiddlewareFn2: any = jest.fn(async (err, message, next) => next)
       const outboundMiddlewareFn = jest.fn(async (err, message, next) => next)
       const app = new Glee()
       app.use(middlewareFn)
@@ -99,10 +99,10 @@ describe('glee', () => {
   describe('useOutbound()', () => {
     it('registers outbound middlewares in order', async () => {
       const msg = new GleeMessage({
-        payload: 'test'
+        payload: 'test',
       })
       const middlewareFn = jest.fn()
-      const middlewareFn2:any = jest.fn()
+      const middlewareFn2: any = jest.fn()
       const inboundMiddlewareFn = jest.fn()
       const app = new Glee()
       app.use(inboundMiddlewareFn)
@@ -118,12 +118,12 @@ describe('glee', () => {
 
     it('registers outbound error middlewares in order', async () => {
       const msg = new GleeMessage({
-        payload: 'test'
+        payload: 'test',
       })
-      const middlewareFn = jest.fn((message, next:any) => next(new Error('fake-error')))
-      const errorMiddlewareFn = jest.fn(async (err, message, next:any) => next(err))
-      const errorMiddlewareFn2: any = jest.fn(async (err, message, next:any) => next(err))
-      const inboundMiddlewareFn = jest.fn(async (err, message, next:any) => next(err))
+      const middlewareFn = jest.fn((message, next: any) => next(new Error('fake-error')))
+      const errorMiddlewareFn = jest.fn(async (err, message, next: any) => next(err))
+      const errorMiddlewareFn2: any = jest.fn(async (err, message, next: any) => next(err))
+      const inboundMiddlewareFn = jest.fn(async (err, message, next: any) => next(err))
       const app = new Glee()
       app.useOutbound(middlewareFn)
       app.useOutbound(errorMiddlewareFn)
@@ -138,7 +138,7 @@ describe('glee', () => {
       expect(errorMiddlewareFn).toHaveBeenCalledBefore(errorMiddlewareFn2)
     })
   })
-  
+
   describe('connect()', () => {
     it('tells all adapters to connect', async () => {
       TEST_ADAPTER.prototype.connect = jest.fn()
@@ -152,7 +152,7 @@ describe('glee', () => {
       expect(TEST_ADAPTER.prototype.connect).toHaveBeenCalledOnce()
     })
   })
-  
+
   describe('send()', () => {
     it('sends a message to the appropriate server', async () => {
       const msg = new GleeMessage({

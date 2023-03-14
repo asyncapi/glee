@@ -21,6 +21,7 @@ Use a template string.
 **`remarks`** Template literals are unsupported for nested calls (see [issue #341](https://github.com/chalk/chalk/issues/341))
 
 **`example`**
+
 ```
 import chalk = require('chalk');
 
@@ -32,6 +33,7 @@ DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
 ```
 
 **`example`**
+
 ```
 import chalk = require('chalk');
 
@@ -40,10 +42,10 @@ log(chalk.red.bgBlack`2 + 3 = {bold ${2 + 3}}`)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `text` | `TemplateStringsArray` |
-| `...placeholders` | `unknown`[] |
+| Name              | Type                   |
+| :---------------- | :--------------------- |
+| `text`            | `TemplateStringsArray` |
+| `...placeholders` | `unknown`[]            |
 
 #### Returns
 
@@ -59,8 +61,8 @@ node_modules/chalk/index.d.ts:148
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type        |
+| :-------- | :---------- |
 | `...text` | `unknown`[] |
 
 #### Returns
@@ -154,7 +156,7 @@ Return a new Chalk instance.
 
 node_modules/chalk/index.d.ts:157
 
-___
+---
 
 ### bgBlack
 
@@ -164,7 +166,7 @@ ___
 
 node_modules/chalk/index.d.ts:369
 
-___
+---
 
 ### bgBlackBright
 
@@ -174,7 +176,7 @@ ___
 
 node_modules/chalk/index.d.ts:388
 
-___
+---
 
 ### bgBlue
 
@@ -184,7 +186,7 @@ ___
 
 node_modules/chalk/index.d.ts:373
 
-___
+---
 
 ### bgBlueBright
 
@@ -194,7 +196,7 @@ ___
 
 node_modules/chalk/index.d.ts:392
 
-___
+---
 
 ### bgCyan
 
@@ -204,7 +206,7 @@ ___
 
 node_modules/chalk/index.d.ts:375
 
-___
+---
 
 ### bgCyanBright
 
@@ -214,7 +216,7 @@ ___
 
 node_modules/chalk/index.d.ts:394
 
-___
+---
 
 ### bgGray
 
@@ -224,7 +226,7 @@ ___
 
 node_modules/chalk/index.d.ts:381
 
-___
+---
 
 ### bgGreen
 
@@ -234,7 +236,7 @@ ___
 
 node_modules/chalk/index.d.ts:371
 
-___
+---
 
 ### bgGreenBright
 
@@ -244,7 +246,7 @@ ___
 
 node_modules/chalk/index.d.ts:390
 
-___
+---
 
 ### bgGrey
 
@@ -254,7 +256,7 @@ ___
 
 node_modules/chalk/index.d.ts:386
 
-___
+---
 
 ### bgMagenta
 
@@ -264,7 +266,7 @@ ___
 
 node_modules/chalk/index.d.ts:374
 
-___
+---
 
 ### bgMagentaBright
 
@@ -274,7 +276,7 @@ ___
 
 node_modules/chalk/index.d.ts:393
 
-___
+---
 
 ### bgRed
 
@@ -284,7 +286,7 @@ ___
 
 node_modules/chalk/index.d.ts:370
 
-___
+---
 
 ### bgRedBright
 
@@ -294,7 +296,7 @@ ___
 
 node_modules/chalk/index.d.ts:389
 
-___
+---
 
 ### bgWhite
 
@@ -304,7 +306,7 @@ ___
 
 node_modules/chalk/index.d.ts:376
 
-___
+---
 
 ### bgWhiteBright
 
@@ -314,7 +316,7 @@ ___
 
 node_modules/chalk/index.d.ts:395
 
-___
+---
 
 ### bgYellow
 
@@ -324,7 +326,7 @@ ___
 
 node_modules/chalk/index.d.ts:372
 
-___
+---
 
 ### bgYellowBright
 
@@ -334,7 +336,7 @@ ___
 
 node_modules/chalk/index.d.ts:391
 
-___
+---
 
 ### black
 
@@ -344,7 +346,7 @@ ___
 
 node_modules/chalk/index.d.ts:341
 
-___
+---
 
 ### blackBright
 
@@ -354,7 +356,7 @@ ___
 
 node_modules/chalk/index.d.ts:360
 
-___
+---
 
 ### blue
 
@@ -364,7 +366,7 @@ ___
 
 node_modules/chalk/index.d.ts:345
 
-___
+---
 
 ### blueBright
 
@@ -374,7 +376,7 @@ ___
 
 node_modules/chalk/index.d.ts:364
 
-___
+---
 
 ### bold
 
@@ -386,7 +388,7 @@ Modifier: Make text bold.
 
 node_modules/chalk/index.d.ts:303
 
-___
+---
 
 ### cyan
 
@@ -396,7 +398,7 @@ ___
 
 node_modules/chalk/index.d.ts:347
 
-___
+---
 
 ### cyanBright
 
@@ -406,7 +408,7 @@ ___
 
 node_modules/chalk/index.d.ts:366
 
-___
+---
 
 ### dim
 
@@ -418,7 +420,7 @@ Modifier: Emitting only a small amount of light.
 
 node_modules/chalk/index.d.ts:308
 
-___
+---
 
 ### gray
 
@@ -428,7 +430,7 @@ ___
 
 node_modules/chalk/index.d.ts:353
 
-___
+---
 
 ### green
 
@@ -438,7 +440,7 @@ ___
 
 node_modules/chalk/index.d.ts:343
 
-___
+---
 
 ### greenBright
 
@@ -448,7 +450,7 @@ ___
 
 node_modules/chalk/index.d.ts:362
 
-___
+---
 
 ### grey
 
@@ -458,7 +460,7 @@ ___
 
 node_modules/chalk/index.d.ts:358
 
-___
+---
 
 ### hidden
 
@@ -470,7 +472,7 @@ Modifier: Prints the text, but makes it invisible.
 
 node_modules/chalk/index.d.ts:328
 
-___
+---
 
 ### inverse
 
@@ -482,7 +484,7 @@ Modifier: Inverse background and foreground colors.
 
 node_modules/chalk/index.d.ts:323
 
-___
+---
 
 ### italic
 
@@ -494,7 +496,7 @@ Modifier: Make text italic. (Not widely supported)
 
 node_modules/chalk/index.d.ts:313
 
-___
+---
 
 ### level
 
@@ -505,6 +507,7 @@ The color support for Chalk.
 By default, color support is automatically detected based on the environment.
 
 Levels:
+
 - `0` - All colors disabled.
 - `1` - Basic 16 colors support.
 - `2` - ANSI 256 colors support.
@@ -514,7 +517,7 @@ Levels:
 
 node_modules/chalk/index.d.ts:170
 
-___
+---
 
 ### magenta
 
@@ -524,7 +527,7 @@ ___
 
 node_modules/chalk/index.d.ts:346
 
-___
+---
 
 ### magentaBright
 
@@ -534,7 +537,7 @@ ___
 
 node_modules/chalk/index.d.ts:365
 
-___
+---
 
 ### red
 
@@ -544,7 +547,7 @@ ___
 
 node_modules/chalk/index.d.ts:342
 
-___
+---
 
 ### redBright
 
@@ -554,7 +557,7 @@ ___
 
 node_modules/chalk/index.d.ts:361
 
-___
+---
 
 ### reset
 
@@ -566,7 +569,7 @@ Modifier: Resets the current color chain.
 
 node_modules/chalk/index.d.ts:298
 
-___
+---
 
 ### strikethrough
 
@@ -578,7 +581,7 @@ Modifier: Puts a horizontal line through the center of the text. (Not widely sup
 
 node_modules/chalk/index.d.ts:333
 
-___
+---
 
 ### underline
 
@@ -590,7 +593,7 @@ Modifier: Make text underline. (Not widely supported)
 
 node_modules/chalk/index.d.ts:318
 
-___
+---
 
 ### visible
 
@@ -603,7 +606,7 @@ Can be useful for things that are purely cosmetic.
 
 node_modules/chalk/index.d.ts:339
 
-___
+---
 
 ### white
 
@@ -613,7 +616,7 @@ ___
 
 node_modules/chalk/index.d.ts:348
 
-___
+---
 
 ### whiteBright
 
@@ -623,7 +626,7 @@ ___
 
 node_modules/chalk/index.d.ts:367
 
-___
+---
 
 ### yellow
 
@@ -633,7 +636,7 @@ ___
 
 node_modules/chalk/index.d.ts:344
 
-___
+---
 
 ### yellowBright
 
@@ -656,8 +659,8 @@ For example, 31 for red, 91 for redBright.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `code` | `number` |
 
 #### Returns
@@ -668,7 +671,7 @@ For example, 31 for red, 91 for redBright.
 
 node_modules/chalk/index.d.ts:226
 
-___
+---
 
 ### ansi256
 
@@ -678,8 +681,8 @@ Use a [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-b
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type     |
+| :------ | :------- |
 | `index` | `number` |
 
 #### Returns
@@ -690,7 +693,7 @@ Use a [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-b
 
 node_modules/chalk/index.d.ts:231
 
-___
+---
 
 ### bgAnsi
 
@@ -704,8 +707,8 @@ Use the foreground code, not the background code (for example, not 41, nor 101).
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `code` | `number` |
 
 #### Returns
@@ -716,7 +719,7 @@ Use the foreground code, not the background code (for example, not 41, nor 101).
 
 node_modules/chalk/index.d.ts:288
 
-___
+---
 
 ### bgAnsi256
 
@@ -726,8 +729,8 @@ Use a [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-b
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type     |
+| :------ | :------- |
 | `index` | `number` |
 
 #### Returns
@@ -738,7 +741,7 @@ Use a [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-b
 
 node_modules/chalk/index.d.ts:293
 
-___
+---
 
 ### bgHex
 
@@ -747,6 +750,7 @@ ___
 Use HEX value to set background color.
 
 **`example`**
+
 ```
 import chalk = require('chalk');
 
@@ -755,8 +759,8 @@ chalk.bgHex('#DEADED');
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type     | Description                                       |
+| :------ | :------- | :------------------------------------------------ |
 | `color` | `string` | Hexadecimal value representing the desired color. |
 
 #### Returns
@@ -767,7 +771,7 @@ chalk.bgHex('#DEADED');
 
 node_modules/chalk/index.d.ts:245
 
-___
+---
 
 ### bgHsl
 
@@ -777,11 +781,11 @@ Use HSL values to set background color.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `hue` | `number` |
+| Name         | Type     |
+| :----------- | :------- |
+| `hue`        | `number` |
 | `saturation` | `number` |
-| `lightness` | `number` |
+| `lightness`  | `number` |
 
 #### Returns
 
@@ -791,7 +795,7 @@ Use HSL values to set background color.
 
 node_modules/chalk/index.d.ts:269
 
-___
+---
 
 ### bgHsv
 
@@ -801,11 +805,11 @@ Use HSV values to set background color.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `hue` | `number` |
+| Name         | Type     |
+| :----------- | :------- |
+| `hue`        | `number` |
 | `saturation` | `number` |
-| `value` | `number` |
+| `value`      | `number` |
 
 #### Returns
 
@@ -815,7 +819,7 @@ Use HSV values to set background color.
 
 node_modules/chalk/index.d.ts:274
 
-___
+---
 
 ### bgHwb
 
@@ -825,9 +829,9 @@ Use HWB values to set background color.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `hue` | `number` |
+| Name        | Type     |
+| :---------- | :------- |
+| `hue`       | `number` |
 | `whiteness` | `number` |
 | `blackness` | `number` |
 
@@ -839,7 +843,7 @@ Use HWB values to set background color.
 
 node_modules/chalk/index.d.ts:279
 
-___
+---
 
 ### bgKeyword
 
@@ -848,6 +852,7 @@ ___
 Use keyword color value to set background color.
 
 **`example`**
+
 ```
 import chalk = require('chalk');
 
@@ -856,8 +861,8 @@ chalk.bgKeyword('orange');
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type     | Description                                   |
+| :------ | :------- | :-------------------------------------------- |
 | `color` | `string` | Keyword value representing the desired color. |
 
 #### Returns
@@ -868,7 +873,7 @@ chalk.bgKeyword('orange');
 
 node_modules/chalk/index.d.ts:259
 
-___
+---
 
 ### bgRgb
 
@@ -878,11 +883,11 @@ Use RGB values to set background color.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `red` | `number` |
+| Name    | Type     |
+| :------ | :------- |
+| `red`   | `number` |
 | `green` | `number` |
-| `blue` | `number` |
+| `blue`  | `number` |
 
 #### Returns
 
@@ -892,7 +897,7 @@ Use RGB values to set background color.
 
 node_modules/chalk/index.d.ts:264
 
-___
+---
 
 ### hex
 
@@ -901,6 +906,7 @@ ___
 Use HEX value to set text color.
 
 **`example`**
+
 ```
 import chalk = require('chalk');
 
@@ -909,8 +915,8 @@ chalk.hex('#DEADED');
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type     | Description                                       |
+| :------ | :------- | :------------------------------------------------ |
 | `color` | `string` | Hexadecimal value representing the desired color. |
 
 #### Returns
@@ -921,7 +927,7 @@ chalk.hex('#DEADED');
 
 node_modules/chalk/index.d.ts:184
 
-___
+---
 
 ### hsl
 
@@ -931,11 +937,11 @@ Use HSL values to set text color.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `hue` | `number` |
+| Name         | Type     |
+| :----------- | :------- |
+| `hue`        | `number` |
 | `saturation` | `number` |
-| `lightness` | `number` |
+| `lightness`  | `number` |
 
 #### Returns
 
@@ -945,7 +951,7 @@ Use HSL values to set text color.
 
 node_modules/chalk/index.d.ts:208
 
-___
+---
 
 ### hsv
 
@@ -955,11 +961,11 @@ Use HSV values to set text color.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `hue` | `number` |
+| Name         | Type     |
+| :----------- | :------- |
+| `hue`        | `number` |
 | `saturation` | `number` |
-| `value` | `number` |
+| `value`      | `number` |
 
 #### Returns
 
@@ -969,7 +975,7 @@ Use HSV values to set text color.
 
 node_modules/chalk/index.d.ts:213
 
-___
+---
 
 ### hwb
 
@@ -979,9 +985,9 @@ Use HWB values to set text color.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `hue` | `number` |
+| Name        | Type     |
+| :---------- | :------- |
+| `hue`       | `number` |
 | `whiteness` | `number` |
 | `blackness` | `number` |
 
@@ -993,7 +999,7 @@ Use HWB values to set text color.
 
 node_modules/chalk/index.d.ts:218
 
-___
+---
 
 ### keyword
 
@@ -1002,6 +1008,7 @@ ___
 Use keyword color value to set text color.
 
 **`example`**
+
 ```
 import chalk = require('chalk');
 
@@ -1010,8 +1017,8 @@ chalk.keyword('orange');
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type     | Description                                   |
+| :------ | :------- | :-------------------------------------------- |
 | `color` | `string` | Keyword value representing the desired color. |
 
 #### Returns
@@ -1022,7 +1029,7 @@ chalk.keyword('orange');
 
 node_modules/chalk/index.d.ts:198
 
-___
+---
 
 ### rgb
 
@@ -1032,11 +1039,11 @@ Use RGB values to set text color.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `red` | `number` |
+| Name    | Type     |
+| :------ | :------- |
+| `red`   | `number` |
 | `green` | `number` |
-| `blue` | `number` |
+| `blue`  | `number` |
 
 #### Returns
 

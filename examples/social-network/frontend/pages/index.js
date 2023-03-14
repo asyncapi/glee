@@ -7,11 +7,7 @@ import db from '../../db.json'
 
 export default function Home({ user, posts }) {
   if (!user) {
-    return (
-      <div>
-        No user has been found with this id.
-      </div>
-    )
+    return <div>No user has been found with this id.</div>
   }
 
   if (typeof window !== 'undefined') {
@@ -30,11 +26,9 @@ export default function Home({ user, posts }) {
           <main className="w-full flex-1 relative z-0 overflow-y-auto focus:outline-none xl:order-last xl:max-w-screen-sm xl:w-full">
             <Header profile={user} />
             <div className="mt-20 px-4">
-              {
-                posts.map((post, index) => (
-                  <Post post={post} user={post.user} key={index} />
-                ))
-              }
+              {posts.map((post, index) => (
+                <Post post={post} user={post.user} key={index} />
+              ))}
             </div>
           </main>
         </div>
@@ -43,12 +37,12 @@ export default function Home({ user, posts }) {
   )
 }
 
-export async function getServerSideProps ({query}) {
+export async function getServerSideProps({ query }) {
   const { users, posts, likes } = db
   return {
     props: {
       user: users[query.user],
-      posts: posts.map(p => ({ ...p, user: users[p.userId], likes: likes.filter(like => like.postId === p.id) })),
-    }
+      posts: posts.map((p) => ({ ...p, user: users[p.userId], likes: likes.filter((like) => like.postId === p.id) })),
+    },
   }
 }

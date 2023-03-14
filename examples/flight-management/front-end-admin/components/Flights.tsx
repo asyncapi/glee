@@ -5,28 +5,28 @@ import Header from './FlightsHeader'
 import useWebSocket from 'react-use-websocket'
 
 export default function Flights({ _icon, _title, airportCode }: any) {
-  const {sendJsonMessage, lastMessage } = useWebSocket('ws://localhost:3000')
+  const { sendJsonMessage, lastMessage } = useWebSocket('ws://localhost:3000')
   const [flights, setFlights] = useState([])
 
-  useEffect(()=> sendJsonMessage({name: 'allFlights', airportCode}), [])
+  useEffect(() => sendJsonMessage({ name: 'allFlights', airportCode }), [])
 
   useEffect(() => {
     if (lastMessage !== null) {
       const jsonMessage = JSON.parse(lastMessage.data)
       console.log(jsonMessage)
-      if(jsonMessage.name === 'allFlights'){
+      if (jsonMessage.name === 'allFlights') {
         setFlights(jsonMessage.flights)
       }
     }
   }, [lastMessage, setFlights])
 
   return (
-    <section className=' bg-slate-800 text-white font-mono '>
+    <section className=" bg-slate-800 text-white font-mono ">
       <Header icon={_icon} text={_title} />
-      <div className='px-2'>
-        <table className='table-auto w-full text-left'>
+      <div className="px-2">
+        <table className="table-auto w-full text-left">
           <thead>
-            <tr className=''>
+            <tr className="">
               <th>Flight No</th>
               <th>Departure</th>
               <th>Arrival</th>
@@ -41,7 +41,7 @@ export default function Flights({ _icon, _title, airportCode }: any) {
           <tbody>
             {flights.map((flight: any) => {
               return (
-                <tr key={flight.id} className='text-black'>
+                <tr key={flight.id} className="text-black">
                   <Flight _flight={flight} sendJsonMessage={sendJsonMessage} />
                 </tr>
               )

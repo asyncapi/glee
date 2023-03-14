@@ -31,8 +31,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type     |
+| :---- | :------- |
 | `dir` | `string` |
 
 #### Returns
@@ -43,7 +43,7 @@
 
 [src/lib/lifecycleEvents.ts:16](https://github.com/asyncapi/glee/blob/388e335/src/lib/lifecycleEvents.ts#L16)
 
-___
+---
 
 ### run
 
@@ -51,10 +51,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `lifecycleEvent` | `string` |
-| `params` | [`GleeFunctionEvent`](lib.md#gleefunctionevent) |
+| Name             | Type                                            |
+| :--------------- | :---------------------------------------------- |
+| `lifecycleEvent` | `string`                                        |
+| `params`         | [`GleeFunctionEvent`](lib.md#gleefunctionevent) |
 
 #### Returns
 

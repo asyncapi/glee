@@ -20,10 +20,10 @@
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
-| `adapter` | [`default`](../classes/lib_cluster.default.md) |
-| `serverName` | `string` |
+| Name         | Type                                           |
+| :----------- | :--------------------------------------------- |
+| `adapter`    | [`default`](../classes/lib_cluster.default.md) |
+| `serverName` | `string`                                       |
 
 #### Defined in
 

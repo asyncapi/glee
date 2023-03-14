@@ -25,7 +25,7 @@ components:
         type: object
         properties:
           test:
-            type: string 
+            type: string
   securitySchemes:
-      saslScramExample:
-        type: scramSha256
+    saslScramExample:
+      type: scramSha256

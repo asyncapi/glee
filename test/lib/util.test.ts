@@ -20,11 +20,11 @@ describe('util', () => {
 
   describe('arrayHasDuplicates', () => {
     it('returns false for no duplicates', () => {
-      expect(util.arrayHasDuplicates([1,2,3,4])).toBeFalse()
+      expect(util.arrayHasDuplicates([1, 2, 3, 4])).toBeFalse()
     })
 
     it('returns true for duplicates', () => {
-      expect(util.arrayHasDuplicates([1,2,2,3,4])).toBeTrue()
+      expect(util.arrayHasDuplicates([1, 2, 2, 3, 4])).toBeTrue()
     })
   })
 
@@ -34,10 +34,10 @@ describe('util', () => {
       const message = new GleeMessage({
         payload: 'Hello World',
         headers: {
-          header: 'value'
+          header: 'value',
         },
         channel: 'fake-channel',
-        serverName: 'fake-server'
+        serverName: 'fake-server',
       })
       const functionEvent = util.gleeMessageToFunctionEvent(message, glee)
 

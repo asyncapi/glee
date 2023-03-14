@@ -1,6 +1,9 @@
 ![Glee — The AsyncAPI framework that will make you smile again.](assets/readme-banner.png)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Coverage Status](https://coveralls.io/repos/github/asyncapi/glee/badge.svg?branch=master)](https://coveralls.io/github/asyncapi/glee?branch=master)
@@ -13,8 +16,8 @@
 
 Glee is a spec-first framework that helps you build server-side applications. It leverages the AsyncAPI specification to make you more productive:
 
-* It makes sure your code and AsyncAPI definition are on par. No more outdated documentation. Glee takes care of it for you, automatically.
-* Glee lets you focus on what matters and handles the rest for you. You only write the code for your business use-case. Glee takes care of performance, scalability, resilience, and everything you need to make your application production-ready.
+- It makes sure your code and AsyncAPI definition are on par. No more outdated documentation. Glee takes care of it for you, automatically.
+- Glee lets you focus on what matters and handles the rest for you. You only write the code for your business use-case. Glee takes care of performance, scalability, resilience, and everything you need to make your application production-ready.
 
 ## Setup
 
@@ -30,9 +33,9 @@ For more information on how to use `create-glee-app`, you can review [the `creat
 
 ## Getting started
 
-* :file_folder: [Application structure](docs/app-structure.md): know how to structure your application with Glee.
-* :gear: [Configuring your application](docs/config-file.md): tweak Glee's default configuration.
-* :rocket: [Examples](./examples): see Glee in action.
+- :file_folder: [Application structure](docs/app-structure.md): know how to structure your application with Glee.
+- :gear: [Configuring your application](docs/config-file.md): tweak Glee's default configuration.
+- :rocket: [Examples](./examples): see Glee in action.
 
 ## Generating documentation
 
@@ -44,6 +47,7 @@ glee docs
 ```
 
 You can also tweak Glee's default configuration for generating documentation here [Configuring your application](docs/config-file.md)
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

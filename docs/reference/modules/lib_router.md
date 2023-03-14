@@ -23,16 +23,16 @@
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
-| `channel` | `string` |
-| `fn` | [`ErrorMiddleware`](middlewares.md#errormiddleware) |
+| Name      | Type                                                |
+| :-------- | :-------------------------------------------------- |
+| `channel` | `string`                                            |
+| `fn`      | [`ErrorMiddleware`](middlewares.md#errormiddleware) |
 
 #### Defined in
 
 [src/lib/router.ts:8](https://github.com/asyncapi/glee/blob/388e335/src/lib/router.ts#L8)
 
-___
+---
 
 ### ChannelMiddlewareTuple
 
@@ -40,16 +40,16 @@ ___
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
-| `channel` | `string` |
-| `fn` | [`Middleware`](middlewares.md#middleware) |
+| Name      | Type                                      |
+| :-------- | :---------------------------------------- |
+| `channel` | `string`                                  |
+| `fn`      | [`Middleware`](middlewares.md#middleware) |
 
 #### Defined in
 
 [src/lib/router.ts:3](https://github.com/asyncapi/glee/blob/388e335/src/lib/router.ts#L3)
 
-___
+---
 
 ### GenericChannelMiddlewareTuple
 
@@ -59,7 +59,7 @@ ___
 
 [src/lib/router.ts:14](https://github.com/asyncapi/glee/blob/388e335/src/lib/router.ts#L14)
 
-___
+---
 
 ### GenericMiddleware
 

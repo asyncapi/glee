@@ -3,7 +3,7 @@ export default async function () {
     kafkaOptions: {
       authentication: {
         key: 'XIL3PSQNLE3ROP7A',
-      }
-    }
+      },
+    },
   }
 }

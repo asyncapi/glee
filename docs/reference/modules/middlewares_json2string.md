@@ -20,10 +20,10 @@
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | [`default`](../classes/lib_message.default.md) |
-| `next` | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
+| Name      | Type                                                      |
+| :-------- | :-------------------------------------------------------- |
+| `message` | [`default`](../classes/lib_message.default.md)            |
+| `next`    | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
 
 ##### Returns
 

@@ -1,5 +1,5 @@
 asyncapi: 2.4.0
-info: 
+info:
   title: asyncapicoin client
   version: 1.0.0
   description: |
@@ -31,4 +31,3 @@ components:
             type: number
           price:
             type: number
-            

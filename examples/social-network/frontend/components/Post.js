@@ -7,8 +7,8 @@ import Avatar from './Avatar'
 
 export default function Post({ post, user }) {
   const loggedInUser = useContext(UserContext)
-  const [liked, setLiked] = useState(!!post.likes.find(l => l.postId === post.id && l.userId === loggedInUser.id))
-  const [likeCount, setLikes] = useState(post.likes.filter(l => l.postId === post.id).length)
+  const [liked, setLiked] = useState(!!post.likes.find((l) => l.postId === post.id && l.userId === loggedInUser.id))
+  const [likeCount, setLikes] = useState(post.likes.filter((l) => l.postId === post.id).length)
 
   const onLike = () => {
     if (liked) {
@@ -36,21 +36,21 @@ export default function Post({ post, user }) {
         <Avatar imageUrl={user.imageUrl} name={user.name} className="mr-4" />
         <strong>{user.name}</strong>
       </div>
-      <p className="text-gray-700 my-2" dangerouslySetInnerHTML={{__html: post.text}} />
+      <p className="text-gray-700 my-2" dangerouslySetInnerHTML={{ __html: post.text }} />
       <img className="w-full object-cover max-h-96" src={post.imageUrl} alt="" />
       <div className="mt-2">
         <button
           type="button"
-          className={`inline-flex items-center px-3 py-2 text-md font-medium ${liked ? 'text-red-600' : 'text-gray-700'} bg-white hover:text-red-600 focus:outline-none`}
+          className={`inline-flex items-center px-3 py-2 text-md font-medium ${
+            liked ? 'text-red-600' : 'text-gray-700'
+          } bg-white hover:text-red-600 focus:outline-none`}
           onClick={onLike}
         >
-          {
-            liked ? (
-              <HeartIconSolid className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-            ) : (
-              <HeartIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-            )
-          }
+          {liked ? (
+            <HeartIconSolid className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+          ) : (
+            <HeartIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+          )}
           {likeCount}
         </button>
       </div>

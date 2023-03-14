@@ -4,19 +4,19 @@ import GleeConnection from './connection.js'
 type MessageHeaders = { [key: string]: any }
 
 interface IGleeMessageConstructor {
-  payload?: any,
-  headers?: MessageHeaders,
-  channel?: string,
-  serverName?: string,
-  connection?: GleeConnection,
-  broadcast?: boolean,
-  cluster?: boolean,
+  payload?: any
+  headers?: MessageHeaders
+  channel?: string
+  serverName?: string
+  connection?: GleeConnection
+  broadcast?: boolean
+  cluster?: boolean
 }
 
 interface IReply {
-  payload?: any,
-  headers?: { [key: string]: any },
-  channel?: string,
+  payload?: any
+  headers?: { [key: string]: any }
+  channel?: string
 }
 
 class GleeMessage extends EventEmitter {
@@ -30,7 +30,7 @@ class GleeMessage extends EventEmitter {
   private _outbound: boolean
   private _cluster: boolean
   private _params: { [key: string]: string }
-  
+
   /**
    * Instantiates a new GleeMessage.
    *
@@ -43,14 +43,14 @@ class GleeMessage extends EventEmitter {
    * @param {Boolean} [options.broadcast=false] Whether the message should be broadcasted or not.
    * @param {Boolean} [options.cluster=false] Whether the message is from a cluster adapter or not.
    */
-  constructor ({
+  constructor({
     payload,
     headers,
     channel,
     serverName,
     connection,
     broadcast = false,
-    cluster = false
+    cluster = false,
   }: IGleeMessageConstructor) {
     super()
 
@@ -90,7 +90,7 @@ class GleeMessage extends EventEmitter {
   get serverName(): string {
     return this._serverName
   }
-  
+
   set serverName(value: string) {
     this._serverName = value
   }
@@ -98,7 +98,7 @@ class GleeMessage extends EventEmitter {
   get connection(): GleeConnection {
     return this._connection
   }
-  
+
   set connection(value: GleeConnection) {
     this._connection = value
   }
@@ -131,7 +131,7 @@ class GleeMessage extends EventEmitter {
    * @param {Object|null} [options.headers] The new message headers. Pass null if you want to remove them.
    * @param {String} [options.channel] The channel where the reply should go to.
    */
-  reply ({ payload, headers, channel } : IReply) {
+  reply({ payload, headers, channel }: IReply) {
     if (payload) this._payload = payload
 
     if (headers !== undefined) {
@@ -160,7 +160,7 @@ class GleeMessage extends EventEmitter {
     this._inbound = true
     this._outbound = false
   }
-  
+
   /**
    * Makes the message suitable only for the outbound pipeline.
    */
@@ -168,14 +168,14 @@ class GleeMessage extends EventEmitter {
     this._inbound = false
     this._outbound = true
   }
-  
+
   /**
    * Checks if it's an inbound message.
    */
   isInbound() {
     return this._inbound && !this._outbound
   }
-  
+
   /**
    * Checks if it's an outbound message.
    */

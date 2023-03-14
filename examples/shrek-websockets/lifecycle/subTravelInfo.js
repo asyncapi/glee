@@ -4,16 +4,19 @@ import dummyjson from 'dummy-json'
 import { Message } from '@asyncapi/glee'
 
 export default async function ({ glee, connection }) {
-  (function myLoop(i) {
+  // eslint-disable-next-line @typescript-eslint/no-extra-semi
+  ;(function myLoop(i) {
     setTimeout(() => {
-      glee.send(new Message({
-        channel: '/travel/status',
-        connection,
-        payload: generateResponse()
-      }))
+      glee.send(
+        new Message({
+          channel: '/travel/status',
+          connection,
+          payload: generateResponse(),
+        }),
+      )
       if (--i) myLoop(i)
     }, 1000)
-  }(100))
+  })(100)
 
   function generateResponse() {
     const template = `{

@@ -73,8 +73,8 @@ Instantiates a Glee Cluster adapter.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name   | Type                             | Description                  |
+| :----- | :------------------------------- | :--------------------------- |
 | `glee` | [`default`](lib_glee.default.md) | A reference to the Glee app. |
 
 #### Overrides
@@ -95,7 +95,7 @@ EventEmitter.constructor
 
 [src/lib/cluster.ts:36](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L36)
 
-___
+---
 
 ### \_instanceId
 
@@ -105,7 +105,7 @@ ___
 
 [src/lib/cluster.ts:39](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L39)
 
-___
+---
 
 ### \_serverName
 
@@ -115,7 +115,7 @@ ___
 
 [src/lib/cluster.ts:37](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L37)
 
-___
+---
 
 ### \_serverUrlExpanded
 
@@ -125,7 +125,7 @@ ___
 
 [src/lib/cluster.ts:38](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L38)
 
-___
+---
 
 ### captureRejectionSymbol
 
@@ -139,7 +139,7 @@ EventEmitter.captureRejectionSymbol
 
 node_modules/@types/node/events.d.ts:301
 
-___
+---
 
 ### captureRejections
 
@@ -155,7 +155,7 @@ EventEmitter.captureRejections
 
 node_modules/@types/node/events.d.ts:306
 
-___
+---
 
 ### defaultMaxListeners
 
@@ -169,7 +169,7 @@ EventEmitter.defaultMaxListeners
 
 node_modules/@types/node/events.d.ts:307
 
-___
+---
 
 ### errorMonitor
 
@@ -205,7 +205,7 @@ node_modules/@types/node/events.d.ts:300
 
 [src/lib/cluster.ts:93](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L93)
 
-___
+---
 
 ### instanceId
 
@@ -219,7 +219,7 @@ ___
 
 [src/lib/cluster.ts:105](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L105)
 
-___
+---
 
 ### serverName
 
@@ -233,7 +233,7 @@ ___
 
 [src/lib/cluster.ts:97](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L97)
 
-___
+---
 
 ### serverUrlExpanded
 
@@ -259,10 +259,10 @@ Alias for `emitter.on(eventName, listener)`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `string` \| `symbol` |
-| `listener` | (...`args`: `any`[]) => `void` |
+| Name        | Type                           |
+| :---------- | :----------------------------- |
+| `eventName` | `string` \| `symbol`           |
+| `listener`  | (...`args`: `any`[]) => `void` |
 
 #### Returns
 
@@ -276,7 +276,7 @@ EventEmitter.addListener
 
 node_modules/@types/node/events.d.ts:327
 
-___
+---
 
 ### connect
 
@@ -292,7 +292,7 @@ Connects to the remote server.
 
 [src/lib/cluster.ts:112](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L112)
 
-___
+---
 
 ### deserializeMessage
 
@@ -302,8 +302,8 @@ Deserializes the serialized message.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name         | Type     | Description            |
+| :----------- | :------- | :--------------------- |
 | `serialized` | `string` | The serialized message |
 
 #### Returns
@@ -316,7 +316,7 @@ The deserialized message.
 
 [src/lib/cluster.ts:151](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L151)
 
-___
+---
 
 ### emit
 
@@ -328,26 +328,26 @@ to each.
 Returns `true` if the event had listeners, `false` otherwise.
 
 ```js
-const EventEmitter = require('events');
-const myEmitter = new EventEmitter();
+const EventEmitter = require('events')
+const myEmitter = new EventEmitter()
 
 // First listener
 myEmitter.on('event', function firstListener() {
-  console.log('Helloooo! first listener');
-});
+  console.log('Helloooo! first listener')
+})
 // Second listener
 myEmitter.on('event', function secondListener(arg1, arg2) {
-  console.log(`event with parameters ${arg1}, ${arg2} in second listener`);
-});
+  console.log(`event with parameters ${arg1}, ${arg2} in second listener`)
+})
 // Third listener
 myEmitter.on('event', function thirdListener(...args) {
-  const parameters = args.join(', ');
-  console.log(`event with parameters ${parameters} in third listener`);
-});
+  const parameters = args.join(', ')
+  console.log(`event with parameters ${parameters} in third listener`)
+})
 
-console.log(myEmitter.listeners('event'));
+console.log(myEmitter.listeners('event'))
 
-myEmitter.emit('event', 1, 2, 3, 4, 5);
+myEmitter.emit('event', 1, 2, 3, 4, 5)
 
 // Prints:
 // [
@@ -364,10 +364,10 @@ myEmitter.emit('event', 1, 2, 3, 4, 5);
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name        | Type                 |
+| :---------- | :------------------- |
 | `eventName` | `string` \| `symbol` |
-| `...args` | `any`[] |
+| `...args`   | `any`[]              |
 
 #### Returns
 
@@ -381,7 +381,7 @@ EventEmitter.emit
 
 node_modules/@types/node/events.d.ts:583
 
-___
+---
 
 ### eventNames
 
@@ -391,15 +391,15 @@ Returns an array listing the events for which the emitter has registered
 listeners. The values in the array are strings or `Symbol`s.
 
 ```js
-const EventEmitter = require('events');
-const myEE = new EventEmitter();
-myEE.on('foo', () => {});
-myEE.on('bar', () => {});
+const EventEmitter = require('events')
+const myEE = new EventEmitter()
+myEE.on('foo', () => {})
+myEE.on('bar', () => {})
 
-const sym = Symbol('symbol');
-myEE.on(sym, () => {});
+const sym = Symbol('symbol')
+myEE.on(sym, () => {})
 
-console.log(myEE.eventNames());
+console.log(myEE.eventNames())
 // Prints: [ 'foo', 'bar', Symbol(symbol) ]
 ```
 
@@ -417,7 +417,7 @@ EventEmitter.eventNames
 
 node_modules/@types/node/events.d.ts:642
 
-___
+---
 
 ### getMaxListeners
 
@@ -440,7 +440,7 @@ EventEmitter.getMaxListeners
 
 node_modules/@types/node/events.d.ts:499
 
-___
+---
 
 ### listenerCount
 
@@ -452,8 +452,8 @@ Returns the number of listeners listening to the event named `eventName`.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name        | Type                 | Description                              |
+| :---------- | :------------------- | :--------------------------------------- |
 | `eventName` | `string` \| `symbol` | The name of the event being listened for |
 
 #### Returns
@@ -468,7 +468,7 @@ EventEmitter.listenerCount
 
 node_modules/@types/node/events.d.ts:589
 
-___
+---
 
 ### listeners
 
@@ -478,9 +478,9 @@ Returns a copy of the array of listeners for the event named `eventName`.
 
 ```js
 server.on('connection', (stream) => {
-  console.log('someone connected!');
-});
-console.log(util.inspect(server.listeners('connection')));
+  console.log('someone connected!')
+})
+console.log(util.inspect(server.listeners('connection')))
 // Prints: [ [Function] ]
 ```
 
@@ -488,8 +488,8 @@ console.log(util.inspect(server.listeners('connection')));
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name        | Type                 |
+| :---------- | :------------------- |
 | `eventName` | `string` \| `symbol` |
 
 #### Returns
@@ -504,7 +504,7 @@ EventEmitter.listeners
 
 node_modules/@types/node/events.d.ts:512
 
-___
+---
 
 ### off
 
@@ -516,10 +516,10 @@ Alias for `emitter.removeListener()`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `string` \| `symbol` |
-| `listener` | (...`args`: `any`[]) => `void` |
+| Name        | Type                           |
+| :---------- | :----------------------------- |
+| `eventName` | `string` \| `symbol`           |
+| `listener`  | (...`args`: `any`[]) => `void` |
 
 #### Returns
 
@@ -533,7 +533,7 @@ EventEmitter.off
 
 node_modules/@types/node/events.d.ts:472
 
-___
+---
 
 ### on
 
@@ -546,8 +546,8 @@ times.
 
 ```js
 server.on('connection', (stream) => {
-  console.log('someone connected!');
-});
+  console.log('someone connected!')
+})
 ```
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
@@ -556,10 +556,10 @@ By default, event listeners are invoked in the order they are added. The`emitter
 event listener to the beginning of the listeners array.
 
 ```js
-const myEE = new EventEmitter();
-myEE.on('foo', () => console.log('a'));
-myEE.prependListener('foo', () => console.log('b'));
-myEE.emit('foo');
+const myEE = new EventEmitter()
+myEE.on('foo', () => console.log('a'))
+myEE.prependListener('foo', () => console.log('b'))
+myEE.emit('foo')
 // Prints:
 //   b
 //   a
@@ -569,10 +569,10 @@ myEE.emit('foo');
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `eventName` | `string` \| `symbol` | The name of the event. |
-| `listener` | (...`args`: `any`[]) => `void` | The callback function |
+| Name        | Type                           | Description            |
+| :---------- | :----------------------------- | :--------------------- |
+| `eventName` | `string` \| `symbol`           | The name of the event. |
+| `listener`  | (...`args`: `any`[]) => `void` | The callback function  |
 
 #### Returns
 
@@ -586,7 +586,7 @@ EventEmitter.on
 
 node_modules/@types/node/events.d.ts:358
 
-___
+---
 
 ### once
 
@@ -597,8 +597,8 @@ next time `eventName` is triggered, this listener is removed and then invoked.
 
 ```js
 server.once('connection', (stream) => {
-  console.log('Ah, we have our first user!');
-});
+  console.log('Ah, we have our first user!')
+})
 ```
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
@@ -607,10 +607,10 @@ By default, event listeners are invoked in the order they are added. The`emitter
 event listener to the beginning of the listeners array.
 
 ```js
-const myEE = new EventEmitter();
-myEE.once('foo', () => console.log('a'));
-myEE.prependOnceListener('foo', () => console.log('b'));
-myEE.emit('foo');
+const myEE = new EventEmitter()
+myEE.once('foo', () => console.log('a'))
+myEE.prependOnceListener('foo', () => console.log('b'))
+myEE.emit('foo')
 // Prints:
 //   b
 //   a
@@ -620,10 +620,10 @@ myEE.emit('foo');
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `eventName` | `string` \| `symbol` | The name of the event. |
-| `listener` | (...`args`: `any`[]) => `void` | The callback function |
+| Name        | Type                           | Description            |
+| :---------- | :----------------------------- | :--------------------- |
+| `eventName` | `string` \| `symbol`           | The name of the event. |
+| `listener`  | (...`args`: `any`[]) => `void` | The callback function  |
 
 #### Returns
 
@@ -637,7 +637,7 @@ EventEmitter.once
 
 node_modules/@types/node/events.d.ts:387
 
-___
+---
 
 ### prependListener
 
@@ -650,8 +650,8 @@ times.
 
 ```js
 server.prependListener('connection', (stream) => {
-  console.log('someone connected!');
-});
+  console.log('someone connected!')
+})
 ```
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
@@ -660,10 +660,10 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `eventName` | `string` \| `symbol` | The name of the event. |
-| `listener` | (...`args`: `any`[]) => `void` | The callback function |
+| Name        | Type                           | Description            |
+| :---------- | :----------------------------- | :--------------------- |
+| `eventName` | `string` \| `symbol`           | The name of the event. |
+| `listener`  | (...`args`: `any`[]) => `void` | The callback function  |
 
 #### Returns
 
@@ -677,19 +677,19 @@ EventEmitter.prependListener
 
 node_modules/@types/node/events.d.ts:607
 
-___
+---
 
 ### prependOnceListener
 
 ▸ **prependOnceListener**(`eventName`, `listener`): [`default`](lib_cluster.default.md)
 
-Adds a **one-time**`listener` function for the event named `eventName` to the_beginning_ of the listeners array. The next time `eventName` is triggered, this
+Adds a **one-time**`listener` function for the event named `eventName` to the*beginning* of the listeners array. The next time `eventName` is triggered, this
 listener is removed, and then invoked.
 
 ```js
 server.prependOnceListener('connection', (stream) => {
-  console.log('Ah, we have our first user!');
-});
+  console.log('Ah, we have our first user!')
+})
 ```
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
@@ -698,10 +698,10 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `eventName` | `string` \| `symbol` | The name of the event. |
-| `listener` | (...`args`: `any`[]) => `void` | The callback function |
+| Name        | Type                           | Description            |
+| :---------- | :----------------------------- | :--------------------- |
+| `eventName` | `string` \| `symbol`           | The name of the event. |
+| `listener`  | (...`args`: `any`[]) => `void` | The callback function  |
 
 #### Returns
 
@@ -715,7 +715,7 @@ EventEmitter.prependOnceListener
 
 node_modules/@types/node/events.d.ts:623
 
-___
+---
 
 ### rawListeners
 
@@ -725,35 +725,35 @@ Returns a copy of the array of listeners for the event named `eventName`,
 including any wrappers (such as those created by `.once()`).
 
 ```js
-const emitter = new EventEmitter();
-emitter.once('log', () => console.log('log once'));
+const emitter = new EventEmitter()
+emitter.once('log', () => console.log('log once'))
 
 // Returns a new Array with a function `onceWrapper` which has a property
 // `listener` which contains the original listener bound above
-const listeners = emitter.rawListeners('log');
-const logFnWrapper = listeners[0];
+const listeners = emitter.rawListeners('log')
+const logFnWrapper = listeners[0]
 
 // Logs "log once" to the console and does not unbind the `once` event
-logFnWrapper.listener();
+logFnWrapper.listener()
 
 // Logs "log once" to the console and removes the listener
-logFnWrapper();
+logFnWrapper()
 
-emitter.on('log', () => console.log('log persistently'));
+emitter.on('log', () => console.log('log persistently'))
 // Will return a new Array with a single function bound by `.on()` above
-const newListeners = emitter.rawListeners('log');
+const newListeners = emitter.rawListeners('log')
 
 // Logs "log persistently" twice
-newListeners[0]();
-emitter.emit('log');
+newListeners[0]()
+emitter.emit('log')
 ```
 
 **`since`** v9.4.0
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name        | Type                 |
+| :---------- | :------------------- |
 | `eventName` | `string` \| `symbol` |
 
 #### Returns
@@ -768,7 +768,7 @@ EventEmitter.rawListeners
 
 node_modules/@types/node/events.d.ts:542
 
-___
+---
 
 ### removeAllListeners
 
@@ -786,8 +786,8 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                 |
+| :------- | :------------------- |
 | `event?` | `string` \| `symbol` |
 
 #### Returns
@@ -802,7 +802,7 @@ EventEmitter.removeAllListeners
 
 node_modules/@types/node/events.d.ts:483
 
-___
+---
 
 ### removeListener
 
@@ -812,11 +812,11 @@ Removes the specified `listener` from the listener array for the event named`eve
 
 ```js
 const callback = (stream) => {
-  console.log('someone connected!');
-};
-server.on('connection', callback);
+  console.log('someone connected!')
+}
+server.on('connection', callback)
 // ...
-server.removeListener('connection', callback);
+server.removeListener('connection', callback)
 ```
 
 `removeListener()` will remove, at most, one instance of a listener from the
@@ -825,35 +825,35 @@ listener array for the specified `eventName`, then `removeListener()` must be
 called multiple times to remove each instance.
 
 Once an event is emitted, all listeners attached to it at the
-time of emitting are called in order. This implies that any`removeListener()` or `removeAllListeners()` calls _after_ emitting and_before_ the last listener finishes execution will
+time of emitting are called in order. This implies that any`removeListener()` or `removeAllListeners()` calls _after_ emitting and*before* the last listener finishes execution will
 not remove them from`emit()` in progress. Subsequent events behave as expected.
 
 ```js
-const myEmitter = new MyEmitter();
+const myEmitter = new MyEmitter()
 
 const callbackA = () => {
-  console.log('A');
-  myEmitter.removeListener('event', callbackB);
-};
+  console.log('A')
+  myEmitter.removeListener('event', callbackB)
+}
 
 const callbackB = () => {
-  console.log('B');
-};
+  console.log('B')
+}
 
-myEmitter.on('event', callbackA);
+myEmitter.on('event', callbackA)
 
-myEmitter.on('event', callbackB);
+myEmitter.on('event', callbackB)
 
 // callbackA removes listener callbackB but it will still be called.
 // Internal listener array at time of emit [callbackA, callbackB]
-myEmitter.emit('event');
+myEmitter.emit('event')
 // Prints:
 //   A
 //   B
 
 // callbackB is now removed.
 // Internal listener array [callbackA]
-myEmitter.emit('event');
+myEmitter.emit('event')
 // Prints:
 //   A
 ```
@@ -869,18 +869,18 @@ event (as in the example below), `removeListener()` will remove the most
 recently added instance. In the example the `once('ping')`listener is removed:
 
 ```js
-const ee = new EventEmitter();
+const ee = new EventEmitter()
 
 function pong() {
-  console.log('pong');
+  console.log('pong')
 }
 
-ee.on('ping', pong);
-ee.once('ping', pong);
-ee.removeListener('ping', pong);
+ee.on('ping', pong)
+ee.once('ping', pong)
+ee.removeListener('ping', pong)
 
-ee.emit('ping');
-ee.emit('ping');
+ee.emit('ping')
+ee.emit('ping')
 ```
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
@@ -889,10 +889,10 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `string` \| `symbol` |
-| `listener` | (...`args`: `any`[]) => `void` |
+| Name        | Type                           |
+| :---------- | :----------------------------- |
+| `eventName` | `string` \| `symbol`           |
+| `listener`  | (...`args`: `any`[]) => `void` |
 
 #### Returns
 
@@ -906,7 +906,7 @@ EventEmitter.removeListener
 
 node_modules/@types/node/events.d.ts:467
 
-___
+---
 
 ### send
 
@@ -916,8 +916,8 @@ Sends a message to the remote server.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                | Description          |
+| :-------- | :---------------------------------- | :------------------- |
 | `message` | [`default`](lib_message.default.md) | The message to send. |
 
 #### Returns
@@ -928,7 +928,7 @@ Sends a message to the remote server.
 
 [src/lib/cluster.ts:121](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L121)
 
-___
+---
 
 ### serializeMessage
 
@@ -938,8 +938,8 @@ Serialize a message into JSON.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                | Description               |
+| :-------- | :---------------------------------- | :------------------------ |
 | `message` | [`default`](lib_message.default.md) | The message to serialize. |
 
 #### Returns
@@ -952,7 +952,7 @@ The serialized message,
 
 [src/lib/cluster.ts:131](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L131)
 
-___
+---
 
 ### setMaxListeners
 
@@ -969,9 +969,9 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n` | `number` |
+| Name | Type     |
+| :--- | :------- |
+| `n`  | `number` |
 
 #### Returns
 
@@ -985,7 +985,7 @@ EventEmitter.setMaxListeners
 
 node_modules/@types/node/events.d.ts:493
 
-___
+---
 
 ### getEventListeners
 
@@ -1000,19 +1000,19 @@ For `EventTarget`s this is the only way to get the event listeners for the
 event target. This is useful for debugging and diagnostic purposes.
 
 ```js
-const { getEventListeners, EventEmitter } = require('events');
+const { getEventListeners, EventEmitter } = require('events')
 
 {
-  const ee = new EventEmitter();
-  const listener = () => console.log('Events are fun');
-  ee.on('foo', listener);
-  getEventListeners(ee, 'foo'); // [listener]
+  const ee = new EventEmitter()
+  const listener = () => console.log('Events are fun')
+  ee.on('foo', listener)
+  getEventListeners(ee, 'foo') // [listener]
 }
 {
-  const et = new EventTarget();
-  const listener = () => console.log('Events are fun');
-  et.addEventListener('foo', listener);
-  getEventListeners(et, 'foo'); // [listener]
+  const et = new EventTarget()
+  const listener = () => console.log('Events are fun')
+  et.addEventListener('foo', listener)
+  getEventListeners(et, 'foo') // [listener]
 }
 ```
 
@@ -1020,10 +1020,10 @@ const { getEventListeners, EventEmitter } = require('events');
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                               |
+| :-------- | :--------------------------------- |
 | `emitter` | `DOMEventTarget` \| `EventEmitter` |
-| `name` | `string` \| `symbol` |
+| `name`    | `string` \| `symbol`               |
 
 #### Returns
 
@@ -1037,7 +1037,7 @@ EventEmitter.getEventListeners
 
 node_modules/@types/node/events.d.ts:270
 
-___
+---
 
 ### listenerCount
 
@@ -1046,11 +1046,11 @@ ___
 A class method that returns the number of listeners for the given `eventName`registered on the given `emitter`.
 
 ```js
-const { EventEmitter, listenerCount } = require('events');
-const myEmitter = new EventEmitter();
-myEmitter.on('event', () => {});
-myEmitter.on('event', () => {});
-console.log(listenerCount(myEmitter, 'event'));
+const { EventEmitter, listenerCount } = require('events')
+const myEmitter = new EventEmitter()
+myEmitter.on('event', () => {})
+myEmitter.on('event', () => {})
+console.log(listenerCount(myEmitter, 'event'))
 // Prints: 2
 ```
 
@@ -1060,10 +1060,10 @@ console.log(listenerCount(myEmitter, 'event'));
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `emitter` | `EventEmitter` | The emitter to query |
-| `eventName` | `string` \| `symbol` | The event name |
+| Name        | Type                 | Description          |
+| :---------- | :------------------- | :------------------- |
+| `emitter`   | `EventEmitter`       | The emitter to query |
+| `eventName` | `string` \| `symbol` | The event name       |
 
 #### Returns
 
@@ -1077,32 +1077,32 @@ EventEmitter.listenerCount
 
 node_modules/@types/node/events.d.ts:242
 
-___
+---
 
 ### on
 
 ▸ `Static` **on**(`emitter`, `eventName`, `options?`): `AsyncIterableIterator`<`any`\>
 
 ```js
-const { on, EventEmitter } = require('events');
+const { on, EventEmitter } = require('events')
 
-(async () => {
-  const ee = new EventEmitter();
+;(async () => {
+  const ee = new EventEmitter()
 
   // Emit later on
   process.nextTick(() => {
-    ee.emit('foo', 'bar');
-    ee.emit('foo', 42);
-  });
+    ee.emit('foo', 'bar')
+    ee.emit('foo', 42)
+  })
 
   for await (const event of on(ee, 'foo')) {
     // The execution of this inner block is synchronous and it
     // processes one event at a time (even with await). Do not use
     // if concurrent execution is required.
-    console.log(event); // prints ['bar'] [42]
+    console.log(event) // prints ['bar'] [42]
   }
   // Unreachable here
-})();
+})()
 ```
 
 Returns an `AsyncIterator` that iterates `eventName` events. It will throw
@@ -1113,39 +1113,39 @@ composed of the emitted event arguments.
 An `AbortSignal` can be used to cancel waiting on events:
 
 ```js
-const { on, EventEmitter } = require('events');
-const ac = new AbortController();
+const { on, EventEmitter } = require('events')
+const ac = new AbortController()
 
-(async () => {
-  const ee = new EventEmitter();
+;(async () => {
+  const ee = new EventEmitter()
 
   // Emit later on
   process.nextTick(() => {
-    ee.emit('foo', 'bar');
-    ee.emit('foo', 42);
-  });
+    ee.emit('foo', 'bar')
+    ee.emit('foo', 42)
+  })
 
   for await (const event of on(ee, 'foo', { signal: ac.signal })) {
     // The execution of this inner block is synchronous and it
     // processes one event at a time (even with await). Do not use
     // if concurrent execution is required.
-    console.log(event); // prints ['bar'] [42]
+    console.log(event) // prints ['bar'] [42]
   }
   // Unreachable here
-})();
+})()
 
-process.nextTick(() => ac.abort());
+process.nextTick(() => ac.abort())
 ```
 
 **`since`** v13.6.0, v12.16.0
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `emitter` | `EventEmitter` | - |
-| `eventName` | `string` | The name of the event being listened for |
-| `options?` | `StaticEventEmitterOptions` | - |
+| Name        | Type                        | Description                              |
+| :---------- | :-------------------------- | :--------------------------------------- |
+| `emitter`   | `EventEmitter`              | -                                        |
+| `eventName` | `string`                    | The name of the event being listened for |
+| `options?`  | `StaticEventEmitterOptions` | -                                        |
 
 #### Returns
 
@@ -1161,7 +1161,7 @@ EventEmitter.on
 
 node_modules/@types/node/events.d.ts:221
 
-___
+---
 
 ### once
 
@@ -1176,31 +1176,31 @@ This method is intentionally generic and works with the web platform [EventTarge
 semantics and does not listen to the `'error'` event.
 
 ```js
-const { once, EventEmitter } = require('events');
+const { once, EventEmitter } = require('events')
 
 async function run() {
-  const ee = new EventEmitter();
+  const ee = new EventEmitter()
 
   process.nextTick(() => {
-    ee.emit('myevent', 42);
-  });
+    ee.emit('myevent', 42)
+  })
 
-  const [value] = await once(ee, 'myevent');
-  console.log(value);
+  const [value] = await once(ee, 'myevent')
+  console.log(value)
 
-  const err = new Error('kaboom');
+  const err = new Error('kaboom')
   process.nextTick(() => {
-    ee.emit('error', err);
-  });
+    ee.emit('error', err)
+  })
 
   try {
-    await once(ee, 'myevent');
+    await once(ee, 'myevent')
   } catch (err) {
-    console.log('error happened', err);
+    console.log('error happened', err)
   }
 }
 
-run();
+run()
 ```
 
 The special handling of the `'error'` event is only used when `events.once()`is used to wait for another event. If `events.once()` is used to wait for the
@@ -1208,15 +1208,15 @@ The special handling of the `'error'` event is only used when `events.once()`is 
 special handling:
 
 ```js
-const { EventEmitter, once } = require('events');
+const { EventEmitter, once } = require('events')
 
-const ee = new EventEmitter();
+const ee = new EventEmitter()
 
 once(ee, 'error')
   .then(([err]) => console.log('ok', err.message))
-  .catch((err) => console.log('error', err.message));
+  .catch((err) => console.log('error', err.message))
 
-ee.emit('error', new Error('boom'));
+ee.emit('error', new Error('boom'))
 
 // Prints: ok boom
 ```
@@ -1224,38 +1224,38 @@ ee.emit('error', new Error('boom'));
 An `AbortSignal` can be used to cancel waiting for the event:
 
 ```js
-const { EventEmitter, once } = require('events');
+const { EventEmitter, once } = require('events')
 
-const ee = new EventEmitter();
-const ac = new AbortController();
+const ee = new EventEmitter()
+const ac = new AbortController()
 
 async function foo(emitter, event, signal) {
   try {
-    await once(emitter, event, { signal });
-    console.log('event emitted!');
+    await once(emitter, event, { signal })
+    console.log('event emitted!')
   } catch (error) {
     if (error.name === 'AbortError') {
-      console.error('Waiting for the event was canceled!');
+      console.error('Waiting for the event was canceled!')
     } else {
-      console.error('There was an error', error.message);
+      console.error('There was an error', error.message)
     }
   }
 }
 
-foo(ee, 'foo', ac.signal);
-ac.abort(); // Abort waiting for the event
-ee.emit('foo'); // Prints: Waiting for the event was canceled!
+foo(ee, 'foo', ac.signal)
+ac.abort() // Abort waiting for the event
+ee.emit('foo') // Prints: Waiting for the event was canceled!
 ```
 
 **`since`** v11.13.0, v10.16.0
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `emitter` | `NodeEventTarget` |
-| `eventName` | `string` \| `symbol` |
-| `options?` | `StaticEventEmitterOptions` |
+| Name        | Type                        |
+| :---------- | :-------------------------- |
+| `emitter`   | `NodeEventTarget`           |
+| `eventName` | `string` \| `symbol`        |
+| `options?`  | `StaticEventEmitterOptions` |
 
 #### Returns
 
@@ -1273,11 +1273,11 @@ node_modules/@types/node/events.d.ts:157
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `emitter` | `DOMEventTarget` |
-| `eventName` | `string` |
-| `options?` | `StaticEventEmitterOptions` |
+| Name        | Type                        |
+| :---------- | :-------------------------- |
+| `emitter`   | `DOMEventTarget`            |
+| `eventName` | `string`                    |
+| `options?`  | `StaticEventEmitterOptions` |
 
 #### Returns
 
@@ -1291,7 +1291,7 @@ EventEmitter.once
 
 node_modules/@types/node/events.d.ts:162
 
-___
+---
 
 ### setMaxListeners
 
@@ -1304,23 +1304,23 @@ modified (if eventTargets is empty) or modify the limit specified in every `Even
 The value can be set to`Infinity` (or `0`) to indicate an unlimited number of listeners.
 
 ```js
-EventEmitter.setMaxListeners(20);
+EventEmitter.setMaxListeners(20)
 // Equivalent to
-EventEmitter.defaultMaxListeners = 20;
+EventEmitter.defaultMaxListeners = 20
 
-const eventTarget = new EventTarget();
+const eventTarget = new EventTarget()
 // Only way to increase limit for `EventTarget` instances
 // as these doesn't expose its own `setMaxListeners` method
-EventEmitter.setMaxListeners(20, eventTarget);
+EventEmitter.setMaxListeners(20, eventTarget)
 ```
 
 **`since`** v15.3.0, v14.17.0
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n?` | `number` |
+| Name              | Type                                   |
+| :---------------- | :------------------------------------- |
+| `n?`              | `number`                               |
 | `...eventTargets` | (`DOMEventTarget` \| `EventEmitter`)[] |
 
 #### Returns

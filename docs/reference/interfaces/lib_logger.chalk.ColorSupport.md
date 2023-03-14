@@ -27,7 +27,7 @@ Return whether Chalk supports Truecolor 16 million colors.
 
 node_modules/chalk/index.d.ts:121
 
-___
+---
 
 ### has256
 
@@ -39,7 +39,7 @@ Return whether Chalk supports ANSI 256 colors.
 
 node_modules/chalk/index.d.ts:116
 
-___
+---
 
 ### hasBasic
 
@@ -51,7 +51,7 @@ Return whether Chalk supports basic 16 colors.
 
 node_modules/chalk/index.d.ts:111
 
-___
+---
 
 ### level
 

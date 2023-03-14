@@ -21,7 +21,7 @@ jobs:
       - name: Autoapproving
         uses: hmarr/auto-approve-action@v2
         with:
-          github-token: "${{ secrets.GH_TOKEN_BOT_EVE }}"
+          github-token: '${{ secrets.GH_TOKEN_BOT_EVE }}'
 
       - name: Label autoapproved
         uses: actions/github-script@v5
@@ -43,10 +43,10 @@ jobs:
       - name: Automerging
         uses: pascalgn/automerge-action@v0.13.0
         env:
-          GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
+          GITHUB_TOKEN: '${{ secrets.GH_TOKEN }}'
           GITHUB_LOGIN: asyncapi-bot
-          MERGE_LABELS: ""
-          MERGE_METHOD: "squash"
-          MERGE_COMMIT_MESSAGE: "{pullRequest.title} (#{pullRequest.number})"
-          MERGE_RETRIES: "20"
-          MERGE_RETRY_SLEEP: "30000"
+          MERGE_LABELS: ''
+          MERGE_METHOD: 'squash'
+          MERGE_COMMIT_MESSAGE: '{pullRequest.title} (#{pullRequest.number})'
+          MERGE_RETRIES: '20'
+          MERGE_RETRY_SLEEP: '30000'

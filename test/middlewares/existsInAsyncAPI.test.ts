@@ -9,7 +9,7 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
     test: {
       url: 'mqtt://fake-url',
       protocol: 'mqtt',
-    }
+    },
   },
   channels: {
     'test/channel': {
@@ -17,33 +17,33 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
         message: {
           payload: {
             type: 'string',
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+  },
 })
 
 describe('existsInAsyncAPI', () => {
-  it('checks if channel exists', done => {
-    const middleware = existsInAsyncAPI(TEST_ASYNCAPI_DOCUMENT);
+  it('checks if channel exists', (done) => {
+    const middleware = existsInAsyncAPI(TEST_ASYNCAPI_DOCUMENT)
     const message = new GleeMessage({
-      channel: 'test/channel'
-    });
+      channel: 'test/channel',
+    })
 
-    middleware(message, err => {
+    middleware(message, (err) => {
       expect(err).toBeUndefined()
       done()
     })
   })
 
-  it('error if channel does not exist', done => {
-    const middleware = existsInAsyncAPI(TEST_ASYNCAPI_DOCUMENT);
+  it('error if channel does not exist', (done) => {
+    const middleware = existsInAsyncAPI(TEST_ASYNCAPI_DOCUMENT)
     const message = new GleeMessage({
-      channel: 'test/channel2'
-    });
+      channel: 'test/channel2',
+    })
 
-    middleware(message, err => {
+    middleware(message, (err) => {
       expect(err).toBeInstanceOf(Error)
       done()
     })

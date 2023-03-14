@@ -7,9 +7,9 @@ import { GleeFunctionEvent } from './index.js'
 import GleeMessage from './message.js'
 
 interface IValidateDataReturn {
-  errors?: void | betterAjvErrors.IOutputError[],
-  humanReadableError?: void | betterAjvErrors.IOutputError[],
-  isValid: boolean | PromiseLike<any>,
+  errors?: void | betterAjvErrors.IOutputError[]
+  humanReadableError?: void | betterAjvErrors.IOutputError[]
+  isValid: boolean | PromiseLike<any>
 }
 
 /**
@@ -19,7 +19,7 @@ interface IValidateDataReturn {
  * @param {String} path The path.
  * @param {String} channel The channel.
  */
-export const getParams = (path: string, channel: string): {[key: string]: string} | null => {
+export const getParams = (path: string, channel: string): { [key: string]: string } | null => {
   if (path === undefined) return {}
 
   const keys = []
@@ -28,10 +28,15 @@ export const getParams = (path: string, channel: string): {[key: string]: string
 
   if (result === null) return null
 
-  return keys.map((key, index) => ({ [key.name]: result[index + 1] })).reduce((prev, val) => ({
-    ...prev,
-    ...val,
-  }), {})
+  return keys
+    .map((key, index) => ({ [key.name]: result[index + 1] }))
+    .reduce(
+      (prev, val) => ({
+        ...prev,
+        ...val,
+      }),
+      {},
+    )
 }
 
 /**
@@ -49,7 +54,7 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
     serverName: message.serverName,
     connection: message.connection,
     broadcast: message.broadcast,
-    cluster: message.cluster
+    cluster: message.cluster,
   })
 
   if (message.isInbound()) {
@@ -57,7 +62,7 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
   } else {
     newMessage.setOutbound()
   }
-  
+
   return newMessage
 }
 
@@ -70,12 +75,12 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
  * @return {Boolean}
  */
 export const matchChannel = (path: string, channel: string): boolean => {
-  return (getParams(path, channel) !== null)
+  return getParams(path, channel) !== null
 }
 
 /**
  * Validates data against a given JSON Schema definition
- * 
+ *
  * @private
  * @param {Any} data The data to validate
  * @param {Object} schema A JSON Schema definition
@@ -104,10 +109,10 @@ export const validateData = (data: any, schema: object): IValidateDataReturn => 
 }
 
 export const arrayHasDuplicates = (array: any[]) => {
-  return (new Set(array)).size !== array.length
+  return new Set(array).size !== array.length
 }
 
-export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): GleeFunctionEvent => {
+export const gleeMessageToFunctionEvent = (message: GleeMessage, glee: Glee): GleeFunctionEvent => {
   return {
     payload: message.payload,
     headers: message.headers,

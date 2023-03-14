@@ -24,10 +24,7 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:dev": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
   },
-  "keywords": [
-    "asyncapi",
-    "framework"
-  ],
+  "keywords": ["asyncapi", "framework"],
   "author": "Fran Mendez",
   "publishConfig": {
     "access": "public"
@@ -85,6 +82,7 @@
     "jest-extended": "^1.2.0",
     "jsdoc-to-markdown": "^5.0.3",
     "markdown-toc": "^1.2.0",
+    "prettier": "^2.8.4",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.1.2",
     "tsc-watch": "^4.5.0",

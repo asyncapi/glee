@@ -3,13 +3,12 @@
 
 name: 'Announce releases in different channels'
 
-on: 
+on:
   release:
-    types: 
+    types:
       - published
 
 jobs:
-
   slack-announce:
     name: Slack - notify on every release
     runs-on: ubuntu-latest
@@ -18,14 +17,14 @@ jobs:
         uses: LoveToKnow/slackify-markdown-action@v1.0.0
         id: markdown
         with:
-            text: "[${{github.event.release.tag_name}}](${{github.event.release.html_url}}) \n ${{ github.event.release.body }}"
+          text: "[${{github.event.release.tag_name}}](${{github.event.release.html_url}}) \n ${{ github.event.release.body }}"
       - name: Send info about release to Slack
         uses: rtCamp/action-slack-notify@v2
         env:
-            SLACK_WEBHOOK: ${{ secrets.SLACK_RELEASES }}
-            SLACK_TITLE: Release ${{github.event.release.tag_name}} for ${{github.repository}} is out in the wild 😱💪🍾🎂
-            SLACK_MESSAGE: ${{steps.markdown.outputs.text}}
-            MSG_MINIMAL: true
+          SLACK_WEBHOOK: ${{ secrets.SLACK_RELEASES }}
+          SLACK_TITLE: Release ${{github.event.release.tag_name}} for ${{github.repository}} is out in the wild 😱💪🍾🎂
+          SLACK_MESSAGE: ${{steps.markdown.outputs.text}}
+          MSG_MINIMAL: true
 
   twitter-announce:
     name: Twitter - notify on minor and major releases
@@ -71,7 +70,7 @@ jobs:
         uses: m1ner79/Github-Twittction@v1.0.1
         with:
           twitter_status: "Release ${{github.event.release.tag_name}} for ${{github.repository}} is out in the wild 😱💪🍾🎂\n\nThank you for the contribution ${{ steps.author.outputs.name }} ${{github.event.release.html_url}}"
-          twitter_consumer_key: ${{ secrets.TWITTER_CONSUMER_KEY }} 
-          twitter_consumer_secret: ${{ secrets.TWITTER_CONSUMER_SECRET }} 
-          twitter_access_token_key: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }} 
+          twitter_consumer_key: ${{ secrets.TWITTER_CONSUMER_KEY }}
+          twitter_consumer_secret: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+          twitter_access_token_key: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
           twitter_access_token_secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}

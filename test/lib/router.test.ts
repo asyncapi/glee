@@ -8,7 +8,7 @@ describe('router', () => {
 
       const fakeMiddleware = {
         channel: 'channel',
-        fn: fakeMiddlewareFunction
+        fn: fakeMiddlewareFunction,
       }
 
       const router = new GleeRouter()

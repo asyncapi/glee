@@ -31,8 +31,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type     |
+| :---- | :------- |
 | `dir` | `string` |
 
 #### Returns
@@ -43,7 +43,7 @@
 
 [src/lib/functions.ts:53](https://github.com/asyncapi/glee/blob/388e335/src/lib/functions.ts#L53)
 
-___
+---
 
 ### trigger
 
@@ -51,12 +51,12 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | `Object` |
-| `__namedParameters.app` | [`default`](../classes/lib_glee.default.md) |
-| `__namedParameters.message` | [`default`](../classes/lib_message.default.md) |
-| `__namedParameters.operationId` | `string` |
+| Name                            | Type                                           |
+| :------------------------------ | :--------------------------------------------- |
+| `__namedParameters`             | `Object`                                       |
+| `__namedParameters.app`         | [`default`](../classes/lib_glee.default.md)    |
+| `__namedParameters.message`     | [`default`](../classes/lib_message.default.md) |
+| `__namedParameters.operationId` | `string`                                       |
 
 #### Returns
 

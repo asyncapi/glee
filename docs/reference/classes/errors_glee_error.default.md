@@ -43,8 +43,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name                | Type     |
+| :------------------ | :------- |
 | `__namedParameters` | `Object` |
 
 #### Overrides
@@ -65,7 +65,7 @@ Error.constructor
 
 [src/errors/glee-error.ts:3](https://github.com/asyncapi/glee/blob/388e335/src/errors/glee-error.ts#L3)
 
-___
+---
 
 ### \_errors
 
@@ -75,7 +75,7 @@ ___
 
 [src/errors/glee-error.ts:2](https://github.com/asyncapi/glee/blob/388e335/src/errors/glee-error.ts#L2)
 
-___
+---
 
 ### message
 
@@ -89,7 +89,7 @@ Error.message
 
 node_modules/typescript/lib/lib.es5.d.ts:1023
 
-___
+---
 
 ### name
 
@@ -103,7 +103,7 @@ Error.name
 
 node_modules/typescript/lib/lib.es5.d.ts:1022
 
-___
+---
 
 ### stack
 
@@ -117,7 +117,7 @@ Error.stack
 
 node_modules/typescript/lib/lib.es5.d.ts:1024
 
-___
+---
 
 ### prepareStackTrace
 
@@ -133,9 +133,9 @@ Optional override for formatting stack traces
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `err` | `Error` |
+| Name          | Type         |
+| :------------ | :----------- |
+| `err`         | `Error`      |
 | `stackTraces` | `CallSite`[] |
 
 ##### Returns
@@ -150,7 +150,7 @@ Error.prepareStackTrace
 
 node_modules/@types/node/globals.d.ts:11
 
-___
+---
 
 ### stackTraceLimit
 
@@ -178,7 +178,7 @@ node_modules/@types/node/globals.d.ts:13
 
 [src/errors/glee-error.ts:16](https://github.com/asyncapi/glee/blob/388e335/src/errors/glee-error.ts#L16)
 
-___
+---
 
 ### errors
 
@@ -202,9 +202,9 @@ Create .stack property on a target object
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `targetObject` | `object` |
+| Name              | Type       |
+| :---------------- | :--------- |
+| `targetObject`    | `object`   |
 | `constructorOpt?` | `Function` |
 
 #### Returns

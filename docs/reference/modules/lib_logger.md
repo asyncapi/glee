@@ -31,7 +31,7 @@
 
 ### chalk
 
-• **chalk**: [`Chalk`](../interfaces/lib_logger.chalk.Chalk.md) & [`ChalkFunction`](../interfaces/lib_logger.chalk.ChalkFunction.md) & { `BackgroundColor`: `BackgroundColor` ; `Color`: `Color` ; `ForegroundColor`: `ForegroundColor` ; `Level`: [`Level`](lib_logger.chalk.md#level) ; `Modifiers`: `Modifiers` ; `stderr`: [`Chalk`](../interfaces/lib_logger.chalk.Chalk.md) & { `supportsColor`: ``false`` \| [`ColorSupport`](../interfaces/lib_logger.chalk.ColorSupport.md)  } ; `supportsColor`: ``false`` \| [`ColorSupport`](../interfaces/lib_logger.chalk.ColorSupport.md)  }
+• **chalk**: [`Chalk`](../interfaces/lib_logger.chalk.Chalk.md) & [`ChalkFunction`](../interfaces/lib_logger.chalk.ChalkFunction.md) & { `BackgroundColor`: `BackgroundColor` ; `Color`: `Color` ; `ForegroundColor`: `ForegroundColor` ; `Level`: [`Level`](lib_logger.chalk.md#level) ; `Modifiers`: `Modifiers` ; `stderr`: [`Chalk`](../interfaces/lib_logger.chalk.Chalk.md) & { `supportsColor`: `false` \| [`ColorSupport`](../interfaces/lib_logger.chalk.ColorSupport.md) } ; `supportsColor`: `false` \| [`ColorSupport`](../interfaces/lib_logger.chalk.ColorSupport.md) }
 
 Main Chalk object that allows to chain styles together.
 Call the last one as a method with a string argument.
@@ -50,8 +50,8 @@ node_modules/chalk/index.d.ts:405
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `amount` | `number` |
 
 #### Returns
@@ -62,7 +62,7 @@ node_modules/chalk/index.d.ts:405
 
 [src/lib/logger.ts:43](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L43)
 
-___
+---
 
 ### logError
 
@@ -70,10 +70,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `error` | [`default`](../classes/errors_glee_error.default.md) \| `Error` |
-| `options` | `ILogErrorOptions` |
+| Name      | Type                                                            |
+| :-------- | :-------------------------------------------------------------- |
+| `error`   | [`default`](../classes/errors_glee_error.default.md) \| `Error` |
+| `options` | `ILogErrorOptions`                                              |
 
 #### Returns
 
@@ -83,7 +83,7 @@ ___
 
 [src/lib/logger.ts:129](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L129)
 
-___
+---
 
 ### logErrorLine
 
@@ -91,9 +91,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | `string` |
+| Name                | Type          |
+| :------------------ | :------------ |
+| `message`           | `string`      |
 | `__namedParameters` | `ILogOptions` |
 
 #### Returns
@@ -104,7 +104,7 @@ ___
 
 [src/lib/logger.ts:123](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L123)
 
-___
+---
 
 ### logInboundMessage
 
@@ -112,8 +112,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                           |
+| :-------- | :--------------------------------------------- |
 | `message` | [`default`](../classes/lib_message.default.md) |
 
 #### Returns
@@ -124,7 +124,7 @@ ___
 
 [src/lib/logger.ts:110](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L110)
 
-___
+---
 
 ### logInfoMessage
 
@@ -132,9 +132,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `text` | `string` |
+| Name                | Type          |
+| :------------------ | :------------ |
+| `text`              | `string`      |
 | `__namedParameters` | `ILogOptions` |
 
 #### Returns
@@ -145,7 +145,7 @@ ___
 
 [src/lib/logger.ts:92](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L92)
 
-___
+---
 
 ### logJSON
 
@@ -153,11 +153,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `json` | `object` \| `any`[] |
-| `__namedParameters` | `Object` |
-| `__namedParameters.error` | `boolean` |
+| Name                      | Type                |
+| :------------------------ | :------------------ |
+| `json`                    | `object` \| `any`[] |
+| `__namedParameters`       | `Object`            |
+| `__namedParameters.error` | `boolean`           |
 
 #### Returns
 
@@ -167,7 +167,7 @@ ___
 
 [src/lib/logger.ts:105](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L105)
 
-___
+---
 
 ### logLineWithIcon
 
@@ -175,10 +175,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `icon` | `string` |
-| `text` | `string` |
+| Name                | Type                      |
+| :------------------ | :------------------------ |
+| `icon`              | `string`                  |
+| `text`              | `string`                  |
 | `__namedParameters` | `ILogLineWithIconOptions` |
 
 #### Returns
@@ -189,7 +189,7 @@ ___
 
 [src/lib/logger.ts:83](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L83)
 
-___
+---
 
 ### logOutboundMessage
 
@@ -197,8 +197,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                           |
+| :-------- | :--------------------------------------------- |
 | `message` | [`default`](../classes/lib_message.default.md) |
 
 #### Returns
@@ -209,7 +209,7 @@ ___
 
 [src/lib/logger.ts:115](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L115)
 
-___
+---
 
 ### logTypeScriptError
 
@@ -217,12 +217,12 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `code` | `number` |
-| `message` | `string` |
-| `fileName` | `string` |
-| `line` | `number` |
+| Name        | Type     |
+| :---------- | :------- |
+| `code`      | `number` |
+| `message`   | `string` |
+| `fileName`  | `string` |
+| `line`      | `number` |
 | `character` | `number` |
 
 #### Returns
@@ -233,7 +233,7 @@ ___
 
 [src/lib/logger.ts:150](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L150)
 
-___
+---
 
 ### logTypeScriptMessage
 
@@ -241,8 +241,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type     |
+| :-------- | :------- |
 | `message` | `string` |
 
 #### Returns
@@ -253,7 +253,7 @@ ___
 
 [src/lib/logger.ts:146](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L146)
 
-___
+---
 
 ### logWarningMessage
 
@@ -261,9 +261,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `text` | `string` |
+| Name                | Type          |
+| :------------------ | :------------ |
+| `text`              | `string`      |
 | `__namedParameters` | `ILogOptions` |
 
 #### Returns
@@ -274,7 +274,7 @@ ___
 
 [src/lib/logger.ts:98](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L98)
 
-___
+---
 
 ### logWelcome
 
@@ -282,8 +282,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name                | Type     |
+| :------------------ | :------- |
 | `__namedParameters` | `Object` |
 
 #### Returns

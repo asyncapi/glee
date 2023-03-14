@@ -12,7 +12,7 @@ import KafkaAdapter from './adapters/kafka/index.js'
 export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) => {
   const serverNames = await getSelectedServerNames()
 
-  serverNames.forEach(serverName => {
+  serverNames.forEach((serverName) => {
     const server = parsedAsyncAPI.server(serverName)
 
     if (!server) {
@@ -25,7 +25,14 @@ export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeC
   if (config.cluster) registerAdapterForCluster(app, config.cluster)
 }
 
-function registerAdapterForServer(serverName: string, server: Server, app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) {
+// eslint-disable-next-line sonarjs/cognitive-complexity
+function registerAdapterForServer(
+  serverName: string,
+  server: Server,
+  app: Glee,
+  parsedAsyncAPI: AsyncAPIDocument,
+  config: GleeConfig,
+) {
   const protocol = server.protocol()
   const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
   if (['mqtt', 'mqtts', 'secure-mqtt'].includes(protocol)) {
@@ -48,7 +55,7 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
       app.addAdapter(WebsocketClientAdapter, {
         serverName,
         server,
-        parsedAsyncAPI
+        parsedAsyncAPI,
       })
     } else {
       if (!configWsAdapter || configWsAdapter === 'native') {
@@ -70,9 +77,10 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
           parsedAsyncAPI,
         })
       } else {
-        throw new Error(`Unknown value for websocket.adapter found in glee.config.js: ${config.ws.server.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`)
+        throw new Error(
+          `Unknown value for websocket.adapter found in glee.config.js: ${config.ws.server.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`,
+        )
       }
-
     }
   } else {
     // TODO: Improve error message with link to repo encouraging the developer to contribute.

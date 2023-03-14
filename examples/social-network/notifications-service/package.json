@@ -13,9 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/asyncapi/glee-hello-world.git"
   },
-  "keywords": [
-    "glee"
-  ],
+  "keywords": ["glee"],
   "author": "Fran Mendez",
   "license": "Apache-2.0",
   "bugs": {

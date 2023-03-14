@@ -22,11 +22,11 @@
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `error` | `Error` |
-| `message` | [`default`](../classes/lib_message.default.md) |
-| `next` | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
+| Name      | Type                                                      |
+| :-------- | :-------------------------------------------------------- |
+| `error`   | `Error`                                                   |
+| `message` | [`default`](../classes/lib_message.default.md)            |
+| `next`    | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
 
 ##### Returns
 
@@ -36,7 +36,7 @@
 
 [src/middlewares/index.d.ts:4](https://github.com/asyncapi/glee/blob/388e335/src/middlewares/index.d.ts#L4)
 
-___
+---
 
 ### Middleware
 
@@ -48,10 +48,10 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | [`default`](../classes/lib_message.default.md) |
-| `next` | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
+| Name      | Type                                                      |
+| :-------- | :-------------------------------------------------------- |
+| `message` | [`default`](../classes/lib_message.default.md)            |
+| `next`    | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
 
 ##### Returns
 
@@ -61,7 +61,7 @@ ___
 
 [src/middlewares/index.d.ts:3](https://github.com/asyncapi/glee/blob/388e335/src/middlewares/index.d.ts#L3)
 
-___
+---
 
 ### MiddlewareCallback
 
@@ -73,9 +73,9 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `error?` | `Error` |
+| Name       | Type                                           |
+| :--------- | :--------------------------------------------- |
+| `error?`   | `Error`                                        |
 | `message?` | [`default`](../classes/lib_message.default.md) |
 
 ##### Returns

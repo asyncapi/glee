@@ -1,10 +1,10 @@
 import 'jest-extended'
 import Glee from '../../src/lib/glee'
 import GleeClusterAdapter from '../../src/lib/cluster.js'
-import {validate as uuidValidate, version as uuidVersion} from 'uuid'
+import { validate as uuidValidate, version as uuidVersion } from 'uuid'
 import GleeMessage from '../../src/lib/message.js'
 import { MiddlewareCallback } from '../../src/middlewares/index.d'
-import {jest} from '@jest/globals'
+import { jest } from '@jest/globals'
 
 const TEST_SERVER_NAME = 'test'
 class TEST_ADAPTER extends GleeClusterAdapter {
@@ -14,19 +14,19 @@ class TEST_ADAPTER extends GleeClusterAdapter {
 }
 
 const fakeConfig = {
-    cluster: {
-      adapter: TEST_ADAPTER,
-      url: 'test://fake-url.com',
-      name: TEST_SERVER_NAME
-    }
+  cluster: {
+    adapter: TEST_ADAPTER,
+    url: 'test://fake-url.com',
+    name: TEST_SERVER_NAME,
+  },
 }
 
 const anotherFakeConfig = {
   cluster: {
     adapter: TEST_ADAPTER,
     url: 'test://fake-url-with-vars:{port}',
-    name: TEST_SERVER_NAME
-  }
+    name: TEST_SERVER_NAME,
+  },
 }
 
 describe('clusterAdapter', () => {
@@ -37,7 +37,7 @@ describe('clusterAdapter', () => {
       expect(adapter.glee).toStrictEqual(app)
     })
   })
-  
+
   describe('serverName', () => {
     it('returns the server name passed on constructor', () => {
       const app = new Glee(fakeConfig)
@@ -53,14 +53,14 @@ describe('clusterAdapter', () => {
       jest.resetModules()
       process.env = {
         ...OLD_ENV,
-        GLEE_SERVER_VARIABLES: `${TEST_SERVER_NAME}:port:8000`
+        GLEE_SERVER_VARIABLES: `${TEST_SERVER_NAME}:port:8000`,
       }
     })
 
     afterAll(() => {
       process.env = OLD_ENV
     })
-    
+
     it('returns the server URL with variables expanded', () => {
       const app = new Glee(anotherFakeConfig)
       const adapter = new GleeClusterAdapter(app)
@@ -82,7 +82,7 @@ describe('clusterAdapter', () => {
       app.setClusterAdapter(TEST_ADAPTER)
 
       const msg = new GleeMessage({
-        payload: 'test'
+        payload: 'test',
       })
 
       app.useOutbound((msg: GleeMessage) => {
@@ -143,7 +143,7 @@ describe('clusterAdapter', () => {
   describe('send()', () => {
     it('throws', async () => {
       const msg = new GleeMessage({
-        payload: 'test'
+        payload: 'test',
       })
       const app = new Glee(fakeConfig)
       app.setClusterAdapter(TEST_ADAPTER)
@@ -164,7 +164,7 @@ describe('clusterAdapter', () => {
       payload: 'test',
       channel: 'test',
       serverName: 'test-server',
-      broadcast: true
+      broadcast: true,
     })
 
     it('serialize message to JSON', () => {

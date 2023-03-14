@@ -9,10 +9,10 @@ import Glee from './glee.js'
 import { gleeMessageToFunctionEvent, validateData, isRemoteServer } from './util.js'
 import { pathToFileURL } from 'url'
 import GleeError from '../errors/glee-error.js'
-import {getParsedAsyncAPI} from './asyncapiFile.js'
+import { getParsedAsyncAPI } from './asyncapiFile.js'
 
 interface FunctionInfo {
-  run: GleeFunction,
+  run: GleeFunction
 }
 
 const OutboundMessageSchema = {
@@ -22,11 +22,11 @@ const OutboundMessageSchema = {
     headers: {
       type: 'object',
       propertyNames: { type: 'string' },
-      additionalProperties: { type: 'string' }
+      additionalProperties: { type: 'string' },
     },
     channel: { type: 'string' },
     server: { type: 'string' },
-  }
+  },
 }
 
 const FunctionReturnSchema = {
@@ -34,18 +34,15 @@ const FunctionReturnSchema = {
   properties: {
     send: {
       type: 'array',
-      items: OutboundMessageSchema
+      items: OutboundMessageSchema,
     },
     reply: {
       type: 'array',
-      items: OutboundMessageSchema
-    }
+      items: OutboundMessageSchema,
+    },
   },
   additionalProperties: false,
-  anyOf: [
-    { required: ['send'] },
-    { required: ['reply'] }
-  ]
+  anyOf: [{ required: ['send'] }, { required: ['reply'] }],
 }
 
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
@@ -62,46 +59,40 @@ export async function register(dir: string) {
 
   try {
     const files = await walkdir.async(dir, { return_object: true })
-    return await Promise.all(Object.keys(files).map(async (filePath) => {
-      try {
-        const functionName = basename(filePath, extname(filePath))
-        const { default: fn } = await import(pathToFileURL(filePath).href)
-        functions.set(functionName, {
-          run: fn,
-        })
-      } catch (e) {
-        console.error(e)
-      }
-    }))
+    return await Promise.all(
+      Object.keys(files).map(async (filePath) => {
+        try {
+          const functionName = basename(filePath, extname(filePath))
+          const { default: fn } = await import(pathToFileURL(filePath).href)
+          functions.set(functionName, {
+            run: fn,
+          })
+        } catch (e) {
+          console.error(e)
+        }
+      }),
+    )
   } catch (e) {
     console.error(e)
   }
 }
 
-export async function trigger({
-  app,
-  operationId,
-  message
-} : {
-  app: Glee,
-  operationId: string,
-  message: GleeMessage,
-}) {
+export async function trigger({ app, operationId, message }: { app: Glee; operationId: string; message: GleeMessage }) {
   try {
     const parsedAsyncAPI = await getParsedAsyncAPI()
     let res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
     if (res === undefined) res = null
     const { humanReadableError, errors, isValid } = validateData(res, FunctionReturnSchema)
 
-    if ( !isValid ) {
+    if (!isValid) {
       const err = new GleeError({
         humanReadableError,
         errors,
       })
       err.message = `Function ${operationId} returned invalid data.`
-      
+
       logError(err, {
-        highlightedWords: [operationId]
+        highlightedWords: [operationId],
       })
 
       return
@@ -111,13 +102,15 @@ export async function trigger({
       const localServerProtocols = ['ws', 'wss', 'http', 'https']
       const serverProtocol = parsedAsyncAPI.server(msg.server).protocol().toLowerCase()
       const isBroadcast = localServerProtocols.includes(serverProtocol) && !isRemoteServer(parsedAsyncAPI, msg.server)
-      app.send(new GleeMessage({
-        payload: msg.payload,
-        headers: msg.headers,
-        channel: msg.channel || message.channel,
-        serverName: msg.server,
-        broadcast: isBroadcast
-      }))
+      app.send(
+        new GleeMessage({
+          payload: msg.payload,
+          headers: msg.headers,
+          channel: msg.channel || message.channel,
+          serverName: msg.server,
+          broadcast: isBroadcast,
+        }),
+      )
     })
 
     res?.reply?.forEach((msg) => {

@@ -23,21 +23,21 @@
 
 [src/lib/configs.ts:53](https://github.com/asyncapi/glee/blob/388e335/src/lib/configs.ts#L53)
 
-___
+---
 
 ### initializeConfigs
 
-▸ **initializeConfigs**(`config?`): `Promise`<{ [key: string]: `string`;  }\>
+▸ **initializeConfigs**(`config?`): `Promise`<{ [key: string]: `string`; }\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `config` | `Config` |
 
 #### Returns
 
-`Promise`<{ [key: string]: `string`;  }\>
+`Promise`<{ [key: string]: `string`; }\>
 
 #### Defined in
 

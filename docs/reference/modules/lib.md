@@ -24,17 +24,17 @@
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type                                                              |
+| :--------- | :---------------------------------------------------------------- |
 | `adapter?` | `string` \| typeof [`default`](../classes/lib_cluster.default.md) |
-| `name?` | `string` |
-| `url` | `string` |
+| `name?`    | `string`                                                          |
+| `url`      | `string`                                                          |
 
 #### Defined in
 
 [src/lib/index.d.ts:8](https://github.com/asyncapi/glee/blob/388e335/src/lib/index.d.ts#L8)
 
-___
+---
 
 ### GleeConfig
 
@@ -42,19 +42,19 @@ ___
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
-| `cluster?` | [`GleeClusterAdapterConfig`](lib.md#gleeclusteradapterconfig) |
-| `websocket?` | { `adapter?`: [`WebSocketServerType`](lib.md#websocketservertype) \| typeof [`default`](../classes/lib_adapter.default.md) ; `httpServer?`: `any` ; `port?`: `number`  } |
-| `websocket.adapter?` | [`WebSocketServerType`](lib.md#websocketservertype) \| typeof [`default`](../classes/lib_adapter.default.md) |
-| `websocket.httpServer?` | `any` |
-| `websocket.port?` | `number` |
+| Name                    | Type                                                                                                                                                                    |
+| :---------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cluster?`              | [`GleeClusterAdapterConfig`](lib.md#gleeclusteradapterconfig)                                                                                                           |
+| `websocket?`            | { `adapter?`: [`WebSocketServerType`](lib.md#websocketservertype) \| typeof [`default`](../classes/lib_adapter.default.md) ; `httpServer?`: `any` ; `port?`: `number` } |
+| `websocket.adapter?`    | [`WebSocketServerType`](lib.md#websocketservertype) \| typeof [`default`](../classes/lib_adapter.default.md)                                                            |
+| `websocket.httpServer?` | `any`                                                                                                                                                                   |
+| `websocket.port?`       | `number`                                                                                                                                                                |
 
 #### Defined in
 
 [src/lib/index.d.ts:14](https://github.com/asyncapi/glee/blob/388e335/src/lib/index.d.ts#L14)
 
-___
+---
 
 ### GleeFunction
 
@@ -66,8 +66,8 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type                                            |
+| :------ | :---------------------------------------------- |
 | `event` | [`GleeFunctionEvent`](lib.md#gleefunctionevent) |
 
 ##### Returns
@@ -78,7 +78,7 @@ ___
 
 [src/lib/index.d.ts:48](https://github.com/asyncapi/glee/blob/388e335/src/lib/index.d.ts#L48)
 
-___
+---
 
 ### GleeFunctionEvent
 
@@ -86,20 +86,20 @@ ___
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
-| `channel?` | `string` |
+| Name          | Type                                              |
+| :------------ | :------------------------------------------------ |
+| `channel?`    | `string`                                          |
 | `connection?` | [`default`](../classes/lib_connection.default.md) |
-| `glee` | [`default`](../classes/lib_glee.default.md) |
-| `headers?` | { [key: string]: `string`;  } |
-| `payload?` | `any` |
-| `serverName` | `string` |
+| `glee`        | [`default`](../classes/lib_glee.default.md)       |
+| `headers?`    | { [key: string]: `string`; }                      |
+| `payload?`    | `any`                                             |
+| `serverName`  | `string`                                          |
 
 #### Defined in
 
 [src/lib/index.d.ts:29](https://github.com/asyncapi/glee/blob/388e335/src/lib/index.d.ts#L29)
 
-___
+---
 
 ### GleeFunctionReturn
 
@@ -107,17 +107,17 @@ ___
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
+| Name         | Type                                                                  |
+| :----------- | :-------------------------------------------------------------------- |
 | `broadcast?` | [`GleeFunctionReturnBroadcast`](lib.md#gleefunctionreturnbroadcast)[] |
-| `reply?` | [`GleeFunctionReturnReply`](lib.md#gleefunctionreturnreply)[] |
-| `send?` | [`GleeFunctionReturnSend`](lib.md#gleefunctionreturnsend)[] |
+| `reply?`     | [`GleeFunctionReturnReply`](lib.md#gleefunctionreturnreply)[]         |
+| `send?`      | [`GleeFunctionReturnSend`](lib.md#gleefunctionreturnsend)[]           |
 
 #### Defined in
 
 [src/lib/index.d.ts:23](https://github.com/asyncapi/glee/blob/388e335/src/lib/index.d.ts#L23)
 
-___
+---
 
 ### GleeFunctionReturnBroadcast
 
@@ -127,7 +127,7 @@ ___
 
 [src/lib/index.d.ts:46](https://github.com/asyncapi/glee/blob/388e335/src/lib/index.d.ts#L46)
 
-___
+---
 
 ### GleeFunctionReturnReply
 
@@ -137,7 +137,7 @@ ___
 
 [src/lib/index.d.ts:45](https://github.com/asyncapi/glee/blob/388e335/src/lib/index.d.ts#L45)
 
-___
+---
 
 ### GleeFunctionReturnSend
 
@@ -145,22 +145,22 @@ ___
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
-| `channel?` | `string` |
-| `headers?` | { [key: string]: `string`;  } |
-| `payload?` | `any` |
-| `server?` | `string` |
+| Name       | Type                         |
+| :--------- | :--------------------------- |
+| `channel?` | `string`                     |
+| `headers?` | { [key: string]: `string`; } |
+| `payload?` | `any`                        |
+| `server?`  | `string`                     |
 
 #### Defined in
 
 [src/lib/index.d.ts:38](https://github.com/asyncapi/glee/blob/388e335/src/lib/index.d.ts#L38)
 
-___
+---
 
 ### WebSocketServerType
 
-Ƭ **WebSocketServerType**: ``"native"`` \| ``"socket.io"``
+Ƭ **WebSocketServerType**: `"native"` \| `"socket.io"`
 
 #### Defined in
 

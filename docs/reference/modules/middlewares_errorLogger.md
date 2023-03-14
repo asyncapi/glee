@@ -20,11 +20,11 @@
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `err` | `Error` |
-| `message` | [`default`](../classes/lib_message.default.md) |
-| `next` | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
+| Name      | Type                                                      |
+| :-------- | :-------------------------------------------------------- |
+| `err`     | `Error`                                                   |
+| `message` | [`default`](../classes/lib_message.default.md)            |
+| `next`    | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
 
 ##### Returns
 

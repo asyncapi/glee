@@ -15,7 +15,7 @@
 
 Renames and re-exports [default](../classes/lib_glee.default.md)
 
-___
+---
 
 ### Message
 

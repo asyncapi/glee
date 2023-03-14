@@ -3,13 +3,13 @@ import string2json from '../../src/middlewares/string2json.js'
 import GleeMessage from '../../src/lib/message.js'
 
 describe('string2json', () => {
-  it('converts json string to object', done => {
+  it('converts json string to object', (done) => {
     const payload = {
-      test: 'value'
+      test: 'value',
     }
 
     const fakeMessage = new GleeMessage({
-      payload: JSON.stringify(payload)
+      payload: JSON.stringify(payload),
     })
 
     string2json(fakeMessage, () => {

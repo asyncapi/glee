@@ -5,12 +5,7 @@ Glee lets you bind incoming messages to [functions](./functions.md). However, so
 To subscribe to a lifecycle event, create a file under the `lifecycle` directory. It must have the following shape:
 
 ```js
-export default async function ({
-  glee,
-  serverName,
-  server,
-  connection,
-}) {
+export default async function ({ glee, serverName, server, connection }) {
   // Your business logic here...
 }
 
@@ -21,23 +16,23 @@ Each file in the `lifecycle` directory must export a default async function and 
 
 ## List of events
 
-|Event|Description|
-|---|---|
-|onConnect|A connection with a broker has been established.
-|onReconnect|Glee reconnected to a broker.
-|onDisconnect|A connection with a broker has been closed.
-|onServerReady|Your Glee server is now ready to accept connections.
-|onServerConnectionOpen|A client has opened a connection with your Glee server.
-|onServerConnectionClose|A client has closed the connection with your Glee server.
+| Event                   | Description                                               |
+| ----------------------- | --------------------------------------------------------- |
+| onConnect               | A connection with a broker has been established.          |
+| onReconnect             | Glee reconnected to a broker.                             |
+| onDisconnect            | A connection with a broker has been closed.               |
+| onServerReady           | Your Glee server is now ready to accept connections.      |
+| onServerConnectionOpen  | A client has opened a connection with your Glee server.   |
+| onServerConnectionClose | A client has closed the connection with your Glee server. |
 
 All of them take a single argument which contains information about the event:
 
-|Attribute|Description
-|---|---|
-|glee|A reference to the Glee app.
-|serverName|The name of the server where the event happened.
-|server|The AsyncAPI definition of the server where the event happened.
-|connection|The connection where the event happened.
+| Attribute  | Description                                                     |
+| ---------- | --------------------------------------------------------------- |
+| glee       | A reference to the Glee app.                                    |
+| serverName | The name of the server where the event happened.                |
+| server     | The AsyncAPI definition of the server where the event happened. |
+| connection | The connection where the event happened.                        |
 
 ## Restricting the lifecycle event
 

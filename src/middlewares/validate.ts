@@ -7,10 +7,12 @@ import { MiddlewareCallback } from './index.js'
 export default (schema: Schema) => (event: GleeMessage, next: MiddlewareCallback) => {
   const { humanReadableError, errors, isValid } = validateData(event.payload, schema)
   if (!isValid) {
-    return next(new GleeError({
-      humanReadableError,
-      errors,
-    }))
+    return next(
+      new GleeError({
+        humanReadableError,
+        errors,
+      }),
+    )
   }
   next()
 }

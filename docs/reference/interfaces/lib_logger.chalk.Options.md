@@ -21,6 +21,7 @@ Specify the color support for Chalk.
 By default, color support is automatically detected based on the environment.
 
 Levels:
+
 - `0` - All colors disabled.
 - `1` - Basic 16 colors support.
 - `2` - ANSI 256 colors support.

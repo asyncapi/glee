@@ -48,7 +48,7 @@ channels:
           bindingVersion: 0.1.0
     subscribe:
       message:
-        $ref: '#/components/messages/UserSignedUp'  
+        $ref: '#/components/messages/UserSignedUp'
   server/announce:
     subscribe:
       message:

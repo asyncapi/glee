@@ -3,7 +3,7 @@ import ValidationError from '../../src/errors/glee-error'
 
 const errorDetails = {
   humanReadableError: 'This is an error',
-  errors: [new Error('Error Occured!')]
+  errors: [new Error('Error Occured!')],
 }
 const error = new ValidationError(errorDetails)
 

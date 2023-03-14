@@ -5,13 +5,13 @@ import fetch from 'node-fetch'
 export default async function (event) {
   const chatMessage = event.payload
   const messageToShrek = chatMessage ? encodeURIComponent(chatMessage) : ''
-  const defaultAnswer = 'Shrek is out sorry. He\'s busy rescuing the princess.'
+  const defaultAnswer = "Shrek is out sorry. He's busy rescuing the princess."
   let shrekAnswer = defaultAnswer
   let botAnswer
 
   try {
     botAnswer = await fetch(`https://api.wit.ai/message?q=${messageToShrek}`, {
-      headers: { Authorization: `Bearer ${process.env.CHATBOT_TOKEN}` }
+      headers: { Authorization: `Bearer ${process.env.CHATBOT_TOKEN}` },
     })
   } catch (e) {
     throw new Error(`Having issues communicating with the bot: ${e}`)
@@ -33,12 +33,12 @@ export default async function (event) {
     shrekAnswer = firstTraitValue ? firstTraitValue : wrongQuestionAnswer
   }
   console.log(`Answered with: ${shrekAnswer}`)
-  
+
   return {
     reply: [
       {
-        payload: shrekAnswer
-      }
-    ]
+        payload: shrekAnswer,
+      },
+    ],
   }
 }

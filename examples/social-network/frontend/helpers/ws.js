@@ -14,7 +14,7 @@ export default class WS {
         const json = JSON.parse(event.data)
         console.log(json)
         if (this.listeners[json.type]) {
-          this.listeners[json.type].forEach(listener => listener(json.data))
+          this.listeners[json.type].forEach((listener) => listener(json.data))
         }
       } catch (e) {
         console.error('Unable to decode the WebSocket message:')

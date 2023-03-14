@@ -20,11 +20,11 @@
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
+| Name          | Type                                              |
+| :------------ | :------------------------------------------------ |
 | `connection?` | [`default`](../classes/lib_connection.default.md) |
-| `server` | `Server` |
-| `serverName` | `string` |
+| `server`      | `Server`                                          |
+| `serverName`  | `string`                                          |
 
 #### Defined in
 
