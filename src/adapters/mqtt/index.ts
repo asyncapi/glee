@@ -2,7 +2,7 @@ import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import { MqttAuthConfig, MqttAdapterConfig } from '../../lib/index.js'
-import { SecurityScheme, Server } from '@asyncapi/parser';
+import { SecurityScheme } from '@asyncapi/parser'
 
 interface IMQTTHeaders {
   cmd?: string;
