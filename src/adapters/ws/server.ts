@@ -39,7 +39,7 @@ class WebSocketsAdapter extends Adapter {
     socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
   }
 
-  private checkQuery(socket, queryData: QueryData) {
+  private checkQuery(queryData: QueryData) {
     const { searchParams, query } = queryData
 
     const queryParams = new Map()
@@ -47,20 +47,13 @@ class WebSocketsAdapter extends Adapter {
       queryParams.set(key, value)
     })
 
-    const { isValid, humanReadableError, errors } = validateData(Object.fromEntries(queryParams.entries()), query)
-    if (!isValid) {
-      this.emitGleeError(socket, { humanReadableError, errors })
-      // return
-    }
+    return validateData(Object.fromEntries(queryParams.entries()), query)
+
   }
 
-  private checkHeaders(socket, requestDetails) {
+  private checkHeaders(requestDetails) {
     const { request, headers } = requestDetails
-    const { isValid, humanReadableError, errors } = validateData(request.headers, headers)
-    if (!isValid) {
-      this.emitGleeError(socket, { humanReadableError, errors })
-      // return
-    }
+    return validateData(request.headers, headers)
   }
 
   private initializeServerEvents(serverData) {
@@ -133,6 +126,31 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
+  private checkBindings(socket, bindingOpts) {
+
+    const { wsChannelBinding, request, searchParams } = bindingOpts
+
+    const { query, headers } = wsChannelBinding
+    if (query) {
+      const { isValid, humanReadableError, errors } = this.checkQuery({searchParams, query})
+
+      if (!isValid) {
+        this.emitGleeError(socket, { humanReadableError, errors })
+        return false
+      }
+    }
+
+    if (headers) {
+      const { isValid, humanReadableError, errors } = this.checkHeaders({request, headers})
+      if (!isValid) {
+        this.emitGleeError(socket, { humanReadableError, errors })
+        return false
+      }
+    }
+
+    return true
+  }
+
   async _connect(): Promise<this> {
     const {
       config,
@@ -158,14 +176,8 @@ class WebSocketsAdapter extends Adapter {
       const wsChannelBinding = this.parsedAsyncAPI.channel(pathname).binding('ws')
 
       if (wsChannelBinding) {
-        const { query, headers } = wsChannelBinding
-        if (query) {
-          this.checkQuery(socket, {searchParams, query})
-        }
-
-        if (headers) {
-          this.checkHeaders(socket, { request, headers })
-        }
+        const correctBindings = this.checkBindings(socket, { wsChannelBinding, request, searchParams})
+        if(!correctBindings) return
       }
 
       if (servers.has(pathname)) {
