@@ -7,7 +7,13 @@ import GleeMessage from '../../lib/message.js'
 import GleeError from '../../errors/glee-error.js'
 import {WebsocketAdapterConfig} from '../../lib/index.js'
 
+type QueryData = {
+  searchParams: URLSearchParams,
+  query: any
+}
+
 class WebSocketsAdapter extends Adapter {
+
   name(): string {
     return 'WebSockets adapter'
   }
@@ -20,7 +26,94 @@ class WebSocketsAdapter extends Adapter {
     return this._send(message)
   }
 
-  async _connect(): Promise<this> { // NOSONAR
+  private emitPathnameError(socket, pathname: string) {
+    socket.end('HTTP/1.1 404 Not Found\r\n\r\n')
+    const err = new Error(`A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file.`)
+    this.emit('error', err)
+    throw err
+  }
+
+  private emitGleeError(socket, options) {
+    const err = new GleeError(options)
+    this.emit('error', err)
+    socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
+  }
+
+  private checkQuery(socket, queryData: QueryData) {
+    const { searchParams, query } = queryData
+
+    const queryParams = new Map()
+    searchParams.forEach((value, key) => {
+      queryParams.set(key, value)
+    })
+
+    const { isValid, humanReadableError, errors } = validateData(Object.fromEntries(queryParams.entries()), query)
+    if (!isValid) {
+      this.emitGleeError(socket, { humanReadableError, errors })
+      // return
+    }
+  }
+
+  private checkHeaders(socket, requestDetails) {
+    const { request, headers } = requestDetails
+    const { isValid, humanReadableError, errors } = validateData(request.headers, headers)
+    if (!isValid) {
+      this.emitGleeError(socket, { humanReadableError, errors })
+      // return
+    }
+  }
+
+  private initializeServerEvents(serverData) {
+    const { servers, ws, pathname, request } = serverData
+
+    servers.get(pathname).emit('connect', ws, request)
+          
+    ws.on('message', (payload) => {
+      const msg = this._createMessage(pathname, payload)
+      this.emit('message', msg, ws)
+    })
+
+    this.emit('server:connection:open', { name: this.name(), adapter: this, connection: ws, channel: pathname, request })
+  }
+
+  private pathnameChecks(socket, pathname: string, serverOptions) {
+
+    const { serverUrl, servers } = serverOptions
+
+    if (!pathname.startsWith(serverUrl.pathname) && !pathname.startsWith(`/${serverUrl.pathname}`)) {
+      this.emitPathnameError(socket, pathname)
+    }
+
+    if (serverUrl.pathname !== '/') {
+      pathname = pathname.substring(serverUrl.pathname.length)
+    }
+
+    // If pathname is /something but AsyncAPI file says the channel name is "something"
+    // then we convert pathname to "something".
+    if (pathname.startsWith('/') && !servers.has(pathname) && servers.has(pathname.substring(1))) {
+      pathname = pathname.substring(1)
+    }
+
+    if (!this.parsedAsyncAPI.channel(pathname)) {
+      this.emitPathnameError(socket, pathname)
+    }
+
+    return pathname
+  }
+
+  private portChecks(portOptions) {
+
+    const { port, config, optionsPort, wsHttpServer } = portOptions
+
+    const checkWrongPort = !optionsPort && config?.httpServer && String(wsHttpServer.address().port) !== String(port)
+
+    if (checkWrongPort) {
+      console.error(`Your custom HTTP server is listening on port ${wsHttpServer.address().port} but your AsyncAPI file says it must listen on ${port}. Please fix the inconsistency.`)
+      process.exit(1)
+    }
+  }
+
+  private async initializeConstants() {
     const options: WebsocketAdapterConfig = await this.resolveProtocolConfig('ws')
     const config = options?.server
     const serverUrl = new URL(this.serverUrlExpanded)
@@ -29,10 +122,27 @@ class WebSocketsAdapter extends Adapter {
     const optionsPort = config?.port
     const port = optionsPort || asyncapiServerPort
 
-    if (!optionsPort && config?.httpServer && String(wsHttpServer.address().port) !== String(port)) {
-      console.error(`Your custom HTTP server is listening on port ${wsHttpServer.address().port} but your AsyncAPI file says it must listen on ${port}. Please fix the inconsistency.`)
-      process.exit(1)
+    return {
+      options,
+      config,
+      serverUrl,
+      wsHttpServer,
+      asyncapiServerPort,
+      optionsPort,
+      port
     }
+  }
+
+  async _connect(): Promise<this> {
+    const {
+      config,
+      serverUrl,
+      wsHttpServer,
+      optionsPort,
+      port
+    } = await this.initializeConstants()
+
+    this.portChecks({ port, config, optionsPort, wsHttpServer })
 
     const servers = new Map()
     this.channelNames.forEach(channelName => {
@@ -42,29 +152,7 @@ class WebSocketsAdapter extends Adapter {
     wsHttpServer.on('upgrade', (request, socket, head) => {
       let { pathname } = new URL(request.url, `ws://${request.headers.host}`)
 
-      if (!pathname.startsWith(serverUrl.pathname) && !pathname.startsWith(`/${serverUrl.pathname}`)) {
-        socket.end('HTTP/1.1 404 Not Found\r\n\r\n')
-        const err = new Error(`A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file.`)
-        this.emit('error', err)
-        throw err
-      }
-
-      if (serverUrl.pathname !== '/') {
-        pathname = pathname.substring(serverUrl.pathname.length)
-      }
-
-      // If pathname is /something but AsyncAPI file says the channel name is "something"
-      // then we convert pathname to "something".
-      if (pathname.startsWith('/') && !servers.has(pathname) && servers.has(pathname.substring(1))) {
-        pathname = pathname.substring(1)
-      }
-
-      if (!this.parsedAsyncAPI.channel(pathname)) {
-        socket.end('HTTP/1.1 404 Not Found\r\n\r\n')
-        const err = new Error(`A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file.`)
-        this.emit('error', err)
-        throw err
-      }
+      pathname = this.pathnameChecks(socket, pathname, {serverUrl, servers})
 
       const { searchParams } = new URL(request.url, `ws://${request.headers.host}`)
       const wsChannelBinding = this.parsedAsyncAPI.channel(pathname).binding('ws')
@@ -72,39 +160,17 @@ class WebSocketsAdapter extends Adapter {
       if (wsChannelBinding) {
         const { query, headers } = wsChannelBinding
         if (query) {
-          const queryParams = new Map()
-          searchParams.forEach((value, key) => {
-            queryParams.set(key, value)
-          })
-          const { isValid, humanReadableError, errors } = validateData(Object.fromEntries(queryParams.entries()), query)
-          if (!isValid) {
-            const err = new GleeError({ humanReadableError, errors })
-            this.emit('error', err)
-            socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
-            return
-          }
+          this.checkQuery(socket, {searchParams, query})
         }
 
         if (headers) {
-          const { isValid, humanReadableError, errors } = validateData(request.headers, headers)
-          if (!isValid) {
-            const err = new GleeError({ humanReadableError, errors })
-            this.emit('error', err)
-            socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
-            return
-          }
+          this.checkHeaders(socket, { request, headers })
         }
       }
+
       if (servers.has(pathname)) {
         servers.get(pathname).handleUpgrade(request, socket, head, (ws) => {
-          servers.get(pathname).emit('connect', ws, request)
-          
-          ws.on('message', (payload) => {
-            const msg = this._createMessage(pathname, payload)
-            this.emit('message', msg, ws)
-          })
-
-          this.emit('server:connection:open', { name: this.name(), adapter: this, connection: ws, channel: pathname, request })
+          this.initializeServerEvents({ servers, ws, pathname, request })
         })
       } else {
         socket.destroy()
