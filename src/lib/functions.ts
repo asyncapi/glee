@@ -118,7 +118,7 @@ export async function trigger({
         headers: msg.headers,
         channel: msg.channel || message.channel,
         serverName: msg.server,
-        connection: message.connection,
+        connection: msg.server ? message.connection : undefined,
         broadcast: isBroadcast
       }))
     })
