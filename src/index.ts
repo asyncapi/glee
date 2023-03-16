@@ -15,6 +15,7 @@ import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import logger from './middlewares/logger.js'
 import generateDocs from './lib/docs.js'
 import errorLogger from './middlewares/errorLogger.js'
+import generateTypes from './lib/types.js'
 import validateConnection from './middlewares/validateConnection.js'
 import { initializeConfigs } from './lib/configs.js'
 import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
@@ -50,7 +51,6 @@ export default async function GleeAppInitializer () {
   const channelNames = parsedAsyncAPI.channelNames()
 
   const app = new Glee(config)
-
   await registerAdapters(app, parsedAsyncAPI, config)
 
   app.use(existsInAsyncAPI(parsedAsyncAPI))
@@ -63,6 +63,7 @@ export default async function GleeAppInitializer () {
   app.use(errorLogger)
   app.useOutbound(errorLogger)
   generateDocs(parsedAsyncAPI, config, null)
+  generateTypes(parsedAsyncAPI, config, null)
 
   channelNames.forEach((channelName) => {
     const channel = parsedAsyncAPI.channel(channelName)
