@@ -21,7 +21,8 @@ export default async function () {
     kafka: {},
     websocket: {},
     mqtt: {},
-    cluster: {}
+    cluster: {},
+    http: {}
   }
 }
 
@@ -67,6 +68,24 @@ export default async function () {
             username: 'user1'
             password: 'pass12'
           }
+        }
+      }
+    },
+    http: {
+      server: {
+        httpServer: customServer, // A custom HTTP server of your own.
+        adapter: 'native', 
+        port: process.env.PORT,
+      },
+      client: {
+        auth: {
+          token: process.env.TOKEN
+        },
+        query: {
+          foo: 'bar'
+        },
+        body: {
+          foo: 'bar'
         }
       }
     }
@@ -136,6 +155,19 @@ These configurations apply to Glee itself, rather than any specific protocol.
 |kafka.auth.rejectUnauthorized | Boolean flag for accepting the valid SSL certificates
 |kafka.auth.username| The username to use during authentication.
 |kafka.auth.password| The password to use during authentication.
+
+### HTTP Server
+
+|Field|Description|
+|--|--|
+|http.server|HTTP server-specific configurations|
+|http.client|HTTP client-specific configurations|
+|http.server.adapter| The Glee adapter to use for the HTTP server. Defaults to a "native" HTTP implementation.|
+|websocket.server.port| The port to use when binding the HTTP server. This is useful when your server is behind a proxy and the port exposed for consumption is not the same as the port your application should be bound to. Defaults to the port specified in the selected AsyncAPI server.|
+|http.client.auth| Authentication/Authorization configuration for the client|
+|http.client.auth.token| HTTP Authentication header|
+|http.client.query| Query object for the client to send|
+|http.client.body| Body object for the client to send
 
 
 ### Auth Config

@@ -98,7 +98,7 @@ class WebSocketsAdapter extends Adapter {
       if (servers.has(pathname)) {
         servers.get(pathname).handleUpgrade(request, socket, head, (ws) => {
           servers.get(pathname).emit('connect', ws, request)
-          
+
           ws.on('message', (payload) => {
             const msg = this._createMessage(pathname, payload)
             this.emit('message', msg, ws)
