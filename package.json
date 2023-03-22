@@ -52,6 +52,7 @@
     "emojis": "^1.0.10",
     "eslint-plugin-github": "^4.3.5",
     "eslint-plugin-security": "^1.4.0",
+    "got": "^12.5.3",
     "kafkajs": "^2.2.3",
     "mqtt": "^4.2.6",
     "path-to-regexp": "^6.2.0",
