@@ -1,86 +1,69 @@
-[@asyncapi/glee](../README.md) / [lib/adapter](../modules/lib_adapter.md) / default
+[@asyncapi/glee](../README.md) / [adapters/ws/server](../modules/adapters_ws_server.md) / default
 
 # Class: default
 
-[lib/adapter](../modules/lib_adapter.md).default
+[adapters/ws/server](../modules/adapters_ws_server.md).default
 
 ## Hierarchy
 
-- `EventEmitter`
+- [`default`](lib_adapter.default.md)
 
   ↳ **`default`**
-
-  ↳↳ [`default`](adapters_http_client.default.md)
-
-  ↳↳ [`default`](adapters_http_server.default.md)
-
-  ↳↳ [`default`](adapters_kafka.default.md)
-
-  ↳↳ [`default`](adapters_mqtt.default.md)
-
-  ↳↳ [`default`](adapters_socket_io.default.md)
-
-  ↳↳ [`default`](adapters_ws_client.default.md)
-
-  ↳↳ [`default`](adapters_ws_server.default.md)
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](lib_adapter.default.md#constructor)
+- [constructor](adapters_ws_server.default.md#constructor)
 
 ### Properties
 
-- [\_AsyncAPIServer](lib_adapter.default.md#_asyncapiserver)
-- [\_channelNames](lib_adapter.default.md#_channelnames)
-- [\_connections](lib_adapter.default.md#_connections)
-- [\_glee](lib_adapter.default.md#_glee)
-- [\_parsedAsyncAPI](lib_adapter.default.md#_parsedasyncapi)
-- [\_serverName](lib_adapter.default.md#_servername)
-- [\_serverUrlExpanded](lib_adapter.default.md#_serverurlexpanded)
-- [captureRejectionSymbol](lib_adapter.default.md#capturerejectionsymbol)
-- [captureRejections](lib_adapter.default.md#capturerejections)
-- [defaultMaxListeners](lib_adapter.default.md#defaultmaxlisteners)
-- [errorMonitor](lib_adapter.default.md#errormonitor)
+- [captureRejectionSymbol](adapters_ws_server.default.md#capturerejectionsymbol)
+- [captureRejections](adapters_ws_server.default.md#capturerejections)
+- [defaultMaxListeners](adapters_ws_server.default.md#defaultmaxlisteners)
+- [errorMonitor](adapters_ws_server.default.md#errormonitor)
 
 ### Accessors
 
-- [AsyncAPIServer](lib_adapter.default.md#asyncapiserver)
-- [channelNames](lib_adapter.default.md#channelnames)
-- [connections](lib_adapter.default.md#connections)
-- [glee](lib_adapter.default.md#glee)
-- [parsedAsyncAPI](lib_adapter.default.md#parsedasyncapi)
-- [serverName](lib_adapter.default.md#servername)
-- [serverUrlExpanded](lib_adapter.default.md#serverurlexpanded)
+- [AsyncAPIServer](adapters_ws_server.default.md#asyncapiserver)
+- [channelNames](adapters_ws_server.default.md#channelnames)
+- [connections](adapters_ws_server.default.md#connections)
+- [glee](adapters_ws_server.default.md#glee)
+- [parsedAsyncAPI](adapters_ws_server.default.md#parsedasyncapi)
+- [serverName](adapters_ws_server.default.md#servername)
+- [serverUrlExpanded](adapters_ws_server.default.md#serverurlexpanded)
 
 ### Methods
 
-- [addListener](lib_adapter.default.md#addlistener)
-- [connect](lib_adapter.default.md#connect)
-- [emit](lib_adapter.default.md#emit)
-- [eventNames](lib_adapter.default.md#eventnames)
-- [getAuthConfig](lib_adapter.default.md#getauthconfig)
-- [getMaxListeners](lib_adapter.default.md#getmaxlisteners)
-- [getSubscribedChannels](lib_adapter.default.md#getsubscribedchannels)
-- [listenerCount](lib_adapter.default.md#listenercount)
-- [listeners](lib_adapter.default.md#listeners)
-- [off](lib_adapter.default.md#off)
-- [on](lib_adapter.default.md#on)
-- [once](lib_adapter.default.md#once)
-- [prependListener](lib_adapter.default.md#prependlistener)
-- [prependOnceListener](lib_adapter.default.md#prependoncelistener)
-- [rawListeners](lib_adapter.default.md#rawlisteners)
-- [removeAllListeners](lib_adapter.default.md#removealllisteners)
-- [removeListener](lib_adapter.default.md#removelistener)
-- [resolveProtocolConfig](lib_adapter.default.md#resolveprotocolconfig)
-- [send](lib_adapter.default.md#send)
-- [setMaxListeners](lib_adapter.default.md#setmaxlisteners)
-- [getEventListeners](lib_adapter.default.md#geteventlisteners)
-- [listenerCount](lib_adapter.default.md#listenercount-1)
-- [on](lib_adapter.default.md#on-1)
-- [once](lib_adapter.default.md#once-1)
-- [setMaxListeners](lib_adapter.default.md#setmaxlisteners-1)
+- [\_connect](adapters_ws_server.default.md#_connect)
+- [\_createMessage](adapters_ws_server.default.md#_createmessage)
+- [\_send](adapters_ws_server.default.md#_send)
+- [addListener](adapters_ws_server.default.md#addlistener)
+- [connect](adapters_ws_server.default.md#connect)
+- [emit](adapters_ws_server.default.md#emit)
+- [eventNames](adapters_ws_server.default.md#eventnames)
+- [getAuthConfig](adapters_ws_server.default.md#getauthconfig)
+- [getMaxListeners](adapters_ws_server.default.md#getmaxlisteners)
+- [getSubscribedChannels](adapters_ws_server.default.md#getsubscribedchannels)
+- [listenerCount](adapters_ws_server.default.md#listenercount)
+- [listeners](adapters_ws_server.default.md#listeners)
+- [name](adapters_ws_server.default.md#name)
+- [off](adapters_ws_server.default.md#off)
+- [on](adapters_ws_server.default.md#on)
+- [once](adapters_ws_server.default.md#once)
+- [prependListener](adapters_ws_server.default.md#prependlistener)
+- [prependOnceListener](adapters_ws_server.default.md#prependoncelistener)
+- [rawListeners](adapters_ws_server.default.md#rawlisteners)
+- [removeAllListeners](adapters_ws_server.default.md#removealllisteners)
+- [removeListener](adapters_ws_server.default.md#removelistener)
+- [resolveProtocolConfig](adapters_ws_server.default.md#resolveprotocolconfig)
+- [send](adapters_ws_server.default.md#send)
+- [setMaxListeners](adapters_ws_server.default.md#setmaxlisteners)
+- [getEventListeners](adapters_ws_server.default.md#geteventlisteners)
+- [listenerCount](adapters_ws_server.default.md#listenercount-1)
+- [on](adapters_ws_server.default.md#on-1)
+- [once](adapters_ws_server.default.md#once-1)
+- [setMaxListeners](adapters_ws_server.default.md#setmaxlisteners-1)
 
 ## Constructors
 
@@ -97,9 +80,9 @@
 | `server` | `Server` |  |
 | `parsedAsyncAPI` | `AsyncAPIDocument` |  |
 
-#### Overrides
+#### Inherited from
 
-EventEmitter.constructor
+[default](lib_adapter.default.md).[constructor](lib_adapter.default.md#constructor)
 
 #### Defined in
 
@@ -107,83 +90,13 @@ EventEmitter.constructor
 
 ## Properties
 
-### \_AsyncAPIServer
-
-• `Private` **\_AsyncAPIServer**: `Server`
-
-#### Defined in
-
-[src/lib/adapter.ts:19](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L19)
-
-___
-
-### \_channelNames
-
-• `Private` **\_channelNames**: `string`[]
-
-#### Defined in
-
-[src/lib/adapter.ts:21](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L21)
-
-___
-
-### \_connections
-
-• `Private` **\_connections**: [`default`](lib_connection.default.md)[]
-
-#### Defined in
-
-[src/lib/adapter.ts:22](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L22)
-
-___
-
-### \_glee
-
-• `Private` **\_glee**: [`default`](lib_glee.default.md)
-
-#### Defined in
-
-[src/lib/adapter.ts:17](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L17)
-
-___
-
-### \_parsedAsyncAPI
-
-• `Private` **\_parsedAsyncAPI**: `AsyncAPIDocument`
-
-#### Defined in
-
-[src/lib/adapter.ts:20](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L20)
-
-___
-
-### \_serverName
-
-• `Private` **\_serverName**: `string`
-
-#### Defined in
-
-[src/lib/adapter.ts:18](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L18)
-
-___
-
-### \_serverUrlExpanded
-
-• `Private` **\_serverUrlExpanded**: `string`
-
-#### Defined in
-
-[src/lib/adapter.ts:23](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L23)
-
-___
-
 ### captureRejectionSymbol
 
 ▪ `Static` `Readonly` **captureRejectionSymbol**: typeof [`captureRejectionSymbol`](adapters_cluster_redis.default.md#capturerejectionsymbol)
 
 #### Inherited from
 
-EventEmitter.captureRejectionSymbol
+[default](lib_adapter.default.md).[captureRejectionSymbol](lib_adapter.default.md#capturerejectionsymbol)
 
 #### Defined in
 
@@ -197,7 +110,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.captureRejections
+[default](lib_adapter.default.md).[captureRejections](lib_adapter.default.md#capturerejections)
 
 #### Defined in
 
@@ -211,7 +124,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.defaultMaxListeners
+[default](lib_adapter.default.md).[defaultMaxListeners](lib_adapter.default.md#defaultmaxlisteners)
 
 #### Defined in
 
@@ -225,7 +138,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.errorMonitor
+[default](lib_adapter.default.md).[errorMonitor](lib_adapter.default.md#errormonitor)
 
 #### Defined in
 
@@ -241,6 +154,10 @@ node_modules/@types/node/events.d.ts:327
 
 `Server`
 
+#### Inherited from
+
+Adapter.AsyncAPIServer
+
 #### Defined in
 
 [src/lib/adapter.ts:133](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L133)
@@ -254,6 +171,10 @@ ___
 #### Returns
 
 `string`[]
+
+#### Inherited from
+
+Adapter.channelNames
 
 #### Defined in
 
@@ -269,6 +190,10 @@ ___
 
 [`default`](lib_connection.default.md)[]
 
+#### Inherited from
+
+Adapter.connections
+
 #### Defined in
 
 [src/lib/adapter.ts:145](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L145)
@@ -282,6 +207,10 @@ ___
 #### Returns
 
 [`default`](lib_glee.default.md)
+
+#### Inherited from
+
+Adapter.glee
 
 #### Defined in
 
@@ -297,6 +226,10 @@ ___
 
 `AsyncAPIDocument`
 
+#### Inherited from
+
+Adapter.parsedAsyncAPI
+
 #### Defined in
 
 [src/lib/adapter.ts:137](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L137)
@@ -310,6 +243,10 @@ ___
 #### Returns
 
 `string`
+
+#### Inherited from
+
+Adapter.serverName
 
 #### Defined in
 
@@ -325,15 +262,74 @@ ___
 
 `string`
 
+#### Inherited from
+
+Adapter.serverUrlExpanded
+
 #### Defined in
 
 [src/lib/adapter.ts:149](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L149)
 
 ## Methods
 
+### \_connect
+
+▸ **_connect**(): `Promise`<[`default`](adapters_ws_server.default.md)\>
+
+#### Returns
+
+`Promise`<[`default`](adapters_ws_server.default.md)\>
+
+#### Defined in
+
+[src/adapters/ws/server.ts:23](https://github.com/asyncapi/glee/blob/2557652/src/adapters/ws/server.ts#L23)
+
+___
+
+### \_createMessage
+
+▸ **_createMessage**(`eventName`, `payload`): [`default`](lib_message.default.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `string` |
+| `payload` | `any` |
+
+#### Returns
+
+[`default`](lib_message.default.md)
+
+#### Defined in
+
+[src/adapters/ws/server.ts:140](https://github.com/asyncapi/glee/blob/2557652/src/adapters/ws/server.ts#L140)
+
+___
+
+### \_send
+
+▸ **_send**(`message`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | [`default`](lib_message.default.md) |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[src/adapters/ws/server.ts:123](https://github.com/asyncapi/glee/blob/2557652/src/adapters/ws/server.ts#L123)
+
+___
+
 ### addListener
 
-▸ **addListener**(`eventName`, `listener`): [`default`](lib_adapter.default.md)
+▸ **addListener**(`eventName`, `listener`): [`default`](adapters_ws_server.default.md)
 
 #### Parameters
 
@@ -344,11 +340,11 @@ ___
 
 #### Returns
 
-[`default`](lib_adapter.default.md)
+[`default`](adapters_ws_server.default.md)
 
 #### Inherited from
 
-EventEmitter.addListener
+[default](lib_adapter.default.md).[addListener](lib_adapter.default.md#addlistener)
 
 #### Defined in
 
@@ -358,15 +354,19 @@ ___
 
 ### connect
 
-▸ **connect**(): `Promise`<`any`\>
+▸ **connect**(): `Promise`<[`default`](adapters_ws_server.default.md)\>
 
 #### Returns
 
-`Promise`<`any`\>
+`Promise`<[`default`](adapters_ws_server.default.md)\>
+
+#### Overrides
+
+[default](lib_adapter.default.md).[connect](lib_adapter.default.md#connect)
 
 #### Defined in
 
-[src/lib/adapter.ts:189](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L189)
+[src/adapters/ws/server.ts:15](https://github.com/asyncapi/glee/blob/2557652/src/adapters/ws/server.ts#L15)
 
 ___
 
@@ -387,7 +387,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.emit
+[default](lib_adapter.default.md).[emit](lib_adapter.default.md#emit)
 
 #### Defined in
 
@@ -405,7 +405,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.eventNames
+[default](lib_adapter.default.md).[eventNames](lib_adapter.default.md#eventnames)
 
 #### Defined in
 
@@ -427,6 +427,10 @@ ___
 
 `Promise`<`any`\>
 
+#### Inherited from
+
+[default](lib_adapter.default.md).[getAuthConfig](lib_adapter.default.md#getauthconfig)
+
 #### Defined in
 
 [src/lib/adapter.ts:162](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L162)
@@ -443,7 +447,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.getMaxListeners
+[default](lib_adapter.default.md).[getMaxListeners](lib_adapter.default.md#getmaxlisteners)
 
 #### Defined in
 
@@ -458,6 +462,10 @@ ___
 #### Returns
 
 `string`[]
+
+#### Inherited from
+
+[default](lib_adapter.default.md).[getSubscribedChannels](lib_adapter.default.md#getsubscribedchannels)
 
 #### Defined in
 
@@ -481,7 +489,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.listenerCount
+[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount)
 
 #### Defined in
 
@@ -505,7 +513,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.listeners
+[default](lib_adapter.default.md).[listeners](lib_adapter.default.md#listeners)
 
 #### Defined in
 
@@ -513,9 +521,23 @@ node_modules/@types/node/events.d.ts:539
 
 ___
 
+### name
+
+▸ **name**(): `string`
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[src/adapters/ws/server.ts:11](https://github.com/asyncapi/glee/blob/2557652/src/adapters/ws/server.ts#L11)
+
+___
+
 ### off
 
-▸ **off**(`eventName`, `listener`): [`default`](lib_adapter.default.md)
+▸ **off**(`eventName`, `listener`): [`default`](adapters_ws_server.default.md)
 
 #### Parameters
 
@@ -526,11 +548,11 @@ ___
 
 #### Returns
 
-[`default`](lib_adapter.default.md)
+[`default`](adapters_ws_server.default.md)
 
 #### Inherited from
 
-EventEmitter.off
+[default](lib_adapter.default.md).[off](lib_adapter.default.md#off)
 
 #### Defined in
 
@@ -540,7 +562,7 @@ ___
 
 ### on
 
-▸ **on**(`eventName`, `listener`): [`default`](lib_adapter.default.md)
+▸ **on**(`eventName`, `listener`): [`default`](adapters_ws_server.default.md)
 
 #### Parameters
 
@@ -551,11 +573,11 @@ ___
 
 #### Returns
 
-[`default`](lib_adapter.default.md)
+[`default`](adapters_ws_server.default.md)
 
 #### Inherited from
 
-EventEmitter.on
+[default](lib_adapter.default.md).[on](lib_adapter.default.md#on)
 
 #### Defined in
 
@@ -565,7 +587,7 @@ ___
 
 ### once
 
-▸ **once**(`eventName`, `listener`): [`default`](lib_adapter.default.md)
+▸ **once**(`eventName`, `listener`): [`default`](adapters_ws_server.default.md)
 
 #### Parameters
 
@@ -576,11 +598,11 @@ ___
 
 #### Returns
 
-[`default`](lib_adapter.default.md)
+[`default`](adapters_ws_server.default.md)
 
 #### Inherited from
 
-EventEmitter.once
+[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
 
 #### Defined in
 
@@ -590,7 +612,7 @@ ___
 
 ### prependListener
 
-▸ **prependListener**(`eventName`, `listener`): [`default`](lib_adapter.default.md)
+▸ **prependListener**(`eventName`, `listener`): [`default`](adapters_ws_server.default.md)
 
 #### Parameters
 
@@ -601,11 +623,11 @@ ___
 
 #### Returns
 
-[`default`](lib_adapter.default.md)
+[`default`](adapters_ws_server.default.md)
 
 #### Inherited from
 
-EventEmitter.prependListener
+[default](lib_adapter.default.md).[prependListener](lib_adapter.default.md#prependlistener)
 
 #### Defined in
 
@@ -615,7 +637,7 @@ ___
 
 ### prependOnceListener
 
-▸ **prependOnceListener**(`eventName`, `listener`): [`default`](lib_adapter.default.md)
+▸ **prependOnceListener**(`eventName`, `listener`): [`default`](adapters_ws_server.default.md)
 
 #### Parameters
 
@@ -626,11 +648,11 @@ ___
 
 #### Returns
 
-[`default`](lib_adapter.default.md)
+[`default`](adapters_ws_server.default.md)
 
 #### Inherited from
 
-EventEmitter.prependOnceListener
+[default](lib_adapter.default.md).[prependOnceListener](lib_adapter.default.md#prependoncelistener)
 
 #### Defined in
 
@@ -654,7 +676,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.rawListeners
+[default](lib_adapter.default.md).[rawListeners](lib_adapter.default.md#rawlisteners)
 
 #### Defined in
 
@@ -664,7 +686,7 @@ ___
 
 ### removeAllListeners
 
-▸ **removeAllListeners**(`event?`): [`default`](lib_adapter.default.md)
+▸ **removeAllListeners**(`event?`): [`default`](adapters_ws_server.default.md)
 
 #### Parameters
 
@@ -674,11 +696,11 @@ ___
 
 #### Returns
 
-[`default`](lib_adapter.default.md)
+[`default`](adapters_ws_server.default.md)
 
 #### Inherited from
 
-EventEmitter.removeAllListeners
+[default](lib_adapter.default.md).[removeAllListeners](lib_adapter.default.md#removealllisteners)
 
 #### Defined in
 
@@ -688,7 +710,7 @@ ___
 
 ### removeListener
 
-▸ **removeListener**(`eventName`, `listener`): [`default`](lib_adapter.default.md)
+▸ **removeListener**(`eventName`, `listener`): [`default`](adapters_ws_server.default.md)
 
 #### Parameters
 
@@ -699,11 +721,11 @@ ___
 
 #### Returns
 
-[`default`](lib_adapter.default.md)
+[`default`](adapters_ws_server.default.md)
 
 #### Inherited from
 
-EventEmitter.removeListener
+[default](lib_adapter.default.md).[removeListener](lib_adapter.default.md#removelistener)
 
 #### Defined in
 
@@ -725,6 +747,10 @@ ___
 
 `Promise`<`any`\>
 
+#### Inherited from
+
+[default](lib_adapter.default.md).[resolveProtocolConfig](lib_adapter.default.md#resolveprotocolconfig)
+
 #### Defined in
 
 [src/lib/adapter.ts:153](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L153)
@@ -733,27 +759,31 @@ ___
 
 ### send
 
-▸ **send**(`message`): `Promise`<`any`\>
+▸ **send**(`message`): `Promise`<`void`\>
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `message` | [`default`](lib_message.default.md) |  |
+| Name | Type |
+| :------ | :------ |
+| `message` | [`default`](lib_message.default.md) |
 
 #### Returns
 
-`Promise`<`any`\>
+`Promise`<`void`\>
+
+#### Overrides
+
+[default](lib_adapter.default.md).[send](lib_adapter.default.md#send)
 
 #### Defined in
 
-[src/lib/adapter.ts:198](https://github.com/asyncapi/glee/blob/2557652/src/lib/adapter.ts#L198)
+[src/adapters/ws/server.ts:19](https://github.com/asyncapi/glee/blob/2557652/src/adapters/ws/server.ts#L19)
 
 ___
 
 ### setMaxListeners
 
-▸ **setMaxListeners**(`n`): [`default`](lib_adapter.default.md)
+▸ **setMaxListeners**(`n`): [`default`](adapters_ws_server.default.md)
 
 #### Parameters
 
@@ -763,11 +793,11 @@ ___
 
 #### Returns
 
-[`default`](lib_adapter.default.md)
+[`default`](adapters_ws_server.default.md)
 
 #### Inherited from
 
-EventEmitter.setMaxListeners
+[default](lib_adapter.default.md).[setMaxListeners](lib_adapter.default.md#setmaxlisteners)
 
 #### Defined in
 
@@ -792,7 +822,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.getEventListeners
+[default](lib_adapter.default.md).[getEventListeners](lib_adapter.default.md#geteventlisteners)
 
 #### Defined in
 
@@ -817,7 +847,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.listenerCount
+[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount-1)
 
 #### Defined in
 
@@ -843,7 +873,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.on
+[default](lib_adapter.default.md).[on](lib_adapter.default.md#on-1)
 
 #### Defined in
 
@@ -869,7 +899,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.once
+[default](lib_adapter.default.md).[once](lib_adapter.default.md#once-1)
 
 #### Defined in
 
@@ -891,7 +921,7 @@ node_modules/@types/node/events.d.ts:194
 
 #### Inherited from
 
-EventEmitter.once
+[default](lib_adapter.default.md).[once](lib_adapter.default.md#once-1)
 
 #### Defined in
 
@@ -916,7 +946,7 @@ ___
 
 #### Inherited from
 
-EventEmitter.setMaxListeners
+[default](lib_adapter.default.md).[setMaxListeners](lib_adapter.default.md#setmaxlisteners-1)
 
 #### Defined in
 

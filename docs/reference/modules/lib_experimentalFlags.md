@@ -4,12 +4,16 @@
 
 ## Table of contents
 
-### Properties
+### Variables
 
 - [default](lib_experimentalFlags.md#default)
 
-## Properties
+## Variables
 
 ### default
 
 • **default**: `Map`<`string`, `string`\>
+
+#### Defined in
+
+[src/lib/experimentalFlags.ts:3](https://github.com/asyncapi/glee/blob/2557652/src/lib/experimentalFlags.ts#L3)

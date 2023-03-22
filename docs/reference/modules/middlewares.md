@@ -4,13 +4,13 @@
 
 ## Table of contents
 
-### Type aliases
+### Type Aliases
 
 - [ErrorMiddleware](middlewares.md#errormiddleware)
 - [Middleware](middlewares.md#middleware)
 - [MiddlewareCallback](middlewares.md#middlewarecallback)
 
-## Type aliases
+## Type Aliases
 
 ### ErrorMiddleware
 
@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[src/middlewares/index.d.ts:4](https://github.com/asyncapi/glee/blob/388e335/src/middlewares/index.d.ts#L4)
+[src/middlewares/index.d.ts:4](https://github.com/asyncapi/glee/blob/2557652/src/middlewares/index.d.ts#L4)
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 #### Defined in
 
-[src/middlewares/index.d.ts:3](https://github.com/asyncapi/glee/blob/388e335/src/middlewares/index.d.ts#L3)
+[src/middlewares/index.d.ts:3](https://github.com/asyncapi/glee/blob/2557652/src/middlewares/index.d.ts#L3)
 
 ___
 
@@ -84,4 +84,4 @@ ___
 
 #### Defined in
 
-[src/middlewares/index.d.ts:5](https://github.com/asyncapi/glee/blob/388e335/src/middlewares/index.d.ts#L5)
+[src/middlewares/index.d.ts:5](https://github.com/asyncapi/glee/blob/2557652/src/middlewares/index.d.ts#L5)

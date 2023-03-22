@@ -4,27 +4,23 @@
 
 ## Table of contents
 
-### Properties
+### Functions
 
 - [default](middlewares_validate.md#default)
 
-## Properties
+## Functions
 
 ### default
 
-• **default**: (`schema`: `Schema`) => (`event`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
+▸ **default**(`schema`): (`event`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
 
-#### Type declaration
-
-▸ (`schema`): (`event`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
-
-##### Parameters
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `schema` | `Schema` |
 
-##### Returns
+#### Returns
 
 `fn`
 
@@ -40,3 +36,7 @@
 ##### Returns
 
 `void`
+
+#### Defined in
+
+[src/middlewares/validate.ts:7](https://github.com/asyncapi/glee/blob/2557652/src/middlewares/validate.ts#L7)

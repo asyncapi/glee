@@ -4,21 +4,17 @@
 
 ## Table of contents
 
-### Properties
+### Functions
 
 - [default](registerAdapters.md#default)
 
-## Properties
+## Functions
 
 ### default
 
-• **default**: (`app`: [`default`](../classes/lib_glee.default.md), `parsedAsyncAPI`: `AsyncAPIDocument`, `config`: [`GleeConfig`](lib.md#gleeconfig)) => `Promise`<`void`\>
+▸ **default**(`app`, `parsedAsyncAPI`, `config`): `Promise`<`void`\>
 
-#### Type declaration
-
-▸ (`app`, `parsedAsyncAPI`, `config`): `Promise`<`void`\>
-
-##### Parameters
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -26,6 +22,10 @@
 | `parsedAsyncAPI` | `AsyncAPIDocument` |
 | `config` | [`GleeConfig`](lib.md#gleeconfig) |
 
-##### Returns
+#### Returns
 
 `Promise`<`void`\>
+
+#### Defined in
+
+[src/registerAdapters.ts:14](https://github.com/asyncapi/glee/blob/2557652/src/registerAdapters.ts#L14)
