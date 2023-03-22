@@ -4,21 +4,17 @@
 
 ## Table of contents
 
-### Properties
+### Functions
 
 - [default](middlewares_errorLogger.md#default)
 
-## Properties
+## Functions
 
 ### default
 
-• **default**: (`err`: `Error`, `message`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
+▸ **default**(`err`, `message`, `next`): `void`
 
-#### Type declaration
-
-▸ (`err`, `message`, `next`): `void`
-
-##### Parameters
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -26,6 +22,10 @@
 | `message` | [`default`](../classes/lib_message.default.md) |
 | `next` | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
 
-##### Returns
+#### Returns
 
 `void`
+
+#### Defined in
+
+[src/middlewares/errorLogger.ts:6](https://github.com/asyncapi/glee/blob/2557652/src/middlewares/errorLogger.ts#L6)

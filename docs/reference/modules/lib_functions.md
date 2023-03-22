@@ -17,11 +17,11 @@
 
 ### functions
 
-• **functions**: `Map`<`string`, `FunctionInfo`\>
+• `Const` **functions**: `Map`<`string`, `FunctionInfo`\>
 
 #### Defined in
 
-[src/lib/functions.ts:51](https://github.com/asyncapi/glee/blob/388e335/src/lib/functions.ts#L51)
+[src/lib/functions.ts:53](https://github.com/asyncapi/glee/blob/2557652/src/lib/functions.ts#L53)
 
 ## Functions
 
@@ -41,22 +41,22 @@
 
 #### Defined in
 
-[src/lib/functions.ts:53](https://github.com/asyncapi/glee/blob/388e335/src/lib/functions.ts#L53)
+[src/lib/functions.ts:55](https://github.com/asyncapi/glee/blob/2557652/src/lib/functions.ts#L55)
 
 ___
 
 ### trigger
 
-▸ **trigger**(`__namedParameters`): `Promise`<`void`\>
+▸ **trigger**(`«destructured»`): `Promise`<`void`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | `Object` |
-| `__namedParameters.app` | [`default`](../classes/lib_glee.default.md) |
-| `__namedParameters.message` | [`default`](../classes/lib_message.default.md) |
-| `__namedParameters.operationId` | `string` |
+| `«destructured»` | `Object` |
+| › `app` | [`default`](../classes/lib_glee.default.md) |
+| › `message` | [`default`](../classes/lib_message.default.md) |
+| › `operationId` | `string` |
 
 #### Returns
 
@@ -64,4 +64,4 @@ ___
 
 #### Defined in
 
-[src/lib/functions.ts:80](https://github.com/asyncapi/glee/blob/388e335/src/lib/functions.ts#L80)
+[src/lib/functions.ts:83](https://github.com/asyncapi/glee/blob/2557652/src/lib/functions.ts#L83)

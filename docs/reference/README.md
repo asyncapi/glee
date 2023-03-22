@@ -7,9 +7,14 @@
 ### Modules
 
 - [adapters/cluster/redis](modules/adapters_cluster_redis.md)
+- [adapters/http/client](modules/adapters_http_client.md)
+- [adapters/http/server](modules/adapters_http_server.md)
+- [adapters/kafka](modules/adapters_kafka.md)
 - [adapters/mqtt](modules/adapters_mqtt.md)
 - [adapters/socket.io](modules/adapters_socket_io.md)
-- [adapters/ws](modules/adapters_ws.md)
+- [adapters/ws/client](modules/adapters_ws_client.md)
+- [adapters/ws/server](modules/adapters_ws_server.md)
+- [docs](modules/docs.md)
 - [errors/glee-error](modules/errors_glee_error.md)
 - [index](modules/index.md)
 - [lib](modules/lib.md)
@@ -19,6 +24,7 @@
 - [lib/compiler](modules/lib_compiler.md)
 - [lib/configs](modules/lib_configs.md)
 - [lib/connection](modules/lib_connection.md)
+- [lib/docs](modules/lib_docs.md)
 - [lib/experimentalFlags](modules/lib_experimentalFlags.md)
 - [lib/functions](modules/lib_functions.md)
 - [lib/glee](modules/lib_glee.md)

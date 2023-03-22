@@ -10,14 +10,16 @@
 - [duplicateMessage](lib_util.md#duplicatemessage)
 - [getParams](lib_util.md#getparams)
 - [gleeMessageToFunctionEvent](lib_util.md#gleemessagetofunctionevent)
+- [isRemoteServer](lib_util.md#isremoteserver)
 - [matchChannel](lib_util.md#matchchannel)
+- [resolveFunctions](lib_util.md#resolvefunctions)
 - [validateData](lib_util.md#validatedata)
 
 ## Functions
 
 ### arrayHasDuplicates
 
-▸ `Const` **arrayHasDuplicates**(`array`): `boolean`
+▸ **arrayHasDuplicates**(`array`): `boolean`
 
 #### Parameters
 
@@ -31,21 +33,19 @@
 
 #### Defined in
 
-[src/lib/util.ts:106](https://github.com/asyncapi/glee/blob/388e335/src/lib/util.ts#L106)
+[src/lib/util.ts:107](https://github.com/asyncapi/glee/blob/2557652/src/lib/util.ts#L107)
 
 ___
 
 ### duplicateMessage
 
-▸ `Const` `Private` **duplicateMessage**(`message`): [`default`](../classes/lib_message.default.md)
-
-Duplicates a GleeMessage.
+▸ `Private` **duplicateMessage**(`message`): [`default`](../classes/lib_message.default.md)
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `message` | [`default`](../classes/lib_message.default.md) | The message to duplicate. |
+| `message` | [`default`](../classes/lib_message.default.md) |  |
 
 #### Returns
 
@@ -53,22 +53,20 @@ Duplicates a GleeMessage.
 
 #### Defined in
 
-[src/lib/util.ts:44](https://github.com/asyncapi/glee/blob/388e335/src/lib/util.ts#L44)
+[src/lib/util.ts:44](https://github.com/asyncapi/glee/blob/2557652/src/lib/util.ts#L44)
 
 ___
 
 ### getParams
 
-▸ `Const` `Private` **getParams**(`path`, `channel`): `Object`
-
-Determines if a path matches a channel, and returns the matching params and its values.
+▸ `Private` **getParams**(`path`, `channel`): `Object`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `path` | `string` | The path. |
-| `channel` | `string` | The channel. |
+| `path` | `string` |  |
+| `channel` | `string` |  |
 
 #### Returns
 
@@ -76,13 +74,13 @@ Determines if a path matches a channel, and returns the matching params and its 
 
 #### Defined in
 
-[src/lib/util.ts:22](https://github.com/asyncapi/glee/blob/388e335/src/lib/util.ts#L22)
+[src/lib/util.ts:22](https://github.com/asyncapi/glee/blob/2557652/src/lib/util.ts#L22)
 
 ___
 
 ### gleeMessageToFunctionEvent
 
-▸ `Const` **gleeMessageToFunctionEvent**(`message`, `glee`): [`GleeFunctionEvent`](lib.md#gleefunctionevent)
+▸ **gleeMessageToFunctionEvent**(`message`, `glee`): [`GleeFunctionEvent`](lib.md#gleefunctionevent)
 
 #### Parameters
 
@@ -97,22 +95,20 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:110](https://github.com/asyncapi/glee/blob/388e335/src/lib/util.ts#L110)
+[src/lib/util.ts:111](https://github.com/asyncapi/glee/blob/2557652/src/lib/util.ts#L111)
 
 ___
 
-### matchChannel
+### isRemoteServer
 
-▸ `Const` `Private` **matchChannel**(`path`, `channel`): `boolean`
-
-Determines if a path matches a channel.
+▸ **isRemoteServer**(`parsedAsyncAPI`, `serverName`): `boolean`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `path` | `string` | The path. |
-| `channel` | `string` | The channel. |
+| Name | Type |
+| :------ | :------ |
+| `parsedAsyncAPI` | `AsyncAPIDocument` |
+| `serverName` | `string` |
 
 #### Returns
 
@@ -120,29 +116,66 @@ Determines if a path matches a channel.
 
 #### Defined in
 
-[src/lib/util.ts:72](https://github.com/asyncapi/glee/blob/388e335/src/lib/util.ts#L72)
+[src/lib/util.ts:123](https://github.com/asyncapi/glee/blob/2557652/src/lib/util.ts#L123)
 
 ___
 
-### validateData
+### matchChannel
 
-▸ `Const` `Private` **validateData**(`data`, `schema`): `IValidateDataReturn`
-
-Validates data against a given JSON Schema definition
+▸ `Private` **matchChannel**(`path`, `channel`): `boolean`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `data` | `any` | The data to validate |
-| `schema` | `object` | A JSON Schema definition |
+| `path` | `string` |  |
+| `channel` | `string` |  |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[src/lib/util.ts:73](https://github.com/asyncapi/glee/blob/2557652/src/lib/util.ts#L73)
+
+___
+
+### resolveFunctions
+
+▸ **resolveFunctions**(`object`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `object` | `any` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[src/lib/util.ts:128](https://github.com/asyncapi/glee/blob/2557652/src/lib/util.ts#L128)
+
+___
+
+### validateData
+
+▸ `Private` **validateData**(`data`, `schema`): `IValidateDataReturn`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `any` |  |
+| `schema` | `object` |  |
 
 #### Returns
 
 `IValidateDataReturn`
 
-Object
-
 #### Defined in
 
-[src/lib/util.ts:84](https://github.com/asyncapi/glee/blob/388e335/src/lib/util.ts#L84)
+[src/lib/util.ts:85](https://github.com/asyncapi/glee/blob/2557652/src/lib/util.ts#L85)

@@ -13,12 +13,12 @@
 - [ColorSupport](../interfaces/lib_logger.chalk.ColorSupport.md)
 - [Options](../interfaces/lib_logger.chalk.Options.md)
 
-### Type aliases
+### Type Aliases
 
 - [Instance](lib_logger.chalk.md#instance)
 - [Level](lib_logger.chalk.md#level)
 
-## Type aliases
+## Type Aliases
 
 ### Instance
 
@@ -27,8 +27,6 @@
 #### Type declaration
 
 • (`options?`)
-
-Return a new Chalk instance.
 
 ##### Parameters
 
@@ -45,12 +43,6 @@ ___
 ### Level
 
 Ƭ **Level**: ``0`` \| ``1`` \| ``2`` \| ``3``
-
-Levels:
-- `0` - All colors disabled.
-- `1` - Basic 16 colors support.
-- `2` - ANSI 256 colors support.
-- `3` - Truecolor 16 million colors support.
 
 #### Defined in
 
