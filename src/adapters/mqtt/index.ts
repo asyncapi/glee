@@ -2,7 +2,7 @@ import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import { MqttAuthConfig, MqttAdapterConfig } from '../../lib/index.js'
-import { SecurityScheme } from '@asyncapi/parser'
+import { SecurityScheme } from '@asyncapi/parser';
 
 interface IMQTTHeaders {
   cmd?: string;
@@ -44,22 +44,22 @@ class MqttAdapter extends Adapter {
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
       const secName = Object.keys(sec.json())[0]
       return this.parsedAsyncAPI.components().securityScheme(secName)
-    })
-
+    }
+    )
     const userAndPasswordSecurityReq = securityRequirements.find(
-      (sec: SecurityScheme) => sec.type() === 'userPassword'
+      (sec) => sec.type() === 'userPassword'
     )
     const X509SecurityReq = securityRequirements.find(
-      (sec: SecurityScheme) => sec.type() === 'X509'
+      (sec) => sec.type() === 'X509'
     )
-
+    
     return {
-      securityRequirements,
       userAndPasswordSecurityReq,
       X509SecurityReq
     }
-  }
 
+  }
+  
   private async initializeClient(data: ClientData) {
 
     const {
@@ -172,7 +172,13 @@ class MqttAdapter extends Adapter {
           const isSessionResume = connAckPacket.sessionPresent
 
           if (!this.firstConnect) {
-            this.checkFirstConnect()
+            this.firstConnect = true
+            this.emit('connect', {
+              name: this.name(),
+              adapter: this,
+              connection: this.client,
+              channels: this.channelNames,
+            })
           }
 
           const shouldSubscribe = !isSessionResume && Array.isArray(subscribedChannels)
