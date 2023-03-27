@@ -7,6 +7,8 @@ import RedisClusterAdapter from './adapters/cluster/redis/index.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import Glee from './lib/glee.js'
 import { GleeConfig, GleeClusterAdapterConfig } from './lib/index.js'
+import HttpServerAdapter from './adapters/http/server.js'
+import HttpClientAdapter from './adapters/http/client.js'
 import KafkaAdapter from './adapters/kafka/index.js'
 
 export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) => {
@@ -74,7 +76,23 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
       }
 
     }
-  } else {
+  }else if (['http', 'https'].includes(protocol)) {
+    if(remoteServers && remoteServers.includes(serverName)){
+      app.addAdapter(HttpClientAdapter, {
+        serverName,
+        server,
+        parsedAsyncAPI
+      })
+    }else{
+      app.addAdapter(HttpServerAdapter, {
+        serverName,
+        server,
+        parsedAsyncAPI
+      })
+    }
+  }
+
+  else {
     // TODO: Improve error message with link to repo encouraging the developer to contribute.
     throw new Error(`Protocol "${server.protocol()}" is not supported yet.`)
   }
