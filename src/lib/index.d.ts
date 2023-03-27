@@ -5,6 +5,8 @@ import GleeConnection from './connection.js'
 import Glee from './glee.js'
 
 type WebSocketServerType = 'native' | 'socket.io'
+type HttpServerType = 'native'
+type QueryParam = { [key: string]: string } | { [key: string]: string[] }
 
 export type AuthFunction<T> = ({serverName, parsedAsyncAPI}: {serverName: string, parsedAsyncAPI: AsyncAPIDocument}) => Promise<T>
 
@@ -17,6 +19,10 @@ export interface MqttAuthConfig {
 
 export interface WsAuthConfig {
     token?: string
+}
+
+export interface HttpAuthConfig {
+  token?: string
 }
 
 export interface KafkaAuthConfig {
@@ -46,6 +52,17 @@ export type WebsocketAdapterConfig = {
   }
 }
 
+export type HttpAdapterConfig = {
+  server: {
+    httpServer?: any,
+    port?: number
+  },
+  client?: {
+    auth?:  HttpAuthConfig | AuthFunction<HttpAuthConfig>,
+    query?: QueryParam,
+    body?: any
+  }
+}
 export type MqttAdapterConfig = {
   auth?: MqttAuthConfig | AuthFunction<MqttAuthConfig>
 }
@@ -66,6 +83,7 @@ export type GleeConfig = {
   ws?: WebsocketAdapterConfig,
   cluster?: GleeClusterAdapterConfig,
   mqtt?: MqttAdapterConfig,
+  http?: HttpAdapterConfig
   kafka?: KafkaAdapterConfig
 }
 
@@ -80,12 +98,14 @@ export type GleeFunctionEvent = {
   serverName: string,
   connection?: GleeConnection,
   payload?: any,
+  query?: QueryParam,
   headers?: { [key: string]: string },
   channel?: string
 }
 
 export type GleeFunctionReturnSend = {
   payload?: any,
+  query?: QueryParam,
   headers?: { [key: string]: string },
   channel?: string,
   server?: string,

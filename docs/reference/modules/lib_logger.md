@@ -33,11 +33,6 @@
 
 • **chalk**: [`Chalk`](../interfaces/lib_logger.chalk.Chalk.md) & [`ChalkFunction`](../interfaces/lib_logger.chalk.ChalkFunction.md) & { `BackgroundColor`: `BackgroundColor` ; `Color`: `Color` ; `ForegroundColor`: `ForegroundColor` ; `Level`: [`Level`](lib_logger.chalk.md#level) ; `Modifiers`: `Modifiers` ; `stderr`: [`Chalk`](../interfaces/lib_logger.chalk.Chalk.md) & { `supportsColor`: ``false`` \| [`ColorSupport`](../interfaces/lib_logger.chalk.ColorSupport.md)  } ; `supportsColor`: ``false`` \| [`ColorSupport`](../interfaces/lib_logger.chalk.ColorSupport.md)  }
 
-Main Chalk object that allows to chain styles together.
-Call the last one as a method with a string argument.
-Order doesn't matter, and later styles take precedent in case of a conflict.
-This simply means that `chalk.red.yellow.green` is equivalent to `chalk.green`.
-
 #### Defined in
 
 node_modules/chalk/index.d.ts:405
@@ -46,7 +41,7 @@ node_modules/chalk/index.d.ts:405
 
 ### logEmptyLines
 
-▸ `Const` **logEmptyLines**(`amount`): `void`
+▸ **logEmptyLines**(`amount`): `void`
 
 #### Parameters
 
@@ -60,19 +55,19 @@ node_modules/chalk/index.d.ts:405
 
 #### Defined in
 
-[src/lib/logger.ts:43](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L43)
+[src/lib/logger.ts:43](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L43)
 
 ___
 
 ### logError
 
-▸ `Const` **logError**(`error`, `options?`): `void`
+▸ **logError**(`error`, `options?`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `error` | [`default`](../classes/errors_glee_error.default.md) \| `Error` |
+| `error` | `Error` \| [`default`](../classes/errors_glee_error.default.md) |
 | `options` | `ILogErrorOptions` |
 
 #### Returns
@@ -81,20 +76,20 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:129](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L129)
+[src/lib/logger.ts:129](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L129)
 
 ___
 
 ### logErrorLine
 
-▸ `Const` **logErrorLine**(`message`, `__namedParameters?`): `void`
+▸ **logErrorLine**(`message`, `«destructured»?`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `message` | `string` |
-| `__namedParameters` | `ILogOptions` |
+| `«destructured»` | `ILogOptions` |
 
 #### Returns
 
@@ -102,13 +97,13 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:123](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L123)
+[src/lib/logger.ts:123](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L123)
 
 ___
 
 ### logInboundMessage
 
-▸ `Const` **logInboundMessage**(`message`): `void`
+▸ **logInboundMessage**(`message`): `void`
 
 #### Parameters
 
@@ -122,20 +117,20 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:110](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L110)
+[src/lib/logger.ts:110](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L110)
 
 ___
 
 ### logInfoMessage
 
-▸ `Const` **logInfoMessage**(`text`, `__namedParameters?`): `void`
+▸ **logInfoMessage**(`text`, `«destructured»?`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `text` | `string` |
-| `__namedParameters` | `ILogOptions` |
+| `«destructured»` | `ILogOptions` |
 
 #### Returns
 
@@ -143,21 +138,21 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:92](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L92)
+[src/lib/logger.ts:92](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L92)
 
 ___
 
 ### logJSON
 
-▸ `Const` **logJSON**(`json`, `__namedParameters?`): `void`
+▸ **logJSON**(`json`, `«destructured»?`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `json` | `object` \| `any`[] |
-| `__namedParameters` | `Object` |
-| `__namedParameters.error` | `boolean` |
+| `«destructured»` | `Object` |
+| › `error` | `boolean` |
 
 #### Returns
 
@@ -165,13 +160,13 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:105](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L105)
+[src/lib/logger.ts:105](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L105)
 
 ___
 
 ### logLineWithIcon
 
-▸ `Const` **logLineWithIcon**(`icon`, `text`, `__namedParameters?`): `void`
+▸ **logLineWithIcon**(`icon`, `text`, `«destructured»?`): `void`
 
 #### Parameters
 
@@ -179,7 +174,7 @@ ___
 | :------ | :------ |
 | `icon` | `string` |
 | `text` | `string` |
-| `__namedParameters` | `ILogLineWithIconOptions` |
+| `«destructured»` | `ILogLineWithIconOptions` |
 
 #### Returns
 
@@ -187,13 +182,13 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:83](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L83)
+[src/lib/logger.ts:83](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L83)
 
 ___
 
 ### logOutboundMessage
 
-▸ `Const` **logOutboundMessage**(`message`): `void`
+▸ **logOutboundMessage**(`message`): `void`
 
 #### Parameters
 
@@ -207,13 +202,13 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:115](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L115)
+[src/lib/logger.ts:115](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L115)
 
 ___
 
 ### logTypeScriptError
 
-▸ `Const` **logTypeScriptError**(`code`, `message`, `fileName`, `line`, `character`): `void`
+▸ **logTypeScriptError**(`code`, `message`, `fileName`, `line`, `character`): `void`
 
 #### Parameters
 
@@ -231,13 +226,13 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:150](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L150)
+[src/lib/logger.ts:150](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L150)
 
 ___
 
 ### logTypeScriptMessage
 
-▸ `Const` **logTypeScriptMessage**(`message`): `void`
+▸ **logTypeScriptMessage**(`message`): `void`
 
 #### Parameters
 
@@ -251,20 +246,20 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:146](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L146)
+[src/lib/logger.ts:146](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L146)
 
 ___
 
 ### logWarningMessage
 
-▸ `Const` **logWarningMessage**(`text`, `__namedParameters?`): `void`
+▸ **logWarningMessage**(`text`, `«destructured»?`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `text` | `string` |
-| `__namedParameters` | `ILogOptions` |
+| `«destructured»` | `ILogOptions` |
 
 #### Returns
 
@@ -272,19 +267,19 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:98](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L98)
+[src/lib/logger.ts:98](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L98)
 
 ___
 
 ### logWelcome
 
-▸ `Const` **logWelcome**(`__namedParameters`): `void`
+▸ **logWelcome**(`«destructured»`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | `Object` |
+| `«destructured»` | `Object` |
 
 #### Returns
 
@@ -292,4 +287,4 @@ ___
 
 #### Defined in
 
-[src/lib/logger.ts:49](https://github.com/asyncapi/glee/blob/388e335/src/lib/logger.ts#L49)
+[src/lib/logger.ts:49](https://github.com/asyncapi/glee/blob/2557652/src/lib/logger.ts#L49)

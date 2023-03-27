@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/glee",
-  "version": "0.10.17",
+  "version": "0.20.0",
   "description": "The AsyncAPI framework",
   "exports": "./dist/moduleIndex.js",
   "type": "module",
@@ -52,6 +52,7 @@
     "emojis": "^1.0.10",
     "eslint-plugin-github": "^4.3.5",
     "eslint-plugin-security": "^1.4.0",
+    "got": "^12.5.3",
     "kafkajs": "^2.2.3",
     "mqtt": "^4.3.7",
     "path-to-regexp": "^6.2.0",
