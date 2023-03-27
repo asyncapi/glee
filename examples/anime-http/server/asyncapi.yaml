@@ -1,0 +1,55 @@
+asyncapi: 2.4.0
+info:
+  title: AsyncAPI IMDB server
+  version: 1.0.0
+  description: This app is a dummy server that would stream the trending/upcoming anime.
+servers:
+  trendingAnimeServer:
+    url: http://localhost:8081
+    protocol: http
+channels:
+  trendingAnime:
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.1.0
+        query:
+          $ref: "#/components/schemas/request"
+        body:
+          $ref: "#/components/schemas/request"
+    publish:
+      operationId: trendingAnimeController
+      message:
+        $ref: "#/components/messages/trendingAnime"
+    subscribe:
+      message:
+        payload:
+          type: object
+components:
+  messages:
+    trendingAnime:
+      summary: Data required to populate trending anime
+      payload:
+        $ref: "#/components/schemas/request"
+  schemas:
+    request:
+      type: object
+      required:
+        - name
+        - rating
+        - genre
+        - studio
+      properties:
+        name:
+          type: string
+          description: Name of the anime.
+        rating:
+          type: string
+          description: Rating of the show.
+        genre:
+          type: string
+          description: The genre of anime.
+        studio:
+          type: string
+          description: The studio of anime.

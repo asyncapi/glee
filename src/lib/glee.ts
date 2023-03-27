@@ -48,7 +48,7 @@ export default class Glee extends EventEmitter {
   get options(): GleeConfig {
     return this._options
   }
-  
+
   get adapters(): AdapterRecord[] {
     return this._adapters
   }
@@ -178,8 +178,8 @@ export default class Glee extends EventEmitter {
 
   /**
    * Synchronizes the other instances in the cluster with the message.
-   * 
-   * @param {GleeMessage} message 
+   *
+   * @param {GleeMessage} message
    */
   syncCluster (message: GleeMessage): void {
     if ( this._clusterAdapter && !message.cluster ) {
@@ -188,7 +188,7 @@ export default class Glee extends EventEmitter {
       })
     }
   }
- 
+
   /**
    * Starts executing the middlewares for the given message.
    *

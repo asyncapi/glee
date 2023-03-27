@@ -37,8 +37,6 @@
 
 • **new default**(`options`)
 
-Instantiates a Glee connection.
-
 #### Parameters
 
 | Name | Type |
@@ -47,7 +45,7 @@ Instantiates a Glee connection.
 
 #### Defined in
 
-[src/lib/connection.ts:28](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L28)
+[src/lib/connection.ts:28](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L28)
 
 ## Properties
 
@@ -57,7 +55,7 @@ Instantiates a Glee connection.
 
 #### Defined in
 
-[src/lib/connection.ts:15](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L15)
+[src/lib/connection.ts:15](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L15)
 
 ___
 
@@ -67,7 +65,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:13](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L13)
+[src/lib/connection.ts:13](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L13)
 
 ___
 
@@ -77,7 +75,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:16](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L16)
+[src/lib/connection.ts:16](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L16)
 
 ___
 
@@ -87,7 +85,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:12](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L12)
+[src/lib/connection.ts:12](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L12)
 
 ___
 
@@ -97,7 +95,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:14](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L14)
+[src/lib/connection.ts:14](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L14)
 
 ## Accessors
 
@@ -111,7 +109,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:48](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L48)
+[src/lib/connection.ts:48](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L48)
 
 ___
 
@@ -125,7 +123,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:40](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L40)
+[src/lib/connection.ts:40](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L40)
 
 ___
 
@@ -139,7 +137,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:52](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L52)
+[src/lib/connection.ts:52](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L52)
 
 ___
 
@@ -153,7 +151,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:36](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L36)
+[src/lib/connection.ts:36](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L36)
 
 ___
 
@@ -167,7 +165,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:44](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L44)
+[src/lib/connection.ts:44](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L44)
 
 ## Methods
 
@@ -175,15 +173,13 @@ ___
 
 ▸ **getRaw**(): `any`
 
-Returns the real connection object.
-
 #### Returns
 
 `any`
 
 #### Defined in
 
-[src/lib/connection.ts:71](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L71)
+[src/lib/connection.ts:71](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L71)
 
 ___
 
@@ -191,13 +187,11 @@ ___
 
 ▸ **hasChannel**(`channelName`): `boolean`
 
-Checks whether a channel is associated with this connection.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `channelName` | `string` | The name of the channel. |
+| `channelName` | `string` |  |
 
 #### Returns
 
@@ -205,4 +199,4 @@ Checks whether a channel is associated with this connection.
 
 #### Defined in
 
-[src/lib/connection.ts:62](https://github.com/asyncapi/glee/blob/388e335/src/lib/connection.ts#L62)
+[src/lib/connection.ts:62](https://github.com/asyncapi/glee/blob/2557652/src/lib/connection.ts#L62)

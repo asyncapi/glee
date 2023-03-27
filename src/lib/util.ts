@@ -49,7 +49,8 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
     serverName: message.serverName,
     connection: message.connection,
     broadcast: message.broadcast,
-    cluster: message.cluster
+    cluster: message.cluster,
+    query: message.query
   })
 
   if (message.isInbound()) {
@@ -57,7 +58,7 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
   } else {
     newMessage.setOutbound()
   }
-  
+
   return newMessage
 }
 
@@ -75,7 +76,7 @@ export const matchChannel = (path: string, channel: string): boolean => {
 
 /**
  * Validates data against a given JSON Schema definition
- * 
+ *
  * @private
  * @param {Any} data The data to validate
  * @param {Object} schema A JSON Schema definition
@@ -110,6 +111,7 @@ export const arrayHasDuplicates = (array: any[]) => {
 export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): GleeFunctionEvent => {
   return {
     payload: message.payload,
+    query: message.query,
     headers: message.headers,
     channel: message.channel,
     connection: message.connection,
