@@ -171,7 +171,7 @@ class MqttAdapter extends Adapter {
         this.client.on('connect', connAckPacket => {
           const isSessionResume = connAckPacket.sessionPresent
 
-          if (!this.firstConnect) {
+          if (!this.checkFirstConnect) {
             this.firstConnect = true
             this.emit('connect', {
               name: this.name(),
