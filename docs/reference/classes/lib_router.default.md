@@ -38,9 +38,11 @@
 
 • **new default**()
 
+Instantiates a GleeRouter.
+
 #### Defined in
 
-[src/lib/router.ts:25](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L25)
+[src/lib/router.ts:25](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L25)
 
 ## Properties
 
@@ -50,7 +52,7 @@
 
 #### Defined in
 
-[src/lib/router.ts:19](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L19)
+[src/lib/router.ts:19](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L19)
 
 ___
 
@@ -60,7 +62,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:17](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L17)
+[src/lib/router.ts:17](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L17)
 
 ___
 
@@ -70,7 +72,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:20](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L20)
+[src/lib/router.ts:20](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L20)
 
 ___
 
@@ -80,21 +82,23 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:18](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L18)
+[src/lib/router.ts:18](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L18)
 
 ## Methods
 
 ### \_addMiddlewares
 
-▸ `Private` **_addMiddlewares**(`target`, `middlewares`, `channel`): `void`
+▸ `Private` **_addMiddlewares**(`target`, `middlewares`, `channel?`): `void`
+
+Adds a normalized middleware to a target collection.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `target` | [`GenericChannelMiddlewareTuple`](../modules/lib_router.md#genericchannelmiddlewaretuple)[] |  |
-| `middlewares` | [`GenericChannelMiddlewareTuple`](../modules/lib_router.md#genericchannelmiddlewaretuple)[] |  |
-| `channel` | `string` | - |
+| `target` | [`GenericChannelMiddlewareTuple`](../modules/lib_router.md#genericchannelmiddlewaretuple)[] | The target collection. |
+| `middlewares` | [`GenericChannelMiddlewareTuple`](../modules/lib_router.md#genericchannelmiddlewaretuple)[] | The middlewares to add to the collection. |
+| `channel?` | `string` | The scope channel. |
 
 #### Returns
 
@@ -102,7 +106,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:122](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L122)
+[src/lib/router.ts:122](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L122)
 
 ___
 
@@ -110,12 +114,14 @@ ___
 
 ▸ **addErrorMiddlewares**(`errorMiddlewares`, `channel?`): `void`
 
+Adds a normalized middleware to the inbound error middlewares collection.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `errorMiddlewares` | [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[] |  |
-| `channel?` | `string` | - |
+| `errorMiddlewares` | [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[] | The middlewares to add to the collection. |
+| `channel?` | `string` | The scope channel. |
 
 #### Returns
 
@@ -123,7 +129,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:159](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L159)
+[src/lib/router.ts:159](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L159)
 
 ___
 
@@ -131,12 +137,14 @@ ___
 
 ▸ **addMiddlewares**(`middlewares`, `channel?`): `void`
 
+Adds a normalized middleware to the inbound middlewares collection.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `middlewares` | [`ChannelMiddlewareTuple`](../modules/lib_router.md#channelmiddlewaretuple)[] |  |
-| `channel?` | `string` | - |
+| `middlewares` | [`ChannelMiddlewareTuple`](../modules/lib_router.md#channelmiddlewaretuple)[] | The middlewares to add to the collection. |
+| `channel?` | `string` | The scope channel. |
 
 #### Returns
 
@@ -144,7 +152,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:139](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L139)
+[src/lib/router.ts:139](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L139)
 
 ___
 
@@ -152,12 +160,14 @@ ___
 
 ▸ **addOutboundErrorMiddlewares**(`errorMiddlewares`, `channel?`): `void`
 
+Adds a normalized middleware to the outbound error middlewares collection.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `errorMiddlewares` | [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[] |  |
-| `channel?` | `string` | - |
+| `errorMiddlewares` | [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[] | The middlewares to add to the collection. |
+| `channel?` | `string` | The scope channel. |
 
 #### Returns
 
@@ -165,7 +175,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:169](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L169)
+[src/lib/router.ts:169](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L169)
 
 ___
 
@@ -173,12 +183,14 @@ ___
 
 ▸ **addOutboundMiddlewares**(`middlewares`, `channel?`): `void`
 
+Adds a normalized middleware to the outbound middlewares collection.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `middlewares` | [`ChannelMiddlewareTuple`](../modules/lib_router.md#channelmiddlewaretuple)[] |  |
-| `channel?` | `string` | - |
+| `middlewares` | [`ChannelMiddlewareTuple`](../modules/lib_router.md#channelmiddlewaretuple)[] | The middlewares to add to the collection. |
+| `channel?` | `string` | The scope channel. |
 
 #### Returns
 
@@ -186,7 +198,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:149](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L149)
+[src/lib/router.ts:149](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L149)
 
 ___
 
@@ -194,13 +206,15 @@ ___
 
 ▸ **getErrorMiddlewares**(): [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[]
 
+Returns all the inbound error middlewares.
+
 #### Returns
 
 [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[]
 
 #### Defined in
 
-[src/lib/router.ts:102](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L102)
+[src/lib/router.ts:102](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L102)
 
 ___
 
@@ -208,13 +222,15 @@ ___
 
 ▸ **getMiddlewares**(): [`ChannelMiddlewareTuple`](../modules/lib_router.md#channelmiddlewaretuple)[]
 
+Returns all the inbound middlewares.
+
 #### Returns
 
 [`ChannelMiddlewareTuple`](../modules/lib_router.md#channelmiddlewaretuple)[]
 
 #### Defined in
 
-[src/lib/router.ts:86](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L86)
+[src/lib/router.ts:86](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L86)
 
 ___
 
@@ -222,13 +238,15 @@ ___
 
 ▸ **getOutboundErrorMiddlewares**(): [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[]
 
+Returns all the outbound error middlewares.
+
 #### Returns
 
 [`ChannelErrorMiddlewareTuple`](../modules/lib_router.md#channelerrormiddlewaretuple)[]
 
 #### Defined in
 
-[src/lib/router.ts:110](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L110)
+[src/lib/router.ts:110](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L110)
 
 ___
 
@@ -236,13 +254,15 @@ ___
 
 ▸ **getOutboundMiddlewares**(): [`ChannelMiddlewareTuple`](../modules/lib_router.md#channelmiddlewaretuple)[]
 
+Returns all the outbound middlewares.
+
 #### Returns
 
 [`ChannelMiddlewareTuple`](../modules/lib_router.md#channelmiddlewaretuple)[]
 
 #### Defined in
 
-[src/lib/router.ts:94](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L94)
+[src/lib/router.ts:94](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L94)
 
 ___
 
@@ -263,13 +283,16 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:73](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L73)
+[src/lib/router.ts:73](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L73)
 
 ___
 
 ### use
 
 ▸ **use**(`...middlewares`): `void`
+
+Use a middleware for inbound messages. Please, note that when passing a GleeRouter as a param,
+this function will make use of inbound and outbound middlewares.
 
 #### Parameters
 
@@ -283,7 +306,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:39](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L39)
+[src/lib/router.ts:39](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L39)
 
 ▸ **use**(`channel`, `...middlewares`): `void`
 
@@ -300,13 +323,15 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:40](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L40)
+[src/lib/router.ts:40](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L40)
 
 ___
 
 ### useOutbound
 
 ▸ **useOutbound**(`...middlewares`): `void`
+
+Use a middleware for outbound messages.
 
 #### Parameters
 
@@ -320,7 +345,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:59](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L59)
+[src/lib/router.ts:59](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L59)
 
 ▸ **useOutbound**(`channel`, `...middlewares`): `void`
 
@@ -337,4 +362,4 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:60](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L60)
+[src/lib/router.ts:60](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/router.ts#L60)

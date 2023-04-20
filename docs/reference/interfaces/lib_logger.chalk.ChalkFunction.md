@@ -16,6 +16,32 @@
 
 ▸ **ChalkFunction**(`text`, `...placeholders`): `string`
 
+Use a template string.
+
+**`Remarks`**
+
+Template literals are unsupported for nested calls (see [issue #341](https://github.com/chalk/chalk/issues/341))
+
+**`Example`**
+
+```
+import chalk = require('chalk');
+
+log(chalk`
+CPU: {red ${cpu.totalPercent}%}
+RAM: {green ${ram.used / ram.total * 100}%}
+DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
+`);
+```
+
+**`Example`**
+
+```
+import chalk = require('chalk');
+
+log(chalk.red.bgBlack`2 + 3 = {bold ${2 + 3}}`)
+```
+
 #### Parameters
 
 | Name | Type |
