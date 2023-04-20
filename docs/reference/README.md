@@ -14,6 +14,8 @@
 - [adapters/socket.io](modules/adapters_socket_io.md)
 - [adapters/ws/client](modules/adapters_ws_client.md)
 - [adapters/ws/server](modules/adapters_ws_server.md)
+- [cli](modules/cli.md)
+- [cli/start](modules/cli_start.md)
 - [docs](modules/docs.md)
 - [errors/glee-error](modules/errors_glee_error.md)
 - [index](modules/index.md)

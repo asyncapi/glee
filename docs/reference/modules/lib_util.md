@@ -33,7 +33,7 @@
 
 #### Defined in
 
-[src/lib/util.ts:107](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/util.ts#L107)
+[src/lib/util.ts:107](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/util.ts#L107)
 
 ___
 
@@ -41,11 +41,13 @@ ___
 
 ▸ `Private` **duplicateMessage**(`message`): [`default`](../classes/lib_message.default.md)
 
+Duplicates a GleeMessage.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `message` | [`default`](../classes/lib_message.default.md) |  |
+| `message` | [`default`](../classes/lib_message.default.md) | The message to duplicate. |
 
 #### Returns
 
@@ -53,7 +55,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:44](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/util.ts#L44)
+[src/lib/util.ts:44](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/util.ts#L44)
 
 ___
 
@@ -61,12 +63,14 @@ ___
 
 ▸ `Private` **getParams**(`path`, `channel`): `Object`
 
+Determines if a path matches a channel, and returns the matching params and its values.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `path` | `string` |  |
-| `channel` | `string` |  |
+| `path` | `string` | The path. |
+| `channel` | `string` | The channel. |
 
 #### Returns
 
@@ -74,7 +78,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:22](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/util.ts#L22)
+[src/lib/util.ts:22](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/util.ts#L22)
 
 ___
 
@@ -95,7 +99,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:111](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/util.ts#L111)
+[src/lib/util.ts:111](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/util.ts#L111)
 
 ___
 
@@ -116,7 +120,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:123](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/util.ts#L123)
+[src/lib/util.ts:123](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/util.ts#L123)
 
 ___
 
@@ -124,12 +128,14 @@ ___
 
 ▸ `Private` **matchChannel**(`path`, `channel`): `boolean`
 
+Determines if a path matches a channel.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `path` | `string` |  |
-| `channel` | `string` |  |
+| `path` | `string` | The path. |
+| `channel` | `string` | The channel. |
 
 #### Returns
 
@@ -137,7 +143,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:73](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/util.ts#L73)
+[src/lib/util.ts:73](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/util.ts#L73)
 
 ___
 
@@ -157,7 +163,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:128](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/util.ts#L128)
+[src/lib/util.ts:128](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/util.ts#L128)
 
 ___
 
@@ -165,17 +171,21 @@ ___
 
 ▸ `Private` **validateData**(`data`, `schema`): `IValidateDataReturn`
 
+Validates data against a given JSON Schema definition
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `data` | `any` |  |
-| `schema` | `object` |  |
+| `data` | `any` | The data to validate |
+| `schema` | `object` | A JSON Schema definition |
 
 #### Returns
 
 `IValidateDataReturn`
 
+Object
+
 #### Defined in
 
-[src/lib/util.ts:85](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/util.ts#L85)
+[src/lib/util.ts:85](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/util.ts#L85)
