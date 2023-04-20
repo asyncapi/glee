@@ -40,7 +40,7 @@
 
 #### Defined in
 
-[src/lib/router.ts:25](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L25)
+[src/lib/router.ts:25](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L25)
 
 ## Properties
 
@@ -50,7 +50,7 @@
 
 #### Defined in
 
-[src/lib/router.ts:19](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L19)
+[src/lib/router.ts:19](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L19)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:17](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L17)
+[src/lib/router.ts:17](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L17)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:20](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L20)
+[src/lib/router.ts:20](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L20)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:18](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L18)
+[src/lib/router.ts:18](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L18)
 
 ## Methods
 
@@ -102,7 +102,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:122](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L122)
+[src/lib/router.ts:122](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L122)
 
 ___
 
@@ -123,7 +123,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:159](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L159)
+[src/lib/router.ts:159](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L159)
 
 ___
 
@@ -144,7 +144,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:139](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L139)
+[src/lib/router.ts:139](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L139)
 
 ___
 
@@ -165,7 +165,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:169](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L169)
+[src/lib/router.ts:169](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L169)
 
 ___
 
@@ -186,7 +186,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:149](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L149)
+[src/lib/router.ts:149](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L149)
 
 ___
 
@@ -200,7 +200,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:102](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L102)
+[src/lib/router.ts:102](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L102)
 
 ___
 
@@ -214,7 +214,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:86](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L86)
+[src/lib/router.ts:86](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L86)
 
 ___
 
@@ -228,7 +228,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:110](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L110)
+[src/lib/router.ts:110](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L110)
 
 ___
 
@@ -242,7 +242,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:94](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L94)
+[src/lib/router.ts:94](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L94)
 
 ___
 
@@ -263,7 +263,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:73](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L73)
+[src/lib/router.ts:73](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L73)
 
 ___
 
@@ -283,7 +283,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:39](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L39)
+[src/lib/router.ts:39](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L39)
 
 ▸ **use**(`channel`, `...middlewares`): `void`
 
@@ -300,7 +300,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:40](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L40)
+[src/lib/router.ts:40](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L40)
 
 ___
 
@@ -320,7 +320,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:59](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L59)
+[src/lib/router.ts:59](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L59)
 
 ▸ **useOutbound**(`channel`, `...middlewares`): `void`
 
@@ -337,4 +337,4 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:60](https://github.com/asyncapi/glee/blob/2557652/src/lib/router.ts#L60)
+[src/lib/router.ts:60](https://github.com/asyncapi/glee/blob/8907e8a/src/lib/router.ts#L60)
