@@ -11,9 +11,6 @@ interface IMQTTHeaders {
   length: number;
 }
 
-const MQTT_UNSPECIFIED_ERROR_REASON = 0x80
-const MQTT_SUCCESS_REASON = 0
-
 class MqttAdapter extends Adapter {
   private client: MqttClient
   private firstConnect: boolean
@@ -72,8 +69,7 @@ class MqttAdapter extends Adapter {
         ? auth?.password
         : undefined,
       ca: X509SecurityReq ? auth?.cert : undefined,
-      protocolVersion,
-      customHandleAcks: this._customAckHandler.bind(this),
+      protocolVersion
     } as any)
 
     this.client.on('close', () => {
@@ -87,13 +83,13 @@ class MqttAdapter extends Adapter {
       this.emit('error', error)
     })
 
-    this.client.on('message', (channel, message, mqttPacket) => {
-      const qos = mqttPacket.qos
-      if (protocolVersion === 5 && qos > 0) return   // ignore higher qos messages. already processed
-
-      const msg = this._createMessage(mqttPacket as IPublishPacket)
-      this.emit('message', msg, this.client)
-    })
+    this.client.handleMessage = (mqttPacket: IPublishPacket, cb) =>{
+      const msg = this._createMessage(mqttPacket)
+      const shouldWait = mqttPacket.qos > 0
+      if(shouldWait) msg.callback = cb
+      this.pushMessage(msg,this.client)
+      if(!shouldWait) cb()
+    }
 
     const connectClient = (): Promise<this> => {
       return new Promise((resolve) => {
@@ -168,16 +164,6 @@ class MqttAdapter extends Adapter {
       headers,
       channel: packet.topic,
     })
-  }
-
-  _customAckHandler(channel, message, mqttPacket, done) {
-    const msg = this._createMessage(mqttPacket as IPublishPacket)
-    console.log('Hello World')
-
-    msg.on('processing:successful', () => done(MQTT_SUCCESS_REASON))
-    msg.on('processing:failed', () => done(MQTT_UNSPECIFIED_ERROR_REASON))
-
-    this.emit('message', msg, this.client)
   }
 }
 

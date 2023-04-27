@@ -132,8 +132,13 @@ export default class Glee extends EventEmitter {
       this._clusterAdapter.instance = new this._clusterAdapter.Adapter(this)
       promises.push(this._clusterAdapter.instance.connect())
     }
-
-    return Promise.all(promises)
+    const adapterStreams = await Promise.all(promises)
+    adapterStreams.forEach((adapter) => {
+      adapter.on('data', (chunk: any) => {
+        this.injectMessage(chunk.message, chunk.serverName, chunk.conn)
+      })
+    })
+    return adapterStreams
   }
 
   /**
@@ -223,7 +228,7 @@ export default class Glee extends EventEmitter {
 
     async.seq(...mws)(message, (err: Error, msg: GleeMessage) => {
       if (err) {
-        message.notifyFailedProcessing()
+        message.notifyFailedProcessing(err)
         debug('Error encountered while processing middlewares.')
         this._processError(errorMiddlewares, err, msg)
         return

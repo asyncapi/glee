@@ -34,6 +34,7 @@ class GleeMessage extends EventEmitter {
   private _cluster: boolean
   private _params: { [key: string]: string }
   private _query: QueryParam
+  private _callback: (...args: any[]) => void
 
   /**
    * Instantiates a new GleeMessage.
@@ -76,6 +77,10 @@ class GleeMessage extends EventEmitter {
 
   set payload(value: any) {
     this._payload = value
+  }
+
+  set callback(callback: any) {
+    this._callback = callback
   }
 
   get headers(): { [key: string]: string } {
@@ -211,13 +216,15 @@ class GleeMessage extends EventEmitter {
    * Indicates successfully processed the message
    */
   notifySuccessfulProcessing() {
+    if(this._callback) this._callback()
     this.emit('processing:successful')
   }
 
   /**
    * Indicates failure in processing the message
    */
-  notifyFailedProcessing() {
+  notifyFailedProcessing(err: Error) {
+    if(this._callback) this._callback(err)
     this.emit('processing:failed')
   }
 }

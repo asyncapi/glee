@@ -1,6 +1,6 @@
 /* eslint-disable security/detect-object-injection */
 import { AsyncAPIDocument, Server } from '@asyncapi/parser'
-import EventEmitter from 'events'
+import { Readable } from 'stream'
 import uriTemplates from 'uri-templates'
 import GleeConnection from './connection.js'
 import Glee from './glee.js'
@@ -13,7 +13,7 @@ export type EnrichedEvent = {
   server: Server,
 }
 
-class GleeAdapter extends EventEmitter {
+class GleeAdapter extends Readable {
   private _glee: Glee
   private _serverName: string
   private _AsyncAPIServer: Server
@@ -31,7 +31,7 @@ class GleeAdapter extends EventEmitter {
    * @param {AsyncAPIDocument} parsedAsyncAPI The AsyncAPI document.
    */
   constructor (glee: Glee, serverName: string, server: Server, parsedAsyncAPI: AsyncAPIDocument) {
-    super()
+    super({objectMode: true})
 
     this._glee = glee
     this._serverName = serverName
@@ -49,17 +49,8 @@ class GleeAdapter extends EventEmitter {
     this._serverUrlExpanded = uriTemplates(this._AsyncAPIServer.url()).fill(Object.fromEntries(uriTemplateValues.entries()))
 
     this.on('error', err => { this._glee.injectError(err) })
-    this.on('message', (message, connection) => {
-      const conn = new GleeConnection({
-        connection,
-        channels: this._connections.find(c => c.rawConnection === connection).channels,
-        serverName,
-        server,
-        parsedAsyncAPI,
-      })
-      this._glee.injectMessage(message, serverName, conn)
-    })
 
+    this._read = (size: number): void => {return}
     function enrichEvent(ev): EnrichedEvent {
       return {
         ...ev,
@@ -71,6 +62,7 @@ class GleeAdapter extends EventEmitter {
     }
 
     function createConnection(ev: { channels?: string[], channel?: string, connection: any }): GleeConnection {
+      if(!ev) return
       let channels = ev.channels
       if (!channels && ev.channel) channels = [ev.channel]
 
@@ -169,6 +161,18 @@ class GleeAdapter extends EventEmitter {
     return await auth({serverName: this._serverName, parsedAsyncAPI: this._parsedAsyncAPI})
   }
 
+  pushMessage(message: GleeMessage, connection: any): void {
+    const gleeConnectionOptions = {
+        connection,
+        channels: this._connections.find(c => c.rawConnection === connection).channels,
+        serverName: this._serverName,
+        server: this.AsyncAPIServer,
+        parsedAsyncAPI: this.parsedAsyncAPI,
+      }
+    
+    const conn = new GleeConnection(gleeConnectionOptions)
+    this.push({message, conn})
+  }
   /**
    * Returns a list of the channels a given adapter has to subscribe to.
    */
