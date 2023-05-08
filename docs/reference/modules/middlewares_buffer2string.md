@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[src/middlewares/buffer2string.ts:4](https://github.com/asyncapi/glee/blob/8907e8a/src/middlewares/buffer2string.ts#L4)
+[src/middlewares/buffer2string.ts:4](https://github.com/asyncapi/glee/blob/57d0f6c/src/middlewares/buffer2string.ts#L4)

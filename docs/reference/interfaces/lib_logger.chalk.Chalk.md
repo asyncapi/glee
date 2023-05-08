@@ -16,6 +16,32 @@
 
 ▸ **Chalk**(`text`, `...placeholders`): `string`
 
+Use a template string.
+
+**`Remarks`**
+
+Template literals are unsupported for nested calls (see [issue #341](https://github.com/chalk/chalk/issues/341))
+
+**`Example`**
+
+```
+import chalk = require('chalk');
+
+log(chalk`
+CPU: {red ${cpu.totalPercent}%}
+RAM: {green ${ram.used / ram.total * 100}%}
+DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
+`);
+```
+
+**`Example`**
+
+```
+import chalk = require('chalk');
+
+log(chalk.red.bgBlack`2 + 3 = {bold ${2 + 3}}`)
+```
+
 #### Parameters
 
 | Name | Type |
@@ -125,6 +151,8 @@ node_modules/chalk/index.d.ts:150
 ### Instance
 
 • **Instance**: [`Instance`](../modules/lib_logger.chalk.md#instance)
+
+Return a new Chalk instance.
 
 #### Defined in
 
@@ -356,6 +384,8 @@ ___
 
 • `Readonly` **bold**: [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Modifier: Make text bold.
+
 #### Defined in
 
 node_modules/chalk/index.d.ts:303
@@ -385,6 +415,8 @@ ___
 ### dim
 
 • `Readonly` **dim**: [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Modifier: Emitting only a small amount of light.
 
 #### Defined in
 
@@ -436,6 +468,8 @@ ___
 
 • `Readonly` **hidden**: [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Modifier: Prints the text, but makes it invisible.
+
 #### Defined in
 
 node_modules/chalk/index.d.ts:328
@@ -445,6 +479,8 @@ ___
 ### inverse
 
 • `Readonly` **inverse**: [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Modifier: Inverse background and foreground colors.
 
 #### Defined in
 
@@ -456,6 +492,8 @@ ___
 
 • `Readonly` **italic**: [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Modifier: Make text italic. (Not widely supported)
+
 #### Defined in
 
 node_modules/chalk/index.d.ts:313
@@ -465,6 +503,16 @@ ___
 ### level
 
 • **level**: [`Level`](../modules/lib_logger.chalk.md#level)
+
+The color support for Chalk.
+
+By default, color support is automatically detected based on the environment.
+
+Levels:
+- `0` - All colors disabled.
+- `1` - Basic 16 colors support.
+- `2` - ANSI 256 colors support.
+- `3` - Truecolor 16 million colors support.
 
 #### Defined in
 
@@ -516,6 +564,8 @@ ___
 
 • `Readonly` **reset**: [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Modifier: Resets the current color chain.
+
 #### Defined in
 
 node_modules/chalk/index.d.ts:298
@@ -525,6 +575,8 @@ ___
 ### strikethrough
 
 • `Readonly` **strikethrough**: [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Modifier: Puts a horizontal line through the center of the text. (Not widely supported)
 
 #### Defined in
 
@@ -536,6 +588,8 @@ ___
 
 • `Readonly` **underline**: [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Modifier: Make text underline. (Not widely supported)
+
 #### Defined in
 
 node_modules/chalk/index.d.ts:318
@@ -545,6 +599,9 @@ ___
 ### visible
 
 • `Readonly` **visible**: [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Modifier: Prints the text only when Chalk has a color support level > 0.
+Can be useful for things that are purely cosmetic.
 
 #### Defined in
 
@@ -596,6 +653,11 @@ node_modules/chalk/index.d.ts:363
 
 ▸ **ansi**(`code`): [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Use a [Select/Set Graphic Rendition](https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters) (SGR) [color code number](https://en.wikipedia.org/wiki/ANSI_escape_code#3/4_bit) to set text color.
+
+30 <= code && code < 38 || 90 <= code && code < 98
+For example, 31 for red, 91 for redBright.
+
 #### Parameters
 
 | Name | Type |
@@ -615,6 +677,8 @@ ___
 ### ansi256
 
 ▸ **ansi256**(`index`): [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Use a [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit) to set text color.
 
 #### Parameters
 
@@ -636,6 +700,12 @@ ___
 
 ▸ **bgAnsi**(`code`): [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Use a [Select/Set Graphic Rendition](https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters) (SGR) [color code number](https://en.wikipedia.org/wiki/ANSI_escape_code#3/4_bit) to set background color.
+
+30 <= code && code < 38 || 90 <= code && code < 98
+For example, 31 for red, 91 for redBright.
+Use the foreground code, not the background code (for example, not 41, nor 101).
+
 #### Parameters
 
 | Name | Type |
@@ -655,6 +725,8 @@ ___
 ### bgAnsi256
 
 ▸ **bgAnsi256**(`index`): [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Use a [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit) to set background color.
 
 #### Parameters
 
@@ -676,11 +748,21 @@ ___
 
 ▸ **bgHex**(`color`): [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Use HEX value to set background color.
+
+**`Example`**
+
+```
+import chalk = require('chalk');
+
+chalk.bgHex('#DEADED');
+```
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `color` | `string` |  |
+| `color` | `string` | Hexadecimal value representing the desired color. |
 
 #### Returns
 
@@ -695,6 +777,8 @@ ___
 ### bgHsl
 
 ▸ **bgHsl**(`hue`, `saturation`, `lightness`): [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Use HSL values to set background color.
 
 #### Parameters
 
@@ -718,6 +802,8 @@ ___
 
 ▸ **bgHsv**(`hue`, `saturation`, `value`): [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Use HSV values to set background color.
+
 #### Parameters
 
 | Name | Type |
@@ -739,6 +825,8 @@ ___
 ### bgHwb
 
 ▸ **bgHwb**(`hue`, `whiteness`, `blackness`): [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Use HWB values to set background color.
 
 #### Parameters
 
@@ -762,11 +850,21 @@ ___
 
 ▸ **bgKeyword**(`color`): [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Use keyword color value to set background color.
+
+**`Example`**
+
+```
+import chalk = require('chalk');
+
+chalk.bgKeyword('orange');
+```
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `color` | `string` |  |
+| `color` | `string` | Keyword value representing the desired color. |
 
 #### Returns
 
@@ -781,6 +879,8 @@ ___
 ### bgRgb
 
 ▸ **bgRgb**(`red`, `green`, `blue`): [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Use RGB values to set background color.
 
 #### Parameters
 
@@ -804,11 +904,21 @@ ___
 
 ▸ **hex**(`color`): [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Use HEX value to set text color.
+
+**`Example`**
+
+```
+import chalk = require('chalk');
+
+chalk.hex('#DEADED');
+```
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `color` | `string` |  |
+| `color` | `string` | Hexadecimal value representing the desired color. |
 
 #### Returns
 
@@ -823,6 +933,8 @@ ___
 ### hsl
 
 ▸ **hsl**(`hue`, `saturation`, `lightness`): [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Use HSL values to set text color.
 
 #### Parameters
 
@@ -846,6 +958,8 @@ ___
 
 ▸ **hsv**(`hue`, `saturation`, `value`): [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Use HSV values to set text color.
+
 #### Parameters
 
 | Name | Type |
@@ -867,6 +981,8 @@ ___
 ### hwb
 
 ▸ **hwb**(`hue`, `whiteness`, `blackness`): [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Use HWB values to set text color.
 
 #### Parameters
 
@@ -890,11 +1006,21 @@ ___
 
 ▸ **keyword**(`color`): [`Chalk`](lib_logger.chalk.Chalk.md)
 
+Use keyword color value to set text color.
+
+**`Example`**
+
+```
+import chalk = require('chalk');
+
+chalk.keyword('orange');
+```
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `color` | `string` |  |
+| `color` | `string` | Keyword value representing the desired color. |
 
 #### Returns
 
@@ -909,6 +1035,8 @@ ___
 ### rgb
 
 ▸ **rgb**(`red`, `green`, `blue`): [`Chalk`](lib_logger.chalk.Chalk.md)
+
+Use RGB values to set text color.
 
 #### Parameters
 
