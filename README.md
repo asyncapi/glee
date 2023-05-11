@@ -15,7 +15,7 @@ Glee is a spec-first framework that helps you build server-side applications. It
 
 ## Setup
 
-The best way to get started with Glee is by using our CLI, which sets up everything automatically for you. To create a project, run:
+The best way to get started with Glee is by using [AsyncAPI CLI](https://github.com/asyncapi/cli), which sets up everything automatically for you. To create a project, run:
 
 ```bash
 asyncapi new glee
