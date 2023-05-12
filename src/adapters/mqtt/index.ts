@@ -136,7 +136,7 @@ class MqttAdapter extends Adapter {
       const operation = this.parsedAsyncAPI.channel(channel).publish()
       const binding = operation.binding('mqtt')
       this.client.subscribe(channel, {
-        qos: binding && binding.qos ? binding.qos : 0,
+        qos: binding?.qos ? binding.qos : 0,
       })
     })
   }
@@ -206,8 +206,8 @@ class MqttAdapter extends Adapter {
         message.channel,
         message.payload,
         {
-          qos: binding && binding.qos ? binding.qos : 2,
-          retain: binding && binding.retain ? binding.retain : false,
+          qos: binding?.qos ? binding.qos : 2,
+          retain: binding?.retain ? binding.retain : false,
         },
         (err) => {
           if (err) {
