@@ -44,7 +44,7 @@ if (command === 'dev') {
 } else if (command === 'start') {
   import('./start.js')
 } else if (command === 'docs') {
-  docs()
+  docs().catch(e => logTypeScriptMessage(e))
 } else {
   console.error(`Unknown command "${args[0]}"`)
 }

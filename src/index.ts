@@ -62,7 +62,7 @@ export default async function GleeAppInitializer () {
   app.useOutbound(logger)
   app.use(errorLogger)
   app.useOutbound(errorLogger)
-  generateDocs(parsedAsyncAPI, config, null)
+  await generateDocs(parsedAsyncAPI, config, null)
 
   channelNames.forEach((channelName) => {
     const channel = parsedAsyncAPI.channel(channelName)
