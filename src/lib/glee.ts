@@ -40,7 +40,7 @@ export default class Glee extends EventEmitter {
   constructor(options: GleeConfig = {}) {
     super({ captureRejections: true })
 
-    this.on('error', (error) => console.log(error))
+    this.on('error', console.error)
 
     this._options = options
     this._router = new GleeRouter()
