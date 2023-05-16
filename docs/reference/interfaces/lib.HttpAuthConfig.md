@@ -18,4 +18,4 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:25](https://github.com/asyncapi/glee/blob/57d0f6c/src/lib/index.d.ts#L25)
+[src/lib/index.d.ts:25](https://github.com/asyncapi/glee/blob/e68f900/src/lib/index.d.ts#L25)
