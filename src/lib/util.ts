@@ -19,7 +19,7 @@ interface IValidateDataReturn {
  * @param {String} path The path.
  * @param {String} channel The channel.
  */
-export const getParams = (path: string, channel: string): {[key: string]: string} | null => {
+export const getParams = (path: string, channel: string): { [key: string]: string } | null => {
   if (path === undefined) return {}
 
   const keys = []
@@ -108,7 +108,7 @@ export const arrayHasDuplicates = (array: any[]) => {
   return (new Set(array)).size !== array.length
 }
 
-export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): GleeFunctionEvent => {
+export const gleeMessageToFunctionEvent = (message: GleeMessage, glee: Glee): GleeFunctionEvent => {
   return {
     payload: message.payload,
     query: message.query,
@@ -122,13 +122,16 @@ export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): Gle
 
 export const isRemoteServer = (parsedAsyncAPI: AsyncAPIDocument, serverName: string): boolean => {
   const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
-  return remoteServers && remoteServers.includes(serverName)
+  if (remoteServers) {
+    return remoteServers.includes(serverName)
+  }
+  return false
 }
 
 export const resolveFunctions = async (object: any) => {
   for (const key in object) {
     if (typeof object[String(key)] === 'object' && !Array.isArray(object[String(key)])) {
-      resolveFunctions(object[String(key)])
+      await resolveFunctions(object[String(key)])
     } else if (typeof object[String(key)] === 'function' && key !== 'auth') {
       object[String(key)] = await object[String(key)]()
     }
