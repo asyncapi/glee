@@ -85,10 +85,9 @@ class MqttAdapter extends Adapter {
 
     this.client.handleMessage = (mqttPacket: IPublishPacket, cb) =>{
       const msg = this._createMessage(mqttPacket)
-      const shouldWait = mqttPacket.qos > 0
-      if(shouldWait) msg.callback = cb
+      msg.qos = mqttPacket.qos as number
       this.pushMessage(msg,this.client)
-      if(!shouldWait) cb()
+      cb()
     }
 
     const connectClient = (): Promise<this> => {

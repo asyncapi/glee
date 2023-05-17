@@ -31,7 +31,7 @@ class GleeAdapter extends Readable {
    * @param {AsyncAPIDocument} parsedAsyncAPI The AsyncAPI document.
    */
   constructor (glee: Glee, serverName: string, server: Server, parsedAsyncAPI: AsyncAPIDocument) {
-    super({objectMode: true})
+    super({objectMode: true, highWaterMark: 0})
 
     this._glee = glee
     this._serverName = serverName
@@ -50,7 +50,7 @@ class GleeAdapter extends Readable {
 
     this.on('error', err => { this._glee.injectError(err) })
 
-    this._read = (size: number): void => {return}
+    this._read = (size: number): void => {}
     function enrichEvent(ev): EnrichedEvent {
       return {
         ...ev,

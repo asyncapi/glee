@@ -1,5 +1,6 @@
 import EventEmitter from 'events'
 import GleeConnection from './connection.js'
+import { v4 as uuidv4 } from 'uuid'
 
 type MessageHeaders = { [key: string]: any }
 type QueryParam = { [key: string]: string } | { [key: string]: string[] }
@@ -23,6 +24,8 @@ interface IReply {
 }
 
 class GleeMessage extends EventEmitter {
+  private _qos: number
+  private _uuid: uuidv4
   private _payload: any
   private _headers: { [key: string]: string }
   private _channel: string
@@ -61,6 +64,8 @@ class GleeMessage extends EventEmitter {
   }: IGleeMessageConstructor) {
     super()
 
+    this._uuid = uuidv4()
+    this._qos = 1
     if (payload) this._payload = payload
     if (headers) this._headers = headers
     if (channel) this._channel = channel
@@ -79,6 +84,17 @@ class GleeMessage extends EventEmitter {
     this._payload = value
   }
 
+  get qos(): number {
+    return this._qos
+  }
+
+  set qos(value: number) {
+    this._qos = value
+  }
+
+  get uuid(): uuidv4 {
+    return this._uuid
+  }
   set callback(callback: any) {
     this._callback = callback
   }

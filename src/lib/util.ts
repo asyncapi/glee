@@ -5,6 +5,7 @@ import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
 import { GleeFunctionEvent } from './index.js'
 import GleeMessage from './message.js'
+import {Readable, PassThrough} from 'stream'
 
 interface IValidateDataReturn {
   errors?: void | betterAjvErrors.IOutputError[],
@@ -133,4 +134,15 @@ export const resolveFunctions = async (object: any) => {
       object[String(key)] = await object[String(key)]()
     }
   }
+}
+
+
+export const mergeStreams = (streams: Readable[]) => {
+    let pass = new PassThrough()
+    let waiting = streams.length
+    for (const stream of streams) {
+        pass = stream.pipe(pass, {end: false})
+        stream.once('end', () => --waiting === 0 && pass.emit('end'))
+    }
+    return pass
 }

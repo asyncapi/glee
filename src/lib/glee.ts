@@ -6,10 +6,11 @@ import GleeAdapter from './adapter.js'
 import GleeClusterAdapter from './cluster.js'
 import GleeRouter, { ChannelErrorMiddlewareTuple, ChannelMiddlewareTuple, GenericMiddleware } from './router.js'
 import GleeMessage from './message.js'
-import { matchChannel, duplicateMessage, getParams } from './util.js'
+import { matchChannel, duplicateMessage, getParams, mergeStreams } from './util.js'
 import { GleeConfig } from './index.js'
 import GleeConnection from './connection.js'
 import { MiddlewareCallback } from '../middlewares/index.js'
+import { Logger, PriorityStream } from './priorityQueue/priorityQueue.js'
 
 const debug = Debug('glee')
 
@@ -133,10 +134,12 @@ export default class Glee extends EventEmitter {
       promises.push(this._clusterAdapter.instance.connect())
     }
     const adapterStreams = await Promise.all(promises)
-    adapterStreams.forEach((adapter) => {
-      adapter.on('data', (chunk: any) => {
-        this.injectMessage(chunk.message, chunk.serverName, chunk.conn)
-      })
+    const priorityQueue = new PriorityStream()
+    const mergedStreams = mergeStreams(adapterStreams)
+    mergedStreams
+    .pipe(priorityQueue)
+    .on('data', (chunk) => {
+      this.injectMessage(chunk.message, chunk.serverName, chunk.connection)
     })
     return adapterStreams
   }
