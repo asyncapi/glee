@@ -107,8 +107,7 @@ class WebSocketsAdapter extends Adapter {
   }
 
   private async initializeConstants() {
-    const options: WebsocketAdapterConfig = await this.resolveProtocolConfig('ws')
-    const config = options?.server
+    const config = this.glee.options?.ws?.server
     const serverUrl = new URL(this.serverUrlExpanded)
     const wsHttpServer = config?.httpServer || http.createServer()
     const asyncapiServerPort = serverUrl.port || 80
@@ -116,7 +115,6 @@ class WebSocketsAdapter extends Adapter {
     const port = optionsPort || asyncapiServerPort
 
     return {
-      options,
       config,
       serverUrl,
       wsHttpServer,
