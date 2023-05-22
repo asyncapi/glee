@@ -41,6 +41,7 @@
     "@types/jest": "^27.4.0",
     "@types/qs": "^6.9.7",
     "ajv": "^6.12.6",
+    "amqplib": "^0.10.3",
     "async": "^3.2.0",
     "better-ajv-errors": "^0.7.0",
     "bufferutil": "^4.0.3",
