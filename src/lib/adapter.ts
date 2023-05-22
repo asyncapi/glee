@@ -48,7 +48,7 @@ class GleeAdapter extends Readable {
     })
     this._serverUrlExpanded = uriTemplates(this._AsyncAPIServer.url()).fill(Object.fromEntries(uriTemplateValues.entries()))
 
-    this.on('error', err => { this._glee.injectError(err) })
+    //this.on('error', err => { this._glee.injectError(err) })
 
     this._read = (size: number): void => {}
     function enrichEvent(ev): EnrichedEvent {
@@ -171,7 +171,10 @@ class GleeAdapter extends Readable {
       }
     
     const conn = new GleeConnection(gleeConnectionOptions)
-    this.push({message, conn})
+    message.connection = conn
+    message.serverName = this._serverName
+    message.setInbound()
+    this.push(message)
   }
   /**
    * Returns a list of the channels a given adapter has to subscribe to.

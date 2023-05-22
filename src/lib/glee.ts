@@ -8,9 +8,12 @@ import GleeRouter, { ChannelErrorMiddlewareTuple, ChannelMiddlewareTuple, Generi
 import GleeMessage from './message.js'
 import { matchChannel, duplicateMessage, getParams, mergeStreams } from './util.js'
 import { GleeConfig } from './index.js'
-import GleeConnection from './connection.js'
 import { MiddlewareCallback } from '../middlewares/index.js'
-import { Logger, PriorityStream } from './priorityQueue/priorityQueue.js'
+import { MessageProcessor } from './messageProcessor.js'
+import { logInboundMessage } from './streams/MessageLogger.js'
+import { bufferToString } from './streams/BufferToString.js'
+import { stringToJSON } from './streams/StringToJSON.js'
+import { priorityQueue } from './streams/PriorityQueue.js'
 
 const debug = Debug('glee')
 
@@ -134,13 +137,13 @@ export default class Glee extends EventEmitter {
       promises.push(this._clusterAdapter.instance.connect())
     }
     const adapterStreams = await Promise.all(promises)
-    const priorityQueue = new PriorityStream()
     const mergedStreams = mergeStreams(adapterStreams)
     mergedStreams
+    .pipe(bufferToString)
+    .pipe(stringToJSON)
+    .pipe(logInboundMessage)
     .pipe(priorityQueue)
-    .on('data', (chunk) => {
-      this.injectMessage(chunk.message, chunk.serverName, chunk.connection)
-    })
+    .pipe(new MessageProcessor(this._router))
     return adapterStreams
   }
 
@@ -152,36 +155,18 @@ export default class Glee extends EventEmitter {
   }
 
   /**
-   * Injects a message into the Glee inbound middleware chain.
-   *
-   * @param {GleeMessage} message The message you want to send.
-   * @param {String} serverName The name of the server this message is coming from.
-   * @param {GleeConnection} [connection] The connection used when receiving the message. Its type is unknown and must be handled by the adapters.
-   */
-  injectMessage (message: GleeMessage, serverName: string, connection: GleeConnection) {
-    message.serverName = serverName
-    message.connection = connection
-    message.setInbound()
-
-    this._processMessage(
-      this._router.getMiddlewares(),
-      this._router.getErrorMiddlewares(),
-      message
-    )
-  }
-
-  /**
    * Injects an error into the Glee inbound error middleware chain.
    *
    * @param {Any} error The error.
    * @param {String} [channel] The channel of the error.
    */
   injectError (error: Error, channel?: string) {
-    this._processError(
-      this._router.getErrorMiddlewares(),
-      error,
-      new GleeMessage({ channel })
-    )
+    console.error(error)
+    // this.push(
+    //   this._router.getErrorMiddlewares(),
+    //   error,
+    //   new GleeMessage({ channel })
+    // )
   }
 
   /**

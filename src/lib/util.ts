@@ -138,7 +138,7 @@ export const resolveFunctions = async (object: any) => {
 
 
 export const mergeStreams = (streams: Readable[]) => {
-    let pass = new PassThrough()
+    let pass = new PassThrough({objectMode: true})
     let waiting = streams.length
     for (const stream of streams) {
         pass = stream.pipe(pass, {end: false})

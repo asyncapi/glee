@@ -1,4 +1,4 @@
-import GleeMessage from '../message.ts'
+import GleeMessage from '../message.js'
 
 export interface PriorityStrategy{
   dequeue(): GleeMessage;
