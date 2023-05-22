@@ -10,14 +10,14 @@ interface ClientData {
   protocolVersion?: number;
 }
 
-  const bindingTemplate: any = {
-    vhost: '/',
-    exchange: 'testExchange',
-    queue: 'testQueue',
-    queueOptions: {},
-    exchangeOptions: {},
-    heartbeat: 0
-  };
+const bindingTemplate: any = {
+  vhost: "/",
+  exchange: "testExchange",
+  queue: "testQueue",
+  queueOptions: {},
+  exchangeOptions: {},
+  heartbeat: 0,
+};
 
 class AMQPAdapter extends Adapter {
   private client: amqplib;
@@ -48,7 +48,7 @@ class AMQPAdapter extends Adapter {
 
   _connect() {
     return new Promise<any>(async (resolve, reject) => {
-        let resolved = false;
+      let resolved = false;
       const amqpOptions: AMQPAdapterConfig = await this.resolveProtocolConfig(
         "amqp"
       );
@@ -58,8 +58,8 @@ class AMQPAdapter extends Adapter {
       const protocolVersion = parseInt(
         this.AsyncAPIServer.protocolVersion() || "0.9.1"
       );
-        const serverBindings = bindingTemplate;
-    //   const serverBindings = this.AsyncAPIServer.binding("amqp");
+      const serverBindings = bindingTemplate;
+      //   const serverBindings = this.AsyncAPIServer.binding("amqp");
 
       this.client = this.initializeConnection({
         url,
@@ -68,36 +68,45 @@ class AMQPAdapter extends Adapter {
         protocolVersion,
       });
 
-      const catchError = error => {
-        if(!resolved) return reject(error);
-        this.emit('error', error)
-      }
+      const catchError = (error) => {
+        if (!resolved) return reject(error);
+        this.emit("error", error);
+      };
 
-      this.client.then((conn) => {
-        conn.createChannel().then((ch) => {
-            let ok = ch.assertExchange(
-              serverBindings?.exchange,
-              "topic",
-              serverBindings?.exchangeOptions
-            );
-            console.log(ok)
-        }).catch((err) => catchError(err))
-    //    conn.createChannel((err, ch) => {
-    //     console.log(ch)
-    //     if(err) catchError(err);
-    //     let ok = ch.assertExchange(serverBindings?.exchange, 'topic', serverBindings?.exchangeOptions);
-    //     ok.then((ch) => {
-    //         console.log(ch)
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     })
-    //     // ch.assertQueue(serverBindings?.queue, {}, (err, _ok) => {
-    //     //     if(err) catchError(err);
-    //     //     cons
-    //     // })
-    //    })
-      }).catch((err) => catchError(err))
-
+      this.client
+        .then((conn) => {
+          conn
+            .createChannel()
+            .then((ch) => {
+              let ok = ch.assertExchange(
+                serverBindings?.exchange,
+                "topic",
+                serverBindings?.exchangeOptions
+              );
+              ok = ok.then(() => {
+                ch.assertQueue(
+                  serverBindings?.queue,
+                  serverBindings?.queueOptions
+                );
+              }).catch(catchError);
+            })
+            .catch(catchError);
+          //    conn.createChannel((err, ch) => {
+          //     console.log(ch)
+          //     if(err) catchError(err);
+          //     let ok = ch.assertExchange(serverBindings?.exchange, 'topic', serverBindings?.exchangeOptions);
+          //     ok.then((ch) => {
+          //         console.log(ch)
+          //     }).catch((err) => {
+          //         console.log(err);
+          //     })
+          //     // ch.assertQueue(serverBindings?.queue, {}, (err, _ok) => {
+          //     //     if(err) catchError(err);
+          //     //     cons
+          //     // })
+          //    })
+        })
+        .catch((err) => catchError(err));
     });
   }
 }
