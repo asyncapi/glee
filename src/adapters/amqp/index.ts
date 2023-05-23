@@ -20,16 +20,17 @@ const bindingTemplate: any = {
 }
 
 class AMQPAdapter extends Adapter {
-  private client: amqplib
+  private client: amqplib;
+  private publisher: null;
   name(): string {
-    return "AMQP adapter"
+    return "AMQP adapter";
   }
   async connect(): Promise<any> {
-    return this._connect()
+    return this._connect();
   }
 
   private async initializeConnection(data: ClientData) {
-    const { url, auth, serverBindings, protocolVersion } = data
+    const { url, auth, serverBindings, protocolVersion } = data;
 
     return amqplib.connect({
       host: url.hostname,
@@ -43,77 +44,88 @@ class AMQPAdapter extends Adapter {
       heartbeat: serverBindings?.heartbeat,
       queue: serverBindings?.queue,
       protocolVersion,
-    } as any)
+    } as any);
   }
 
   _fnConsumer(msg, callback) {
-    const newMsg = this._createMessage(msg)
-    callback(true)
-    this.emit('message', newMsg, this.client.connection)
-    // emitter(parsedMessage.reqId, message)
+    const newMsg = this._createMessage(msg);
+    callback(true);
+    this.emit("message", newMsg, this.client.connection);
+    console.log(this.client.createChannel);
   }
 
-  _createMessage(msg){
+  _createMessage(msg) {
     const headers = {
       ...msg.fields,
-      ...msg.properties
-    }
+      ...msg.properties,
+    };
     return new GleeMessage({
       channel: msg.topic,
       headers,
       payload: msg.content.toString(),
-    })
+    });
   }
 
   _closeOnErr(err) {
-    if (!err) return false
-    console.error("[AMQP] error", err)
+    if (!err) return false;
+    console.error("[AMQP] error", err);
     // amqpConn.close()
-    return true
+    return true;
   }
 
-  private _subscribe(queue: string, ch: any) {
-    const topics = Object.keys(this.parsedAsyncAPI.channels())
+  _subscribe(queue: string, ch: any) {
+    const topics = Object.keys(this.parsedAsyncAPI.channels());
     return Promise.all(
       topics.map((topic) => {
         let channel = ch
           .bindQueue(queue, bindingTemplate?.exchange, topic)
           .then(() => {
-            return queue
+            return queue;
           })
-          .catch((error) => console.log(error))
+          .catch((error) => console.log(error));
 
         channel.then((queue) => {
-          ch.consume(queue, processMsg)
-        })
+          ch.consume(queue, processMsg);
+        });
         const processMsg = (msg) => {
-          msg.topic = topic
+          msg.topic = topic;
           // Process incoming messages and send them to fnConsumer
           // Here we need to send a callback(true) for acknowledge the message or callback(false) for reject them
           this._fnConsumer(msg, function (ok) {
             try {
-              ok ? ch.ack(msg) : ch.reject(msg, true)
+              ok ? ch.ack(msg) : ch.reject(msg, true);
             } catch (e) {
-              this.closeOnErr(e)
+              this.closeOnErr(e);
             }
-          })
-        }
+          });
+        };
       })
-    )
+    );
   }
 
+  // _send(message: tring): Promise<void> {
+  //   return new Promise((resolve, reject) => {
+  //     // const operation = this.parsedAsyncAPI
+  //     //   .channel(message.channel)
+  //     //   .subscribe();
+
+  //       console.log(this.client.createChannel())
+  //   });
+  // }
+  
+
   async _connect(): Promise<this> {
-    const resolved = false
+    const resolved = false;
     const amqpOptions: AMQPAdapterConfig = await this.resolveProtocolConfig(
       "amqp"
-    )
-    const auth: AMQPAuthConfig = await this.getAuthConfig(amqpOptions.auth)
-    const url = new URL(this.AsyncAPIServer.url())
+    );
+    const auth: AMQPAuthConfig = await this.getAuthConfig(amqpOptions.auth);
+    const url = new URL(this.AsyncAPIServer.url());
 
     const protocolVersion = parseInt(
       this.AsyncAPIServer.protocolVersion() || "0.9.1"
-    )
-    const serverBindings = bindingTemplate
+    );
+    const serverBindings = bindingTemplate;
     //   const serverBindings = this.AsyncAPIServer.binding('amqp')
 
     this.client = await this.initializeConnection({
@@ -121,22 +133,21 @@ class AMQPAdapter extends Adapter {
       auth,
       serverBindings,
       protocolVersion,
-    })
-
+    });
 
     const connectClient = (): Promise<this> => {
       return new Promise((resolve, reject) => {
         const catchError = (error) => {
-          if (!resolved) return reject(error)
-          this.emit("error", error)
-        }
-        if(resolve) {
+          if (!resolved) return reject(error);
+          this.emit("error", error);
+        };
+        if (resolve) {
           this.emit("connect", {
             name: this.name(),
             adapter: this,
             connection: this.client.connection,
-            channels: this.getSubscribedChannels()
-          })
+            channels: this.getSubscribedChannels(),
+          });
         }
         this.client
           .createChannel()
@@ -155,7 +166,7 @@ class AMQPAdapter extends Adapter {
               })
               .catch(catchError);
 
-            connect = connect
+            connect
               .then((conQueue) => {
                 const queue = conQueue.queue;
                 this._subscribe(queue, ch);
@@ -163,10 +174,10 @@ class AMQPAdapter extends Adapter {
               .catch(catchError);
           })
           .catch(catchError);
-      })
-    }
+      });
+    };
 
-    return connectClient()
+    return connectClient();
   }
 }
 
