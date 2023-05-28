@@ -172,13 +172,7 @@ class MqttAdapter extends Adapter {
           const isSessionResume = connAckPacket.sessionPresent
 
           if (!this.firstConnect) {
-            this.firstConnect = true
-            this.emit('connect', {
-              name: this.name(),
-              adapter: this,
-              connection: this.client,
-              channels: this.channelNames,
-            })
+            this.checkFirstConnect()
           }
 
           const shouldSubscribe = !isSessionResume && Array.isArray(subscribedChannels)
