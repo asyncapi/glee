@@ -2,7 +2,7 @@ import { accessSync, statSync, constants, existsSync } from 'fs'
 import path from 'path'
 import { pathToFileURL } from 'url'
 import { logErrorLine, logWarningMessage } from './logger.js'
-
+import {GleeConfig} from './index.js'
 interface Config {
   functionsDir?: string,
 }
@@ -103,3 +103,30 @@ export function getConfigs(): { [key: string]: string } {
     ASYNCAPI_FILE_PATH
   }
 }
+
+
+export class GlobalGleeConfig {
+  private _config: GleeConfig
+
+  constructor(config: GleeConfig) {
+    this._config = config
+  }
+
+  async init(protocol: string){
+
+    const defaultValues = {
+      docs: {
+        enabled: true,
+        folder: 'docs',
+        template: '@asyncapi/markdown-template'
+      }
+    }
+
+    return {
+      ...this._config[protocol],
+      defaultValues[protocol]
+    }
+  }
+  
+}
+
