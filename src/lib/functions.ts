@@ -9,7 +9,7 @@ import Glee from './glee.js'
 import { gleeMessageToFunctionEvent, validateData, isRemoteServer } from './util.js'
 import { pathToFileURL } from 'url'
 import GleeError from '../errors/glee-error.js'
-import {getParsedAsyncAPI} from './asyncapiFile.js'
+import { getParsedAsyncAPI } from './asyncapiFile.js'
 
 interface FunctionInfo {
   run: GleeFunction,
@@ -81,7 +81,7 @@ export async function trigger({
   app,
   operationId,
   message
-} : {
+}: {
   app: Glee,
   operationId: string,
   message: GleeMessage,
@@ -92,13 +92,13 @@ export async function trigger({
     if (res === undefined) res = null
     const { humanReadableError, errors, isValid } = validateData(res, FunctionReturnSchema)
 
-    if ( !isValid ) {
+    if (!isValid) {
       const err = new GleeError({
         humanReadableError,
         errors,
       })
       err.message = `Function ${operationId} returned invalid data.`
-      
+
       logError(err, {
         highlightedWords: [operationId]
       })
@@ -109,16 +109,13 @@ export async function trigger({
     res?.send?.forEach((msg) => {
       const localServerProtocols = ['ws', 'wss', 'http', 'https']
       let isBroadcast = true
-      if (msg.server) {
-        const serverProtocol = parsedAsyncAPI.server(msg.server).protocol().toLowerCase()
-        isBroadcast = localServerProtocols.includes(serverProtocol) && !isRemoteServer(parsedAsyncAPI, msg.server)
-      }
+      const serverProtocol = parsedAsyncAPI.server(msg.server || message.serverName).protocol().toLowerCase()
+      isBroadcast = localServerProtocols.includes(serverProtocol) && !isRemoteServer(parsedAsyncAPI, msg.server)
       app.send(new GleeMessage({
         payload: msg.payload,
         headers: msg.headers,
         channel: msg.channel || message.channel,
         serverName: msg.server,
-        connection: msg.server ? message.connection : undefined,
         broadcast: isBroadcast
       }))
     })
