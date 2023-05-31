@@ -57,10 +57,10 @@
 - [serializeMessage](adapters_cluster_redis.default.md#serializemessage)
 - [setMaxListeners](adapters_cluster_redis.default.md#setmaxlisteners)
 - [getEventListeners](adapters_cluster_redis.default.md#geteventlisteners)
-- [listenerCount](adapters_cluster_redis.default.md#listenercount)
-- [on](adapters_cluster_redis.default.md#on)
-- [once](adapters_cluster_redis.default.md#once)
-- [setMaxListeners](adapters_cluster_redis.default.md#setmaxlisteners)
+- [listenerCount](adapters_cluster_redis.default.md#listenercount-1)
+- [on](adapters_cluster_redis.default.md#on-1)
+- [once](adapters_cluster_redis.default.md#once-1)
+- [setMaxListeners](adapters_cluster_redis.default.md#setmaxlisteners-1)
 
 ## Constructors
 
@@ -82,7 +82,7 @@ Instantiates a Glee Cluster adapter.
 
 #### Defined in
 
-[src/lib/cluster.ts:46](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L46)
+[src/lib/cluster.ts:46](https://github.com/asyncapi/glee/blob/6792e86/src/lib/cluster.ts#L46)
 
 ## Properties
 
@@ -92,17 +92,17 @@ Instantiates a Glee Cluster adapter.
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:9](https://github.com/asyncapi/glee/blob/388e335/src/adapters/cluster/redis/index.ts#L9)
+[src/adapters/cluster/redis/index.ts:9](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/cluster/redis/index.ts#L9)
 
 ___
 
 ### \_publisher
 
-• `Private` **\_publisher**: `RedisClientType`<{ `bf`: { `ADD`: `__module` ; `EXISTS`: `__module` ; `INFO`: `__module` ; `INSERT`: `__module` ; `LOADCHUNK`: `__module` ; `MADD`: `__module` ; `MEXISTS`: `__module` ; `RESERVE`: `__module` ; `SCANDUMP`: `__module` ; `add`: `__module` ; `exists`: `__module` ; `info`: `__module` ; `insert`: `__module` ; `loadChunk`: `__module` ; `mAdd`: `__module` ; `mExists`: `__module` ; `reserve`: `__module` ; `scanDump`: `__module`  } ; `cf`: { `ADD`: `__module` ; `ADDNX`: `__module` ; `COUNT`: `__module` ; `DEL`: `__module` ; `EXISTS`: `__module` ; `INFO`: `__module` ; `INSERT`: `__module` ; `INSERTNX`: `__module` ; `LOADCHUNK`: `__module` ; `RESERVE`: `__module` ; `SCANDUMP`: `__module` ; `add`: `__module` ; `addNX`: `__module` ; `count`: `__module` ; `del`: `__module` ; `exists`: `__module` ; `info`: `__module` ; `insert`: `__module` ; `insertNX`: `__module` ; `loadChunk`: `__module` ; `reserve`: `__module` ; `scanDump`: `__module`  } ; `cms`: { `INCRBY`: `__module` ; `INFO`: `__module` ; `INITBYDIM`: `__module` ; `INITBYPROB`: `__module` ; `MERGE`: `__module` ; `QUERY`: `__module` ; `incrBy`: `__module` ; `info`: `__module` ; `initByDim`: `__module` ; `initByProb`: `__module` ; `merge`: `__module` ; `query`: `__module`  } ; `ft`: { `AGGREGATE`: `__module` ; `ALIASADD`: `__module` ; `ALIASDEL`: `__module` ; `ALIASUPDATE`: `__module` ; `ALTER`: `__module` ; `CONFIG_GET`: `__module` ; `CONFIG_SET`: `__module` ; `CREATE`: `__module` ; `DICTADD`: `__module` ; `DICTDEL`: `__module` ; `DICTDUMP`: `__module` ; `DROPINDEX`: `__module` ; `EXPLAIN`: `__module` ; `EXPLAINCLI`: `__module` ; `INFO`: `__module` ; `PROFILEAGGREGATE`: `__module` ; `PROFILESEARCH`: `__module` ; `SEARCH`: `__module` ; `SPELLCHECK`: `__module` ; `SUGADD`: `__module` ; `SUGDEL`: `__module` ; `SUGGET`: `__module` ; `SUGGET_WITHPAYLOADS`: `__module` ; `SUGGET_WITHSCORES`: `__module` ; `SUGGET_WITHSCORES_WITHPAYLOADS`: `__module` ; `SUGLEN`: `__module` ; `SYNDUMP`: `__module` ; `SYNUPDATE`: `__module` ; `TAGVALS`: `__module` ; `_LIST`: `__module` ; `_list`: `__module` ; `aggregate`: `__module` ; `aliasAdd`: `__module` ; `aliasDel`: `__module` ; `aliasUpdate`: `__module` ; `alter`: `__module` ; `configGet`: `__module` ; `configSet`: `__module` ; `create`: `__module` ; `dictAdd`: `__module` ; `dictDel`: `__module` ; `dictDump`: `__module` ; `dropIndex`: `__module` ; `explain`: `__module` ; `explainCli`: `__module` ; `info`: `__module` ; `profileAggregate`: `__module` ; `profileSearch`: `__module` ; `search`: `__module` ; `spellCheck`: `__module` ; `sugAdd`: `__module` ; `sugDel`: `__module` ; `sugGet`: `__module` ; `sugGetWithPayloads`: `__module` ; `sugGetWithScores`: `__module` ; `sugGetWithScoresWithPayloads`: `__module` ; `sugLen`: `__module` ; `synDump`: `__module` ; `synUpdate`: `__module` ; `tagVals`: `__module`  } ; `graph`: { `CONFIG_GET`: `__module` ; `CONFIG_SET`: `__module` ; `DELETE`: `__module` ; `EXPLAIN`: `__module` ; `LIST`: `__module` ; `PROFILE`: `__module` ; `QUERY`: `__module` ; `QUERY_RO`: `__module` ; `SLOWLOG`: `__module` ; `configGet`: `__module` ; `configSet`: `__module` ; `delete`: `__module` ; `explain`: `__module` ; `list`: `__module` ; `profile`: `__module` ; `query`: `__module` ; `queryRo`: `__module` ; `slowLog`: `__module`  } ; `json`: { `ARRAPPEND`: `__module` ; `ARRINDEX`: `__module` ; `ARRINSERT`: `__module` ; `ARRLEN`: `__module` ; `ARRPOP`: `__module` ; `ARRTRIM`: `__module` ; `DEBUG_MEMORY`: `__module` ; `DEL`: `__module` ; `FORGET`: `__module` ; `GET`: `__module` ; `MGET`: `__module` ; `NUMINCRBY`: `__module` ; `NUMMULTBY`: `__module` ; `OBJKEYS`: `__module` ; `OBJLEN`: `__module` ; `RESP`: `__module` ; `SET`: `__module` ; `STRAPPEND`: `__module` ; `STRLEN`: `__module` ; `TYPE`: `__module` ; `arrAppend`: `__module` ; `arrIndex`: `__module` ; `arrInsert`: `__module` ; `arrLen`: `__module` ; `arrPop`: `__module` ; `arrTrim`: `__module` ; `debugMemory`: `__module` ; `del`: `__module` ; `forget`: `__module` ; `get`: `__module` ; `mGet`: `__module` ; `numIncrBy`: `__module` ; `numMultBy`: `__module` ; `objKeys`: `__module` ; `objLen`: `__module` ; `resp`: `__module` ; `set`: `__module` ; `strAppend`: `__module` ; `strLen`: `__module` ; `type`: `__module`  } ; `topK`: { `ADD`: `__module` ; `COUNT`: `__module` ; `INCRBY`: `__module` ; `INFO`: `__module` ; `LIST`: `__module` ; `QUERY`: `__module` ; `RESERVE`: `__module` ; `add`: `__module` ; `count`: `__module` ; `incrBy`: `__module` ; `info`: `__module` ; `list`: `__module` ; `query`: `__module` ; `reserve`: `__module`  } ; `ts`: { `ADD`: `__module` ; `ALTER`: `__module` ; `CREATE`: `__module` ; `CREATERULE`: `__module` ; `DECRBY`: `__module` ; `DEL`: `__module` ; `DELETERULE`: `__module` ; `GET`: `__module` ; `INCRBY`: `__module` ; `INFO`: `__module` ; `INFO_DEBUG`: `__module` ; `MADD`: `__module` ; `MGET`: `__module` ; `MGET_WITHLABELS`: `__module` ; `MRANGE`: `__module` ; `MRANGE_WITHLABELS`: `__module` ; `MREVRANGE`: `__module` ; `MREVRANGE_WITHLABELS`: `__module` ; `QUERYINDEX`: `__module` ; `RANGE`: `__module` ; `REVRANGE`: `__module` ; `add`: `__module` ; `alter`: `__module` ; `create`: `__module` ; `createRule`: `__module` ; `decrBy`: `__module` ; `del`: `__module` ; `deleteRule`: `__module` ; `get`: `__module` ; `incrBy`: `__module` ; `info`: `__module` ; `infoDebug`: `__module` ; `mAdd`: `__module` ; `mGet`: `__module` ; `mGetWithLabels`: `__module` ; `mRange`: `__module` ; `mRangeWithLabels`: `__module` ; `mRevRange`: `__module` ; `mRevRangeWithLabels`: `__module` ; `queryIndex`: `__module` ; `range`: `__module` ; `revRange`: `__module`  }  }, `RedisScripts`\>
+• `Private` **\_publisher**: `RedisClientType`<{ `bf`: { `ADD`: `__module` ; `CARD`: `__module` ; `EXISTS`: `__module` ; `INFO`: `__module` ; `INSERT`: `__module` ; `LOADCHUNK`: `__module` ; `MADD`: `__module` ; `MEXISTS`: `__module` ; `RESERVE`: `__module` ; `SCANDUMP`: `__module` ; `add`: `__module` ; `card`: `__module` ; `exists`: `__module` ; `info`: `__module` ; `insert`: `__module` ; `loadChunk`: `__module` ; `mAdd`: `__module` ; `mExists`: `__module` ; `reserve`: `__module` ; `scanDump`: `__module`  } ; `cf`: { `ADD`: `__module` ; `ADDNX`: `__module` ; `COUNT`: `__module` ; `DEL`: `__module` ; `EXISTS`: `__module` ; `INFO`: `__module` ; `INSERT`: `__module` ; `INSERTNX`: `__module` ; `LOADCHUNK`: `__module` ; `RESERVE`: `__module` ; `SCANDUMP`: `__module` ; `add`: `__module` ; `addNX`: `__module` ; `count`: `__module` ; `del`: `__module` ; `exists`: `__module` ; `info`: `__module` ; `insert`: `__module` ; `insertNX`: `__module` ; `loadChunk`: `__module` ; `reserve`: `__module` ; `scanDump`: `__module`  } ; `cms`: { `INCRBY`: `__module` ; `INFO`: `__module` ; `INITBYDIM`: `__module` ; `INITBYPROB`: `__module` ; `MERGE`: `__module` ; `QUERY`: `__module` ; `incrBy`: `__module` ; `info`: `__module` ; `initByDim`: `__module` ; `initByProb`: `__module` ; `merge`: `__module` ; `query`: `__module`  } ; `ft`: { `AGGREGATE`: `__module` ; `AGGREGATE_WITHCURSOR`: `__module` ; `ALIASADD`: `__module` ; `ALIASDEL`: `__module` ; `ALIASUPDATE`: `__module` ; `ALTER`: `__module` ; `CONFIG_GET`: `__module` ; `CONFIG_SET`: `__module` ; `CREATE`: `__module` ; `CURSOR_DEL`: `__module` ; `CURSOR_READ`: `__module` ; `DICTADD`: `__module` ; `DICTDEL`: `__module` ; `DICTDUMP`: `__module` ; `DROPINDEX`: `__module` ; `EXPLAIN`: `__module` ; `EXPLAINCLI`: `__module` ; `INFO`: `__module` ; `PROFILEAGGREGATE`: `__module` ; `PROFILESEARCH`: `__module` ; `SEARCH`: `__module` ; `SPELLCHECK`: `__module` ; `SUGADD`: `__module` ; `SUGDEL`: `__module` ; `SUGGET`: `__module` ; `SUGGET_WITHPAYLOADS`: `__module` ; `SUGGET_WITHSCORES`: `__module` ; `SUGGET_WITHSCORES_WITHPAYLOADS`: `__module` ; `SUGLEN`: `__module` ; `SYNDUMP`: `__module` ; `SYNUPDATE`: `__module` ; `TAGVALS`: `__module` ; `_LIST`: `__module` ; `_list`: `__module` ; `aggregate`: `__module` ; `aggregateWithCursor`: `__module` ; `aliasAdd`: `__module` ; `aliasDel`: `__module` ; `aliasUpdate`: `__module` ; `alter`: `__module` ; `configGet`: `__module` ; `configSet`: `__module` ; `create`: `__module` ; `cursorDel`: `__module` ; `cursorRead`: `__module` ; `dictAdd`: `__module` ; `dictDel`: `__module` ; `dictDump`: `__module` ; `dropIndex`: `__module` ; `explain`: `__module` ; `explainCli`: `__module` ; `info`: `__module` ; `profileAggregate`: `__module` ; `profileSearch`: `__module` ; `search`: `__module` ; `spellCheck`: `__module` ; `sugAdd`: `__module` ; `sugDel`: `__module` ; `sugGet`: `__module` ; `sugGetWithPayloads`: `__module` ; `sugGetWithScores`: `__module` ; `sugGetWithScoresWithPayloads`: `__module` ; `sugLen`: `__module` ; `synDump`: `__module` ; `synUpdate`: `__module` ; `tagVals`: `__module`  } ; `graph`: { `CONFIG_GET`: `__module` ; `CONFIG_SET`: `__module` ; `DELETE`: `__module` ; `EXPLAIN`: `__module` ; `LIST`: `__module` ; `PROFILE`: `__module` ; `QUERY`: `__module` ; `RO_QUERY`: `__module` ; `SLOWLOG`: `__module` ; `configGet`: `__module` ; `configSet`: `__module` ; `delete`: `__module` ; `explain`: `__module` ; `list`: `__module` ; `profile`: `__module` ; `query`: `__module` ; `roQuery`: `__module` ; `slowLog`: `__module`  } ; `json`: { `ARRAPPEND`: `__module` ; `ARRINDEX`: `__module` ; `ARRINSERT`: `__module` ; `ARRLEN`: `__module` ; `ARRPOP`: `__module` ; `ARRTRIM`: `__module` ; `DEBUG_MEMORY`: `__module` ; `DEL`: `__module` ; `FORGET`: `__module` ; `GET`: `__module` ; `MGET`: `__module` ; `NUMINCRBY`: `__module` ; `NUMMULTBY`: `__module` ; `OBJKEYS`: `__module` ; `OBJLEN`: `__module` ; `RESP`: `__module` ; `SET`: `__module` ; `STRAPPEND`: `__module` ; `STRLEN`: `__module` ; `TYPE`: `__module` ; `arrAppend`: `__module` ; `arrIndex`: `__module` ; `arrInsert`: `__module` ; `arrLen`: `__module` ; `arrPop`: `__module` ; `arrTrim`: `__module` ; `debugMemory`: `__module` ; `del`: `__module` ; `forget`: `__module` ; `get`: `__module` ; `mGet`: `__module` ; `numIncrBy`: `__module` ; `numMultBy`: `__module` ; `objKeys`: `__module` ; `objLen`: `__module` ; `resp`: `__module` ; `set`: `__module` ; `strAppend`: `__module` ; `strLen`: `__module` ; `type`: `__module`  } ; `tDigest`: { `ADD`: `__module` ; `BYRANK`: `__module` ; `BYREVRANK`: `__module` ; `CDF`: `__module` ; `CREATE`: `__module` ; `INFO`: `__module` ; `MAX`: `__module` ; `MERGE`: `__module` ; `MIN`: `__module` ; `QUANTILE`: `__module` ; `RANK`: `__module` ; `RESET`: `__module` ; `REVRANK`: `__module` ; `TRIMMED_MEAN`: `__module` ; `add`: `__module` ; `byRank`: `__module` ; `byRevRank`: `__module` ; `cdf`: `__module` ; `create`: `__module` ; `info`: `__module` ; `max`: `__module` ; `merge`: `__module` ; `min`: `__module` ; `quantile`: `__module` ; `rank`: `__module` ; `reset`: `__module` ; `revRank`: `__module` ; `trimmedMean`: `__module`  } ; `topK`: { `ADD`: `__module` ; `COUNT`: `__module` ; `INCRBY`: `__module` ; `INFO`: `__module` ; `LIST`: `__module` ; `LIST_WITHCOUNT`: `__module` ; `QUERY`: `__module` ; `RESERVE`: `__module` ; `add`: `__module` ; `count`: `__module` ; `incrBy`: `__module` ; `info`: `__module` ; `list`: `__module` ; `listWithCount`: `__module` ; `query`: `__module` ; `reserve`: `__module`  } ; `ts`: { `ADD`: `__module` ; `ALTER`: `__module` ; `CREATE`: `__module` ; `CREATERULE`: `__module` ; `DECRBY`: `__module` ; `DEL`: `__module` ; `DELETERULE`: `__module` ; `GET`: `__module` ; `INCRBY`: `__module` ; `INFO`: `__module` ; `INFO_DEBUG`: `__module` ; `MADD`: `__module` ; `MGET`: `__module` ; `MGET_WITHLABELS`: `__module` ; `MRANGE`: `__module` ; `MRANGE_WITHLABELS`: `__module` ; `MREVRANGE`: `__module` ; `MREVRANGE_WITHLABELS`: `__module` ; `QUERYINDEX`: `__module` ; `RANGE`: `__module` ; `REVRANGE`: `__module` ; `add`: `__module` ; `alter`: `__module` ; `create`: `__module` ; `createRule`: `__module` ; `decrBy`: `__module` ; `del`: `__module` ; `deleteRule`: `__module` ; `get`: `__module` ; `incrBy`: `__module` ; `info`: `__module` ; `infoDebug`: `__module` ; `mAdd`: `__module` ; `mGet`: `__module` ; `mGetWithLabels`: `__module` ; `mRange`: `__module` ; `mRangeWithLabels`: `__module` ; `mRevRange`: `__module` ; `mRevRangeWithLabels`: `__module` ; `queryIndex`: `__module` ; `range`: `__module` ; `revRange`: `__module`  }  } & `RedisModules`, `RedisFunctions`, `RedisScripts`\>
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:10](https://github.com/asyncapi/glee/blob/388e335/src/adapters/cluster/redis/index.ts#L10)
+[src/adapters/cluster/redis/index.ts:10](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/cluster/redis/index.ts#L10)
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:301
+node_modules/@types/node/events.d.ts:328
 
 ___
 
@@ -132,7 +132,7 @@ Sets or gets the default captureRejection value for all emitters.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:306
+node_modules/@types/node/events.d.ts:333
 
 ___
 
@@ -146,7 +146,7 @@ ___
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:307
+node_modules/@types/node/events.d.ts:334
 
 ___
 
@@ -168,7 +168,7 @@ regular `'error'` listener is installed.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:300
+node_modules/@types/node/events.d.ts:327
 
 ## Accessors
 
@@ -186,7 +186,7 @@ ClusterAdapter.glee
 
 #### Defined in
 
-[src/lib/cluster.ts:93](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L93)
+[src/lib/cluster.ts:93](https://github.com/asyncapi/glee/blob/6792e86/src/lib/cluster.ts#L93)
 
 ___
 
@@ -204,7 +204,7 @@ ClusterAdapter.instanceId
 
 #### Defined in
 
-[src/lib/cluster.ts:105](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L105)
+[src/lib/cluster.ts:105](https://github.com/asyncapi/glee/blob/6792e86/src/lib/cluster.ts#L105)
 
 ___
 
@@ -222,7 +222,7 @@ ClusterAdapter.serverName
 
 #### Defined in
 
-[src/lib/cluster.ts:97](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L97)
+[src/lib/cluster.ts:97](https://github.com/asyncapi/glee/blob/6792e86/src/lib/cluster.ts#L97)
 
 ___
 
@@ -240,7 +240,7 @@ ClusterAdapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/cluster.ts:101](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L101)
+[src/lib/cluster.ts:101](https://github.com/asyncapi/glee/blob/6792e86/src/lib/cluster.ts#L101)
 
 ## Methods
 
@@ -254,7 +254,7 @@ ClusterAdapter.serverUrlExpanded
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:24](https://github.com/asyncapi/glee/blob/388e335/src/adapters/cluster/redis/index.ts#L24)
+[src/adapters/cluster/redis/index.ts:24](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/cluster/redis/index.ts#L24)
 
 ___
 
@@ -274,7 +274,7 @@ ___
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:67](https://github.com/asyncapi/glee/blob/388e335/src/adapters/cluster/redis/index.ts#L67)
+[src/adapters/cluster/redis/index.ts:67](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/cluster/redis/index.ts#L67)
 
 ___
 
@@ -284,7 +284,9 @@ ___
 
 Alias for `emitter.on(eventName, listener)`.
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -303,7 +305,7 @@ Alias for `emitter.on(eventName, listener)`.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:327
+node_modules/@types/node/events.d.ts:354
 
 ___
 
@@ -323,7 +325,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:16](https://github.com/asyncapi/glee/blob/388e335/src/adapters/cluster/redis/index.ts#L16)
+[src/adapters/cluster/redis/index.ts:16](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/cluster/redis/index.ts#L16)
 
 ___
 
@@ -351,13 +353,13 @@ The deserialized message.
 
 #### Defined in
 
-[src/lib/cluster.ts:151](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L151)
+[src/lib/cluster.ts:151](https://github.com/asyncapi/glee/blob/6792e86/src/lib/cluster.ts#L151)
 
 ___
 
 ### emit
 
-▸ **emit**(`eventName`, ...`args`): `boolean`
+▸ **emit**(`eventName`, `...args`): `boolean`
 
 Synchronously calls each of the listeners registered for the event named`eventName`, in the order they were registered, passing the supplied arguments
 to each.
@@ -397,7 +399,9 @@ myEmitter.emit('event', 1, 2, 3, 4, 5);
 // event with parameters 1, 2, 3, 4, 5 in third listener
 ```
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -416,7 +420,7 @@ myEmitter.emit('event', 1, 2, 3, 4, 5);
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:583
+node_modules/@types/node/events.d.ts:610
 
 ___
 
@@ -440,7 +444,9 @@ console.log(myEE.eventNames());
 // Prints: [ 'foo', 'bar', Symbol(symbol) ]
 ```
 
-**`since`** v6.0.0
+**`Since`**
+
+v6.0.0
 
 #### Returns
 
@@ -452,7 +458,7 @@ console.log(myEE.eventNames());
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:642
+node_modules/@types/node/events.d.ts:669
 
 ___
 
@@ -463,7 +469,9 @@ ___
 Returns the current max listener value for the `EventEmitter` which is either
 set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapters_cluster_redis.default.md#defaultmaxlisteners).
 
-**`since`** v1.0.0
+**`Since`**
+
+v1.0.0
 
 #### Returns
 
@@ -475,7 +483,7 @@ set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapter
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:499
+node_modules/@types/node/events.d.ts:526
 
 ___
 
@@ -485,7 +493,9 @@ ___
 
 Returns the number of listeners listening to the event named `eventName`.
 
-**`since`** v3.2.0
+**`Since`**
+
+v3.2.0
 
 #### Parameters
 
@@ -503,7 +513,7 @@ Returns the number of listeners listening to the event named `eventName`.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:589
+node_modules/@types/node/events.d.ts:616
 
 ___
 
@@ -521,7 +531,9 @@ console.log(util.inspect(server.listeners('connection')));
 // Prints: [ [Function] ]
 ```
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -539,7 +551,7 @@ console.log(util.inspect(server.listeners('connection')));
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:512
+node_modules/@types/node/events.d.ts:539
 
 ___
 
@@ -553,7 +565,7 @@ ___
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:12](https://github.com/asyncapi/glee/blob/388e335/src/adapters/cluster/redis/index.ts#L12)
+[src/adapters/cluster/redis/index.ts:12](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/cluster/redis/index.ts#L12)
 
 ___
 
@@ -563,7 +575,9 @@ ___
 
 Alias for `emitter.removeListener()`.
 
-**`since`** v10.0.0
+**`Since`**
+
+v10.0.0
 
 #### Parameters
 
@@ -582,7 +596,7 @@ Alias for `emitter.removeListener()`.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:472
+node_modules/@types/node/events.d.ts:499
 
 ___
 
@@ -616,7 +630,9 @@ myEE.emit('foo');
 //   a
 ```
 
-**`since`** v0.1.101
+**`Since`**
+
+v0.1.101
 
 #### Parameters
 
@@ -635,7 +651,7 @@ myEE.emit('foo');
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:358
+node_modules/@types/node/events.d.ts:385
 
 ___
 
@@ -667,7 +683,9 @@ myEE.emit('foo');
 //   a
 ```
 
-**`since`** v0.3.0
+**`Since`**
+
+v0.3.0
 
 #### Parameters
 
@@ -686,7 +704,7 @@ myEE.emit('foo');
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:387
+node_modules/@types/node/events.d.ts:414
 
 ___
 
@@ -707,7 +725,9 @@ server.prependListener('connection', (stream) => {
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v6.0.0
+**`Since`**
+
+v6.0.0
 
 #### Parameters
 
@@ -726,7 +746,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:607
+node_modules/@types/node/events.d.ts:634
 
 ___
 
@@ -734,7 +754,7 @@ ___
 
 ▸ **prependOnceListener**(`eventName`, `listener`): [`default`](adapters_cluster_redis.default.md)
 
-Adds a **one-time**`listener` function for the event named `eventName` to the_beginning_ of the listeners array. The next time `eventName` is triggered, this
+Adds a **one-time**`listener` function for the event named `eventName` to the _beginning_ of the listeners array. The next time `eventName` is triggered, this
 listener is removed, and then invoked.
 
 ```js
@@ -745,7 +765,9 @@ server.prependOnceListener('connection', (stream) => {
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v6.0.0
+**`Since`**
+
+v6.0.0
 
 #### Parameters
 
@@ -764,7 +786,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:623
+node_modules/@types/node/events.d.ts:650
 
 ___
 
@@ -799,7 +821,9 @@ newListeners[0]();
 emitter.emit('log');
 ```
 
-**`since`** v9.4.0
+**`Since`**
+
+v9.4.0
 
 #### Parameters
 
@@ -817,7 +841,7 @@ emitter.emit('log');
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:542
+node_modules/@types/node/events.d.ts:569
 
 ___
 
@@ -833,7 +857,9 @@ component or module (e.g. sockets or file streams).
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -851,7 +877,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:483
+node_modules/@types/node/events.d.ts:510
 
 ___
 
@@ -876,8 +902,8 @@ listener array for the specified `eventName`, then `removeListener()` must be
 called multiple times to remove each instance.
 
 Once an event is emitted, all listeners attached to it at the
-time of emitting are called in order. This implies that any`removeListener()` or `removeAllListeners()` calls _after_ emitting and_before_ the last listener finishes execution will
-not remove them from`emit()` in progress. Subsequent events behave as expected.
+time of emitting are called in order. This implies that any`removeListener()` or `removeAllListeners()` calls _after_ emitting and _before_ the last listener finishes execution
+will not remove them from`emit()` in progress. Subsequent events behave as expected.
 
 ```js
 const myEmitter = new MyEmitter();
@@ -936,7 +962,9 @@ ee.emit('ping');
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -955,7 +983,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:467
+node_modules/@types/node/events.d.ts:494
 
 ___
 
@@ -967,9 +995,9 @@ Sends a message to the remote server.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | [`default`](lib_message.default.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `message` | [`default`](lib_message.default.md) | The message to send. |
 
 #### Returns
 
@@ -981,7 +1009,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/adapters/cluster/redis/index.ts:20](https://github.com/asyncapi/glee/blob/388e335/src/adapters/cluster/redis/index.ts#L20)
+[src/adapters/cluster/redis/index.ts:20](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/cluster/redis/index.ts#L20)
 
 ___
 
@@ -1009,7 +1037,7 @@ The serialized message,
 
 #### Defined in
 
-[src/lib/cluster.ts:131](https://github.com/asyncapi/glee/blob/388e335/src/lib/cluster.ts#L131)
+[src/lib/cluster.ts:131](https://github.com/asyncapi/glee/blob/6792e86/src/lib/cluster.ts#L131)
 
 ___
 
@@ -1024,7 +1052,9 @@ modified for this specific `EventEmitter` instance. The value can be set to`Infi
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v0.3.5
+**`Since`**
+
+v0.3.5
 
 #### Parameters
 
@@ -1042,7 +1072,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:493
+node_modules/@types/node/events.d.ts:520
 
 ___
 
@@ -1075,13 +1105,15 @@ const { getEventListeners, EventEmitter } = require('events');
 }
 ```
 
-**`since`** v15.2.0, v14.17.0
+**`Since`**
+
+v15.2.0, v14.17.0
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `emitter` | `DOMEventTarget` \| `EventEmitter` |
+| `emitter` | `EventEmitter` \| `_DOMEventTarget` |
 | `name` | `string` \| `symbol` |
 
 #### Returns
@@ -1094,7 +1126,7 @@ const { getEventListeners, EventEmitter } = require('events');
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:270
+node_modules/@types/node/events.d.ts:299
 
 ___
 
@@ -1113,9 +1145,13 @@ console.log(listenerCount(myEmitter, 'event'));
 // Prints: 2
 ```
 
-**`since`** v0.9.12
+**`Since`**
 
-**`deprecated`** Since v3.2.0 - Use `listenerCount` instead.
+v0.9.12
+
+**`Deprecated`**
+
+Since v3.2.0 - Use `listenerCount` instead.
 
 #### Parameters
 
@@ -1130,11 +1166,11 @@ console.log(listenerCount(myEmitter, 'event'));
 
 #### Inherited from
 
-[default](lib_cluster.default.md).[listenerCount](lib_cluster.default.md#listenercount)
+[default](lib_cluster.default.md).[listenerCount](lib_cluster.default.md#listenercount-1)
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:242
+node_modules/@types/node/events.d.ts:271
 
 ___
 
@@ -1196,7 +1232,9 @@ const ac = new AbortController();
 process.nextTick(() => ac.abort());
 ```
 
-**`since`** v13.6.0, v12.16.0
+**`Since`**
+
+v13.6.0, v12.16.0
 
 #### Parameters
 
@@ -1214,11 +1252,11 @@ that iterates `eventName` events emitted by the `emitter`
 
 #### Inherited from
 
-[default](lib_cluster.default.md).[on](lib_cluster.default.md#on)
+[default](lib_cluster.default.md).[on](lib_cluster.default.md#on-1)
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:221
+node_modules/@types/node/events.d.ts:254
 
 ___
 
@@ -1306,13 +1344,15 @@ ac.abort(); // Abort waiting for the event
 ee.emit('foo'); // Prints: Waiting for the event was canceled!
 ```
 
-**`since`** v11.13.0, v10.16.0
+**`Since`**
+
+v11.13.0, v10.16.0
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `emitter` | `NodeEventTarget` |
+| `emitter` | `_NodeEventTarget` |
 | `eventName` | `string` \| `symbol` |
 | `options?` | `StaticEventEmitterOptions` |
 
@@ -1322,11 +1362,11 @@ ee.emit('foo'); // Prints: Waiting for the event was canceled!
 
 #### Inherited from
 
-[default](lib_cluster.default.md).[once](lib_cluster.default.md#once)
+[default](lib_cluster.default.md).[once](lib_cluster.default.md#once-1)
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:157
+node_modules/@types/node/events.d.ts:194
 
 ▸ `Static` **once**(`emitter`, `eventName`, `options?`): `Promise`<`any`[]\>
 
@@ -1334,7 +1374,7 @@ node_modules/@types/node/events.d.ts:157
 
 | Name | Type |
 | :------ | :------ |
-| `emitter` | `DOMEventTarget` |
+| `emitter` | `_DOMEventTarget` |
 | `eventName` | `string` |
 | `options?` | `StaticEventEmitterOptions` |
 
@@ -1344,43 +1384,40 @@ node_modules/@types/node/events.d.ts:157
 
 #### Inherited from
 
-[default](lib_cluster.default.md).[once](lib_cluster.default.md#once)
+[default](lib_cluster.default.md).[once](lib_cluster.default.md#once-1)
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:162
+node_modules/@types/node/events.d.ts:195
 
 ___
 
 ### setMaxListeners
 
-▸ `Static` **setMaxListeners**(`n?`, ...`eventTargets`): `void`
-
-By default `EventEmitter`s will print a warning if more than `10` listeners are
-added for a particular event. This is a useful default that helps finding
-memory leaks. The `EventEmitter.setMaxListeners()` method allows the default limit to be
-modified (if eventTargets is empty) or modify the limit specified in every `EventTarget` | `EventEmitter` passed as arguments.
-The value can be set to`Infinity` (or `0`) to indicate an unlimited number of listeners.
+▸ `Static` **setMaxListeners**(`n?`, `...eventTargets`): `void`
 
 ```js
-EventEmitter.setMaxListeners(20);
-// Equivalent to
-EventEmitter.defaultMaxListeners = 20;
+const {
+  setMaxListeners,
+  EventEmitter
+} = require('events');
 
-const eventTarget = new EventTarget();
-// Only way to increase limit for `EventTarget` instances
-// as these doesn't expose its own `setMaxListeners` method
-EventEmitter.setMaxListeners(20, eventTarget);
+const target = new EventTarget();
+const emitter = new EventEmitter();
+
+setMaxListeners(5, target, emitter);
 ```
 
-**`since`** v15.3.0, v14.17.0
+**`Since`**
+
+v15.4.0
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n?` | `number` |
-| `...eventTargets` | (`DOMEventTarget` \| `EventEmitter`)[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `n?` | `number` | A non-negative number. The maximum number of listeners per `EventTarget` event. |
+| `...eventTargets` | (`EventEmitter` \| `_DOMEventTarget`)[] | - |
 
 #### Returns
 
@@ -1388,8 +1425,8 @@ EventEmitter.setMaxListeners(20, eventTarget);
 
 #### Inherited from
 
-[default](lib_cluster.default.md).[setMaxListeners](lib_cluster.default.md#setmaxlisteners)
+[default](lib_cluster.default.md).[setMaxListeners](lib_cluster.default.md#setmaxlisteners-1)
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:290
+node_modules/@types/node/events.d.ts:317

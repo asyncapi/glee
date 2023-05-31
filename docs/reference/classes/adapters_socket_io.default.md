@@ -43,6 +43,7 @@
 - [connect](adapters_socket_io.default.md#connect)
 - [emit](adapters_socket_io.default.md#emit)
 - [eventNames](adapters_socket_io.default.md#eventnames)
+- [getAuthConfig](adapters_socket_io.default.md#getauthconfig)
 - [getMaxListeners](adapters_socket_io.default.md#getmaxlisteners)
 - [getSubscribedChannels](adapters_socket_io.default.md#getsubscribedchannels)
 - [listenerCount](adapters_socket_io.default.md#listenercount)
@@ -56,13 +57,14 @@
 - [rawListeners](adapters_socket_io.default.md#rawlisteners)
 - [removeAllListeners](adapters_socket_io.default.md#removealllisteners)
 - [removeListener](adapters_socket_io.default.md#removelistener)
+- [resolveProtocolConfig](adapters_socket_io.default.md#resolveprotocolconfig)
 - [send](adapters_socket_io.default.md#send)
 - [setMaxListeners](adapters_socket_io.default.md#setmaxlisteners)
 - [getEventListeners](adapters_socket_io.default.md#geteventlisteners)
-- [listenerCount](adapters_socket_io.default.md#listenercount)
-- [on](adapters_socket_io.default.md#on)
-- [once](adapters_socket_io.default.md#once)
-- [setMaxListeners](adapters_socket_io.default.md#setmaxlisteners)
+- [listenerCount](adapters_socket_io.default.md#listenercount-1)
+- [on](adapters_socket_io.default.md#on-1)
+- [once](adapters_socket_io.default.md#once-1)
+- [setMaxListeners](adapters_socket_io.default.md#setmaxlisteners-1)
 
 ## Constructors
 
@@ -87,7 +89,7 @@ Instantiates a Glee adapter.
 
 #### Defined in
 
-[src/lib/adapter.ts:31](https://github.com/asyncapi/glee/blob/388e335/src/lib/adapter.ts#L31)
+[src/lib/adapter.ts:33](https://github.com/asyncapi/glee/blob/6792e86/src/lib/adapter.ts#L33)
 
 ## Properties
 
@@ -97,7 +99,7 @@ Instantiates a Glee adapter.
 
 #### Defined in
 
-[src/adapters/socket.io/index.ts:6](https://github.com/asyncapi/glee/blob/388e335/src/adapters/socket.io/index.ts#L6)
+[src/adapters/socket.io/index.ts:6](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/socket.io/index.ts#L6)
 
 ___
 
@@ -111,7 +113,7 @@ ___
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:301
+node_modules/@types/node/events.d.ts:328
 
 ___
 
@@ -127,7 +129,7 @@ Sets or gets the default captureRejection value for all emitters.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:306
+node_modules/@types/node/events.d.ts:333
 
 ___
 
@@ -141,7 +143,7 @@ ___
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:307
+node_modules/@types/node/events.d.ts:334
 
 ___
 
@@ -163,7 +165,7 @@ regular `'error'` listener is installed.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:300
+node_modules/@types/node/events.d.ts:327
 
 ## Accessors
 
@@ -181,7 +183,7 @@ Adapter.AsyncAPIServer
 
 #### Defined in
 
-[src/lib/adapter.ts:131](https://github.com/asyncapi/glee/blob/388e335/src/lib/adapter.ts#L131)
+[src/lib/adapter.ts:133](https://github.com/asyncapi/glee/blob/6792e86/src/lib/adapter.ts#L133)
 
 ___
 
@@ -199,7 +201,7 @@ Adapter.channelNames
 
 #### Defined in
 
-[src/lib/adapter.ts:139](https://github.com/asyncapi/glee/blob/388e335/src/lib/adapter.ts#L139)
+[src/lib/adapter.ts:141](https://github.com/asyncapi/glee/blob/6792e86/src/lib/adapter.ts#L141)
 
 ___
 
@@ -217,7 +219,7 @@ Adapter.connections
 
 #### Defined in
 
-[src/lib/adapter.ts:143](https://github.com/asyncapi/glee/blob/388e335/src/lib/adapter.ts#L143)
+[src/lib/adapter.ts:145](https://github.com/asyncapi/glee/blob/6792e86/src/lib/adapter.ts#L145)
 
 ___
 
@@ -235,7 +237,7 @@ Adapter.glee
 
 #### Defined in
 
-[src/lib/adapter.ts:123](https://github.com/asyncapi/glee/blob/388e335/src/lib/adapter.ts#L123)
+[src/lib/adapter.ts:125](https://github.com/asyncapi/glee/blob/6792e86/src/lib/adapter.ts#L125)
 
 ___
 
@@ -253,7 +255,7 @@ Adapter.parsedAsyncAPI
 
 #### Defined in
 
-[src/lib/adapter.ts:135](https://github.com/asyncapi/glee/blob/388e335/src/lib/adapter.ts#L135)
+[src/lib/adapter.ts:137](https://github.com/asyncapi/glee/blob/6792e86/src/lib/adapter.ts#L137)
 
 ___
 
@@ -271,7 +273,7 @@ Adapter.serverName
 
 #### Defined in
 
-[src/lib/adapter.ts:127](https://github.com/asyncapi/glee/blob/388e335/src/lib/adapter.ts#L127)
+[src/lib/adapter.ts:129](https://github.com/asyncapi/glee/blob/6792e86/src/lib/adapter.ts#L129)
 
 ___
 
@@ -289,7 +291,7 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/adapter.ts:147](https://github.com/asyncapi/glee/blob/388e335/src/lib/adapter.ts#L147)
+[src/lib/adapter.ts:149](https://github.com/asyncapi/glee/blob/6792e86/src/lib/adapter.ts#L149)
 
 ## Methods
 
@@ -303,7 +305,7 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/adapters/socket.io/index.ts:20](https://github.com/asyncapi/glee/blob/388e335/src/adapters/socket.io/index.ts#L20)
+[src/adapters/socket.io/index.ts:20](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/socket.io/index.ts#L20)
 
 ___
 
@@ -324,7 +326,7 @@ ___
 
 #### Defined in
 
-[src/adapters/socket.io/index.ts:83](https://github.com/asyncapi/glee/blob/388e335/src/adapters/socket.io/index.ts#L83)
+[src/adapters/socket.io/index.ts:96](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/socket.io/index.ts#L96)
 
 ___
 
@@ -344,7 +346,7 @@ ___
 
 #### Defined in
 
-[src/adapters/socket.io/index.ts:67](https://github.com/asyncapi/glee/blob/388e335/src/adapters/socket.io/index.ts#L67)
+[src/adapters/socket.io/index.ts:77](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/socket.io/index.ts#L77)
 
 ___
 
@@ -354,7 +356,9 @@ ___
 
 Alias for `emitter.on(eventName, listener)`.
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -373,7 +377,7 @@ Alias for `emitter.on(eventName, listener)`.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:327
+node_modules/@types/node/events.d.ts:354
 
 ___
 
@@ -393,13 +397,13 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/adapters/socket.io/index.ts:12](https://github.com/asyncapi/glee/blob/388e335/src/adapters/socket.io/index.ts#L12)
+[src/adapters/socket.io/index.ts:12](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/socket.io/index.ts#L12)
 
 ___
 
 ### emit
 
-▸ **emit**(`eventName`, ...`args`): `boolean`
+▸ **emit**(`eventName`, `...args`): `boolean`
 
 Synchronously calls each of the listeners registered for the event named`eventName`, in the order they were registered, passing the supplied arguments
 to each.
@@ -439,7 +443,9 @@ myEmitter.emit('event', 1, 2, 3, 4, 5);
 // event with parameters 1, 2, 3, 4, 5 in third listener
 ```
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -458,7 +464,7 @@ myEmitter.emit('event', 1, 2, 3, 4, 5);
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:583
+node_modules/@types/node/events.d.ts:610
 
 ___
 
@@ -482,7 +488,9 @@ console.log(myEE.eventNames());
 // Prints: [ 'foo', 'bar', Symbol(symbol) ]
 ```
 
-**`since`** v6.0.0
+**`Since`**
+
+v6.0.0
 
 #### Returns
 
@@ -494,7 +502,31 @@ console.log(myEE.eventNames());
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:642
+node_modules/@types/node/events.d.ts:669
+
+___
+
+### getAuthConfig
+
+▸ **getAuthConfig**(`auth`): `Promise`<`any`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `auth` | `any` |
+
+#### Returns
+
+`Promise`<`any`\>
+
+#### Inherited from
+
+[default](lib_adapter.default.md).[getAuthConfig](lib_adapter.default.md#getauthconfig)
+
+#### Defined in
+
+[src/lib/adapter.ts:162](https://github.com/asyncapi/glee/blob/6792e86/src/lib/adapter.ts#L162)
 
 ___
 
@@ -505,7 +537,9 @@ ___
 Returns the current max listener value for the `EventEmitter` which is either
 set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapters_socket_io.default.md#defaultmaxlisteners).
 
-**`since`** v1.0.0
+**`Since`**
+
+v1.0.0
 
 #### Returns
 
@@ -517,7 +551,7 @@ set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapter
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:499
+node_modules/@types/node/events.d.ts:526
 
 ___
 
@@ -537,7 +571,7 @@ Returns a list of the channels a given adapter has to subscribe to.
 
 #### Defined in
 
-[src/lib/adapter.ts:154](https://github.com/asyncapi/glee/blob/388e335/src/lib/adapter.ts#L154)
+[src/lib/adapter.ts:175](https://github.com/asyncapi/glee/blob/6792e86/src/lib/adapter.ts#L175)
 
 ___
 
@@ -547,7 +581,9 @@ ___
 
 Returns the number of listeners listening to the event named `eventName`.
 
-**`since`** v3.2.0
+**`Since`**
+
+v3.2.0
 
 #### Parameters
 
@@ -565,7 +601,7 @@ Returns the number of listeners listening to the event named `eventName`.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:589
+node_modules/@types/node/events.d.ts:616
 
 ___
 
@@ -583,7 +619,9 @@ console.log(util.inspect(server.listeners('connection')));
 // Prints: [ [Function] ]
 ```
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -601,7 +639,7 @@ console.log(util.inspect(server.listeners('connection')));
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:512
+node_modules/@types/node/events.d.ts:539
 
 ___
 
@@ -615,7 +653,7 @@ ___
 
 #### Defined in
 
-[src/adapters/socket.io/index.ts:8](https://github.com/asyncapi/glee/blob/388e335/src/adapters/socket.io/index.ts#L8)
+[src/adapters/socket.io/index.ts:8](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/socket.io/index.ts#L8)
 
 ___
 
@@ -625,7 +663,9 @@ ___
 
 Alias for `emitter.removeListener()`.
 
-**`since`** v10.0.0
+**`Since`**
+
+v10.0.0
 
 #### Parameters
 
@@ -644,7 +684,7 @@ Alias for `emitter.removeListener()`.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:472
+node_modules/@types/node/events.d.ts:499
 
 ___
 
@@ -678,7 +718,9 @@ myEE.emit('foo');
 //   a
 ```
 
-**`since`** v0.1.101
+**`Since`**
+
+v0.1.101
 
 #### Parameters
 
@@ -697,7 +739,7 @@ myEE.emit('foo');
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:358
+node_modules/@types/node/events.d.ts:385
 
 ___
 
@@ -729,7 +771,9 @@ myEE.emit('foo');
 //   a
 ```
 
-**`since`** v0.3.0
+**`Since`**
+
+v0.3.0
 
 #### Parameters
 
@@ -748,7 +792,7 @@ myEE.emit('foo');
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:387
+node_modules/@types/node/events.d.ts:414
 
 ___
 
@@ -769,7 +813,9 @@ server.prependListener('connection', (stream) => {
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v6.0.0
+**`Since`**
+
+v6.0.0
 
 #### Parameters
 
@@ -788,7 +834,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:607
+node_modules/@types/node/events.d.ts:634
 
 ___
 
@@ -796,7 +842,7 @@ ___
 
 ▸ **prependOnceListener**(`eventName`, `listener`): [`default`](adapters_socket_io.default.md)
 
-Adds a **one-time**`listener` function for the event named `eventName` to the_beginning_ of the listeners array. The next time `eventName` is triggered, this
+Adds a **one-time**`listener` function for the event named `eventName` to the _beginning_ of the listeners array. The next time `eventName` is triggered, this
 listener is removed, and then invoked.
 
 ```js
@@ -807,7 +853,9 @@ server.prependOnceListener('connection', (stream) => {
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v6.0.0
+**`Since`**
+
+v6.0.0
 
 #### Parameters
 
@@ -826,7 +874,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:623
+node_modules/@types/node/events.d.ts:650
 
 ___
 
@@ -861,7 +909,9 @@ newListeners[0]();
 emitter.emit('log');
 ```
 
-**`since`** v9.4.0
+**`Since`**
+
+v9.4.0
 
 #### Parameters
 
@@ -879,7 +929,7 @@ emitter.emit('log');
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:542
+node_modules/@types/node/events.d.ts:569
 
 ___
 
@@ -895,7 +945,9 @@ component or module (e.g. sockets or file streams).
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -913,7 +965,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:483
+node_modules/@types/node/events.d.ts:510
 
 ___
 
@@ -938,8 +990,8 @@ listener array for the specified `eventName`, then `removeListener()` must be
 called multiple times to remove each instance.
 
 Once an event is emitted, all listeners attached to it at the
-time of emitting are called in order. This implies that any`removeListener()` or `removeAllListeners()` calls _after_ emitting and_before_ the last listener finishes execution will
-not remove them from`emit()` in progress. Subsequent events behave as expected.
+time of emitting are called in order. This implies that any`removeListener()` or `removeAllListeners()` calls _after_ emitting and _before_ the last listener finishes execution
+will not remove them from`emit()` in progress. Subsequent events behave as expected.
 
 ```js
 const myEmitter = new MyEmitter();
@@ -998,7 +1050,9 @@ ee.emit('ping');
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -1017,7 +1071,31 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:467
+node_modules/@types/node/events.d.ts:494
+
+___
+
+### resolveProtocolConfig
+
+▸ **resolveProtocolConfig**(`protocol`): `Promise`<`any`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `protocol` | `string` |
+
+#### Returns
+
+`Promise`<`any`\>
+
+#### Inherited from
+
+[default](lib_adapter.default.md).[resolveProtocolConfig](lib_adapter.default.md#resolveprotocolconfig)
+
+#### Defined in
+
+[src/lib/adapter.ts:153](https://github.com/asyncapi/glee/blob/6792e86/src/lib/adapter.ts#L153)
 
 ___
 
@@ -1029,9 +1107,9 @@ Sends a message to the remote server.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | [`default`](lib_message.default.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `message` | [`default`](lib_message.default.md) | The message to send. |
 
 #### Returns
 
@@ -1043,7 +1121,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/adapters/socket.io/index.ts:16](https://github.com/asyncapi/glee/blob/388e335/src/adapters/socket.io/index.ts#L16)
+[src/adapters/socket.io/index.ts:16](https://github.com/asyncapi/glee/blob/6792e86/src/adapters/socket.io/index.ts#L16)
 
 ___
 
@@ -1058,7 +1136,9 @@ modified for this specific `EventEmitter` instance. The value can be set to`Infi
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v0.3.5
+**`Since`**
+
+v0.3.5
 
 #### Parameters
 
@@ -1076,7 +1156,7 @@ Returns a reference to the `EventEmitter`, so that calls can be chained.
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:493
+node_modules/@types/node/events.d.ts:520
 
 ___
 
@@ -1109,13 +1189,15 @@ const { getEventListeners, EventEmitter } = require('events');
 }
 ```
 
-**`since`** v15.2.0, v14.17.0
+**`Since`**
+
+v15.2.0, v14.17.0
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `emitter` | `DOMEventTarget` \| `EventEmitter` |
+| `emitter` | `EventEmitter` \| `_DOMEventTarget` |
 | `name` | `string` \| `symbol` |
 
 #### Returns
@@ -1128,7 +1210,7 @@ const { getEventListeners, EventEmitter } = require('events');
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:270
+node_modules/@types/node/events.d.ts:299
 
 ___
 
@@ -1147,9 +1229,13 @@ console.log(listenerCount(myEmitter, 'event'));
 // Prints: 2
 ```
 
-**`since`** v0.9.12
+**`Since`**
 
-**`deprecated`** Since v3.2.0 - Use `listenerCount` instead.
+v0.9.12
+
+**`Deprecated`**
+
+Since v3.2.0 - Use `listenerCount` instead.
 
 #### Parameters
 
@@ -1164,11 +1250,11 @@ console.log(listenerCount(myEmitter, 'event'));
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount)
+[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount-1)
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:242
+node_modules/@types/node/events.d.ts:271
 
 ___
 
@@ -1230,7 +1316,9 @@ const ac = new AbortController();
 process.nextTick(() => ac.abort());
 ```
 
-**`since`** v13.6.0, v12.16.0
+**`Since`**
+
+v13.6.0, v12.16.0
 
 #### Parameters
 
@@ -1248,11 +1336,11 @@ that iterates `eventName` events emitted by the `emitter`
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[on](lib_adapter.default.md#on)
+[default](lib_adapter.default.md).[on](lib_adapter.default.md#on-1)
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:221
+node_modules/@types/node/events.d.ts:254
 
 ___
 
@@ -1340,13 +1428,15 @@ ac.abort(); // Abort waiting for the event
 ee.emit('foo'); // Prints: Waiting for the event was canceled!
 ```
 
-**`since`** v11.13.0, v10.16.0
+**`Since`**
+
+v11.13.0, v10.16.0
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `emitter` | `NodeEventTarget` |
+| `emitter` | `_NodeEventTarget` |
 | `eventName` | `string` \| `symbol` |
 | `options?` | `StaticEventEmitterOptions` |
 
@@ -1356,11 +1446,11 @@ ee.emit('foo'); // Prints: Waiting for the event was canceled!
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
+[default](lib_adapter.default.md).[once](lib_adapter.default.md#once-1)
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:157
+node_modules/@types/node/events.d.ts:194
 
 ▸ `Static` **once**(`emitter`, `eventName`, `options?`): `Promise`<`any`[]\>
 
@@ -1368,7 +1458,7 @@ node_modules/@types/node/events.d.ts:157
 
 | Name | Type |
 | :------ | :------ |
-| `emitter` | `DOMEventTarget` |
+| `emitter` | `_DOMEventTarget` |
 | `eventName` | `string` |
 | `options?` | `StaticEventEmitterOptions` |
 
@@ -1378,43 +1468,40 @@ node_modules/@types/node/events.d.ts:157
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
+[default](lib_adapter.default.md).[once](lib_adapter.default.md#once-1)
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:162
+node_modules/@types/node/events.d.ts:195
 
 ___
 
 ### setMaxListeners
 
-▸ `Static` **setMaxListeners**(`n?`, ...`eventTargets`): `void`
-
-By default `EventEmitter`s will print a warning if more than `10` listeners are
-added for a particular event. This is a useful default that helps finding
-memory leaks. The `EventEmitter.setMaxListeners()` method allows the default limit to be
-modified (if eventTargets is empty) or modify the limit specified in every `EventTarget` | `EventEmitter` passed as arguments.
-The value can be set to`Infinity` (or `0`) to indicate an unlimited number of listeners.
+▸ `Static` **setMaxListeners**(`n?`, `...eventTargets`): `void`
 
 ```js
-EventEmitter.setMaxListeners(20);
-// Equivalent to
-EventEmitter.defaultMaxListeners = 20;
+const {
+  setMaxListeners,
+  EventEmitter
+} = require('events');
 
-const eventTarget = new EventTarget();
-// Only way to increase limit for `EventTarget` instances
-// as these doesn't expose its own `setMaxListeners` method
-EventEmitter.setMaxListeners(20, eventTarget);
+const target = new EventTarget();
+const emitter = new EventEmitter();
+
+setMaxListeners(5, target, emitter);
 ```
 
-**`since`** v15.3.0, v14.17.0
+**`Since`**
+
+v15.4.0
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n?` | `number` |
-| `...eventTargets` | (`DOMEventTarget` \| `EventEmitter`)[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `n?` | `number` | A non-negative number. The maximum number of listeners per `EventTarget` event. |
+| `...eventTargets` | (`EventEmitter` \| `_DOMEventTarget`)[] | - |
 
 #### Returns
 
@@ -1422,8 +1509,8 @@ EventEmitter.setMaxListeners(20, eventTarget);
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[setMaxListeners](lib_adapter.default.md#setmaxlisteners)
+[default](lib_adapter.default.md).[setMaxListeners](lib_adapter.default.md#setmaxlisteners-1)
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:290
+node_modules/@types/node/events.d.ts:317

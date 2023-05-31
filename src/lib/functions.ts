@@ -4,7 +4,7 @@ import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
 import { logWarningMessage, logError } from './logger.js'
 import GleeMessage from './message.js'
-import { GleeFunction } from './index.d'
+import { GleeFunction } from './index.js'
 import Glee from './glee.js'
 import { gleeMessageToFunctionEvent, validateData, isRemoteServer } from './util.js'
 import { pathToFileURL } from 'url'
@@ -26,6 +26,7 @@ const OutboundMessageSchema = {
     },
     channel: { type: 'string' },
     server: { type: 'string' },
+    query: { type: 'object' } 
   }
 }
 const FunctionReturnSchema = {
@@ -51,6 +52,7 @@ const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
 export const functions: Map<string, FunctionInfo> = new Map()
 
 export async function register(dir: string) {
+
   try {
     const statsDir = await stat(dir)
     if (!statsDir.isDirectory()) return
@@ -88,6 +90,7 @@ export async function trigger({
 }) {
   try {
     const parsedAsyncAPI = await getParsedAsyncAPI()
+
     let res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
     if (res === undefined) res = null
     const { humanReadableError, errors, isValid } = validateData(res, FunctionReturnSchema)
@@ -113,6 +116,7 @@ export async function trigger({
       isBroadcast = localServerProtocols.includes(serverProtocol) && !isRemoteServer(parsedAsyncAPI, msg.server)
       app.send(new GleeMessage({
         payload: msg.payload,
+        query: msg.query,
         headers: msg.headers,
         channel: msg.channel || message.channel,
         serverName: msg.server,

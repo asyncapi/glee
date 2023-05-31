@@ -5,6 +5,7 @@ import uriTemplates from 'uri-templates'
 import GleeConnection from './connection.js'
 import Glee from './glee.js'
 import GleeMessage from './message.js'
+import { resolveFunctions } from './util.js'
 
 export type EnrichedEvent = {
   connection?: GleeConnection,
@@ -35,7 +36,7 @@ class GleeAdapter extends EventEmitter {
     this._glee = glee
     this._serverName = serverName
     this._AsyncAPIServer = server
-    
+
     this._parsedAsyncAPI = parsedAsyncAPI
     this._channelNames = this._parsedAsyncAPI.channelNames()
     this._connections = []
@@ -90,11 +91,11 @@ class GleeAdapter extends EventEmitter {
         connection: conn,
       }))
     })
-    
+
     this.on('server:ready', (ev) => {
       this._glee.emit('adapter:server:ready', enrichEvent(ev))
     })
-    
+
     this.on('server:connection:open', (ev) => {
       const conn = createConnection(ev)
       this._connections.push(conn)
@@ -111,10 +112,10 @@ class GleeAdapter extends EventEmitter {
         connection: conn,
       }))
     })
-    
+
     this.on('close', (ev) => {
       const conn = createConnection(ev)
-      
+
       this._glee.emit('adapter:close', enrichEvent({
         connection: conn,
       }))
@@ -152,18 +153,20 @@ class GleeAdapter extends EventEmitter {
   async resolveProtocolConfig(protocol: string) {
     if(!this.glee.options[protocol]) return undefined
     const protocolConfig = {...this.glee.options[protocol]}
-    const resolve = async (config: any) => {
-      for (const key in config) {
-        if (typeof config[key] === 'object' && !Array.isArray(config[key])) {
-          resolve(config[key])
-        } else if (typeof config[key] === 'function') {
-          config[key] = await config[key]()
-        }
-      }
+    if (!protocolConfig) return undefined
+
+    await resolveFunctions(protocolConfig)
+    return protocolConfig
+  }
+
+  async getAuthConfig(auth: any) {
+    if (!auth) return
+    if (typeof auth !== 'function') {
+      await resolveFunctions(auth)
+      return auth
     }
 
-    await resolve(protocolConfig)
-    return protocolConfig
+    return await auth({serverName: this._serverName, parsedAsyncAPI: this._parsedAsyncAPI})
   }
 
   /**
@@ -174,7 +177,7 @@ class GleeAdapter extends EventEmitter {
       .filter(channelName => {
         const channel = this._parsedAsyncAPI.channel(channelName)
         if (!channel.hasPublish()) return false
-        
+
         const channelServers = channel.hasServers() ? channel.servers() : channel.ext('x-servers') || this._parsedAsyncAPI.serverNames()
         return channelServers.includes(this._serverName)
       })

@@ -1,13 +1,10 @@
 ![Glee — The AsyncAPI framework that will make you smile again.](assets/readme-banner.png)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Coverage Status](https://coveralls.io/repos/github/asyncapi/glee/badge.svg?branch=master)](https://coveralls.io/github/asyncapi/glee?branch=master)
-
-> :warning: Glee is still under development, it didn't reach v1.0.0 and therefore is not suitable for production use yet.
-
-> :warning: So far, it only supports MQTT and WebSockets (native, Socket.IO, and custom implementations).
 
 ## What's Glee?
 
@@ -18,15 +15,15 @@ Glee is a spec-first framework that helps you build server-side applications. It
 
 ## Setup
 
-The best way to get started with Glee is using `create-glee-app`, which sets up everything automatically for you. To create a project, run:
+The best way to get started with Glee is by using [AsyncAPI CLI](https://github.com/asyncapi/cli), which sets up everything automatically for you. To create a project, run:
 
 ```bash
-npx create-glee-app
+asyncapi new glee
 ```
 
 After the installation is complete, follow the instructions to start the development server.
 
-For more information on how to use `create-glee-app`, you can review [the `create-glee-app` documentation](https://github.com/asyncapi/create-glee-app).
+> For more information on how to install AsynAPI CLI, you can review [CLI instalation documentation](https://www.asyncapi.com/docs/tools/cli/installation)
 
 ## Getting started
 
@@ -34,6 +31,16 @@ For more information on how to use `create-glee-app`, you can review [the `creat
 * :gear: [Configuring your application](docs/config-file.md): tweak Glee's default configuration.
 * :rocket: [Examples](./examples): see Glee in action.
 
+## Generating documentation
+
+When using spec-driven framework like Glee, it's always neccessary to have docs and code always in sync.
+Glee will automatically generate documentation for your application and you can also generate your documentation yourself by running:
+
+```bash
+glee docs
+```
+
+You can also tweak Glee's default configuration for generating documentation here [Configuring your application](docs/config-file.md)
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

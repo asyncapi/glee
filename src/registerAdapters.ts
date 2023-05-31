@@ -6,7 +6,10 @@ import SocketIOAdapter from './adapters/socket.io/index.js'
 import RedisClusterAdapter from './adapters/cluster/redis/index.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import Glee from './lib/glee.js'
-import { GleeConfig, GleeClusterAdapterConfig } from './lib/index.d'
+import { GleeConfig, GleeClusterAdapterConfig } from './lib/index.js'
+import HttpServerAdapter from './adapters/http/server.js'
+import HttpClientAdapter from './adapters/http/client.js'
+import KafkaAdapter from './adapters/kafka/index.js'
 
 export default async (app: Glee, parsedAsyncAPI: AsyncAPIDocument, config: GleeConfig) => {
   const serverNames = await getSelectedServerNames()
@@ -33,10 +36,16 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
       server,
       parsedAsyncAPI,
     })
+  } else if (['kafka', 'kafka-secure'].includes(protocol)) {
+    app.addAdapter(KafkaAdapter, {
+      serverName,
+      server,
+      parsedAsyncAPI,
+    })
   } else if (['amqp', 'amqps'].includes(protocol)) {
     // TODO: Implement AMQP support
   } else if (['ws', 'wss'].includes(protocol)) {
-    const configWsAdapter = config?.websocket?.server?.adapter
+    const configWsAdapter = config?.ws?.server?.adapter
     if (remoteServers && remoteServers.includes(serverName)) {
       app.addAdapter(WebsocketClientAdapter, {
         serverName,
@@ -63,11 +72,27 @@ function registerAdapterForServer(serverName: string, server: Server, app: Glee,
           parsedAsyncAPI,
         })
       } else {
-        throw new Error(`Unknown value for websocket.adapter found in glee.config.js: ${config.websocket.server.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`)
+        throw new Error(`Unknown value for websocket.adapter found in glee.config.js: ${config.ws.server.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`)
       }
 
     }
-  } else {
+  }else if (['http', 'https'].includes(protocol)) {
+    if(remoteServers && remoteServers.includes(serverName)){
+      app.addAdapter(HttpClientAdapter, {
+        serverName,
+        server,
+        parsedAsyncAPI
+      })
+    }else{
+      app.addAdapter(HttpServerAdapter, {
+        serverName,
+        server,
+        parsedAsyncAPI
+      })
+    }
+  }
+
+  else {
     // TODO: Improve error message with link to repo encouraging the developer to contribute.
     throw new Error(`Protocol "${server.protocol()}" is not supported yet.`)
   }

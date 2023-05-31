@@ -1,6 +1,6 @@
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
-import { GleeFunctionEvent, GleeFunctionReturn, GleeFunctionReturnSend } from './index.d'
+import { GleeFunctionEvent, GleeFunctionReturn, GleeFunctionReturnSend } from './index.js'
 import { logInfoMessage } from './logger.js'
 import GleeMessage from './message.js'
 import { arrayHasDuplicates } from './util.js'
@@ -33,7 +33,7 @@ export async function register (dir: string) {
         } = await import(pathToFileURL(filePath).href)
 
         if (!events.has(lifecycleEvent)) events.set(lifecycleEvent, [])
-        
+
         events.set(lifecycleEvent, [...events.get(lifecycleEvent), {
           fn,
           channels,
@@ -50,7 +50,7 @@ export async function register (dir: string) {
 
 export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
   if (!Array.isArray(events.get(lifecycleEvent))) return
-  
+
   try {
     const connectionChannels = params.connection.channels
     const connectionServer = params.connection.serverName
@@ -62,7 +62,7 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
         ])) {
           return false
         }
-        
+
         if (info.servers) {
           return info.servers.includes(connectionServer)
         }
@@ -75,9 +75,9 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
     logInfoMessage(`Running ${lifecycleEvent} lifecycle event...`, {
       highlightedWords: [lifecycleEvent]
     })
-    
+
     const responses = await Promise.all(handlers.map(info => info.fn(params)))
-    
+
     responses.forEach(res => {
       res?.send?.forEach((event: GleeFunctionReturnSend) => {
         try {
@@ -87,6 +87,7 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
             channel: event.channel,
             serverName: event.server,
             connection: params.connection,
+            query: event.query
           }))
         } catch (e) {
           console.error(`The ${lifecycleEvent} lifecycle function failed to send an event to channel ${event.channel}.`)

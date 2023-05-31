@@ -31,4 +31,3 @@ components:
             type: number
           price:
             type: number
-            

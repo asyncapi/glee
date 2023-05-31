@@ -14,13 +14,16 @@
 
 ### Chalk
 
-▸ **Chalk**(`text`, ...`placeholders`): `string`
+▸ **Chalk**(`text`, `...placeholders`): `string`
 
 Use a template string.
 
-**`remarks`** Template literals are unsupported for nested calls (see [issue #341](https://github.com/chalk/chalk/issues/341))
+**`Remarks`**
 
-**`example`**
+Template literals are unsupported for nested calls (see [issue #341](https://github.com/chalk/chalk/issues/341))
+
+**`Example`**
+
 ```
 import chalk = require('chalk');
 
@@ -31,7 +34,8 @@ DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
 `);
 ```
 
-**`example`**
+**`Example`**
+
 ```
 import chalk = require('chalk');
 
@@ -55,7 +59,7 @@ node_modules/chalk/index.d.ts:148
 
 ### Chalk
 
-▸ **Chalk**(...`text`): `string`
+▸ **Chalk**(`...text`): `string`
 
 #### Parameters
 
@@ -746,7 +750,8 @@ ___
 
 Use HEX value to set background color.
 
-**`example`**
+**`Example`**
+
 ```
 import chalk = require('chalk');
 
@@ -847,7 +852,8 @@ ___
 
 Use keyword color value to set background color.
 
-**`example`**
+**`Example`**
+
 ```
 import chalk = require('chalk');
 
@@ -900,7 +906,8 @@ ___
 
 Use HEX value to set text color.
 
-**`example`**
+**`Example`**
+
 ```
 import chalk = require('chalk');
 
@@ -1001,7 +1008,8 @@ ___
 
 Use keyword color value to set text color.
 
-**`example`**
+**`Example`**
+
 ```
 import chalk = require('chalk');
 

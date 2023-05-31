@@ -3,7 +3,7 @@ import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
-import { GleeFunctionEvent } from './index.d'
+import { GleeFunctionEvent } from './index.js'
 import GleeMessage from './message.js'
 
 interface IValidateDataReturn {
@@ -19,7 +19,7 @@ interface IValidateDataReturn {
  * @param {String} path The path.
  * @param {String} channel The channel.
  */
-export const getParams = (path: string, channel: string): {[key: string]: string} | null => {
+export const getParams = (path: string, channel: string): { [key: string]: string } | null => {
   if (path === undefined) return {}
 
   const keys = []
@@ -49,7 +49,8 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
     serverName: message.serverName,
     connection: message.connection,
     broadcast: message.broadcast,
-    cluster: message.cluster
+    cluster: message.cluster,
+    query: message.query
   })
 
   if (message.isInbound()) {
@@ -57,7 +58,7 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
   } else {
     newMessage.setOutbound()
   }
-  
+
   return newMessage
 }
 
@@ -75,7 +76,7 @@ export const matchChannel = (path: string, channel: string): boolean => {
 
 /**
  * Validates data against a given JSON Schema definition
- * 
+ *
  * @private
  * @param {Any} data The data to validate
  * @param {Object} schema A JSON Schema definition
@@ -107,9 +108,10 @@ export const arrayHasDuplicates = (array: any[]) => {
   return (new Set(array)).size !== array.length
 }
 
-export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): GleeFunctionEvent => {
+export const gleeMessageToFunctionEvent = (message: GleeMessage, glee: Glee): GleeFunctionEvent => {
   return {
     payload: message.payload,
+    query: message.query,
     headers: message.headers,
     channel: message.channel,
     connection: message.connection,
@@ -120,5 +122,18 @@ export const gleeMessageToFunctionEvent = (message: GleeMessage, glee:Glee): Gle
 
 export const isRemoteServer = (parsedAsyncAPI: AsyncAPIDocument, serverName: string): boolean => {
   const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
-  return remoteServers && remoteServers.includes(serverName)
+  if (remoteServers) {
+    return remoteServers.includes(serverName)
+  }
+  return false
+}
+
+export const resolveFunctions = async (object: any) => {
+  for (const key in object) {
+    if (typeof object[String(key)] === 'object' && !Array.isArray(object[String(key)])) {
+      await resolveFunctions(object[String(key)])
+    } else if (typeof object[String(key)] === 'function' && key !== 'auth') {
+      object[String(key)] = await object[String(key)]()
+    }
+  }
 }

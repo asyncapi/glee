@@ -4,27 +4,27 @@
 
 ## Table of contents
 
-### Properties
+### Functions
 
 - [default](middlewares_validateConnection.md#default)
 
-## Properties
+## Functions
 
 ### default
 
-• **default**: (`event`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
+▸ **default**(`event`, `next`): `void`
 
-#### Type declaration
-
-▸ (`event`, `next`): `void`
-
-##### Parameters
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `event` | [`default`](../classes/lib_message.default.md) |
 | `next` | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
 
-##### Returns
+#### Returns
 
 `void`
+
+#### Defined in
+
+[src/middlewares/validateConnection.ts:4](https://github.com/asyncapi/glee/blob/6792e86/src/middlewares/validateConnection.ts#L4)

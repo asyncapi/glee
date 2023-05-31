@@ -6,10 +6,31 @@
 
 ### Functions
 
+- [findSpecFile](lib_configs.md#findspecfile)
 - [getConfigs](lib_configs.md#getconfigs)
 - [initializeConfigs](lib_configs.md#initializeconfigs)
 
 ## Functions
+
+### findSpecFile
+
+▸ **findSpecFile**(`baseDir`): `string`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `baseDir` | `string` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[src/lib/configs.ts:82](https://github.com/asyncapi/glee/blob/6792e86/src/lib/configs.ts#L82)
+
+___
 
 ### getConfigs
 
@@ -21,13 +42,13 @@
 
 #### Defined in
 
-[src/lib/configs.ts:53](https://github.com/asyncapi/glee/blob/388e335/src/lib/configs.ts#L53)
+[src/lib/configs.ts:96](https://github.com/asyncapi/glee/blob/6792e86/src/lib/configs.ts#L96)
 
 ___
 
 ### initializeConfigs
 
-▸ **initializeConfigs**(`config?`): `Promise`<{ [key: string]: `string`;  }\>
+▸ **initializeConfigs**(`config?`): `Promise`<{ `[key: string]`: `string`;  }\>
 
 #### Parameters
 
@@ -37,8 +58,8 @@ ___
 
 #### Returns
 
-`Promise`<{ [key: string]: `string`;  }\>
+`Promise`<{ `[key: string]`: `string`;  }\>
 
 #### Defined in
 
-[src/lib/configs.ts:16](https://github.com/asyncapi/glee/blob/388e335/src/lib/configs.ts#L16)
+[src/lib/configs.ts:20](https://github.com/asyncapi/glee/blob/6792e86/src/lib/configs.ts#L20)
