@@ -10,6 +10,9 @@ interface ClientData {
   protocolVersion?: number
 }
 
+const serverBindings = this.AsyncAPIServer.binding('amqp')
+
+
 const bindingTemplate: any = {
   vhost: "/",
   exchange: "testExchange",
@@ -80,8 +83,12 @@ class AMQPAdapter extends Adapter {
     const topics = Object.keys(this.parsedAsyncAPI.channels())
     return Promise.all(
       topics.map((topic) => {
+       const operation:any = this.parsedAsyncAPI
+        .channel(topic)
+         .publish()
+         const binding = operation ? operation.binding('amqp') : undefined
         const channel = ch
-          .bindQueue(queue, bindingTemplate?.exchange, topic)
+          .bindQueue(queue, binding ? binding.exchange.name : bindingTemplate.exchange, topic)
           .then(() => {
             return queue
           })
@@ -110,18 +117,42 @@ class AMQPAdapter extends Adapter {
     return new Promise((resolve, reject) => {
       const operation = this.parsedAsyncAPI
         .channel(message.channel)
-        .subscribe();
-      const { exchange, routingKey } = message.headers;
-      // convert string message in buffer
-      const newMessage = Buffer.from(message.payload, "utf-8");
+        .subscribe()
+      const binding = operation ? operation.binding('amqp') : undefined
+        const {
+          durable,
+          exclusive,
+          vhost,
+          topic,
+          autoDelete
+        } = binding.exchange
+      const newMessage = Buffer.from(message.payload, "utf-8")
+      const exchangeOptions = { durable, exclusive, vhost, autoDelete }
       this.client.createChannel().then((ch) => {
-        ch.publish(exchange, routingKey, newMessage, {}, (err) => {
+        const ok = ch.assertExchange(binding ? binding.exchange.name : 'amqp.topic' , binding ? topic : 'topic'  , binding ? exchangeOptions : {})
+        return ok.then(() => {
+          console.log(message)
+        ch.publish(binding.exchange.name, message.channel, newMessage, {}, (err) => {
           if (err) {
             this.emit("error", err)
             this.client.connection.close()
           }
+          resolve()
+          return ch.close()
         })
-      })
+        })
+      }).finally(() => this.client.connection.close())
+      // const { exchange, routingKey } = message.headers
+      // convert string message in buffer
+      // const newMessage = Buffer.from(message.payload, "utf-8")
+      // this.client.createChannel().then((ch) => {
+      //   ch.publish(exchange, routingKey, newMessage, {}, (err) => {
+      //     if (err) {
+      //       this.emit("error", err)
+      //       this.client.connection.close()
+      //     }
+      //   })
+      // })
     })
   }
   
@@ -138,7 +169,6 @@ class AMQPAdapter extends Adapter {
       this.AsyncAPIServer.protocolVersion() || "0.9.1"
     )
     const serverBindings = bindingTemplate
-    //   const serverBindings = this.AsyncAPIServer.binding('amqp')
 
     this.client = await this.initializeConnection({
       url,
