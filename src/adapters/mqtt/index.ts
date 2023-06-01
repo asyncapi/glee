@@ -148,7 +148,7 @@ class MqttAdapter extends Adapter {
           console.log(err.message)
           return
         }
-        logLineWithIcon(':zap:', `Subscribed to \`${channel}\` topic.`, {
+        logLineWithIcon(':zap:', `Subscribed to \`${channel}\` topic with QoS ${granted[0].qos}`, {
           highlightedWords: [channel],
         })
       })
@@ -185,14 +185,8 @@ class MqttAdapter extends Adapter {
         this.client.on('connect', connAckPacket => {
           const isSessionResume = connAckPacket.sessionPresent
 
-          if (!this.checkFirstConnect) {
-            this.firstConnect = true
-            this.emit('connect', {
-              name: this.name(),
-              adapter: this,
-              connection: this.client,
-              channels: this.channelNames,
-            })
+          if (!this.firstConnect) {
+            this.checkFirstConnect()
           }
 
           const shouldSubscribe = !isSessionResume && Array.isArray(subscribedChannels)
