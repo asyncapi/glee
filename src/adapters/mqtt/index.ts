@@ -148,7 +148,7 @@ class MqttAdapter extends Adapter {
           console.log(err.message)
           return
         }
-        logLineWithIcon(':zap:', `Subscribed to \`${channel}\` topic with QoS ${granted[0].qos}`, {
+        logLineWithIcon(':zap:', `Subscribed to \`${channel}\` topic with QoS ${granted?.[0].qos}`, {
           highlightedWords: [channel],
         })
       })
