@@ -52,14 +52,14 @@ class MqttAdapter extends Adapter {
     const X509SecurityReq = securityRequirements.find(
       (sec) => sec.type() === 'X509'
     )
-    
+
     return {
       userAndPasswordSecurityReq,
       X509SecurityReq
     }
 
   }
-  
+
   private async initializeClient(data: ClientData) {
 
     const {
@@ -171,14 +171,8 @@ class MqttAdapter extends Adapter {
         this.client.on('connect', connAckPacket => {
           const isSessionResume = connAckPacket.sessionPresent
 
-          if (!this.checkFirstConnect) {
-            this.firstConnect = true
-            this.emit('connect', {
-              name: this.name(),
-              adapter: this,
-              connection: this.client,
-              channels: this.channelNames,
-            })
+          if (!this.firstConnect) {
+            this.checkFirstConnect()
           }
 
           const shouldSubscribe = !isSessionResume && Array.isArray(subscribedChannels)

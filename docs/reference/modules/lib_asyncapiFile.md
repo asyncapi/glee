@@ -20,4 +20,4 @@
 
 #### Defined in
 
-[src/lib/asyncapiFile.ts:5](https://github.com/asyncapi/glee/blob/e68f900/src/lib/asyncapiFile.ts#L5)
+[src/lib/asyncapiFile.ts:5](https://github.com/asyncapi/glee/blob/107b536/src/lib/asyncapiFile.ts#L5)
