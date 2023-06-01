@@ -70,13 +70,6 @@ class AMQPAdapter extends Adapter {
     })
   }
 
-  _closeOnErr(err) {
-    if (!err) return false
-    console.error("[AMQP] error", err)
-    // amqpConn.close()
-    return true
-  }
-
   _subscribe() {
     const topics = Object.keys(this.parsedAsyncAPI.channels())
     return Promise.all(
