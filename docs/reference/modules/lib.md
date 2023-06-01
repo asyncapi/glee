@@ -61,7 +61,7 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:11](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L11)
+[src/lib/index.d.ts:11](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L11)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:74](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L74)
+[src/lib/index.d.ts:74](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L74)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:37](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L37)
+[src/lib/index.d.ts:37](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L37)
 
 ___
 
@@ -119,7 +119,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:81](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L81)
+[src/lib/index.d.ts:81](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L81)
 
 ___
 
@@ -143,7 +143,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:117](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L117)
+[src/lib/index.d.ts:117](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L117)
 
 ___
 
@@ -165,7 +165,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:96](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L96)
+[src/lib/index.d.ts:96](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L96)
 
 ___
 
@@ -183,7 +183,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:90](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L90)
+[src/lib/index.d.ts:90](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L90)
 
 ___
 
@@ -193,7 +193,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:115](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L115)
+[src/lib/index.d.ts:115](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L115)
 
 ___
 
@@ -203,7 +203,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:114](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L114)
+[src/lib/index.d.ts:114](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L114)
 
 ___
 
@@ -223,7 +223,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:106](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L106)
+[src/lib/index.d.ts:106](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L106)
 
 ___
 
@@ -245,7 +245,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:55](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L55)
+[src/lib/index.d.ts:55](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L55)
 
 ___
 
@@ -255,7 +255,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:8](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L8)
+[src/lib/index.d.ts:8](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L8)
 
 ___
 
@@ -271,7 +271,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:70](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L70)
+[src/lib/index.d.ts:70](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L70)
 
 ___
 
@@ -287,7 +287,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:66](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L66)
+[src/lib/index.d.ts:66](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L66)
 
 ___
 
@@ -297,7 +297,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:9](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L9)
+[src/lib/index.d.ts:9](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L9)
 
 ___
 
@@ -307,7 +307,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:7](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L7)
+[src/lib/index.d.ts:7](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L7)
 
 ___
 
@@ -329,4 +329,4 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:43](https://github.com/asyncapi/glee/blob/3a5bbae/src/lib/index.d.ts#L43)
+[src/lib/index.d.ts:43](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L43)
