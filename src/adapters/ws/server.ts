@@ -5,7 +5,6 @@ import Adapter from '../../lib/adapter.js'
 import GleeConnection from '../../lib/connection.js'
 import GleeMessage from '../../lib/message.js'
 import GleeError from '../../errors/glee-error.js'
-import {WebsocketAdapterConfig} from '../../lib/index.js'
 
 type QueryData = {
   searchParams: URLSearchParams,
