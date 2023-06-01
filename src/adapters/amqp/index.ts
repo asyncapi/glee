@@ -10,18 +10,6 @@ interface ClientData {
   protocolVersion?: number
 }
 
-
-// const bindingTemplate: any = {
-//   vhost: "/",
-//   exchange: "testExchange",
-//   queue: "testQueue",
-//   queueOptions: {},
-//   exchangeOptions: {},
-//   heartbeat: 0,
-// }
-
-
-
 class AMQPAdapter extends Adapter {
   private client: amqplib
 
