@@ -10,17 +10,17 @@ interface ClientData {
   protocolVersion?: number
 }
 
-const serverBindings = this.AsyncAPIServer.binding('amqp')
+
+// const bindingTemplate: any = {
+//   vhost: "/",
+//   exchange: "testExchange",
+//   queue: "testQueue",
+//   queueOptions: {},
+//   exchangeOptions: {},
+//   heartbeat: 0,
+// }
 
 
-const bindingTemplate: any = {
-  vhost: "/",
-  exchange: "testExchange",
-  queue: "testQueue",
-  queueOptions: {},
-  exchangeOptions: {},
-  heartbeat: 0,
-}
 
 class AMQPAdapter extends Adapter {
   private client: amqplib
@@ -45,11 +45,9 @@ class AMQPAdapter extends Adapter {
       protocol: url.protocol.slice(0, url.protocol.length - 1),
       username: auth.username,
       password: auth.password,
-      keepalive: serverBindings?.keepAlive,
-      vhost: serverBindings?.vhost,
-      exchange: serverBindings?.exchange,
-      heartbeat: serverBindings?.heartbeat,
-      queue: serverBindings?.queue,
+      keepalive: serverBindings?.keepAlive || 0,
+      vhost: serverBindings?.vhost || '/',
+      heartbeat: serverBindings?.heartbeat || 0,
       protocolVersion,
     } as any)
   }
@@ -79,36 +77,56 @@ class AMQPAdapter extends Adapter {
     return true
   }
 
-  _subscribe(queue: string, ch: any) {
+  _subscribe() {
     const topics = Object.keys(this.parsedAsyncAPI.channels())
     return Promise.all(
       topics.map((topic) => {
-       const operation:any = this.parsedAsyncAPI
-        .channel(topic)
-         .publish()
-         const binding = operation ? operation.binding('amqp') : undefined
-        const channel = ch
-          .bindQueue(queue, binding ? binding.exchange.name : bindingTemplate.exchange, topic)
-          .then(() => {
-            return queue
+        const operation: any = this.parsedAsyncAPI.channel(topic).publish()
+        const binding = operation ? operation.binding('amqp') : undefined
+        this.client
+          .createChannel()
+          .then((ch) => {
+            let connect = ch.assertExchange(
+              // eslint-disable-next-line sonarjs/no-duplicate-string
+              binding?.exchange.name || "amqp.topic",
+              binding?.exchange.type || "topic",
+              binding?.exchange || {}
+            )
+            connect = connect.then(() => {
+              return ch.assertQueue(
+                binding?.queue.name || '',
+                binding?.queue|| {}
+              )
+            })
+              .catch((error) => this.emit("error", error))
+            
+            connect
+              .then((conQueue) => {
+                const queue = conQueue.queue
+                const channel = ch
+                  .bindQueue(queue, binding?.exchange.name || 'amqp.topic', topic)
+                  .then(() => {
+                    return queue
+                  })
+                  .catch((error) => console.log(error))
+                channel.then((queue) => {
+                  ch.consume(queue, processMsg)
+                })
+                const processMsg = (msg) => {
+                  msg.topic = topic
+                  // Process incoming messages and send them to fnConsumer
+                  // Here we need to send a callback(true) for acknowledge the message or callback(false) for reject them
+                  this._fnConsumer(msg, function (ok) {
+                    try {
+                      ok ? ch.ack(msg) : ch.reject(msg, true)
+                    } catch (e) {
+                      this.closeOnErr(e)
+                    }
+                  })
+                }
+              })
+              .catch((error) => this.emit("error", error))
           })
-          .catch((error) => console.log(error))
-
-        channel.then((queue) => {
-          ch.consume(queue, processMsg)
-        })
-        const processMsg = (msg) => {
-          msg.topic = topic
-          // Process incoming messages and send them to fnConsumer
-          // Here we need to send a callback(true) for acknowledge the message or callback(false) for reject them
-          this._fnConsumer(msg, function (ok) {
-            try {
-              ok ? ch.ack(msg) : ch.reject(msg, true)
-            } catch (e) {
-              this.closeOnErr(e)
-            }
-          })
-        }
       })
     )
   }
@@ -119,21 +137,13 @@ class AMQPAdapter extends Adapter {
         .channel(message.channel)
         .subscribe()
       const binding = operation ? operation.binding('amqp') : undefined
-        const {
-          durable,
-          exclusive,
-          vhost,
-          topic,
-          autoDelete
-        } = binding.exchange
       const newMessage = Buffer.from(message.payload, "utf-8")
-      const exchangeOptions = { durable, exclusive, vhost, autoDelete }
       this.client.createChannel().then((ch) => {
-        const ok = ch.assertExchange(binding ? binding.exchange.name : 'amqp.topic' , binding ? topic : 'topic'  , binding ? exchangeOptions : {})
+        const ok = ch.assertExchange(binding ? binding.exchange.name : 'amqp.topic' , binding ? binding.exchange.type : 'topic'  , binding ? binding.exchange : {})
         return ok.then(() => {
-          console.log(message)
         ch.publish(binding.exchange.name, message.channel, newMessage, {}, (err) => {
           if (err) {
+            reject(err)
             this.emit("error", err)
             this.client.connection.close()
           }
@@ -142,17 +152,6 @@ class AMQPAdapter extends Adapter {
         })
         })
       }).finally(() => this.client.connection.close())
-      // const { exchange, routingKey } = message.headers
-      // convert string message in buffer
-      // const newMessage = Buffer.from(message.payload, "utf-8")
-      // this.client.createChannel().then((ch) => {
-      //   ch.publish(exchange, routingKey, newMessage, {}, (err) => {
-      //     if (err) {
-      //       this.emit("error", err)
-      //       this.client.connection.close()
-      //     }
-      //   })
-      // })
     })
   }
   
@@ -168,7 +167,8 @@ class AMQPAdapter extends Adapter {
     const protocolVersion = parseInt(
       this.AsyncAPIServer.protocolVersion() || "0.9.1"
     )
-    const serverBindings = bindingTemplate
+    const serverBindings = this.AsyncAPIServer.binding('amqp')
+
 
     this.client = await this.initializeConnection({
       url,
@@ -191,30 +191,7 @@ class AMQPAdapter extends Adapter {
             channels: this.getSubscribedChannels(),
           })
         }
-        this.client
-          .createChannel()
-          .then((ch) => {
-            let connect = ch.assertExchange(
-              serverBindings?.exchange,
-              "topic",
-              serverBindings?.exchangeOptions
-            )
-            connect = connect
-              .then(() => {
-                return ch.assertQueue(
-                  serverBindings?.queue,
-                  serverBindings?.queueOptions
-                )
-              })
-              .catch(catchError)
-
-            connect
-              .then((conQueue) => {
-                const queue = conQueue.queue
-                this._subscribe(queue, ch)
-              })
-              .catch(catchError)
-          })
+          this._subscribe()
           .catch(catchError)
       })
     }
