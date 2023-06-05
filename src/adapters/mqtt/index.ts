@@ -3,7 +3,7 @@ import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import { MqttAuthConfig, MqttAdapterConfig } from '../../lib/index.js'
 import { SecurityScheme } from '@asyncapi/parser';
-import { logLineWithIcon } from '../../lib/logger.js';
+import { logLineWithIcon } from '../../lib/logger.js'
 
 interface IMQTTHeaders {
   cmd?: string;
