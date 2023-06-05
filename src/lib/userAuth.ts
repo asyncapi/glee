@@ -1,3 +1,7 @@
+//file for user authentication similar to lifecycle events
+//reads the file
+//parses the file
+
 import { stat } from "fs/promises";
 import walkdir from "walkdir";
 import {
@@ -32,15 +36,16 @@ export async function register(dir: string) {
         try {
           const {
             default: fn,
-            lifecycleEvent,
+            // lifecycleEvent,
+            security,
             channels,
             servers,
           } = await import(pathToFileURL(filePath).href);
 
-          if (!events.has(lifecycleEvent)) events.set(lifecycleEvent, []);
+          if (!events.has(security)) events.set(security, []);
 
-          events.set(lifecycleEvent, [
-            ...events.get(lifecycleEvent),
+          events.set(security, [
+            ...events.get(security),
             {
               fn,
               channels,
@@ -57,13 +62,14 @@ export async function register(dir: string) {
   }
 }
 
-export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
-  if (!Array.isArray(events.get(lifecycleEvent))) return;
+export async function run(security: string, params: GleeFunctionEvent) {
+  if (!Array.isArray(events.get(security))) return;
 
   try {
-    const connectionChannels = "/price" || params.connection.channels;
-    const connectionServer = "websocket" || params.connection.serverName;
-    const handlers = events.get(lifecycleEvent).filter((info) => {
+    const connectionChannels = params.connection.channels;
+    const connectionServer = params.connection.serverName;
+
+    const handlers = events.get(security).filter((info) => {
       if (
         info.channels &&
         !arrayHasDuplicates([...connectionChannels, ...info.channels])
@@ -80,35 +86,15 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
 
     if (!handlers.length) return;
 
-    logInfoMessage(`Running ${lifecycleEvent} lifecycle event...`, {
-      highlightedWords: [lifecycleEvent],
+    logInfoMessage(`Running ${security} security scheme...`, {
+      highlightedWords: [security],
     });
 
     const responses = await Promise.all(
       handlers.map((info) => info.fn(params))
     );
 
-    responses.forEach((res) => {
-      res?.send?.forEach((event: GleeFunctionReturnSend) => {
-        try {
-          params.glee.send(
-            new GleeMessage({
-              payload: event.payload,
-              headers: event.headers,
-              channel: event.channel,
-              serverName: event.server,
-              connection: params.connection,
-              query: event.query,
-            })
-          );
-        } catch (e) {
-          console.error(
-            `The ${lifecycleEvent} lifecycle function failed to send an event to channel ${event.channel}.`
-          );
-          console.error(e);
-        }
-      });
-    });
+    return responses;
   } catch (e) {
     console.error(e);
   }

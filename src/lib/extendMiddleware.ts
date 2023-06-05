@@ -1,3 +1,7 @@
+//file for extending middleware to contain user middleware
+//attempts to read user middleware from instance middleware directory.
+//parses the files if they exists
+
 import { stat } from "fs/promises";
 import walkdir from "walkdir";
 import {
@@ -61,8 +65,8 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
   if (!Array.isArray(events.get(lifecycleEvent))) return;
 
   try {
-    const connectionChannels = "/price" || params.connection.channels;
-    const connectionServer = "websocket" || params.connection.serverName;
+    const connectionChannels = params.connection.channels;
+    const connectionServer = params.connection.serverName;
     const handlers = events.get(lifecycleEvent).filter((info) => {
       if (
         info.channels &&
