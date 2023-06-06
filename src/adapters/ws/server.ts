@@ -149,7 +149,7 @@ class WebSocketsAdapter extends Adapter {
     };
   }
 
-  private checkBindings(socket, bindingOpts) {
+  private async checkBindings(socket, bindingOpts) {
     const { wsChannelBinding, request, searchParams } = bindingOpts;
 
     const { query, headers } = wsChannelBinding;
@@ -173,10 +173,25 @@ class WebSocketsAdapter extends Adapter {
 
       // doesn't mean it will be resolved before proceeding
       //we need a way to delay connection until authentication is done
-      this.emit("auth", {
-        headers: request.headers,
-        server: this.serverName,
+      // this.emit("auth", {
+      //   headers: request.headers,
+      //   server: this.serverName,
+      // });
+
+      // console.log(this.auth);
+
+      const authStatus = await this.auth("tokens", {
+        glee: this.glee,
+        serverName: this.serverName,
+        headers,
       });
+
+      console.log(authStatus);
+
+      if (authStatus.indexOf(true) == -1) {
+        console.log("Destroying from checkBindings");
+        socket.destroy();
+      }
 
       if (!isValid) {
         this.emitGleeError(socket, { humanReadableError, errors });
@@ -198,7 +213,7 @@ class WebSocketsAdapter extends Adapter {
       servers.set(channelName, new WebSocket.Server({ noServer: true }));
     });
 
-    wsHttpServer.on("upgrade", (request, socket, head) => {
+    wsHttpServer.on("upgrade", async (request, socket, head) => {
       let { pathname } = new URL(request.url, `ws://${request.headers.host}`);
 
       pathname = this.pathnameChecks(socket, pathname, { serverUrl, servers });
@@ -214,7 +229,7 @@ class WebSocketsAdapter extends Adapter {
         .binding("ws");
 
       if (wsChannelBinding) {
-        const correctBindings = this.checkBindings(socket, {
+        const correctBindings = await this.checkBindings(socket, {
           wsChannelBinding,
           request,
           searchParams,
@@ -224,11 +239,14 @@ class WebSocketsAdapter extends Adapter {
 
       // socket.destroy()
 
+      console.log("proceeding to connect");
+
       if (servers.has(pathname)) {
         servers.get(pathname).handleUpgrade(request, socket, head, (ws) => {
           this.initializeServerEvents({ servers, ws, pathname, request });
         });
       } else {
+        console.log("destroyings");
         socket.destroy();
       }
     });

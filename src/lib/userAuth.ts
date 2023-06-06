@@ -66,8 +66,8 @@ export async function run(security: string, params: GleeFunctionEvent) {
   if (!Array.isArray(events.get(security))) return;
 
   try {
-    const connectionChannels = params.connection.channels;
-    const connectionServer = params.connection.serverName;
+    const connectionChannels = "/price" || params.connection.channels;
+    const connectionServer = "websockets" || params.connection.serverName;
 
     const handlers = events.get(security).filter((info) => {
       if (

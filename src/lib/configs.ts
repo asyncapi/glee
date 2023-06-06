@@ -31,7 +31,7 @@ export async function initializeConfigs(
     GLEE_DIR,
     config.functionsDir || "functions"
   );
-  GLEE_AUTH_DIR = path.resolve(GLEE_DIR, config.functionsDir || "middleware");
+  GLEE_AUTH_DIR = path.resolve(GLEE_DIR, config.functionsDir || "auth");
 
   GLEE_CONFIG_FILE_PATH_TS = path.resolve(GLEE_DIR, "glee.config.ts");
   GLEE_CONFIG_FILE_PATH_JS = path.resolve(GLEE_DIR, "glee.config.js");
