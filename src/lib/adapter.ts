@@ -103,9 +103,9 @@ class GleeAdapter extends EventEmitter {
       });
     }
 
-    // this.on("auth", (ev) => {
-    //   this._glee.emit("adapter:auth", enrichEvent(ev));
-    // });
+    this.on("auth", (ev) => {
+      this._glee.emit("adapter:auth", enrichEvent(ev));
+    });
 
     this.on("connect", (ev) => {
       const conn = createConnection(ev);

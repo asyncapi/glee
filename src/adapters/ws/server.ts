@@ -173,17 +173,23 @@ class WebSocketsAdapter extends Adapter {
 
       // doesn't mean it will be resolved before proceeding
       //we need a way to delay connection until authentication is done
-      // this.emit("auth", {
-      //   headers: request.headers,
-      //   server: this.serverName,
-      // });
+      // function emitAuth(self) {
+      //   process.nextTick(function () {
+      //     self.emit("auth", {
+      //       headers: request.headers,
+      //       server: self.serverName,
+      //     });
+      //   });
+      // }
+
+      // emitAuth(this);
 
       // console.log(this.auth);
 
       const authStatus = await this.auth("tokens", {
         glee: this.glee,
         serverName: this.serverName,
-        headers,
+        headers: request.headers,
       });
 
       console.log(authStatus);
@@ -214,6 +220,11 @@ class WebSocketsAdapter extends Adapter {
     });
 
     wsHttpServer.on("upgrade", async (request, socket, head) => {
+      // this.emit("auth", {
+      //   headers: request.headers,
+      //   server: this.serverName,
+      // });
+
       let { pathname } = new URL(request.url, `ws://${request.headers.host}`);
 
       pathname = this.pathnameChecks(socket, pathname, { serverUrl, servers });
