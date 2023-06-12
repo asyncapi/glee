@@ -234,7 +234,6 @@ class MqttAdapter extends Adapter {
 
   _customAckHandler(channel, message, mqttPacket, done) {
     const msg = this._createMessage(mqttPacket as IPublishPacket);
-    console.log("Hello World");
 
     msg.on("processing:successful", () => done(MQTT_SUCCESS_REASON));
     msg.on("processing:failed", () => done(MQTT_UNSPECIFIED_ERROR_REASON));

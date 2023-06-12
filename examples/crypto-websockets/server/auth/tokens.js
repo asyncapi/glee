@@ -11,7 +11,7 @@ export default async function ({
   serverName,
   headers,
 }) {
-  console.log("Authentication on going");
+  console.log("Authentication file on going");
   console.log("headers", headers);
 
   const auth = headers["authentication"];

@@ -173,31 +173,31 @@ class WebSocketsAdapter extends Adapter {
 
       // doesn't mean it will be resolved before proceeding
       //we need a way to delay connection until authentication is done
-      // function emitAuth(self) {
-      //   process.nextTick(function () {
-      //     self.emit("auth", {
-      //       headers: request.headers,
-      //       server: self.serverName,
-      //     });
-      //   });
-      // }
+      function emitAuth(self) {
+        process.nextTick(function () {
+          self.emit("auth", {
+            headers: request.headers,
+            server: self.serverName,
+          });
+        });
+      }
 
       // emitAuth(this);
 
       // console.log(this.auth);
 
-      const authStatus = await this.auth("tokens", {
-        glee: this.glee,
-        serverName: this.serverName,
-        headers: request.headers,
-      });
+      // const authStatus = await this.auth("tokens", {
+      //   glee: this.glee,
+      //   serverName: this.serverName,
+      //   headers: request.headers,
+      // });
 
-      console.log(authStatus);
+      // console.log(authStatus);
 
-      if (authStatus.indexOf(true) == -1) {
-        console.log("Destroying from checkBindings");
-        socket.destroy();
-      }
+      // if (authStatus.indexOf(true) == -1) {
+      //   console.log("Destroying from checkBindings");
+      //   socket.destroy();
+      // }
 
       if (!isValid) {
         this.emitGleeError(socket, { humanReadableError, errors });
@@ -224,6 +224,32 @@ class WebSocketsAdapter extends Adapter {
       //   headers: request.headers,
       //   server: this.serverName,
       // });
+
+      function done() {
+        let resolveFunc, rejectFunc;
+        const promise = new Promise((resolve, reject) => {
+          resolveFunc = resolve;
+          rejectFunc = reject;
+        });
+        return {
+          promise,
+          done: (val) => {
+            if (val === true) {
+              resolveFunc();
+            } else if (val === false) {
+              rejectFunc(new Error("auth failed!"));
+            }
+          },
+        };
+      }
+
+      const myPromise = done();
+      this.emit("onAuth", {
+        headers: request.headers,
+        server: this.serverName,
+        myPromise,
+      });
+      await myPromise.promise;
 
       let { pathname } = new URL(request.url, `ws://${request.headers.host}`);
 
@@ -257,7 +283,6 @@ class WebSocketsAdapter extends Adapter {
           this.initializeServerEvents({ servers, ws, pathname, request });
         });
       } else {
-        console.log("destroyings");
         socket.destroy();
       }
     });
