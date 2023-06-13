@@ -105,28 +105,3 @@ export function getConfigs(): { [key: string]: string } {
 }
 
 
-export class GlobalGleeConfig {
-  private _config: GleeConfig
-
-  constructor(config: GleeConfig) {
-    this._config = config
-  }
-
-  async init(protocol: string){
-
-    const defaultValues = {
-      docs: {
-        enabled: true,
-        folder: 'docs',
-        template: '@asyncapi/markdown-template'
-      }
-    }
-
-    return {
-      ...this._config[protocol],
-      defaultValues[protocol]
-    }
-  }
-  
-}
-
