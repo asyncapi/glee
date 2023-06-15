@@ -225,8 +225,6 @@ export default class Glee extends EventEmitter {
     }
   }
 
-  //execute auth
-
   /**
    * Starts executing the middlewares for the given message.
    *

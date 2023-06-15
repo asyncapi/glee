@@ -143,6 +143,8 @@ export default async function GleeAppInitializer() {
       glee: app,
       serverName: e.serverName,
       headers: e.headers,
+      callback: e.callback,
+      doc: e.doc,
     });
   });
 

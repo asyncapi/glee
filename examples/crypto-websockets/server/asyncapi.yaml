@@ -10,6 +10,9 @@ servers:
     protocol: ws
     security:
       - tokens: []
+  ws-websocket:
+    url: ws://localhost:4000
+    protocol: ws
 channels:
   /price:
     bindings:
@@ -38,6 +41,10 @@ components:
             type: number
   securitySchemes:
     tokens:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    jwt: 
       type: http
       scheme: bearer
       bearerFormat: JWT

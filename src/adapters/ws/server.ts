@@ -78,6 +78,54 @@ class WebSocketsAdapter extends Adapter {
     });
   }
 
+  private getSecurityReqs() {
+    const securityRequirements = (this.AsyncAPIServer.security() || []).map(
+      (sec) => {
+        const secName = Object.keys(sec.json())[0];
+        return this.parsedAsyncAPI.components().securityScheme(secName);
+      }
+    );
+    const userAndPasswordSecurityReq = securityRequirements.find(
+      (sec) => sec.type() === "userPassword"
+    );
+    const X509SecurityReq = securityRequirements.find(
+      (sec) => sec.type() === "X509"
+    );
+    const tokens = securityRequirements.find((sec) => sec.type() === "http");
+
+    console.log("tokens", tokens);
+    console.log("userPassword", userAndPasswordSecurityReq);
+    console.log("x509SecurityReq", X509SecurityReq);
+
+    return {
+      userAndPasswordSecurityReq,
+      X509SecurityReq,
+      tokens,
+    };
+  }
+
+  private getAuthProps(headers) {
+    const { tokens, X509SecurityReq, userAndPasswordSecurityReq } =
+      this.getSecurityReqs();
+
+    const authProps = {};
+
+    if (tokens) {
+      authProps["token"] = headers["authentication"];
+    }
+
+    if (X509SecurityReq) {
+      authProps["cert"] = headers["cert"];
+    }
+
+    if (userAndPasswordSecurityReq) {
+      authProps["user"] = headers["user"];
+      authProps["password"] = headers["password"];
+    }
+
+    return authProps;
+  }
+
   private pathnameChecks(socket, pathname: string, serverOptions) {
     const { serverUrl, servers } = serverOptions;
 
@@ -127,6 +175,15 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
+  // private async emitAuth(self, request) {
+  //   process.nextTick(function () {
+  //     self.emit("auth", {
+  //       headers: request.headers,
+  //       server: self.serverName,
+  //     });
+  //   });
+  // }
+
   private async initializeConstants() {
     const options: WebsocketAdapterConfig = await this.resolveProtocolConfig(
       "ws"
@@ -172,15 +229,15 @@ class WebSocketsAdapter extends Adapter {
       });
 
       // doesn't mean it will be resolved before proceeding
-      //we need a way to delay connection until authentication is done
-      function emitAuth(self) {
-        process.nextTick(function () {
-          self.emit("auth", {
-            headers: request.headers,
-            server: self.serverName,
-          });
-        });
-      }
+      // we need a way to delay connection until authentication is done
+      // function emitAuth(self) {
+      //   process.nextTick(function () {
+      //     self.emit("auth", {
+      //       headers: request.headers,
+      //       server: self.serverName,
+      //     });
+      //   });
+      // }
 
       // emitAuth(this);
 
@@ -208,48 +265,81 @@ class WebSocketsAdapter extends Adapter {
     return true;
   }
 
+  private wrapCallbackDecorator(cb) {
+    return function done(val: Boolean) {
+      if (val == true) {
+        console.log("proceeding");
+        cb(val);
+      } else {
+        //emit error
+        console.log("failing");
+        cb(val, 401, "Unauthorized");
+      }
+    };
+  }
+
   async _connect(): Promise<this> {
     const { config, serverUrl, wsHttpServer, optionsPort, port } =
       await this.initializeConstants();
 
     this.portChecks({ port, config, optionsPort, wsHttpServer });
 
+    //verifyClient works!!!!
     const servers = new Map();
     this.channelNames.forEach((channelName) => {
-      servers.set(channelName, new WebSocket.Server({ noServer: true }));
+      servers.set(
+        channelName,
+        new WebSocket.Server({
+          noServer: true,
+          verifyClient:
+            !this.AsyncAPIServer.security() ||
+            Object.keys(this.AsyncAPIServer.security()).length <= 0
+              ? null
+              : (info, cb) => {
+                  const authProps = this.getAuthProps(info.req.headers);
+                  const done = this.wrapCallbackDecorator(cb);
+                  this.emit("auth", {
+                    headers: authProps,
+                    server: this.serverName,
+                    callback: done,
+                    doc: this.parsedAsyncAPI,
+                  });
+                },
+        })
+      );
     });
 
     wsHttpServer.on("upgrade", async (request, socket, head) => {
-      // this.emit("auth", {
-      //   headers: request.headers,
-      //   server: this.serverName,
+      //handle auth here
+      // this.on("auth", function (e) {
+      //   this.auth("token", {
+      //     glee: this.glee,
+      //     serverName: e.server,
+      //     headers: e.headers,
+      //   });
       // });
 
-      function done() {
-        let resolveFunc, rejectFunc;
-        const promise = new Promise((resolve, reject) => {
-          resolveFunc = resolve;
-          rejectFunc = reject;
-        });
-        return {
-          promise,
-          done: (val) => {
-            if (val === true) {
-              resolveFunc();
-            } else if (val === false) {
-              rejectFunc(new Error("auth failed!"));
-            }
-          },
-        };
-      }
+      // this.emitAuth(this, request);
+      // function runAuth(self) {
+      //   process.nextTick(async () => {
+      //     const authStatus = await self.auth("tokens", {
+      //       glee: self.glee,
+      //       serverName: self.serverName,
+      //       headers: request.headers,
+      //     });
 
-      const myPromise = done();
-      this.emit("onAuth", {
-        headers: request.headers,
-        server: this.serverName,
-        myPromise,
-      });
-      await myPromise.promise;
+      //     console.log(authStatus);
+
+      //     if (authStatus.indexOf(true) == -1) {
+      //       // console.log("Destroying from checkBindings");
+      //       // this.emit("error", "cannot authenticate");
+      //       socket.end("HTTP/1.1 401 Unauthorized\r\n\r\n");
+      //       socket.destroy();
+      //     }
+      //   });
+      // }
+
+      // runAuth(this);
 
       let { pathname } = new URL(request.url, `ws://${request.headers.host}`);
 
@@ -275,8 +365,6 @@ class WebSocketsAdapter extends Adapter {
       }
 
       // socket.destroy()
-
-      console.log("proceeding to connect");
 
       if (servers.has(pathname)) {
         servers.get(pathname).handleUpgrade(request, socket, head, (ws) => {

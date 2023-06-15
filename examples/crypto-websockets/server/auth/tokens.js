@@ -37,7 +37,7 @@ export default async function ({
 
   console.log("network data", res.data);
 
-  return true;
+  return false;
   // glee.send(
   //   new Message({
   //     channel: "/price",

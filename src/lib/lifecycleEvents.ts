@@ -14,6 +14,7 @@ interface IEvent {
   fn: (event: GleeFunctionEvent) => GleeFunctionReturn;
   channels: string[];
   servers: string[];
+  security: string[];
 }
 export const events: Map<string, IEvent[]> = new Map();
 
@@ -35,6 +36,7 @@ export async function register(dir: string) {
             lifecycleEvent,
             channels,
             servers,
+            security,
           } = await import(pathToFileURL(filePath).href);
 
           if (!events.has(lifecycleEvent)) events.set(lifecycleEvent, []);
@@ -45,6 +47,7 @@ export async function register(dir: string) {
               fn,
               channels,
               servers,
+              security,
             },
           ]);
         } catch (e) {
@@ -60,9 +63,21 @@ export async function register(dir: string) {
 export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
   if (!Array.isArray(events.get(lifecycleEvent))) return;
 
+  //try to get the security scheme to run based on the server
+
   try {
-    const connectionChannels = "/price" || params.connection.channels;
-    const connectionServer = "websocket" || params.connection.serverName;
+    let connectionChannels, serverSecurity, securityName;
+
+    const connectionServer = params.connection?.serverName || params.serverName;
+
+    lifecycleEvent == "onAuth"
+      ? ([serverSecurity] =
+          params.doc.json("servers")[connectionServer].security) //get server security
+      : (connectionChannels = params.connection.channels);
+
+    serverSecurity ? ([securityName] = Object.keys(serverSecurity)) : null;
+
+    //get auth array for serverName
     const handlers = events.get(lifecycleEvent).filter((info) => {
       if (
         info.channels &&
@@ -75,10 +90,19 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
         return info.servers.includes(connectionServer);
       }
 
+      //check if server has that securityScheme
+      if (info.security) {
+        return info.security.includes(securityName);
+      }
+
       return true;
     });
 
+    // console.log("parsedAsyncAPI", serverSecurity);
+
     if (!handlers.length) return;
+
+    // console.log("handlers", handlers);
 
     logInfoMessage(`Running ${lifecycleEvent} lifecycle event...`, {
       highlightedWords: [lifecycleEvent],

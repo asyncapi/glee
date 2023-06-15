@@ -11,7 +11,9 @@ export type EnrichedEvent = {
   connection?: GleeConnection;
   serverName: string;
   server: Server;
-  headers: { [key: string]: string };
+  headers?: { [key: string]: string };
+  callback?: any;
+  doc?: any;
 };
 
 class GleeAdapter extends EventEmitter {
@@ -82,6 +84,8 @@ class GleeAdapter extends EventEmitter {
           serverName,
           server,
           headers: ev.headers ? ev.headers : null,
+          callback: ev.callback ? ev.callback : null,
+          doc: ev.doc ? ev.doc : null,
         },
       };
     }
