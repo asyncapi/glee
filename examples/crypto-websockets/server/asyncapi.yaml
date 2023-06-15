@@ -10,6 +10,7 @@ servers:
     protocol: ws
     security:
       - tokens: []
+      - jwt: []
   ws-websocket:
     url: ws://localhost:4000
     protocol: ws

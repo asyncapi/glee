@@ -93,9 +93,9 @@ class WebSocketsAdapter extends Adapter {
     );
     const tokens = securityRequirements.find((sec) => sec.type() === "http");
 
-    console.log("tokens", tokens);
-    console.log("userPassword", userAndPasswordSecurityReq);
-    console.log("x509SecurityReq", X509SecurityReq);
+    // console.log("tokens", tokens);
+    // console.log("userPassword", userAndPasswordSecurityReq);
+    // console.log("x509SecurityReq", X509SecurityReq);
 
     return {
       userAndPasswordSecurityReq,
@@ -266,15 +266,8 @@ class WebSocketsAdapter extends Adapter {
   }
 
   private wrapCallbackDecorator(cb) {
-    return function done(val: Boolean) {
-      if (val == true) {
-        console.log("proceeding");
-        cb(val);
-      } else {
-        //emit error
-        console.log("failing");
-        cb(val, 401, "Unauthorized");
-      }
+    return function done(val: Boolean, code?: number, message?: string) {
+      cb(val, code, message);
     };
   }
 
@@ -302,7 +295,7 @@ class WebSocketsAdapter extends Adapter {
                     headers: authProps,
                     server: this.serverName,
                     callback: done,
-                    doc: this.parsedAsyncAPI,
+                    doc: this.AsyncAPIServer,
                   });
                 },
         })

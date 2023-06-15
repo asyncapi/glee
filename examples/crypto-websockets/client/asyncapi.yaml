@@ -5,11 +5,11 @@ info:
   description: |
     This app creates a client that subscribes to the server for the price change.
 servers:
-  ws-websockets:
-    url: ws://localhost:4000
+  websockets:
+    url: ws://localhost:3000
     protocol: ws
 x-remoteServers:
-  - ws-websockets
+  - websockets
 channels:
   /price:
     bindings:

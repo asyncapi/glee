@@ -66,16 +66,17 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
   //try to get the security scheme to run based on the server
 
   try {
-    let connectionChannels, serverSecurity, securityName;
+    let connectionChannels, securityNames;
 
     const connectionServer = params.connection?.serverName || params.serverName;
 
-    lifecycleEvent == "onAuth"
-      ? ([serverSecurity] =
-          params.doc.json("servers")[connectionServer].security) //get server security
-      : (connectionChannels = params.connection.channels);
-
-    serverSecurity ? ([securityName] = Object.keys(serverSecurity)) : null;
+    if (lifecycleEvent == "onAuth") {
+      securityNames = params.doc
+        .security()
+        .map((sec) => Object.keys(sec.json())[0]);
+    } else {
+      connectionChannels = params.connection.channels;
+    }
 
     //get auth array for serverName
     const handlers = events.get(lifecycleEvent).filter((info) => {
@@ -91,18 +92,21 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
       }
 
       //check if server has that securityScheme
-      if (info.security) {
-        return info.security.includes(securityName);
+      if (
+        info.security &&
+        !arrayHasDuplicates([...securityNames, ...info.security])
+      ) {
+        console.error(
+          `The ${lifecycleEvent} lifecycle couldn't find any security for ${connectionServer} authentication.`
+        );
+        params.callback(false, 422, "Cannot find authentication file");
+        return false;
       }
 
       return true;
     });
 
-    // console.log("parsedAsyncAPI", serverSecurity);
-
     if (!handlers.length) return;
-
-    // console.log("handlers", handlers);
 
     logInfoMessage(`Running ${lifecycleEvent} lifecycle event...`, {
       highlightedWords: [lifecycleEvent],
