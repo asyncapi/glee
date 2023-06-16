@@ -2,35 +2,19 @@
 
 This app is a dummy server that would stream the price of a fake cryptocurrency
 
-
 ## Table of Contents
 
-* [Servers](#servers)
-  * [websocket](#websocket-server)
-* [Operations](#operations)
-  * [SUB /price](#sub-price-operation)
+- [Servers](#servers)
+  - [websocket](#websocket-server)
+- [Operations](#operations)
+  - [SUB /price](#sub-price-operation)
 
 ## Servers
 
 ### `websocket` Server
 
-* URL: `ws://localhost:3000`
-* Protocol: `ws`
-
-
-#### Security
-
-##### Security Requirement 1
-
-* Type: `HTTP`
-  * Scheme: bearer
-  * Bearer format: JWT
-
-
-
-
-
-
+- URL: `ws://localhost:3000`
+- Protocol: `ws`
 
 ## Operations
 
@@ -38,24 +22,24 @@ This app is a dummy server that would stream the price of a fake cryptocurrency
 
 #### `ws` Channel specific information
 
-| Name | Type | Description | Value | Constraints | Notes |
-|---|---|---|---|---|---|
-| bindingVersion | - | - | `"0.1.0"` | - | - |
-| headers | object | - | - | - | **additional properties are allowed** |
-| headers.token | string | - | - | - | - |
+| Name           | Type   | Description | Value     | Constraints | Notes                                 |
+| -------------- | ------ | ----------- | --------- | ----------- | ------------------------------------- |
+| bindingVersion | -      | -           | `"0.1.0"` | -           | -                                     |
+| headers        | object | -           | -         | -           | **additional properties are allowed** |
+| headers.token  | string | -           | -         | -           | -                                     |
 
 #### Message `indexGraph`
 
-*Data required for drawing index graph*
+_Data required for drawing index graph_
 
 ##### Payload
 
-| Name | Type | Description | Value | Constraints | Notes |
-|---|---|---|---|---|---|
-| (root) | object | - | - | - | **additional properties are allowed** |
-| status | string | - | - | - | - |
-| time | number | - | - | - | - |
-| price | number | - | - | - | - |
+| Name   | Type   | Description | Value | Constraints | Notes                                 |
+| ------ | ------ | ----------- | ----- | ----------- | ------------------------------------- |
+| (root) | object | -           | -     | -           | **additional properties are allowed** |
+| status | string | -           | -     | -           | -                                     |
+| time   | number | -           | -     | -           | -                                     |
+| price  | number | -           | -     | -           | -                                     |
 
 > Examples of payload _(generated)_
 
@@ -66,6 +50,3 @@ This app is a dummy server that would stream the price of a fake cryptocurrency
   "price": 0
 }
 ```
-
-
-

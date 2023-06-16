@@ -24,7 +24,7 @@ class HttpClientAdapter extends Adapter {
     const auth: HttpAuthConfig = await this.getAuthConfig(config.client.auth)
     headers['Authentication'] = auth?.token
     const serverUrl = this.serverUrlExpanded
-    this.channelNames.forEach(async (channelName) => {
+    for (const channelName of this.channelNames) {
       const channelInfo = this.parsedAsyncAPI.channel(channelName)
       const httpChannelBinding = channelInfo.binding('http')
       const channelServers = channelInfo.servers()
@@ -34,7 +34,7 @@ class HttpClientAdapter extends Adapter {
       ) {
         const method = httpChannelBinding.method
         const url = `${serverUrl}/${channelName}`
-        const body:any = message.payload
+        const body: any = message.payload
         const query: { [key: string]: string } | { [key: string]: string[] } = message.query
         got({
           method,
@@ -50,7 +50,7 @@ class HttpClientAdapter extends Adapter {
             this.emit('error', err)
           })
       }
-    })
+    }
   }
   private createMessage(channelName: string, payload: any) {
     return new GleeMessage({
