@@ -66,7 +66,7 @@ export default async function GleeAppInitializer() {
   const app = new Glee(config);
 
   //add auth to glee adapter
-  await registerAdapters(app, parsedAsyncAPI, config, runAuth);
+  await registerAdapters(app, parsedAsyncAPI, config);
 
   app.use(existsInAsyncAPI(parsedAsyncAPI));
   app.useOutbound(existsInAsyncAPI(parsedAsyncAPI));

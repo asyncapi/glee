@@ -24,7 +24,6 @@ class GleeAdapter extends EventEmitter {
   private _channelNames: string[];
   private _connections: GleeConnection[];
   private _serverUrlExpanded: string;
-  private _auth?: any;
 
   /**
    * Instantiates a Glee adapter.
@@ -38,15 +37,13 @@ class GleeAdapter extends EventEmitter {
     glee: Glee,
     serverName: string,
     server: Server,
-    parsedAsyncAPI: AsyncAPIDocument,
-    auth?: any
+    parsedAsyncAPI: AsyncAPIDocument
   ) {
     super();
 
     this._glee = glee;
     this._serverName = serverName;
     this._AsyncAPIServer = server;
-    this._auth = auth;
 
     this._parsedAsyncAPI = parsedAsyncAPI;
     this._channelNames = this._parsedAsyncAPI.channelNames();
@@ -164,10 +161,6 @@ class GleeAdapter extends EventEmitter {
 
   get glee(): Glee {
     return this._glee;
-  }
-
-  get auth(): any {
-    return this._auth;
   }
 
   get serverName(): string {

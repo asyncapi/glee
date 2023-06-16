@@ -14,8 +14,7 @@ import KafkaAdapter from "./adapters/kafka/index.js";
 export default async (
   app: Glee,
   parsedAsyncAPI: AsyncAPIDocument,
-  config: GleeConfig,
-  auth?: any
+  config: GleeConfig
 ) => {
   const serverNames = await getSelectedServerNames();
 
@@ -28,14 +27,7 @@ export default async (
       );
     }
 
-    registerAdapterForServer(
-      serverName,
-      server,
-      app,
-      parsedAsyncAPI,
-      config,
-      auth
-    );
+    registerAdapterForServer(serverName, server, app, parsedAsyncAPI, config);
   });
 
   if (config.cluster) registerAdapterForCluster(app, config.cluster);
@@ -46,8 +38,7 @@ function registerAdapterForServer(
   server: Server,
   app: Glee,
   parsedAsyncAPI: AsyncAPIDocument,
-  config: GleeConfig,
-  auth?: any
+  config: GleeConfig
 ) {
   const protocol = server.protocol();
   const remoteServers = parsedAsyncAPI.extension("x-remoteServers");
@@ -79,7 +70,6 @@ function registerAdapterForServer(
           serverName,
           server,
           parsedAsyncAPI,
-          auth,
         });
       } else if (configWsAdapter === "socket.io") {
         app.addAdapter(SocketIOAdapter, {
