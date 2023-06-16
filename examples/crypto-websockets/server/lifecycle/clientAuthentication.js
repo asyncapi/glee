@@ -5,7 +5,7 @@ import { Message } from "@asyncapi/glee";
 import axios from "axios";
 
 export default async function ({ serverName, headers, callback: done }) {
-  console.log("Authentication on going");
+  console.log("from client Auth");
 
   console.log(headers);
 
