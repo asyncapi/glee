@@ -23,7 +23,6 @@ type AdapterRecord = {
   serverName: string;
   server: Server;
   parsedAsyncAPI: AsyncAPIDocument;
-  auth?: any;
 };
 
 type ClusterAdapterRecord = {
@@ -76,15 +75,13 @@ export default class Glee extends EventEmitter {
       serverName,
       server,
       parsedAsyncAPI,
-      auth,
     }: {
       serverName: string;
       server: Server;
       parsedAsyncAPI: AsyncAPIDocument;
-      auth?: any;
     }
   ) {
-    this._adapters.push({ Adapter, serverName, server, parsedAsyncAPI, auth });
+    this._adapters.push({ Adapter, serverName, server, parsedAsyncAPI });
   }
 
   /**
@@ -154,8 +151,7 @@ export default class Glee extends EventEmitter {
         this,
         a.serverName,
         a.server,
-        a.parsedAsyncAPI,
-        a.auth
+        a.parsedAsyncAPI
       );
       promises.push(a.instance.connect());
     });
