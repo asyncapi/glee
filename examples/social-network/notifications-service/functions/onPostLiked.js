@@ -1,23 +1,23 @@
 /* eslint-disable no-undef, security/detect-object-injection */
 
-import fetch from "node-fetch";
-import { Low, JSONFile } from "lowdb";
-const db = new Low(new JSONFile("../db.json"));
+import fetch from "node-fetch"
+import { Low, JSONFile } from "lowdb"
+const db = new Low(new JSONFile("../db.json"))
 
 export default async function (event) {
-  console.log(event);
-  await db.read();
-  const { users, posts } = db.data;
-  const { postId, userId } = event.payload;
-  const postOwner = users[posts.find((p) => p.id === postId).userId];
-  const userWhoLiked = users[userId];
+  console.log(event)
+  await db.read()
+  const { users, posts } = db.data
+  const { postId, userId } = event.payload
+  const postOwner = users[posts.find((p) => p.id === postId).userId]
+  const userWhoLiked = users[userId]
 
   if (postOwner.id === userWhoLiked.id) {
     console.log(
       "It's great that you like yourself but I'm not going to send a notification 😊"
-    );
+    )
   } else {
-    console.log("Sending message to Slack...");
+    console.log("Sending message to Slack...")
     fetch(process.env.SLACK_URL, {
       method: "POST",
       body: JSON.stringify({
@@ -28,6 +28,6 @@ export default async function (event) {
         }`,
       }),
       headers: { "Content-Type": "application/json" },
-    });
+    })
   }
 }

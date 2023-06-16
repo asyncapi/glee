@@ -4,7 +4,7 @@
 import { Message } from "@asyncapi/glee";
 
 export default async function ({ glee, connection, server, serverName }) {
-  console.log("recieving messages");
+  // console.log("recieving messages");
   // console.log("running lifecycle event");
   // let status = "transit";
   // let currentPrice = 100;

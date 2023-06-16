@@ -1,14 +1,14 @@
-import { stat } from "fs/promises";
-import walkdir from "walkdir";
+import { stat } from "fs/promises"
+import walkdir from "walkdir"
 import {
   GleeFunctionEvent,
   GleeFunctionReturn,
   GleeFunctionReturnSend,
-} from "./index.js";
-import { logInfoMessage } from "./logger.js";
-import GleeMessage from "./message.js";
-import { arrayHasDuplicates } from "./util.js";
-import { pathToFileURL } from "url";
+} from "./index.js"
+import { logInfoMessage } from "./logger.js"
+import GleeMessage from "./message.js"
+import { arrayHasDuplicates } from "./util.js"
+import { pathToFileURL } from "url"
 
 interface IEvent {
   fn: (event: GleeFunctionEvent) => GleeFunctionReturn;
@@ -16,18 +16,18 @@ interface IEvent {
   servers: string[];
   security: string[];
 }
-export const events: Map<string, IEvent[]> = new Map();
+export const events: Map<string, IEvent[]> = new Map()
 
 export async function register(dir: string) {
   try {
-    const statsDir = await stat(dir);
-    if (!statsDir.isDirectory()) return;
+    const statsDir = await stat(dir)
+    if (!statsDir.isDirectory()) return
   } catch (e) {
-    if (e.code === "ENOENT") return;
+    if (e.code === "ENOENT") return
   }
 
   try {
-    const files = await walkdir.async(dir, { return_object: true });
+    const files = await walkdir.async(dir, { return_object: true })
     return await Promise.all(
       Object.keys(files).map(async (filePath) => {
         try {
@@ -37,9 +37,9 @@ export async function register(dir: string) {
             channels,
             servers,
             security,
-          } = await import(pathToFileURL(filePath).href);
+          } = await import(pathToFileURL(filePath).href)
 
-          if (!events.has(lifecycleEvent)) events.set(lifecycleEvent, []);
+          if (!events.has(lifecycleEvent)) events.set(lifecycleEvent, [])
 
           events.set(lifecycleEvent, [
             ...events.get(lifecycleEvent),
@@ -49,33 +49,33 @@ export async function register(dir: string) {
               servers,
               security,
             },
-          ]);
+          ])
         } catch (e) {
-          console.error(e);
+          console.error(e)
         }
       })
-    );
+    )
   } catch (e) {
-    console.error(e);
+    console.error(e)
   }
 }
 
 export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
-  if (!Array.isArray(events.get(lifecycleEvent))) return;
+  if (!Array.isArray(events.get(lifecycleEvent))) return
 
   //try to get the security scheme to run based on the server
 
   try {
-    let connectionChannels, securityNames;
+    let connectionChannels, securityNames
 
-    const connectionServer = params.connection?.serverName || params.serverName;
+    const connectionServer = params.connection?.serverName || params.serverName
 
     if (lifecycleEvent == "onAuth") {
       securityNames = params.doc
         .security()
-        .map((sec) => Object.keys(sec.json())[0]);
+        .map((sec) => Object.keys(sec.json())[0])
     } else {
-      connectionChannels = params.connection.channels;
+      connectionChannels = params.connection.channels
     }
 
     //get auth array for serverName
@@ -84,11 +84,11 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
         info.channels &&
         !arrayHasDuplicates([...connectionChannels, ...info.channels])
       ) {
-        return false;
+        return false
       }
 
       if (info.servers) {
-        return info.servers.includes(connectionServer);
+        return info.servers.includes(connectionServer)
       }
 
       //check if server has that securityScheme
@@ -98,23 +98,23 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
       ) {
         console.error(
           `The ${lifecycleEvent} lifecycle couldn't find any security for ${connectionServer} authentication.`
-        );
-        params.callback(false, 422, "Cannot find authentication file");
-        return false;
+        )
+        params.callback(false, 422, "Cannot find authentication file")
+        return false
       }
 
-      return true;
-    });
+      return true
+    })
 
-    if (!handlers.length) return;
+    if (!handlers.length) return
 
     logInfoMessage(`Running ${lifecycleEvent} lifecycle event...`, {
       highlightedWords: [lifecycleEvent],
-    });
+    })
 
     const responses = await Promise.all(
       handlers.map((info) => info.fn(params))
-    );
+    )
 
     responses.forEach((res) => {
       res?.send?.forEach((event: GleeFunctionReturnSend) => {
@@ -128,16 +128,16 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
               connection: params.connection,
               query: event.query,
             })
-          );
+          )
         } catch (e) {
           console.error(
             `The ${lifecycleEvent} lifecycle function failed to send an event to channel ${event.channel}.`
-          );
-          console.error(e);
+          )
+          console.error(e)
         }
-      });
-    });
+      })
+    })
   } catch (e) {
-    console.error(e);
+    console.error(e)
   }
 }
