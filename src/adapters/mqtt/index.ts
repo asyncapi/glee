@@ -52,14 +52,14 @@ class MqttAdapter extends Adapter {
     const X509SecurityReq = securityRequirements.find(
       (sec) => sec.type() === 'X509'
     )
-    
+
     return {
       userAndPasswordSecurityReq,
       X509SecurityReq
     }
 
   }
-  
+
   private async initializeClient(data: ClientData) {
 
     const {
@@ -136,7 +136,7 @@ class MqttAdapter extends Adapter {
       const operation = this.parsedAsyncAPI.channel(channel).publish()
       const binding = operation.binding('mqtt')
       this.client.subscribe(channel, {
-        qos: binding && binding.qos ? binding.qos : 0,
+        qos: binding?.qos ? binding.qos : 0,
       })
     })
   }
@@ -171,14 +171,8 @@ class MqttAdapter extends Adapter {
         this.client.on('connect', connAckPacket => {
           const isSessionResume = connAckPacket.sessionPresent
 
-          if (!this.checkFirstConnect) {
-            this.firstConnect = true
-            this.emit('connect', {
-              name: this.name(),
-              adapter: this,
-              connection: this.client,
-              channels: this.channelNames,
-            })
+          if (!this.firstConnect) {
+            this.checkFirstConnect()
           }
 
           const shouldSubscribe = !isSessionResume && Array.isArray(subscribedChannels)
@@ -206,8 +200,8 @@ class MqttAdapter extends Adapter {
         message.channel,
         message.payload,
         {
-          qos: binding && binding.qos ? binding.qos : 2,
-          retain: binding && binding.retain ? binding.retain : false,
+          qos: binding?.qos ? binding.qos : 2,
+          retain: binding?.retain ? binding.retain : false,
         },
         (err) => {
           if (err) {

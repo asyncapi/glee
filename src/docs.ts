@@ -5,5 +5,5 @@ import generateDocs from './lib/docs.js'
 export default async () => {
   const config = await initializeConfigs()
   const parsedAsyncAPI = await getParsedAsyncAPI()
-  generateDocs(parsedAsyncAPI, config, null)
+  await generateDocs(parsedAsyncAPI, config, null)
 }
