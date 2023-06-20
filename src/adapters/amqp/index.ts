@@ -6,7 +6,7 @@ import GleeMessage from "../../lib/message.js"
 interface ClientData {
   auth?: AMQPAuthConfig
   url?: URL
-  serverBindings?: any
+  vhost?: string,
   protocolVersion?: number
 }
 
@@ -25,7 +25,7 @@ class AMQPAdapter extends Adapter {
   }
 
   private async initializeConnection(data: ClientData) {
-    const { url, auth, serverBindings, protocolVersion } = data
+    const { url, auth, vhost, protocolVersion } = data
 
     return amqplib.connect({
       host: url.hostname,
@@ -33,11 +33,11 @@ class AMQPAdapter extends Adapter {
       protocol: url.protocol.slice(0, url.protocol.length - 1),
       username: auth.username,
       password: auth.password,
-      keepalive: serverBindings?.keepAlive || 0,
-      vhost: serverBindings?.vhost || '/',
-      heartbeat: serverBindings?.heartbeat || 0,
+      keepalive: 0,
+      vhost: vhost || '/',
+      heartbeat: 0,
       protocolVersion,
-    } as any)
+    })
   }
 
   _fnConsumer(msg, callback) {
@@ -107,7 +107,7 @@ class AMQPAdapter extends Adapter {
                 }
               })
               .catch((error) => this.emit("error", error))
-          })
+          }).catch((error) => this.emit("error", error))
       })
     )
   }
@@ -137,8 +137,7 @@ class AMQPAdapter extends Adapter {
   }
   
 
-  async _connect(): Promise<this> {
-    const resolved = false
+  async _connect() {
     const amqpOptions: AMQPAdapterConfig = await this.resolveProtocolConfig(
       "amqp"
     )
@@ -148,22 +147,27 @@ class AMQPAdapter extends Adapter {
     const protocolVersion = parseInt(
       this.AsyncAPIServer.protocolVersion() || "0.9.1"
     )
-    const serverBindings = this.AsyncAPIServer.binding('amqp')
+    const channels = this.parsedAsyncAPI.channels();
+    const vhosts = []
+    for (const channel in channels) {
+      const operation = this.parsedAsyncAPI.channel(channel).subscribe().binding('amqp');
+      const vhost =  operation?.queue?.vhost
+      if (vhosts.includes(vhost)) {
+        continue
+      } else {
+        vhosts.push(vhost)
+        this.client = await this.initializeConnection({
+        url,
+        auth,
+        vhost,
+        protocolVersion,
+      })
+      }
+      this._subscribe()
 
-
-    this.client = await this.initializeConnection({
-      url,
-      auth,
-      serverBindings,
-      protocolVersion,
-    })
-
+    }
     const connectClient = (): Promise<this> => {
       return new Promise((resolve, reject) => {
-        const catchError = (error) => {
-          if (!resolved) return reject(error)
-          this.emit("error", error)
-        }
         if (resolve) {
           this.emit("connect", {
             name: this.name(),
@@ -172,12 +176,9 @@ class AMQPAdapter extends Adapter {
             channels: this.getSubscribedChannels(),
           })
         }
-          this._subscribe()
-          .catch(catchError)
       })
     }
-
-    return connectClient()
+      connectClient()
   }
 }
 
