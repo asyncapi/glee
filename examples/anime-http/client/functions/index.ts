@@ -12,7 +12,7 @@ export default async function () {
       studio: "teststudio",
       genre: "testgenre",
     },
-  };
+  }
   return {
     send: [
       {
@@ -21,5 +21,5 @@ export default async function () {
         query: payload.query,
       },
     ],
-  };
+  }
 }
