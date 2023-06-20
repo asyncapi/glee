@@ -150,7 +150,7 @@ class AMQPAdapter extends Adapter {
     const channels = this.parsedAsyncAPI.channels()
     const vhosts = []
     for (const channel in channels) {
-      const operation = this.parsedAsyncAPI.channel(channel).subscribe().binding('amqp');
+      const operation = this.parsedAsyncAPI.channel(channel).subscribe().binding('amqp')
       const vhost =  operation?.queue?.vhost
       if (vhosts.includes(vhost)) {
         continue
@@ -167,7 +167,7 @@ class AMQPAdapter extends Adapter {
 
     }
     const connectClient = (): Promise<this> => {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         if (resolve) {
           this.emit("connect", {
             name: this.name(),
