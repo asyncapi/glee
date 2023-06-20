@@ -89,7 +89,7 @@ class AMQPAdapter extends Adapter {
                   .then(() => {
                     return queue
                   })
-                  .catch((error) => console.log(error))
+                  .catch((error) => this.emit("error", error))
                 channel.then((queue) => {
                   ch.consume(queue, processMsg)
                 })
@@ -147,7 +147,7 @@ class AMQPAdapter extends Adapter {
     const protocolVersion = parseInt(
       this.AsyncAPIServer.protocolVersion() || "0.9.1"
     )
-    const channels = this.parsedAsyncAPI.channels();
+    const channels = this.parsedAsyncAPI.channels()
     const vhosts = []
     for (const channel in channels) {
       const operation = this.parsedAsyncAPI.channel(channel).subscribe().binding('amqp');
