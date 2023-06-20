@@ -1,11 +1,11 @@
 // /* eslint-disable no-undef */
 
 // //@ts-ignore
-import { Message } from "@asyncapi/glee"
+// import { Message } from "@asyncapi/glee";
 import axios from "axios"
 
-export default async function ({ serverName, headers, callback: done }) {
-  const res = await axios.get("https://jsonplaceholder.typicode.com/todos/1")
+export default async function ({ callback: done }) {
+  await axios.get("https://jsonplaceholder.typicode.com/todos/1")
 
   // console.log("network data", res.data)
 
