@@ -1,21 +1,21 @@
-import EventEmitter from "events";
-import async from "async";
-import Debug from "debug";
-import { AsyncAPIDocument, Server } from "@asyncapi/parser";
-import GleeAdapter from "./adapter.js";
-import GleeClusterAdapter from "./cluster.js";
+import EventEmitter from "events"
+import async from "async"
+import Debug from "debug"
+import { AsyncAPIDocument, Server } from "@asyncapi/parser"
+import GleeAdapter from "./adapter.js"
+import GleeClusterAdapter from "./cluster.js"
 import GleeRouter, {
   ChannelErrorMiddlewareTuple,
   ChannelMiddlewareTuple,
   GenericMiddleware,
-} from "./router.js";
-import GleeMessage from "./message.js";
-import { matchChannel, duplicateMessage, getParams } from "./util.js";
-import { GleeConfig } from "./index.js";
-import GleeConnection from "./connection.js";
-import { MiddlewareCallback } from "../middlewares/index.js";
+} from "./router.js"
+import GleeMessage from "./message.js"
+import { matchChannel, duplicateMessage, getParams } from "./util.js"
+import { GleeConfig } from "./index.js"
+import GleeConnection from "./connection.js"
+import { MiddlewareCallback } from "../middlewares/index.js"
 
-const debug = Debug("glee");
+const debug = Debug("glee")
 
 type AdapterRecord = {
   Adapter: typeof GleeAdapter;
@@ -31,10 +31,10 @@ type ClusterAdapterRecord = {
 };
 
 export default class Glee extends EventEmitter {
-  private _options: GleeConfig;
-  private _router: GleeRouter;
-  private _adapters: AdapterRecord[];
-  private _clusterAdapter: ClusterAdapterRecord;
+  private _options: GleeConfig
+  private _router: GleeRouter
+  private _adapters: AdapterRecord[]
+  private _clusterAdapter: ClusterAdapterRecord
 
   /**
    * Instantiates Glee.
@@ -42,25 +42,25 @@ export default class Glee extends EventEmitter {
    * @param {Object} [options={}]
    */
   constructor(options: GleeConfig = {}) {
-    super({ captureRejections: true });
+    super({ captureRejections: true })
 
-    this.on("error", console.error);
+    this.on("error", console.error)
 
-    this._options = options;
-    this._router = new GleeRouter();
-    this._adapters = [];
+    this._options = options
+    this._router = new GleeRouter()
+    this._adapters = []
   }
 
   get options(): GleeConfig {
-    return this._options;
+    return this._options
   }
 
   get adapters(): AdapterRecord[] {
-    return this._adapters;
+    return this._adapters
   }
 
   get clusterAdapter(): ClusterAdapterRecord {
-    return this._clusterAdapter;
+    return this._clusterAdapter
   }
 
   /**
@@ -79,7 +79,7 @@ export default class Glee extends EventEmitter {
       parsedAsyncAPI,
     }: { serverName: string; server: Server; parsedAsyncAPI: AsyncAPIDocument }
   ) {
-    this._adapters.push({ Adapter, serverName, server, parsedAsyncAPI });
+    this._adapters.push({ Adapter, serverName, server, parsedAsyncAPI })
   }
 
   /**
@@ -90,7 +90,7 @@ export default class Glee extends EventEmitter {
   setClusterAdapter(Adapter: typeof GleeClusterAdapter) {
     this._clusterAdapter = {
       Adapter,
-    };
+    }
   }
 
   /**
@@ -105,7 +105,7 @@ export default class Glee extends EventEmitter {
     ...middlewares: GenericMiddleware[]
   ): void {
     // eslint-disable-line @typescript-eslint/no-unused-vars
-    this._router.use(...arguments); // eslint-disable-line prefer-rest-params
+    this._router.use(...arguments) // eslint-disable-line prefer-rest-params
   }
 
   /**
@@ -120,7 +120,7 @@ export default class Glee extends EventEmitter {
     ...middlewares: GenericMiddleware[]
   ): void {
     // eslint-disable-line @typescript-eslint/no-unused-vars
-    this._router.useOutbound(...arguments); // eslint-disable-line prefer-rest-params
+    this._router.useOutbound(...arguments) // eslint-disable-line prefer-rest-params
   }
 
   /**
@@ -129,20 +129,20 @@ export default class Glee extends EventEmitter {
    * @param {Object|GleeMessage} message The payload of the message you want to send.
    */
   send(message: GleeMessage): void {
-    message.setOutbound();
+    message.setOutbound()
 
     this._processMessage(
       this._router.getOutboundMiddlewares(),
       this._router.getOutboundErrorMiddlewares(),
       message
-    );
+    )
   }
 
   /**
    * Tells the adapters to connect.
    */
   async connect(): Promise<any[]> {
-    const promises = [];
+    const promises = []
 
     this._adapters.forEach((a) => {
       a.instance = new a.Adapter(
@@ -150,23 +150,23 @@ export default class Glee extends EventEmitter {
         a.serverName,
         a.server,
         a.parsedAsyncAPI
-      );
-      promises.push(a.instance.connect());
-    });
+      )
+      promises.push(a.instance.connect())
+    })
 
     if (this._clusterAdapter) {
-      this._clusterAdapter.instance = new this._clusterAdapter.Adapter(this);
-      promises.push(this._clusterAdapter.instance.connect());
+      this._clusterAdapter.instance = new this._clusterAdapter.Adapter(this)
+      promises.push(this._clusterAdapter.instance.connect())
     }
 
-    return Promise.all(promises);
+    return Promise.all(promises)
   }
 
   /**
    * Alias for `connect`.
    */
   async listen(): Promise<any[]> {
-    return this.connect();
+    return this.connect()
   }
 
   /**
@@ -181,15 +181,15 @@ export default class Glee extends EventEmitter {
     serverName: string,
     connection: GleeConnection
   ) {
-    message.serverName = serverName;
-    message.connection = connection;
-    message.setInbound();
+    message.serverName = serverName
+    message.connection = connection
+    message.setInbound()
 
     this._processMessage(
       this._router.getMiddlewares(),
       this._router.getErrorMiddlewares(),
       message
-    );
+    )
   }
 
   /**
@@ -203,7 +203,7 @@ export default class Glee extends EventEmitter {
       this._router.getErrorMiddlewares(),
       error,
       new GleeMessage({ channel })
-    );
+    )
   }
 
   /**
@@ -214,8 +214,8 @@ export default class Glee extends EventEmitter {
   syncCluster(message: GleeMessage): void {
     if (this._clusterAdapter && !message.cluster) {
       this._clusterAdapter.instance.send(message).catch((e: Error) => {
-        this._processError(this._router.getErrorMiddlewares(), e, message);
-      });
+        this._processError(this._router.getErrorMiddlewares(), e, message)
+      })
     }
   }
 
@@ -235,58 +235,58 @@ export default class Glee extends EventEmitter {
     const mws = middlewares
       .filter((mw) => matchChannel(mw.channel, message.channel))
       .map((mw) => (msg: GleeMessage, next: MiddlewareCallback) => {
-        const msgForMiddleware: GleeMessage = duplicateMessage(msg);
+        const msgForMiddleware: GleeMessage = duplicateMessage(msg)
         msgForMiddleware.params = getParams(
           mw.channel,
           msgForMiddleware.channel
-        );
+        )
 
         msgForMiddleware.on("send", (m: GleeMessage) => {
-          m.setOutbound();
+          m.setOutbound()
           this._processMessage(
             this._router.getOutboundMiddlewares(),
             this._router.getOutboundErrorMiddlewares(),
             m
-          );
-        });
+          )
+        })
 
         mw.fn.call(
           mw.fn,
           msgForMiddleware,
           (err: Error, newMessage: GleeMessage) => {
-            const nextMessage = newMessage || msgForMiddleware;
-            nextMessage.channel = message.channel; // This is to avoid the channel to be modified.
-            next(err, nextMessage);
+            const nextMessage = newMessage || msgForMiddleware
+            nextMessage.channel = message.channel // This is to avoid the channel to be modified.
+            next(err, nextMessage)
           }
-        );
-      });
+        )
+      })
 
     async.seq(...mws)(message, (err: Error, msg: GleeMessage) => {
       if (err) {
-        message.notifyFailedProcessing();
-        debug("Error encountered while processing middlewares.");
-        this._processError(errorMiddlewares, err, msg);
-        return;
+        message.notifyFailedProcessing()
+        debug("Error encountered while processing middlewares.")
+        this._processError(errorMiddlewares, err, msg)
+        return
       }
 
       if (middlewares === this._router.getOutboundMiddlewares()) {
-        debug("Outbound pipeline finished. Sending message...");
-        debug(msg);
+        debug("Outbound pipeline finished. Sending message...")
+        debug(msg)
         this._adapters.forEach((a: AdapterRecord) => {
           if (
             a.instance &&
             (!msg.serverName || msg.serverName === a.serverName)
           ) {
             a.instance.send(msg).catch((e: Error) => {
-              this._processError(errorMiddlewares, e, msg);
-            });
+              this._processError(errorMiddlewares, e, msg)
+            })
           }
-        });
+        })
       } else {
-        message.notifySuccessfulProcessing();
-        debug("Inbound pipeline finished.");
+        message.notifySuccessfulProcessing()
+        debug("Inbound pipeline finished.")
       }
-    });
+    })
   }
 
   /**
@@ -304,10 +304,10 @@ export default class Glee extends EventEmitter {
   ): void {
     const emws = errorMiddlewares.filter((emw) =>
       matchChannel(emw.channel, message.channel)
-    );
-    if (!emws.length) return;
+    )
+    if (!emws.length) return
 
-    this._execErrorMiddleware(emws, 0, error, message);
+    this._execErrorMiddleware(emws, 0, error, message)
   }
 
   private _execErrorMiddleware(
@@ -316,10 +316,10 @@ export default class Glee extends EventEmitter {
     error: Error,
     message: GleeMessage
   ) {
-    const emwsLength = emws.length;
+    const emwsLength = emws.length
     emws[(index + emwsLength) % emwsLength].fn(error, message, (err: Error) => {
-      if (!emws[index + 1]) return;
-      this._execErrorMiddleware.call(null, emws, index + 1, err, message);
-    });
+      if (!emws[index + 1]) return
+      this._execErrorMiddleware.call(null, emws, index + 1, err, message)
+    })
   }
 }

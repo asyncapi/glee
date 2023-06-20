@@ -7,6 +7,9 @@ servers:
   trendingAnimeServer:
     url: http://localhost:8081
     protocol: http
+    security:
+      - tokens: []
+
 channels:
   trendingAnime:
     bindings:
@@ -53,3 +56,9 @@ components:
         studio:
           type: string
           description: The studio of anime.
+  securitySchemes:
+    tokens:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      
