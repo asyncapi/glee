@@ -21,7 +21,7 @@ class HttpClientAdapter extends Adapter {
     const headers = {};
     const config: HttpAdapterConfig = await this.resolveProtocolConfig("http");
     const auth: HttpAuthConfig = await this.getAuthConfig(config?.client?.auth);
-    headers["Authentication"] = auth?.token || "arb-tokenValue";
+    headers["Authentication"] = auth?.token;
     const serverUrl = this.serverUrlExpanded;
     for (const channelName of this.channelNames) {
       const channelInfo = this.parsedAsyncAPI.channel(channelName);
