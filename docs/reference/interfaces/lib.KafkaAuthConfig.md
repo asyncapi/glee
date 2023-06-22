@@ -23,7 +23,7 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:30](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L30)
+[src/lib/index.d.ts:30](https://github.com/asyncapi/glee/blob/05a4b50/src/lib/index.d.ts#L30)
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:31](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L31)
+[src/lib/index.d.ts:31](https://github.com/asyncapi/glee/blob/05a4b50/src/lib/index.d.ts#L31)
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:29](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L29)
+[src/lib/index.d.ts:29](https://github.com/asyncapi/glee/blob/05a4b50/src/lib/index.d.ts#L29)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:34](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L34)
+[src/lib/index.d.ts:34](https://github.com/asyncapi/glee/blob/05a4b50/src/lib/index.d.ts#L34)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:32](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L32)
+[src/lib/index.d.ts:32](https://github.com/asyncapi/glee/blob/05a4b50/src/lib/index.d.ts#L32)
 
 ___
 
@@ -73,4 +73,4 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:33](https://github.com/asyncapi/glee/blob/107b536/src/lib/index.d.ts#L33)
+[src/lib/index.d.ts:33](https://github.com/asyncapi/glee/blob/05a4b50/src/lib/index.d.ts#L33)
