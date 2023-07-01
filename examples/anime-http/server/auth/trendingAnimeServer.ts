@@ -4,19 +4,21 @@
 // import { Message } from "@asyncapi/glee";
 import axios from "axios"
 
-export default async function ({ callback: done }) {
+export async function serverAuth({ callback: done }) {
   await axios.get("https://jsonplaceholder.typicode.com/todos/1")
 
-  console.log("running in auth file")
+  console.log("running in auth file in auth folder")
 
   // console.log("network data", res.data)
 
   // callback(false, 401, "Unauthorized");
   //   console.log(typeof done);
-  done(true)
+  done(false)
 }
 
-export const lifecycleEvent = "onAuth"
+export async function clientAuth({ parsedAsyncAPI, serverName }) {}
 
-//specify auth that's being run
-export const security = ["tokens"]
+// export const lifecycleEvent = "onAuth";
+
+// //specify auth that's being run
+// export const security = ["tokens"];

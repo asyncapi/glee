@@ -13,7 +13,10 @@ import {
   register as registerFunctions,
   trigger as triggerFunction,
 } from "./lib/functions.js"
-// import { register as registerAuth, run as runAuth } from "./lib/userAuth.js"
+import {
+  register as registerAuth,
+  trigger as runAuth,
+} from "./lib/userAuth.js"
 import buffer2string from "./middlewares/buffer2string.js"
 import string2json from "./middlewares/string2json.js"
 import json2string from "./middlewares/json2string.js"
@@ -39,7 +42,7 @@ export default async function GleeAppInitializer() {
     GLEE_PROJECT_DIR,
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
-    //GLEE_AUTH_DIR,
+    GLEE_AUTH_DIR,
   } = config
 
   logWelcome({
@@ -54,7 +57,7 @@ export default async function GleeAppInitializer() {
 
   await registerFunctions(GLEE_FUNCTIONS_DIR)
   await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
-  // await registerAuth(GLEE_AUTH_DIR);
+  await registerAuth(GLEE_AUTH_DIR)
 
   const parsedAsyncAPI = await getParsedAsyncAPI()
   const channelNames = parsedAsyncAPI.channelNames()
@@ -116,7 +119,14 @@ export default async function GleeAppInitializer() {
         highlightedWords: [e.serverName],
       }
     )
-    await runLifecycleEvents("onAuth", {
+    // await runLifecycleEvents("onAuth", {
+    // glee: app,
+    // serverName: e.serverName,
+    // headers: e.headers,
+    // callback: e.callback,
+    // doc: e.doc,
+    // })
+    await runAuth({
       glee: app,
       serverName: e.serverName,
       headers: e.headers,

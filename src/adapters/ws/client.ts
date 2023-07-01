@@ -32,6 +32,7 @@ class WsClientAdapter extends Adapter {
       const headers = {}
       const wsOptions: WebsocketAdapterConfig =
         await this.resolveProtocolConfig("ws")
+      //resloveAuthConfig - takes a serverName, returns the client auth
       const auth: WsAuthConfig = await this.getAuthConfig(
         wsOptions.client.auth
       )

@@ -56,34 +56,28 @@ class HttpAdapter extends Adapter {
           },
         }
       }
+
+      function checkAuthPresense() {
+        return (
+          this.AsyncAPIServer.security() &&
+          Object.keys(this.AsyncAPIServer.security()).length > 0
+        )
+      }
+
+      const authBool = checkAuthPresense.call(this)
+
+      console.log("auth present", authBool)
+
+      // let promise = done().promise,
+      //   callback = done().done;
+
       const { promise, done: callback } = done()
 
-      //promise callback
-      // function doneGenerator() {
-      //   return new Promise((resolve, reject) => {
-      //     return function (val: boolean) {
-      //       if (val == true) {
-      //         console.log("authentication done");
-      //         resolve(true);
-      //       } else {
-      //         console.log("failing");
-      //         // res.end("HTTP/1.1 404 Not Found1\r\n\r\n");
-      //         const err = new Error("Auth Failed");
-      //         // self.emit("error", err);
-      //         reject(err);
-      //       }
-      //     };
-      //   });
-      //   // return { done, promise };
-      // }
-
-      // const myPromise = doneGenerator()
-
-      if (
-        this.AsyncAPIServer.security() &&
-        Object.keys(this.AsyncAPIServer.security()).length > 0
-      ) {
+      if (checkAuthPresense.call(this)) {
         console.log("emitiing auth")
+        // promise = done().promise;
+        // callback = done().done;
+
         this.emit("auth", {
           headers: req.headers,
           server: this.serverName,
@@ -92,10 +86,12 @@ class HttpAdapter extends Adapter {
         })
       }
 
-      // console.log(await myPromise);
+      //check auth function
+
+      //if authenticatio
 
       req.on("end", async () => {
-        await promise
+        if (checkAuthPresense.call(this)) await promise
         body = JSON.parse(Buffer.concat(bodyBuffer).toString())
         this.httpResponses.set(this.serverName, res)
         let { pathname } = new URL(req.url, serverUrl)
@@ -194,6 +190,8 @@ class HttpAdapter extends Adapter {
       query: JSON.parse(JSON.stringify(params.query)),
     })
   }
+
+  // _checkAuth() {}
 }
 
 export default HttpAdapter

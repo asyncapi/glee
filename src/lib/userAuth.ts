@@ -2,98 +2,189 @@
 // //reads the file
 // //parses the file
 
-// import { stat } from "fs/promises"
-// import walkdir from "walkdir"
-// import {
-//   GleeFunctionEvent,
-//   GleeFunctionReturn,
-//   GleeFunctionReturnSend,
-// } from "./index.js"
-// import { logInfoMessage } from "./logger.js"
-// import GleeMessage from "./message.js"
-// import { arrayHasDuplicates } from "./util.js"
-// import { pathToFileURL } from "url"
+// *****process to making an auth file - server part*****
+//register authname
+//name of authfile should be same with the server
+//i.e in auth directory we have auth/serverNme.js. we can get protocol from the filename and the security it implements
 
-// interface IEvent {
-//   fn: (event: GleeFunctionEvent) => GleeFunctionReturn;
-//   channels: string[];
-//   servers: string[];
+// ****** on the client part****
+//check the security scheme and - send it's auth parameters - access to server's security scheme
+//
+
+//in case of multiple server authentication
+//client auth should specify what auth to run
+// if more than one auth, then array should contain more than one - run in order as specified in array
+
+//how will it work??
+//server and client in the same file.
+//- if we use serverName as
+
+import { basename, extname, relative, join } from "path"
+import { stat } from "fs/promises"
+import walkdir from "walkdir"
+import { getConfigs } from "./configs.js"
+import { logWarningMessage, logError } from "./logger.js"
+import GleeMessage from "./message.js"
+import { GleeFunction, GleeFunctionEvent } from "./index.js"
+import Glee from "./glee.js"
+import {
+  gleeMessageToFunctionEvent,
+  validateData,
+  isRemoteServer,
+} from "./util.js"
+import { pathToFileURL } from "url"
+import GleeError from "../errors/glee-error.js"
+import { getParsedAsyncAPI } from "./asyncapiFile.js"
+
+interface FunctionInfo {
+  run: GleeFunction;
+  clientAuth?: GleeFunction;
+  serverAuth?: GleeFunction;
+}
+
+const OutboundMessageSchema = {
+  type: "object",
+  properties: {
+    payload: {},
+    headers: {
+      type: "object",
+      propertyNames: { type: "string" },
+      additionalProperties: { type: "string" },
+    },
+    channel: { type: "string" },
+    server: { type: "string" },
+    query: { type: "object" },
+  },
+}
+const FunctionReturnSchema = {
+  type: ["object", "null"],
+  properties: {
+    send: {
+      type: "array",
+      items: OutboundMessageSchema,
+    },
+    reply: {
+      type: "array",
+      items: OutboundMessageSchema,
+    },
+  },
+  additionalProperties: false,
+  anyOf: [{ required: ["send"] }, { required: ["reply"] }],
+}
+
+const { GLEE_DIR, GLEE_FUNCTIONS_DIR, GLEE_AUTH_DIR } = getConfigs()
+export const functions: Map<string, FunctionInfo> = new Map()
+
+export async function register(dir: string) {
+  try {
+    const statsDir = await stat(dir)
+    if (!statsDir.isDirectory()) return
+  } catch (e) {
+    if (e.code === "ENOENT") return
+    throw e
+  }
+
+  //get serverAuth and ClientAuth
+
+  try {
+    const files = await walkdir.async(dir, { return_object: true })
+    return await Promise.all(
+      Object.keys(files).map(async (filePath) => {
+        try {
+          const functionName = basename(filePath, extname(filePath))
+          const {
+            default: fn,
+            clientAuth,
+            serverAuth,
+          } = await import(pathToFileURL(filePath).href)
+          functions.set(functionName, {
+            run: fn,
+            clientAuth,
+            serverAuth,
+          })
+        } catch (e) {
+          console.error(e)
+        }
+      })
+    )
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export async function trigger(
+  params: //   operationId,
+  //   message,
+  GleeFunctionEvent
+) {
+  try {
+    // const parsedAsyncAPI = (await getParsedAsyncAPI()).server;
+
+    // console.log("parsedAsyncAPI", parsedAsyncAPI.toString());
+    // console.log("current server", app.AsyncAPIServer)
+
+    // console.log("glee", params.glee);
+
+    console.log("auth params", {
+      ...params.doc,
+      serverName: params.serverName,
+    })
+
+    console.log("Auth functions", functions)
+
+    // await Promise.all(
+    //     handlers.map((info) => info.fn(params))
+    //   )
+
+    await functions.get(params.serverName).serverAuth(params)
+
+    console.log("done with auth file")
+    // if (res === undefined) res = null;
+    // const { humanReadableError, errors, isValid } = validateData(
+    //   res,
+    //   FunctionReturnSchema
+    // );
+
+    // if (!isValid) {
+    //   const err = new GleeError({
+    //     humanReadableError,
+    //     errors,
+    //   });
+    //   err.message = `Function ${params.serverName} returned invalid data.`;
+
+    //   logError(err, {
+    //     highlightedWords: [params.serverName],
+    //   });
+
+    return
+    // }
+  } catch (err) {
+    if (err.code === "ERR_MODULE_NOT_FOUND") {
+      const functionsPath = relative(GLEE_DIR, GLEE_AUTH_DIR)
+      const missingFile = relative(GLEE_AUTH_DIR, `${params.serverName}.js`)
+      const missingPath = join(functionsPath, missingFile)
+      logWarningMessage(`Missing function file ${missingPath}.`, {
+        highlightedWords: [missingPath],
+      })
+    } else {
+      throw err
+    }
+  }
+}
+
+//example
+// **auth/websocket.js - auth/{{serverName}}.js
+
+//serverName is the name of the server from the spec file(asyncApi.yaml)
+
+// for accepting/handling connections from other servers
+// export default function ServerAuth({ headers, callback }) {
+//   // **logic
 // }
-// export const events: Map<string, IEvent[]> = new Map()
 
-// export async function register(dir: string) {
-//   try {
-//     const statsDir = await stat(dir)
-//     if (!statsDir.isDirectory()) return
-//   } catch (e) {
-//     if (e.code === "ENOENT") return
-//   }
-
-//   try {
-//     const files = await walkdir.async(dir, { return_object: true })
-//     return await Promise.all(
-//       Object.keys(files).map(async (filePath) => {
-//         try {
-//           const {
-//             default: fn,
-//             // lifecycleEvent,
-//             security,
-//             channels,
-//             servers,
-//           } = await import(pathToFileURL(filePath).href)
-
-//           if (!events.has(security)) events.set(security, [])
-
-//           events.set(security, [
-//             ...events.get(security),
-//             {
-//               fn,
-//               channels,
-//               servers,
-//             },
-//           ])
-//         } catch (e) {
-//           console.error(e)
-//         }
-//       })
-//     )
-//   } catch (e) {
-//     console.error(e)
-//   }
-// }
-
-// export async function run(security: string, params: GleeFunctionEvent) {
-//   if (!Array.isArray(events.get(security))) return
-
-//   try {
-//     const connectionChannels = "/price" || params.connection.channels
-//     const connectionServer = "websockets" || params.connection.serverName
-
-//     const handlers = events.get(security).filter((info) => {
-//       if (
-//         info.channels &&
-//         !arrayHasDuplicates([...connectionChannels, ...info.channels])
-//       ) {
-//         return false
-//       }
-
-//       if (info.servers) {
-//         return info.servers.includes(connectionServer)
-//       }
-
-//       return true
-//     })
-
-//     if (!handlers.length) return
-
-//     logInfoMessage(`Running ${security} security scheme...`, {
-//       highlightedWords: [security],
-//     })
-
-//     return await Promise.all(
-//       handlers.map((info) => info.fn(params))
-//     )
-//   } catch (e) {
-//     console.error(e)
-//   }
-// }
+// //for connecting to external servers
+// export const clientAuth = ({ serverName, parsedAsyncAPI }) => {
+//   // should have conditionals about the servers it wants to connect to as in the glee.config.ts file.
+//   const username = "";
+//   const password = "";
+// };
