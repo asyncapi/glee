@@ -9,7 +9,7 @@ export async function serverAuth({ headers, callback: done }) {
 
   console.log("running in auth file in auth folder")
 
-  console.log("headers", headers)
+  console.log("headers", headers["authentication"])
 
   // console.log("network data", res.data)
 

@@ -64,10 +64,6 @@ class HttpAdapter extends Adapter {
         )
       }
 
-      const authBool = checkAuthPresense.call(this)
-
-      console.log("auth present", authBool)
-
       // let promise = done().promise,
       //   callback = done().done;
 
@@ -107,7 +103,6 @@ class HttpAdapter extends Adapter {
         const { query } = url.parse(req.url, true)
         const searchParams = { query }
         const payload = body
-        console.log("payload", payload)
         const httpChannelBinding = this.parsedAsyncAPI
           .channel(pathname)
           .binding("http")

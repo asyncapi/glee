@@ -24,17 +24,17 @@ import { stat } from "fs/promises"
 import walkdir from "walkdir"
 import { getConfigs } from "./configs.js"
 import { logWarningMessage, logError } from "./logger.js"
-import GleeMessage from "./message.js"
+// import GleeMessage from "./message.js"
 import { GleeFunction, GleeFunctionEvent } from "./index.js"
-import Glee from "./glee.js"
-import {
-  gleeMessageToFunctionEvent,
-  validateData,
-  isRemoteServer,
-} from "./util.js"
+// import Glee from "./glee.js"
+// import {
+//   gleeMessageToFunctionEvent,
+//   validateData,
+//   isRemoteServer,
+// } from "./util.js"
 import { pathToFileURL } from "url"
-import GleeError from "../errors/glee-error.js"
-import { getParsedAsyncAPI } from "./asyncapiFile.js"
+// import GleeError from "../errors/glee-error.js"
+// import { getParsedAsyncAPI } from "./asyncapiFile.js"
 
 interface FunctionInfo {
   run: GleeFunction;
@@ -84,6 +84,8 @@ export async function register(dir: string) {
 }
 
 export async function triggerAuth(params: GleeFunctionEvent) {
+  const { serverName, callback } = params
+
   try {
     // console.log("auth params", {
     //   ...params.doc,
@@ -94,10 +96,17 @@ export async function triggerAuth(params: GleeFunctionEvent) {
 
     // console.log("glee", params.glee)
 
-    let res = await functions.get(params.serverName).serverAuth(params)
+    const auth = functions.get(serverName)
+
+    if (!auth === undefined) {
+      // new Error("server Auth not found")
+      callback(false, 422, "Cannot find authentication file")
+    }
+
+    await auth.serverAuth(params)
 
     // console.log("done with auth file");
-    if (res === undefined) res = null
+    // if (res === undefined) res = null;
     // const { humanReadableError, errors, isValid } = validateData(
     //   res,
     //   FunctionReturnSchema
@@ -119,7 +128,7 @@ export async function triggerAuth(params: GleeFunctionEvent) {
   } catch (err) {
     if (err.code === "ERR_MODULE_NOT_FOUND") {
       const functionsPath = relative(GLEE_DIR, GLEE_AUTH_DIR)
-      const missingFile = relative(GLEE_AUTH_DIR, `${params.serverName}.js`)
+      const missingFile = relative(GLEE_AUTH_DIR, `${serverName}.js`)
       const missingPath = join(functionsPath, missingFile)
       logWarningMessage(`Missing function file ${missingPath}.`, {
         highlightedWords: [missingPath],
@@ -131,12 +140,7 @@ export async function triggerAuth(params: GleeFunctionEvent) {
 }
 
 export async function clientAuthConfig(serverName: string) {
-  console.log("Auth functions", functions)
-  const authconfig = functions.get(serverName).clientAuth
-
-  console.log(authconfig.toString())
-
-  return authconfig
+  return functions.get(serverName).clientAuth
 }
 
 //example
