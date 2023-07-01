@@ -42,36 +42,6 @@ interface FunctionInfo {
   serverAuth?: GleeFunction;
 }
 
-const OutboundMessageSchema = {
-  type: "object",
-  properties: {
-    payload: {},
-    headers: {
-      type: "object",
-      propertyNames: { type: "string" },
-      additionalProperties: { type: "string" },
-    },
-    channel: { type: "string" },
-    server: { type: "string" },
-    query: { type: "object" },
-  },
-}
-const FunctionReturnSchema = {
-  type: ["object", "null"],
-  properties: {
-    send: {
-      type: "array",
-      items: OutboundMessageSchema,
-    },
-    reply: {
-      type: "array",
-      items: OutboundMessageSchema,
-    },
-  },
-  additionalProperties: false,
-  anyOf: [{ required: ["send"] }, { required: ["reply"] }],
-}
-
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR, GLEE_AUTH_DIR } = getConfigs()
 export const functions: Map<string, FunctionInfo> = new Map()
 
@@ -88,6 +58,7 @@ export async function register(dir: string) {
 
   try {
     const files = await walkdir.async(dir, { return_object: true })
+    console.log("register Auth", files)
     return await Promise.all(
       Object.keys(files).map(async (filePath) => {
         try {
@@ -112,49 +83,36 @@ export async function register(dir: string) {
   }
 }
 
-export async function trigger(
-  params: //   operationId,
-  //   message,
-  GleeFunctionEvent
-) {
+export async function triggerAuth(params: GleeFunctionEvent) {
   try {
-    // const parsedAsyncAPI = (await getParsedAsyncAPI()).server;
+    // console.log("auth params", {
+    //   ...params.doc,
+    //   serverName: params.serverName,
+    // })
 
-    // console.log("parsedAsyncAPI", parsedAsyncAPI.toString());
-    // console.log("current server", app.AsyncAPIServer)
+    // console.log("Auth functions", functions)
 
-    // console.log("glee", params.glee);
+    // console.log("glee", params.glee)
 
-    console.log("auth params", {
-      ...params.doc,
-      serverName: params.serverName,
-    })
+    let res = await functions.get(params.serverName).serverAuth(params)
 
-    console.log("Auth functions", functions)
-
-    // await Promise.all(
-    //     handlers.map((info) => info.fn(params))
-    //   )
-
-    await functions.get(params.serverName).serverAuth(params)
-
-    console.log("done with auth file")
-    // if (res === undefined) res = null;
+    // console.log("done with auth file");
+    if (res === undefined) res = null
     // const { humanReadableError, errors, isValid } = validateData(
     //   res,
     //   FunctionReturnSchema
-    // );
+    // )
 
     // if (!isValid) {
     //   const err = new GleeError({
     //     humanReadableError,
     //     errors,
-    //   });
-    //   err.message = `Function ${params.serverName} returned invalid data.`;
+    //   })
+    //   err.message = `Function ${params.serverName} returned invalid data.`
 
     //   logError(err, {
     //     highlightedWords: [params.serverName],
-    //   });
+    //   })
 
     return
     // }
@@ -170,6 +128,15 @@ export async function trigger(
       throw err
     }
   }
+}
+
+export async function clientAuthConfig(serverName: string) {
+  console.log("Auth functions", functions)
+  const authconfig = functions.get(serverName).clientAuth
+
+  console.log(authconfig.toString())
+
+  return authconfig
 }
 
 //example

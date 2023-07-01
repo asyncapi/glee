@@ -15,7 +15,7 @@ import {
 } from "./lib/functions.js"
 import {
   register as registerAuth,
-  trigger as runAuth,
+  triggerAuth as runAuth,
 } from "./lib/userAuth.js"
 import buffer2string from "./middlewares/buffer2string.js"
 import string2json from "./middlewares/string2json.js"

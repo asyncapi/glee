@@ -32,7 +32,8 @@ class WsClientAdapter extends Adapter {
       const headers = {}
       const wsOptions: WebsocketAdapterConfig =
         await this.resolveProtocolConfig("ws")
-      //resloveAuthConfig - takes a serverName, returns the client auth
+      //resloveAuthConfig - takes a serverName, returns the client auth - glee._options has a GLEE_AUTH_DIR use with serverName.ts to find clientAuth
+      console.log(this.glee.options)
       const auth: WsAuthConfig = await this.getAuthConfig(
         wsOptions.client.auth
       )
