@@ -42,7 +42,7 @@ export async function register(dir: string) {
         try {
           const functionName = basename(filePath, extname(filePath))
           const {
-            default: fn,
+            // default: fn,
             clientAuth,
             serverAuth,
           } = await import(pathToFileURL(filePath).href)
@@ -67,7 +67,7 @@ export async function triggerAuth(params: GleeFunctionEvent) {
   try {
     const auth = functions.get(serverName)
 
-    if (!auth === undefined) {
+    if (!auth) {
       // new Error("server Auth not found")
       callback(false, 422, "Cannot find authentication file")
     }

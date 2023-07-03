@@ -89,10 +89,6 @@ class WebSocketsAdapter extends Adapter {
     )
     const tokens = securityRequirements.find((sec) => sec.type() === "http")
 
-    // console.log("tokens", tokens);
-    // console.log("userPassword", userAndPasswordSecurityReq);
-    // console.log("x509SecurityReq", X509SecurityReq);
-
     return {
       userAndPasswordSecurityReq,
       X509SecurityReq,
@@ -121,6 +117,8 @@ class WebSocketsAdapter extends Adapter {
 
     return authProps
   }
+
+  //for auth properties, implement something like `getCert`, `getTokens`, `getUserPass`
 
   private pathnameChecks(socket, pathname: string, serverOptions) {
     const { serverUrl, servers } = serverOptions
@@ -171,15 +169,6 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  // private async emitAuth(self, request) {
-  //   process.nextTick(function () {
-  //     self.emit("auth", {
-  //       headers: request.headers,
-  //       server: self.serverName,
-  //     });
-  //   });
-  // }
-
   private async initializeConstants() {
     const config = this.glee.options?.ws?.server
     const serverUrl = new URL(this.serverUrlExpanded)
@@ -219,34 +208,6 @@ class WebSocketsAdapter extends Adapter {
         request,
         headers,
       })
-
-      // doesn't mean it will be resolved before proceeding
-      // we need a way to delay connection until authentication is done
-      // function emitAuth(self) {
-      //   process.nextTick(function () {
-      //     self.emit("auth", {
-      //       headers: request.headers,
-      //       server: self.serverName,
-      //     });
-      //   });
-      // }
-
-      // emitAuth(this);
-
-      // console.log(this.auth);
-
-      // const authStatus = await this.auth("tokens", {
-      //   glee: this.glee,
-      //   serverName: this.serverName,
-      //   headers: request.headers,
-      // });
-
-      // console.log(authStatus);
-
-      // if (authStatus.indexOf(true) == -1) {
-      //   console.log("Destroying from checkBindings");
-      //   socket.destroy();
-      // }
 
       if (!isValid) {
         this.emitGleeError(socket, { humanReadableError, errors })
