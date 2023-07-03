@@ -63,20 +63,9 @@ export async function register(dir: string) {
 export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
   if (!Array.isArray(events.get(lifecycleEvent))) return
 
-  //try to get the security scheme to run based on the server
-
   try {
-    let connectionChannels, securityNames
-
-    const connectionServer = params.connection?.serverName || params.serverName
-
-    if (lifecycleEvent == "onAuth") {
-      securityNames = params.doc
-        .security()
-        .map((sec) => Object.keys(sec.json())[0])
-    } else {
-      connectionChannels = params.connection.channels
-    }
+    const connectionChannels = params.connection.channels
+    const connectionServer = params.connection?.serverName
 
     //get auth array for serverName
     const handlers = events.get(lifecycleEvent).filter((info) => {
@@ -89,19 +78,6 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
 
       if (info.servers) {
         return info.servers.includes(connectionServer)
-      }
-
-      //check if server has that securityScheme
-      if (
-        info.security &&
-        !arrayHasDuplicates([...securityNames, ...info.security])
-      ) {
-        console.log(arrayHasDuplicates([...securityNames, ...info.security]))
-        console.error(
-          `The ${lifecycleEvent} lifecycle couldn't find any authrntication for ${connectionServer} authentication.`
-        )
-        params.callback(false, 422, "Cannot find authentication file")
-        return false
       }
 
       return true
