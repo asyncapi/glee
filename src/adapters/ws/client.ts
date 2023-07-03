@@ -3,6 +3,7 @@ import Adapter from "../../lib/adapter.js"
 import GleeMessage from "../../lib/message.js"
 import ws from "ws"
 import { WsAuthConfig, WebsocketAdapterConfig } from "../../lib/index.js"
+import { clientAuthConfig } from "../../lib/userAuth.js"
 
 interface Client {
   channel: string;
@@ -32,11 +33,9 @@ class WsClientAdapter extends Adapter {
       const headers = {}
       const wsOptions: WebsocketAdapterConfig =
         await this.resolveProtocolConfig("ws")
-      //resloveAuthConfig - takes a serverName, returns the client auth - glee._options has a GLEE_AUTH_DIR use with serverName.ts to find clientAuth
-      console.log(this.glee.options)
-      const auth: WsAuthConfig = await this.getAuthConfig(
-        wsOptions.client.auth
-      )
+      //resloveAuthConfig - takes a serverName, returns the client auth from currentServer AuthFile
+      const authConfig = await clientAuthConfig(this.serverName)
+      const auth: WsAuthConfig = await this.getAuthConfig(authConfig)
       headers["Authentication"] = `bearer ${auth?.token}`
 
       const url = new URL(this.AsyncAPIServer.url() + channel)
