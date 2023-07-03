@@ -25,8 +25,3 @@ export async function clientAuth({ parsedAsyncAPI, serverName }) {
     }
   }
 }
-
-// export const lifecycleEvent = "onAuth";
-
-// //specify auth that's being run
-// export const security = ["tokens"];

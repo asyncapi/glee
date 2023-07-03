@@ -16,7 +16,6 @@ import { pathToFileURL } from "url"
 // import { getParsedAsyncAPI } from "./asyncapiFile.js"
 
 interface AuthFunctionInfo {
-  // run: GleeFunction;
   clientAuth?: GleeFunction;
   serverAuth?: GleeFunction;
 }
@@ -41,13 +40,10 @@ export async function register(dir: string) {
       Object.keys(files).map(async (filePath) => {
         try {
           const functionName = basename(filePath, extname(filePath))
-          const {
-            // default: fn,
-            clientAuth,
-            serverAuth,
-          } = await import(pathToFileURL(filePath).href)
+          const { clientAuth, serverAuth } = await import(
+            pathToFileURL(filePath).href
+          )
           functions.set(functionName, {
-            // run: fn,
             clientAuth,
             serverAuth,
           })
@@ -68,7 +64,6 @@ export async function triggerAuth(params: GleeFunctionEvent) {
     const auth = functions.get(serverName)
 
     if (!auth) {
-      // new Error("server Auth not found")
       callback(false, 422, "Cannot find authentication file")
     }
 

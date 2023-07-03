@@ -31,9 +31,8 @@ class WsClientAdapter extends Adapter {
 
     for (const channel of channelsOnThisServer) {
       const headers = {}
-      const wsOptions: WebsocketAdapterConfig =
-        await this.resolveProtocolConfig("ws")
-      //resloveAuthConfig - takes a serverName, returns the client auth from currentServer AuthFile
+      // const wsOptions: WebsocketAdapterConfig =
+      // await this.resolveProtocolConfig("ws")
       const authConfig = await clientAuthConfig(this.serverName)
       const auth: WsAuthConfig = await this.getAuthConfig(authConfig)
       headers["Authentication"] = `bearer ${auth?.token}`
