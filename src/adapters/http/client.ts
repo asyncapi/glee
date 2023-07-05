@@ -4,7 +4,6 @@ import got from 'got'
 import { HttpAuthConfig, HttpAdapterConfig } from '../../lib/index.js'
 import http from 'http'
 class HttpClientAdapter extends Adapter {
-
   name(): string {
     return 'HTTP client'
   }
@@ -28,14 +27,14 @@ class HttpClientAdapter extends Adapter {
       const channelInfo = this.parsedAsyncAPI.channel(channelName)
       const httpChannelBinding = channelInfo.binding('http')
       const channelServers = channelInfo.servers()
-      const isChannelServers = !channelServers.length || channelServers.includes(message.serverName)
-      if (
-        httpChannelBinding && isChannelServers
-      ) {
+      const isChannelServers =
+        !channelServers.length || channelServers.includes(message.serverName)
+      if (httpChannelBinding && isChannelServers) {
         const method = httpChannelBinding.method
         const url = `${serverUrl}/${channelName}`
         const body: any = message.payload
-        const query: { [key: string]: string } | { [key: string]: string[] } = message.query
+        const query: { [key: string]: string } | { [key: string]: string[] } =
+          message.query
         got({
           method,
           url,

@@ -7,7 +7,7 @@ import { validateData } from './util.js'
 import GleeError from '../errors/glee-error.js'
 
 export type ClusterEvent = {
-  serverName: string,
+  serverName: string
   adapter: GleeClusterAdapter
 }
 
@@ -19,17 +19,17 @@ const ClusterMessageSchema = {
     headers: {
       type: 'object',
       propertyNames: { type: 'string' },
-      additionProperties: { type: 'string' }
+      additionProperties: { type: 'string' },
     },
     channel: { type: 'string' },
     serverName: { type: 'string' },
     broadcast: { type: 'boolean' },
     cluster: { type: 'boolean' },
     outbound: { type: 'boolean' },
-    inbound: { type: 'boolean' }
+    inbound: { type: 'boolean' },
   },
   required: ['instanceId', 'payload', 'channel', 'serverName', 'broadcast'],
-  additionalProperties: false
+  additionalProperties: false,
 }
 
 class GleeClusterAdapter extends EventEmitter {
@@ -43,7 +43,7 @@ class GleeClusterAdapter extends EventEmitter {
    *
    * @param {Glee} glee  A reference to the Glee app.
    */
-  constructor (glee: Glee) {
+  constructor(glee: Glee) {
     super()
 
     this._instanceId = uuidv4()
@@ -52,40 +52,47 @@ class GleeClusterAdapter extends EventEmitter {
     this._serverName = serverName
     const url = this._glee.options?.cluster?.url
 
-    if ( !url ) {
-      console.log('Please provide a URL for your cluster adapter in glee.config.js')
+    if (!url) {
+      console.log(
+        'Please provide a URL for your cluster adapter in glee.config.js'
+      )
       process.exit(1)
     }
 
     const uriTemplateValues = new Map()
-    process.env.GLEE_SERVER_VARIABLES?.split(',').forEach(t => {
+    process.env.GLEE_SERVER_VARIABLES?.split(',').forEach((t) => {
       const [localServerName, variable, value] = t.split(':')
-      if (localServerName === this._serverName) uriTemplateValues.set(variable, value)
+      if (localServerName === this._serverName)
+        uriTemplateValues.set(variable, value)
     })
-    this._serverUrlExpanded = uriTemplates(url).fill(Object.fromEntries(uriTemplateValues.entries()))
+    this._serverUrlExpanded = uriTemplates(url).fill(
+      Object.fromEntries(uriTemplateValues.entries())
+    )
 
     function genClusterEvent(ev): ClusterEvent {
       return {
         ...ev,
-        serverName
+        serverName,
       }
     }
 
-    this.on('error', err => { this._glee.injectError(err) })
-    this.on('message', message => {
+    this.on('error', (err) => {
+      this._glee.injectError(err)
+    })
+    this.on('message', (message) => {
       message.cluster = true
       this._glee.send(message)
     })
 
-    this.on('connect', ev => {
+    this.on('connect', (ev) => {
       this._glee.emit('adapter:cluster:connect', genClusterEvent(ev))
     })
 
-    this.on('reconnect', ev => {
+    this.on('reconnect', (ev) => {
       this._glee.emit('adapter:cluster:reconnect', genClusterEvent(ev))
     })
-    
-    this.on('close', ev => {   
+
+    this.on('close', (ev) => {
       this._glee.emit('adapter:cluster:close', genClusterEvent(ev))
     })
   }
@@ -118,7 +125,8 @@ class GleeClusterAdapter extends EventEmitter {
    *
    * @param {GleeMessage} message The message to send.
    */
-  async send(message: GleeMessage): Promise<any> { // eslint-disable-line @typescript-eslint/no-unused-vars
+  async send(message: GleeMessage): Promise<any> {
+    // eslint-disable-line @typescript-eslint/no-unused-vars
     throw new Error('Method `send` is not implemented.')
   }
 
@@ -138,7 +146,7 @@ class GleeClusterAdapter extends EventEmitter {
       broadcast: message.broadcast,
       cluster: message.cluster,
       inbound: message.isInbound(),
-      outbound: message.isOutbound()
+      outbound: message.isOutbound(),
     })
   }
 
@@ -152,11 +160,14 @@ class GleeClusterAdapter extends EventEmitter {
     let messageData
     try {
       messageData = JSON.parse(serialized)
-      const { errors, humanReadableError, isValid } = validateData(messageData, ClusterMessageSchema)
-      if ( !isValid ) {
+      const { errors, humanReadableError, isValid } = validateData(
+        messageData,
+        ClusterMessageSchema
+      )
+      if (!isValid) {
         throw new GleeError({ humanReadableError, errors })
       }
-    } catch ( e ) {
+    } catch (e) {
       this._glee.injectError(e)
       return
     }
@@ -164,11 +175,11 @@ class GleeClusterAdapter extends EventEmitter {
     let payload = messageData.payload
     try {
       payload = JSON.parse(messageData.payload)
-    } catch ( e ) {
+    } catch (e) {
       // payload isn't JSON
     }
 
-    if ( messageData.instanceId === this._instanceId ) return
+    if (messageData.instanceId === this._instanceId) return
 
     const message = new GleeMessage({
       payload: payload,
@@ -176,7 +187,7 @@ class GleeClusterAdapter extends EventEmitter {
       channel: messageData.channel,
       serverName: messageData.serverName,
       broadcast: messageData.broadcast,
-      cluster: messageData.cluster
+      cluster: messageData.cluster,
     })
 
     if (messageData.inbound && !messageData.outbound) {
@@ -184,10 +195,9 @@ class GleeClusterAdapter extends EventEmitter {
     } else {
       message.setOutbound()
     }
-    
+
     return message
   }
-  
 }
 
 export default GleeClusterAdapter
