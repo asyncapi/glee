@@ -8,9 +8,7 @@ export default async (spec, config, resDir) => {
   logInfoMessage(`Generating docs for your parsed specification...`)
   const resolvedData = spec.json()
   const generator = new Generator(
-    configData?.template
-      ? configData.template
-      : '@asyncapi/markdown-template',
+    configData?.template ? configData.template : '@asyncapi/markdown-template',
     path.resolve(
       resDir ? resDir : './',
       configData?.folder ? configData.folder : 'docs'

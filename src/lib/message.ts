@@ -5,21 +5,21 @@ type MessageHeaders = { [key: string]: any }
 type QueryParam = { [key: string]: string } | { [key: string]: string[] }
 
 interface IGleeMessageConstructor {
-  payload?: any,
-  headers?: MessageHeaders,
-  channel?: string,
-  serverName?: string,
-  connection?: GleeConnection,
-  broadcast?: boolean,
-  cluster?: boolean,
+  payload?: any
+  headers?: MessageHeaders
+  channel?: string
+  serverName?: string
+  connection?: GleeConnection
+  broadcast?: boolean
+  cluster?: boolean
   query?: QueryParam
 }
 
 interface IReply {
-  payload?: any,
-  headers?: { [key: string]: any },
-  channel?: string,
-  query?: QueryParam,
+  payload?: any
+  headers?: { [key: string]: any }
+  channel?: string
+  query?: QueryParam
 }
 
 class GleeMessage extends EventEmitter {
@@ -48,7 +48,7 @@ class GleeMessage extends EventEmitter {
    * @param {Boolean} [options.cluster=false] Whether the message is from a cluster adapter or not.
    * @param {Object} [options.query] The query parameters to send or receive query when using the HTTP protocol.
    */
-  constructor ({
+  constructor({
     payload,
     headers,
     channel,
@@ -56,7 +56,7 @@ class GleeMessage extends EventEmitter {
     connection,
     broadcast = false,
     cluster = false,
-    query
+    query,
   }: IGleeMessageConstructor) {
     super()
 
@@ -146,7 +146,7 @@ class GleeMessage extends EventEmitter {
    * @param {String} [options.channel] The channel where the reply should go to.
    * @param {Object} [options.query] The new message query parameters. Pass a falsy value if you don't want to change them.
    */
-  reply ({ payload, headers, channel, query } : IReply) {
+  reply({ payload, headers, channel, query }: IReply) {
     if (payload) this._payload = payload
 
     if (query) this._query = query
@@ -163,7 +163,9 @@ class GleeMessage extends EventEmitter {
       if (typeof channel === 'string') {
         this._channel = channel
       } else {
-        return console.error('GleeMessage.reply(): when specified, "channel" must be a string.')
+        return console.error(
+          'GleeMessage.reply(): when specified, "channel" must be a string.'
+        )
       }
     }
 

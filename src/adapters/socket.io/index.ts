@@ -37,7 +37,8 @@ class SocketIOAdapter extends Adapter {
       const server = websocketOptions.httpServer
       if (!optionsPort && String(server.address().port) !== String(port)) {
         console.error(
-          `Your custom HTTP server is listening on port ${server.address().port
+          `Your custom HTTP server is listening on port ${
+            server.address().port
           } but your AsyncAPI file says it must listen on ${port}. Please fix the inconsistency.`
         )
         process.exit(1)
