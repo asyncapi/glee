@@ -63,7 +63,7 @@ class GleeClusterAdapter extends EventEmitter {
     process.env.GLEE_SERVER_VARIABLES?.split(',').forEach((t) => {
       const [localServerName, variable, value] = t.split(':')
       if (localServerName === this._serverName)
-        uriTemplateValues.set(variable, value)
+        {uriTemplateValues.set(variable, value)}
     })
     this._serverUrlExpanded = uriTemplates(url).fill(
       Object.fromEntries(uriTemplateValues.entries())

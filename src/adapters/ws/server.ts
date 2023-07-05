@@ -233,11 +233,11 @@ class WebSocketsAdapter extends Adapter {
         })
     } else {
       if (!message.connection)
-        throw new Error(
+        {throw new Error(
           'There is no WebSocket connection to send the message yet.'
-        )
+        )}
       if (!(message.connection instanceof GleeConnection))
-        throw new Error('Connection object is not of GleeConnection type.')
+        {throw new Error('Connection object is not of GleeConnection type.')}
       message.connection.getRaw().send(message.payload)
     }
   }

@@ -81,7 +81,7 @@ async function loadConfigsFromFile() {
       pathToFileURL(GLEE_CONFIG_FILE_PATH).href
     )
     if (typeof projectConfigs === 'function')
-      projectConfigs = await projectConfigs()
+      {projectConfigs = await projectConfigs()}
     if (!projectConfigs) return
 
     GLEE_DIR = projectConfigs.glee?.gleeDir || GLEE_DIR
