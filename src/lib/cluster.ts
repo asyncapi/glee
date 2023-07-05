@@ -125,8 +125,7 @@ class GleeClusterAdapter extends EventEmitter {
    *
    * @param {GleeMessage} message The message to send.
    */
-  async send(message: GleeMessage): Promise<any> {
-    // eslint-disable-line @typescript-eslint/no-unused-vars
+  async send(message: GleeMessage): Promise<any> { // eslint-disable-line @typescript-eslint/no-unused-vars
     throw new Error('Method `send` is not implemented.')
   }
 
