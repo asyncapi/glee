@@ -7,12 +7,11 @@ import GleeMessage from '../../lib/message.js'
 import GleeError from '../../errors/glee-error.js'
 
 type QueryData = {
-  searchParams: URLSearchParams,
+  searchParams: URLSearchParams
   query: any
 }
 
 class WebSocketsAdapter extends Adapter {
-
   name(): string {
     return 'WebSockets adapter'
   }
@@ -27,7 +26,9 @@ class WebSocketsAdapter extends Adapter {
 
   private emitPathnameError(socket, pathname: string) {
     socket.end('HTTP/1.1 404 Not Found\r\n\r\n')
-    const err = new Error(`A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file.`)
+    const err = new Error(
+      `A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file.`
+    )
     this.emit('error', err)
     throw err
   }
@@ -47,7 +48,6 @@ class WebSocketsAdapter extends Adapter {
     })
 
     return validateData(Object.fromEntries(queryParams.entries()), query)
-
   }
 
   private checkHeaders(requestDetails) {
@@ -59,20 +59,28 @@ class WebSocketsAdapter extends Adapter {
     const { servers, ws, pathname, request } = serverData
 
     servers.get(pathname).emit('connect', ws, request)
-          
+
     ws.on('message', (payload) => {
       const msg = this._createMessage(pathname, payload)
       this.emit('message', msg, ws)
     })
 
-    this.emit('server:connection:open', { name: this.name(), adapter: this, connection: ws, channel: pathname, request })
+    this.emit('server:connection:open', {
+      name: this.name(),
+      adapter: this,
+      connection: ws,
+      channel: pathname,
+      request,
+    })
   }
 
   private pathnameChecks(socket, pathname: string, serverOptions) {
-
     const { serverUrl, servers } = serverOptions
 
-    if (!pathname.startsWith(serverUrl.pathname) && !pathname.startsWith(`/${serverUrl.pathname}`)) {
+    if (
+      !pathname.startsWith(serverUrl.pathname) &&
+      !pathname.startsWith(`/${serverUrl.pathname}`)
+    ) {
       this.emitPathnameError(socket, pathname)
     }
 
@@ -82,7 +90,11 @@ class WebSocketsAdapter extends Adapter {
 
     // If pathname is /something but AsyncAPI file says the channel name is "something"
     // then we convert pathname to "something".
-    if (pathname.startsWith('/') && !servers.has(pathname) && servers.has(pathname.substring(1))) {
+    if (
+      pathname.startsWith('/') &&
+      !servers.has(pathname) &&
+      servers.has(pathname.substring(1))
+    ) {
       pathname = pathname.substring(1)
     }
 
@@ -94,13 +106,19 @@ class WebSocketsAdapter extends Adapter {
   }
 
   private portChecks(portOptions) {
-
     const { port, config, optionsPort, wsHttpServer } = portOptions
 
-    const checkWrongPort = !optionsPort && config?.httpServer && String(wsHttpServer.address().port) !== String(port)
+    const checkWrongPort =
+      !optionsPort &&
+      config?.httpServer &&
+      String(wsHttpServer.address().port) !== String(port)
 
     if (checkWrongPort) {
-      console.error(`Your custom HTTP server is listening on port ${wsHttpServer.address().port} but your AsyncAPI file says it must listen on ${port}. Please fix the inconsistency.`)
+      console.error(
+        `Your custom HTTP server is listening on port ${
+          wsHttpServer.address().port
+        } but your AsyncAPI file says it must listen on ${port}. Please fix the inconsistency.`
+      )
       process.exit(1)
     }
   }
@@ -119,17 +137,19 @@ class WebSocketsAdapter extends Adapter {
       wsHttpServer,
       asyncapiServerPort,
       optionsPort,
-      port
+      port,
     }
   }
 
   private checkBindings(socket, bindingOpts) {
-
     const { wsChannelBinding, request, searchParams } = bindingOpts
 
     const { query, headers } = wsChannelBinding
     if (query) {
-      const { isValid, humanReadableError, errors } = this.checkQuery({searchParams, query})
+      const { isValid, humanReadableError, errors } = this.checkQuery({
+        searchParams,
+        query,
+      })
 
       if (!isValid) {
         this.emitGleeError(socket, { humanReadableError, errors })
@@ -138,7 +158,10 @@ class WebSocketsAdapter extends Adapter {
     }
 
     if (headers) {
-      const { isValid, humanReadableError, errors } = this.checkHeaders({request, headers})
+      const { isValid, humanReadableError, errors } = this.checkHeaders({
+        request,
+        headers,
+      })
       if (!isValid) {
         this.emitGleeError(socket, { humanReadableError, errors })
         return false
@@ -149,32 +172,36 @@ class WebSocketsAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> {
-    const {
-      config,
-      serverUrl,
-      wsHttpServer,
-      optionsPort,
-      port
-    } = await this.initializeConstants()
+    const { config, serverUrl, wsHttpServer, optionsPort, port } =
+      await this.initializeConstants()
 
     this.portChecks({ port, config, optionsPort, wsHttpServer })
 
     const servers = new Map()
-    this.channelNames.forEach(channelName => {
+    this.channelNames.forEach((channelName) => {
       servers.set(channelName, new WebSocket.Server({ noServer: true }))
     })
 
     wsHttpServer.on('upgrade', (request, socket, head) => {
       let { pathname } = new URL(request.url, `ws://${request.headers.host}`)
 
-      pathname = this.pathnameChecks(socket, pathname, {serverUrl, servers})
+      pathname = this.pathnameChecks(socket, pathname, { serverUrl, servers })
 
-      const { searchParams } = new URL(request.url, `ws://${request.headers.host}`)
-      const wsChannelBinding = this.parsedAsyncAPI.channel(pathname).binding('ws')
+      const { searchParams } = new URL(
+        request.url,
+        `ws://${request.headers.host}`
+      )
+      const wsChannelBinding = this.parsedAsyncAPI
+        .channel(pathname)
+        .binding('ws')
 
       if (wsChannelBinding) {
-        const correctBindings = this.checkBindings(socket, { wsChannelBinding, request, searchParams})
-        if(!correctBindings) return
+        const correctBindings = this.checkBindings(socket, {
+          wsChannelBinding,
+          request,
+          searchParams,
+        })
+        if (!correctBindings) return
       }
 
       if (servers.has(pathname)) {
@@ -199,15 +226,18 @@ class WebSocketsAdapter extends Adapter {
     if (message.broadcast) {
       this.glee.syncCluster(message)
 
-      this
-        .connections
+      this.connections
         .filter(({ channels }) => channels.includes(message.channel))
         .forEach((connection) => {
           connection.getRaw().send(message.payload)
         })
     } else {
-      if (!message.connection) throw new Error('There is no WebSocket connection to send the message yet.')
-      if (!(message.connection instanceof GleeConnection)) throw new Error('Connection object is not of GleeConnection type.')
+      if (!message.connection)
+        {throw new Error(
+          'There is no WebSocket connection to send the message yet.'
+        )}
+      if (!(message.connection instanceof GleeConnection))
+        {throw new Error('Connection object is not of GleeConnection type.')}
       message.connection.getRaw().send(message.payload)
     }
   }
@@ -215,7 +245,7 @@ class WebSocketsAdapter extends Adapter {
   _createMessage(eventName: string, payload: any): GleeMessage {
     return new GleeMessage({
       payload,
-      channel: eventName
+      channel: eventName,
     })
   }
 }

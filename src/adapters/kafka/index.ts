@@ -1,7 +1,7 @@
 import { Kafka, SASLOptions } from 'kafkajs'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
-import {KafkaAdapterConfig, KafkaAuthConfig} from '../../lib/index.js'
+import { KafkaAdapterConfig, KafkaAuthConfig } from '../../lib/index.js'
 
 class KafkaAdapter extends Adapter {
   private kafka: Kafka
@@ -11,7 +11,9 @@ class KafkaAdapter extends Adapter {
   }
 
   async connect() {
-    const kafkaOptions: KafkaAdapterConfig = await this.resolveProtocolConfig('kafka')
+    const kafkaOptions: KafkaAdapterConfig = await this.resolveProtocolConfig(
+      'kafka'
+    )
     const auth: KafkaAuthConfig = await this.getAuthConfig(kafkaOptions.auth)
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(
       (sec) => {
@@ -39,7 +41,10 @@ class KafkaAdapter extends Adapter {
         cert: auth?.cert,
       },
       sasl: {
-        mechanism: (scramSha256SecurityReq ? 'scram-sha-256' : undefined) || (scramSha512SecurityReq ? 'scram-sha-512' : undefined) || 'plain',
+        mechanism:
+          (scramSha256SecurityReq ? 'scram-sha-256' : undefined) ||
+          (scramSha512SecurityReq ? 'scram-sha-512' : undefined) ||
+          'plain',
         username: userAndPasswordSecurityReq ? auth?.username : undefined,
         password: userAndPasswordSecurityReq ? auth?.password : undefined,
       } as SASLOptions,
@@ -53,13 +58,16 @@ class KafkaAdapter extends Adapter {
           name: this.name(),
           adapter: this,
           connection: consumer,
-          channels: this.getSubscribedChannels()
+          channels: this.getSubscribedChannels(),
         })
       }
     })
     await consumer.connect()
     const subscribedChannels = this.getSubscribedChannels()
-    await consumer.subscribe({ topics: subscribedChannels, fromBeginning: true })
+    await consumer.subscribe({
+      topics: subscribedChannels,
+      fromBeginning: true,
+    })
     await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
         const msg = this._createMessage(topic, partition, message)
@@ -73,11 +81,13 @@ class KafkaAdapter extends Adapter {
     await producer.connect()
     await producer.send({
       topic: message.channel,
-      messages: [{
-        key: message.headers.key,
-        value: message.payload,
-        timestamp: message.headers.timestamp,
-      }],
+      messages: [
+        {
+          key: message.headers.key,
+          value: message.payload,
+          timestamp: message.headers.timestamp,
+        },
+      ],
     })
     await producer.disconnect()
   }
