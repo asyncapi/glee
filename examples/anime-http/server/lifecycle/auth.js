@@ -7,9 +7,6 @@ import axios from "axios"
 export default async function ({ callback: done }) {
   await axios.get("https://jsonplaceholder.typicode.com/todos/1")
 
-  console.log("running in auth file")
-
-  // console.log("network data", res.data)
 
   // callback(false, 401, "Unauthorized");
   //   console.log(typeof done);
