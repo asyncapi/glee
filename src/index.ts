@@ -119,13 +119,6 @@ export default async function GleeAppInitializer() {
         highlightedWords: [e.serverName],
       }
     )
-    // await runLifecycleEvents("onAuth", {
-    // glee: app,
-    // serverName: e.serverName,
-    // headers: e.headers,
-    // callback: e.callback,
-    // doc: e.doc,
-    // })
     await runAuth({
       glee: app,
       serverName: e.serverName,

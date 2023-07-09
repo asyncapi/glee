@@ -64,16 +64,9 @@ class HttpAdapter extends Adapter {
         )
       }
 
-      // let promise = done().promise,
-      //   callback = done().done;
-
       const { promise, done: callback } = done()
 
       if (checkAuthPresense.call(this)) {
-        console.log('emitiing auth')
-        // promise = done().promise;
-        // callback = done().done;
-
         this.emit('auth', {
           headers: req.headers,
           server: this.serverName,
@@ -81,10 +74,6 @@ class HttpAdapter extends Adapter {
           doc: this.AsyncAPIServer,
         })
       }
-
-      //check auth function
-
-      //if authenticatio
 
       req.on('end', async () => {
         if (checkAuthPresense.call(this)) await promise
@@ -184,8 +173,6 @@ class HttpAdapter extends Adapter {
       query: JSON.parse(JSON.stringify(params.query)),
     })
   }
-
-  // _checkAuth() {}
 }
 
 export default HttpAdapter

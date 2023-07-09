@@ -258,36 +258,6 @@ class WebSocketsAdapter extends Adapter {
     })
 
     wsHttpServer.on('upgrade', async (request, socket, head) => {
-      // this.on("auth", function (e) {
-      //   this.auth("token", {
-      //     glee: this.glee,
-      //     serverName: e.server,
-      //     headers: e.headers,
-      //   });
-      // });
-
-      // this.emitAuth(this, request);
-      // function runAuth(self) {
-      //   process.nextTick(async () => {
-      //     const authStatus = await self.auth("tokens", {
-      //       glee: self.glee,
-      //       serverName: self.serverName,
-      //       headers: request.headers,
-      //     });
-
-      //     console.log(authStatus);
-
-      //     if (authStatus.indexOf(true) == -1) {
-      //       // console.log("Destroying from checkBindings");
-      //       // this.emit("error", "cannot authenticate");
-      //       socket.end("HTTP/1.1 401 Unauthorized\r\n\r\n");
-      //       socket.destroy();
-      //     }
-      //   });
-      // }
-
-      // runAuth(this);
-
       let { pathname } = new URL(request.url, `ws://${request.headers.host}`)
 
       pathname = this.pathnameChecks(socket, pathname, { serverUrl, servers })
