@@ -24,7 +24,6 @@ export async function register(dir: string) {
   }
 
   //get serverAuth and ClientAuth
-
   try {
     const files = await walkdir.async(dir, { return_object: true })
     return await Promise.all(
@@ -47,19 +46,15 @@ export async function register(dir: string) {
     console.error(e)
   }
 }
-
 export async function triggerAuth(params: GleeFunctionEvent) {
   const { serverName, callback } = params
 
   try {
     const auth = functions.get(serverName)
-
     if (!auth) {
       callback(false, 422, 'Cannot find authentication file')
     }
-
     await auth.serverAuth(params)
-
     return
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
