@@ -1,20 +1,20 @@
 /* eslint-disable security/detect-object-injection */
-import { AsyncAPIDocument, Server } from "@asyncapi/parser"
-import EventEmitter from "events"
-import uriTemplates from "uri-templates"
-import GleeConnection from "./connection.js"
-import Glee from "./glee.js"
-import GleeMessage from "./message.js"
-import { resolveFunctions } from "./util.js"
+import { AsyncAPIDocument, Server } from '@asyncapi/parser'
+import EventEmitter from 'events'
+import uriTemplates from 'uri-templates'
+import GleeConnection from './connection.js'
+import Glee from './glee.js'
+import GleeMessage from './message.js'
+import { resolveFunctions } from './util.js'
 
 export type EnrichedEvent = {
-  connection?: GleeConnection;
-  serverName: string;
-  server: Server;
-  headers?: { [key: string]: string };
-  callback?: any;
-  doc?: any;
-};
+  connection?: GleeConnection
+  serverName: string
+  server: Server
+  headers?: { [key: string]: string }
+  callback?: any
+  doc?: any
+}
 
 class GleeAdapter extends EventEmitter {
   private _glee: Glee
@@ -50,8 +50,8 @@ class GleeAdapter extends EventEmitter {
     this._connections = []
 
     const uriTemplateValues = new Map()
-    process.env.GLEE_SERVER_VARIABLES?.split(",").forEach((t) => {
-      const [localServerName, variable, value] = t.split(":")
+    process.env.GLEE_SERVER_VARIABLES?.split(',').forEach((t) => {
+      const [localServerName, variable, value] = t.split(':')
       if (localServerName === this._serverName) {
         uriTemplateValues.set(variable, value)
       }
@@ -60,10 +60,10 @@ class GleeAdapter extends EventEmitter {
       Object.fromEntries(uriTemplateValues.entries())
     )
 
-    this.on("error", (err) => {
+    this.on('error', (err) => {
       this._glee.injectError(err)
     })
-    this.on("message", (message, connection) => {
+    this.on('message', (message, connection) => {
       const conn = new GleeConnection({
         connection,
         channels: this._connections.find((c) => c.rawConnection === connection)
@@ -89,9 +89,9 @@ class GleeAdapter extends EventEmitter {
     }
 
     function createConnection(ev: {
-      channels?: string[];
-      channel?: string;
-      connection: any;
+      channels?: string[]
+      channel?: string
+      connection: any
     }): GleeConnection {
       let channels = ev.channels
       if (!channels && ev.channel) channels = [ev.channel]
@@ -105,54 +105,54 @@ class GleeAdapter extends EventEmitter {
       })
     }
 
-    this.on("auth", (ev) => {
-      this._glee.emit("adapter:auth", enrichEvent(ev))
+    this.on('auth', (ev) => {
+      this._glee.emit('adapter:auth', enrichEvent(ev))
     })
 
-    this.on("connect", (ev) => {
+    this.on('connect', (ev) => {
       const conn = createConnection(ev)
       this._connections.push(conn)
 
       this._glee.emit(
-        "adapter:connect",
+        'adapter:connect',
         enrichEvent({
           connection: conn,
         })
       )
     })
 
-    this.on("server:ready", (ev) => {
-      this._glee.emit("adapter:server:ready", enrichEvent(ev))
+    this.on('server:ready', (ev) => {
+      this._glee.emit('adapter:server:ready', enrichEvent(ev))
     })
 
-    this.on("server:connection:open", (ev) => {
+    this.on('server:connection:open', (ev) => {
       const conn = createConnection(ev)
       this._connections.push(conn)
 
       this._glee.emit(
-        "adapter:server:connection:open",
+        'adapter:server:connection:open',
         enrichEvent({
           connection: conn,
         })
       )
     })
 
-    this.on("reconnect", (ev) => {
+    this.on('reconnect', (ev) => {
       const conn = createConnection(ev)
 
       this._glee.emit(
-        "adapter:reconnect",
+        'adapter:reconnect',
         enrichEvent({
           connection: conn,
         })
       )
     })
 
-    this.on("close", (ev) => {
+    this.on('close', (ev) => {
       const conn = createConnection(ev)
 
       this._glee.emit(
-        "adapter:close",
+        'adapter:close',
         enrichEvent({
           connection: conn,
         })
@@ -199,7 +199,7 @@ class GleeAdapter extends EventEmitter {
 
   async getAuthConfig(auth: any) {
     if (!auth) return
-    if (typeof auth !== "function") {
+    if (typeof auth !== 'function') {
       await resolveFunctions(auth)
       return auth
     }
@@ -220,7 +220,7 @@ class GleeAdapter extends EventEmitter {
 
       const channelServers = channel.hasServers()
         ? channel.servers()
-        : channel.ext("x-servers") || this._parsedAsyncAPI.serverNames()
+        : channel.ext('x-servers') || this._parsedAsyncAPI.serverNames()
       return channelServers.includes(this._serverName)
     })
   }
@@ -229,7 +229,7 @@ class GleeAdapter extends EventEmitter {
    * Connects to the remote server.
    */
   async connect(): Promise<any> {
-    throw new Error("Method `connect` is not implemented.")
+    throw new Error('Method `connect` is not implemented.')
   }
 
   /**
@@ -239,7 +239,7 @@ class GleeAdapter extends EventEmitter {
    */
   async send(message: GleeMessage): Promise<any> {
     // eslint-disable-line @typescript-eslint/no-unused-vars
-    throw new Error("Method `send` is not implemented.")
+    throw new Error('Method `send` is not implemented.')
   }
 }
 

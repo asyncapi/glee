@@ -1,34 +1,34 @@
-import EventEmitter from "events"
-import async from "async"
-import Debug from "debug"
-import { AsyncAPIDocument, Server } from "@asyncapi/parser"
-import GleeAdapter from "./adapter.js"
-import GleeClusterAdapter from "./cluster.js"
+import EventEmitter from 'events'
+import async from 'async'
+import Debug from 'debug'
+import { AsyncAPIDocument, Server } from '@asyncapi/parser'
+import GleeAdapter from './adapter.js'
+import GleeClusterAdapter from './cluster.js'
 import GleeRouter, {
   ChannelErrorMiddlewareTuple,
   ChannelMiddlewareTuple,
   GenericMiddleware,
-} from "./router.js"
-import GleeMessage from "./message.js"
-import { matchChannel, duplicateMessage, getParams } from "./util.js"
-import { GleeConfig } from "./index.js"
-import GleeConnection from "./connection.js"
-import { MiddlewareCallback } from "../middlewares/index.js"
+} from './router.js'
+import GleeMessage from './message.js'
+import { matchChannel, duplicateMessage, getParams } from './util.js'
+import { GleeConfig } from './index.js'
+import GleeConnection from './connection.js'
+import { MiddlewareCallback } from '../middlewares/index.js'
 
-const debug = Debug("glee")
+const debug = Debug('glee')
 
 type AdapterRecord = {
-  Adapter: typeof GleeAdapter;
-  instance?: GleeAdapter;
-  serverName: string;
-  server: Server;
-  parsedAsyncAPI: AsyncAPIDocument;
-};
+  Adapter: typeof GleeAdapter
+  instance?: GleeAdapter
+  serverName: string
+  server: Server
+  parsedAsyncAPI: AsyncAPIDocument
+}
 
 type ClusterAdapterRecord = {
-  Adapter: typeof GleeClusterAdapter;
-  instance?: GleeClusterAdapter;
-};
+  Adapter: typeof GleeClusterAdapter
+  instance?: GleeClusterAdapter
+}
 
 export default class Glee extends EventEmitter {
   private _options: GleeConfig
@@ -44,7 +44,7 @@ export default class Glee extends EventEmitter {
   constructor(options: GleeConfig = {}) {
     super({ captureRejections: true })
 
-    this.on("error", console.error)
+    this.on('error', console.error)
 
     this._options = options
     this._router = new GleeRouter()
@@ -98,8 +98,8 @@ export default class Glee extends EventEmitter {
    * @param {String} [channel] The channel you want to scope the middleware to.
    * @param {Function|GleeRouter} ...middlewares A function or GleeRouter to use as a middleware.
    */
-  use(...middlewares: GenericMiddleware[]): void;
-  use(channel: string, ...middlewares: GenericMiddleware[]): void;
+  use(...middlewares: GenericMiddleware[]): void
+  use(channel: string, ...middlewares: GenericMiddleware[]): void
   use(
     channel: string | GenericMiddleware,
     ...middlewares: GenericMiddleware[]
@@ -113,8 +113,8 @@ export default class Glee extends EventEmitter {
    * @param {String} [channel] The channel you want to scope the middleware to.
    * @param {Function|GleeRouter} ...middlewares A function or GleeRouter to use as a middleware.
    */
-  useOutbound(...middlewares: GenericMiddleware[]): void;
-  useOutbound(channel: string, ...middlewares: GenericMiddleware[]): void;
+  useOutbound(...middlewares: GenericMiddleware[]): void
+  useOutbound(channel: string, ...middlewares: GenericMiddleware[]): void
   useOutbound(
     channel: string | GenericMiddleware,
     ...middlewares: GenericMiddleware[]
@@ -145,12 +145,7 @@ export default class Glee extends EventEmitter {
     const promises = []
 
     this._adapters.forEach((a) => {
-      a.instance = new a.Adapter(
-        this,
-        a.serverName,
-        a.server,
-        a.parsedAsyncAPI
-      )
+      a.instance = new a.Adapter(this, a.serverName, a.server, a.parsedAsyncAPI)
       promises.push(a.instance.connect())
     })
 
@@ -241,7 +236,7 @@ export default class Glee extends EventEmitter {
           msgForMiddleware.channel
         )
 
-        msgForMiddleware.on("send", (m: GleeMessage) => {
+        msgForMiddleware.on('send', (m: GleeMessage) => {
           m.setOutbound()
           this._processMessage(
             this._router.getOutboundMiddlewares(),
@@ -264,13 +259,13 @@ export default class Glee extends EventEmitter {
     async.seq(...mws)(message, (err: Error, msg: GleeMessage) => {
       if (err) {
         message.notifyFailedProcessing()
-        debug("Error encountered while processing middlewares.")
+        debug('Error encountered while processing middlewares.')
         this._processError(errorMiddlewares, err, msg)
         return
       }
 
       if (middlewares === this._router.getOutboundMiddlewares()) {
-        debug("Outbound pipeline finished. Sending message...")
+        debug('Outbound pipeline finished. Sending message...')
         debug(msg)
         this._adapters.forEach((a: AdapterRecord) => {
           if (
@@ -284,7 +279,7 @@ export default class Glee extends EventEmitter {
         })
       } else {
         message.notifySuccessfulProcessing()
-        debug("Inbound pipeline finished.")
+        debug('Inbound pipeline finished.')
       }
     })
   }

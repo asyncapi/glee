@@ -1,20 +1,19 @@
-import { stat } from "fs/promises"
-import walkdir from "walkdir"
+import { stat } from 'fs/promises'
+import walkdir from 'walkdir'
 import {
   GleeFunctionEvent,
   GleeFunctionReturn,
   GleeFunctionReturnSend,
-} from "./index.js"
-import { logInfoMessage } from "./logger.js"
-import GleeMessage from "./message.js"
-import { arrayHasDuplicates } from "./util.js"
-import { pathToFileURL } from "url"
+} from './index.js'
+import { logInfoMessage } from './logger.js'
+import GleeMessage from './message.js'
+import { arrayHasDuplicates } from './util.js'
+import { pathToFileURL } from 'url'
 
 interface IEvent {
-  fn: (event: GleeFunctionEvent) => GleeFunctionReturn;
-  channels: string[];
-  servers: string[];
-  security: string[];
+  fn: (event: GleeFunctionEvent) => GleeFunctionReturn
+  channels: string[]
+  servers: string[]
 }
 export const events: Map<string, IEvent[]> = new Map()
 
@@ -23,7 +22,7 @@ export async function register(dir: string) {
     const statsDir = await stat(dir)
     if (!statsDir.isDirectory()) return
   } catch (e) {
-    if (e.code === "ENOENT") return
+    if (e.code === 'ENOENT') return
   }
 
   try {
@@ -36,7 +35,6 @@ export async function register(dir: string) {
             lifecycleEvent,
             channels,
             servers,
-            security,
           } = await import(pathToFileURL(filePath).href)
 
           if (!events.has(lifecycleEvent)) events.set(lifecycleEvent, [])
@@ -47,7 +45,6 @@ export async function register(dir: string) {
               fn,
               channels,
               servers,
-              security,
             },
           ])
         } catch (e) {
@@ -65,9 +62,7 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
 
   try {
     const connectionChannels = params.connection.channels
-    const connectionServer = params.connection?.serverName
-
-    //get auth array for serverName
+    const connectionServer = params.connection.serverName
     const handlers = events.get(lifecycleEvent).filter((info) => {
       if (
         info.channels &&
@@ -89,9 +84,7 @@ export async function run(lifecycleEvent: string, params: GleeFunctionEvent) {
       highlightedWords: [lifecycleEvent],
     })
 
-    const responses = await Promise.all(
-      handlers.map((info) => info.fn(params))
-    )
+    const responses = await Promise.all(handlers.map((info) => info.fn(params)))
 
     responses.forEach((res) => {
       res?.send?.forEach((event: GleeFunctionReturnSend) => {

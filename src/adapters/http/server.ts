@@ -1,15 +1,15 @@
-import Adapter from "../../lib/adapter.js"
-import GleeMessage from "../../lib/message.js"
-import http from "http"
-import { validateData } from "../../lib/util.js"
-import GleeError from "../../errors/glee-error.js"
-import * as url from "url"
+import Adapter from '../../lib/adapter.js'
+import GleeMessage from '../../lib/message.js'
+import http from 'http'
+import { validateData } from '../../lib/util.js'
+import GleeError from '../../errors/glee-error.js'
+import * as url from 'url'
 
 class HttpAdapter extends Adapter {
   private httpResponses = new Map()
 
   name(): string {
-    return "HTTP server"
+    return 'HTTP server'
   }
 
   async connect(): Promise<this> {
@@ -22,7 +22,7 @@ class HttpAdapter extends Adapter {
 
   async _connect(): Promise<this> {
     // NOSONAR
-    const config = await this.resolveProtocolConfig("http")
+    const config = await this.resolveProtocolConfig('http')
     const httpOptions = config?.server
     const serverUrl = new URL(this.serverUrlExpanded)
     const httpServer = httpOptions?.httpServer || http.createServer()
@@ -30,12 +30,12 @@ class HttpAdapter extends Adapter {
     const optionsPort = httpOptions?.port
     const port = optionsPort || asyncapiServerPort
 
-    httpServer.on("request", async (req, res) => {
-      res.setHeader("Content-Type", "application/json")
+    httpServer.on('request', async (req, res) => {
+      res.setHeader('Content-Type', 'application/json')
 
       const bodyBuffer = []
       let body: object
-      req.on("data", (chunk) => {
+      req.on('data', (chunk) => {
         bodyBuffer.push(chunk)
       })
 
@@ -51,7 +51,7 @@ class HttpAdapter extends Adapter {
             if (val === true) {
               resolveFunc(true)
             } else if (val === false) {
-              rejectFunc(new Error("auth failed!"))
+              rejectFunc(new Error('auth failed!'))
             }
           },
         }
@@ -70,11 +70,11 @@ class HttpAdapter extends Adapter {
       const { promise, done: callback } = done()
 
       if (checkAuthPresense.call(this)) {
-        console.log("emitiing auth")
+        console.log('emitiing auth')
         // promise = done().promise;
         // callback = done().done;
 
-        this.emit("auth", {
+        this.emit('auth', {
           headers: req.headers,
           server: this.serverName,
           callback,
@@ -86,18 +86,18 @@ class HttpAdapter extends Adapter {
 
       //if authenticatio
 
-      req.on("end", async () => {
+      req.on('end', async () => {
         if (checkAuthPresense.call(this)) await promise
         body = JSON.parse(Buffer.concat(bodyBuffer).toString())
         this.httpResponses.set(this.serverName, res)
         let { pathname } = new URL(req.url, serverUrl)
-        pathname = pathname.startsWith("/") ? pathname.substring(1) : pathname
+        pathname = pathname.startsWith('/') ? pathname.substring(1) : pathname
         if (!this.parsedAsyncAPI.channel(pathname)) {
-          res.end("HTTP/1.1 404 Not Found1\r\n\r\n")
+          res.end('HTTP/1.1 404 Not Found1\r\n\r\n')
           const err = new Error(
             `A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file. here`
           )
-          this.emit("error", err)
+          this.emit('error', err)
           return err
         }
         const { query } = url.parse(req.url, true)
@@ -105,7 +105,7 @@ class HttpAdapter extends Adapter {
         const payload = body
         const httpChannelBinding = this.parsedAsyncAPI
           .channel(pathname)
-          .binding("http")
+          .binding('http')
         if (httpChannelBinding) {
           this._checkHttpBinding(
             req,
@@ -116,20 +116,19 @@ class HttpAdapter extends Adapter {
             payload
           )
         }
-        this.emit("connect", {
+        this.emit('connect', {
           name: this.name(),
           adapter: this,
           connection: http,
           channel: pathname,
         })
         const msg = this._createMessage(pathname, payload, searchParams)
-        this.emit("message", msg, http)
+        this.emit('message', msg, http)
       })
     })
 
     httpServer.listen(port)
-    this.emit("server:ready", { name: this.name(), adapter: this })
-
+    this.emit('server:ready', { name: this.name(), adapter: this })
     return this
   }
   _checkHttpBinding(
@@ -143,7 +142,7 @@ class HttpAdapter extends Adapter {
     const { query, body, method } = httpChannelBinding
     if (method && req.method !== method) {
       const err = new Error(`Cannot ${req.method} ${pathname}`)
-      this.emit("error", err)
+      this.emit('error', err)
       res.end(err.message)
       return
     }
@@ -154,7 +153,7 @@ class HttpAdapter extends Adapter {
       )
       if (!isValid) {
         const err = new GleeError({ humanReadableError, errors })
-        this.emit("error", err)
+        this.emit('error', err)
         res.end(JSON.stringify(err.errors))
         return
       }
@@ -166,7 +165,7 @@ class HttpAdapter extends Adapter {
       )
       if (!isValid) {
         const err = new GleeError({ humanReadableError, errors })
-        this.emit("error", err)
+        this.emit('error', err)
         res.end(JSON.stringify(err.errors))
         return
       }

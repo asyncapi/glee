@@ -86,7 +86,7 @@ Instantiates a Glee adapter.
 
 #### Defined in
 
-[src/lib/adapter.ts:33](https://github.com/asyncapi/glee/blob/107b536/src/lib/adapter.ts#L33)
+[src/lib/adapter.ts:33](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/adapter.ts#L33)
 
 ## Properties
 
@@ -170,7 +170,7 @@ Adapter.AsyncAPIServer
 
 #### Defined in
 
-[src/lib/adapter.ts:133](https://github.com/asyncapi/glee/blob/107b536/src/lib/adapter.ts#L133)
+[src/lib/adapter.ts:160](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/adapter.ts#L160)
 
 ___
 
@@ -188,7 +188,7 @@ Adapter.channelNames
 
 #### Defined in
 
-[src/lib/adapter.ts:141](https://github.com/asyncapi/glee/blob/107b536/src/lib/adapter.ts#L141)
+[src/lib/adapter.ts:168](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/adapter.ts#L168)
 
 ___
 
@@ -206,7 +206,7 @@ Adapter.connections
 
 #### Defined in
 
-[src/lib/adapter.ts:145](https://github.com/asyncapi/glee/blob/107b536/src/lib/adapter.ts#L145)
+[src/lib/adapter.ts:172](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/adapter.ts#L172)
 
 ___
 
@@ -224,7 +224,7 @@ Adapter.glee
 
 #### Defined in
 
-[src/lib/adapter.ts:125](https://github.com/asyncapi/glee/blob/107b536/src/lib/adapter.ts#L125)
+[src/lib/adapter.ts:152](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/adapter.ts#L152)
 
 ___
 
@@ -242,7 +242,7 @@ Adapter.parsedAsyncAPI
 
 #### Defined in
 
-[src/lib/adapter.ts:137](https://github.com/asyncapi/glee/blob/107b536/src/lib/adapter.ts#L137)
+[src/lib/adapter.ts:164](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/adapter.ts#L164)
 
 ___
 
@@ -260,7 +260,7 @@ Adapter.serverName
 
 #### Defined in
 
-[src/lib/adapter.ts:129](https://github.com/asyncapi/glee/blob/107b536/src/lib/adapter.ts#L129)
+[src/lib/adapter.ts:156](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/adapter.ts#L156)
 
 ___
 
@@ -278,7 +278,7 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/adapter.ts:149](https://github.com/asyncapi/glee/blob/107b536/src/lib/adapter.ts#L149)
+[src/lib/adapter.ts:176](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/adapter.ts#L176)
 
 ## Methods
 
@@ -329,7 +329,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/adapters/http/client.ts:11](https://github.com/asyncapi/glee/blob/107b536/src/adapters/http/client.ts#L11)
+[src/adapters/http/client.ts:10](https://github.com/asyncapi/glee/blob/f65a7a0/src/adapters/http/client.ts#L10)
 
 ___
 
@@ -350,7 +350,7 @@ ___
 
 #### Defined in
 
-[src/adapters/http/client.ts:55](https://github.com/asyncapi/glee/blob/107b536/src/adapters/http/client.ts#L55)
+[src/adapters/http/client.ts:54](https://github.com/asyncapi/glee/blob/f65a7a0/src/adapters/http/client.ts#L54)
 
 ___
 
@@ -479,7 +479,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:162](https://github.com/asyncapi/glee/blob/107b536/src/lib/adapter.ts#L162)
+[src/lib/adapter.ts:189](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/adapter.ts#L189)
 
 ___
 
@@ -524,7 +524,7 @@ Returns a list of the channels a given adapter has to subscribe to.
 
 #### Defined in
 
-[src/lib/adapter.ts:175](https://github.com/asyncapi/glee/blob/107b536/src/lib/adapter.ts#L175)
+[src/lib/adapter.ts:205](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/adapter.ts#L205)
 
 ___
 
@@ -606,7 +606,7 @@ ___
 
 #### Defined in
 
-[src/adapters/http/client.ts:8](https://github.com/asyncapi/glee/blob/107b536/src/adapters/http/client.ts#L8)
+[src/adapters/http/client.ts:7](https://github.com/asyncapi/glee/blob/f65a7a0/src/adapters/http/client.ts#L7)
 
 ___
 
@@ -1048,7 +1048,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:153](https://github.com/asyncapi/glee/blob/107b536/src/lib/adapter.ts#L153)
+[src/lib/adapter.ts:180](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/adapter.ts#L180)
 
 ___
 
@@ -1074,7 +1074,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/adapters/http/client.ts:21](https://github.com/asyncapi/glee/blob/107b536/src/adapters/http/client.ts#L21)
+[src/adapters/http/client.ts:20](https://github.com/asyncapi/glee/blob/f65a7a0/src/adapters/http/client.ts#L20)
 
 ___
 

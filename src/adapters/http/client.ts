@@ -1,16 +1,16 @@
-import Adapter from "../../lib/adapter.js"
-import GleeMessage from "../../lib/message.js"
-import got from "got"
-import { HttpAuthConfig, HttpAdapterConfig } from "../../lib/index.js"
-import http from "http"
-import { clientAuthConfig } from "../../lib/userAuth.js"
+import Adapter from '../../lib/adapter.js'
+import GleeMessage from '../../lib/message.js'
+import got from 'got'
+import { HttpAuthConfig, HttpAdapterConfig } from '../../lib/index.js'
+import http from 'http'
+import { clientAuthConfig } from '../../lib/userAuth.js'
 
 class HttpClientAdapter extends Adapter {
   name(): string {
-    return "HTTP client"
+    return 'HTTP client'
   }
   async connect(): Promise<this> {
-    this.emit("connect", {
+    this.emit('connect', {
       name: this.name(),
       adapter: this,
       connection: http,
@@ -24,11 +24,11 @@ class HttpClientAdapter extends Adapter {
     // const config: HttpAdapterConfig = await this.resolveProtocolConfig("http")
     const authConfig = await clientAuthConfig(this.serverName)
     const auth: HttpAuthConfig = await this.getAuthConfig(authConfig)
-    headers["Authentication"] = auth?.token
+    headers['Authentication'] = auth?.token
     const serverUrl = this.serverUrlExpanded
     for (const channelName of this.channelNames) {
       const channelInfo = this.parsedAsyncAPI.channel(channelName)
-      const httpChannelBinding = channelInfo.binding("http")
+      const httpChannelBinding = channelInfo.binding('http')
       const channelServers = channelInfo.servers()
       const isChannelServers =
         !channelServers.length || channelServers.includes(message.serverName)
@@ -47,10 +47,10 @@ class HttpClientAdapter extends Adapter {
         })
           .then((res) => {
             const msg = this.createMessage(channelName, res.body)
-            this.emit("message", msg, http)
+            this.emit('message', msg, http)
           })
           .catch((err) => {
-            this.emit("error", err)
+            this.emit('error', err)
           })
       }
     }

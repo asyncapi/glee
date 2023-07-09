@@ -1,15 +1,15 @@
-import { AsyncAPIDocument, Server } from "@asyncapi/parser"
-import MqttAdapter from "./adapters/mqtt/index.js"
-import WebSocketServerAdapter from "./adapters/ws/server.js"
-import WebsocketClientAdapter from "./adapters/ws/client.js"
-import SocketIOAdapter from "./adapters/socket.io/index.js"
-import RedisClusterAdapter from "./adapters/cluster/redis/index.js"
-import { getSelectedServerNames } from "./lib/servers.js"
-import Glee from "./lib/glee.js"
-import { GleeConfig, GleeClusterAdapterConfig } from "./lib/index.js"
-import HttpServerAdapter from "./adapters/http/server.js"
-import HttpClientAdapter from "./adapters/http/client.js"
-import KafkaAdapter from "./adapters/kafka/index.js"
+import { AsyncAPIDocument, Server } from '@asyncapi/parser'
+import MqttAdapter from './adapters/mqtt/index.js'
+import WebSocketServerAdapter from './adapters/ws/server.js'
+import WebsocketClientAdapter from './adapters/ws/client.js'
+import SocketIOAdapter from './adapters/socket.io/index.js'
+import RedisClusterAdapter from './adapters/cluster/redis/index.js'
+import { getSelectedServerNames } from './lib/servers.js'
+import Glee from './lib/glee.js'
+import { GleeConfig, GleeClusterAdapterConfig } from './lib/index.js'
+import HttpServerAdapter from './adapters/http/server.js'
+import HttpClientAdapter from './adapters/http/client.js'
+import KafkaAdapter from './adapters/kafka/index.js'
 
 export default async (
   app: Glee,
@@ -41,22 +41,22 @@ function registerAdapterForServer(
   config: GleeConfig
 ) {
   const protocol = server.protocol()
-  const remoteServers = parsedAsyncAPI.extension("x-remoteServers")
-  if (["mqtt", "mqtts", "secure-mqtt"].includes(protocol)) {
+  const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
+  if (['mqtt', 'mqtts', 'secure-mqtt'].includes(protocol)) {
     app.addAdapter(MqttAdapter, {
       serverName,
       server,
       parsedAsyncAPI,
     })
-  } else if (["kafka", "kafka-secure"].includes(protocol)) {
+  } else if (['kafka', 'kafka-secure'].includes(protocol)) {
     app.addAdapter(KafkaAdapter, {
       serverName,
       server,
       parsedAsyncAPI,
     })
-  } else if (["amqp", "amqps"].includes(protocol)) {
+  } else if (['amqp', 'amqps'].includes(protocol)) {
     // TODO: Implement AMQP support
-  } else if (["ws", "wss"].includes(protocol)) {
+  } else if (['ws', 'wss'].includes(protocol)) {
     const configWsAdapter = config?.ws?.server?.adapter
     if (remoteServers && remoteServers.includes(serverName)) {
       app.addAdapter(WebsocketClientAdapter, {
@@ -65,19 +65,19 @@ function registerAdapterForServer(
         parsedAsyncAPI,
       })
     } else {
-      if (!configWsAdapter || configWsAdapter === "native") {
+      if (!configWsAdapter || configWsAdapter === 'native') {
         app.addAdapter(WebSocketServerAdapter, {
           serverName,
           server,
           parsedAsyncAPI,
         })
-      } else if (configWsAdapter === "socket.io") {
+      } else if (configWsAdapter === 'socket.io') {
         app.addAdapter(SocketIOAdapter, {
           serverName,
           server,
           parsedAsyncAPI,
         })
-      } else if (typeof configWsAdapter === "object") {
+      } else if (typeof configWsAdapter === 'object') {
         app.addAdapter(configWsAdapter, {
           serverName,
           server,
@@ -89,7 +89,7 @@ function registerAdapterForServer(
         )
       }
     }
-  } else if (["http", "https"].includes(protocol)) {
+  } else if (['http', 'https'].includes(protocol)) {
     if (remoteServers && remoteServers.includes(serverName)) {
       app.addAdapter(HttpClientAdapter, {
         serverName,
@@ -115,9 +115,9 @@ function registerAdapterForCluster(
 ) {
   const adapter = config.adapter
 
-  if (!adapter || adapter === "redis") {
+  if (!adapter || adapter === 'redis') {
     app.setClusterAdapter(RedisClusterAdapter)
-  } else if (typeof adapter === "function") {
+  } else if (typeof adapter === 'function') {
     app.setClusterAdapter(adapter)
   } else {
     throw new Error(`Unknown value for cluster.adapter in glee.config.js`)

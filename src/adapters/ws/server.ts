@@ -1,19 +1,19 @@
-import WebSocket from "ws"
-import http from "http"
-import { validateData } from "../../lib/util.js"
-import Adapter from "../../lib/adapter.js"
-import GleeConnection from "../../lib/connection.js"
-import GleeMessage from "../../lib/message.js"
-import GleeError from "../../errors/glee-error.js"
+import WebSocket from 'ws'
+import http from 'http'
+import { validateData } from '../../lib/util.js'
+import Adapter from '../../lib/adapter.js'
+import GleeConnection from '../../lib/connection.js'
+import GleeMessage from '../../lib/message.js'
+import GleeError from '../../errors/glee-error.js'
 
 type QueryData = {
-  searchParams: URLSearchParams;
-  query: any;
-};
+  searchParams: URLSearchParams
+  query: any
+}
 
 class WebSocketsAdapter extends Adapter {
   name(): string {
-    return "WebSockets adapter"
+    return 'WebSockets adapter'
   }
 
   async connect(): Promise<this> {
@@ -25,18 +25,18 @@ class WebSocketsAdapter extends Adapter {
   }
 
   private emitPathnameError(socket, pathname: string) {
-    socket.end("HTTP/1.1 404 Not Found\r\n\r\n")
+    socket.end('HTTP/1.1 404 Not Found\r\n\r\n')
     const err = new Error(
       `A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file.`
     )
-    this.emit("error", err)
+    this.emit('error', err)
     throw err
   }
 
   private emitGleeError(socket, options) {
     const err = new GleeError(options)
-    this.emit("error", err)
-    socket.end("HTTP/1.1 400 Bad Request\r\n\r\n")
+    this.emit('error', err)
+    socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
   }
 
   private checkQuery(queryData: QueryData) {
@@ -58,14 +58,14 @@ class WebSocketsAdapter extends Adapter {
   private initializeServerEvents(serverData) {
     const { servers, ws, pathname, request } = serverData
 
-    servers.get(pathname).emit("connect", ws, request)
+    servers.get(pathname).emit('connect', ws, request)
 
-    ws.on("message", (payload) => {
+    ws.on('message', (payload) => {
       const msg = this._createMessage(pathname, payload)
-      this.emit("message", msg, ws)
+      this.emit('message', msg, ws)
     })
 
-    this.emit("server:connection:open", {
+    this.emit('server:connection:open', {
       name: this.name(),
       adapter: this,
       connection: ws,
@@ -82,12 +82,12 @@ class WebSocketsAdapter extends Adapter {
       }
     )
     const userAndPasswordSecurityReq = securityRequirements.find(
-      (sec) => sec.type() === "userPassword"
+      (sec) => sec.type() === 'userPassword'
     )
     const X509SecurityReq = securityRequirements.find(
-      (sec) => sec.type() === "X509"
+      (sec) => sec.type() === 'X509'
     )
-    const tokens = securityRequirements.find((sec) => sec.type() === "http")
+    const tokens = securityRequirements.find((sec) => sec.type() === 'http')
 
     return {
       userAndPasswordSecurityReq,
@@ -103,16 +103,16 @@ class WebSocketsAdapter extends Adapter {
     const authProps = {}
 
     if (tokens) {
-      authProps["token"] = headers["authentication"]
+      authProps['token'] = headers['authentication']
     }
 
     if (X509SecurityReq) {
-      authProps["cert"] = headers["cert"]
+      authProps['cert'] = headers['cert']
     }
 
     if (userAndPasswordSecurityReq) {
-      authProps["user"] = headers["user"]
-      authProps["password"] = headers["password"]
+      authProps['user'] = headers['user']
+      authProps['password'] = headers['password']
     }
 
     return authProps
@@ -130,14 +130,14 @@ class WebSocketsAdapter extends Adapter {
       this.emitPathnameError(socket, pathname)
     }
 
-    if (serverUrl.pathname !== "/") {
+    if (serverUrl.pathname !== '/') {
       pathname = pathname.substring(serverUrl.pathname.length)
     }
 
     // If pathname is /something but AsyncAPI file says the channel name is "something"
     // then we convert pathname to "something".
     if (
-      pathname.startsWith("/") &&
+      pathname.startsWith('/') &&
       !servers.has(pathname) &&
       servers.has(pathname.substring(1))
     ) {
@@ -246,7 +246,7 @@ class WebSocketsAdapter extends Adapter {
                   console.log(Object.keys(info.req))
                   const authProps = this.getAuthProps(info.req.headers)
                   const done = this.wrapCallbackDecorator(cb)
-                  this.emit("auth", {
+                  this.emit('auth', {
                     headers: authProps,
                     server: this.serverName,
                     callback: done,
@@ -257,7 +257,7 @@ class WebSocketsAdapter extends Adapter {
       )
     })
 
-    wsHttpServer.on("upgrade", async (request, socket, head) => {
+    wsHttpServer.on('upgrade', async (request, socket, head) => {
       // this.on("auth", function (e) {
       //   this.auth("token", {
       //     glee: this.glee,
@@ -300,7 +300,7 @@ class WebSocketsAdapter extends Adapter {
 
       const wsChannelBinding = this.parsedAsyncAPI
         .channel(pathname)
-        .binding("ws")
+        .binding('ws')
 
       if (wsChannelBinding) {
         const correctBindings = await this.checkBindings(socket, {
@@ -326,7 +326,7 @@ class WebSocketsAdapter extends Adapter {
       wsHttpServer.listen(port)
     }
 
-    this.emit("server:ready", { name: this.name(), adapter: this })
+    this.emit('server:ready', { name: this.name(), adapter: this })
 
     return this
   }
@@ -336,6 +336,7 @@ class WebSocketsAdapter extends Adapter {
       this.glee.syncCluster(message)
 
       this.connections
+      this.connections
         .filter(({ channels }) => channels.includes(message.channel))
         .forEach((connection) => {
           connection.getRaw().send(message.payload)
@@ -343,11 +344,11 @@ class WebSocketsAdapter extends Adapter {
     } else {
       if (!message.connection) {
         throw new Error(
-          "There is no WebSocket connection to send the message yet."
+          'There is no WebSocket connection to send the message yet.'
         )
       }
       if (!(message.connection instanceof GleeConnection)) {
-        throw new Error("Connection object is not of GleeConnection type.")
+        throw new Error('Connection object is not of GleeConnection type.')
       }
       message.connection.getRaw().send(message.payload)
     }
