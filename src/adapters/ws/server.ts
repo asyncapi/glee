@@ -336,7 +336,6 @@ class WebSocketsAdapter extends Adapter {
       this.glee.syncCluster(message)
 
       this.connections
-      this.connections
         .filter(({ channels }) => channels.includes(message.channel))
         .forEach((connection) => {
           connection.getRaw().send(message.payload)
