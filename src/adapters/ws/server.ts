@@ -242,6 +242,8 @@ class WebSocketsAdapter extends Adapter {
             Object.keys(this.AsyncAPIServer.security()).length <= 0
               ? null
               : (info, cb) => {
+                  //check out later
+                  console.log(Object.keys(info.req))
                   const authProps = this.getAuthProps(info.req.headers)
                   const done = this.wrapCallbackDecorator(cb)
                   this.emit("auth", {
