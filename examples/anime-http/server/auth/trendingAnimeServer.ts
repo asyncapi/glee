@@ -14,7 +14,6 @@ export async function serverAuth({ headers, callback: done }) {
   // console.log("network data", res.data)
 
   // callback(false, 401, "Unauthorized");
-  //   console.log(typeof done);
   done(true)
 }
 
