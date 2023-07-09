@@ -12,7 +12,7 @@ interface AuthFunctionInfo {
 }
 
 const { GLEE_DIR, GLEE_AUTH_DIR } = getConfigs()
-export const functions: Map<string, AuthFunctionInfo> = new Map()
+export const authFunctions: Map<string, AuthFunctionInfo> = new Map()
 
 export async function register(dir: string) {
   try {
@@ -29,11 +29,11 @@ export async function register(dir: string) {
     return await Promise.all(
       Object.keys(files).map(async (filePath) => {
         try {
-          const functionName = basename(filePath, extname(filePath))
+          const serverName = basename(filePath, extname(filePath))
           const { clientAuth, serverAuth } = await import(
             pathToFileURL(filePath).href
           )
-          functions.set(functionName, {
+          authFunctions.set(serverName, {
             clientAuth,
             serverAuth,
           })
@@ -50,7 +50,7 @@ export async function triggerAuth(params: GleeFunctionEvent) {
   const { serverName, callback } = params
 
   try {
-    const auth = functions.get(serverName)
+    const auth = authFunctions.get(serverName)
     if (!auth) {
       callback(false, 422, 'Cannot find authentication file')
     }
@@ -58,11 +58,8 @@ export async function triggerAuth(params: GleeFunctionEvent) {
     return
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
-      const functionsPath = relative(GLEE_DIR, GLEE_AUTH_DIR)
-      const missingFile = relative(GLEE_AUTH_DIR, `${serverName}.js`)
-      const missingPath = join(functionsPath, missingFile)
-      logWarningMessage(`Missing function file ${missingPath}.`, {
-        highlightedWords: [missingPath],
+      logWarningMessage(`Missing function file ${serverName}.`, {
+        highlightedWords: [serverName],
       })
     } else {
       throw err
@@ -71,5 +68,5 @@ export async function triggerAuth(params: GleeFunctionEvent) {
 }
 
 export async function clientAuthConfig(serverName: string) {
-  return functions.get(serverName).clientAuth
+  return authFunctions.get(serverName).clientAuth
 }
