@@ -3,6 +3,8 @@ import GleeMessage from '../../lib/message.js'
 import got from 'got'
 import { HttpAuthConfig, HttpAdapterConfig } from '../../lib/index.js'
 import http from 'http'
+import { clientAuthConfig } from '../../lib/userAuth.js'
+
 class HttpClientAdapter extends Adapter {
   name(): string {
     return 'HTTP client'
@@ -19,8 +21,9 @@ class HttpClientAdapter extends Adapter {
 
   async send(message: GleeMessage): Promise<void> {
     const headers = {}
-    const config: HttpAdapterConfig = await this.resolveProtocolConfig('http')
-    const auth: HttpAuthConfig = await this.getAuthConfig(config.client.auth)
+    const authConfig = await clientAuthConfig(this.serverName)
+    const auth: HttpAuthConfig = await this.getAuthConfig(authConfig)
+    console.log('auth from client', auth)
     headers['Authentication'] = auth?.token
     const serverUrl = this.serverUrlExpanded
     for (const channelName of this.channelNames) {
@@ -40,6 +43,7 @@ class HttpClientAdapter extends Adapter {
           url,
           json: body,
           searchParams: JSON.parse(JSON.stringify(query)),
+          headers,
         })
           .then((res) => {
             const msg = this.createMessage(channelName, res.body)

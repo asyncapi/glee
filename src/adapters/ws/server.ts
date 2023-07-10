@@ -74,6 +74,52 @@ class WebSocketsAdapter extends Adapter {
     })
   }
 
+  private getSecurityReqs() {
+    const securityRequirements = (this.AsyncAPIServer.security() || []).map(
+      (sec) => {
+        const secName = Object.keys(sec.json())[0]
+        return this.parsedAsyncAPI.components().securityScheme(secName)
+      }
+    )
+    const userAndPasswordSecurityReq = securityRequirements.find(
+      (sec) => sec.type() === 'userPassword'
+    )
+    const X509SecurityReq = securityRequirements.find(
+      (sec) => sec.type() === 'X509'
+    )
+    const tokens = securityRequirements.find((sec) => sec.type() === 'http')
+
+    return {
+      userAndPasswordSecurityReq,
+      X509SecurityReq,
+      tokens,
+    }
+  }
+
+  private getAuthProps(headers) {
+    const { tokens, X509SecurityReq, userAndPasswordSecurityReq } =
+      this.getSecurityReqs()
+
+    const authProps = {}
+
+    if (tokens) {
+      authProps['token'] = headers['authentication']
+    }
+
+    if (X509SecurityReq) {
+      authProps['cert'] = headers['cert']
+    }
+
+    if (userAndPasswordSecurityReq) {
+      authProps['user'] = headers['user']
+      authProps['password'] = headers['password']
+    }
+
+    return authProps
+  }
+
+  //for auth properties, implement something like `getCert`, `getTokens`, `getUserPass`
+
   private pathnameChecks(socket, pathname: string, serverOptions) {
     const { serverUrl, servers } = serverOptions
 
@@ -141,7 +187,7 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  private checkBindings(socket, bindingOpts) {
+  private async checkBindings(socket, bindingOpts) {
     const { wsChannelBinding, request, searchParams } = bindingOpts
 
     const { query, headers } = wsChannelBinding
@@ -162,6 +208,7 @@ class WebSocketsAdapter extends Adapter {
         request,
         headers,
       })
+
       if (!isValid) {
         this.emitGleeError(socket, { humanReadableError, errors })
         return false
@@ -171,38 +218,70 @@ class WebSocketsAdapter extends Adapter {
     return true
   }
 
+  private wrapCallbackDecorator(cb) {
+    return function done(val: boolean, code?: number, message?: string) {
+      cb(val, code, message)
+    }
+  }
+
   async _connect(): Promise<this> {
     const { config, serverUrl, wsHttpServer, optionsPort, port } =
       await this.initializeConstants()
 
     this.portChecks({ port, config, optionsPort, wsHttpServer })
 
+    //verifyClient works!!!!
     const servers = new Map()
     this.channelNames.forEach((channelName) => {
-      servers.set(channelName, new WebSocket.Server({ noServer: true }))
+      servers.set(
+        channelName,
+        new WebSocket.Server({
+          noServer: true,
+          verifyClient:
+            !this.AsyncAPIServer.security() ||
+            Object.keys(this.AsyncAPIServer.security()).length <= 0
+              ? null
+              : (info, cb) => {
+                  //check out later
+                  console.log(Object.keys(info.req))
+                  const authProps = this.getAuthProps(info.req.headers)
+                  const done = this.wrapCallbackDecorator(cb)
+                  this.emit('auth', {
+                    headers: authProps,
+                    server: this.serverName,
+                    callback: done,
+                    doc: this.AsyncAPIServer,
+                  })
+                },
+        })
+      )
     })
 
-    wsHttpServer.on('upgrade', (request, socket, head) => {
+    wsHttpServer.on('upgrade', async (request, socket, head) => {
       let { pathname } = new URL(request.url, `ws://${request.headers.host}`)
 
       pathname = this.pathnameChecks(socket, pathname, { serverUrl, servers })
 
+      //add auth fields to this URL interface
       const { searchParams } = new URL(
         request.url,
         `ws://${request.headers.host}`
       )
+
       const wsChannelBinding = this.parsedAsyncAPI
         .channel(pathname)
         .binding('ws')
 
       if (wsChannelBinding) {
-        const correctBindings = this.checkBindings(socket, {
+        const correctBindings = await this.checkBindings(socket, {
           wsChannelBinding,
           request,
           searchParams,
         })
         if (!correctBindings) return
       }
+
+      // socket.destroy()
 
       if (servers.has(pathname)) {
         servers.get(pathname).handleUpgrade(request, socket, head, (ws) => {
@@ -232,12 +311,14 @@ class WebSocketsAdapter extends Adapter {
           connection.getRaw().send(message.payload)
         })
     } else {
-      if (!message.connection)
-        {throw new Error(
+      if (!message.connection) {
+        throw new Error(
           'There is no WebSocket connection to send the message yet.'
-        )}
-      if (!(message.connection instanceof GleeConnection))
-        {throw new Error('Connection object is not of GleeConnection type.')}
+        )
+      }
+      if (!(message.connection instanceof GleeConnection)) {
+        throw new Error('Connection object is not of GleeConnection type.')
+      }
       message.connection.getRaw().send(message.payload)
     }
   }

@@ -8,10 +8,14 @@ export default {
   testPathIgnorePatterns: ['functions.test.ts'],
   globals: {
     'ts-jest': {
-      useESM: true
+      useESM: true,
     },
   },
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
+    '^nimma/legacy$': '<rootDir>/node_modules/nimma/dist/legacy/cjs/index.js',
+    '^nimma/fallbacks$':
+      '<rootDir>/node_modules/nimma/dist/legacy/cjs/fallbacks/index.js',
   },
+  transform: {},
 }

@@ -11,6 +11,9 @@ export type EnrichedEvent = {
   connection?: GleeConnection
   serverName: string
   server: Server
+  headers?: { [key: string]: string }
+  callback?: any
+  doc?: any
 }
 
 class GleeAdapter extends EventEmitter {
@@ -49,8 +52,9 @@ class GleeAdapter extends EventEmitter {
     const uriTemplateValues = new Map()
     process.env.GLEE_SERVER_VARIABLES?.split(',').forEach((t) => {
       const [localServerName, variable, value] = t.split(':')
-      if (localServerName === this._serverName)
-        {uriTemplateValues.set(variable, value)}
+      if (localServerName === this._serverName) {
+        uriTemplateValues.set(variable, value)
+      }
     })
     this._serverUrlExpanded = uriTemplates(this._AsyncAPIServer.url()).fill(
       Object.fromEntries(uriTemplateValues.entries())
@@ -77,6 +81,9 @@ class GleeAdapter extends EventEmitter {
         ...{
           serverName,
           server,
+          headers: ev.headers ? ev.headers : null,
+          callback: ev.callback ? ev.callback : null,
+          doc: ev.doc ? ev.doc : null,
         },
       }
     }
@@ -97,6 +104,11 @@ class GleeAdapter extends EventEmitter {
         parsedAsyncAPI,
       })
     }
+
+    this.on('auth', (ev) => {
+      console.log('emitting auth')
+      this._glee.emit('adapter:auth', enrichEvent(ev))
+    })
 
     this.on('connect', (ev) => {
       const conn = createConnection(ev)
@@ -226,7 +238,8 @@ class GleeAdapter extends EventEmitter {
    *
    * @param {GleeMessage} message The message to send.
    */
-  async send(message: GleeMessage): Promise<any> { // eslint-disable-line @typescript-eslint/no-unused-vars
+  async send(message: GleeMessage): Promise<any> {
+    // eslint-disable-line @typescript-eslint/no-unused-vars
     throw new Error('Method `send` is not implemented.')
   }
 }

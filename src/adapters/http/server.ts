@@ -30,14 +30,54 @@ class HttpAdapter extends Adapter {
     const optionsPort = httpOptions?.port
     const port = optionsPort || asyncapiServerPort
 
-    httpServer.on('request', (req, res) => {
+    httpServer.on('request', async (req, res) => {
       res.setHeader('Content-Type', 'application/json')
+
       const bodyBuffer = []
       let body: object
       req.on('data', (chunk) => {
         bodyBuffer.push(chunk)
       })
-      req.on('end', () => {
+
+      function done() {
+        let resolveFunc, rejectFunc
+        const promise = new Promise((resolve, reject) => {
+          resolveFunc = resolve
+          rejectFunc = reject
+        })
+        return {
+          promise,
+          done: (val) => {
+            if (val === true) {
+              resolveFunc(true)
+            } else if (val === false) {
+              rejectFunc(new Error('auth failed!'))
+            }
+          },
+        }
+      }
+
+      function checkAuthPresense() {
+        return (
+          this.AsyncAPIServer.security() &&
+          Object.keys(this.AsyncAPIServer.security()).length > 0
+        )
+      }
+
+      const { promise, done: callback } = done()
+
+      if (checkAuthPresense.call(this)) {
+        console.log('http-server.ts emitting auth')
+        this.emit('auth', {
+          headers: req.headers,
+          server: this.serverName,
+          callback,
+          doc: this.AsyncAPIServer,
+        })
+      }
+
+      req.on('end', async () => {
+        if (checkAuthPresense.call(this)) await promise
         body = JSON.parse(Buffer.concat(bodyBuffer).toString())
         this.httpResponses.set(this.serverName, res)
         let { pathname } = new URL(req.url, serverUrl)

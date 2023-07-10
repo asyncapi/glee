@@ -8,6 +8,12 @@ servers:
   websocket:
     url: ws://localhost:3000
     protocol: ws
+    security:
+      - tokens: []
+      - JWT: []
+  ws-websocket:
+    url: ws://localhost:4000
+    protocol: ws
 channels:
   /price:
     bindings:
@@ -34,3 +40,12 @@ components:
             type: number
           price:
             type: number
+  securitySchemes:
+    tokens:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    JWT:
+     type: http
+     scheme: bearer
+     bearerFormat: JWT

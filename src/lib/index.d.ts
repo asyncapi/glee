@@ -106,6 +106,8 @@ export type GleeFunctionEvent = {
   payload?: any
   query?: QueryParam
   headers?: { [key: string]: string }
+  callback?: any
+  doc?: any
   channel?: string
 }
 
