@@ -3,12 +3,17 @@ import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
 import { logWarningMessage } from './logger.js'
-import { GleeFunction, GleeFunctionEvent } from './index.js'
+import {
+  GleeFunction,
+  GleeFunctionEvent,
+  GleeAuthFunction,
+  GleeAuthFunctionEvent,
+} from './index.js'
 import { pathToFileURL } from 'url'
 
 interface AuthFunctionInfo {
-  clientAuth?: GleeFunction
-  serverAuth?: GleeFunction
+  clientAuth?: GleeAuthFunction
+  serverAuth?: GleeAuthFunction
 }
 
 const { GLEE_DIR, GLEE_AUTH_DIR } = getConfigs()
@@ -46,7 +51,7 @@ export async function register(dir: string) {
     console.error(e)
   }
 }
-export async function triggerAuth(params: GleeFunctionEvent) {
+export async function triggerAuth(params: GleeAuthFunctionEvent) {
   const { serverName, callback } = params
 
   console.log('running auth')
@@ -70,5 +75,6 @@ export async function triggerAuth(params: GleeFunctionEvent) {
 }
 
 export async function clientAuthConfig(serverName: string) {
-  return authFunctions.get(serverName).clientAuth
+  //should check that it contains the implement security keys e.g tokens, userPass, etc.
+  return authFunctions.get(serverName)?.clientAuth
 }

@@ -23,7 +23,6 @@ class HttpClientAdapter extends Adapter {
     const headers = {}
     const authConfig = await clientAuthConfig(this.serverName)
     const auth: HttpAuthConfig = await this.getAuthConfig(authConfig)
-    console.log('auth from client', auth)
     headers['Authentication'] = auth?.token
     const serverUrl = this.serverUrlExpanded
     for (const channelName of this.channelNames) {
@@ -50,6 +49,7 @@ class HttpClientAdapter extends Adapter {
             this.emit('message', msg, http)
           })
           .catch((err) => {
+            console.log('getting Error')
             this.emit('error', err)
           })
       }

@@ -47,11 +47,15 @@ class HttpAdapter extends Adapter {
         })
         return {
           promise,
-          done: (val) => {
+          done: (val: boolean, code?: number, message?: string) => {
             if (val === true) {
               resolveFunc(true)
             } else if (val === false) {
-              rejectFunc(new Error('auth failed!'))
+              rejectFunc({
+                code: code || 401,
+                message: message || 'Unauthorized',
+              })
+              return
             }
           },
         }
@@ -67,7 +71,6 @@ class HttpAdapter extends Adapter {
       const { promise, done: callback } = done()
 
       if (checkAuthPresense.call(this)) {
-        console.log('http-server.ts emitting auth')
         this.emit('auth', {
           headers: req.headers,
           server: this.serverName,
@@ -77,7 +80,15 @@ class HttpAdapter extends Adapter {
       }
 
       req.on('end', async () => {
-        if (checkAuthPresense.call(this)) await promise
+        try {
+          if (checkAuthPresense.call(this)) await promise
+        } catch (e) {
+          res.statusCode = e.code
+          res.end()
+          this.emit('error', new Error(`${e.code} ${e.message}`))
+          return
+        }
+
         body = JSON.parse(Buffer.concat(bodyBuffer).toString())
         this.httpResponses.set(this.serverName, res)
         let { pathname } = new URL(req.url, serverUrl)

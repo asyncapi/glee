@@ -25,6 +25,8 @@ export interface MqttAuthConfig {
 
 export interface WsAuthConfig {
   token?: string
+  username?: string
+  password?: string
 }
 
 export interface HttpAuthConfig {
@@ -105,10 +107,15 @@ export type GleeFunctionEvent = {
   connection?: GleeConnection
   payload?: any
   query?: QueryParam
-  headers?: { [key: string]: string }
-  callback?: any
-  doc?: any
   channel?: string
+}
+
+export type GleeAuthFunctionEvent = {
+  glee: Glee
+  headers: { [Key: string]: string }
+  callback: any
+  serverName: string
+  doc: any
 }
 
 export type GleeFunctionReturnSend = {
@@ -125,3 +132,7 @@ export type GleeFunctionReturnBroadcast = GleeFunctionReturnSend
 export type GleeFunction = (
   event: GleeFunctionEvent
 ) => Promise<GleeFunctionReturn>
+
+export type GleeAuthFunction = (
+  event: GleeAuthFunctionEvent
+) => Promise<GleeAuthFunctionEvent>

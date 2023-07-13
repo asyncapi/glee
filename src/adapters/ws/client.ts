@@ -33,9 +33,12 @@ class WsClientAdapter extends Adapter {
       const headers = {}
       const authConfig = await clientAuthConfig(this.serverName)
       const auth: WsAuthConfig = await this.getAuthConfig(authConfig)
-      headers['Authentication'] = `bearer ${auth?.token}`
+      headers['Authentication'] = auth.token ? `bearer ${auth?.token}` : ''
 
+      //possibley accept a hash string from user in order to hash password before transmission
       const url = new URL(this.AsyncAPIServer.url() + channel)
+      url.username = auth?.username
+      url.password = auth?.password
 
       this.clients.push({
         channel,

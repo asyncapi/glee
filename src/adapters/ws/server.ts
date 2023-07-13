@@ -190,6 +190,8 @@ class WebSocketsAdapter extends Adapter {
   private async checkBindings(socket, bindingOpts) {
     const { wsChannelBinding, request, searchParams } = bindingOpts
 
+    console.log(wsChannelBinding)
+
     const { query, headers } = wsChannelBinding
     if (query) {
       const { isValid, humanReadableError, errors } = this.checkQuery({
@@ -221,6 +223,15 @@ class WebSocketsAdapter extends Adapter {
   private wrapCallbackDecorator(cb) {
     return function done(val: boolean, code?: number, message?: string) {
       cb(val, code, message)
+      if (val === false) {
+        console.error(`An error occurred during authentication`)
+        const err =
+          code && message
+            ? new Error(`${code} ${message}`)
+            : new Error('401 Unauthorized')
+        this.emit('error', err)
+      }
+      return
     }
   }
 
@@ -242,10 +253,14 @@ class WebSocketsAdapter extends Adapter {
             Object.keys(this.AsyncAPIServer.security()).length <= 0
               ? null
               : (info, cb) => {
-                  //check out later
-                  console.log(Object.keys(info.req))
+                  var buf = Buffer.from(
+                    info.req.headers?.authorization.split(' ')[1],
+                    'base64'
+                  )
                   const authProps = this.getAuthProps(info.req.headers)
-                  const done = this.wrapCallbackDecorator(cb)
+                  console.log(info.req.headers)
+                  console.log('userPass', buf.toString())
+                  const done = this.wrapCallbackDecorator(cb).bind(this)
                   this.emit('auth', {
                     headers: authProps,
                     server: this.serverName,
