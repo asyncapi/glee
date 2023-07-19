@@ -30,7 +30,7 @@ import validateConnection from './middlewares/validateConnection.js'
 import { initializeConfigs } from './lib/configs.js'
 import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
-import { EnrichedEvent } from './lib/adapter.js'
+import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 
 dotenvExpand(dotenv.config())
@@ -111,7 +111,7 @@ export default async function GleeAppInitializer() {
     }
   })
 
-  app.on('adapter:auth', async (e: EnrichedEvent) => {
+  app.on('adapter:auth', async (e: AuthEvent) => {
     logLineWithIcon(
       ':zap:',
       `Running authentication on server ${e.serverName}.`,
@@ -123,7 +123,7 @@ export default async function GleeAppInitializer() {
     await runAuth({
       glee: app,
       serverName: e.serverName,
-      headers: e.headers,
+      authProps: e.authProps,
       callback: e.callback,
       doc: e.doc,
     })

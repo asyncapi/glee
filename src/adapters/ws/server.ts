@@ -5,6 +5,7 @@ import Adapter from '../../lib/adapter.js'
 import GleeConnection from '../../lib/connection.js'
 import GleeMessage from '../../lib/message.js'
 import GleeError from '../../errors/glee-error.js'
+import { AuthProps } from '../../lib/index.js'
 
 type QueryData = {
   searchParams: URLSearchParams
@@ -74,45 +75,49 @@ class WebSocketsAdapter extends Adapter {
     })
   }
 
-  private getSecurityReqs() {
-    const securityRequirements = (this.AsyncAPIServer.security() || []).map(
-      (sec) => {
-        const secName = Object.keys(sec.json())[0]
-        return this.parsedAsyncAPI.components().securityScheme(secName)
-      }
-    )
-    const userAndPasswordSecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'userPassword'
-    )
-    const X509SecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'X509'
-    )
-    const tokens = securityRequirements.find((sec) => sec.type() === 'http')
+  // private getSecurityReqs() {
+  //   const securityRequirements = (this.AsyncAPIServer.security() || []).map(
+  //     (sec) => {
+  //       const secName = Object.keys(sec.json())[0]
+  //       return this.parsedAsyncAPI.components().securityScheme(secName)
+  //     }
+  //   )
+  //   const userAndPasswordSecurityReq = securityRequirements.find(
+  //     (sec) => sec.type() === 'userPassword'
+  //   )
+  //   const X509SecurityReq = securityRequirements.find(
+  //     (sec) => sec.type() === 'X509'
+  //   )
+  //   const tokens = securityRequirements.find((sec) => sec.type() === 'http')
 
-    return {
-      userAndPasswordSecurityReq,
-      X509SecurityReq,
-      tokens,
-    }
-  }
+  //   return {
+  //     userAndPasswordSecurityReq,
+  //     X509SecurityReq,
+  //     tokens,
+  //   }
+  // }
 
   private getAuthProps(headers) {
-    const { tokens, X509SecurityReq, userAndPasswordSecurityReq } =
-      this.getSecurityReqs()
+    const authProps: AuthProps = {
+      getToken: () => {
+        return headers['authentication']
+      },
+      getUserPass: () => {
+        const buf = headers['authorization']
+          ? Buffer.from(headers['authorization']?.split(' ')[1], 'base64')
+          : undefined
 
-    const authProps = {}
+        if (!buf) return
 
-    if (tokens) {
-      authProps['token'] = headers['authentication']
-    }
-
-    if (X509SecurityReq) {
-      authProps['cert'] = headers['cert']
-    }
-
-    if (userAndPasswordSecurityReq) {
-      authProps['user'] = headers['user']
-      authProps['password'] = headers['password']
+        const [username, password] = buf.toString().split(':')
+        return {
+          username,
+          password,
+        }
+      },
+      getCert: () => {
+        return headers['cert']
+      },
     }
 
     return authProps
@@ -253,16 +258,10 @@ class WebSocketsAdapter extends Adapter {
             Object.keys(this.AsyncAPIServer.security()).length <= 0
               ? null
               : (info, cb) => {
-                  var buf = Buffer.from(
-                    info.req.headers?.authorization.split(' ')[1],
-                    'base64'
-                  )
                   const authProps = this.getAuthProps(info.req.headers)
-                  console.log(info.req.headers)
-                  console.log('userPass', buf.toString())
                   const done = this.wrapCallbackDecorator(cb).bind(this)
                   this.emit('auth', {
-                    headers: authProps,
+                    authProps,
                     server: this.serverName,
                     callback: done,
                     doc: this.AsyncAPIServer,

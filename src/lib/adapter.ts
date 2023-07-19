@@ -6,12 +6,17 @@ import GleeConnection from './connection.js'
 import Glee from './glee.js'
 import GleeMessage from './message.js'
 import { resolveFunctions } from './util.js'
+import { AuthProps } from './index.js'
 
 export type EnrichedEvent = {
   connection?: GleeConnection
   serverName: string
   server: Server
-  headers?: { [key: string]: string }
+}
+
+export type AuthEvent = {
+  serverName: string
+  authProps?: AuthProps
   callback?: any
   doc?: any
 }
@@ -81,9 +86,18 @@ class GleeAdapter extends EventEmitter {
         ...{
           serverName,
           server,
-          headers: ev.headers ? ev.headers : null,
-          callback: ev.callback ? ev.callback : null,
-          doc: ev.doc ? ev.doc : null,
+        },
+      }
+    }
+
+    function enrichAuthEvent(ev): AuthEvent {
+      return {
+        ...ev,
+        ...{
+          serverName,
+          authProps: ev.authProps,
+          callback: ev.callback,
+          doc: ev.doc,
         },
       }
     }
@@ -107,7 +121,7 @@ class GleeAdapter extends EventEmitter {
 
     this.on('auth', (ev) => {
       console.log('emitting auth')
-      this._glee.emit('adapter:auth', enrichEvent(ev))
+      this._glee.emit('adapter:auth', enrichAuthEvent(ev))
     })
 
     this.on('connect', (ev) => {

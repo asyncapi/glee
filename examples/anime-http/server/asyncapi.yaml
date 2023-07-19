@@ -8,7 +8,7 @@ servers:
     url: 'http://localhost:8081'
     protocol: http
     security:
-      - tokens: []
+      - token: []
       - userPass: []
       - apiKey: []
       - cert: []
@@ -59,7 +59,7 @@ components:
           type: string
           description: The studio of anime.
   securitySchemes:
-    tokens:
+    token:
       type: http
       scheme: bearer
       bearerFormat: JWT

@@ -58,12 +58,22 @@ export async function triggerAuth(params: GleeAuthFunctionEvent) {
 
   try {
     const auth = authFunctions.get(serverName)
+    // console.log(auth)
     if (!auth) {
+      // throw new Error('Cannot find authentication file')
+      logWarningMessage(
+        `Missing Authentication function file. Cannot find ${serverName}.ts or ${serverName}.js`,
+        {
+          highlightedWords: [serverName],
+        }
+      )
       callback(false, 422, 'Cannot find authentication file')
+      return
     }
     await auth.serverAuth(params)
     return
   } catch (err) {
+    // console.log('error', err.code)
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
       logWarningMessage(`Missing function file ${serverName}.`, {
         highlightedWords: [serverName],

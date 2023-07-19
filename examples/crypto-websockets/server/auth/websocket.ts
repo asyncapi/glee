@@ -7,7 +7,9 @@ export async function serverAuth({ headers, callback: done }) {
     timeout: 5000,
   })
 
-  console.log("headers", headers.token)
+  console.log("token", headers.getToken())
+  console.log("userpass", headers.getUserPass())
+  console.log("cert", headers.getCert())
 
   // console.log("network data", res.data)
 
@@ -18,16 +20,8 @@ export async function serverAuth({ headers, callback: done }) {
 
 export async function clientAuth({ parsedAsyncAPI, serverName }) {
     return {
-      token: {
-        type: "http",
-        value: process.env.TOKEN
-      },
-
-      userPass: {
-        type: "userPass",
-        username: 'ovie',
-        password: "somepassword",
-        hash: process.env.HASH
-      }
+      token: process.env.TOKEN,
+      username: 'ovie',
+      password: "somepassword",
     }
 }

@@ -31,7 +31,17 @@ export interface WsAuthConfig {
 
 export interface HttpAuthConfig {
   token?: string
+  username?: string
+  password?: string
 }
+
+export type AuthProps = {
+  getToken: Function
+  getUserPass: Function
+  getCert: Function
+}
+
+export type WsHttpAuth = WsAuthConfig | HttpAuthConfig
 
 export interface KafkaAuthConfig {
   key?: string
@@ -113,7 +123,7 @@ export type GleeFunctionEvent = {
 
 export type GleeAuthFunctionEvent = {
   glee: Glee
-  headers: { [Key: string]: string }
+  authProps: AuthProps
   callback: any
   serverName: string
   doc: any
