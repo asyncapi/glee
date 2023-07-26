@@ -23,7 +23,7 @@ asyncapi new glee
 
 After the installation is complete, follow the instructions to start the development server.
 
-> For more information on how to install AsynAPI CLI, you can review [CLI instalation documentation](https://www.asyncapi.com/docs/tools/cli/installation)
+> For more information on how to install AsyncAPI CLI, you can review [CLI installation documentation](https://www.asyncapi.com/docs/tools/cli/installation)
 
 ## Getting started
 
