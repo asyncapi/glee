@@ -3,12 +3,7 @@ import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
 import { logWarningMessage } from './logger.js'
-import {
-  GleeFunction,
-  GleeFunctionEvent,
-  GleeAuthFunction,
-  GleeAuthFunctionEvent,
-} from './index.js'
+import { GleeAuthFunction, GleeAuthFunctionEvent } from './index.js'
 import { pathToFileURL } from 'url'
 
 interface AuthFunctionInfo {
@@ -16,7 +11,7 @@ interface AuthFunctionInfo {
   serverAuth?: GleeAuthFunction
 }
 
-const { GLEE_DIR, GLEE_AUTH_DIR } = getConfigs()
+// const { GLEE_DIR, GLEE_AUTH_DIR } = getConfigs()
 export const authFunctions: Map<string, AuthFunctionInfo> = new Map()
 
 export async function register(dir: string) {
@@ -52,15 +47,13 @@ export async function register(dir: string) {
   }
 }
 export async function triggerAuth(params: GleeAuthFunctionEvent) {
-  const { serverName, callback } = params
+  const { serverName, callback, authProps } = params
 
   console.log('running auth')
 
   try {
     const auth = authFunctions.get(serverName)
-    // console.log(auth)
     if (!auth) {
-      // throw new Error('Cannot find authentication file')
       logWarningMessage(
         `Missing Authentication function file. Cannot find ${serverName}.ts or ${serverName}.js`,
         {
@@ -73,7 +66,6 @@ export async function triggerAuth(params: GleeAuthFunctionEvent) {
     await auth.serverAuth(params)
     return
   } catch (err) {
-    // console.log('error', err.code)
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
       logWarningMessage(`Missing function file ${serverName}.`, {
         highlightedWords: [serverName],
@@ -86,5 +78,11 @@ export async function triggerAuth(params: GleeAuthFunctionEvent) {
 
 export async function clientAuthConfig(serverName: string) {
   //should check that it contains the implement security keys e.g tokens, userPass, etc.
+  // console.log(
+  //   'client auth',
+  //   authFunctions.get(serverName)?.clientAuth.toString()
+  // )
   return authFunctions.get(serverName)?.clientAuth
 }
+
+//auth-helper class

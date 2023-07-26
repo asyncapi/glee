@@ -16,9 +16,9 @@ export type EnrichedEvent = {
 
 export type AuthEvent = {
   serverName: string
-  authProps?: AuthProps
-  callback?: any
-  doc?: any
+  authProps: AuthProps
+  callback: any
+  doc: any
 }
 
 class GleeAdapter extends EventEmitter {
@@ -120,7 +120,6 @@ class GleeAdapter extends EventEmitter {
     }
 
     this.on('auth', (ev) => {
-      console.log('emitting auth')
       this._glee.emit('adapter:auth', enrichAuthEvent(ev))
     })
 

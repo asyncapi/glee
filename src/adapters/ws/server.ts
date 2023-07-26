@@ -195,8 +195,6 @@ class WebSocketsAdapter extends Adapter {
   private async checkBindings(socket, bindingOpts) {
     const { wsChannelBinding, request, searchParams } = bindingOpts
 
-    console.log(wsChannelBinding)
-
     const { query, headers } = wsChannelBinding
     if (query) {
       const { isValid, humanReadableError, errors } = this.checkQuery({

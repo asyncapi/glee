@@ -9,8 +9,10 @@ servers:
     url: ws://localhost:3000
     protocol: ws
     security:
-      - tokens: []
-      - JWT: []
+      - token: []
+      - userPass: []
+      - apiKey: []
+      - cert: []
   ws-websocket:
     url: ws://localhost:4000
     protocol: ws
@@ -41,11 +43,16 @@ components:
           price:
             type: number
   securitySchemes:
-    tokens:
+    token:
       type: http
       scheme: bearer
       bearerFormat: JWT
-    JWT:
-     type: http
-     scheme: bearer
-     bearerFormat: JWT
+    userPass:
+      type: userPassword
+    apiKey:
+      type: httpApiKey
+      name: api_key
+      in: header
+    cert:
+      type: apiKey
+      in: user

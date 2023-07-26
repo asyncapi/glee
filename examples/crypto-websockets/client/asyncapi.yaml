@@ -8,6 +8,9 @@ servers:
   websockets:
     url: ws://localhost:3000
     protocol: ws
+    security:
+      - token: []
+      - JWT: []
 x-remoteServers:
   - websockets
 channels:
@@ -31,3 +34,12 @@ components:
             type: number
           price:
             type: number
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

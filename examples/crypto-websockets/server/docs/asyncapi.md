@@ -7,6 +7,7 @@ This app is a dummy server that would stream the price of a fake cryptocurrency
 
 * [Servers](#servers)
   * [websocket](#websocket-server)
+  * [ws-websocket](#ws-websocket-server)
 * [Operations](#operations)
   * [SUB /price](#sub-price-operation)
 
@@ -15,6 +16,35 @@ This app is a dummy server that would stream the price of a fake cryptocurrency
 ### `websocket` Server
 
 * URL: `ws://localhost:3000`
+* Protocol: `ws`
+
+
+#### Security
+
+##### Security Requirement 1
+
+* Type: `HTTP`
+  * Scheme: bearer
+  * Bearer format: JWT
+
+
+
+
+##### Security Requirement 2
+
+* Type: `HTTP`
+  * Scheme: bearer
+  * Bearer format: JWT
+
+
+
+
+
+
+
+### `ws-websocket` Server
+
+* URL: `ws://localhost:4000`
 * Protocol: `ws`
 
 

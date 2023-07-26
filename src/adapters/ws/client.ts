@@ -4,6 +4,7 @@ import GleeMessage from '../../lib/message.js'
 import ws from 'ws'
 import { WsAuthConfig, WebsocketAdapterConfig } from '../../lib/index.js'
 import { clientAuthConfig } from '../../lib/userAuth.js'
+import GleeAuth from '../../lib/wsHttpAuth.js'
 
 interface Client {
   channel: string
@@ -32,20 +33,32 @@ class WsClientAdapter extends Adapter {
     for (const channel of channelsOnThisServer) {
       const headers = {}
       const authConfig = await clientAuthConfig(this.serverName)
+      //Remember to move the getAuthConfig() function to wsHttpAuth.ts file
       const auth: WsAuthConfig = await this.getAuthConfig(authConfig)
-      headers['Authentication'] = auth.token ? `bearer ${auth?.token}` : ''
-      //possibley accept a hash string from user in order to hash password before transmission
+      const gleeAuth = new GleeAuth(
+        this.AsyncAPIServer,
+        this.parsedAsyncAPI,
+        'WsClientAdapter',
+        auth
+      )
       const url = new URL(this.AsyncAPIServer.url() + channel)
-      if (auth.username && auth.password) {
-        url.username = auth?.username
-        url.password = auth?.password
-      }
+      gleeAuth.checkClientAuthConfig()
+      // headers['Authentication'] = auth.token ? `bearer ${auth?.token}` : ''
+      // //possibley accept a hash string from user in order to hash password before transmission
+
+      // if (auth.username && auth.password) {
+      //   url.username = auth?.username
+      //   url.password = auth?.password
+      // }
+      // // headers['cert'] = 'aghehioejonoe'
       this.clients.push({
         channel,
         client: new ws(url, { headers }),
         binding: this.parsedAsyncAPI.channel(channel).binding('ws'),
       })
     }
+
+    //ws://user:password@
 
     for (const { client, channel } of this.clients) {
       client.on('open', () => {
