@@ -33,14 +33,14 @@ After the installation is complete, follow the instructions to start the develop
 
 ## Generating documentation
 
-When using spec-driven framework like Glee, it's always neccessary to have docs and code always in sync.
-Glee will automatically generate documentation for your application and you can also generate your documentation yourself by running:
+When using spec-driven framework like Glee, it's always necessary to have docs and code always in sync.
+Glee will automatically generate documentation for your application or you can also generate your documentation yourself by running:
 
 ```bash
 glee docs
 ```
 
-You can also tweak Glee's default configuration for generating documentation here [Configuring your application](docs/config-file.md)
+You can also tweak Glee's default configuration for generating documentation here: [Configuring your application](docs/config-file.md)
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -59,4 +59,4 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind is welcome!
