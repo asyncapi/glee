@@ -1,8 +1,8 @@
 ---
-title: "Create AsyncAPI document"
+title: "Create AsyncAPI Glee template"
 weight: 170
 ---
-This tutorial teaches you how to create a simple glee template. You'll use the AsyncAPI document and the template you develop to generate Javascript code. Additionally, you'll create template code with a reusable component to reuse the custom functionality you create and test your code using an WS client.
+This tutorial teaches you how to create a simple glee template. You'll use the AsyncAPI Glee template you develop to generate Javascript code. Additionally, you'll create template code with a reusable component to reuse the custom functionality you create and test your code using an WS client.
 
 <CodeBlock>
 {`asyncapi: '2.1.0'
