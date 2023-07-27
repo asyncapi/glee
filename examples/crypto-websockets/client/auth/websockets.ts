@@ -10,7 +10,7 @@ export async function clientAuth({ parsedAsyncAPI, serverName }) {
       // JWT: process.env.TOKEN,
       // username: '',
       // password: "",
-      userpass: {
+      userPass: {
         username: "alec", password: "oviecodes"
       }
     }

@@ -105,23 +105,25 @@ class GleeAuth extends EventEmitter {
     //return url and headers
     authKeys.map((el) => {
       const scheme = this.secReqs.find((sec) => Object.keys(sec) == el)
-      console.log(scheme[el].scheme())
+      //   console.log(scheme[el].scheme(), scheme[el].type())
+      //   console.log(this.auth[el])
       if (scheme[el].scheme() == 'bearer')
-        headers['authorization'] = `bearer ${this.auth[el]}`
-      if (scheme[el].type() == 'userPass') {
+        headers['authentication'] = `bearer ${this.auth[el]}`
+      if (scheme[el].type() == 'userPassword') {
         url.password = this.auth[el]['password']
         url.username = this.auth[el]['username']
       }
     })
 
     console.log(url, headers)
+    return { url, headers }
   }
 
   getServerAuthReq() {}
 
   processClientAuth(url, headers) {
     const authKeys = this.checkClientAuthConfig()
-    this.formClientAuth(authKeys, { url, headers })
+    return this.formClientAuth(authKeys, { url, headers })
   }
 
   checkClientUnimplementedSecScheme() {}

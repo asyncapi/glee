@@ -10,7 +10,9 @@ servers:
     protocol: ws
     security:
       - token: []
-      - JWT: []
+      - userPass: []
+      - apiKey: []
+      - cert: []
 x-remoteServers:
   - websockets
 channels:
@@ -39,7 +41,12 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-    JWT:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    userPass:
+      type: userPassword
+    apiKey:
+      type: httpApiKey
+      name: api_key
+      in: header
+    cert:
+      type: apiKey
+      in: user

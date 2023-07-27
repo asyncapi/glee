@@ -31,7 +31,7 @@ class WsClientAdapter extends Adapter {
     const channelsOnThisServer = this.getWsChannels()
 
     for (const channel of channelsOnThisServer) {
-      const headers = {}
+      let headers = {}
       const authConfig = await clientAuthConfig(this.serverName)
       //Remember to move the getAuthConfig() function to wsHttpAuth.ts file
       const auth: WsAuthConfig = await this.getAuthConfig(authConfig)
@@ -41,16 +41,10 @@ class WsClientAdapter extends Adapter {
         'WsClientAdapter',
         auth
       )
-      const url = new URL(this.AsyncAPIServer.url() + channel)
-      gleeAuth.processClientAuth(url, headers)
-      // headers['Authentication'] = auth.token ? `bearer ${auth?.token}` : ''
-      // //possibley accept a hash string from user in order to hash password before transmission
-
-      // if (auth.username && auth.password) {
-      //   url.username = auth?.username
-      //   url.password = auth?.password
-      // }
-      // // headers['cert'] = 'aghehioejonoe'
+      let url = new URL(this.AsyncAPIServer.url() + channel)
+      const modedAuth = gleeAuth.processClientAuth(url, headers)
+      headers = modedAuth.headers
+      url = modedAuth.url
       this.clients.push({
         channel,
         client: new ws(url, { headers }),
@@ -58,7 +52,7 @@ class WsClientAdapter extends Adapter {
       })
     }
 
-    //ws://user:password@
+    // ws://user:password@
 
     for (const { client, channel } of this.clients) {
       client.on('open', () => {
