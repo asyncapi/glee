@@ -7,10 +7,11 @@ export async function clientAuth({ parsedAsyncAPI, serverName }) {
   // console.log(secSchemes)
     return {
       token: process.env.TOKEN,
-      username: '',
-      password: ""
-      // userpass: {
-      //   username: "", password: ""
-      // }
+      // JWT: process.env.TOKEN,
+      // username: '',
+      // password: "",
+      userpass: {
+        username: "alec", password: "oviecodes"
+      }
     }
 }

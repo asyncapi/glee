@@ -42,7 +42,7 @@ class WsClientAdapter extends Adapter {
         auth
       )
       const url = new URL(this.AsyncAPIServer.url() + channel)
-      gleeAuth.checkClientAuthConfig()
+      gleeAuth.processClientAuth(url, headers)
       // headers['Authentication'] = auth.token ? `bearer ${auth?.token}` : ''
       // //possibley accept a hash string from user in order to hash password before transmission
 
