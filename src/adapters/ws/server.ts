@@ -6,6 +6,7 @@ import GleeConnection from '../../lib/connection.js'
 import GleeMessage from '../../lib/message.js'
 import GleeError from '../../errors/glee-error.js'
 import { AuthProps } from '../../lib/index.js'
+import GleeAuth from '../../lib/wsHttpAuth.js'
 
 type QueryData = {
   searchParams: URLSearchParams
@@ -74,56 +75,6 @@ class WebSocketsAdapter extends Adapter {
       request,
     })
   }
-
-  // private getSecurityReqs() {
-  //   const securityRequirements = (this.AsyncAPIServer.security() || []).map(
-  //     (sec) => {
-  //       const secName = Object.keys(sec.json())[0]
-  //       return this.parsedAsyncAPI.components().securityScheme(secName)
-  //     }
-  //   )
-  //   const userAndPasswordSecurityReq = securityRequirements.find(
-  //     (sec) => sec.type() === 'userPassword'
-  //   )
-  //   const X509SecurityReq = securityRequirements.find(
-  //     (sec) => sec.type() === 'X509'
-  //   )
-  //   const tokens = securityRequirements.find((sec) => sec.type() === 'http')
-
-  //   return {
-  //     userAndPasswordSecurityReq,
-  //     X509SecurityReq,
-  //     tokens,
-  //   }
-  // }
-
-  private getAuthProps(headers) {
-    const authProps: AuthProps = {
-      getToken: () => {
-        return headers['authentication']
-      },
-      getUserPass: () => {
-        const buf = headers['authorization']
-          ? Buffer.from(headers['authorization']?.split(' ')[1], 'base64')
-          : undefined
-
-        if (!buf) return
-
-        const [username, password] = buf.toString().split(':')
-        return {
-          username,
-          password,
-        }
-      },
-      getCert: () => {
-        return headers['cert']
-      },
-    }
-
-    return authProps
-  }
-
-  //for auth properties, implement something like `getCert`, `getTokens`, `getUserPass`
 
   private pathnameChecks(socket, pathname: string, serverOptions) {
     const { serverUrl, servers } = serverOptions
@@ -238,6 +189,30 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
+  private verifyClientFunc(info, cb) {
+    if (
+      !this.AsyncAPIServer.security() ||
+      Object.keys(this.AsyncAPIServer.security()).length <= 0
+    )
+      return null
+    else {
+      const gleeAuth = new GleeAuth(
+        this.AsyncAPIServer,
+        this.parsedAsyncAPI,
+        this.serverName,
+        info.req.headers
+      )
+      const authProps = gleeAuth.getServerAuthProps(info.req.headers)
+      const done = this.wrapCallbackDecorator(cb).bind(this)
+      this.emit('auth', {
+        authProps,
+        server: this.serverName,
+        callback: done,
+        doc: this.AsyncAPIServer,
+      })
+    }
+  }
+
   async _connect(): Promise<this> {
     const { config, serverUrl, wsHttpServer, optionsPort, port } =
       await this.initializeConstants()
@@ -251,20 +226,9 @@ class WebSocketsAdapter extends Adapter {
         channelName,
         new WebSocket.Server({
           noServer: true,
-          verifyClient:
-            !this.AsyncAPIServer.security() ||
-            Object.keys(this.AsyncAPIServer.security()).length <= 0
-              ? null
-              : (info, cb) => {
-                  const authProps = this.getAuthProps(info.req.headers)
-                  const done = this.wrapCallbackDecorator(cb).bind(this)
-                  this.emit('auth', {
-                    authProps,
-                    server: this.serverName,
-                    callback: done,
-                    doc: this.AsyncAPIServer,
-                  })
-                },
+          verifyClient: (info, cb) => {
+            this.verifyClientFunc(info, cb)
+          },
         })
       )
     })

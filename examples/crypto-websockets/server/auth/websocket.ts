@@ -17,7 +17,7 @@ export async function serverAuth({ authProps, callback: done }) {
 
   // callback(false, 401, "Unauthorized");
   //adopt error mechanism for error message
-  done(true)
+  done(false)
 }
 
 export async function clientAuth({ parsedAsyncAPI, serverName }) {

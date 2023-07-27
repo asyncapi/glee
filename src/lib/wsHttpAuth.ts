@@ -3,6 +3,7 @@ import { AsyncAPIDocument, SecurityScheme, Server } from '@asyncapi/parser'
 import { arrayHasDuplicates, resolveFunctions } from './util.js'
 import { EventEmitter } from 'events'
 import { HttpAuthConfig, WsAuthConfig } from './index.js'
+import { AuthProps } from './index.js'
 
 // export type ChannelMiddlewareTuple = {
 //   channel: string
@@ -108,6 +109,32 @@ class GleeAuth extends EventEmitter {
   }
 
   getServerAuthReq() {}
+
+  getServerAuthProps(headers) {
+    const authProps: AuthProps = {
+      getToken: () => {
+        return headers['authentication']
+      },
+      getUserPass: () => {
+        const buf = headers['authorization']
+          ? Buffer.from(headers['authorization']?.split(' ')[1], 'base64')
+          : undefined
+
+        if (!buf) return
+
+        const [username, password] = buf.toString().split(':')
+        return {
+          username,
+          password,
+        }
+      },
+      getCert: () => {
+        return headers['cert']
+      },
+    }
+
+    return authProps
+  }
 
   async processClientAuth(url, headers) {
     this.auth = await this.getAuthConfig(this.authConfig)
