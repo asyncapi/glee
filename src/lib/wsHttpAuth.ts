@@ -4,20 +4,20 @@ import { arrayHasDuplicates, resolveFunctions } from './util.js'
 import { EventEmitter } from 'events'
 import { HttpAuthConfig, WsAuthConfig } from './index.js'
 
-export type ChannelMiddlewareTuple = {
-  channel: string
-  fn: Middleware
-}
+// export type ChannelMiddlewareTuple = {
+//   channel: string
+//   fn: Middleware
+// }
 
-export type ChannelErrorMiddlewareTuple = {
-  channel: string
-  fn: ErrorMiddleware
-}
+// export type ChannelErrorMiddlewareTuple = {
+//   channel: string
+//   fn: ErrorMiddleware
+// }
 
-export type GenericMiddleware = Middleware | ErrorMiddleware
-export type GenericChannelMiddlewareTuple =
-  | ChannelMiddlewareTuple
-  | ChannelErrorMiddlewareTuple
+// export type GenericMiddleware = Middleware | ErrorMiddleware
+// export type GenericChannelMiddlewareTuple =
+//   | ChannelMiddlewareTuple
+//   | ChannelErrorMiddlewareTuple
 
 const schemesMap = {
   http: ['scheme'],
@@ -94,9 +94,7 @@ class GleeAuth extends EventEmitter {
   }
 
   formClientAuth(authKeys, { url, headers }) {
-    //attach userPass to url
-    //attach bearer scheme to headers
-    //return url and headers
+    //attach userPass to url, attach bearer scheme to headers then return url and headers
     authKeys.map((el) => {
       const scheme = this.secReqs.find((sec) => Object.keys(sec) == el)
       if (scheme[el].scheme() == 'bearer')
@@ -106,8 +104,6 @@ class GleeAuth extends EventEmitter {
         url.username = this.auth[el]['username']
       }
     })
-
-    console.log(url, headers)
     return { url, headers }
   }
 
