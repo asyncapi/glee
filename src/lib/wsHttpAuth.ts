@@ -1,7 +1,8 @@
 import { ErrorMiddleware, Middleware } from '../middlewares/index.js'
 import { AsyncAPIDocument, SecurityScheme, Server } from '@asyncapi/parser'
-import { arrayHasDuplicates } from './util.js'
+import { arrayHasDuplicates, resolveFunctions } from './util.js'
 import { EventEmitter } from 'events'
+import { HttpAuthConfig, WsAuthConfig } from './index.js'
 
 export type ChannelMiddlewareTuple = {
   channel: string
@@ -25,10 +26,10 @@ const schemesMap = {
 
 class GleeAuth extends EventEmitter {
   private secReqs: { [key: string]: SecurityScheme }[]
-
   private parsedAsyncAPI: AsyncAPIDocument
-  private adapter: string
+  private serverName: string
   private AsyncAPIServer: Server
+  private authConfig: WsAuthConfig | HttpAuthConfig
   private auth: { [key: string]: string } | { [key: string]: string[] }
 
   /**
@@ -37,52 +38,34 @@ class GleeAuth extends EventEmitter {
   constructor(
     AsyncAPIServer: Server,
     parsedAsyncAPI: AsyncAPIDocument,
-    adapter: string,
-    authParams
+    serverName: string,
+    authConfig
   ) {
     super()
     this.secReqs
     this.parsedAsyncAPI = parsedAsyncAPI
-    this.adapter = adapter
+    this.serverName = serverName
     this.AsyncAPIServer = AsyncAPIServer
-    this.auth = authParams
+    this.authConfig = authConfig
   }
 
   checkClientAuthConfig() {
-    // console.log(this.adapter)
-    // console.log(this.auth)
-    // const secSchemes = []
     this.secReqs = (this.AsyncAPIServer.security() || []).map((sec) => {
       const secName = Object.keys(sec.json())[0]
-      //   secSchemes.push({
-      //     [secName]: this.parsedAsyncAPI.components().securityScheme(secName),
-      //   })
       return {
         [secName]: this.parsedAsyncAPI.components().securityScheme(secName),
       }
-      //   return this.parsedAsyncAPI.components().securityScheme(secName)
     })
 
-    // console.log(this.secReqs)
-
     //["tokens", "username", "password"] --> ["tokens", "userPass"]
-
     //["tokens", "username", "password"] --> [{tokens}, {userPass}]
-
     //forEach auth, try to find corresponding secReq
-
     const authKeys = Object.keys(this.auth)
-
     const secNames = this.secReqs.map((el) => Object.keys(el)[0])
-
-    // console.log(authKeys)
-    // console.log(secNames)
 
     authKeys.forEach((el) => {
       const allowed = secNames.includes(el)
       if (allowed == false) {
-        // console.log(`${el} is not allowed`)
-        // return false
         const err = new Error(
           `${el} securityScheme is not defined in your asyncapi.yaml config`
         )
@@ -97,7 +80,18 @@ class GleeAuth extends EventEmitter {
     //raise a warning about any unimplemented securityScheme
   }
 
-  getAuthConfig() {}
+  async getAuthConfig(auth) {
+    if (!auth) return
+    if (typeof auth !== 'function') {
+      await resolveFunctions(auth)
+      return auth
+    }
+
+    return await auth({
+      serverName: this.serverName,
+      parsedAsyncAPI: this.parsedAsyncAPI,
+    })
+  }
 
   formClientAuth(authKeys, { url, headers }) {
     //attach userPass to url
@@ -105,8 +99,6 @@ class GleeAuth extends EventEmitter {
     //return url and headers
     authKeys.map((el) => {
       const scheme = this.secReqs.find((sec) => Object.keys(sec) == el)
-      //   console.log(scheme[el].scheme(), scheme[el].type())
-      //   console.log(this.auth[el])
       if (scheme[el].scheme() == 'bearer')
         headers['authentication'] = `bearer ${this.auth[el]}`
       if (scheme[el].type() == 'userPassword') {
@@ -121,7 +113,8 @@ class GleeAuth extends EventEmitter {
 
   getServerAuthReq() {}
 
-  processClientAuth(url, headers) {
+  async processClientAuth(url, headers) {
+    this.auth = await this.getAuthConfig(this.authConfig)
     const authKeys = this.checkClientAuthConfig()
     return this.formClientAuth(authKeys, { url, headers })
   }
