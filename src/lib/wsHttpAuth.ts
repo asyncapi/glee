@@ -93,7 +93,7 @@ class GleeAuth extends EventEmitter {
     return { url, headers }
   }
 
-  getServerAuthReq() {}
+  //   getServerAuthReq() {}
 
   getServerAuthProps(headers) {
     const authProps: AuthProps = {
@@ -127,9 +127,9 @@ class GleeAuth extends EventEmitter {
     return this.formClientAuth(authKeys, { url, headers })
   }
 
-  checkClientUnimplementedSecScheme() {}
+  //   checkClientUnimplementedSecScheme() {}
 
-  getSchemes(type) {}
+  //   getSchemes(type) {}
 }
 
 export default GleeAuth
