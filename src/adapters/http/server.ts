@@ -4,6 +4,7 @@ import http from 'http'
 import { validateData } from '../../lib/util.js'
 import GleeError from '../../errors/glee-error.js'
 import * as url from 'url'
+import GleeAuth from '../../lib/wsHttpAuth.js'
 
 class HttpAdapter extends Adapter {
   private httpResponses = new Map()
@@ -71,8 +72,14 @@ class HttpAdapter extends Adapter {
       const { promise, done: callback } = done()
 
       if (checkAuthPresense.call(this)) {
+        const gleeAuth = new GleeAuth(
+          this.AsyncAPIServer,
+          this.parsedAsyncAPI,
+          this.serverName,
+          req.headers
+        )
         this.emit('auth', {
-          headers: req.headers,
+          headers: gleeAuth.getServerAuthProps(req.headers),
           server: this.serverName,
           callback,
           doc: this.AsyncAPIServer,

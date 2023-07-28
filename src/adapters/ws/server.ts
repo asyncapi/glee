@@ -5,7 +5,6 @@ import Adapter from '../../lib/adapter.js'
 import GleeConnection from '../../lib/connection.js'
 import GleeMessage from '../../lib/message.js'
 import GleeError from '../../errors/glee-error.js'
-import { AuthProps } from '../../lib/index.js'
 import GleeAuth from '../../lib/wsHttpAuth.js'
 
 type QueryData = {

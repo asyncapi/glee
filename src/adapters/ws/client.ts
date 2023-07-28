@@ -30,6 +30,8 @@ class WsClientAdapter extends Adapter {
   private async _connect(): Promise<this> {
     const channelsOnThisServer = this.getWsChannels()
 
+    console.log(this.serverName, 'trying to connect-ws')
+
     for (const channel of channelsOnThisServer) {
       let headers = {}
       const authConfig = await clientAuthConfig(this.serverName)
@@ -40,9 +42,11 @@ class WsClientAdapter extends Adapter {
         authConfig
       )
       let url = new URL(this.AsyncAPIServer.url() + channel)
-      const modedAuth = await gleeAuth.processClientAuth(url, headers)
-      headers = modedAuth.headers
-      url = modedAuth.url
+      if (authConfig) {
+        const modedAuth = await gleeAuth.processClientAuth(url, headers)
+        headers = modedAuth.headers
+        url = modedAuth.url
+      }
       this.clients.push({
         channel,
         client: new ws(url, { headers }),

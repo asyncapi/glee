@@ -4,26 +4,27 @@ import got from 'got'
 import { HttpAuthConfig, HttpAdapterConfig } from '../../lib/index.js'
 import http from 'http'
 import { clientAuthConfig } from '../../lib/userAuth.js'
+import GleeAuth from '../../lib/wsHttpAuth.js'
 
 class HttpClientAdapter extends Adapter {
   name(): string {
     return 'HTTP client'
   }
   async connect(): Promise<this> {
+    console.log(this.serverName, 'trying to connect-http')
     this.emit('connect', {
       name: this.name(),
       adapter: this,
       connection: http,
       channel: this.channelNames,
     })
+    console.log(this.serverName, 'connect emitted -http')
     return this
   }
 
   async send(message: GleeMessage): Promise<void> {
-    const headers = {}
+    let headers = {}
     const authConfig = await clientAuthConfig(this.serverName)
-    const auth: HttpAuthConfig = await this.getAuthConfig(authConfig)
-    headers['Authentication'] = auth?.token
     const serverUrl = this.serverUrlExpanded
     for (const channelName of this.channelNames) {
       const channelInfo = this.parsedAsyncAPI.channel(channelName)
@@ -33,7 +34,18 @@ class HttpClientAdapter extends Adapter {
         !channelServers.length || channelServers.includes(message.serverName)
       if (httpChannelBinding && isChannelServers) {
         const method = httpChannelBinding.method
-        const url = `${serverUrl}/${channelName}`
+        let url = `${serverUrl}/${channelName}`
+        const gleeAuth = new GleeAuth(
+          this.AsyncAPIServer,
+          this.parsedAsyncAPI,
+          this.serverName,
+          authConfig
+        )
+        if (authConfig) {
+          const modedAuth = await gleeAuth.processClientAuth(url, headers)
+          headers = modedAuth.headers
+          url = modedAuth.url
+        }
         const body: any = message.payload
         const query: { [key: string]: string } | { [key: string]: string[] } =
           message.query

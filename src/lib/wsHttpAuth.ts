@@ -80,6 +80,7 @@ class GleeAuth extends EventEmitter {
   }
 
   formClientAuth(authKeys, { url, headers }) {
+    if (!authKeys) return { url, headers }
     //attach userPass to url, attach bearer scheme to headers then return url and headers
     authKeys.map((el) => {
       const scheme = this.secReqs.find((sec) => Object.keys(sec) == el)
@@ -124,6 +125,7 @@ class GleeAuth extends EventEmitter {
   async processClientAuth(url, headers) {
     this.auth = await this.getAuthConfig(this.authConfig)
     const authKeys = this.checkClientAuthConfig()
+    if (!authKeys) return
     return this.formClientAuth(authKeys, { url, headers })
   }
 

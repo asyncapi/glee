@@ -133,6 +133,8 @@ class GleeAdapter extends EventEmitter {
           connection: conn,
         })
       )
+
+      console.log('connect done')
     })
 
     this.on('server:ready', (ev) => {
