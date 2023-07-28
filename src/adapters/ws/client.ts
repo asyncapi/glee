@@ -30,8 +30,6 @@ class WsClientAdapter extends Adapter {
   private async _connect(): Promise<this> {
     const channelsOnThisServer = this.getWsChannels()
 
-    console.log(this.serverName, 'trying to connect-ws')
-
     for (const channel of channelsOnThisServer) {
       let headers = {}
       const authConfig = await clientAuthConfig(this.serverName)

@@ -11,14 +11,12 @@ class HttpClientAdapter extends Adapter {
     return 'HTTP client'
   }
   async connect(): Promise<this> {
-    console.log(this.serverName, 'trying to connect-http')
     this.emit('connect', {
       name: this.name(),
       adapter: this,
       connection: http,
       channel: this.channelNames,
     })
-    console.log(this.serverName, 'connect emitted -http')
     return this
   }
 

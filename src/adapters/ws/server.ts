@@ -213,6 +213,7 @@ class WebSocketsAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> {
+    console.log('connecting to ws server')
     const { config, serverUrl, wsHttpServer, optionsPort, port } =
       await this.initializeConstants()
 
