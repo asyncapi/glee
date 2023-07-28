@@ -188,28 +188,28 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  private verifyClientFunc(info, cb) {
-    if (
-      !this.AsyncAPIServer.security() ||
-      Object.keys(this.AsyncAPIServer.security()).length <= 0
+  private checkAuthPresense() {
+    return (
+      this.AsyncAPIServer.security() &&
+      Object.keys(this.AsyncAPIServer.security()).length > 0
     )
-      return null
-    else {
-      const gleeAuth = new GleeAuth(
-        this.AsyncAPIServer,
-        this.parsedAsyncAPI,
-        this.serverName,
-        info.req.headers
-      )
-      const authProps = gleeAuth.getServerAuthProps(info.req.headers)
-      const done = this.wrapCallbackDecorator(cb).bind(this)
-      this.emit('auth', {
-        authProps,
-        server: this.serverName,
-        callback: done,
-        doc: this.AsyncAPIServer,
-      })
-    }
+  }
+
+  private verifyClientFunc(info, cb) {
+    const gleeAuth = new GleeAuth(
+      this.AsyncAPIServer,
+      this.parsedAsyncAPI,
+      this.serverName,
+      info.req.headers
+    )
+    const authProps = gleeAuth.getServerAuthProps(info.req.headers)
+    const done = this.wrapCallbackDecorator(cb).bind(this)
+    this.emit('auth', {
+      authProps,
+      server: this.serverName,
+      callback: done,
+      doc: this.AsyncAPIServer,
+    })
   }
 
   async _connect(): Promise<this> {
@@ -226,9 +226,11 @@ class WebSocketsAdapter extends Adapter {
         channelName,
         new WebSocket.Server({
           noServer: true,
-          verifyClient: (info, cb) => {
-            this.verifyClientFunc(info, cb)
-          },
+          verifyClient: this.checkAuthPresense.call(this)
+            ? (info, cb) => {
+                this.verifyClientFunc(info, cb)
+              }
+            : null,
         })
       )
     })
