@@ -5,21 +5,6 @@ import { EventEmitter } from 'events'
 import { HttpAuthConfig, WsAuthConfig } from './index.js'
 import { AuthProps } from './index.js'
 
-// export type ChannelMiddlewareTuple = {
-//   channel: string
-//   fn: Middleware
-// }
-
-// export type ChannelErrorMiddlewareTuple = {
-//   channel: string
-//   fn: ErrorMiddleware
-// }
-
-// export type GenericMiddleware = Middleware | ErrorMiddleware
-// export type GenericChannelMiddlewareTuple =
-//   | ChannelMiddlewareTuple
-//   | ChannelErrorMiddlewareTuple
-
 const schemesMap = {
   http: ['scheme'],
   userPass: [''],
@@ -43,7 +28,7 @@ class GleeAuth extends EventEmitter {
     authConfig
   ) {
     super()
-    this.secReqs
+    this.secReqs = []
     this.parsedAsyncAPI = parsedAsyncAPI
     this.serverName = serverName
     this.AsyncAPIServer = AsyncAPIServer
