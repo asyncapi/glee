@@ -18,7 +18,7 @@ export async function serverAuth({ authProps, callback: done }) {
   // console.log("network data", res.data)
 
   // callback(false, 401, "Unauthorized");
-  done(true)
+  done(false)
 }
 
 export async function clientAuth({ parsedAsyncAPI, serverName }) {

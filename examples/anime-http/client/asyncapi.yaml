@@ -7,6 +7,8 @@ servers:
   trendingAnime:
     url: http://localhost:8081
     protocol: http
+    security:
+      - token: []
   testwebhook:
     url: ws://localhost:9000
     protocol: ws
@@ -43,3 +45,8 @@ components:
       summary: ping client
       payload:
         type: object
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
