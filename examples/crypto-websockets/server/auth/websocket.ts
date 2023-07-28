@@ -8,15 +8,10 @@ export async function serverAuth({ authProps, callback: done }) {
   })
 
   console.log("token", authProps.getToken())
-  const token = authProps.getToken()
-  // checkDB(token) -> done(false)
   console.log("userpass", authProps.getUserPass())
   console.log("cert", authProps.getCert())
 
-  // console.log("network data", res.data)
-
   // callback(false, 401, "Unauthorized");
-  //adopt error mechanism for error message
   done(false)
 }
 

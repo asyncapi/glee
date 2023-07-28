@@ -9,15 +9,7 @@ export async function serverAuth({ authProps, callback: done }) {
     timeout: 5000,
   })
 
-  console.log("running in auth file in auth folder")
-
-  // authProps
-
-  // console.log("authProps", authProps.getToken())
-
-  // console.log("network data", res.data)
-
-  // callback(false, 401, "Unauthorized");
+  // done(false, 401, "Unauthorized");
   done(false)
 }
 

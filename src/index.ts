@@ -119,7 +119,6 @@ export default async function GleeAppInitializer() {
         highlightedWords: [e.serverName],
       }
     )
-    console.log('auth event recieved')
     await runAuth({
       glee: app,
       serverName: e.serverName,
