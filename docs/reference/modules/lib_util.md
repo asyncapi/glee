@@ -33,7 +33,7 @@
 
 #### Defined in
 
-[src/lib/util.ts:107](https://github.com/asyncapi/glee/blob/e68f900/src/lib/util.ts#L107)
+[src/lib/util.ts:118](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/util.ts#L118)
 
 ___
 
@@ -55,7 +55,7 @@ Duplicates a GleeMessage.
 
 #### Defined in
 
-[src/lib/util.ts:44](https://github.com/asyncapi/glee/blob/e68f900/src/lib/util.ts#L44)
+[src/lib/util.ts:52](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/util.ts#L52)
 
 ___
 
@@ -78,7 +78,7 @@ Determines if a path matches a channel, and returns the matching params and its 
 
 #### Defined in
 
-[src/lib/util.ts:22](https://github.com/asyncapi/glee/blob/e68f900/src/lib/util.ts#L22)
+[src/lib/util.ts:22](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/util.ts#L22)
 
 ___
 
@@ -99,7 +99,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:111](https://github.com/asyncapi/glee/blob/e68f900/src/lib/util.ts#L111)
+[src/lib/util.ts:122](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/util.ts#L122)
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:123](https://github.com/asyncapi/glee/blob/e68f900/src/lib/util.ts#L123)
+[src/lib/util.ts:137](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/util.ts#L137)
 
 ___
 
@@ -143,7 +143,7 @@ Determines if a path matches a channel.
 
 #### Defined in
 
-[src/lib/util.ts:73](https://github.com/asyncapi/glee/blob/e68f900/src/lib/util.ts#L73)
+[src/lib/util.ts:81](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/util.ts#L81)
 
 ___
 
@@ -163,7 +163,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:131](https://github.com/asyncapi/glee/blob/e68f900/src/lib/util.ts#L131)
+[src/lib/util.ts:148](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/util.ts#L148)
 
 ___
 
@@ -188,4 +188,4 @@ Object
 
 #### Defined in
 
-[src/lib/util.ts:85](https://github.com/asyncapi/glee/blob/e68f900/src/lib/util.ts#L85)
+[src/lib/util.ts:93](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/util.ts#L93)

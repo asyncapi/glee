@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/glee",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "description": "The AsyncAPI framework",
   "exports": "./dist/moduleIndex.js",
   "type": "module",
@@ -31,6 +31,12 @@
   "author": "Fran Mendez",
   "publishConfig": {
     "access": "public"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^nimma/legacy$": "<rootDir>/../../node_modules/nimma/dist/legacy/cjs/index.js",
+      "^nimma/(.*)": "<rootDir>/../../node_modules/nimma/dist/cjs/$1"
+    }
   },
   "license": "Apache-2.0",
   "dependencies": {

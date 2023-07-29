@@ -6,19 +6,19 @@ import { SecurityScheme } from '@asyncapi/parser'
 import { logLineWithIcon } from '../../lib/logger.js'
 
 interface IMQTTHeaders {
-  cmd?: string;
-  retain?: boolean;
-  qos: QoS;
-  dup: boolean;
-  length: number;
+  cmd?: string
+  retain?: boolean
+  qos: QoS
+  dup: boolean
+  length: number
 }
 
 interface ClientData {
-  url?: URL,
-  auth?: MqttAuthConfig,
-  serverBinding?: any,
-  protocolVersion?: number,
-  userAndPasswordSecurityReq?: SecurityScheme,
+  url?: URL
+  auth?: MqttAuthConfig
+  serverBinding?: any
+  protocolVersion?: number
+  userAndPasswordSecurityReq?: SecurityScheme
   X509SecurityReq?: SecurityScheme
 }
 
@@ -42,10 +42,11 @@ class MqttAdapter extends Adapter {
   }
 
   private getSecurityReqs() {
-    const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
-      const secName = Object.keys(sec.json())[0]
-      return this.parsedAsyncAPI.components().securityScheme(secName)
-    }
+    const securityRequirements = (this.AsyncAPIServer.security() || []).map(
+      (sec) => {
+        const secName = Object.keys(sec.json())[0]
+        return this.parsedAsyncAPI.components().securityScheme(secName)
+      }
     )
     const userAndPasswordSecurityReq = securityRequirements.find(
       (sec) => sec.type() === 'userPassword'
@@ -56,22 +57,19 @@ class MqttAdapter extends Adapter {
 
     return {
       userAndPasswordSecurityReq,
-      X509SecurityReq
+      X509SecurityReq,
     }
-
   }
 
   private async initializeClient(data: ClientData) {
-
     const {
       url,
       auth,
       serverBinding,
       protocolVersion,
       userAndPasswordSecurityReq,
-      X509SecurityReq
+      X509SecurityReq,
     } = data
-
 
     return mqtt.connect({
       host: url.hostname,
@@ -83,15 +81,11 @@ class MqttAdapter extends Adapter {
         topic: serverBinding?.lastWill?.topic,
         qos: serverBinding?.lastWill?.qos,
         payload: serverBinding?.lastWill?.message,
-        retain: serverBinding?.lastWill?.retain
+        retain: serverBinding?.lastWill?.retain,
       },
       keepalive: serverBinding?.keepAlive,
-      username: userAndPasswordSecurityReq
-        ? auth?.username
-        : undefined,
-      password: userAndPasswordSecurityReq
-        ? auth?.password
-        : undefined,
+      username: userAndPasswordSecurityReq ? auth?.username : undefined,
+      password: userAndPasswordSecurityReq ? auth?.password : undefined,
       ca: X509SecurityReq ? auth?.cert : undefined,
       protocolVersion,
       customHandleAcks: this._customAckHandler.bind(this),
@@ -99,7 +93,6 @@ class MqttAdapter extends Adapter {
   }
 
   private async listenToEvents(data: ClientData) {
-
     const { protocolVersion } = data
 
     this.client.on('close', () => {
@@ -115,7 +108,7 @@ class MqttAdapter extends Adapter {
 
     this.client.on('message', (channel, message, mqttPacket) => {
       const qos = mqttPacket.qos
-      if (protocolVersion === 5 && qos > 0) return   // ignore higher qos messages. already processed
+      if (protocolVersion === 5 && qos > 0) return // ignore higher qos messages. already processed
 
       const msg = this._createMessage(mqttPacket as IPublishPacket)
       this.emit('message', msg, this.client)
@@ -156,18 +149,24 @@ class MqttAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> {
-    const mqttOptions: MqttAdapterConfig  = await this.resolveProtocolConfig('mqtt')
+    const mqttOptions: MqttAdapterConfig = await this.resolveProtocolConfig(
+      'mqtt'
+    )
     const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions.auth)
     const subscribedChannels = this.getSubscribedChannels()
     const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
     const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
 
-    const { userAndPasswordSecurityReq, X509SecurityReq } = this.getSecurityReqs()
+    const { userAndPasswordSecurityReq, X509SecurityReq } =
+      this.getSecurityReqs()
 
     const url = new URL(this.AsyncAPIServer.url())
 
-    const protocolVersion = parseInt(this.AsyncAPIServer.protocolVersion() || '4')
-    const serverBinding = protocolVersion === 5 ? mqtt5ServerBinding : mqttServerBinding
+    const protocolVersion = parseInt(
+      this.AsyncAPIServer.protocolVersion() || '4'
+    )
+    const serverBinding =
+      protocolVersion === 5 ? mqtt5ServerBinding : mqttServerBinding
 
     this.client = await this.initializeClient({
       url,
@@ -175,21 +174,22 @@ class MqttAdapter extends Adapter {
       serverBinding,
       protocolVersion,
       userAndPasswordSecurityReq,
-      X509SecurityReq
+      X509SecurityReq,
     })
 
     await this.listenToEvents({ protocolVersion })
 
     const connectClient = (): Promise<this> => {
       return new Promise((resolve) => {
-        this.client.on('connect', connAckPacket => {
+        this.client.on('connect', (connAckPacket) => {
           const isSessionResume = connAckPacket.sessionPresent
 
           if (!this.firstConnect) {
             this.checkFirstConnect()
           }
 
-          const shouldSubscribe = !isSessionResume && Array.isArray(subscribedChannels)
+          const shouldSubscribe =
+            !isSessionResume && Array.isArray(subscribedChannels)
 
           if (shouldSubscribe) {
             this.subscribe(subscribedChannels)
@@ -201,14 +201,11 @@ class MqttAdapter extends Adapter {
     }
 
     return connectClient()
-
   }
 
   _send(message: GleeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      const operation = this.parsedAsyncAPI
-        .channel(message.channel)
-        .subscribe()
+      const operation = this.parsedAsyncAPI.channel(message.channel).subscribe()
       const binding = operation ? operation.binding('mqtt') : undefined
       this.client.publish(
         message.channel,

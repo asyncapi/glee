@@ -26,4 +26,4 @@
 
 #### Defined in
 
-[src/lib/compiler.ts:21](https://github.com/asyncapi/glee/blob/e68f900/src/lib/compiler.ts#L21)
+[src/lib/compiler.ts:23](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/compiler.ts#L23)

@@ -25,11 +25,11 @@ class RedisClusterAdapter extends ClusterAdapter {
     this._channelName = `${this.serverName}-channel`
 
     this._publisher = createClient({
-        url: this.serverUrlExpanded
+      url: this.serverUrlExpanded,
     })
     const subscriber = this._publisher.duplicate()
 
-    this._publisher.on('error', err => {
+    this._publisher.on('error', (err) => {
       this.emit('error', err)
     })
 
@@ -41,7 +41,7 @@ class RedisClusterAdapter extends ClusterAdapter {
       this.emit('close', { name: this.name(), adapter: this })
     })
 
-    subscriber.on('error', err => {
+    subscriber.on('error', (err) => {
       this.emit('error', err)
     })
 
@@ -50,14 +50,14 @@ class RedisClusterAdapter extends ClusterAdapter {
     })
 
     subscriber.on('end', () => {
-      this.emit('close', { name: this.name(), adapter: this }) 
+      this.emit('close', { name: this.name(), adapter: this })
     })
 
     await Promise.all([this._publisher.connect(), subscriber.connect()])
 
-    subscriber.subscribe(this._channelName, serialized => {
+    subscriber.subscribe(this._channelName, (serialized) => {
       const message = this.deserializeMessage(serialized)
-      if ( message ) this.emit('message', message)
+      if (message) this.emit('message', message)
     })
 
     this.emit('connect', { name: this.name(), adapter: this })
