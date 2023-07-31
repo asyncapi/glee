@@ -3,6 +3,7 @@ import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import { MqttAuthConfig, MqttAdapterConfig } from '../../lib/index.js'
 import { SecurityScheme } from '@asyncapi/parser'
+import { logLineWithIcon } from '../../lib/logger.js'
 
 interface IMQTTHeaders {
   cmd?: string
@@ -130,6 +131,19 @@ class MqttAdapter extends Adapter {
       const binding = operation.binding('mqtt')
       this.client.subscribe(channel, {
         qos: binding?.qos ? binding.qos : 0,
+      }, (err, granted) => {
+        if (err) {
+          logLineWithIcon('x', `Error while trying to subscribe to \`${channel}\` topic.`, {
+            highlightedWords: [channel],
+            iconColor: '#f00',
+            disableEmojis: true,
+          })
+          console.log(err.message)
+          return
+        }
+        logLineWithIcon(':zap:', `Subscribed to \`${channel}\` topic with QoS ${granted?.[0].qos}`, {
+          highlightedWords: [channel],
+        })
       })
     })
   }
