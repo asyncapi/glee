@@ -19,7 +19,8 @@ export default async function () {
   return {
     glee: {},
     docs: {},
-    server: {}
+    server: {},
+    cluster: {}
   }
 }
 
@@ -45,6 +46,11 @@ export default async function () {
         adapter: 'native', // Default. Can also be 'socket.io' or a reference to a custom adapter.
         port: process.env.PORT,
       }
+    },
+    cluster: {
+      adapter: 'redis',
+      name: 'cluster', // Default. Name of your cluster.
+      url: 'redis://localhost:6379', // Server URL used by adapter for clustering
     }
   };
 }
