@@ -96,7 +96,7 @@ class GleeAuth extends EventEmitter {
         const oauth = scheme[el].flows()
         const oauthTypes = Object.keys(scheme[el].flows())
 
-        oauthTypes.map((type, i) => {
+        oauthTypes.forEach((type, i) => {
           const token = this.auth[el][type]
           if (!token) return
           headers.oauth2[type] = { ...oauth[type], token }
