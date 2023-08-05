@@ -39,6 +39,7 @@ export type AuthProps = {
   getToken: Function
   getUserPass: Function
   getCert: Function
+  getOauth2: Function
 }
 
 export type WsHttpAuth = WsAuthConfig | HttpAuthConfig

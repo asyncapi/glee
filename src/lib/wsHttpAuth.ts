@@ -1,4 +1,3 @@
-import { ErrorMiddleware, Middleware } from '../middlewares/index.js'
 import { AsyncAPIDocument, SecurityScheme, Server } from '@asyncapi/parser'
 import { arrayHasDuplicates, resolveFunctions } from './util.js'
 import { EventEmitter } from 'events'
@@ -84,13 +83,27 @@ class GleeAuth extends EventEmitter {
     //attach userPass to url, attach bearer scheme to headers then return url and headers
     authKeys.map((el) => {
       const scheme = this.secReqs.find((sec) => Object.keys(sec) == el)
-      if (scheme[el].scheme() == 'bearer')
+      if (scheme[el].scheme() == 'bearer') {
         headers['authentication'] = `bearer ${this.auth[el]}`
+      }
       if (scheme[el].type() == 'userPassword') {
         url.password = this.auth[el]['password']
         url.username = this.auth[el]['username']
       }
+      if (scheme[el].type() == 'oauth2') {
+        headers.oauth2 = {}
+        // console.log(this.auth[el])
+        const oauth = scheme[el].flows()
+        const oauthTypes = Object.keys(scheme[el].flows())
+
+        oauthTypes.map((type, i) => {
+          const token = this.auth[el][type]
+          if (!token) return
+          headers.oauth2[type] = { ...oauth[type], token }
+        })
+      }
     })
+    console.log(headers)
     return { url, headers }
   }
 
@@ -116,6 +129,9 @@ class GleeAuth extends EventEmitter {
       },
       getCert: () => {
         return headers['cert']
+      },
+      getOauth2: () => {
+        return headers['oauth2']
       },
     }
 

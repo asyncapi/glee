@@ -9,6 +9,9 @@ servers:
     protocol: http
     security:
       - token: []
+      - oauth: 
+        - write:pets
+        - read:pets
   testwebhook:
     url: ws://localhost:9000
     protocol: ws
@@ -50,3 +53,18 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+    oauth:
+        type: oauth2
+        flows:
+          implicit:
+            authorizationUrl: https://example.com/api/oauth/dialog
+            scopes:
+              write:pets: modify pets in your account
+              read:pets: read your pets
+          authorizationCode:
+            authorizationUrl: https://example.com/api/oauth/dialog
+            tokenUrl: https://example.com/api/oauth/dialog
+            scopes:
+              delete:pets: modify pets in your account
+              update:pets: read your pets
+            
