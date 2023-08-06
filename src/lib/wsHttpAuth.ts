@@ -127,11 +127,11 @@ class GleeAuth extends EventEmitter {
       //   }
       if (scheme[el].type() == 'httpApiKey') {
         const loc = scheme[el].json('in')
-        loc == 'header'
-          ? (headers[scheme[el].json('name')] = this.auth[el])
-          : loc == 'query'
-          ? (query[scheme[el].json('name')] = this.auth[el])
-          : null
+        if (loc == 'header') {
+          headers[scheme[el].json('name')] = this.auth[el]
+        } else if (loc == 'query') {
+          query[scheme[el].json('name')] = this.auth[el]
+        }
       }
     })
     // console.log(headers, query, myUrl)
