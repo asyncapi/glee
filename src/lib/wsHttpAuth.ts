@@ -2,6 +2,7 @@ import { AsyncAPIDocument, SecurityScheme, Server } from '@asyncapi/parser'
 import { arrayHasDuplicates, resolveFunctions } from './util.js'
 import { EventEmitter } from 'events'
 import { HttpAuthConfig, WsAuthConfig } from './index.js'
+// import * as url from 'url'
 import { AuthProps } from './index.js'
 
 const schemesMap = {
@@ -93,8 +94,24 @@ class GleeAuth extends EventEmitter {
       }
       if (scheme[el].type() == 'userPassword') {
         //TODO: parse url using url.parse(), or the way it's done in websockets for the sake of HTTP userPassword auth scheme
-        url.password = this.auth[el]['password']
-        url.username = this.auth[el]['username']
+        // console.log('url is an object', typeof url == 'object')
+        // console.log('Object url', new URL(url))
+        // console.log('URL parser', myURL)
+        //parse url add auth then unparse
+        // url.auth = `'${this.auth[el]['username']}:${this.auth[el]['password']}'`
+
+        // console.log(myURL.href)
+        if (typeof url == 'object') {
+          url.password = this.auth[el]['password']
+          url.username = this.auth[el]['username']
+          return
+        }
+
+        const myURL = new URL(url)
+        myURL.password = this.auth[el]['password']
+        myURL.username = this.auth[el]['username']
+
+        url = myURL
       }
       //   if (scheme[el].type() == 'oauth2') {
       //     headers.oauth2 = {}
@@ -109,13 +126,15 @@ class GleeAuth extends EventEmitter {
       //     })
       //   }
       if (scheme[el].type() == 'httpApiKey') {
-        // console.log('httpApiKey', scheme[el].json('name'))
-        scheme[el].json('in') == 'header'
+        const loc = scheme[el].json('in')
+        loc == 'header'
           ? (headers[scheme[el].json('name')] = this.auth[el])
-          : (query[scheme[el].json('name')] = this.auth[el])
+          : loc == 'query'
+          ? (query[scheme[el].json('name')] = this.auth[el])
+          : null
       }
     })
-    console.log(headers, query, url)
+    // console.log(headers, query, myUrl)
     return { url, headers, query }
   }
 

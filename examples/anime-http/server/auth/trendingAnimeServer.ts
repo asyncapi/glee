@@ -12,6 +12,8 @@ export async function serverAuth({ authProps, callback: done }) {
   // console.log("oauth props", (Object.keys(authProps.getOauth2())))
   // console.log("authProps", authProps)
   console.log("httpAPIkey", authProps.getHttpAPIKeys("api_key"))
+  console.log("token", authProps.getToken())
+  console.log("userpassword", authProps.getUserPass())
 
   // done(false, 401, "Unauthorized");
   done(false)

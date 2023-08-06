@@ -9,9 +9,9 @@ export async function clientAuth({ parsedAsyncAPI, serverName }) {
         implicit: process.env.OAUTH2
       },
       apiKey: process.env.OAUTH2,
-      // userPass: {
-      //   username: "oviecodes",
-      //   password: "megwolo"
-      // }
+      userPass: {
+        username: "oviecodes",
+        password: "megwolo"
+      }
     }
   }

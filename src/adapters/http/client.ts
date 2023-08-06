@@ -50,10 +50,11 @@ class HttpClientAdapter extends Adapter {
             query
           )
           headers = modedAuth.headers
-          url = modedAuth.url
+          url = modedAuth.url.href
           query = modedAuth.query
         }
         // console.log('headers from client adapter', headers)
+        console.log(url)
 
         got({
           method,
