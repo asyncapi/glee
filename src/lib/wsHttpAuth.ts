@@ -9,6 +9,11 @@ const schemesMap = {
   userPass: [''],
 }
 
+const inMap = {
+  header: 'headers',
+  query: 'query',
+}
+
 class GleeAuth extends EventEmitter {
   private secReqs: { [key: string]: SecurityScheme }[]
   private parsedAsyncAPI: AsyncAPIDocument
@@ -78,7 +83,7 @@ class GleeAuth extends EventEmitter {
     })
   }
 
-  formClientAuth(authKeys, { url, headers }) {
+  formClientAuth(authKeys, { url, headers, query }) {
     if (!authKeys) return { url, headers }
     //attach userPass to url, attach bearer scheme to headers then return url and headers
     authKeys.map((el) => {
@@ -87,29 +92,36 @@ class GleeAuth extends EventEmitter {
         headers['authentication'] = `bearer ${this.auth[el]}`
       }
       if (scheme[el].type() == 'userPassword') {
+        //TODO: parse url using url.parse(), or the way it's done in websockets for the sake of HTTP userPassword auth scheme
         url.password = this.auth[el]['password']
         url.username = this.auth[el]['username']
       }
-      if (scheme[el].type() == 'oauth2') {
-        headers.oauth2 = {}
-        // console.log(this.auth[el])
-        const oauth = scheme[el].flows()
-        const oauthTypes = Object.keys(scheme[el].flows())
+      //   if (scheme[el].type() == 'oauth2') {
+      //     headers.oauth2 = {}
+      //     // console.log(this.auth[el])
+      //     const oauth = scheme[el].flows()
+      //     const oauthTypes = Object.keys(scheme[el].flows())
 
-        oauthTypes.forEach((type, i) => {
-          const token = this.auth[el][type]
-          if (!token) return
-          headers.oauth2[type] = { ...oauth[type], token }
-        })
+      //     oauthTypes.forEach((type, i) => {
+      //       const token = this.auth[el][type]
+      //       if (!token) return
+      //       headers.oauth2[type] = { ...oauth[type].json('scope'), token }
+      //     })
+      //   }
+      if (scheme[el].type() == 'httpApiKey') {
+        // console.log('httpApiKey', scheme[el].json('name'))
+        scheme[el].json('in') == 'header'
+          ? (headers[scheme[el].json('name')] = this.auth[el])
+          : (query[scheme[el].json('name')] = this.auth[el])
       }
     })
-    console.log(headers)
-    return { url, headers }
+    console.log(headers, query, url)
+    return { url, headers, query }
   }
 
   //   getServerAuthReq() {}
 
-  getServerAuthProps(headers) {
+  getServerAuthProps(headers, query) {
     const authProps: AuthProps = {
       getToken: () => {
         return headers['authentication']
@@ -131,18 +143,22 @@ class GleeAuth extends EventEmitter {
         return headers['cert']
       },
       getOauth2: () => {
-        return headers['oauth2']
+        console.log(headers['oauth2'])
+        // return JSON.parse(headers['oauth2'])
+      },
+      getHttpAPIKeys: (name: string) => {
+        return headers[name] ?? query[name]
       },
     }
 
     return authProps
   }
 
-  async processClientAuth(url, headers) {
+  async processClientAuth(url, headers, query) {
     this.auth = await this.getAuthConfig(this.authConfig)
     const authKeys = this.checkClientAuthConfig()
     if (!authKeys) return
-    return this.formClientAuth(authKeys, { url, headers })
+    return this.formClientAuth(authKeys, { url, headers, query })
   }
 
   //   checkClientUnimplementedSecScheme() {}

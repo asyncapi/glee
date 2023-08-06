@@ -7,6 +7,11 @@ export async function clientAuth({ parsedAsyncAPI, serverName }) {
       token: process.env.TOKEN,
       oauth: {
         implicit: process.env.OAUTH2
-      }
+      },
+      apiKey: process.env.OAUTH2,
+      // userPass: {
+      //   username: "oviecodes",
+      //   password: "megwolo"
+      // }
     }
   }

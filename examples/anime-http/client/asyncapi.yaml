@@ -9,6 +9,8 @@ servers:
     protocol: http
     security:
       - token: []
+      - userPass: []
+      - apiKey: []
       - oauth: 
         - write:pets
         - read:pets
@@ -53,6 +55,12 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+    userPass:
+      type: userPassword
+    apiKey:
+      type: httpApiKey
+      name: api_key
+      in: query
     oauth:
         type: oauth2
         flows:

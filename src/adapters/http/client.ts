@@ -39,14 +39,22 @@ class HttpClientAdapter extends Adapter {
           this.serverName,
           authConfig
         )
+        const body: any = message.payload
+        let query: { [key: string]: string } | { [key: string]: string[] } =
+          message.query
+
         if (authConfig) {
-          const modedAuth = await gleeAuth.processClientAuth(url, headers)
+          const modedAuth = await gleeAuth.processClientAuth(
+            url,
+            headers,
+            query
+          )
           headers = modedAuth.headers
           url = modedAuth.url
+          query = modedAuth.query
         }
-        const body: any = message.payload
-        const query: { [key: string]: string } | { [key: string]: string[] } =
-          message.query
+        // console.log('headers from client adapter', headers)
+
         got({
           method,
           url,

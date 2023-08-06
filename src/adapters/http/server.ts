@@ -78,8 +78,13 @@ class HttpAdapter extends Adapter {
           this.serverName,
           req.headers
         )
+        // console.log('recieved headers', req.headers)
+        // console.log('recieved query', url.parse(req.url, true))
         this.emit('auth', {
-          headers: gleeAuth.getServerAuthProps(req.headers),
+          authProps: gleeAuth.getServerAuthProps(
+            req.headers,
+            url.parse(req.url, true).query
+          ),
           server: this.serverName,
           callback,
           doc: this.AsyncAPIServer,

@@ -9,6 +9,10 @@ export async function serverAuth({ authProps, callback: done }) {
     timeout: 5000,
   })
 
+  // console.log("oauth props", (Object.keys(authProps.getOauth2())))
+  // console.log("authProps", authProps)
+  console.log("httpAPIkey", authProps.getHttpAPIKeys("api_key"))
+
   // done(false, 401, "Unauthorized");
   done(false)
 }

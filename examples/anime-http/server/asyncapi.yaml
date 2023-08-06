@@ -69,7 +69,7 @@ components:
     apiKey:
       type: httpApiKey
       name: api_key
-      in: header
+      in: query
     cert:
       type: apiKey
       in: user
