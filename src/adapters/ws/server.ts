@@ -184,7 +184,6 @@ class WebSocketsAdapter extends Adapter {
             : new Error('401 Unauthorized')
         this.emit('error', err)
       }
-      return
     }
   }
 

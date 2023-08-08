@@ -56,12 +56,11 @@ class GleeAuth extends EventEmitter {
 
     authKeys.forEach((el) => {
       const allowed = secNames.includes(el)
-      if (allowed == false) {
+      if (!allowed) {
         const err = new Error(
           `${el} securityScheme is not defined in your asyncapi.yaml config`
         )
         this.emit('error', err)
-        return
       }
     })
 
@@ -90,7 +89,7 @@ class GleeAuth extends EventEmitter {
     authKeys.map((el) => {
       const scheme = this.secReqs.find((sec) => Object.keys(sec) == el)
       if (scheme[el].scheme() == 'bearer') {
-        headers['authentication'] = `bearer ${this.auth[el]}`
+        headers.authentication = `bearer ${this.auth[el]}`
       }
       if (
         scheme[el].type() == 'userPassword' ||
@@ -160,6 +159,9 @@ class GleeAuth extends EventEmitter {
       },
       getHttpAPIKeys: (name: string) => {
         return headers[name] ?? query[name]
+      },
+      getAPIKeys: () => {
+        return `keys`
       },
     }
 

@@ -36,11 +36,15 @@ export interface HttpAuthConfig {
 }
 
 export type AuthProps = {
-  getToken: Function
-  getUserPass: Function
-  getCert: Function
-  getOauthToken: Function
-  getHttpAPIKeys: Function
+  getToken: () => string
+  getUserPass: () => {
+    username: string
+    password: string
+  }
+  getCert: () => string
+  getOauthToken: () => string
+  getHttpAPIKeys: (name: string) => string
+  getAPIKeys: () => string
 }
 
 export type WsHttpAuth = WsAuthConfig | HttpAuthConfig
