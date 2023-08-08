@@ -1,19 +1,8 @@
 import { AsyncAPIDocument, SecurityScheme, Server } from '@asyncapi/parser'
-import { arrayHasDuplicates, resolveFunctions } from './util.js'
+import { resolveFunctions } from './util.js'
 import { EventEmitter } from 'events'
 import { HttpAuthConfig, WsAuthConfig } from './index.js'
-// import * as url from 'url'
 import { AuthProps } from './index.js'
-
-const schemesMap = {
-  http: ['scheme'],
-  userPass: [''],
-}
-
-const inMap = {
-  header: 'headers',
-  query: 'query',
-}
 
 class GleeAuth extends EventEmitter {
   private secReqs: { [key: string]: SecurityScheme }[]
@@ -48,9 +37,6 @@ class GleeAuth extends EventEmitter {
       }
     })
 
-    //["tokens", "username", "password"] --> ["tokens", "userPass"]
-    //["tokens", "username", "password"] --> [{tokens}, {userPass}]
-    //forEach auth, try to find corresponding secReq
     const authKeys = Object.keys(this.auth)
     const secNames = this.secReqs.map((el) => Object.keys(el)[0])
 
@@ -85,49 +71,40 @@ class GleeAuth extends EventEmitter {
 
   formClientAuth(authKeys, { url, headers, query }) {
     if (!authKeys) return { url, headers }
-    //attach userPass to url, attach bearer scheme to headers then return url and headers
     authKeys.map((el) => {
       const scheme = this.secReqs.find((sec) => Object.keys(sec) == el)
-      if (scheme[el].scheme() == 'bearer') {
-        headers.authentication = `bearer ${this.auth[el]}`
+      const currentScheme = scheme[String(el)].scheme()
+      const currentType = scheme[String(el)].type()
+      if (currentScheme == 'bearer') {
+        headers.authentication = `bearer ${this.auth[String(el)]}`
       }
-      if (
-        scheme[el].type() == 'userPassword' ||
-        scheme[el].type() == 'apiKey'
-      ) {
-        //TODO: parse url using url.parse(), or the way it's done in websockets for the sake of HTTP userPassword auth scheme
-        // console.log('url is an object', typeof url == 'object')
-        // console.log('Object url', new URL(url))
-        // console.log('URL parser', myURL)
-        //parse url add auth then unparse
-        // url.auth = `'${this.auth[el]['username']}:${this.auth[el]['password']}'`
+      if (currentType == 'userPassword' || currentType == 'apiKey') {
+        const password = this.auth[String(el)]['password']
+        const username = this.auth[String(el)]['user']
 
-        // console.log(myURL.href)
         if (typeof url == 'object') {
-          url.password = this.auth[el]['password']
-          url.username = this.auth[el]['user']
+          url.password = password
+          url.username = username
           return
         }
 
         const myURL = new URL(url)
-        myURL.password = this.auth[el]['password']
-        myURL.username = this.auth[el]['user']
-
+        myURL.password = password
+        myURL.username = username
         url = myURL
       }
-      if (scheme[el].type() == 'oauth2') {
-        headers.oauthToken = this.auth[el]
+      if (currentType == 'oauth2') {
+        headers.oauthToken = this.auth[String(el)]
       }
-      if (scheme[el].type() == 'httpApiKey') {
-        const loc = scheme[el].json('in')
+      if (currentType == 'httpApiKey') {
+        const loc = scheme[String(el)].json('in')
         if (loc == 'header') {
-          headers[scheme[el].json('name')] = this.auth[el]
+          headers[scheme[String(el)].json('name')] = this.auth[String(el)]
         } else if (loc == 'query') {
-          query[scheme[el].json('name')] = this.auth[el]
+          query[scheme[String(el)].json('name')] = this.auth[String(el)]
         }
       }
     })
-    // console.log(headers, query, myUrl)
     return { url, headers, query }
   }
 
@@ -136,11 +113,11 @@ class GleeAuth extends EventEmitter {
   getServerAuthProps(headers, query) {
     const authProps: AuthProps = {
       getToken: () => {
-        return headers['authentication']
+        return headers.authentication
       },
       getUserPass: () => {
-        const buf = headers['authorization']
-          ? Buffer.from(headers['authorization']?.split(' ')[1], 'base64')
+        const buf = headers.authorization
+          ? Buffer.from(headers.authorization?.split(' ')[1], 'base64')
           : undefined
 
         if (!buf) return
@@ -152,13 +129,13 @@ class GleeAuth extends EventEmitter {
         }
       },
       getCert: () => {
-        return headers['cert']
+        return headers.cert
       },
       getOauthToken: () => {
-        return headers['oauthtoken']
+        return headers.oauthtoken
       },
       getHttpAPIKeys: (name: string) => {
-        return headers[name] ?? query[name]
+        return headers[String(name)] ?? query[String(name)]
       },
       getAPIKeys: () => {
         return `keys`
