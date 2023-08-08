@@ -11,6 +11,7 @@ servers:
       - token: []
       - userPass: []
       - apiKey: []
+      - UserOrPassKey: []
       - cert: []
       - oauth: []
 channels:
@@ -70,19 +71,15 @@ components:
       type: httpApiKey
       name: api_key
       in: query
-    cert:
+    UserOrPassKey:
       type: apiKey
       in: user
+    cert:
+      type: X509
     oauth:
         type: oauth2
         flows:
-          implicit:
-            authorizationUrl: https://example.com/api/oauth/dialog
-            scopes:
-              write:pets: modify pets in your account
-              read:pets: read your pets
-          authorizationCode:
-            authorizationUrl: https://example.com/api/oauth/dialog
+          clientCredentials:
             tokenUrl: https://example.com/api/oauth/dialog
             scopes:
               delete:pets: modify pets in your account

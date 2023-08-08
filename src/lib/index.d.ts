@@ -39,7 +39,7 @@ export type AuthProps = {
   getToken: Function
   getUserPass: Function
   getCert: Function
-  getOauth2: Function
+  getOauthToken: Function
   getHttpAPIKeys: Function
 }
 

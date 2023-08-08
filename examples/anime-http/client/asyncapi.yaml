@@ -11,6 +11,7 @@ servers:
       - token: []
       - userPass: []
       - apiKey: []
+      - UserOrPassKey: []
       - oauth: 
         - write:pets
         - read:pets
@@ -61,6 +62,9 @@ components:
       type: httpApiKey
       name: api_key
       in: query
+    UserOrPassKey:
+      type: apiKey
+      in: user
     oauth:
         type: oauth2
         flows:

@@ -5,7 +5,7 @@ export async function clientAuth({ parsedAsyncAPI, serverName }) {
       // username: '',
       // password: "",
       userPass: {
-        username: "alec", password: "oviecodes"
+        user: "alec", password: "oviecodes"
       }
     }
 }

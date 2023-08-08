@@ -92,7 +92,10 @@ class GleeAuth extends EventEmitter {
       if (scheme[el].scheme() == 'bearer') {
         headers['authentication'] = `bearer ${this.auth[el]}`
       }
-      if (scheme[el].type() == 'userPassword') {
+      if (
+        scheme[el].type() == 'userPassword' ||
+        scheme[el].type() == 'apiKey'
+      ) {
         //TODO: parse url using url.parse(), or the way it's done in websockets for the sake of HTTP userPassword auth scheme
         // console.log('url is an object', typeof url == 'object')
         // console.log('Object url', new URL(url))
@@ -103,28 +106,19 @@ class GleeAuth extends EventEmitter {
         // console.log(myURL.href)
         if (typeof url == 'object') {
           url.password = this.auth[el]['password']
-          url.username = this.auth[el]['username']
+          url.username = this.auth[el]['user']
           return
         }
 
         const myURL = new URL(url)
         myURL.password = this.auth[el]['password']
-        myURL.username = this.auth[el]['username']
+        myURL.username = this.auth[el]['user']
 
         url = myURL
       }
-      //   if (scheme[el].type() == 'oauth2') {
-      //     headers.oauth2 = {}
-      //     // console.log(this.auth[el])
-      //     const oauth = scheme[el].flows()
-      //     const oauthTypes = Object.keys(scheme[el].flows())
-
-      //     oauthTypes.forEach((type, i) => {
-      //       const token = this.auth[el][type]
-      //       if (!token) return
-      //       headers.oauth2[type] = { ...oauth[type].json('scope'), token }
-      //     })
-      //   }
+      if (scheme[el].type() == 'oauth2') {
+        headers.oauthToken = this.auth[el]
+      }
       if (scheme[el].type() == 'httpApiKey') {
         const loc = scheme[el].json('in')
         if (loc == 'header') {
@@ -161,9 +155,8 @@ class GleeAuth extends EventEmitter {
       getCert: () => {
         return headers['cert']
       },
-      getOauth2: () => {
-        console.log(headers['oauth2'])
-        // return JSON.parse(headers['oauth2'])
+      getOauthToken: () => {
+        return headers['oauthtoken']
       },
       getHttpAPIKeys: (name: string) => {
         return headers[name] ?? query[name]
