@@ -1,8 +1,7 @@
 import { AsyncAPIDocument, SecurityScheme, Server } from '@asyncapi/parser'
 import { resolveFunctions } from './util.js'
 import { EventEmitter } from 'events'
-import { HttpAuthConfig, WsAuthConfig } from './index.js'
-import { AuthProps } from './index.js'
+import { HttpAuthConfig, WsAuthConfig, AuthProps } from './index.js'
 
 class GleeAuth extends EventEmitter {
   private secReqs: { [key: string]: SecurityScheme }[]
