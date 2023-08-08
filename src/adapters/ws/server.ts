@@ -224,7 +224,7 @@ class WebSocketsAdapter extends Adapter {
         channelName,
         new WebSocket.Server({
           noServer: true,
-          verifyClient: this.checkAuthPresense.call(this)
+          verifyClient: this.checkAuthPresense()
             ? (info, cb) => {
                 this.verifyClientFunc(info, cb)
               }

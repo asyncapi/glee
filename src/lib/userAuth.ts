@@ -49,6 +49,8 @@ export async function register(dir: string) {
 export async function triggerAuth(params: GleeAuthFunctionEvent) {
   const { serverName, callback } = params
 
+  console.log('serverName', serverName)
+
   try {
     const auth = authFunctions.get(serverName)
     if (!auth) {
