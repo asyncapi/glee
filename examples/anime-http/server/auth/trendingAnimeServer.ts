@@ -1,7 +1,6 @@
 // /* eslint-disable no-undef */
 
 // //@ts-ignore
-// import { Message } from "@asyncapi/glee";
 import axios from "axios"
 
 export async function serverAuth({ authProps, callback: done }) {
@@ -18,7 +17,7 @@ export async function serverAuth({ authProps, callback: done }) {
   done(false)
 }
 
-export async function clientAuth({ parsedAsyncAPI, serverName }) {
+export async function clientAuth({ serverName }) {
   if (serverName === "websockets") {
     return {
       token: process.env.TOKEN,

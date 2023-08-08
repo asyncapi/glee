@@ -2,7 +2,6 @@
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import ws from 'ws'
-import { WsAuthConfig, WebsocketAdapterConfig } from '../../lib/index.js'
 import { clientAuthConfig } from '../../lib/userAuth.js'
 import GleeAuth from '../../lib/wsHttpAuth.js'
 

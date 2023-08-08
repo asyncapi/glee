@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-export async function clientAuth({ parsedAsyncAPI, serverName }) {
+export async function clientAuth({ serverName }) {
     console.log("serverName", serverName)
   
     return {

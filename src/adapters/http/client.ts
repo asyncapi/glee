@@ -1,7 +1,6 @@
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import got from 'got'
-import { HttpAuthConfig, HttpAdapterConfig } from '../../lib/index.js'
 import http from 'http'
 import { clientAuthConfig } from '../../lib/userAuth.js'
 import GleeAuth from '../../lib/wsHttpAuth.js'
