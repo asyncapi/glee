@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import EventEmitter from 'events'
 import async from 'async'
 import Debug from 'debug'
@@ -101,8 +102,8 @@ export default class Glee extends EventEmitter {
   use(...middlewares: GenericMiddleware[]): void
   use(channel: string, ...middlewares: GenericMiddleware[]): void
   use(
-    channel: string | GenericMiddleware, // eslint-disable-line @typescript-eslint/no-unused-vars
-    ...middlewares: GenericMiddleware[] // eslint-disable-line @typescript-eslint/no-unused-vars
+    channel: string | GenericMiddleware,
+    ...middlewares: GenericMiddleware[]
   ): void {
     this._router.use(...arguments) // eslint-disable-line prefer-rest-params
   }
@@ -115,8 +116,8 @@ export default class Glee extends EventEmitter {
   useOutbound(...middlewares: GenericMiddleware[]): void
   useOutbound(channel: string, ...middlewares: GenericMiddleware[]): void
   useOutbound(
-    channel: string | GenericMiddleware, // eslint-disable-line @typescript-eslint/no-unused-vars
-    ...middlewares: GenericMiddleware[] // eslint-disable-line @typescript-eslint/no-unused-vars
+    channel: string | GenericMiddleware,
+    ...middlewares: GenericMiddleware[]
   ): void {
     this._router.useOutbound(...arguments) // eslint-disable-line prefer-rest-params
   }
