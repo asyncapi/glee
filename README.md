@@ -1,13 +1,11 @@
 ![Glee — The AsyncAPI framework that will make you smile again.](assets/readme-banner.png)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+
 [![Coverage Status](https://coveralls.io/repos/github/asyncapi/glee/badge.svg?branch=master)](https://coveralls.io/github/asyncapi/glee?branch=master)
-
-> :warning: Glee is still under development, it didn't reach v1.0.0 and therefore is not suitable for production use yet.
-
-> :warning: So far, it only supports MQTT and WebSockets (native, Socket.IO, and custom implementations).
 
 ## What's Glee?
 
@@ -18,15 +16,15 @@ Glee is a spec-first framework that helps you build server-side applications. It
 
 ## Setup
 
-The best way to get started with Glee is using `create-glee-app`, which sets up everything automatically for you. To create a project, run:
+The best way to get started with Glee is by using [AsyncAPI CLI](https://github.com/asyncapi/cli), which sets up everything automatically for you. To create a project, run:
 
 ```bash
-npx create-glee-app
+asyncapi new glee
 ```
 
 After the installation is complete, follow the instructions to start the development server.
 
-For more information on how to use `create-glee-app`, you can review [the `create-glee-app` documentation](https://github.com/asyncapi/create-glee-app).
+> For more information on how to install AsyncAPI CLI, you can review [CLI installation documentation](https://www.asyncapi.com/docs/tools/cli/installation)
 
 ## Getting started
 
@@ -36,14 +34,14 @@ For more information on how to use `create-glee-app`, you can review [the `creat
 
 ## Generating documentation
 
-When using spec-driven framework like Glee, it's always neccessary to have docs and code always in sync.
-Glee will automatically generate documentation for your application and you can also generate your documentation yourself by running:
+When using spec-driven framework like Glee, it's always necessary to have docs and code always in sync.
+Glee will automatically generate documentation for your application or you can also generate your documentation yourself by running:
 
 ```bash
 glee docs
 ```
 
-You can also tweak Glee's default configuration for generating documentation here [Configuring your application](docs/config-file.md)
+You can also tweak Glee's default configuration for generating documentation here: [Configuring your application](docs/config-file.md)
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -52,9 +50,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://github.com/sudoshreyansh"><img src="https://avatars.githubusercontent.com/u/44190883?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sudoshreyansh</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=sudoshreyansh" title="Tests">⚠️</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/sudoshreyansh"><img src="https://avatars.githubusercontent.com/u/44190883?v=4?s=100" width="100px;" alt="sudoshreyansh"/><br /><sub><b>sudoshreyansh</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=sudoshreyansh" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/afzal442"><img src="https://avatars.githubusercontent.com/u/11625672?v=4?s=100" width="100px;" alt="Afzal Ansari"/><br /><sub><b>Afzal Ansari</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=afzal442" title="Documentation">📖</a></td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->
@@ -62,4 +63,4 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind is welcome!

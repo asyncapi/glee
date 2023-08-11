@@ -2,13 +2,24 @@ import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import { MqttAuthConfig, MqttAdapterConfig } from '../../lib/index.js'
+import { SecurityScheme } from '@asyncapi/parser'
+import { logLineWithIcon } from '../../lib/logger.js'
 
 interface IMQTTHeaders {
-  cmd?: string;
-  retain?: boolean;
-  qos: QoS;
-  dup: boolean;
-  length: number;
+  cmd?: string
+  retain?: boolean
+  qos: QoS
+  dup: boolean
+  length: number
+}
+
+interface ClientData {
+  url?: URL
+  auth?: MqttAuthConfig
+  serverBinding?: any
+  protocolVersion?: number
+  userAndPasswordSecurityReq?: SecurityScheme
+  X509SecurityReq?: SecurityScheme
 }
 
 const MQTT_UNSPECIFIED_ERROR_REASON = 0x80
@@ -30,16 +41,12 @@ class MqttAdapter extends Adapter {
     return this._send(message)
   }
 
-  async _connect(): Promise<this> { // NOSONAR
-    const mqttOptions: MqttAdapterConfig  = await this.resolveProtocolConfig('mqtt')
-    const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions.auth)
-    const subscribedChannels = this.getSubscribedChannels()
-    const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
-    const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
-    const securityRequirements = (this.AsyncAPIServer.security() || []).map(sec => {
-      const secName = Object.keys(sec.json())[0]
-      return this.parsedAsyncAPI.components().securityScheme(secName)
-    }
+  private getSecurityReqs() {
+    const securityRequirements = (this.AsyncAPIServer.security() || []).map(
+      (sec) => {
+        const secName = Object.keys(sec.json())[0]
+        return this.parsedAsyncAPI.components().securityScheme(secName)
+      }
     )
     const userAndPasswordSecurityReq = securityRequirements.find(
       (sec) => sec.type() === 'userPassword'
@@ -47,13 +54,25 @@ class MqttAdapter extends Adapter {
     const X509SecurityReq = securityRequirements.find(
       (sec) => sec.type() === 'X509'
     )
-    const url = new URL(this.AsyncAPIServer.url())
 
-    const protocolVersion = parseInt(this.AsyncAPIServer.protocolVersion() || '4')
-    const serverBinding = protocolVersion === 5 ? mqtt5ServerBinding : mqttServerBinding
+    return {
+      userAndPasswordSecurityReq,
+      X509SecurityReq,
+    }
+  }
 
-    this.client = mqtt.connect({
-      host: url.host,
+  private async initializeClient(data: ClientData) {
+    const {
+      url,
+      auth,
+      serverBinding,
+      protocolVersion,
+      userAndPasswordSecurityReq,
+      X509SecurityReq,
+    } = data
+
+    return mqtt.connect({
+      host: url.hostname,
       port: url.port || (url.protocol === 'mqtt:' ? 1883 : 8883),
       protocol: url.protocol.slice(0, url.protocol.length - 1),
       clientId: serverBinding?.clientId ?? auth?.clientId,
@@ -62,19 +81,19 @@ class MqttAdapter extends Adapter {
         topic: serverBinding?.lastWill?.topic,
         qos: serverBinding?.lastWill?.qos,
         payload: serverBinding?.lastWill?.message,
-        retain: serverBinding?.lastWill?.retain
+        retain: serverBinding?.lastWill?.retain,
       },
       keepalive: serverBinding?.keepAlive,
-      username: userAndPasswordSecurityReq
-        ? auth?.username
-        : undefined,
-      password: userAndPasswordSecurityReq
-        ? auth?.password
-        : undefined,
+      username: userAndPasswordSecurityReq ? auth?.username : undefined,
+      password: userAndPasswordSecurityReq ? auth?.password : undefined,
       ca: X509SecurityReq ? auth?.cert : undefined,
       protocolVersion,
       customHandleAcks: this._customAckHandler.bind(this),
     } as any)
+  }
+
+  private async listenToEvents(data: ClientData) {
+    const { protocolVersion } = data
 
     this.client.on('close', () => {
       this.emit('close', {
@@ -89,35 +108,91 @@ class MqttAdapter extends Adapter {
 
     this.client.on('message', (channel, message, mqttPacket) => {
       const qos = mqttPacket.qos
-      if (protocolVersion === 5 && qos > 0) return   // ignore higher qos messages. already processed
+      if (protocolVersion === 5 && qos > 0) return // ignore higher qos messages. already processed
 
       const msg = this._createMessage(mqttPacket as IPublishPacket)
       this.emit('message', msg, this.client)
     })
+  }
+
+  private checkFirstConnect() {
+    this.firstConnect = true
+    this.emit('connect', {
+      name: this.name(),
+      adapter: this,
+      connection: this.client,
+      channels: this.channelNames,
+    })
+  }
+
+  private subscribe(channels: string[]) {
+    channels.forEach((channel) => {
+      const operation = this.parsedAsyncAPI.channel(channel).publish()
+      const binding = operation.binding('mqtt')
+      this.client.subscribe(channel, {
+        qos: binding?.qos ? binding.qos : 0,
+      }, (err, granted) => {
+        if (err) {
+          logLineWithIcon('x', `Error while trying to subscribe to \`${channel}\` topic.`, {
+            highlightedWords: [channel],
+            iconColor: '#f00',
+            disableEmojis: true,
+          })
+          console.log(err.message)
+          return
+        }
+        logLineWithIcon(':zap:', `Subscribed to \`${channel}\` topic with QoS ${granted?.[0].qos}`, {
+          highlightedWords: [channel],
+        })
+      })
+    })
+  }
+
+  async _connect(): Promise<this> {
+    const mqttOptions: MqttAdapterConfig = await this.resolveProtocolConfig(
+      'mqtt'
+    )
+    const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions.auth)
+    const subscribedChannels = this.getSubscribedChannels()
+    const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
+    const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
+
+    const { userAndPasswordSecurityReq, X509SecurityReq } =
+      this.getSecurityReqs()
+
+    const url = new URL(this.AsyncAPIServer.url())
+
+    const protocolVersion = parseInt(
+      this.AsyncAPIServer.protocolVersion() || '4'
+    )
+    const serverBinding =
+      protocolVersion === 5 ? mqtt5ServerBinding : mqttServerBinding
+
+    this.client = await this.initializeClient({
+      url,
+      auth,
+      serverBinding,
+      protocolVersion,
+      userAndPasswordSecurityReq,
+      X509SecurityReq,
+    })
+
+    await this.listenToEvents({ protocolVersion })
 
     const connectClient = (): Promise<this> => {
       return new Promise((resolve) => {
-        this.client.on('connect', connAckPacket => {
+        this.client.on('connect', (connAckPacket) => {
           const isSessionResume = connAckPacket.sessionPresent
 
           if (!this.firstConnect) {
-            this.firstConnect = true
-            this.emit('connect', {
-              name: this.name(),
-              adapter: this,
-              connection: this.client,
-              channels: this.channelNames,
-            })
+            this.checkFirstConnect()
           }
 
-          if (!isSessionResume && Array.isArray(subscribedChannels)) {
-            subscribedChannels.forEach((channel) => {
-              const operation = this.parsedAsyncAPI.channel(channel).publish()
-              const binding = operation.binding('mqtt')
-              this.client.subscribe(channel, {
-                qos: binding && binding.qos ? binding.qos : 0,
-              })
-            })
+          const shouldSubscribe =
+            !isSessionResume && Array.isArray(subscribedChannels)
+
+          if (shouldSubscribe) {
+            this.subscribe(subscribedChannels)
           }
 
           resolve(this)
@@ -126,21 +201,18 @@ class MqttAdapter extends Adapter {
     }
 
     return connectClient()
-
   }
 
   _send(message: GleeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      const operation = this.parsedAsyncAPI
-        .channel(message.channel)
-        .subscribe()
+      const operation = this.parsedAsyncAPI.channel(message.channel).subscribe()
       const binding = operation ? operation.binding('mqtt') : undefined
       this.client.publish(
         message.channel,
         message.payload,
         {
-          qos: binding && binding.qos ? binding.qos : 2,
-          retain: binding && binding.retain ? binding.retain : false,
+          qos: binding?.qos ? binding.qos : 2,
+          retain: binding?.retain ? binding.retain : false,
         },
         (err) => {
           if (err) {

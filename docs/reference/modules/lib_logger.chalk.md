@@ -13,12 +13,12 @@
 - [ColorSupport](../interfaces/lib_logger.chalk.ColorSupport.md)
 - [Options](../interfaces/lib_logger.chalk.Options.md)
 
-### Type aliases
+### Type Aliases
 
 - [Instance](lib_logger.chalk.md#instance)
 - [Level](lib_logger.chalk.md#level)
 
-## Type aliases
+## Type Aliases
 
 ### Instance
 

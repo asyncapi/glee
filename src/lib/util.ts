@@ -20,7 +20,10 @@ interface IValidateDataReturn {
  * @param {String} path The path.
  * @param {String} channel The channel.
  */
-export const getParams = (path: string, channel: string): { [key: string]: string } | null => {
+export const getParams = (
+  path: string,
+  channel: string
+): { [key: string]: string } | null => {
   if (path === undefined) return {}
 
   const keys = []
@@ -56,6 +59,7 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
     connection: message.connection,
     broadcast: message.broadcast,
     cluster: message.cluster,
+    query: message.query,
   })
 
   if (message.isInbound()) {
@@ -87,7 +91,10 @@ export const matchChannel = (path: string, channel: string): boolean => {
  * @param {Object} schema A JSON Schema definition
  * @returns Object
  */
-export const validateData = (data: any, schema: object): IValidateDataReturn => {
+export const validateData = (
+  data: any,
+  schema: object
+): IValidateDataReturn => {
   const ajv = new Ajv({ allErrors: true, jsonPointers: true })
   const validation = ajv.compile(schema)
   const isValid = validation(data)
@@ -113,9 +120,14 @@ export const arrayHasDuplicates = (array: any[]) => {
   return new Set(array).size !== array.length
 }
 
-export const gleeMessageToFunctionEvent = (message: GleeMessage, glee: Glee): GleeFunctionEvent => {
+
+export const gleeMessageToFunctionEvent = (
+  message: GleeMessage,
+  glee: Glee
+): GleeFunctionEvent => {
   return {
     payload: message.payload,
+    query: message.query,
     headers: message.headers,
     channel: message.channel,
     connection: message.connection,
@@ -124,9 +136,15 @@ export const gleeMessageToFunctionEvent = (message: GleeMessage, glee: Glee): Gl
   } as GleeFunctionEvent
 }
 
-export const isRemoteServer = (parsedAsyncAPI: AsyncAPIDocument, serverName: string): boolean => {
+export const isRemoteServer = (
+  parsedAsyncAPI: AsyncAPIDocument,
+  serverName: string
+): boolean => {
   const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
-  return remoteServers && remoteServers.includes(serverName)
+  if (remoteServers) {
+    return remoteServers.includes(serverName)
+  }
+  return false
 }
 
 export const isAValidHttpUrl = (s: string) => {
@@ -164,8 +182,11 @@ export const getInvokeFunction = (options: GleeFunctionReturnInvoke): GleeFuncti
 }
 export const resolveFunctions = async (object: any) => {
   for (const key in object) {
-    if (typeof object[String(key)] === 'object' && !Array.isArray(object[String(key)])) {
-      resolveFunctions(object[String(key)])
+    if (
+      typeof object[String(key)] === 'object' &&
+      !Array.isArray(object[String(key)])
+    ) {
+      await resolveFunctions(object[String(key)])
     } else if (typeof object[String(key)] === 'function' && key !== 'auth') {
       object[String(key)] = await object[String(key)]()
     }

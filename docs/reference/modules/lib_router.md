@@ -8,14 +8,14 @@
 
 - [default](../classes/lib_router.default.md)
 
-### Type aliases
+### Type Aliases
 
 - [ChannelErrorMiddlewareTuple](lib_router.md#channelerrormiddlewaretuple)
 - [ChannelMiddlewareTuple](lib_router.md#channelmiddlewaretuple)
 - [GenericChannelMiddlewareTuple](lib_router.md#genericchannelmiddlewaretuple)
 - [GenericMiddleware](lib_router.md#genericmiddleware)
 
-## Type aliases
+## Type Aliases
 
 ### ChannelErrorMiddlewareTuple
 
@@ -30,7 +30,7 @@
 
 #### Defined in
 
-[src/lib/router.ts:8](https://github.com/asyncapi/glee/blob/388e335/src/lib/router.ts#L8)
+[src/lib/router.ts:8](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/router.ts#L8)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:3](https://github.com/asyncapi/glee/blob/388e335/src/lib/router.ts#L3)
+[src/lib/router.ts:3](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/router.ts#L3)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:14](https://github.com/asyncapi/glee/blob/388e335/src/lib/router.ts#L14)
+[src/lib/router.ts:14](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/router.ts#L14)
 
 ___
 
@@ -67,4 +67,4 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:13](https://github.com/asyncapi/glee/blob/388e335/src/lib/router.ts#L13)
+[src/lib/router.ts:13](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/router.ts#L13)

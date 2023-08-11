@@ -1,7 +1,7 @@
 export default class ValidationError extends Error {
   private _errors: Error[]
   private _details: string
-  
+
   constructor({ humanReadableError, errors }) {
     super(humanReadableError)
     this._errors = errors

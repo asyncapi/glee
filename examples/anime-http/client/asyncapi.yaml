@@ -1,0 +1,45 @@
+asyncapi: 2.4.0
+info:
+  title: AsyncAPI IMDB client
+  version: 1.0.0
+  description: This app creates a client that subscribes to the server for getting the top 10 trending/upcoming anime.
+servers:
+  trendingAnime:
+    url: http://localhost:8081
+    protocol: http
+  testwebhook:
+    url: ws://localhost:9000
+    protocol: ws
+x-remoteServers:
+  - trendingAnime
+channels:
+  /test:
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+    publish:
+      operationId: index
+      message:
+        $ref: '#/components/messages/test'
+  trendingAnime:
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.1.0
+    servers:
+      - trendingAnime
+    publish:
+      operationId: trendingAnimeListRecieverController
+      message:
+        $ref: "../server/asyncapi.yaml#/components/messages/trendingAnime"
+    subscribe:
+      message:
+        payload:
+          type: object
+components:
+  messages:
+    test:
+      summary: ping client
+      payload:
+        type: object

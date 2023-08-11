@@ -4,27 +4,27 @@
 
 ## Table of contents
 
-### Properties
+### Functions
 
 - [default](middlewares_json2string.md#default)
 
-## Properties
+## Functions
 
 ### default
 
-• **default**: (`message`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
+▸ **default**(`message`, `next`): `void`
 
-#### Type declaration
-
-▸ (`message`, `next`): `void`
-
-##### Parameters
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `message` | [`default`](../classes/lib_message.default.md) |
 | `next` | [`MiddlewareCallback`](middlewares.md#middlewarecallback) |
 
-##### Returns
+#### Returns
 
 `void`
+
+#### Defined in
+
+[src/middlewares/json2string.ts:4](https://github.com/asyncapi/glee/blob/f9c7c95/src/middlewares/json2string.ts#L4)

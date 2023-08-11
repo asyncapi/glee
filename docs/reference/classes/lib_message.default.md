@@ -27,6 +27,7 @@
 - [\_outbound](lib_message.default.md#_outbound)
 - [\_params](lib_message.default.md#_params)
 - [\_payload](lib_message.default.md#_payload)
+- [\_query](lib_message.default.md#_query)
 - [\_serverName](lib_message.default.md#_servername)
 - [captureRejectionSymbol](lib_message.default.md#capturerejectionsymbol)
 - [captureRejections](lib_message.default.md#capturerejections)
@@ -42,6 +43,7 @@
 - [headers](lib_message.default.md#headers)
 - [params](lib_message.default.md#params)
 - [payload](lib_message.default.md#payload)
+- [query](lib_message.default.md#query)
 - [serverName](lib_message.default.md#servername)
 
 ### Methods
@@ -54,6 +56,8 @@
 - [isOutbound](lib_message.default.md#isoutbound)
 - [listenerCount](lib_message.default.md#listenercount)
 - [listeners](lib_message.default.md#listeners)
+- [notifyFailedProcessing](lib_message.default.md#notifyfailedprocessing)
+- [notifySuccessfulProcessing](lib_message.default.md#notifysuccessfulprocessing)
 - [off](lib_message.default.md#off)
 - [on](lib_message.default.md#on)
 - [once](lib_message.default.md#once)
@@ -68,10 +72,10 @@
 - [setMaxListeners](lib_message.default.md#setmaxlisteners)
 - [setOutbound](lib_message.default.md#setoutbound)
 - [getEventListeners](lib_message.default.md#geteventlisteners)
-- [listenerCount](lib_message.default.md#listenercount)
-- [on](lib_message.default.md#on)
-- [once](lib_message.default.md#once)
-- [setMaxListeners](lib_message.default.md#setmaxlisteners)
+- [listenerCount](lib_message.default.md#listenercount-1)
+- [on](lib_message.default.md#on-1)
+- [once](lib_message.default.md#once-1)
+- [setMaxListeners](lib_message.default.md#setmaxlisteners-1)
 
 ## Constructors
 
@@ -93,7 +97,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/message.ts:46](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L46)
+[src/lib/message.ts:51](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L51)
 
 ## Properties
 
@@ -103,7 +107,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/message.ts:28](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L28)
+[src/lib/message.ts:31](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L31)
 
 ___
 
@@ -113,7 +117,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:25](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L25)
+[src/lib/message.ts:28](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L28)
 
 ___
 
@@ -123,7 +127,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:31](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L31)
+[src/lib/message.ts:34](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L34)
 
 ___
 
@@ -133,7 +137,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:27](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L27)
+[src/lib/message.ts:30](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L30)
 
 ___
 
@@ -147,7 +151,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:24](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L24)
+[src/lib/message.ts:27](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L27)
 
 ___
 
@@ -157,7 +161,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:29](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L29)
+[src/lib/message.ts:32](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L32)
 
 ___
 
@@ -167,7 +171,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:30](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L30)
+[src/lib/message.ts:33](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L33)
 
 ___
 
@@ -181,7 +185,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:32](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L32)
+[src/lib/message.ts:35](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L35)
 
 ___
 
@@ -191,7 +195,17 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:23](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L23)
+[src/lib/message.ts:26](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L26)
+
+___
+
+### \_query
+
+• `Private` **\_query**: `QueryParam`
+
+#### Defined in
+
+[src/lib/message.ts:36](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L36)
 
 ___
 
@@ -201,7 +215,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:26](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L26)
+[src/lib/message.ts:29](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L29)
 
 ___
 
@@ -215,7 +229,7 @@ EventEmitter.captureRejectionSymbol
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:301
+node_modules/@types/node/events.d.ts:328
 
 ___
 
@@ -231,7 +245,7 @@ EventEmitter.captureRejections
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:306
+node_modules/@types/node/events.d.ts:333
 
 ___
 
@@ -245,7 +259,7 @@ EventEmitter.defaultMaxListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:307
+node_modules/@types/node/events.d.ts:334
 
 ___
 
@@ -267,7 +281,7 @@ EventEmitter.errorMonitor
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:300
+node_modules/@types/node/events.d.ts:327
 
 ## Accessors
 
@@ -281,7 +295,7 @@ node_modules/@types/node/events.d.ts:300
 
 #### Defined in
 
-[src/lib/message.ts:106](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L106)
+[src/lib/message.ts:113](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L113)
 
 ___
 
@@ -295,7 +309,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:82](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L82)
+[src/lib/message.ts:89](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L89)
 
 • `set` **channel**(`value`): `void`
 
@@ -311,7 +325,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:86](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L86)
+[src/lib/message.ts:93](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L93)
 
 ___
 
@@ -325,7 +339,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:118](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L118)
+[src/lib/message.ts:125](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L125)
 
 • `set` **cluster**(`value`): `void`
 
@@ -341,7 +355,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:122](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L122)
+[src/lib/message.ts:129](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L129)
 
 ___
 
@@ -355,7 +369,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:98](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L98)
+[src/lib/message.ts:105](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L105)
 
 • `set` **connection**(`value`): `void`
 
@@ -371,7 +385,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:102](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L102)
+[src/lib/message.ts:109](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L109)
 
 ___
 
@@ -385,7 +399,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:74](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L74)
+[src/lib/message.ts:81](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L81)
 
 • `set` **headers**(`value`): `void`
 
@@ -401,7 +415,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:78](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L78)
+[src/lib/message.ts:85](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L85)
 
 ___
 
@@ -415,7 +429,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:110](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L110)
+[src/lib/message.ts:117](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L117)
 
 • `set` **params**(`value`): `void`
 
@@ -431,7 +445,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:114](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L114)
+[src/lib/message.ts:121](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L121)
 
 ___
 
@@ -445,7 +459,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:66](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L66)
+[src/lib/message.ts:73](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L73)
 
 • `set` **payload**(`value`): `void`
 
@@ -461,7 +475,37 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:70](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L70)
+[src/lib/message.ts:77](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L77)
+
+___
+
+### query
+
+• `get` **query**(): `QueryParam`
+
+#### Returns
+
+`QueryParam`
+
+#### Defined in
+
+[src/lib/message.ts:133](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L133)
+
+• `set` **query**(`value`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `QueryParam` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/lib/message.ts:137](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L137)
 
 ___
 
@@ -475,7 +519,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:90](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L90)
+[src/lib/message.ts:97](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L97)
 
 • `set` **serverName**(`value`): `void`
 
@@ -491,7 +535,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:94](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L94)
+[src/lib/message.ts:101](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L101)
 
 ## Methods
 
@@ -501,7 +545,9 @@ ___
 
 Alias for `emitter.on(eventName, listener)`.
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -520,13 +566,13 @@ EventEmitter.addListener
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:327
+node_modules/@types/node/events.d.ts:354
 
 ___
 
 ### emit
 
-▸ **emit**(`eventName`, ...`args`): `boolean`
+▸ **emit**(`eventName`, `...args`): `boolean`
 
 Synchronously calls each of the listeners registered for the event named`eventName`, in the order they were registered, passing the supplied arguments
 to each.
@@ -566,7 +612,9 @@ myEmitter.emit('event', 1, 2, 3, 4, 5);
 // event with parameters 1, 2, 3, 4, 5 in third listener
 ```
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -585,7 +633,7 @@ EventEmitter.emit
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:583
+node_modules/@types/node/events.d.ts:610
 
 ___
 
@@ -609,7 +657,9 @@ console.log(myEE.eventNames());
 // Prints: [ 'foo', 'bar', Symbol(symbol) ]
 ```
 
-**`since`** v6.0.0
+**`Since`**
+
+v6.0.0
 
 #### Returns
 
@@ -621,7 +671,7 @@ EventEmitter.eventNames
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:642
+node_modules/@types/node/events.d.ts:669
 
 ___
 
@@ -632,7 +682,9 @@ ___
 Returns the current max listener value for the `EventEmitter` which is either
 set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](lib_message.default.md#defaultmaxlisteners).
 
-**`since`** v1.0.0
+**`Since`**
+
+v1.0.0
 
 #### Returns
 
@@ -644,7 +696,7 @@ EventEmitter.getMaxListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:499
+node_modules/@types/node/events.d.ts:526
 
 ___
 
@@ -660,7 +712,7 @@ Checks if it's an inbound message.
 
 #### Defined in
 
-[src/lib/message.ts:175](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L175)
+[src/lib/message.ts:194](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L194)
 
 ___
 
@@ -676,7 +728,7 @@ Checks if it's an outbound message.
 
 #### Defined in
 
-[src/lib/message.ts:182](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L182)
+[src/lib/message.ts:201](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L201)
 
 ___
 
@@ -686,7 +738,9 @@ ___
 
 Returns the number of listeners listening to the event named `eventName`.
 
-**`since`** v3.2.0
+**`Since`**
+
+v3.2.0
 
 #### Parameters
 
@@ -704,7 +758,7 @@ EventEmitter.listenerCount
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:589
+node_modules/@types/node/events.d.ts:616
 
 ___
 
@@ -722,7 +776,9 @@ console.log(util.inspect(server.listeners('connection')));
 // Prints: [ [Function] ]
 ```
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -740,7 +796,39 @@ EventEmitter.listeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:512
+node_modules/@types/node/events.d.ts:539
+
+___
+
+### notifyFailedProcessing
+
+▸ **notifyFailedProcessing**(): `void`
+
+Indicates failure in processing the message
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/lib/message.ts:222](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L222)
+
+___
+
+### notifySuccessfulProcessing
+
+▸ **notifySuccessfulProcessing**(): `void`
+
+Indicates successfully processed the message
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/lib/message.ts:215](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L215)
 
 ___
 
@@ -750,7 +838,9 @@ ___
 
 Alias for `emitter.removeListener()`.
 
-**`since`** v10.0.0
+**`Since`**
+
+v10.0.0
 
 #### Parameters
 
@@ -769,7 +859,7 @@ EventEmitter.off
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:472
+node_modules/@types/node/events.d.ts:499
 
 ___
 
@@ -803,7 +893,9 @@ myEE.emit('foo');
 //   a
 ```
 
-**`since`** v0.1.101
+**`Since`**
+
+v0.1.101
 
 #### Parameters
 
@@ -822,7 +914,7 @@ EventEmitter.on
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:358
+node_modules/@types/node/events.d.ts:385
 
 ___
 
@@ -854,7 +946,9 @@ myEE.emit('foo');
 //   a
 ```
 
-**`since`** v0.3.0
+**`Since`**
+
+v0.3.0
 
 #### Parameters
 
@@ -873,7 +967,7 @@ EventEmitter.once
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:387
+node_modules/@types/node/events.d.ts:414
 
 ___
 
@@ -894,7 +988,9 @@ server.prependListener('connection', (stream) => {
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v6.0.0
+**`Since`**
+
+v6.0.0
 
 #### Parameters
 
@@ -913,7 +1009,7 @@ EventEmitter.prependListener
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:607
+node_modules/@types/node/events.d.ts:634
 
 ___
 
@@ -921,7 +1017,7 @@ ___
 
 ▸ **prependOnceListener**(`eventName`, `listener`): [`default`](lib_message.default.md)
 
-Adds a **one-time**`listener` function for the event named `eventName` to the_beginning_ of the listeners array. The next time `eventName` is triggered, this
+Adds a **one-time**`listener` function for the event named `eventName` to the _beginning_ of the listeners array. The next time `eventName` is triggered, this
 listener is removed, and then invoked.
 
 ```js
@@ -932,7 +1028,9 @@ server.prependOnceListener('connection', (stream) => {
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v6.0.0
+**`Since`**
+
+v6.0.0
 
 #### Parameters
 
@@ -951,7 +1049,7 @@ EventEmitter.prependOnceListener
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:623
+node_modules/@types/node/events.d.ts:650
 
 ___
 
@@ -986,7 +1084,9 @@ newListeners[0]();
 emitter.emit('log');
 ```
 
-**`since`** v9.4.0
+**`Since`**
+
+v9.4.0
 
 #### Parameters
 
@@ -1004,7 +1104,7 @@ EventEmitter.rawListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:542
+node_modules/@types/node/events.d.ts:569
 
 ___
 
@@ -1020,7 +1120,9 @@ component or module (e.g. sockets or file streams).
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -1038,7 +1140,7 @@ EventEmitter.removeAllListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:483
+node_modules/@types/node/events.d.ts:510
 
 ___
 
@@ -1063,8 +1165,8 @@ listener array for the specified `eventName`, then `removeListener()` must be
 called multiple times to remove each instance.
 
 Once an event is emitted, all listeners attached to it at the
-time of emitting are called in order. This implies that any`removeListener()` or `removeAllListeners()` calls _after_ emitting and_before_ the last listener finishes execution will
-not remove them from`emit()` in progress. Subsequent events behave as expected.
+time of emitting are called in order. This implies that any`removeListener()` or `removeAllListeners()` calls _after_ emitting and _before_ the last listener finishes execution
+will not remove them from`emit()` in progress. Subsequent events behave as expected.
 
 ```js
 const myEmitter = new MyEmitter();
@@ -1123,7 +1225,9 @@ ee.emit('ping');
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v0.1.26
+**`Since`**
+
+v0.1.26
 
 #### Parameters
 
@@ -1142,7 +1246,7 @@ EventEmitter.removeListener
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:467
+node_modules/@types/node/events.d.ts:494
 
 ___
 
@@ -1164,7 +1268,7 @@ Sends the message back to the server/broker.
 
 #### Defined in
 
-[src/lib/message.ts:134](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L134)
+[src/lib/message.ts:149](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L149)
 
 ___
 
@@ -1180,7 +1284,7 @@ Tells Glee to send the message.
 
 #### Defined in
 
-[src/lib/message.ts:189](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L189)
+[src/lib/message.ts:208](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L208)
 
 ___
 
@@ -1196,7 +1300,7 @@ Makes the message suitable only for the inbound pipeline.
 
 #### Defined in
 
-[src/lib/message.ts:159](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L159)
+[src/lib/message.ts:178](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L178)
 
 ___
 
@@ -1211,7 +1315,9 @@ modified for this specific `EventEmitter` instance. The value can be set to`Infi
 
 Returns a reference to the `EventEmitter`, so that calls can be chained.
 
-**`since`** v0.3.5
+**`Since`**
+
+v0.3.5
 
 #### Parameters
 
@@ -1229,7 +1335,7 @@ EventEmitter.setMaxListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:493
+node_modules/@types/node/events.d.ts:520
 
 ___
 
@@ -1245,7 +1351,7 @@ Makes the message suitable only for the outbound pipeline.
 
 #### Defined in
 
-[src/lib/message.ts:167](https://github.com/asyncapi/glee/blob/388e335/src/lib/message.ts#L167)
+[src/lib/message.ts:186](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/message.ts#L186)
 
 ___
 
@@ -1278,13 +1384,15 @@ const { getEventListeners, EventEmitter } = require('events');
 }
 ```
 
-**`since`** v15.2.0, v14.17.0
+**`Since`**
+
+v15.2.0, v14.17.0
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `emitter` | `DOMEventTarget` \| `EventEmitter` |
+| `emitter` | `EventEmitter` \| `_DOMEventTarget` |
 | `name` | `string` \| `symbol` |
 
 #### Returns
@@ -1297,7 +1405,7 @@ EventEmitter.getEventListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:270
+node_modules/@types/node/events.d.ts:299
 
 ___
 
@@ -1316,9 +1424,13 @@ console.log(listenerCount(myEmitter, 'event'));
 // Prints: 2
 ```
 
-**`since`** v0.9.12
+**`Since`**
 
-**`deprecated`** Since v3.2.0 - Use `listenerCount` instead.
+v0.9.12
+
+**`Deprecated`**
+
+Since v3.2.0 - Use `listenerCount` instead.
 
 #### Parameters
 
@@ -1337,7 +1449,7 @@ EventEmitter.listenerCount
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:242
+node_modules/@types/node/events.d.ts:271
 
 ___
 
@@ -1399,7 +1511,9 @@ const ac = new AbortController();
 process.nextTick(() => ac.abort());
 ```
 
-**`since`** v13.6.0, v12.16.0
+**`Since`**
+
+v13.6.0, v12.16.0
 
 #### Parameters
 
@@ -1421,7 +1535,7 @@ EventEmitter.on
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:221
+node_modules/@types/node/events.d.ts:254
 
 ___
 
@@ -1509,13 +1623,15 @@ ac.abort(); // Abort waiting for the event
 ee.emit('foo'); // Prints: Waiting for the event was canceled!
 ```
 
-**`since`** v11.13.0, v10.16.0
+**`Since`**
+
+v11.13.0, v10.16.0
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `emitter` | `NodeEventTarget` |
+| `emitter` | `_NodeEventTarget` |
 | `eventName` | `string` \| `symbol` |
 | `options?` | `StaticEventEmitterOptions` |
 
@@ -1529,7 +1645,7 @@ EventEmitter.once
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:157
+node_modules/@types/node/events.d.ts:194
 
 ▸ `Static` **once**(`emitter`, `eventName`, `options?`): `Promise`<`any`[]\>
 
@@ -1537,7 +1653,7 @@ node_modules/@types/node/events.d.ts:157
 
 | Name | Type |
 | :------ | :------ |
-| `emitter` | `DOMEventTarget` |
+| `emitter` | `_DOMEventTarget` |
 | `eventName` | `string` |
 | `options?` | `StaticEventEmitterOptions` |
 
@@ -1551,39 +1667,36 @@ EventEmitter.once
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:162
+node_modules/@types/node/events.d.ts:195
 
 ___
 
 ### setMaxListeners
 
-▸ `Static` **setMaxListeners**(`n?`, ...`eventTargets`): `void`
-
-By default `EventEmitter`s will print a warning if more than `10` listeners are
-added for a particular event. This is a useful default that helps finding
-memory leaks. The `EventEmitter.setMaxListeners()` method allows the default limit to be
-modified (if eventTargets is empty) or modify the limit specified in every `EventTarget` | `EventEmitter` passed as arguments.
-The value can be set to`Infinity` (or `0`) to indicate an unlimited number of listeners.
+▸ `Static` **setMaxListeners**(`n?`, `...eventTargets`): `void`
 
 ```js
-EventEmitter.setMaxListeners(20);
-// Equivalent to
-EventEmitter.defaultMaxListeners = 20;
+const {
+  setMaxListeners,
+  EventEmitter
+} = require('events');
 
-const eventTarget = new EventTarget();
-// Only way to increase limit for `EventTarget` instances
-// as these doesn't expose its own `setMaxListeners` method
-EventEmitter.setMaxListeners(20, eventTarget);
+const target = new EventTarget();
+const emitter = new EventEmitter();
+
+setMaxListeners(5, target, emitter);
 ```
 
-**`since`** v15.3.0, v14.17.0
+**`Since`**
+
+v15.4.0
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n?` | `number` |
-| `...eventTargets` | (`DOMEventTarget` \| `EventEmitter`)[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `n?` | `number` | A non-negative number. The maximum number of listeners per `EventTarget` event. |
+| `...eventTargets` | (`EventEmitter` \| `_DOMEventTarget`)[] | - |
 
 #### Returns
 
@@ -1595,4 +1708,4 @@ EventEmitter.setMaxListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:290
+node_modules/@types/node/events.d.ts:317

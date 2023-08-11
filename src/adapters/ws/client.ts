@@ -1,20 +1,20 @@
 /* eslint-disable security/detect-object-injection */
-import Adapter from "../../lib/adapter.js"
-import GleeMessage from "../../lib/message.js"
-import ws from "ws"
+import Adapter from '../../lib/adapter.js'
+import GleeMessage from '../../lib/message.js'
+import ws from 'ws'
 import { WsAuthConfig, WebsocketAdapterConfig } from '../../lib/index.js'
 
 interface Client {
-  channel: string;
-  client: ws;
-  binding?: any;
+  channel: string
+  client: ws
+  binding?: any
 }
 
 class WsClientAdapter extends Adapter {
   private clients: Array<Client> = []
 
   name(): string {
-    return "WS adapter"
+    return 'WS adapter'
   }
 
   async connect(): Promise<this> {
@@ -30,24 +30,23 @@ class WsClientAdapter extends Adapter {
 
     for (const channel of channelsOnThisServer) {
       const headers = {}
-      const wsOptions: WebsocketAdapterConfig = await this.resolveProtocolConfig('ws')
+      const wsOptions: WebsocketAdapterConfig =
+        await this.resolveProtocolConfig('ws')
       const auth: WsAuthConfig = await this.getAuthConfig(wsOptions.client.auth)
       headers['Authentication'] = `bearer ${auth?.token}`
 
-      const url = new URL(
-        this.AsyncAPIServer.url() + channel
-      )
+      const url = new URL(this.AsyncAPIServer.url() + channel)
 
       this.clients.push({
         channel,
         client: new ws(url, { headers }),
-        binding: this.parsedAsyncAPI.channel(channel).binding("ws"),
+        binding: this.parsedAsyncAPI.channel(channel).binding('ws'),
       })
     }
 
     for (const { client, channel } of this.clients) {
-      client.on("open", () => {
-        this.emit("connect", {
+      client.on('open', () => {
+        this.emit('connect', {
           name: this.name(),
           adapter: this,
           connection: client,
@@ -55,14 +54,14 @@ class WsClientAdapter extends Adapter {
         })
       })
 
-      client.on("message", (data) => {
+      client.on('message', (data) => {
         const msg = this._createMessage(channel, data)
-        this.emit("message", msg, client)
+        this.emit('message', msg, client)
       })
 
-      client.on("error", (err) => {
+      client.on('error', (err) => {
         console.log('GETING ERROR')
-        this.emit("error", err)
+        this.emit('error', err)
       })
     }
     return this
@@ -71,7 +70,7 @@ class WsClientAdapter extends Adapter {
   private getWsChannels() {
     const channels = []
     for (const channel of this.channelNames) {
-      if (this.parsedAsyncAPI.channel(channel).hasBinding("ws")) {
+      if (this.parsedAsyncAPI.channel(channel).hasBinding('ws')) {
         if (this.parsedAsyncAPI.channel(channel).hasServers()) {
           if (
             this.parsedAsyncAPI
@@ -98,7 +97,7 @@ class WsClientAdapter extends Adapter {
       client.send(message.payload)
     } else {
       throw new Error(
-        "There is no WebSocker connection to send the message yet."
+        'There is no WebSocker connection to send the message yet.'
       )
     }
   }

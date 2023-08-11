@@ -39,13 +39,13 @@
 
 ### constructor
 
-• **new default**(`__namedParameters`)
+• **new default**(`«destructured»`)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | `Object` |
+| `«destructured»` | `Object` |
 
 #### Overrides
 
@@ -53,7 +53,7 @@ Error.constructor
 
 #### Defined in
 
-[src/errors/glee-error.ts:5](https://github.com/asyncapi/glee/blob/388e335/src/errors/glee-error.ts#L5)
+[src/errors/glee-error.ts:5](https://github.com/asyncapi/glee/blob/f9c7c95/src/errors/glee-error.ts#L5)
 
 ## Properties
 
@@ -63,7 +63,7 @@ Error.constructor
 
 #### Defined in
 
-[src/errors/glee-error.ts:3](https://github.com/asyncapi/glee/blob/388e335/src/errors/glee-error.ts#L3)
+[src/errors/glee-error.ts:3](https://github.com/asyncapi/glee/blob/f9c7c95/src/errors/glee-error.ts#L3)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[src/errors/glee-error.ts:2](https://github.com/asyncapi/glee/blob/388e335/src/errors/glee-error.ts#L2)
+[src/errors/glee-error.ts:2](https://github.com/asyncapi/glee/blob/f9c7c95/src/errors/glee-error.ts#L2)
 
 ___
 
@@ -87,7 +87,7 @@ Error.message
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1023
+node_modules/typescript/lib/lib.es5.d.ts:1054
 
 ___
 
@@ -101,7 +101,7 @@ Error.name
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1022
+node_modules/typescript/lib/lib.es5.d.ts:1053
 
 ___
 
@@ -115,7 +115,7 @@ Error.stack
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1024
+node_modules/typescript/lib/lib.es5.d.ts:1055
 
 ___
 
@@ -129,7 +129,9 @@ ___
 
 Optional override for formatting stack traces
 
-**`see`** https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+**`See`**
+
+https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ##### Parameters
 
@@ -176,7 +178,7 @@ node_modules/@types/node/globals.d.ts:13
 
 #### Defined in
 
-[src/errors/glee-error.ts:16](https://github.com/asyncapi/glee/blob/388e335/src/errors/glee-error.ts#L16)
+[src/errors/glee-error.ts:16](https://github.com/asyncapi/glee/blob/f9c7c95/src/errors/glee-error.ts#L16)
 
 ___
 
@@ -190,7 +192,7 @@ ___
 
 #### Defined in
 
-[src/errors/glee-error.ts:12](https://github.com/asyncapi/glee/blob/388e335/src/errors/glee-error.ts#L12)
+[src/errors/glee-error.ts:12](https://github.com/asyncapi/glee/blob/f9c7c95/src/errors/glee-error.ts#L12)
 
 ## Methods
 

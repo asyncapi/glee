@@ -3,7 +3,7 @@
 import { compileAndWatch } from '../lib/compiler.js'
 import spawn from 'cross-spawn'
 import { logLineWithIcon, logTypeScriptMessage } from '../lib/logger.js'
-import docs from "../docs.js"
+import docs from '../docs.js'
 
 const args = process.argv.splice(2)
 const command = args[0]
@@ -44,7 +44,7 @@ if (command === 'dev') {
 } else if (command === 'start') {
   import('./start.js')
 } else if (command === 'docs') {
-  docs()
+  docs().catch((e) => logTypeScriptMessage(e))
 } else {
   console.error(`Unknown command "${args[0]}"`)
 }

@@ -8,11 +8,11 @@
 
 - [default](../classes/lib_adapter.default.md)
 
-### Type aliases
+### Type Aliases
 
 - [EnrichedEvent](lib_adapter.md#enrichedevent)
 
-## Type aliases
+## Type Aliases
 
 ### EnrichedEvent
 
@@ -28,4 +28,4 @@
 
 #### Defined in
 
-[src/lib/adapter.ts:8](https://github.com/asyncapi/glee/blob/388e335/src/lib/adapter.ts#L8)
+[src/lib/adapter.ts:10](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/adapter.ts#L10)

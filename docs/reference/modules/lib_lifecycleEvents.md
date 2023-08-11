@@ -17,11 +17,11 @@
 
 ### events
 
-• **events**: `Map`<`string`, `IEvent`[]\>
+• `Const` **events**: `Map`<`string`, `IEvent`[]\>
 
 #### Defined in
 
-[src/lib/lifecycleEvents.ts:14](https://github.com/asyncapi/glee/blob/388e335/src/lib/lifecycleEvents.ts#L14)
+[src/lib/lifecycleEvents.ts:18](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/lifecycleEvents.ts#L18)
 
 ## Functions
 
@@ -41,7 +41,7 @@
 
 #### Defined in
 
-[src/lib/lifecycleEvents.ts:16](https://github.com/asyncapi/glee/blob/388e335/src/lib/lifecycleEvents.ts#L16)
+[src/lib/lifecycleEvents.ts:20](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/lifecycleEvents.ts#L20)
 
 ___
 
@@ -62,4 +62,4 @@ ___
 
 #### Defined in
 
-[src/lib/lifecycleEvents.ts:51](https://github.com/asyncapi/glee/blob/388e335/src/lib/lifecycleEvents.ts#L51)
+[src/lib/lifecycleEvents.ts:60](https://github.com/asyncapi/glee/blob/f9c7c95/src/lib/lifecycleEvents.ts#L60)

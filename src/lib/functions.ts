@@ -2,7 +2,7 @@ import { basename, extname, relative, join } from 'path'
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
-import { logWarningMessage } from './logger.js'
+import { logError, logWarningMessage } from './logger.js'
 import GleeMessage from './message.js'
 import { GleeFunction, GleeFunctionReturn } from './index.js'
 import Glee from './glee.js'
@@ -11,14 +11,47 @@ import {
   gleeMessageToFunctionEvent,
   isAValidHttpUrl,
   isRemoteServer,
+  validateData,
 } from './util.js'
 import { pathToFileURL } from 'url'
 import { getParsedAsyncAPI } from './asyncapiFile.js'
+import GleeError from '../errors/glee-error.js'
 import httpFetch from './httpFetch.js'
 import { validateGleeFunctionReturn, validateGleeInvokeOptions } from './jsonSchemaValidators.js'
 
+
 interface FunctionInfo {
   run: GleeFunction
+}
+
+const OutboundMessageSchema = {
+  type: 'object',
+  properties: {
+    payload: {},
+    headers: {
+      type: 'object',
+      propertyNames: { type: 'string' },
+      additionalProperties: { type: 'string' },
+    },
+    channel: { type: 'string' },
+    server: { type: 'string' },
+    query: { type: 'object' },
+  },
+}
+const FunctionReturnSchema = {
+  type: ['object', 'null'],
+  properties: {
+    send: {
+      type: 'array',
+      items: OutboundMessageSchema,
+    },
+    reply: {
+      type: 'array',
+      items: OutboundMessageSchema,
+    },
+  },
+  additionalProperties: false,
+  anyOf: [{ required: ['send'] }, { required: ['reply'] }],
 }
 
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
@@ -82,8 +115,23 @@ export async function trigger({
 }) {
   try {
     const parsedAsyncAPI = await getParsedAsyncAPI()
-    const res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
+    let res = await functions.get(operationId).run(gleeMessageToFunctionEvent(message, app))
+    if (res === undefined) res = null
+    const { humanReadableError, errors, isValid } = validateData(
+      res,
+      FunctionReturnSchema
+    )
+    if (!isValid) {
+      const err = new GleeError({
+        humanReadableError,
+        errors,
+      })
+      err.message = `Function ${operationId} returned invalid data.`
 
+      logError(err, {
+        highlightedWords: [operationId],
+      })
+    }
     // eslint-disable-next-line @typescript-eslint/no-extra-semi
     const handleResponse = (res: GleeFunctionReturn, source: string) => {
       validateGleeFunctionReturn(res, source)
@@ -103,7 +151,6 @@ export async function trigger({
           })
         )
       })
-
       res?.reply?.forEach((msg) => {
         message.reply({
           payload: msg.payload,

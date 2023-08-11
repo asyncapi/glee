@@ -4,27 +4,23 @@
 
 ## Table of contents
 
-### Properties
+### Functions
 
 - [default](middlewares_existsInAsyncAPI.md#default)
 
-## Properties
+## Functions
 
 ### default
 
-• **default**: (`asyncapi`: `AsyncAPIDocument`) => (`event`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
+▸ **default**(`asyncapi`): (`event`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
 
-#### Type declaration
-
-▸ (`asyncapi`): (`event`: [`default`](../classes/lib_message.default.md), `next`: [`MiddlewareCallback`](middlewares.md#middlewarecallback)) => `void`
-
-##### Parameters
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `asyncapi` | `AsyncAPIDocument` |
 
-##### Returns
+#### Returns
 
 `fn`
 
@@ -40,3 +36,7 @@
 ##### Returns
 
 `void`
+
+#### Defined in
+
+[src/middlewares/existsInAsyncAPI.ts:5](https://github.com/asyncapi/glee/blob/f9c7c95/src/middlewares/existsInAsyncAPI.ts#L5)
