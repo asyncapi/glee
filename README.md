@@ -1,8 +1,9 @@
 ![Glee — The AsyncAPI framework that will make you smile again.](assets/readme-banner.png)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 
 [![Coverage Status](https://coveralls.io/repos/github/asyncapi/glee/badge.svg?branch=master)](https://coveralls.io/github/asyncapi/glee?branch=master)
 
@@ -49,9 +50,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://github.com/sudoshreyansh"><img src="https://avatars.githubusercontent.com/u/44190883?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sudoshreyansh</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=sudoshreyansh" title="Tests">⚠️</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/sudoshreyansh"><img src="https://avatars.githubusercontent.com/u/44190883?v=4?s=100" width="100px;" alt="sudoshreyansh"/><br /><sub><b>sudoshreyansh</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=sudoshreyansh" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/afzal442"><img src="https://avatars.githubusercontent.com/u/11625672?v=4?s=100" width="100px;" alt="Afzal Ansari"/><br /><sub><b>Afzal Ansari</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=afzal442" title="Documentation">📖</a></td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->
