@@ -8,9 +8,21 @@
 
 ### Properties
 
+- [password](lib.WsAuthConfig.md#password)
 - [token](lib.WsAuthConfig.md#token)
+- [username](lib.WsAuthConfig.md#username)
 
 ## Properties
+
+### password
+
+• `Optional` **password**: `string`
+
+#### Defined in
+
+[src/lib/index.d.ts:29](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L29)
+
+___
 
 ### token
 
@@ -18,4 +30,14 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:27](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L27)
+[src/lib/index.d.ts:27](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L27)
+
+___
+
+### username
+
+• `Optional` **username**: `string`
+
+#### Defined in
+
+[src/lib/index.d.ts:28](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L28)

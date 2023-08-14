@@ -14,7 +14,10 @@
 ### Type Aliases
 
 - [AuthFunction](lib.md#authfunction)
+- [AuthProps](lib.md#authprops)
 - [CoreGleeConfig](lib.md#coregleeconfig)
+- [GleeAuthFunction](lib.md#gleeauthfunction)
+- [GleeAuthFunctionEvent](lib.md#gleeauthfunctionevent)
 - [GleeClusterAdapterConfig](lib.md#gleeclusteradapterconfig)
 - [GleeConfig](lib.md#gleeconfig)
 - [GleeFunction](lib.md#gleefunction)
@@ -30,6 +33,7 @@
 - [QueryParam](lib.md#queryparam)
 - [WebSocketServerType](lib.md#websocketservertype)
 - [WebsocketAdapterConfig](lib.md#websocketadapterconfig)
+- [WsHttpAuth](lib.md#wshttpauth)
 
 ## Type Aliases
 
@@ -76,7 +80,28 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:11](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L11)
+[src/lib/index.d.ts:11](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L11)
+
+___
+
+### AuthProps
+
+Ƭ **AuthProps**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `getAPIKeys` | () => `string` |
+| `getCert` | () => `string` |
+| `getHttpAPIKeys` | (`name`: `string`) => `string` |
+| `getOauthToken` | () => `string` |
+| `getToken` | () => `string` |
+| `getUserPass` | () => { `password`: `string` ; `username`: `string`  } |
+
+#### Defined in
+
+[src/lib/index.d.ts:38](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L38)
 
 ___
 
@@ -95,7 +120,51 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:80](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L80)
+[src/lib/index.d.ts:98](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L98)
+
+___
+
+### GleeAuthFunction
+
+Ƭ **GleeAuthFunction**: (`event`: [`GleeAuthFunctionEvent`](lib.md#gleeauthfunctionevent)) => `Promise`<[`GleeAuthFunctionEvent`](lib.md#gleeauthfunctionevent)\>
+
+#### Type declaration
+
+▸ (`event`): `Promise`<[`GleeAuthFunctionEvent`](lib.md#gleeauthfunctionevent)\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `event` | [`GleeAuthFunctionEvent`](lib.md#gleeauthfunctionevent) |
+
+##### Returns
+
+`Promise`<[`GleeAuthFunctionEvent`](lib.md#gleeauthfunctionevent)\>
+
+#### Defined in
+
+[src/lib/index.d.ts:153](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L153)
+
+___
+
+### GleeAuthFunctionEvent
+
+Ƭ **GleeAuthFunctionEvent**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `authProps` | [`AuthProps`](lib.md#authprops) |
+| `callback` | `any` |
+| `doc` | `any` |
+| `glee` | [`default`](../classes/lib_glee.default.md) |
+| `serverName` | `string` |
+
+#### Defined in
+
+[src/lib/index.d.ts:130](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L130)
 
 ___
 
@@ -113,7 +182,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:43](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L43)
+[src/lib/index.d.ts:61](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L61)
 
 ___
 
@@ -134,7 +203,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:87](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L87)
+[src/lib/index.d.ts:105](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L105)
 
 ___
 
@@ -158,7 +227,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:123](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L123)
+[src/lib/index.d.ts:149](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L149)
 
 ___
 
@@ -180,7 +249,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:102](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L102)
+[src/lib/index.d.ts:120](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L120)
 
 ___
 
@@ -198,7 +267,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:96](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L96)
+[src/lib/index.d.ts:114](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L114)
 
 ___
 
@@ -208,7 +277,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:121](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L121)
+[src/lib/index.d.ts:147](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L147)
 
 ___
 
@@ -218,7 +287,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:120](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L120)
+[src/lib/index.d.ts:146](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L146)
 
 ___
 
@@ -238,7 +307,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:112](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L112)
+[src/lib/index.d.ts:138](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L138)
 
 ___
 
@@ -260,7 +329,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:61](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L61)
+[src/lib/index.d.ts:79](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L79)
 
 ___
 
@@ -270,7 +339,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:8](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L8)
+[src/lib/index.d.ts:8](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L8)
 
 ___
 
@@ -286,7 +355,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:76](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L76)
+[src/lib/index.d.ts:94](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L94)
 
 ___
 
@@ -302,7 +371,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:72](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L72)
+[src/lib/index.d.ts:90](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L90)
 
 ___
 
@@ -312,7 +381,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:9](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L9)
+[src/lib/index.d.ts:9](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L9)
 
 ___
 
@@ -322,7 +391,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:7](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L7)
+[src/lib/index.d.ts:7](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L7)
 
 ___
 
@@ -344,4 +413,14 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:49](https://github.com/asyncapi/glee/blob/f65a7a0/src/lib/index.d.ts#L49)
+[src/lib/index.d.ts:67](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L67)
+
+___
+
+### WsHttpAuth
+
+Ƭ **WsHttpAuth**: [`WsAuthConfig`](../interfaces/lib.WsAuthConfig.md) \| [`HttpAuthConfig`](../interfaces/lib.HttpAuthConfig.md)
+
+#### Defined in
+
+[src/lib/index.d.ts:50](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L50)
