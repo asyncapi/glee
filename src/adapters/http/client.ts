@@ -20,7 +20,7 @@ class HttpClientAdapter extends Adapter {
   async send(message: GleeMessage): Promise<void> {
     const headers = {}
     const config: HttpAdapterConfig = await this.resolveProtocolConfig('http')
-    const auth: HttpAuthConfig = await this.getAuthConfig(config.client.auth)
+    const auth: HttpAuthConfig = await this.getAuthConfig(config?.client?.auth)
     headers['Authentication'] = auth?.token
     const serverUrl = this.serverUrlExpanded
     for (const channelName of this.channelNames) {

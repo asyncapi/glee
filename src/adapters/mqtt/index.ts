@@ -152,7 +152,7 @@ class MqttAdapter extends Adapter {
     const mqttOptions: MqttAdapterConfig = await this.resolveProtocolConfig(
       'mqtt'
     )
-    const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions.auth)
+    const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions?.auth)
     const subscribedChannels = this.getSubscribedChannels()
     const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
     const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
