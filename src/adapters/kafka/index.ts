@@ -14,7 +14,7 @@ class KafkaAdapter extends Adapter {
     const kafkaOptions: KafkaAdapterConfig = await this.resolveProtocolConfig(
       'kafka'
     )
-    const auth: KafkaAuthConfig = await this.getAuthConfig(kafkaOptions.auth)
+    const auth: KafkaAuthConfig = await this.getAuthConfig(kafkaOptions?.auth)
     const securityRequirements = (this.AsyncAPIServer.security() || []).map(
       (sec) => {
         const secName = Object.keys(sec.json())[0]

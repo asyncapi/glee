@@ -32,7 +32,7 @@ class WsClientAdapter extends Adapter {
       const headers = {}
       const wsOptions: WebsocketAdapterConfig =
         await this.resolveProtocolConfig('ws')
-      const auth: WsAuthConfig = await this.getAuthConfig(wsOptions.client.auth)
+      const auth: WsAuthConfig = await this.getAuthConfig(wsOptions?.client?.auth)
       headers['Authentication'] = `bearer ${auth?.token}`
 
       const url = new URL(this.AsyncAPIServer.url() + channel)
