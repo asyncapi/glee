@@ -48,4 +48,4 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:11](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L11)
+[src/lib/adapter.ts:10](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L10)

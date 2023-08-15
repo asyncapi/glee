@@ -28,7 +28,7 @@
 
 #### Defined in
 
-[src/lib/configs.ts:102](https://github.com/oviecodes/glee/blob/2283982/src/lib/configs.ts#L102)
+[src/lib/configs.ts:98](https://github.com/asyncapi/glee/blob/b84101b/src/lib/configs.ts#L98)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 #### Defined in
 
-[src/lib/configs.ts:120](https://github.com/oviecodes/glee/blob/2283982/src/lib/configs.ts#L120)
+[src/lib/configs.ts:116](https://github.com/asyncapi/glee/blob/b84101b/src/lib/configs.ts#L116)
 
 ___
 
@@ -62,4 +62,4 @@ ___
 
 #### Defined in
 
-[src/lib/configs.ts:21](https://github.com/oviecodes/glee/blob/2283982/src/lib/configs.ts#L21)
+[src/lib/configs.ts:20](https://github.com/asyncapi/glee/blob/b84101b/src/lib/configs.ts#L20)

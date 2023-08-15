@@ -23,7 +23,7 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:54](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L54)
+[src/lib/index.d.ts:36](https://github.com/asyncapi/glee/blob/b84101b/src/lib/index.d.ts#L36)
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:55](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L55)
+[src/lib/index.d.ts:37](https://github.com/asyncapi/glee/blob/b84101b/src/lib/index.d.ts#L37)
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:53](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L53)
+[src/lib/index.d.ts:35](https://github.com/asyncapi/glee/blob/b84101b/src/lib/index.d.ts#L35)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:58](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L58)
+[src/lib/index.d.ts:40](https://github.com/asyncapi/glee/blob/b84101b/src/lib/index.d.ts#L40)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:56](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L56)
+[src/lib/index.d.ts:38](https://github.com/asyncapi/glee/blob/b84101b/src/lib/index.d.ts#L38)
 
 ___
 
@@ -73,4 +73,4 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:57](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L57)
+[src/lib/index.d.ts:39](https://github.com/asyncapi/glee/blob/b84101b/src/lib/index.d.ts#L39)
