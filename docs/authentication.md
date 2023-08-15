@@ -1,4 +1,4 @@
-# Functions
+# Authentication Functions
 
 <!-- Glee relies on functions to execute your business logic. Functions are files that export a default async Node.js function: -->
 
@@ -119,7 +119,6 @@ components:
 ```
 
 **The Client asyncapi.yaml file does not need to implement all the security requirements in the server, it only needs to implement the ones that it uses.**
-
 
 
 ## Server Authentication in Glee
