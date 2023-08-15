@@ -201,6 +201,7 @@ class WebSocketsAdapter extends Adapter {
       this.serverName,
       info.req.headers
     )
+
     const authProps = gleeAuth.getServerAuthProps(info.req.headers, {})
     const done = this.wrapCallbackDecorator(cb).bind(this)
     this.emit('auth', {
