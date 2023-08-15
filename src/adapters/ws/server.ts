@@ -174,24 +174,14 @@ class WebSocketsAdapter extends Adapter {
   }
 
   private wrapCallbackDecorator(cb) {
-    return function done(val: boolean, code?: number, message?: string) {
+    return function done(val: boolean, code = 401, message = 'Unauthorized') {
       cb(val, code, message)
       if (val === false) {
         console.error(`An error occurred during authentication`)
-        const err =
-          code && message
-            ? new Error(`${code} ${message}`)
-            : new Error('401 Unauthorized')
+        const err = new Error(`${code} ${message}`)
         this.emit('error', err)
       }
     }
-  }
-
-  private checkAuthPresense() {
-    return (
-      this.AsyncAPIServer.security() &&
-      Object.keys(this.AsyncAPIServer.security()).length > 0
-    )
   }
 
   private verifyClientFunc(gleeAuth, info, cb) {
@@ -224,7 +214,7 @@ class WebSocketsAdapter extends Adapter {
         channelName,
         new WebSocket.Server({
           noServer: true,
-          verifyClient: this.checkAuthPresense()
+          verifyClient: gleeAuth.checkAuthPresense()
             ? (info, cb) => {
                 this.verifyClientFunc(gleeAuth, info, cb)
               }

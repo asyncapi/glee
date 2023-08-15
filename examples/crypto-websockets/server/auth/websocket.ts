@@ -12,7 +12,7 @@ export async function serverAuth({ authProps, callback: done }) {
   console.log("cert", authProps.getCert())
 
   // callback(false, 401, "Unauthorized");
-  done(true)
+  done(false)
 }
 
 export async function clientAuth({ parsedAsyncAPI, serverName }) {
