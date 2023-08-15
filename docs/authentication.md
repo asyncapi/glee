@@ -16,7 +16,113 @@ export async function clientAuth({ parsedAsyncAPI, serverName }) {
 }
 ```
 
-The name of the file should be the name of the targeted server that the authentication is made for.
+Glee looks for authentication files in the `auth` directory, the name of the authentication file should be the name of the targeted server that the authentication logic should work for.
+
+## Supported Authentication Values in AsyncAPI.yaml file
+
+AsyncAPI currently supports a variety of authentication formats as specified in the documentation, however Glee supports the following authentication schemas.
+
+A sample `asyncAPI.yaml` for a server with security requirments and security schemes is shown below:
+
+```yaml
+##server asyncAPI schema
+asyncapi: 2.6.0
+info:
+  title: AsyncAPI IMDB server
+  version: 1.0.0
+  description: This app is a dummy server that would stream the trending/upcoming anime.
+servers:
+  trendingAnimeServer:
+    url: 'http://localhost:8081'
+    protocol: http
+    security:
+      - token: []
+      - userPass: []
+      - apiKey: []
+      - UserOrPassKey: []
+      - oauth: []
+
+      ...
+
+components:
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    userPass:
+      type: userPassword
+    apiKey:
+      type: httpApiKey
+      name: api_key
+      in: query
+    UserOrPassKey:
+      type: apiKey
+      in: user
+    oauth:
+        type: oauth2
+        flows:
+          clientCredentials:
+            tokenUrl: https://example.com/api/oauth/dialog
+            scopes:
+              delete:pets: modify pets in your account
+              update:pets: read your pets
+
+```
+
+A sample `asyncAPI.yaml` for a client that implements some of the requirements of the server above:
+
+```yaml
+##client asyncAPI schema
+servers:
+  trendingAnime:
+    url: http://localhost:8081
+    protocol: http
+    security:
+      - token: []
+      - userPass: []
+      - apiKey: []
+      - oauth: 
+        - write:pets
+        - read:pets
+  testwebhook:
+    url: ws://localhost:9000
+    protocol: ws
+x-remoteServers:
+  - trendingAnime
+
+  ...
+
+components:
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    userPass:
+      type: userPassword
+    apiKey:
+      type: httpApiKey
+      name: api_key
+      in: query
+      oauth:
+        type: oauth2
+        flows:
+          clientCredentials:
+            tokenUrl: https://example.com/api/oauth/dialog
+            scopes:
+              delete:pets: modify pets in your account
+              update:pets: read your pets
+          
+          
+
+```
+
+**The Client asyncapi.yaml file does not need to implement all the security requirements in the server, it only needs to implement the ones that it uses.**
+
+
+
+## Server Authentication in Glee
 
 The `serverAuth` function takes an argument that can be destructured as follows
 
@@ -27,14 +133,7 @@ The `serverAuth` function takes an argument that can be destructured as follows
 | serverName | The name of the server/broker from which the event was emitted. |
 | doc        | The parsedAsyncAPI schema                                       |
 
-The `clientAuth` function also takes an argument, and it's argument can be destructured as follows
-
-| Attribute      | Description                                                                           |
-| -------------- | ------------------------------------------------------------------------------------- |
-| parsedAsyncAPI | The parsedAsyncAPI schema.                                                            |
-| serverName     | The name of the server/broker from with the authentication parameters are being sent. |
-
-Functions take a single argument, which is the event received from a broker or a client, depending which kind of API you're building. The `event` argument has the following shape:
+### done()
 
 The `done` parameter in the `serverAuth` function allows the broker/server to know what to do next depending on the boolean value you pass to it.
 
@@ -50,55 +149,69 @@ export async function serverAuth({ authProps, callback: done }) {
 
 When `true` is passed to the done parameter, the server/broker knows to go ahead and allow the client to connect, which means authentication has succeeded. However if the `done` parameter is called with `false` then the server knows to throw an error message and reject the client, which means authenticatio has failed.
 
+`done()` should always be the last thing called in a `serverAuth` function, Glee won't execute  any logic beyond the `done()` call.
 
-#### Client Authentication in Glee
+### authProps
 
+`authProps` implements a couple of methods that allows the server to retrieve the authentication parameters from the client, below are the current available methods;
 
+```js
+export async function serverAuth({ authProps, callback: done }) {
+  //some network request
 
-#### Server Authentication in Glee
+  authProps.getOauthToken()
+  authProps.getHttpAPIKeys("api_key")
+  authProps.getToken()
+  authProps.getUserPass()
 
-
-
-#### Supported Authentication Values in AsyncAPI.yaml file
-
-AsyncAPI currently supports a variety of authentication formats as specified in the documentation, however Glee supports the following authentication schemas
-
-
-
-```yaml
-
+  // done(false, 401, "Unauthorized");
+  done(false)
+}
 
 ```
 
+ Method     | Description                                                                           |
+| -------------- | ------------------------------------------------------------------------------------- |
+| `getOauthToken()` | returns the oauth authentication parameter |
+| `getHttpAPIKeys(name)`     | returns the HttpAPIKeys parameter with the specified name from either headers or query parameter  |
+| `getToken()` | returns the http bearer token parameter |
+| `getUserPass()` | returns username and password parameters |
 
+## Client Authentication in Glee
 
-Functions may return an object to tell Glee what to do next. For instance, the following example greets the user back:
+The `clientAuth` function also takes an argument, and it's argument can be destructured as follows
 
-| Attribute | Type                                                            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| --------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| send      | array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt; | A list of outbound messages to send when the processing of the inbound event has finished. All clients subscribed to the given channel/topic will receive the message.                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| reply     | array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt; | A list of outbound messages to send as a reply when the processing of the inbound event has finished. This is useful when the target of your message is the sender of the inbound event. Note, however, that this only works when you're running Glee as a server. For example, using `reply` when receiving a WebSocket message is fine and the reply will exclusively go to the client that sent the message. However, if you're receiving a message from an MQTT broker, `reply` will work exactly the same way as `send` above, and will send the message to all the clients subscribed to the given channel/topic. |
+| Attribute      | Description                                                                           |
+| -------------- | ------------------------------------------------------------------------------------- |
+| parsedAsyncAPI | The parsedAsyncAPI schema.                                                            |
+| serverName     | The name of the server/broker from with the authentication parameters are being sent. |
 
-##### Anatomy of an outbound message
+### possible authentication parameters
 
-| Attribute | Type                        | Description                                                                                                                     |
-| --------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| payload   | string                      | The payload/body of the message you want to send.                                                                               |
-| headers   | object&lt;string,string&gt; | The headers/metadata of the message you want to send.                                                                           |
-| channel   | string                      | The channel/topic you want to send the message to. Defaults to `event.channel`, i.e., the same channel as the received event.   |
-| server    | string                      | The server/broker you want to send the message to. Defaults to `event.serverName`, i.e., the same server as the received event. |
+The possible authentication parameters are shown in the code snippet below:
 
-## How does Glee know which function it should execute?
+```js
 
-Glee reads your `asyncapi.yaml` file and searches for all the `publish` operations containing an `operationId` attribute. The `operationId` serves as a mechanism to bind a given operation to a specific function file. For instance, given the folowing AsyncAPI definition:
+export async function clientAuth({ serverName }) {
+  
+  return {
+    token: process.env.TOKEN,
+    oauth: process.env.OAUTH2,
+    apiKey: process.env.APIKEY,
+    userPass: {
+      user: "oviecodes",
+      password: "password"
+    }
+  }
+}
 
-```yaml
-...
-channels:
-  hello:
-    publish:
-      operationId: onHello
-      ...
 ```
 
-Glee maps the `onHello` operation to the `functions/onHello.js` file.
+**The name of the authentication parameters should be the same as the names specified in the asyncAPI.yaml file.**
+
+auth type | values |
+|----------------|-----------------|
+| http bearer (JWT) | Value should be a JWT string |
+| Oauth2 | The value should should be a string |
+| httpApiKey in headers or query params | The value should be a string |
+| userPass | The value should be an object with the user and password as properties
