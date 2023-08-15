@@ -194,14 +194,7 @@ class WebSocketsAdapter extends Adapter {
     )
   }
 
-  private verifyClientFunc(info, cb) {
-    const gleeAuth = new GleeAuth(
-      this.AsyncAPIServer,
-      this.parsedAsyncAPI,
-      this.serverName,
-      info.req.headers
-    )
-
+  private verifyClientFunc(gleeAuth, info, cb) {
     const authProps = gleeAuth.getServerAuthProps(info.req.headers, {})
     const done = this.wrapCallbackDecorator(cb).bind(this)
     this.emit('auth', {
@@ -218,6 +211,12 @@ class WebSocketsAdapter extends Adapter {
 
     this.portChecks({ port, config, optionsPort, wsHttpServer })
 
+    const gleeAuth = new GleeAuth(
+      this.AsyncAPIServer,
+      this.parsedAsyncAPI,
+      this.serverName
+    )
+
     //verifyClient works!!!!
     const servers = new Map()
     this.channelNames.forEach((channelName) => {
@@ -227,7 +226,7 @@ class WebSocketsAdapter extends Adapter {
           noServer: true,
           verifyClient: this.checkAuthPresense()
             ? (info, cb) => {
-                this.verifyClientFunc(info, cb)
+                this.verifyClientFunc(gleeAuth, info, cb)
               }
             : null,
         })
