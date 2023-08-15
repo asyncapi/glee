@@ -1,8 +1,8 @@
-[@asyncapi/glee](../README.md) / [adapters/mqtt](../modules/adapters_mqtt.md) / default
+[@asyncapi/glee](../README.md) / [adapters/kafka](../modules/adapters_kafka.md) / default
 
 # Class: default
 
-[adapters/mqtt](../modules/adapters_mqtt.md).default
+[adapters/kafka](../modules/adapters_kafka.md).default
 
 ## Hierarchy
 
@@ -14,64 +14,56 @@
 
 ### Constructors
 
-- [constructor](adapters_mqtt.default.md#constructor)
+- [constructor](adapters_kafka.default.md#constructor)
 
 ### Properties
 
-- [client](adapters_mqtt.default.md#client)
-- [firstConnect](adapters_mqtt.default.md#firstconnect)
-- [captureRejectionSymbol](adapters_mqtt.default.md#capturerejectionsymbol)
-- [captureRejections](adapters_mqtt.default.md#capturerejections)
-- [defaultMaxListeners](adapters_mqtt.default.md#defaultmaxlisteners)
-- [errorMonitor](adapters_mqtt.default.md#errormonitor)
+- [firstConnect](adapters_kafka.default.md#firstconnect)
+- [kafka](adapters_kafka.default.md#kafka)
+- [captureRejectionSymbol](adapters_kafka.default.md#capturerejectionsymbol)
+- [captureRejections](adapters_kafka.default.md#capturerejections)
+- [defaultMaxListeners](adapters_kafka.default.md#defaultmaxlisteners)
+- [errorMonitor](adapters_kafka.default.md#errormonitor)
 
 ### Accessors
 
-- [AsyncAPIServer](adapters_mqtt.default.md#asyncapiserver)
-- [channelNames](adapters_mqtt.default.md#channelnames)
-- [connections](adapters_mqtt.default.md#connections)
-- [glee](adapters_mqtt.default.md#glee)
-- [parsedAsyncAPI](adapters_mqtt.default.md#parsedasyncapi)
-- [serverName](adapters_mqtt.default.md#servername)
-- [serverUrlExpanded](adapters_mqtt.default.md#serverurlexpanded)
+- [AsyncAPIServer](adapters_kafka.default.md#asyncapiserver)
+- [channelNames](adapters_kafka.default.md#channelnames)
+- [connections](adapters_kafka.default.md#connections)
+- [glee](adapters_kafka.default.md#glee)
+- [parsedAsyncAPI](adapters_kafka.default.md#parsedasyncapi)
+- [serverName](adapters_kafka.default.md#servername)
+- [serverUrlExpanded](adapters_kafka.default.md#serverurlexpanded)
 
 ### Methods
 
-- [\_connect](adapters_mqtt.default.md#_connect)
-- [\_createMessage](adapters_mqtt.default.md#_createmessage)
-- [\_customAckHandler](adapters_mqtt.default.md#_customackhandler)
-- [\_send](adapters_mqtt.default.md#_send)
-- [addListener](adapters_mqtt.default.md#addlistener)
-- [checkFirstConnect](adapters_mqtt.default.md#checkfirstconnect)
-- [connect](adapters_mqtt.default.md#connect)
-- [emit](adapters_mqtt.default.md#emit)
-- [eventNames](adapters_mqtt.default.md#eventnames)
-- [getAuthConfig](adapters_mqtt.default.md#getauthconfig)
-- [getMaxListeners](adapters_mqtt.default.md#getmaxlisteners)
-- [getSecurityReqs](adapters_mqtt.default.md#getsecurityreqs)
-- [getSubscribedChannels](adapters_mqtt.default.md#getsubscribedchannels)
-- [initializeClient](adapters_mqtt.default.md#initializeclient)
-- [listenToEvents](adapters_mqtt.default.md#listentoevents)
-- [listenerCount](adapters_mqtt.default.md#listenercount)
-- [listeners](adapters_mqtt.default.md#listeners)
-- [name](adapters_mqtt.default.md#name)
-- [off](adapters_mqtt.default.md#off)
-- [on](adapters_mqtt.default.md#on)
-- [once](adapters_mqtt.default.md#once)
-- [prependListener](adapters_mqtt.default.md#prependlistener)
-- [prependOnceListener](adapters_mqtt.default.md#prependoncelistener)
-- [rawListeners](adapters_mqtt.default.md#rawlisteners)
-- [removeAllListeners](adapters_mqtt.default.md#removealllisteners)
-- [removeListener](adapters_mqtt.default.md#removelistener)
-- [resolveProtocolConfig](adapters_mqtt.default.md#resolveprotocolconfig)
-- [send](adapters_mqtt.default.md#send)
-- [setMaxListeners](adapters_mqtt.default.md#setmaxlisteners)
-- [subscribe](adapters_mqtt.default.md#subscribe)
-- [getEventListeners](adapters_mqtt.default.md#geteventlisteners)
-- [listenerCount](adapters_mqtt.default.md#listenercount-1)
-- [on](adapters_mqtt.default.md#on-1)
-- [once](adapters_mqtt.default.md#once-1)
-- [setMaxListeners](adapters_mqtt.default.md#setmaxlisteners-1)
+- [\_createMessage](adapters_kafka.default.md#_createmessage)
+- [addListener](adapters_kafka.default.md#addlistener)
+- [connect](adapters_kafka.default.md#connect)
+- [emit](adapters_kafka.default.md#emit)
+- [eventNames](adapters_kafka.default.md#eventnames)
+- [getAuthConfig](adapters_kafka.default.md#getauthconfig)
+- [getMaxListeners](adapters_kafka.default.md#getmaxlisteners)
+- [getSubscribedChannels](adapters_kafka.default.md#getsubscribedchannels)
+- [listenerCount](adapters_kafka.default.md#listenercount)
+- [listeners](adapters_kafka.default.md#listeners)
+- [name](adapters_kafka.default.md#name)
+- [off](adapters_kafka.default.md#off)
+- [on](adapters_kafka.default.md#on)
+- [once](adapters_kafka.default.md#once)
+- [prependListener](adapters_kafka.default.md#prependlistener)
+- [prependOnceListener](adapters_kafka.default.md#prependoncelistener)
+- [rawListeners](adapters_kafka.default.md#rawlisteners)
+- [removeAllListeners](adapters_kafka.default.md#removealllisteners)
+- [removeListener](adapters_kafka.default.md#removelistener)
+- [resolveProtocolConfig](adapters_kafka.default.md#resolveprotocolconfig)
+- [send](adapters_kafka.default.md#send)
+- [setMaxListeners](adapters_kafka.default.md#setmaxlisteners)
+- [getEventListeners](adapters_kafka.default.md#geteventlisteners)
+- [listenerCount](adapters_kafka.default.md#listenercount-1)
+- [on](adapters_kafka.default.md#on-1)
+- [once](adapters_kafka.default.md#once-1)
+- [setMaxListeners](adapters_kafka.default.md#setmaxlisteners-1)
 
 ## Constructors
 
@@ -96,27 +88,27 @@ Instantiates a Glee adapter.
 
 #### Defined in
 
-[src/lib/adapter.ts:41](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L41)
+[src/lib/adapter.ts:33](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L33)
 
 ## Properties
 
-### client
+### firstConnect
 
-• `Private` **client**: `MqttClient`
+• `Private` **firstConnect**: `boolean` = `true`
 
 #### Defined in
 
-[src/adapters/mqtt/index.ts:28](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L28)
+[src/adapters/kafka/index.ts:8](https://github.com/asyncapi/glee/blob/b84101b/src/adapters/kafka/index.ts#L8)
 
 ___
 
-### firstConnect
+### kafka
 
-• `Private` **firstConnect**: `boolean`
+• `Private` **kafka**: `Kafka`
 
 #### Defined in
 
-[src/adapters/mqtt/index.ts:29](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L29)
+[src/adapters/kafka/index.ts:7](https://github.com/asyncapi/glee/blob/b84101b/src/adapters/kafka/index.ts#L7)
 
 ___
 
@@ -200,7 +192,7 @@ Adapter.AsyncAPIServer
 
 #### Defined in
 
-[src/lib/adapter.ts:185](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L185)
+[src/lib/adapter.ts:160](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L160)
 
 ___
 
@@ -218,7 +210,7 @@ Adapter.channelNames
 
 #### Defined in
 
-[src/lib/adapter.ts:193](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L193)
+[src/lib/adapter.ts:168](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L168)
 
 ___
 
@@ -236,7 +228,7 @@ Adapter.connections
 
 #### Defined in
 
-[src/lib/adapter.ts:197](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L197)
+[src/lib/adapter.ts:172](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L172)
 
 ___
 
@@ -254,7 +246,7 @@ Adapter.glee
 
 #### Defined in
 
-[src/lib/adapter.ts:177](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L177)
+[src/lib/adapter.ts:152](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L152)
 
 ___
 
@@ -272,7 +264,7 @@ Adapter.parsedAsyncAPI
 
 #### Defined in
 
-[src/lib/adapter.ts:189](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L189)
+[src/lib/adapter.ts:164](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L164)
 
 ___
 
@@ -290,7 +282,7 @@ Adapter.serverName
 
 #### Defined in
 
-[src/lib/adapter.ts:181](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L181)
+[src/lib/adapter.ts:156](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L156)
 
 ___
 
@@ -308,33 +300,21 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/adapter.ts:201](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L201)
+[src/lib/adapter.ts:176](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L176)
 
 ## Methods
 
-### \_connect
-
-▸ **_connect**(): `Promise`<[`default`](adapters_mqtt.default.md)\>
-
-#### Returns
-
-`Promise`<[`default`](adapters_mqtt.default.md)\>
-
-#### Defined in
-
-[src/adapters/mqtt/index.ts:137](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L137)
-
-___
-
 ### \_createMessage
 
-▸ **_createMessage**(`packet`): [`default`](lib_message.default.md)
+▸ **_createMessage**(`topic`, `partition`, `message`): [`default`](lib_message.default.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `packet` | `IPublishPacket` |
+| `topic` | `any` |
+| `partition` | `any` |
+| `message` | `any` |
 
 #### Returns
 
@@ -342,56 +322,13 @@ ___
 
 #### Defined in
 
-[src/adapters/mqtt/index.ts:215](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L215)
-
-___
-
-### \_customAckHandler
-
-▸ **_customAckHandler**(`channel`, `message`, `mqttPacket`, `done`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `channel` | `any` |
-| `message` | `any` |
-| `mqttPacket` | `any` |
-| `done` | `any` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/adapters/mqtt/index.ts:231](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L231)
-
-___
-
-### \_send
-
-▸ **_send**(`message`): `Promise`<`void`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `message` | [`default`](lib_message.default.md) |
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[src/adapters/mqtt/index.ts:192](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L192)
+[src/adapters/kafka/index.ts:95](https://github.com/asyncapi/glee/blob/b84101b/src/adapters/kafka/index.ts#L95)
 
 ___
 
 ### addListener
 
-▸ **addListener**(`eventName`, `listener`): [`default`](adapters_mqtt.default.md)
+▸ **addListener**(`eventName`, `listener`): [`default`](adapters_kafka.default.md)
 
 Alias for `emitter.on(eventName, listener)`.
 
@@ -408,7 +345,7 @@ v0.1.26
 
 #### Returns
 
-[`default`](adapters_mqtt.default.md)
+[`default`](adapters_kafka.default.md)
 
 #### Inherited from
 
@@ -420,29 +357,15 @@ node_modules/@types/node/events.d.ts:354
 
 ___
 
-### checkFirstConnect
-
-▸ `Private` **checkFirstConnect**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/adapters/mqtt/index.ts:117](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L117)
-
-___
-
 ### connect
 
-▸ **connect**(): `Promise`<[`default`](adapters_mqtt.default.md)\>
+▸ **connect**(): `Promise`<`void`\>
 
 Connects to the remote server.
 
 #### Returns
 
-`Promise`<[`default`](adapters_mqtt.default.md)\>
+`Promise`<`void`\>
 
 #### Overrides
 
@@ -450,7 +373,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/adapters/mqtt/index.ts:35](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L35)
+[src/adapters/kafka/index.ts:13](https://github.com/asyncapi/glee/blob/b84101b/src/adapters/kafka/index.ts#L13)
 
 ___
 
@@ -579,7 +502,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:214](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L214)
+[src/lib/adapter.ts:189](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L189)
 
 ___
 
@@ -588,7 +511,7 @@ ___
 ▸ **getMaxListeners**(): `number`
 
 Returns the current max listener value for the `EventEmitter` which is either
-set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapters_mqtt.default.md#defaultmaxlisteners).
+set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapters_kafka.default.md#defaultmaxlisteners).
 
 **`Since`**
 
@@ -608,25 +531,6 @@ node_modules/@types/node/events.d.ts:526
 
 ___
 
-### getSecurityReqs
-
-▸ `Private` **getSecurityReqs**(): `Object`
-
-#### Returns
-
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `X509SecurityReq` | `SecurityScheme` |
-| `userAndPasswordSecurityReq` | `SecurityScheme` |
-
-#### Defined in
-
-[src/adapters/mqtt/index.ts:43](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L43)
-
-___
-
 ### getSubscribedChannels
 
 ▸ **getSubscribedChannels**(): `string`[]
@@ -643,47 +547,7 @@ Returns a list of the channels a given adapter has to subscribe to.
 
 #### Defined in
 
-[src/lib/adapter.ts:230](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L230)
-
-___
-
-### initializeClient
-
-▸ `Private` **initializeClient**(`data`): `Promise`<`MqttClient`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `ClientData` |
-
-#### Returns
-
-`Promise`<`MqttClient`\>
-
-#### Defined in
-
-[src/adapters/mqtt/index.ts:63](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L63)
-
-___
-
-### listenToEvents
-
-▸ `Private` **listenToEvents**(`data`): `Promise`<`void`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `ClientData` |
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[src/adapters/mqtt/index.ts:94](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L94)
+[src/lib/adapter.ts:205](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L205)
 
 ___
 
@@ -765,13 +629,13 @@ ___
 
 #### Defined in
 
-[src/adapters/mqtt/index.ts:31](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L31)
+[src/adapters/kafka/index.ts:9](https://github.com/asyncapi/glee/blob/b84101b/src/adapters/kafka/index.ts#L9)
 
 ___
 
 ### off
 
-▸ **off**(`eventName`, `listener`): [`default`](adapters_mqtt.default.md)
+▸ **off**(`eventName`, `listener`): [`default`](adapters_kafka.default.md)
 
 Alias for `emitter.removeListener()`.
 
@@ -788,7 +652,7 @@ v10.0.0
 
 #### Returns
 
-[`default`](adapters_mqtt.default.md)
+[`default`](adapters_kafka.default.md)
 
 #### Inherited from
 
@@ -802,7 +666,7 @@ ___
 
 ### on
 
-▸ **on**(`eventName`, `listener`): [`default`](adapters_mqtt.default.md)
+▸ **on**(`eventName`, `listener`): [`default`](adapters_kafka.default.md)
 
 Adds the `listener` function to the end of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -843,7 +707,7 @@ v0.1.101
 
 #### Returns
 
-[`default`](adapters_mqtt.default.md)
+[`default`](adapters_kafka.default.md)
 
 #### Inherited from
 
@@ -857,7 +721,7 @@ ___
 
 ### once
 
-▸ **once**(`eventName`, `listener`): [`default`](adapters_mqtt.default.md)
+▸ **once**(`eventName`, `listener`): [`default`](adapters_kafka.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName`. The
 next time `eventName` is triggered, this listener is removed and then invoked.
@@ -896,7 +760,7 @@ v0.3.0
 
 #### Returns
 
-[`default`](adapters_mqtt.default.md)
+[`default`](adapters_kafka.default.md)
 
 #### Inherited from
 
@@ -910,7 +774,7 @@ ___
 
 ### prependListener
 
-▸ **prependListener**(`eventName`, `listener`): [`default`](adapters_mqtt.default.md)
+▸ **prependListener**(`eventName`, `listener`): [`default`](adapters_kafka.default.md)
 
 Adds the `listener` function to the _beginning_ of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -938,7 +802,7 @@ v6.0.0
 
 #### Returns
 
-[`default`](adapters_mqtt.default.md)
+[`default`](adapters_kafka.default.md)
 
 #### Inherited from
 
@@ -952,7 +816,7 @@ ___
 
 ### prependOnceListener
 
-▸ **prependOnceListener**(`eventName`, `listener`): [`default`](adapters_mqtt.default.md)
+▸ **prependOnceListener**(`eventName`, `listener`): [`default`](adapters_kafka.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName` to the _beginning_ of the listeners array. The next time `eventName` is triggered, this
 listener is removed, and then invoked.
@@ -978,7 +842,7 @@ v6.0.0
 
 #### Returns
 
-[`default`](adapters_mqtt.default.md)
+[`default`](adapters_kafka.default.md)
 
 #### Inherited from
 
@@ -1047,7 +911,7 @@ ___
 
 ### removeAllListeners
 
-▸ **removeAllListeners**(`event?`): [`default`](adapters_mqtt.default.md)
+▸ **removeAllListeners**(`event?`): [`default`](adapters_kafka.default.md)
 
 Removes all listeners, or those of the specified `eventName`.
 
@@ -1069,7 +933,7 @@ v0.1.26
 
 #### Returns
 
-[`default`](adapters_mqtt.default.md)
+[`default`](adapters_kafka.default.md)
 
 #### Inherited from
 
@@ -1083,7 +947,7 @@ ___
 
 ### removeListener
 
-▸ **removeListener**(`eventName`, `listener`): [`default`](adapters_mqtt.default.md)
+▸ **removeListener**(`eventName`, `listener`): [`default`](adapters_kafka.default.md)
 
 Removes the specified `listener` from the listener array for the event named`eventName`.
 
@@ -1175,7 +1039,7 @@ v0.1.26
 
 #### Returns
 
-[`default`](adapters_mqtt.default.md)
+[`default`](adapters_kafka.default.md)
 
 #### Inherited from
 
@@ -1207,7 +1071,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:205](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L205)
+[src/lib/adapter.ts:180](https://github.com/asyncapi/glee/blob/b84101b/src/lib/adapter.ts#L180)
 
 ___
 
@@ -1233,13 +1097,13 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/adapters/mqtt/index.ts:39](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L39)
+[src/adapters/kafka/index.ts:79](https://github.com/asyncapi/glee/blob/b84101b/src/adapters/kafka/index.ts#L79)
 
 ___
 
 ### setMaxListeners
 
-▸ **setMaxListeners**(`n`): [`default`](adapters_mqtt.default.md)
+▸ **setMaxListeners**(`n`): [`default`](adapters_kafka.default.md)
 
 By default `EventEmitter`s will print a warning if more than `10` listeners are
 added for a particular event. This is a useful default that helps finding
@@ -1260,7 +1124,7 @@ v0.3.5
 
 #### Returns
 
-[`default`](adapters_mqtt.default.md)
+[`default`](adapters_kafka.default.md)
 
 #### Inherited from
 
@@ -1269,26 +1133,6 @@ v0.3.5
 #### Defined in
 
 node_modules/@types/node/events.d.ts:520
-
-___
-
-### subscribe
-
-▸ `Private` **subscribe**(`channels`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `channels` | `string`[] |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/adapters/mqtt/index.ts:127](https://github.com/oviecodes/glee/blob/2283982/src/adapters/mqtt/index.ts#L127)
 
 ___
 

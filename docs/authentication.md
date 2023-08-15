@@ -50,6 +50,28 @@ export async function serverAuth({ authProps, callback: done }) {
 
 When `true` is passed to the done parameter, the server/broker knows to go ahead and allow the client to connect, which means authentication has succeeded. However if the `done` parameter is called with `false` then the server knows to throw an error message and reject the client, which means authenticatio has failed.
 
+
+#### Client Authentication in Glee
+
+
+
+#### Server Authentication in Glee
+
+
+
+#### Supported Authentication Values in AsyncAPI.yaml file
+
+AsyncAPI currently supports a variety of authentication formats as specified in the documentation, however Glee supports the following authentication schemas
+
+
+
+```yaml
+
+
+```
+
+
+
 Functions may return an object to tell Glee what to do next. For instance, the following example greets the user back:
 
 | Attribute | Type                                                            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
