@@ -198,8 +198,8 @@ export async function clientAuth({ serverName }) {
     oauth: process.env.OAUTH2,
     apiKey: process.env.APIKEY,
     userPass: {
-      user: "oviecodes",
-      password: "password"
+      user: process.env.user,
+      password: process.env.password
     }
   }
 }
@@ -213,4 +213,4 @@ auth type | values |
 | http bearer (JWT) | Value should be a JWT string |
 | Oauth2 | The value should should be a string |
 | httpApiKey in headers or query params | The value should be a string |
-| userPass | The value should be an object with the user and password as properties
+| userPass | The value should be an object with the user and password as properties |
