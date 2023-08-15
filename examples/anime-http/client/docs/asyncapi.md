@@ -20,6 +20,59 @@ This app creates a client that subscribes to the server for getting the top 10 t
 * Protocol: `http`
 
 
+#### Security
+
+##### Security Requirement 1
+
+* Type: `HTTP`
+  * Scheme: bearer
+  * Bearer format: JWT
+
+
+
+
+##### Security Requirement 2
+
+* Type: `User/Password`
+
+
+
+##### Security Requirement 3
+
+* Type: `HTTP API key`
+  * Name: api_key
+  * In: query
+
+
+
+
+##### Security Requirement 4
+
+* Type: `API key`
+  * In: user
+
+
+
+
+##### Security Requirement 5
+
+* Type: `OAuth2`
+  * Flows:
+
+    Required scopes: `write:pets`, `read:pets`
+
+    | Flow | Auth URL | Token URL | Refresh URL | Scopes |
+    |---|---|---|---|---|
+    | Implicit | [https://example.com/api/oauth/dialog](https://example.com/api/oauth/dialog) | - | - | `write:pets`, `read:pets` |
+    | Authorization Code | [https://example.com/api/oauth/dialog](https://example.com/api/oauth/dialog) | [https://example.com/api/oauth/dialog](https://example.com/api/oauth/dialog) | - | `delete:pets`, `update:pets` |
+
+
+
+
+
+
+
+
 
 ### `testwebhook` Server
 
