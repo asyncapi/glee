@@ -7,7 +7,7 @@ Authentication in Glee can be done using authentication functions. Authenticatio
 ```js
 /* websocket.js */
 
-export async function serverAuth({ authProps, callback: done }) {
+export async function serverAuth({ authProps, done }) {
   //server auth logic
 }
 
@@ -139,7 +139,7 @@ The `done` parameter in the `serverAuth` function allows the broker/server to kn
 ```js
 /* websocket.js */
 
-export async function serverAuth({ authProps, callback: done }) {
+export async function serverAuth({ authProps, done }) {
   // done(true)
   //done(false, 401, "Unauthorized")
   // done(false)
@@ -155,7 +155,7 @@ When `true` is passed to the done parameter, the server/broker knows to go ahead
 `authProps` implements a couple of methods that allows the server to retrieve the authentication parameters from the client, below are the current available methods;
 
 ```js
-export async function serverAuth({ authProps, callback: done }) {
+export async function serverAuth({ authProps, done }) {
   //some network request
 
   authProps.getOauthToken()
