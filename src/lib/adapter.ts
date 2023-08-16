@@ -17,7 +17,7 @@ export type EnrichedEvent = {
 export type AuthEvent = {
   serverName: string
   authProps: AuthProps
-  callback: any
+  done: any
   doc: any
 }
 

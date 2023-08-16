@@ -58,37 +58,30 @@ class HttpAdapter extends Adapter {
         }
       }
 
-      function checkAuthPresense() {
-        return (
-          this.AsyncAPIServer.security() &&
-          Object.keys(this.AsyncAPIServer.security()).length > 0
-        )
-      }
+      const gleeAuth = new GleeAuth(
+        this.AsyncAPIServer,
+        this.parsedAsyncAPI,
+        this.serverName,
+        req.headers
+      )
 
       const { promise, done: callback } = done()
 
-      if (checkAuthPresense.call(this)) {
-        const gleeAuth = new GleeAuth(
-          this.AsyncAPIServer,
-          this.parsedAsyncAPI,
-          this.serverName,
-          req.headers
-        )
-
+      if (gleeAuth.checkAuthPresense()) {
         this.emit('auth', {
           authProps: gleeAuth.getServerAuthProps(
             req.headers,
             url.parse(req.url, true).query
           ),
           server: this.serverName,
-          callback,
+          done: callback,
           doc: this.AsyncAPIServer,
         })
       }
 
       req.on('end', async () => {
         try {
-          if (checkAuthPresense.call(this)) await promise
+          if (gleeAuth.checkAuthPresense()) await promise
         } catch (e) {
           res.statusCode = e.code
           res.end()

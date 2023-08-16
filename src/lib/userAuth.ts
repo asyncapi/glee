@@ -47,7 +47,7 @@ export async function register(dir: string) {
   }
 }
 export async function triggerAuth(params: GleeAuthFunctionEvent) {
-  const { serverName, callback } = params
+  const { serverName, done } = params
 
   console.log('serverName', serverName)
 
@@ -60,7 +60,7 @@ export async function triggerAuth(params: GleeAuthFunctionEvent) {
           highlightedWords: [serverName],
         }
       )
-      callback(false, 422, 'Cannot find authentication file')
+      done(false, 422, 'Cannot find authentication file')
       return
     }
     await auth.serverAuth(params)

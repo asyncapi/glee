@@ -18,7 +18,7 @@ class GleeAuth extends EventEmitter {
     AsyncAPIServer: Server,
     parsedAsyncAPI: AsyncAPIDocument,
     serverName: string,
-    authConfig
+    authConfig?
   ) {
     super()
     this.secReqs = []
@@ -149,6 +149,13 @@ class GleeAuth extends EventEmitter {
     const authKeys = this.checkClientAuthConfig()
     if (!authKeys) return
     return this.formClientAuth(authKeys, { url, headers, query })
+  }
+
+  checkAuthPresense(): boolean {
+    return (
+      this.AsyncAPIServer.security() &&
+      Object.keys(this.AsyncAPIServer.security()).length > 0
+    )
   }
 
   //   checkClientUnimplementedSecScheme() {}

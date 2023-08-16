@@ -123,7 +123,7 @@ export default async function GleeAppInitializer() {
       glee: app,
       serverName: e.serverName,
       authProps: e.authProps,
-      callback: e.callback,
+      done: e.done,
       doc: e.doc,
     })
   })
@@ -167,7 +167,9 @@ export default async function GleeAppInitializer() {
   app.on('adapter:server:ready', async (e: EnrichedEvent) => {
     logLineWithIcon(
       ':zap:',
-      `Server ${e.serverName} is ready to accept connections on ${e.server.url()}.`,
+      `Server ${
+        e.serverName
+      } is ready to accept connections on ${e.server.url()}.`,
       {
         highlightedWords: [e.serverName],
       }

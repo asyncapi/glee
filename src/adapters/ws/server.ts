@@ -174,39 +174,23 @@ class WebSocketsAdapter extends Adapter {
   }
 
   private wrapCallbackDecorator(cb) {
-    return function done(val: boolean, code?: number, message?: string) {
+    return function done(val: boolean, code = 401, message = 'Unauthorized') {
       cb(val, code, message)
       if (val === false) {
         console.error(`An error occurred during authentication`)
-        const err =
-          code && message
-            ? new Error(`${code} ${message}`)
-            : new Error('401 Unauthorized')
+        const err = new Error(`${code} ${message}`)
         this.emit('error', err)
       }
     }
   }
 
-  private checkAuthPresense() {
-    return (
-      this.AsyncAPIServer.security() &&
-      Object.keys(this.AsyncAPIServer.security()).length > 0
-    )
-  }
-
-  private verifyClientFunc(info, cb) {
-    const gleeAuth = new GleeAuth(
-      this.AsyncAPIServer,
-      this.parsedAsyncAPI,
-      this.serverName,
-      info.req.headers
-    )
+  private verifyClientFunc(gleeAuth, info, cb) {
     const authProps = gleeAuth.getServerAuthProps(info.req.headers, {})
     const done = this.wrapCallbackDecorator(cb).bind(this)
     this.emit('auth', {
       authProps,
       server: this.serverName,
-      callback: done,
+      done,
       doc: this.AsyncAPIServer,
     })
   }
@@ -217,6 +201,12 @@ class WebSocketsAdapter extends Adapter {
 
     this.portChecks({ port, config, optionsPort, wsHttpServer })
 
+    const gleeAuth = new GleeAuth(
+      this.AsyncAPIServer,
+      this.parsedAsyncAPI,
+      this.serverName
+    )
+
     //verifyClient works!!!!
     const servers = new Map()
     this.channelNames.forEach((channelName) => {
@@ -224,9 +214,9 @@ class WebSocketsAdapter extends Adapter {
         channelName,
         new WebSocket.Server({
           noServer: true,
-          verifyClient: this.checkAuthPresense()
+          verifyClient: gleeAuth.checkAuthPresense()
             ? (info, cb) => {
-                this.verifyClientFunc(info, cb)
+                this.verifyClientFunc(gleeAuth, info, cb)
               }
             : null,
         })
