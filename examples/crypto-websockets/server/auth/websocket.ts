@@ -2,14 +2,13 @@
 
 import axios from "axios"
 
-export async function serverAuth({ authProps, callback: done }) {
+export async function serverAuth({ authProps, done }) {
   await axios.get("https://jsonplaceholder.typicode.com/todos/1", {
     timeout: 5000,
   })
 
   console.log("token", authProps.getToken())
   console.log("userpass", authProps.getUserPass())
-  console.log("cert", authProps.getCert())
 
   // callback(false, 401, "Unauthorized");
   done(false)

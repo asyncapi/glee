@@ -3,7 +3,7 @@
 // //@ts-ignore
 import axios from "axios"
 
-export async function serverAuth({ authProps, callback: done }) {
+export async function serverAuth({ authProps, done }) {
   await axios.get("https://jsonplaceholder.typicode.com/todos/1", {
     timeout: 5000,
   })

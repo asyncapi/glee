@@ -130,7 +130,7 @@ export type GleeFunctionEvent = {
 export type GleeAuthFunctionEvent = {
   glee: Glee
   authProps: AuthProps
-  callback: any
+  done: any
   serverName: string
   doc: any
 }

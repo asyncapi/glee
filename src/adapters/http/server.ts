@@ -74,7 +74,7 @@ class HttpAdapter extends Adapter {
             url.parse(req.url, true).query
           ),
           server: this.serverName,
-          callback,
+          done: callback,
           doc: this.AsyncAPIServer,
         })
       }

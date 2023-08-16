@@ -190,7 +190,7 @@ class WebSocketsAdapter extends Adapter {
     this.emit('auth', {
       authProps,
       server: this.serverName,
-      callback: done,
+      done,
       doc: this.AsyncAPIServer,
     })
   }
