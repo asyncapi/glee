@@ -1,4 +1,4 @@
-# Authentication Functions
+# Authentication
 
 <!-- Glee relies on functions to execute your business logic. Functions are files that export a default async Node.js function: -->
 
