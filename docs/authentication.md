@@ -70,7 +70,7 @@ components:
 
 ```
 
-A sample `asyncAPI.yaml` for a client that implements some of the requirements of the server above:
+A sample `asyncapi.yaml` for a client that implements some of the requirements of the server above:
 
 ```yaml
 ##client asyncAPI schema
