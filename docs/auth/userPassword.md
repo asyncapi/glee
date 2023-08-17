@@ -1,6 +1,6 @@
 ## Getting started with username and password authentication
 
-User and password authentication is one of the most basic form of authentication. This guide will walk through how to implement username and password in Glee.
+User and password authentication is one of the most basic form of authentication. This guide will walk through how to implement username and password authentication in Glee.
 
 A sample `asyncapi.yaml` for a server with security requirements and user password security scheme is shown below:
 
@@ -124,7 +124,7 @@ export async clientAuth({ parsedAsyncAPI, serverName }) {
 `userPass` should be the name of the security requirement as specified in your `asyncapi.yaml` file, then pass `user` and `password` as it's properties
 
 
-### server side
+### Server side
 
 From the server `asyncapi.yaml` file above, create a file named `trendingAnimeServer.ts` in the `auth` directory, since that is the server that has the security Property. 
 
