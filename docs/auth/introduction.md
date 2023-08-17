@@ -22,7 +22,7 @@ Glee looks for authentication files in the `auth` directory, the name of the aut
 
 AsyncAPI currently supports a variety of authentication formats as specified in the documentation, however Glee supports the following authentication schemas.
 
-A sample `asyncapi.yaml` for a server with security requirements and security schemes is shown below:
+A sample `asyncapi.yaml` for a server with security requirements and a `userPassword` security schemes is shown below:
 
 ```yaml
 ##server asyncAPI schema
@@ -36,37 +36,14 @@ servers:
     url: 'http://localhost:8081'
     protocol: http
     security:
-      - token: []
       - userPass: []
-      - apiKey: []
-      - UserOrPassKey: []
-      - oauth: []
 
-      ...
+  ...
 
 components:
   securitySchemes:
-    token:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
     userPass:
       type: userPassword
-    apiKey:
-      type: httpApiKey
-      name: api_key
-      in: query
-    UserOrPassKey:
-      type: apiKey
-      in: user
-    oauth:
-        type: oauth2
-        flows:
-          clientCredentials:
-            tokenUrl: https://example.com/api/oauth/dialog
-            scopes:
-              delete:pets: modify pets in your account
-              update:pets: read your pets
 
 ```
 
@@ -79,12 +56,7 @@ servers:
     url: http://localhost:8081
     protocol: http
     security:
-      - token: []
       - userPass: []
-      - apiKey: []
-      - oauth:
-        - write:pets
-        - read:pets
   testwebhook:
     url: ws://localhost:9000
     protocol: ws
@@ -95,26 +67,8 @@ x-remoteServers:
 
 components:
   securitySchemes:
-    token:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
     userPass:
       type: userPassword
-    apiKey:
-      type: httpApiKey
-      name: api_key
-      in: query
-      oauth:
-        type: oauth2
-        flows:
-          clientCredentials:
-            tokenUrl: https://example.com/api/oauth/dialog
-            scopes:
-              delete:pets: modify pets in your account
-              update:pets: read your pets
-
-
 
 ```
 
@@ -126,7 +80,7 @@ The `serverAuth` function takes an argument that can be destructured as follows
 
 | Attribute  | Description                                                     |
 | ---------- | --------------------------------------------------------------- |
-| callback   | The done function that tells the server to proceed.             |
+| done       | The done function that tells the server to proceed.             |
 | authProps  | The authentication parameters recieved from the client.         |
 | serverName | The name of the server/broker from which the event was emitted. |
 | doc        | The parsedAsyncAPI schema                                       |
