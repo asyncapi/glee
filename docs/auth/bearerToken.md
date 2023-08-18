@@ -1,6 +1,6 @@
 ## Getting started with Bearer Token authentication
 
-Bearer Token authentication is one of the most popular forms of authentication and is widely used because of it's percieved security. This guide will walk through how to implement bearer token authentication in Glee.
+Bearer Token authentication is one of the most popular forms of authentication and is widely used because of its percieved security. This guide will walk through how to implement bearer token authentication in Glee.
 
 A sample `asyncapi.yaml` for a server with security requirements and user password security scheme is shown below:
 
