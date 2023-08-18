@@ -18,7 +18,7 @@ export async function clientAuth({ parsedAsyncAPI, serverName }) {
 
 Glee looks for authentication files in the `auth` directory, the name of the authentication file should be the name of the targeted server that the authentication logic should work for.
 
-## Supported Authentication Values in AsyncAPI.yaml file
+## Supported Authentication Values in asyncapi.yaml file
 
 AsyncAPI currently supports a variety of authentication formats as specified in the documentation, however Glee supports the following authentication schemas.
 
