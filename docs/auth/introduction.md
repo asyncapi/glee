@@ -1,6 +1,5 @@
 # Authentication
 
-<!-- Glee relies on functions to execute your business logic. Functions are files that export a default async Node.js function: -->
 
 Authentication in Glee can be done using authentication functions. Authentication functions are files that export either one or both of the `clientAuth` and `serverAuth` Node.js functions:
 
