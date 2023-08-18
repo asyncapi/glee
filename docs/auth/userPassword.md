@@ -1,6 +1,6 @@
 ## Getting started with username and password authentication
 
-User and password authentication is one of the most basic form of authentication. This guide will walk through how to implement username and password authentication in Glee.
+User and password authentication is one of the most basic forms of authentication. This guide will walk through how to implement username and password authentication in Glee.
 
 A sample `asyncapi.yaml` for a server with security requirements and user password security scheme is shown below:
 
