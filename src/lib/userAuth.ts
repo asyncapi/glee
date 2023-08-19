@@ -1,7 +1,6 @@
 import { basename, extname } from 'path'
 import { stat } from 'fs/promises'
 import walkdir from 'walkdir'
-// import { getConfigs } from './configs.js'
 import { logWarningMessage } from './logger.js'
 import { GleeAuthFunction, GleeAuthFunctionEvent } from './index.js'
 import { pathToFileURL } from 'url'
@@ -11,7 +10,6 @@ interface AuthFunctionInfo {
   serverAuth?: GleeAuthFunction
 }
 
-// const { GLEE_DIR, GLEE_AUTH_DIR } = getConfigs()
 export const authFunctions: Map<string, AuthFunctionInfo> = new Map()
 
 export async function register(dir: string) {
@@ -49,8 +47,6 @@ export async function register(dir: string) {
 export async function triggerAuth(params: GleeAuthFunctionEvent) {
   const { serverName, done } = params
 
-  console.log('serverName', serverName)
-
   try {
     const auth = authFunctions.get(serverName)
     if (!auth) {
@@ -77,12 +73,5 @@ export async function triggerAuth(params: GleeAuthFunctionEvent) {
 }
 
 export async function clientAuthConfig(serverName: string) {
-  //should check that it contains the implement security keys e.g tokens, userPass, etc.
-  // console.log(
-  //   'client auth',
-  //   authFunctions.get(serverName)?.clientAuth.toString()
-  // )
   return authFunctions.get(serverName)?.clientAuth
 }
-
-//auth-helper class

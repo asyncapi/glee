@@ -12,7 +12,7 @@ class GleeAuth extends EventEmitter {
   private auth: { [key: string]: string } | { [key: string]: string[] }
 
   /**
-   * Instantiates a GleeRouter.
+   * Instantiates authentication.
    */
   constructor(
     AsyncAPIServer: Server,
