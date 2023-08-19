@@ -20,7 +20,7 @@ The name of the authentication file should be the name of the targeted server th
 
 ## Supported Authentication Values in asyncapi.yaml file
 
-AsyncAPI currently supports a variety of authentication formats as specified in the documentation, however Glee supports the following authentication schemas.
+AsyncAPI currently supports a variety of authentication formats as specified in the [documentation](https://www.asyncapi.com/docs/reference/specification/v2.6.0#securitySchemeObject), however Glee supports the following authentication schemas.
 
 A sample `asyncapi.yaml` for a server with security requirements and a `userPassword` security schemes is shown below:
 
