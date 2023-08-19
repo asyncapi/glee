@@ -207,7 +207,6 @@ class WebSocketsAdapter extends Adapter {
       this.serverName
     )
 
-    //verifyClient works!!!!
     const servers = new Map()
     this.channelNames.forEach((channelName) => {
       servers.set(
@@ -228,7 +227,6 @@ class WebSocketsAdapter extends Adapter {
 
       pathname = this.pathnameChecks(socket, pathname, { serverUrl, servers })
 
-      //add auth fields to this URL interface
       const { searchParams } = new URL(
         request.url,
         `ws://${request.headers.host}`
@@ -246,8 +244,6 @@ class WebSocketsAdapter extends Adapter {
         })
         if (!correctBindings) return
       }
-
-      // socket.destroy()
 
       if (servers.has(pathname)) {
         servers.get(pathname).handleUpgrade(request, socket, head, (ws) => {
