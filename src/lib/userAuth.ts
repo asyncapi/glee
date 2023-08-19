@@ -59,6 +59,7 @@ export async function triggerAuth(params: GleeAuthFunctionEvent) {
       done(false, 422, 'Cannot find authentication file')
       return
     }
+    //run serverAuth function with passed parameters
     await auth.serverAuth(params)
     return
   } catch (err) {
@@ -73,5 +74,6 @@ export async function triggerAuth(params: GleeAuthFunctionEvent) {
 }
 
 export async function clientAuthConfig(serverName: string) {
+  //get client credentials
   return authFunctions.get(serverName)?.clientAuth
 }
