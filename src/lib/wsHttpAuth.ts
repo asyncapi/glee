@@ -70,41 +70,55 @@ class GleeAuth extends EventEmitter {
 
   formClientAuth(authKeys, { url, headers, query }) {
     if (!authKeys) return { url, headers }
-    authKeys.map((el) => {
-      const scheme = this.secReqs.find((sec) => Object.keys(sec) == el)
-      const currentScheme = scheme[String(el)].scheme()
-      const currentType = scheme[String(el)].type()
+    authKeys.map((authKey) => {
+      const scheme = this.secReqs.find((sec) => Object.keys(sec) == authKey)
+      const currentScheme = scheme[String(authKey)].scheme()
+      const currentType = scheme[String(authKey)].type()
       if (currentScheme == 'bearer') {
-        headers.authentication = `bearer ${this.auth[String(el)]}`
+        headers.authentication = `bearer ${this.auth[String(authKey)]}`
+        return
       }
       if (currentType == 'userPassword' || currentType == 'apiKey') {
-        const password = this.auth[String(el)]['password']
-        const username = this.auth[String(el)]['user']
-
-        if (typeof url == 'object') {
-          url.password = password
-          url.username = username
-          return
-        }
-
-        const myURL = new URL(url)
-        myURL.password = password
-        myURL.username = username
-        url = myURL
+        url = this.userPassApiKeyLogic(url, authKey)
+        return
       }
       if (currentType == 'oauth2') {
-        headers.oauthToken = this.auth[String(el)]
+        headers.oauthToken = this.auth[String(authKey)]
       }
       if (currentType == 'httpApiKey') {
-        const loc = scheme[String(el)].json('in')
-        if (loc == 'header') {
-          headers[scheme[String(el)].json('name')] = this.auth[String(el)]
-        } else if (loc == 'query') {
-          query[scheme[String(el)].json('name')] = this.auth[String(el)]
-        }
+        const conf = this.httpApiKeyLogic(scheme, headers, query, authKey)
+        headers = conf.headers
+        query = conf.query
       }
     })
     return { url, headers, query }
+  }
+
+  private userPassApiKeyLogic(url, authKey) {
+    const password = this.auth[String(authKey)]['password']
+    const username = this.auth[String(authKey)]['user']
+
+    if (typeof url == 'object') {
+      url.password = password
+      url.username = username
+      return url
+    }
+
+    const myURL = new URL(url)
+    myURL.password = password
+    myURL.username = username
+    return myURL
+  }
+
+  private httpApiKeyLogic(scheme, headers, query, authKey) {
+    const loc = scheme[String(authKey)].json('in')
+    if (loc == 'header') {
+      headers[scheme[String(authKey)].json('name')] = this.auth[String(authKey)]
+    } else if (loc == 'query') {
+      query[scheme[String(authKey)].json('name')] = this.auth[String(authKey)]
+    }
+
+    return { headers, query }
   }
 
   //   getServerAuthReq() {}

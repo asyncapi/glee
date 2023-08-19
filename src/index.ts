@@ -26,7 +26,6 @@ import logger from './middlewares/logger.js'
 import generateDocs from './lib/docs.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
-// import authMiddleware from "./middlewares/authMiddleware.js"
 import { initializeConfigs } from './lib/configs.js'
 import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'

@@ -177,7 +177,6 @@ class WebSocketsAdapter extends Adapter {
     return function done(val: boolean, code = 401, message = 'Unauthorized') {
       cb(val, code, message)
       if (val === false) {
-        console.error(`An error occurred during authentication`)
         const err = new Error(`${code} ${message}`)
         this.emit('error', err)
       }
