@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:29](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L29)
+[src/lib/index.d.ts:29](https://github.com/asyncapi/glee/blob/f761154/src/lib/index.d.ts#L29)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:27](https://github.com/asyncapi/glee/blob/b84101b/src/lib/index.d.ts#L27)
+[src/lib/index.d.ts:27](https://github.com/asyncapi/glee/blob/f761154/src/lib/index.d.ts#L27)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:28](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L28)
+[src/lib/index.d.ts:28](https://github.com/asyncapi/glee/blob/f761154/src/lib/index.d.ts#L28)
