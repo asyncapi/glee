@@ -10,9 +10,29 @@
 
 ### Type Aliases
 
+- [AuthEvent](lib_adapter.md#authevent)
 - [EnrichedEvent](lib_adapter.md#enrichedevent)
 
 ## Type Aliases
+
+### AuthEvent
+
+Ƭ **AuthEvent**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `authProps` | [`AuthProps`](lib.md#authprops) |
+| `callback` | `any` |
+| `doc` | `any` |
+| `serverName` | `string` |
+
+#### Defined in
+
+[src/lib/adapter.ts:17](https://github.com/oviecodes/glee/blob/2283982/src/lib/adapter.ts#L17)
+
+___
 
 ### EnrichedEvent
 

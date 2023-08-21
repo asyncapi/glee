@@ -5,6 +5,7 @@ import Adapter from '../../lib/adapter.js'
 import GleeConnection from '../../lib/connection.js'
 import GleeMessage from '../../lib/message.js'
 import GleeError from '../../errors/glee-error.js'
+import GleeAuth from '../../lib/wsHttpAuth.js'
 
 type QueryData = {
   searchParams: URLSearchParams
@@ -141,7 +142,7 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  private checkBindings(socket, bindingOpts) {
+  private async checkBindings(socket, bindingOpts) {
     const { wsChannelBinding, request, searchParams } = bindingOpts
 
     const { query, headers } = wsChannelBinding
@@ -162,6 +163,7 @@ class WebSocketsAdapter extends Adapter {
         request,
         headers,
       })
+
       if (!isValid) {
         this.emitGleeError(socket, { humanReadableError, errors })
         return false
@@ -171,18 +173,55 @@ class WebSocketsAdapter extends Adapter {
     return true
   }
 
+  private wrapCallbackDecorator(cb) {
+    return function done(val: boolean, code = 401, message = 'Unauthorized') {
+      cb(val, code, message)
+      if (val === false) {
+        const err = new Error(`${code} ${message}`)
+        this.emit('error', err)
+      }
+    }
+  }
+
+  private verifyClientFunc(gleeAuth, info, cb) {
+    const authProps = gleeAuth.getServerAuthProps(info.req.headers, {})
+    const done = this.wrapCallbackDecorator(cb).bind(this)
+    this.emit('auth', {
+      authProps,
+      server: this.serverName,
+      done,
+      doc: this.AsyncAPIServer,
+    })
+  }
+
   async _connect(): Promise<this> {
     const { config, serverUrl, wsHttpServer, optionsPort, port } =
       await this.initializeConstants()
 
     this.portChecks({ port, config, optionsPort, wsHttpServer })
 
+    const gleeAuth = new GleeAuth(
+      this.AsyncAPIServer,
+      this.parsedAsyncAPI,
+      this.serverName
+    )
+
     const servers = new Map()
     this.channelNames.forEach((channelName) => {
-      servers.set(channelName, new WebSocket.Server({ noServer: true }))
+      servers.set(
+        channelName,
+        new WebSocket.Server({
+          noServer: true,
+          verifyClient: gleeAuth.checkAuthPresense()
+            ? (info, cb) => {
+                this.verifyClientFunc(gleeAuth, info, cb)
+              }
+            : null,
+        })
+      )
     })
 
-    wsHttpServer.on('upgrade', (request, socket, head) => {
+    wsHttpServer.on('upgrade', async (request, socket, head) => {
       let { pathname } = new URL(request.url, `ws://${request.headers.host}`)
 
       pathname = this.pathnameChecks(socket, pathname, { serverUrl, servers })
@@ -191,12 +230,13 @@ class WebSocketsAdapter extends Adapter {
         request.url,
         `ws://${request.headers.host}`
       )
+
       const wsChannelBinding = this.parsedAsyncAPI
         .channel(pathname)
         .binding('ws')
 
       if (wsChannelBinding) {
-        const correctBindings = this.checkBindings(socket, {
+        const correctBindings = await this.checkBindings(socket, {
           wsChannelBinding,
           request,
           searchParams,
@@ -232,12 +272,14 @@ class WebSocketsAdapter extends Adapter {
           connection.getRaw().send(message.payload)
         })
     } else {
-      if (!message.connection)
-        {throw new Error(
+      if (!message.connection) {
+        throw new Error(
           'There is no WebSocket connection to send the message yet.'
-        )}
-      if (!(message.connection instanceof GleeConnection))
-        {throw new Error('Connection object is not of GleeConnection type.')}
+        )
+      }
+      if (!(message.connection instanceof GleeConnection)) {
+        throw new Error('Connection object is not of GleeConnection type.')
+      }
       message.connection.getRaw().send(message.payload)
     }
   }

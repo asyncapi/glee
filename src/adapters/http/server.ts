@@ -4,6 +4,7 @@ import http from 'http'
 import { validateData } from '../../lib/util.js'
 import GleeError from '../../errors/glee-error.js'
 import * as url from 'url'
+import GleeAuth from '../../lib/wsHttpAuth.js'
 
 class HttpAdapter extends Adapter {
   private httpResponses = new Map()
@@ -30,14 +31,64 @@ class HttpAdapter extends Adapter {
     const optionsPort = httpOptions?.port
     const port = optionsPort || asyncapiServerPort
 
-    httpServer.on('request', (req, res) => {
+    httpServer.on('request', async (req, res) => {
       res.setHeader('Content-Type', 'application/json')
+
       const bodyBuffer = []
       let body: object
       req.on('data', (chunk) => {
         bodyBuffer.push(chunk)
       })
-      req.on('end', () => {
+
+      function done() {
+        let resolveFunc, rejectFunc
+        const promise = new Promise((resolve, reject) => {
+          resolveFunc = resolve
+          rejectFunc = reject
+        })
+        return {
+          promise,
+          done: (val: boolean, code = 401, message = 'Unauthorized') => {
+            if (val) {
+              resolveFunc(true)
+            } else {
+              rejectFunc({ code, message })
+            }
+          },
+        }
+      }
+
+      const gleeAuth = new GleeAuth(
+        this.AsyncAPIServer,
+        this.parsedAsyncAPI,
+        this.serverName,
+        req.headers
+      )
+
+      const { promise, done: callback } = done()
+
+      if (gleeAuth.checkAuthPresense()) {
+        this.emit('auth', {
+          authProps: gleeAuth.getServerAuthProps(
+            req.headers,
+            url.parse(req.url, true).query
+          ),
+          server: this.serverName,
+          done: callback,
+          doc: this.AsyncAPIServer,
+        })
+      }
+
+      req.on('end', async () => {
+        try {
+          if (gleeAuth.checkAuthPresense()) await promise
+        } catch (e) {
+          res.statusCode = e.code
+          res.end()
+          this.emit('error', new Error(`${e.code} ${e.message}`))
+          return
+        }
+
         body = JSON.parse(Buffer.concat(bodyBuffer).toString())
         this.httpResponses.set(this.serverName, res)
         let { pathname } = new URL(req.url, serverUrl)

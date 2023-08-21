@@ -1,12 +1,19 @@
-asyncapi: 2.4.0
+asyncapi: 2.6.0
 info:
   title: AsyncAPI IMDB server
   version: 1.0.0
   description: This app is a dummy server that would stream the trending/upcoming anime.
 servers:
   trendingAnimeServer:
-    url: http://localhost:8081
+    url: 'http://localhost:8081'
     protocol: http
+    security:
+      - token: []
+      - userPass: []
+      - apiKey: []
+      - UserOrPassKey: []
+      - cert: []
+      - oauth: []
 channels:
   trendingAnime:
     bindings:
@@ -15,13 +22,13 @@ channels:
         method: POST
         bindingVersion: 0.1.0
         query:
-          $ref: "#/components/schemas/request"
+          $ref: '#/components/schemas/request'
         body:
-          $ref: "#/components/schemas/request"
+          $ref: '#/components/schemas/request'
     publish:
       operationId: trendingAnimeController
       message:
-        $ref: "#/components/messages/trendingAnime"
+        $ref: '#/components/messages/trendingAnime'
     subscribe:
       message:
         payload:
@@ -31,7 +38,7 @@ components:
     trendingAnime:
       summary: Data required to populate trending anime
       payload:
-        $ref: "#/components/schemas/request"
+        $ref: '#/components/schemas/request'
   schemas:
     request:
       type: object
@@ -53,3 +60,27 @@ components:
         studio:
           type: string
           description: The studio of anime.
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    userPass:
+      type: userPassword
+    apiKey:
+      type: httpApiKey
+      name: api_key
+      in: query
+    UserOrPassKey:
+      type: apiKey
+      in: user
+    cert:
+      type: X509
+    oauth:
+        type: oauth2
+        flows:
+          clientCredentials:
+            tokenUrl: https://example.com/api/oauth/dialog
+            scopes:
+              delete:pets: modify pets in your account
+              update:pets: read your pets
