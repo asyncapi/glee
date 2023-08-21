@@ -25,11 +25,29 @@ export interface MqttAuthConfig {
 
 export interface WsAuthConfig {
   token?: string
+  username?: string
+  password?: string
 }
 
 export interface HttpAuthConfig {
   token?: string
+  username?: string
+  password?: string
 }
+
+export type AuthProps = {
+  getToken: () => string
+  getUserPass: () => {
+    username: string
+    password: string
+  }
+  getCert: () => string
+  getOauthToken: () => string
+  getHttpAPIKeys: (name: string) => string
+  getAPIKeys: () => string
+}
+
+export type WsHttpAuth = WsAuthConfig | HttpAuthConfig
 
 export interface KafkaAuthConfig {
   key?: string
@@ -109,6 +127,14 @@ export type GleeFunctionEvent = {
   channel?: string
 }
 
+export type GleeAuthFunctionEvent = {
+  glee: Glee
+  authProps: AuthProps
+  done: any
+  serverName: string
+  doc: any
+}
+
 export type GleeFunctionReturnSend = {
   payload?: any
   query?: QueryParam
@@ -123,3 +149,7 @@ export type GleeFunctionReturnBroadcast = GleeFunctionReturnSend
 export type GleeFunction = (
   event: GleeFunctionEvent
 ) => Promise<GleeFunctionReturn>
+
+export type GleeAuthFunction = (
+  event: GleeAuthFunctionEvent
+) => Promise<GleeAuthFunctionEvent>

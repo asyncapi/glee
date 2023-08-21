@@ -8,9 +8,21 @@
 
 ### Properties
 
+- [password](lib.HttpAuthConfig.md#password)
 - [token](lib.HttpAuthConfig.md#token)
+- [username](lib.HttpAuthConfig.md#username)
 
 ## Properties
+
+### password
+
+• `Optional` **password**: `string`
+
+#### Defined in
+
+[src/lib/index.d.ts:35](https://github.com/asyncapi/glee/blob/f761154/src/lib/index.d.ts#L35)
+
+___
 
 ### token
 
@@ -18,4 +30,14 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:31](https://github.com/asyncapi/glee/blob/b84101b/src/lib/index.d.ts#L31)
+[src/lib/index.d.ts:33](https://github.com/asyncapi/glee/blob/f761154/src/lib/index.d.ts#L33)
+
+___
+
+### username
+
+• `Optional` **username**: `string`
+
+#### Defined in
+
+[src/lib/index.d.ts:34](https://github.com/asyncapi/glee/blob/f761154/src/lib/index.d.ts#L34)

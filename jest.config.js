@@ -13,5 +13,9 @@ export default {
   },
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
+    '^nimma/legacy$': '<rootDir>/node_modules/nimma/dist/legacy/cjs/index.js',
+    '^nimma/fallbacks$':
+      '<rootDir>/node_modules/nimma/dist/legacy/cjs/fallbacks/index.js',
   },
+  transform: {},
 }
