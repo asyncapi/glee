@@ -1,12 +1,12 @@
-[@asyncapi/glee](../README.md) / [adapters/http/server](../modules/adapters_http_server.md) / default
+[@asyncapi/glee](../README.md) / [lib/wsHttpAuth](../modules/lib_wsHttpAuth.md) / default
 
 # Class: default
 
-[adapters/http/server](../modules/adapters_http_server.md).default
+[lib/wsHttpAuth](../modules/lib_wsHttpAuth.md).default
 
 ## Hierarchy
 
-- [`default`](lib_adapter.default.md)
+- `EventEmitter`
 
   ↳ **`default`**
 
@@ -14,93 +14,136 @@
 
 ### Constructors
 
-- [constructor](adapters_http_server.default.md#constructor)
+- [constructor](lib_wsHttpAuth.default.md#constructor)
 
 ### Properties
 
-- [httpResponses](adapters_http_server.default.md#httpresponses)
-- [captureRejectionSymbol](adapters_http_server.default.md#capturerejectionsymbol)
-- [captureRejections](adapters_http_server.default.md#capturerejections)
-- [defaultMaxListeners](adapters_http_server.default.md#defaultmaxlisteners)
-- [errorMonitor](adapters_http_server.default.md#errormonitor)
-
-### Accessors
-
-- [AsyncAPIServer](adapters_http_server.default.md#asyncapiserver)
-- [channelNames](adapters_http_server.default.md#channelnames)
-- [connections](adapters_http_server.default.md#connections)
-- [glee](adapters_http_server.default.md#glee)
-- [parsedAsyncAPI](adapters_http_server.default.md#parsedasyncapi)
-- [serverName](adapters_http_server.default.md#servername)
-- [serverUrlExpanded](adapters_http_server.default.md#serverurlexpanded)
+- [AsyncAPIServer](lib_wsHttpAuth.default.md#asyncapiserver)
+- [auth](lib_wsHttpAuth.default.md#auth)
+- [authConfig](lib_wsHttpAuth.default.md#authconfig)
+- [parsedAsyncAPI](lib_wsHttpAuth.default.md#parsedasyncapi)
+- [secReqs](lib_wsHttpAuth.default.md#secreqs)
+- [serverName](lib_wsHttpAuth.default.md#servername)
+- [captureRejectionSymbol](lib_wsHttpAuth.default.md#capturerejectionsymbol)
+- [captureRejections](lib_wsHttpAuth.default.md#capturerejections)
+- [defaultMaxListeners](lib_wsHttpAuth.default.md#defaultmaxlisteners)
+- [errorMonitor](lib_wsHttpAuth.default.md#errormonitor)
 
 ### Methods
 
-- [\_checkHttpBinding](adapters_http_server.default.md#_checkhttpbinding)
-- [\_connect](adapters_http_server.default.md#_connect)
-- [\_createMessage](adapters_http_server.default.md#_createmessage)
-- [\_send](adapters_http_server.default.md#_send)
-- [addListener](adapters_http_server.default.md#addlistener)
-- [connect](adapters_http_server.default.md#connect)
-- [emit](adapters_http_server.default.md#emit)
-- [eventNames](adapters_http_server.default.md#eventnames)
-- [getAuthConfig](adapters_http_server.default.md#getauthconfig)
-- [getMaxListeners](adapters_http_server.default.md#getmaxlisteners)
-- [getSubscribedChannels](adapters_http_server.default.md#getsubscribedchannels)
-- [listenerCount](adapters_http_server.default.md#listenercount)
-- [listeners](adapters_http_server.default.md#listeners)
-- [name](adapters_http_server.default.md#name)
-- [off](adapters_http_server.default.md#off)
-- [on](adapters_http_server.default.md#on)
-- [once](adapters_http_server.default.md#once)
-- [prependListener](adapters_http_server.default.md#prependlistener)
-- [prependOnceListener](adapters_http_server.default.md#prependoncelistener)
-- [rawListeners](adapters_http_server.default.md#rawlisteners)
-- [removeAllListeners](adapters_http_server.default.md#removealllisteners)
-- [removeListener](adapters_http_server.default.md#removelistener)
-- [resolveProtocolConfig](adapters_http_server.default.md#resolveprotocolconfig)
-- [send](adapters_http_server.default.md#send)
-- [setMaxListeners](adapters_http_server.default.md#setmaxlisteners)
-- [getEventListeners](adapters_http_server.default.md#geteventlisteners)
-- [listenerCount](adapters_http_server.default.md#listenercount-1)
-- [on](adapters_http_server.default.md#on-1)
-- [once](adapters_http_server.default.md#once-1)
-- [setMaxListeners](adapters_http_server.default.md#setmaxlisteners-1)
+- [addListener](lib_wsHttpAuth.default.md#addlistener)
+- [checkAuthPresense](lib_wsHttpAuth.default.md#checkauthpresense)
+- [checkClientAuthConfig](lib_wsHttpAuth.default.md#checkclientauthconfig)
+- [emit](lib_wsHttpAuth.default.md#emit)
+- [eventNames](lib_wsHttpAuth.default.md#eventnames)
+- [formClientAuth](lib_wsHttpAuth.default.md#formclientauth)
+- [getAuthConfig](lib_wsHttpAuth.default.md#getauthconfig)
+- [getMaxListeners](lib_wsHttpAuth.default.md#getmaxlisteners)
+- [getServerAuthProps](lib_wsHttpAuth.default.md#getserverauthprops)
+- [httpApiKeyLogic](lib_wsHttpAuth.default.md#httpapikeylogic)
+- [listenerCount](lib_wsHttpAuth.default.md#listenercount)
+- [listeners](lib_wsHttpAuth.default.md#listeners)
+- [off](lib_wsHttpAuth.default.md#off)
+- [on](lib_wsHttpAuth.default.md#on)
+- [once](lib_wsHttpAuth.default.md#once)
+- [prependListener](lib_wsHttpAuth.default.md#prependlistener)
+- [prependOnceListener](lib_wsHttpAuth.default.md#prependoncelistener)
+- [processClientAuth](lib_wsHttpAuth.default.md#processclientauth)
+- [rawListeners](lib_wsHttpAuth.default.md#rawlisteners)
+- [removeAllListeners](lib_wsHttpAuth.default.md#removealllisteners)
+- [removeListener](lib_wsHttpAuth.default.md#removelistener)
+- [setMaxListeners](lib_wsHttpAuth.default.md#setmaxlisteners)
+- [userPassApiKeyLogic](lib_wsHttpAuth.default.md#userpassapikeylogic)
+- [getEventListeners](lib_wsHttpAuth.default.md#geteventlisteners)
+- [listenerCount](lib_wsHttpAuth.default.md#listenercount-1)
+- [on](lib_wsHttpAuth.default.md#on-1)
+- [once](lib_wsHttpAuth.default.md#once-1)
+- [setMaxListeners](lib_wsHttpAuth.default.md#setmaxlisteners-1)
 
 ## Constructors
 
 ### constructor
 
-• **new default**(`glee`, `serverName`, `server`, `parsedAsyncAPI`)
+• **new default**(`AsyncAPIServer`, `parsedAsyncAPI`, `serverName`, `authConfig?`)
 
-Instantiates a Glee adapter.
+Instantiates authentication.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `glee` | [`default`](lib_glee.default.md) | A reference to the Glee app. |
-| `serverName` | `string` | The name of the AsyncAPI server to use for the connection. |
-| `server` | `Server` | The AsyncAPI server to use for the connection. |
-| `parsedAsyncAPI` | `AsyncAPIDocument` | The AsyncAPI document. |
+| Name | Type |
+| :------ | :------ |
+| `AsyncAPIServer` | `Server` |
+| `parsedAsyncAPI` | `AsyncAPIDocument` |
+| `serverName` | `string` |
+| `authConfig?` | `any` |
 
-#### Inherited from
+#### Overrides
 
-[default](lib_adapter.default.md).[constructor](lib_adapter.default.md#constructor)
+EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/adapter.ts:41](https://github.com/asyncapi/glee/blob/f761154/src/lib/adapter.ts#L41)
+[src/lib/wsHttpAuth.ts:17](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L17)
 
 ## Properties
 
-### httpResponses
+### AsyncAPIServer
 
-• `Private` **httpResponses**: `Map`<`any`, `any`\>
+• `Private` **AsyncAPIServer**: `Server`
 
 #### Defined in
 
-[src/adapters/http/server.ts:10](https://github.com/asyncapi/glee/blob/f761154/src/adapters/http/server.ts#L10)
+[src/lib/wsHttpAuth.ts:10](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L10)
+
+___
+
+### auth
+
+• `Private` **auth**: { `[key: string]`: `string`;  } \| { `[key: string]`: `string`[];  }
+
+#### Defined in
+
+[src/lib/wsHttpAuth.ts:12](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L12)
+
+___
+
+### authConfig
+
+• `Private` **authConfig**: [`WsAuthConfig`](../interfaces/lib.WsAuthConfig.md) \| [`HttpAuthConfig`](../interfaces/lib.HttpAuthConfig.md)
+
+#### Defined in
+
+[src/lib/wsHttpAuth.ts:11](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L11)
+
+___
+
+### parsedAsyncAPI
+
+• `Private` **parsedAsyncAPI**: `AsyncAPIDocument`
+
+#### Defined in
+
+[src/lib/wsHttpAuth.ts:8](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L8)
+
+___
+
+### secReqs
+
+• `Private` **secReqs**: { `[key: string]`: `SecurityScheme`;  }[]
+
+#### Defined in
+
+[src/lib/wsHttpAuth.ts:7](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L7)
+
+___
+
+### serverName
+
+• `Private` **serverName**: `string`
+
+#### Defined in
+
+[src/lib/wsHttpAuth.ts:9](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L9)
 
 ___
 
@@ -110,7 +153,7 @@ ___
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[captureRejectionSymbol](lib_adapter.default.md#capturerejectionsymbol)
+EventEmitter.captureRejectionSymbol
 
 #### Defined in
 
@@ -126,7 +169,7 @@ Sets or gets the default captureRejection value for all emitters.
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[captureRejections](lib_adapter.default.md#capturerejections)
+EventEmitter.captureRejections
 
 #### Defined in
 
@@ -140,7 +183,7 @@ ___
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[defaultMaxListeners](lib_adapter.default.md#defaultmaxlisteners)
+EventEmitter.defaultMaxListeners
 
 #### Defined in
 
@@ -162,224 +205,17 @@ regular `'error'` listener is installed.
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[errorMonitor](lib_adapter.default.md#errormonitor)
+EventEmitter.errorMonitor
 
 #### Defined in
 
 node_modules/@types/node/events.d.ts:327
 
-## Accessors
-
-### AsyncAPIServer
-
-• `get` **AsyncAPIServer**(): `Server`
-
-#### Returns
-
-`Server`
-
-#### Inherited from
-
-Adapter.AsyncAPIServer
-
-#### Defined in
-
-[src/lib/adapter.ts:185](https://github.com/asyncapi/glee/blob/f761154/src/lib/adapter.ts#L185)
-
-___
-
-### channelNames
-
-• `get` **channelNames**(): `string`[]
-
-#### Returns
-
-`string`[]
-
-#### Inherited from
-
-Adapter.channelNames
-
-#### Defined in
-
-[src/lib/adapter.ts:193](https://github.com/asyncapi/glee/blob/f761154/src/lib/adapter.ts#L193)
-
-___
-
-### connections
-
-• `get` **connections**(): [`default`](lib_connection.default.md)[]
-
-#### Returns
-
-[`default`](lib_connection.default.md)[]
-
-#### Inherited from
-
-Adapter.connections
-
-#### Defined in
-
-[src/lib/adapter.ts:197](https://github.com/asyncapi/glee/blob/f761154/src/lib/adapter.ts#L197)
-
-___
-
-### glee
-
-• `get` **glee**(): [`default`](lib_glee.default.md)
-
-#### Returns
-
-[`default`](lib_glee.default.md)
-
-#### Inherited from
-
-Adapter.glee
-
-#### Defined in
-
-[src/lib/adapter.ts:177](https://github.com/asyncapi/glee/blob/f761154/src/lib/adapter.ts#L177)
-
-___
-
-### parsedAsyncAPI
-
-• `get` **parsedAsyncAPI**(): `AsyncAPIDocument`
-
-#### Returns
-
-`AsyncAPIDocument`
-
-#### Inherited from
-
-Adapter.parsedAsyncAPI
-
-#### Defined in
-
-[src/lib/adapter.ts:189](https://github.com/asyncapi/glee/blob/f761154/src/lib/adapter.ts#L189)
-
-___
-
-### serverName
-
-• `get` **serverName**(): `string`
-
-#### Returns
-
-`string`
-
-#### Inherited from
-
-Adapter.serverName
-
-#### Defined in
-
-[src/lib/adapter.ts:181](https://github.com/asyncapi/glee/blob/f761154/src/lib/adapter.ts#L181)
-
-___
-
-### serverUrlExpanded
-
-• `get` **serverUrlExpanded**(): `string`
-
-#### Returns
-
-`string`
-
-#### Inherited from
-
-Adapter.serverUrlExpanded
-
-#### Defined in
-
-[src/lib/adapter.ts:201](https://github.com/asyncapi/glee/blob/f761154/src/lib/adapter.ts#L201)
-
 ## Methods
-
-### \_checkHttpBinding
-
-▸ **_checkHttpBinding**(`req`, `res`, `pathname`, `httpChannelBinding`, `searchParams`, `payload`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `req` | `any` |
-| `res` | `any` |
-| `pathname` | `any` |
-| `httpChannelBinding` | `any` |
-| `searchParams` | `any` |
-| `payload` | `any` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/adapters/http/server.ts:135](https://github.com/asyncapi/glee/blob/f761154/src/adapters/http/server.ts#L135)
-
-___
-
-### \_connect
-
-▸ **_connect**(): `Promise`<[`default`](adapters_http_server.default.md)\>
-
-#### Returns
-
-`Promise`<[`default`](adapters_http_server.default.md)\>
-
-#### Defined in
-
-[src/adapters/http/server.ts:24](https://github.com/asyncapi/glee/blob/f761154/src/adapters/http/server.ts#L24)
-
-___
-
-### \_createMessage
-
-▸ **_createMessage**(`pathName`, `body`, `params`): [`default`](lib_message.default.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `pathName` | `string` |
-| `body` | `any` |
-| `params` | `any` |
-
-#### Returns
-
-[`default`](lib_message.default.md)
-
-#### Defined in
-
-[src/adapters/http/server.ts:181](https://github.com/asyncapi/glee/blob/f761154/src/adapters/http/server.ts#L181)
-
-___
-
-### \_send
-
-▸ **_send**(`message`): `Promise`<`void`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `message` | [`default`](lib_message.default.md) |
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[src/adapters/http/server.ts:175](https://github.com/asyncapi/glee/blob/f761154/src/adapters/http/server.ts#L175)
-
-___
 
 ### addListener
 
-▸ **addListener**(`eventName`, `listener`): [`default`](adapters_http_server.default.md)
+▸ **addListener**(`eventName`, `listener`): [`default`](lib_wsHttpAuth.default.md)
 
 Alias for `emitter.on(eventName, listener)`.
 
@@ -396,11 +232,11 @@ v0.1.26
 
 #### Returns
 
-[`default`](adapters_http_server.default.md)
+[`default`](lib_wsHttpAuth.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[addListener](lib_adapter.default.md#addlistener)
+EventEmitter.addListener
 
 #### Defined in
 
@@ -408,23 +244,31 @@ node_modules/@types/node/events.d.ts:354
 
 ___
 
-### connect
+### checkAuthPresense
 
-▸ **connect**(): `Promise`<[`default`](adapters_http_server.default.md)\>
-
-Connects to the remote server.
+▸ **checkAuthPresense**(): `boolean`
 
 #### Returns
 
-`Promise`<[`default`](adapters_http_server.default.md)\>
-
-#### Overrides
-
-[default](lib_adapter.default.md).[connect](lib_adapter.default.md#connect)
+`boolean`
 
 #### Defined in
 
-[src/adapters/http/server.ts:16](https://github.com/asyncapi/glee/blob/f761154/src/adapters/http/server.ts#L16)
+[src/lib/wsHttpAuth.ts:168](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L168)
+
+___
+
+### checkClientAuthConfig
+
+▸ **checkClientAuthConfig**(): `string`[]
+
+#### Returns
+
+`string`[]
+
+#### Defined in
+
+[src/lib/wsHttpAuth.ts:31](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L31)
 
 ___
 
@@ -487,7 +331,7 @@ v0.1.26
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[emit](lib_adapter.default.md#emit)
+EventEmitter.emit
 
 #### Defined in
 
@@ -525,11 +369,32 @@ v6.0.0
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[eventNames](lib_adapter.default.md#eventnames)
+EventEmitter.eventNames
 
 #### Defined in
 
 node_modules/@types/node/events.d.ts:669
+
+___
+
+### formClientAuth
+
+▸ **formClientAuth**(`authKeys`, `«destructured»`): { `headers`: `any` ; `query`: `undefined` ; `url`: `any`  } \| { `headers`: `any` ; `query`: `any` ; `url`: `any`  }
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `authKeys` | `any` |
+| `«destructured»` | `Object` |
+
+#### Returns
+
+{ `headers`: `any` ; `query`: `undefined` ; `url`: `any`  } \| { `headers`: `any` ; `query`: `any` ; `url`: `any`  }
+
+#### Defined in
+
+[src/lib/wsHttpAuth.ts:71](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L71)
 
 ___
 
@@ -547,13 +412,9 @@ ___
 
 `Promise`<`any`\>
 
-#### Inherited from
-
-[default](lib_adapter.default.md).[getAuthConfig](lib_adapter.default.md#getauthconfig)
-
 #### Defined in
 
-[src/lib/adapter.ts:214](https://github.com/asyncapi/glee/blob/f761154/src/lib/adapter.ts#L214)
+[src/lib/wsHttpAuth.ts:58](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L58)
 
 ___
 
@@ -562,7 +423,7 @@ ___
 ▸ **getMaxListeners**(): `number`
 
 Returns the current max listener value for the `EventEmitter` which is either
-set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](adapters_http_server.default.md#defaultmaxlisteners).
+set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](lib_wsHttpAuth.default.md#defaultmaxlisteners).
 
 **`Since`**
 
@@ -574,7 +435,7 @@ v1.0.0
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[getMaxListeners](lib_adapter.default.md#getmaxlisteners)
+EventEmitter.getMaxListeners
 
 #### Defined in
 
@@ -582,23 +443,52 @@ node_modules/@types/node/events.d.ts:526
 
 ___
 
-### getSubscribedChannels
+### getServerAuthProps
 
-▸ **getSubscribedChannels**(): `string`[]
+▸ **getServerAuthProps**(`headers`, `query`): [`AuthProps`](../modules/lib.md#authprops)
 
-Returns a list of the channels a given adapter has to subscribe to.
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `headers` | `any` |
+| `query` | `any` |
 
 #### Returns
 
-`string`[]
-
-#### Inherited from
-
-[default](lib_adapter.default.md).[getSubscribedChannels](lib_adapter.default.md#getsubscribedchannels)
+[`AuthProps`](../modules/lib.md#authprops)
 
 #### Defined in
 
-[src/lib/adapter.ts:230](https://github.com/asyncapi/glee/blob/f761154/src/lib/adapter.ts#L230)
+[src/lib/wsHttpAuth.ts:126](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L126)
+
+___
+
+### httpApiKeyLogic
+
+▸ `Private` **httpApiKeyLogic**(`scheme`, `headers`, `query`, `authKey`): `Object`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheme` | `any` |
+| `headers` | `any` |
+| `query` | `any` |
+| `authKey` | `any` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `headers` | `any` |
+| `query` | `any` |
+
+#### Defined in
+
+[src/lib/wsHttpAuth.ts:113](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L113)
 
 ___
 
@@ -624,7 +514,7 @@ v3.2.0
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount)
+EventEmitter.listenerCount
 
 #### Defined in
 
@@ -662,7 +552,7 @@ v0.1.26
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[listeners](lib_adapter.default.md#listeners)
+EventEmitter.listeners
 
 #### Defined in
 
@@ -670,23 +560,9 @@ node_modules/@types/node/events.d.ts:539
 
 ___
 
-### name
-
-▸ **name**(): `string`
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[src/adapters/http/server.ts:12](https://github.com/asyncapi/glee/blob/f761154/src/adapters/http/server.ts#L12)
-
-___
-
 ### off
 
-▸ **off**(`eventName`, `listener`): [`default`](adapters_http_server.default.md)
+▸ **off**(`eventName`, `listener`): [`default`](lib_wsHttpAuth.default.md)
 
 Alias for `emitter.removeListener()`.
 
@@ -703,11 +579,11 @@ v10.0.0
 
 #### Returns
 
-[`default`](adapters_http_server.default.md)
+[`default`](lib_wsHttpAuth.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[off](lib_adapter.default.md#off)
+EventEmitter.off
 
 #### Defined in
 
@@ -717,7 +593,7 @@ ___
 
 ### on
 
-▸ **on**(`eventName`, `listener`): [`default`](adapters_http_server.default.md)
+▸ **on**(`eventName`, `listener`): [`default`](lib_wsHttpAuth.default.md)
 
 Adds the `listener` function to the end of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -758,11 +634,11 @@ v0.1.101
 
 #### Returns
 
-[`default`](adapters_http_server.default.md)
+[`default`](lib_wsHttpAuth.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[on](lib_adapter.default.md#on)
+EventEmitter.on
 
 #### Defined in
 
@@ -772,7 +648,7 @@ ___
 
 ### once
 
-▸ **once**(`eventName`, `listener`): [`default`](adapters_http_server.default.md)
+▸ **once**(`eventName`, `listener`): [`default`](lib_wsHttpAuth.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName`. The
 next time `eventName` is triggered, this listener is removed and then invoked.
@@ -811,11 +687,11 @@ v0.3.0
 
 #### Returns
 
-[`default`](adapters_http_server.default.md)
+[`default`](lib_wsHttpAuth.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[once](lib_adapter.default.md#once)
+EventEmitter.once
 
 #### Defined in
 
@@ -825,7 +701,7 @@ ___
 
 ### prependListener
 
-▸ **prependListener**(`eventName`, `listener`): [`default`](adapters_http_server.default.md)
+▸ **prependListener**(`eventName`, `listener`): [`default`](lib_wsHttpAuth.default.md)
 
 Adds the `listener` function to the _beginning_ of the listeners array for the
 event named `eventName`. No checks are made to see if the `listener` has
@@ -853,11 +729,11 @@ v6.0.0
 
 #### Returns
 
-[`default`](adapters_http_server.default.md)
+[`default`](lib_wsHttpAuth.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[prependListener](lib_adapter.default.md#prependlistener)
+EventEmitter.prependListener
 
 #### Defined in
 
@@ -867,7 +743,7 @@ ___
 
 ### prependOnceListener
 
-▸ **prependOnceListener**(`eventName`, `listener`): [`default`](adapters_http_server.default.md)
+▸ **prependOnceListener**(`eventName`, `listener`): [`default`](lib_wsHttpAuth.default.md)
 
 Adds a **one-time**`listener` function for the event named `eventName` to the _beginning_ of the listeners array. The next time `eventName` is triggered, this
 listener is removed, and then invoked.
@@ -893,15 +769,37 @@ v6.0.0
 
 #### Returns
 
-[`default`](adapters_http_server.default.md)
+[`default`](lib_wsHttpAuth.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[prependOnceListener](lib_adapter.default.md#prependoncelistener)
+EventEmitter.prependOnceListener
 
 #### Defined in
 
 node_modules/@types/node/events.d.ts:650
+
+___
+
+### processClientAuth
+
+▸ **processClientAuth**(`url`, `headers`, `query`): `Promise`<{ `headers`: `any` ; `query`: `undefined` ; `url`: `any`  } \| { `headers`: `any` ; `query`: `any` ; `url`: `any`  }\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `url` | `any` |
+| `headers` | `any` |
+| `query` | `any` |
+
+#### Returns
+
+`Promise`<{ `headers`: `any` ; `query`: `undefined` ; `url`: `any`  } \| { `headers`: `any` ; `query`: `any` ; `url`: `any`  }\>
+
+#### Defined in
+
+[src/lib/wsHttpAuth.ts:161](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L161)
 
 ___
 
@@ -952,7 +850,7 @@ v9.4.0
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[rawListeners](lib_adapter.default.md#rawlisteners)
+EventEmitter.rawListeners
 
 #### Defined in
 
@@ -962,7 +860,7 @@ ___
 
 ### removeAllListeners
 
-▸ **removeAllListeners**(`event?`): [`default`](adapters_http_server.default.md)
+▸ **removeAllListeners**(`event?`): [`default`](lib_wsHttpAuth.default.md)
 
 Removes all listeners, or those of the specified `eventName`.
 
@@ -984,11 +882,11 @@ v0.1.26
 
 #### Returns
 
-[`default`](adapters_http_server.default.md)
+[`default`](lib_wsHttpAuth.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[removeAllListeners](lib_adapter.default.md#removealllisteners)
+EventEmitter.removeAllListeners
 
 #### Defined in
 
@@ -998,7 +896,7 @@ ___
 
 ### removeListener
 
-▸ **removeListener**(`eventName`, `listener`): [`default`](adapters_http_server.default.md)
+▸ **removeListener**(`eventName`, `listener`): [`default`](lib_wsHttpAuth.default.md)
 
 Removes the specified `listener` from the listener array for the event named`eventName`.
 
@@ -1090,11 +988,11 @@ v0.1.26
 
 #### Returns
 
-[`default`](adapters_http_server.default.md)
+[`default`](lib_wsHttpAuth.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[removeListener](lib_adapter.default.md#removelistener)
+EventEmitter.removeListener
 
 #### Defined in
 
@@ -1102,59 +1000,9 @@ node_modules/@types/node/events.d.ts:494
 
 ___
 
-### resolveProtocolConfig
-
-▸ **resolveProtocolConfig**(`protocol`): `Promise`<`any`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `protocol` | `string` |
-
-#### Returns
-
-`Promise`<`any`\>
-
-#### Inherited from
-
-[default](lib_adapter.default.md).[resolveProtocolConfig](lib_adapter.default.md#resolveprotocolconfig)
-
-#### Defined in
-
-[src/lib/adapter.ts:205](https://github.com/asyncapi/glee/blob/f761154/src/lib/adapter.ts#L205)
-
-___
-
-### send
-
-▸ **send**(`message`): `Promise`<`void`\>
-
-Sends a message to the remote server.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `message` | [`default`](lib_message.default.md) | The message to send. |
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Overrides
-
-[default](lib_adapter.default.md).[send](lib_adapter.default.md#send)
-
-#### Defined in
-
-[src/adapters/http/server.ts:20](https://github.com/asyncapi/glee/blob/f761154/src/adapters/http/server.ts#L20)
-
-___
-
 ### setMaxListeners
 
-▸ **setMaxListeners**(`n`): [`default`](adapters_http_server.default.md)
+▸ **setMaxListeners**(`n`): [`default`](lib_wsHttpAuth.default.md)
 
 By default `EventEmitter`s will print a warning if more than `10` listeners are
 added for a particular event. This is a useful default that helps finding
@@ -1175,15 +1023,36 @@ v0.3.5
 
 #### Returns
 
-[`default`](adapters_http_server.default.md)
+[`default`](lib_wsHttpAuth.default.md)
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[setMaxListeners](lib_adapter.default.md#setmaxlisteners)
+EventEmitter.setMaxListeners
 
 #### Defined in
 
 node_modules/@types/node/events.d.ts:520
+
+___
+
+### userPassApiKeyLogic
+
+▸ `Private` **userPassApiKeyLogic**(`url`, `authKey`): `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `url` | `any` |
+| `authKey` | `any` |
+
+#### Returns
+
+`any`
+
+#### Defined in
+
+[src/lib/wsHttpAuth.ts:97](https://github.com/asyncapi/glee/blob/f761154/src/lib/wsHttpAuth.ts#L97)
 
 ___
 
@@ -1233,7 +1102,7 @@ v15.2.0, v14.17.0
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[getEventListeners](lib_adapter.default.md#geteventlisteners)
+EventEmitter.getEventListeners
 
 #### Defined in
 
@@ -1277,7 +1146,7 @@ Since v3.2.0 - Use `listenerCount` instead.
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[listenerCount](lib_adapter.default.md#listenercount-1)
+EventEmitter.listenerCount
 
 #### Defined in
 
@@ -1363,7 +1232,7 @@ that iterates `eventName` events emitted by the `emitter`
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[on](lib_adapter.default.md#on-1)
+EventEmitter.on
 
 #### Defined in
 
@@ -1473,7 +1342,7 @@ v11.13.0, v10.16.0
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[once](lib_adapter.default.md#once-1)
+EventEmitter.once
 
 #### Defined in
 
@@ -1495,7 +1364,7 @@ node_modules/@types/node/events.d.ts:194
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[once](lib_adapter.default.md#once-1)
+EventEmitter.once
 
 #### Defined in
 
@@ -1536,7 +1405,7 @@ v15.4.0
 
 #### Inherited from
 
-[default](lib_adapter.default.md).[setMaxListeners](lib_adapter.default.md#setmaxlisteners-1)
+EventEmitter.setMaxListeners
 
 #### Defined in
 
