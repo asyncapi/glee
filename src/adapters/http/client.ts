@@ -1,7 +1,7 @@
-import Adapter from '../../lib/adapter.js'
-import GleeMessage from '../../lib/message.js'
 import got from 'got'
 import http from 'http'
+import Adapter from '../../lib/adapter.js'
+import GleeMessage from '../../lib/message.js'
 import { clientAuthConfig } from '../../lib/userAuth.js'
 import GleeAuth from '../../lib/wsHttpAuth.js'
 
@@ -65,7 +65,6 @@ class HttpClientAdapter extends Adapter {
             this.emit('message', msg, http)
           })
           .catch((err) => {
-            console.log('getting Error')
             this.emit('error', err)
           })
       }

@@ -8,7 +8,7 @@ export default {
   testPathIgnorePatterns: ['functions.test.ts'],
   globals: {
     'ts-jest': {
-      useESM: true,
+      useESM: true
     },
   },
   moduleNameMapper: {
