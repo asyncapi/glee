@@ -22,7 +22,7 @@
 
 #### Defined in
 
-[src/lib/userAuth.ts:15](https://github.com/oviecodes/glee/blob/2283982/src/lib/userAuth.ts#L15)
+[src/lib/userAuth.ts:13](https://github.com/asyncapi/glee/blob/f761154/src/lib/userAuth.ts#L13)
 
 ## Functions
 
@@ -42,7 +42,7 @@
 
 #### Defined in
 
-[src/lib/userAuth.ts:79](https://github.com/oviecodes/glee/blob/2283982/src/lib/userAuth.ts#L79)
+[src/lib/userAuth.ts:76](https://github.com/asyncapi/glee/blob/f761154/src/lib/userAuth.ts#L76)
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 #### Defined in
 
-[src/lib/userAuth.ts:17](https://github.com/oviecodes/glee/blob/2283982/src/lib/userAuth.ts#L17)
+[src/lib/userAuth.ts:15](https://github.com/asyncapi/glee/blob/f761154/src/lib/userAuth.ts#L15)
 
 ___
 
@@ -82,4 +82,4 @@ ___
 
 #### Defined in
 
-[src/lib/userAuth.ts:49](https://github.com/oviecodes/glee/blob/2283982/src/lib/userAuth.ts#L49)
+[src/lib/userAuth.ts:47](https://github.com/asyncapi/glee/blob/f761154/src/lib/userAuth.ts#L47)
