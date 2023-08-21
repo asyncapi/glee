@@ -10,14 +10,13 @@ export async function serverAuth({ authProps, done }) {
   console.log("token", authProps.getToken())
   console.log("userpass", authProps.getUserPass())
 
-  // callback(false, 401, "Unauthorized");
   done(false)
 }
 
 export async function clientAuth({ parsedAsyncAPI, serverName }) {
     return {
       token: process.env.TOKEN,
-      username: 'ovie',
-      password: "somepassword",
+      username: process.env.USERNAME,
+      password: process.env.PASSWORD,
     }
 }

@@ -13,7 +13,6 @@ export async function serverAuth({ authProps, done }) {
   console.log("token", authProps.getToken())
   console.log("userpassword", authProps.getUserPass())
 
-  // done(false, 401, "Unauthorized");
   done(false)
 }
 

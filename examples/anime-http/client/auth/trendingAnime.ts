@@ -8,8 +8,8 @@ export async function clientAuth({ serverName }) {
       oauth: process.env.OAUTH2,
       apiKey: process.env.APIKEY,
       userPass: {
-        user: "oviecodes",
-        password: "password"
+        user: process.env.USERNAME,
+        password: process.env.PASSWORD
       }
     }
   }
