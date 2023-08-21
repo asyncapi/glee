@@ -1,6 +1,6 @@
-## Getting started with username and password authentication
+## Getting started with httpAPIKey authentication
 
-This guide will walk through how to implement username and password authentication in Glee.
+This guide will walk through how to implement authentication using the `httpAPiKey` security scheme in Glee.
 
 A sample `asyncapi.yaml` for a server with security requirements and user `HttpApiKey` security scheme is shown below:
 
