@@ -14,7 +14,10 @@
 ### Type Aliases
 
 - [AuthFunction](lib.md#authfunction)
+- [AuthProps](lib.md#authprops)
 - [CoreGleeConfig](lib.md#coregleeconfig)
+- [GleeAuthFunction](lib.md#gleeauthfunction)
+- [GleeAuthFunctionEvent](lib.md#gleeauthfunctionevent)
 - [GleeClusterAdapterConfig](lib.md#gleeclusteradapterconfig)
 - [GleeConfig](lib.md#gleeconfig)
 - [GleeFunction](lib.md#gleefunction)
@@ -30,6 +33,7 @@
 - [QueryParam](lib.md#queryparam)
 - [WebSocketServerType](lib.md#websocketservertype)
 - [WebsocketAdapterConfig](lib.md#websocketadapterconfig)
+- [WsHttpAuth](lib.md#wshttpauth)
 
 ## Type Aliases
 

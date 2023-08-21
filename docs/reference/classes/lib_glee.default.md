@@ -324,9 +324,9 @@ Adds a connection adapter.
 | :------ | :------ |
 | `Adapter` | typeof [`default`](lib_adapter.default.md) |
 | `«destructured»` | `Object` |
-| › `parsedAsyncAPI` | `AsyncAPIDocument` |
-| › `server` | `Server` |
-| › `serverName` | `string` |
+| › `parsedAsyncAPI` | `AsyncAPIDocument` |
+| › `server` | `Server` |
+| › `serverName` | `string` |
 
 #### Returns
 

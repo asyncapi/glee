@@ -8,9 +8,21 @@
 
 ### Properties
 
+- [password](lib.HttpAuthConfig.md#password)
 - [token](lib.HttpAuthConfig.md#token)
+- [username](lib.HttpAuthConfig.md#username)
 
 ## Properties
+
+### password
+
+• `Optional` **password**: `string`
+
+#### Defined in
+
+[src/lib/index.d.ts:35](https://github.com/oviecodes/glee/blob/2283982/src/lib/index.d.ts#L35)
+
+___
 
 ### token
 

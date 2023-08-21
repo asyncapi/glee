@@ -3,3 +3,4 @@ coverage
 .github
 examples
 node_modules
+docs
