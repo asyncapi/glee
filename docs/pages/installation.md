@@ -31,7 +31,7 @@ Also, you can already open the project in your favorite editor and start tweakin
 ```
 
 On following the next steps, you'll be able to view your application running, 
-essentiaaly when you run the development server `npm run dev`:
+essentially when you run the development server `npm run dev`:
 
 ```
 > glee-hello-world@0.1.0 dev
