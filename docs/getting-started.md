@@ -30,3 +30,101 @@ Glee expects your project to have some files and folders with special names. Whe
 |package.json|**Required.** The Node.js package definition file. Make sure you include `@asyncapi/glee` as a dependency and add two scripts: `dev` and `start`. They should be running `glee dev` and `glee start` respectively.
 
 To understand the structure in a broader way, please refer to the associated page's links. 
+
+### Let's create a glee project to simply the app structure
+
+We will consider simple WebSocket API using glee to understand its magic. We will create a simple WebSocket server that receives a current time from the client and then send a "good morning", "good evening" or "good night" respectively.
+
+To setup a project, you should follow our installation page on how to setup glee on your environment.
+
+We recommend creating a new Glee app using our official CLI which sets up everything automatically. (You don't need to create an empty directory. create-glee-app will make one for you.) To create a project, run: `asyncapi new glee`
+
+Once the process is completed you should have a new Glee app ready for development and see these files that were made.
+
+
+#### Define our Spec for our API
+
+Glee being a spec-first framework, development starts with defining your API spec. To know more details into it, you can follow glee template to understand it step by step. For our case we will define our API:
+
+```yaml
+asyncapi: 2.1.0
+info:
+  title: Greet Bot
+  version: 0.1.0
+servers:
+  websockets:
+    url: ws://0.0.0.0:3000
+    protocol: ws
+channels:
+  greet:
+    publish:
+      operationId: onGreet
+      message:
+        $ref: '#/components/messages/time'
+    subscribe:
+      message:
+        $ref: '#/components/messages/greet'
+components:
+  messages:
+    time:
+      payload:
+        type: object
+        properties:
+          currentTime:
+            type: number
+          name:
+            type: string
+    greet:
+      payload:
+        type: string
+
+```
+
+This will be the Specification that defines our API, in our case, it is very simple, as we will be sending a name and the time of the day, and our API will greet us accordingly.
+
+One thing to note here is the operationId, this is needed and is a crucial part of glee, as this is how we will be connecting our business logic with our spec, operationId is the name of the function that will be called every time a certain operation occurs. In our case whenever /greet channel received a message.
+
+#### Define our operation function
+
+Now for our case, we will be adding a file `functions/onGreet.js` and writing up the logic for parsing our time and sending a response.
+
+```javascript
+export default async function (event) {
+  const { name, time } = event.payload
+  const t = new Date(time)
+  const curHr = t.getHours()
+  let response = ''
+  if (curHr < 12) {
+    response = `Good Morning ${name}`
+  } else if (curHr < 18) {
+    response = `Good Afternoon ${name}`
+  } else {
+    response = `Good Evening ${name}`
+  }
+  return {
+    reply: [
+      {
+        payload: response,
+      },
+    ],
+  }
+}
+
+```
+
+Every file in the functions folder acts as a handler to develop business logic for glee, every file should export an async function that receives an event parameter, where you have access to payload and server details.
+
+Running and testing your application
+We will not execute the application and carry out testing with Postman to ensure that it is functioning as intended.
+
+Now to run your glee application, just run:
+
+```
+npm run dev
+# or 
+npm run start
+```
+To send a WebSocket request with a payload to `ws://localhost:3000/greet`, open Postman and checkout the endpoint:
+
+
+So this is how easy it is to build a WebSocket API using Glee. You can check out the example code [here](https://github.com/Souvikns/greet-bot).
