@@ -33,14 +33,14 @@ To understand the structure in a broader way, please refer to the associated pag
 
 ### Let's create a glee project to simply the app structure
 
-We will consider simple WebSocket API using glee to understand its magic. We will create a simple WebSocket server that receives a current time from the client and then send a "good morning", "good evening" or "good night" respectively.
+We will consider a simple WebSocket API using glee to understand its magic. We will create a simple WebSocket server that receives a current time from the client and then send a "good morning", "good evening" or "good night" respectively.
 
 To setup a project, you should follow our installation page on how to setup glee on your environment.
 
 We recommend creating a new Glee app using our official CLI which sets up everything automatically. (You don't need to create an empty directory. create-glee-app will make one for you.) To create a project, run: `asyncapi new glee`
 
 Once the process is completed you should have a new Glee app ready for development and see these files that were made.
-
+![glee_struct](https://github.com/afzal442/glee/assets/11625672/2140f1fc-451c-4d3d-8802-3291149fd8ff)
 
 #### Define our Spec for our API
 
@@ -125,6 +125,6 @@ npm run dev
 npm run start
 ```
 To send a WebSocket request with a payload to `ws://localhost:3000/greet`, open Postman and checkout the endpoint:
-
+![image](https://github.com/afzal442/glee/assets/11625672/759fcb78-e9dc-481c-b2ca-cd8cd83f4ba1)
 
 So this is how easy it is to build a WebSocket API using Glee. You can check out the example code [here](https://github.com/Souvikns/greet-bot).
