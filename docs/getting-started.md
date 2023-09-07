@@ -82,7 +82,7 @@ components:
 
 This will be the Specification that defines our API, in our case, it is very simple, as we will be sending a name and the time of the day, and our API will greet us accordingly.
 
-One thing to note here is the operationId, this is needed and is a crucial part of glee, as this is how we will be connecting our business logic with our spec, operationId is the name of the function that will be called every time a certain operation occurs. In our case whenever /greet channel received a message.
+One thing to note here is the `operationId`, this is needed and is a crucial part of glee, as this is how we will be connecting our business logic with our spec, `operationId` is the name of the function that will be called every time a certain operation occurs. In our case whenever `/greet` channel received a message.
 
 #### Define our operation function
 
@@ -125,6 +125,5 @@ npm run dev
 npm run start
 ```
 To send a WebSocket request with a payload to `ws://localhost:3000/greet`, open Postman and checkout the endpoint:
-![image](https://github.com/afzal442/glee/assets/11625672/759fcb78-e9dc-481c-b2ca-cd8cd83f4ba1)
 
 So this is how easy it is to build a WebSocket API using Glee. You can check out the example code [here](https://github.com/Souvikns/greet-bot).
