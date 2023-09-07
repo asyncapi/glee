@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:35](https://github.com/asyncapi/glee/blob/75f1ced/src/lib/index.d.ts#L35)
+[src/lib/index.d.ts:35](https://github.com/asyncapi/glee/blob/c94c694/src/lib/index.d.ts#L35)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:33](https://github.com/asyncapi/glee/blob/75f1ced/src/lib/index.d.ts#L33)
+[src/lib/index.d.ts:33](https://github.com/asyncapi/glee/blob/c94c694/src/lib/index.d.ts#L33)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:34](https://github.com/asyncapi/glee/blob/75f1ced/src/lib/index.d.ts#L34)
+[src/lib/index.d.ts:34](https://github.com/asyncapi/glee/blob/c94c694/src/lib/index.d.ts#L34)
