@@ -87,10 +87,18 @@ async function loadConfigsFromFile() {
     }
     if (!projectConfigs) return
 
-    GLEE_DIR = projectConfigs.glee?.gleeDir || GLEE_DIR
-    GLEE_LIFECYCLE_DIR = projectConfigs.glee?.lifecycleDir ?? GLEE_LIFECYCLE_DIR
-    GLEE_FUNCTIONS_DIR = projectConfigs.glee?.functionsDir ?? GLEE_FUNCTIONS_DIR
-    GLEE_AUTH_DIR = projectConfigs.glee?.authDir ?? GLEE_AUTH_DIR
+    GLEE_DIR = projectConfigs.glee?.gleeDir
+      ? path.resolve(GLEE_PROJECT_DIR, projectConfigs.glee?.gleeDir)
+      : GLEE_DIR
+    GLEE_FUNCTIONS_DIR = projectConfigs.glee?.functionsDir
+      ? path.resolve(GLEE_DIR, projectConfigs.glee?.functionsDir)
+      : GLEE_FUNCTIONS_DIR
+    GLEE_LIFECYCLE_DIR = projectConfigs.glee?.lifecycleDir
+      ? path.resolve(GLEE_DIR, projectConfigs.glee?.lifecycleDir)
+      : GLEE_LIFECYCLE_DIR
+    GLEE_AUTH_DIR = projectConfigs.glee?.authDir
+      ? path.resolve(GLEE_DIR, projectConfigs.glee?.authDir)
+      : GLEE_AUTH_DIR
     ASYNCAPI_FILE_PATH =
       projectConfigs.glee?.asyncapiFilePath ?? ASYNCAPI_FILE_PATH
     return projectConfigs
