@@ -5,7 +5,7 @@ weight: 30
 
 ## Glee Installation
 
-Before installing Glee into your project, make sure you have pre-installed [AsyncAPI CLI](https://github.com/asyncapi/cli) tool.
+Before installing Glee into your project, make sure you have pre-installed NPM, NodeJs and [AsyncAPI CLI](https://github.com/asyncapi/cli) tools on your system.
 
 The best way to get started with Glee is by using AsyncAPI CLI, which sets up everything automatically for you. 
 To create a project, run:
@@ -30,13 +30,4 @@ Next steps:
 Also, you can already open the project in your favorite editor and start tweaking it
 ```
 
-On following the next steps, you'll be able to view your application running, 
-essentially when you run the development server `npm run dev`:
-
-```
-> glee-hello-world@0.1.0 dev
-> glee dev
-
- TS Compiling TypeScript sources...
-
-```
+While making twist to your application, you can follow along with our getting started guide on the relevant page.

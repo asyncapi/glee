@@ -10,22 +10,4 @@ weight: 20
 - Glee validates the schema of the payload that it receives, if it doesn't conform to the schema that is defined in the AsyncAPI document, it throw an error telling user that the server received an invalid payload.
 
 To summarize, the Glee offers the following features and process flow, as shown in the diagram below:
-
-```mermaid
-graph TD;
-A[AsyncAPI Glee CLI]
-B[Creation]
-H[Generation]
-I[Optimization]
-D[Validation]
-F[Apps/Docs]
-K[Bundling]
-E[Conversion]
-A-->B;
-A-->D;
-A-->H
-H-->F
-A-->I;
-A-->E;
-A-->K;
-```
+<!-- TODO -->
