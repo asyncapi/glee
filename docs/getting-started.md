@@ -125,5 +125,6 @@ npm run dev
 npm run start
 ```
 To send a WebSocket request with a payload e.g. `{"name":"souvik", "time": "1567906535"}` to `ws://localhost:3000/greet`, open Postman and checkout the endpoint:
+![glee1](https://github.com/afzal442/glee/assets/11625672/5f3770b8-ec97-4018-9d54-36ab725d4db8)
 
 So this is how easy it is to build a WebSocket API using Glee. You can also check out the example code [here](https://github.com/Souvikns/greet-bot).
