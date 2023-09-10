@@ -3,6 +3,8 @@ title: Getting Started
 weight: 80
 ---
 
+Before you get started with a glee project, let's take a high level view of Application structure what glee resonates with.
+
 ## Application structure
 
 Glee expects your project to have some files and folders with special names. When you run `asyncapi new glee`, [AsyncAPI CLI](https://github.com/asyncapi/cli) generates a boilerplate application structure by creating a new folder and populating an initial set of files as shown below. You can continue working in this default structure, adding new components, as described throughout the documentation of asyncapi cli.
@@ -39,7 +41,7 @@ To setup a project, you should follow our installation page on how to setup glee
 
 We recommend creating a new Glee app using our official CLI which sets up everything automatically. (You don't need to create an empty directory. create-glee-app will make one for you.) To create a project, run: `asyncapi new glee`
 
-Once the process is completed you should have a new Glee app ready for development and see these files that were made.
+Once the process is completed, you should have a new Glee app ready for development and see these files that were made.
 
 ![glee_struct](https://github.com/afzal442/glee/assets/11625672/2140f1fc-451c-4d3d-8802-3291149fd8ff)
 
