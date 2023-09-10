@@ -40,6 +40,7 @@ To setup a project, you should follow our installation page on how to setup glee
 We recommend creating a new Glee app using our official CLI which sets up everything automatically. (You don't need to create an empty directory. create-glee-app will make one for you.) To create a project, run: `asyncapi new glee`
 
 Once the process is completed you should have a new Glee app ready for development and see these files that were made.
+
 ![glee_struct](https://github.com/afzal442/glee/assets/11625672/2140f1fc-451c-4d3d-8802-3291149fd8ff)
 
 #### Define our Spec for our API
@@ -125,6 +126,7 @@ npm run dev
 npm run start
 ```
 To send a WebSocket request with a payload e.g. `{"name":"souvik", "time": "1567906535"}` to `ws://localhost:3000/greet`, open Postman and checkout the endpoint:
+
 ![glee1](https://github.com/afzal442/glee/assets/11625672/5f3770b8-ec97-4018-9d54-36ab725d4db8)
 
-So this is how easy it is to build a WebSocket API using Glee. You can also check out the example code [here](https://github.com/Souvikns/greet-bot).
+So, this is how easy it is to build a WebSocket API using Glee. You can also check out the example code [here](https://github.com/Souvikns/greet-bot).
