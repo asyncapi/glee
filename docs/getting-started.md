@@ -3,7 +3,15 @@ title: Getting Started
 weight: 80
 ---
 
-Before you get started with a glee project, let's take a high level view of Application structure what glee resonates with.
+## Introduction
+
+[Glee](https://github.com/asyncapi/glee) is a spec-first framework that helps you build server-side applications. That means it operates on the principle of defining the API specification (AsyncAPI) before diving into the actual implementation of the application logic. It leverages that principle to make you more productive:
+
+- Glee ensures your code and AsyncAPI definition are on par, eliminating the problem of outdated documentation. By having both the code and the AsyncAPI definition in sync, you can ensure that the API documentation is always up to date, accurate, and reflects the current state of the application. Glee takes care of this automatically for you.
+- Glee lets you focus on what matters and handles the rest for you. You only write the code for your business use-case. Glee takes care of performance, scalability, resilience, and everything you need to make your application production-ready.
+- Glee validates the schema of the payload that it receives, if it doesn't conform to the schema that is defined in the AsyncAPI document, it throw an error telling user that the server received an invalid payload.
+
+Now, before you get started with a glee project, let's take a high level view of Application structure what glee resonates with.
 
 ## Application structure
 
@@ -33,7 +41,7 @@ Glee expects your project to have some files and folders with special names. Whe
 
 To understand the structure in a broader way, please refer to the associated page's links. 
 
-### Let's create a glee project to simply the app structure
+### Let's create a glee project to simplify the app structure
 
 We will consider a simple WebSocket API using glee to understand its magic. We will create a simple WebSocket server that receives a current time from the client and then send a "good morning", "good evening" or "good night" respectively.
 
