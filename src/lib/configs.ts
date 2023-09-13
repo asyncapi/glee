@@ -76,7 +76,7 @@ function isFileReadable(filePath: string) {
 /**
  * Loads the configuration from glee project.
  */
-async function loadConfigsFromFile() {
+export async function loadConfigsFromFile() {
   if (!isFileReadable(GLEE_CONFIG_FILE_PATH)) return
   try {
     let { default: projectConfigs } = await import(
