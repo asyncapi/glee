@@ -13,7 +13,7 @@ export async function serverAuth({ authProps, done }) {
   console.log("token", authProps.getToken())
   console.log("userpassword", authProps.getUserPass())
 
-  done(false)
+  done(true)
 }
 
 export async function clientAuth({ serverName }) {
