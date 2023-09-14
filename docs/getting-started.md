@@ -135,7 +135,7 @@ npm run dev
 # or 
 npm run start
 ```
-To send a WebSocket request with a payload e.g. `{"name":"souvik", "time": "1567906535"}` to `ws://localhost:3000/greet`, open Postman and checkout the endpoint:
+To send a WebSocket request with a payload e.g. `{"name":"john", "time": "1567906535"}` to `ws://localhost:3000/greet`, open Postman and checkout the endpoint:
 
 ![glee_response](/assets/glee_resp.png)
 
