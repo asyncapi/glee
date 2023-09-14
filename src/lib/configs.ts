@@ -5,6 +5,8 @@ import { logErrorLine, logWarningMessage } from './logger.js'
 
 interface Config {
   functionsDir?: string
+  lifecycleDir?: string
+  authDir?: string
 }
 
 let GLEE_DIR: string
@@ -29,9 +31,9 @@ export async function initializeConfigs(
   )
   GLEE_FUNCTIONS_DIR = path.resolve(
     GLEE_DIR,
-    config.functionsDir || 'functions'
+    config.lifecycleDir || 'functions'
   )
-  GLEE_AUTH_DIR = path.resolve(GLEE_DIR, config.functionsDir || 'auth')
+  GLEE_AUTH_DIR = path.resolve(GLEE_DIR, config.authDir || 'auth')
 
   GLEE_CONFIG_FILE_PATH_TS = path.resolve(GLEE_DIR, 'glee.config.ts')
   GLEE_CONFIG_FILE_PATH_JS = path.resolve(GLEE_DIR, 'glee.config.js')
