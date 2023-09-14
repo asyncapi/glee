@@ -39,4 +39,4 @@
 
 #### Defined in
 
-[src/middlewares/existsInAsyncAPI.ts:5](https://github.com/asyncapi/glee/blob/c94c694/src/middlewares/existsInAsyncAPI.ts#L5)
+[src/middlewares/existsInAsyncAPI.ts:5](https://github.com/asyncapi/glee/blob/aaa489f/src/middlewares/existsInAsyncAPI.ts#L5)

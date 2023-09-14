@@ -9,6 +9,7 @@
 - [findSpecFile](lib_configs.md#findspecfile)
 - [getConfigs](lib_configs.md#getconfigs)
 - [initializeConfigs](lib_configs.md#initializeconfigs)
+- [loadConfigsFromFile](lib_configs.md#loadconfigsfromfile)
 
 ## Functions
 
@@ -28,7 +29,7 @@
 
 #### Defined in
 
-[src/lib/configs.ts:102](https://github.com/asyncapi/glee/blob/c94c694/src/lib/configs.ts#L102)
+[src/lib/configs.ts:112](https://github.com/asyncapi/glee/blob/aaa489f/src/lib/configs.ts#L112)
 
 ___
 
@@ -42,7 +43,7 @@ ___
 
 #### Defined in
 
-[src/lib/configs.ts:120](https://github.com/asyncapi/glee/blob/c94c694/src/lib/configs.ts#L120)
+[src/lib/configs.ts:130](https://github.com/asyncapi/glee/blob/aaa489f/src/lib/configs.ts#L130)
 
 ___
 
@@ -62,4 +63,20 @@ ___
 
 #### Defined in
 
-[src/lib/configs.ts:21](https://github.com/asyncapi/glee/blob/c94c694/src/lib/configs.ts#L21)
+[src/lib/configs.ts:23](https://github.com/asyncapi/glee/blob/aaa489f/src/lib/configs.ts#L23)
+
+___
+
+### loadConfigsFromFile
+
+▸ **loadConfigsFromFile**(): `Promise`<`any`\>
+
+Loads the configuration from glee project.
+
+#### Returns
+
+`Promise`<`any`\>
+
+#### Defined in
+
+[src/lib/configs.ts:81](https://github.com/asyncapi/glee/blob/aaa489f/src/lib/configs.ts#L81)
