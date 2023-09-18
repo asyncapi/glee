@@ -30,4 +30,4 @@ Next steps:
 Also, you can already open the project in your favorite editor and start tweaking it
 ```
 
-While making twist to your application, you can follow along with our getting started guide on the relevant page.
+While making twists to your application, you can follow along with our getting started guide on the relevant page.
