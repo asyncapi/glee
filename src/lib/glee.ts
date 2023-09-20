@@ -2,7 +2,7 @@
 import EventEmitter from 'events'
 import async from 'async'
 import Debug from 'debug'
-import { AsyncAPIDocument, Server } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ServerInterface as Server } from '@asyncapi/parser'
 import GleeAdapter from './adapter.js'
 import GleeClusterAdapter from './cluster.js'
 import GleeRouter, {

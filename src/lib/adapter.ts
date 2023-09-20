@@ -1,5 +1,5 @@
 /* eslint-disable security/detect-object-injection */
-import { AsyncAPIDocument, Server } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ServerInterface as Server } from '@asyncapi/parser'
 import EventEmitter from 'events'
 import uriTemplates from 'uri-templates'
 import GleeConnection from './connection.js'
@@ -51,7 +51,7 @@ class GleeAdapter extends EventEmitter {
     this._AsyncAPIServer = server
 
     this._parsedAsyncAPI = parsedAsyncAPI
-    this._channelNames = this._parsedAsyncAPI.channelNames()
+    this._channelNames = this._parsedAsyncAPI.channels().map(e => e.address())
     this._connections = []
 
     const uriTemplateValues = new Map()
@@ -229,12 +229,12 @@ class GleeAdapter extends EventEmitter {
    */
   getSubscribedChannels(): string[] {
     return this._channelNames.filter((channelName) => {
-      const channel = this._parsedAsyncAPI.channel(channelName)
-      if (!channel.hasPublish()) return false
+      const channel = this._parsedAsyncAPI.channels().get(channelName)
+      if (channel.operations().filterByReceive().length <= 0) return false
 
-      const channelServers = channel.hasServers()
+      const channelServers = channel.servers()
         ? channel.servers()
-        : channel.ext('x-servers') || this._parsedAsyncAPI.serverNames()
+        : channel.extensions().get('x-servers').value() || this._parsedAsyncAPI.channels().map(e => e.address)
       return channelServers.includes(this._serverName)
     })
   }

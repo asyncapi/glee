@@ -1,4 +1,4 @@
-import { AsyncAPIDocument } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument } from '@asyncapi/parser'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
@@ -138,7 +138,7 @@ export const isRemoteServer = (
   parsedAsyncAPI: AsyncAPIDocument,
   serverName: string
 ): boolean => {
-  const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
+  const remoteServers = parsedAsyncAPI.extensions().get('x-remoteServers').value()
   if (remoteServers) {
     return remoteServers.includes(serverName)
   }

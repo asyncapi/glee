@@ -1,4 +1,4 @@
-import { Server as AsyncAPIServer, AsyncAPIDocument } from '@asyncapi/parser'
+import { ServerInterface as AsyncAPIServer, AsyncAPIDocumentInterface as AsyncAPIDocument } from '@asyncapi/parser'
 
 interface IGleeConnectionConstructor {
   connection: any
