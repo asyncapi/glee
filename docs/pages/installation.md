@@ -36,7 +36,22 @@ While making twists to your application, you can follow along with our getting s
 
 ### Manual Installation
 
-To manually create a new app, create a folder e.g. `myapp` and install the required packages:
+To manually create a new app, create a new folder e.g. `myapp` so the folder structure would look like below;
+
+```
+├─ functions          (required)
+│  ├─ onHello.js
+│  └─ ...
+├─ lifecycle          (optional)
+│  ├─ onConnect.js
+│  └─ ...
+├─ .env               (optional)
+├─ asyncapi.(yaml | yml | json)      (required)
+├─ glee.config.js     (optional)
+├─ package.json       (required)
+```
+
+Install the required packages inside a new folder:
 
 ```js
 npm init -y
@@ -105,13 +120,6 @@ export default async function (event) {
     }]
   }
 }
-
-```
-Finally, create a `.env` file specifying a server name:
-
-```
-GLEE_SERVER_NAMES=websockets
-```
 
 #### Run the Development Server
 
