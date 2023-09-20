@@ -1,10 +1,11 @@
 import 'jest-extended'
-import AsyncAPIDocument from '@asyncapi/parser/lib/models/asyncapi'
+import {AsyncAPIDocumentV2 as AsyncAPIDocument} from '@asyncapi/parser'
 import existsInAsyncAPI from '../../src/middlewares/existsInAsyncAPI.js'
 import GleeMessage from '../../src/lib/message.js'
 
 const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
   asyncapi: '2.2.0',
+  info: {title: '', version: ''},
   servers: {
     test: {
       url: 'mqtt://fake-url',

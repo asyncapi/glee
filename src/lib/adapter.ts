@@ -41,7 +41,7 @@ class GleeAdapter extends EventEmitter {
   constructor(
     glee: Glee,
     serverName: string,
-    server: Server,
+    server: Server | undefined,
     parsedAsyncAPI: AsyncAPIDocument
   ) {
     super()
@@ -51,7 +51,7 @@ class GleeAdapter extends EventEmitter {
     this._AsyncAPIServer = server
 
     this._parsedAsyncAPI = parsedAsyncAPI
-    this._channelNames = this._parsedAsyncAPI.channels().map(e => e.address())
+    this._channelNames = this._parsedAsyncAPI.channels().all().map(e => e.address())
     this._connections = []
 
     const uriTemplateValues = new Map()

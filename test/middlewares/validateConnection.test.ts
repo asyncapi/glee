@@ -1,6 +1,6 @@
 import 'jest-extended'
 import GleeConnection from '../../src/lib/connection.js'
-import AsyncAPIDocument from '@asyncapi/parser/lib/models/asyncapi'
+import {AsyncAPIDocumentV2 as AsyncAPIDocument} from '@asyncapi/parser'
 import GleeMessage from '../../src/lib/message.js'
 import validateConnection from '../../src/middlewares/validateConnection.js'
 
@@ -8,6 +8,7 @@ const TEST_SERVER_NAME = 'test'
 const TEST_CHANNEL = 'test/channel'
 const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
   asyncapi: '2.2.0',
+  info: {title: '', version: ''},
   servers: {
     test: {
       url: 'mqtt://fake-url',
@@ -26,7 +27,7 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
     }
   }
 })
-const TEST_SERVER = TEST_ASYNCAPI_DOCUMENT.server(TEST_SERVER_NAME)
+const TEST_SERVER = TEST_ASYNCAPI_DOCUMENT.servers().get(TEST_SERVER_NAME)
 
 const fakeConnection = new GleeConnection({
   connection: 'fake-connection',

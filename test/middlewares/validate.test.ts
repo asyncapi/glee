@@ -1,11 +1,15 @@
 import 'jest-extended'
-import AsyncAPIDocument from '@asyncapi/parser/lib/models/asyncapi'
+import {AsyncAPIDocumentV2} from '@asyncapi/parser'
 import GleeMessage from '../../src/lib/message.js'
 import validate from '../../src/middlewares/validate.js'
 import GleeError from '../../src/errors/glee-error.js'
 
-const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
+const TEST_ASYNCAPI_DOCUMENT =  new AsyncAPIDocumentV2({
   asyncapi: '2.2.0',
+  info: {
+    title: '',
+    version: ''
+  },
   servers: {
     test: {
       url: 'mqtt://fake-url',
@@ -34,7 +38,7 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
   }
 })
 
-const schema = TEST_ASYNCAPI_DOCUMENT.channel('test/channel').publish().message().payload().json()
+const schema = TEST_ASYNCAPI_DOCUMENT.channels().get('test/channel')?.json().publish.message.payload
 const middleware = validate(schema)
 
 describe('validate', () => {

@@ -78,7 +78,7 @@ export default class Glee extends EventEmitter {
       serverName,
       server,
       parsedAsyncAPI,
-    }: { serverName: string; server: Server; parsedAsyncAPI: AsyncAPIDocument }
+    }: { serverName: string; server: Server | undefined; parsedAsyncAPI: AsyncAPIDocument }
   ) {
     this._adapters.push({ Adapter, serverName, server, parsedAsyncAPI })
   }

@@ -1,6 +1,6 @@
 import 'jest-extended'
-import AsyncAPIDocument from '@asyncapi/parser/lib/models/asyncapi'
-import { Server } from '@asyncapi/parser'
+import {AsyncAPIDocumentV2 as AsyncAPIDocument} from '@asyncapi/parser'
+import { ServerInterface as Server } from '@asyncapi/parser'
 import GleeConnection from '../../src/lib/connection.js'
 import Glee from '../../src/lib/glee.js'
 import GleeMessage from '../../src/lib/message.js'
@@ -13,6 +13,7 @@ const ANOTHER_TEST_SERVER_NAME = 'another'
 const TEST_CHANNEL = 'test/channel'
 const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
   asyncapi: '2.2.0',
+  info: {title: '', version: ''},
   servers: {
     test: {
       url: 'mqtt://fake-url',
@@ -40,8 +41,8 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
     },
   },
 })
-const TEST_SERVER: Server = TEST_ASYNCAPI_DOCUMENT.server(TEST_SERVER_NAME)
-const ANOTHER_TEST_SERVER: Server = TEST_ASYNCAPI_DOCUMENT.server(
+const TEST_SERVER: Server | undefined = TEST_ASYNCAPI_DOCUMENT.servers().get(TEST_SERVER_NAME)
+const ANOTHER_TEST_SERVER: Server | undefined = TEST_ASYNCAPI_DOCUMENT.servers().get(
   ANOTHER_TEST_SERVER_NAME
 )
 const RAW_CONN = { fake: 'conn' }
@@ -150,7 +151,7 @@ describe('adapter', () => {
         TEST_ASYNCAPI_DOCUMENT
       )
       expect(adapter.channelNames).toStrictEqual(
-        TEST_ASYNCAPI_DOCUMENT.channelNames()
+        TEST_ASYNCAPI_DOCUMENT.channels().all().map(e =>e.address)
       )
     })
   })
@@ -178,9 +179,9 @@ describe('adapter', () => {
 
       expect(app.adapters.length).toStrictEqual(1)
       expect(app.adapters[0].instance).toBeTruthy()
-      expect(app.adapters[0].instance.connections.length).toStrictEqual(1)
+      expect(app.adapters[0].instance?.connections.length).toStrictEqual(1)
       expect(
-        app.adapters[0].instance.connections[0].rawConnection
+        app.adapters[0].instance?.connections[0].rawConnection
       ).toStrictEqual(RAW_CONN)
     })
   })
@@ -233,7 +234,7 @@ describe('adapter', () => {
 
       expect(app.adapters.length).toStrictEqual(1)
       expect(app.adapters[0].instance).toBeTruthy()
-      app.adapters[0].instance.emit('message', msg, RAW_CONN)
+      app.adapters[0].instance?.emit('message', msg, RAW_CONN)
     })
   })
 

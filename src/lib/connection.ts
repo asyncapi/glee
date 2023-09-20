@@ -4,7 +4,7 @@ interface IGleeConnectionConstructor {
   connection: any
   channels: string[]
   serverName: string
-  server: AsyncAPIServer
+  server?: AsyncAPIServer
   parsedAsyncAPI: AsyncAPIDocument
 }
 

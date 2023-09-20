@@ -1,7 +1,7 @@
 import 'jest-extended'
-import AsyncAPIDocument from '@asyncapi/parser/lib/models/asyncapi'
+import {AsyncAPIDocumentV2 as AsyncAPIDocument} from '@asyncapi/parser'
 import {jest} from '@jest/globals'
-import {Server} from '@asyncapi/parser'
+import {ServerInterface as Server} from '@asyncapi/parser'
 import GleeConnection from '../../src/lib/connection.js'
 import Glee from '../../src/lib/glee.js'
 import GleeMessage from '../../src/lib/message.js'
@@ -12,6 +12,7 @@ const ANOTHER_TEST_SERVER_NAME = 'another'
 const TEST_CHANNEL = 'test/channel'
 const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
   asyncapi: '2.2.0',
+  info: {title: '', version: ''},
   servers: {
     test: {
       url: 'mqtt://fake-url',
@@ -34,8 +35,8 @@ const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
     }
   }
 })
-const TEST_SERVER: Server = TEST_ASYNCAPI_DOCUMENT.server(TEST_SERVER_NAME)
-const ANOTHER_TEST_SERVER: Server = TEST_ASYNCAPI_DOCUMENT.server(ANOTHER_TEST_SERVER_NAME)
+const TEST_SERVER: Server | undefined = TEST_ASYNCAPI_DOCUMENT.servers().get(TEST_SERVER_NAME)
+const ANOTHER_TEST_SERVER: Server | undefined = TEST_ASYNCAPI_DOCUMENT.servers().get(ANOTHER_TEST_SERVER_NAME)
 class TEST_ADAPTER extends GleeAdapter {}
 class ANOTHER_TEST_ADAPTER extends GleeAdapter {}
 
