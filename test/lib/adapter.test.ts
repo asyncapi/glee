@@ -151,7 +151,7 @@ describe('adapter', () => {
         TEST_ASYNCAPI_DOCUMENT
       )
       expect(adapter.channelNames).toStrictEqual(
-        TEST_ASYNCAPI_DOCUMENT.channels().all().map(e =>e.address)
+        TEST_ASYNCAPI_DOCUMENT.channels().all().map(e =>e.address())
       )
     })
   })

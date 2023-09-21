@@ -230,11 +230,11 @@ class GleeAdapter extends EventEmitter {
   getSubscribedChannels(): string[] {
     return this._channelNames.filter((channelName) => {
       const channel = this._parsedAsyncAPI.channels().get(channelName)
-      if (channel.operations().filterByReceive().length <= 0) return false
+      if (channel.operations().filterBySend().length == 0) return true
 
       const channelServers = channel.servers()
         ? channel.servers()
-        : channel.extensions().get('x-servers').value() || this._parsedAsyncAPI.channels().map(e => e.address)
+        : channel.extensions().get('x-servers')?.value() || this._parsedAsyncAPI.allServers()
       return channelServers.includes(this._serverName)
     })
   }
