@@ -93,7 +93,7 @@ class HttpAdapter extends Adapter {
         this.httpResponses.set(this.serverName, res)
         let { pathname } = new URL(req.url, serverUrl)
         pathname = pathname.startsWith('/') ? pathname.substring(1) : pathname
-        if (!this.parsedAsyncAPI.channel(pathname)) {
+        if (!this.parsedAsyncAPI.channels().get(pathname)) {
           res.end('HTTP/1.1 404 Not Found1\r\n\r\n')
           const err = new Error(
             `A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file. here`
@@ -105,8 +105,8 @@ class HttpAdapter extends Adapter {
         const searchParams = { query }
         const payload = body
         const httpChannelBinding = this.parsedAsyncAPI
-          .channel(pathname)
-          .binding('http')
+          .channels().get(pathname)
+          .bindings().get('http')
         if (httpChannelBinding) {
           this._checkHttpBinding(
             req,

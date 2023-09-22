@@ -15,10 +15,10 @@ class KafkaAdapter extends Adapter {
       'kafka'
     )
     const auth: KafkaAuthConfig = await this.getAuthConfig(kafkaOptions?.auth)
-    const securityRequirements = (this.AsyncAPIServer.security() || []).map(
+    const securityRequirements = this.AsyncAPIServer.security().map(
       (sec) => {
-        const secName = Object.keys(sec.json())[0]
-        return this.parsedAsyncAPI.components().securityScheme(secName)
+        const secName = Object.keys(sec.values())[0]
+        return this.parsedAsyncAPI.components().securitySchemes().get(secName)
       }
     )
     const userAndPasswordSecurityReq = securityRequirements.find(

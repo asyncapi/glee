@@ -2,7 +2,7 @@ import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import { MqttAuthConfig, MqttAdapterConfig } from '../../lib/index.js'
-import { SecurityScheme } from '@asyncapi/parser'
+import { SecuritySchemesInterface as SecurityScheme } from '@asyncapi/parser'
 import { logLineWithIcon } from '../../lib/logger.js'
 
 interface IMQTTHeaders {
@@ -42,22 +42,24 @@ class MqttAdapter extends Adapter {
   }
 
   private getSecurityReqs() {
-    const securityRequirements = (this.AsyncAPIServer.security() || []).map(
-      (sec) => {
-        const secName = Object.keys(sec.json())[0]
-        return this.parsedAsyncAPI.components().securityScheme(secName)
+
+    const parsedSecurityScehemes = this.parsedAsyncAPI.components().securitySchemes().all()
+
+    let userAndPasswordSecurityReq
+    let X509SecurityReq
+
+    for (const security of parsedSecurityScehemes) {
+      if (security.type() === 'userPassword') {
+        userAndPasswordSecurityReq = security
       }
-    )
-    const userAndPasswordSecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'userPassword'
-    )
-    const X509SecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'X509'
-    )
+      if (security.type() === 'x509') {
+        X509SecurityReq = security
+      }
+    }
 
     return {
       userAndPasswordSecurityReq,
-      X509SecurityReq,
+      X509SecurityReq
     }
   }
 
@@ -127,7 +129,7 @@ class MqttAdapter extends Adapter {
 
   private subscribe(channels: string[]) {
     channels.forEach((channel) => {
-      const operation = this.parsedAsyncAPI.channel(channel).publish()
+      const operation = this.parsedAsyncAPI.channels().get(channel).json().subscribe()
       const binding = operation.binding('mqtt')
       this.client.subscribe(channel, {
         qos: binding?.qos ? binding.qos : 0,
@@ -154,8 +156,8 @@ class MqttAdapter extends Adapter {
     )
     const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions?.auth)
     const subscribedChannels = this.getSubscribedChannels()
-    const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
-    const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
+    const mqttServerBinding = this.AsyncAPIServer.bindings().get('mqtt')
+    const mqtt5ServerBinding = this.AsyncAPIServer.bindings().get('mqtt5')
 
     const { userAndPasswordSecurityReq, X509SecurityReq } =
       this.getSecurityReqs()
@@ -205,7 +207,7 @@ class MqttAdapter extends Adapter {
 
   _send(message: GleeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      const operation = this.parsedAsyncAPI.channel(message.channel).subscribe()
+      const operation = this.parsedAsyncAPI.channels().get(message.channel).json().subscribe()
       const binding = operation ? operation.binding('mqtt') : undefined
       this.client.publish(
         message.channel,
