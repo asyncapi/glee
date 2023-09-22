@@ -78,7 +78,7 @@ class WsClientAdapter extends Adapter {
     const channels = []
     for (const channel of this.channelNames) {
       if (this.parsedAsyncAPI.channels().get(channel).bindings().get('ws')) {
-        if (this.parsedAsyncAPI.channels().get(channel).servers().length < 0) { // NOSONAR
+        if (this.parsedAsyncAPI.channels().get(channel).servers().length !== 0) { // NOSONAR
           if (
             this.parsedAsyncAPI
               .channels().get(channel)
