@@ -59,7 +59,7 @@ export default async function GleeAppInitializer() {
   await registerAuth(GLEE_AUTH_DIR)
 
   const parsedAsyncAPI = await getParsedAsyncAPI()
-  const channelNames = parsedAsyncAPI.channelNames()
+  const channelNames = parsedAsyncAPI.channels().map(e => e.address())
 
   const app = new Glee(config)
 
@@ -78,15 +78,15 @@ export default async function GleeAppInitializer() {
   await generateDocs(parsedAsyncAPI, config, null)
 
   channelNames.forEach((channelName) => {
-    const channel = parsedAsyncAPI.channel(channelName)
-    if (channel.hasPublish()) {
-      const operationId = channel.publish().json('operationId')
+    const channel = parsedAsyncAPI.channels().get(channelName)
+    if (channel.operations().filterBySend().length !==0) {
+      const operationId = channel.operations()[0].operationId()
+      const publishOperation = channel.operations().filterBySend()[0]
       if (operationId) {
         const schema = {
-          oneOf: channel
-            .publish()
-            .messages()
-            .map((message) => message.payload().json()),
+          oneOf: publishOperation
+          .messages()
+          .map(m => m.payload().json()),
         } as any
         app.use(channelName, validate(schema), (event, next) => {
           triggerFunction({
@@ -99,12 +99,12 @@ export default async function GleeAppInitializer() {
         })
       }
     }
-    if (channel.hasSubscribe()) {
+    if (channel.operations().filterByReceive().length !== 0) {
+      const subscribeOperation = channel.operations().filterByReceive()[0]
       const schema = {
-        oneOf: channel
-          .subscribe()
-          .messages()
-          .map((message) => message.payload().json()),
+        oneOf: subscribeOperation
+        .messages()
+        .map(m => m.payload().json()),
       } as any
       app.useOutbound(channelName, validate(schema), json2string)
     }

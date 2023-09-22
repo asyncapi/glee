@@ -118,10 +118,7 @@ export async function trigger({
 
     res?.send?.forEach((msg) => {
       const localServerProtocols = ['ws', 'wss', 'http', 'https']
-      const serverProtocol = parsedAsyncAPI
-        .server(msg.server || message.serverName)
-        .protocol()
-        .toLowerCase()
+      const serverProtocol = parsedAsyncAPI.servers().get(msg.server || message.serverName).protocol().toLocaleLowerCase()
       const isBroadcast =
         localServerProtocols.includes(serverProtocol) &&
         !isRemoteServer(parsedAsyncAPI, msg.server)

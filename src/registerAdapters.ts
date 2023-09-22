@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentV2 as AsyncAPIDocument, ServerInterface } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ServerInterface } from '@asyncapi/parser'
 import MqttAdapter from './adapters/mqtt/index.js'
 import WebSocketServerAdapter from './adapters/ws/server.js'
 import WebsocketClientAdapter from './adapters/ws/client.js'
