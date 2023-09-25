@@ -1,5 +1,5 @@
 import { readFile } from 'fs/promises'
-import asyncapi, { AsyncAPIDocumentInterface as AsyncAPIDocument, Parser, toAsyncAPIDocument} from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, Parser, toAsyncAPIDocument} from '@asyncapi/parser'
 import { getConfigs } from './configs.js'
 
 export async function getParsedAsyncAPI(): Promise<AsyncAPIDocument> {

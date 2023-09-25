@@ -1,6 +1,5 @@
 import 'jest-extended'
-import {AsyncAPIDocumentV2 as AsyncAPIDocument} from '@asyncapi/parser'
-import { ServerInterface as Server } from '@asyncapi/parser'
+import {AsyncAPIDocumentV2 as AsyncAPIDocument, ServerInterface as Server} from '@asyncapi/parser'
 import GleeConnection from '../../src/lib/connection.js'
 import Glee from '../../src/lib/glee.js'
 import GleeMessage from '../../src/lib/message.js'
