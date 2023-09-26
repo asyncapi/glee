@@ -41,7 +41,7 @@ function registerAdapterForServer(
   config: GleeConfig
 ) {
   const protocol = server.protocol()
-  const remoteServers = parsedAsyncAPI.extensions().get('x-remoteServers').value()
+  const remoteServers = parsedAsyncAPI.extensions().get('x-remoteServers')?.value()
   if (['mqtt', 'mqtts', 'secure-mqtt'].includes(protocol)) {
     app.addAdapter(MqttAdapter, {
       serverName,

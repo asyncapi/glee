@@ -59,7 +59,7 @@ export default async function GleeAppInitializer() {
   await registerAuth(GLEE_AUTH_DIR)
 
   const parsedAsyncAPI = await getParsedAsyncAPI()
-  const channelNames = parsedAsyncAPI.channels().map(e => e.address())
+  const channelNames = parsedAsyncAPI.channels().all().map(e => e.address())
 
   const app = new Glee(config)
 

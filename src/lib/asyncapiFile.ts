@@ -6,5 +6,6 @@ export async function getParsedAsyncAPI(): Promise<AsyncAPIDocument> {
   const { ASYNCAPI_FILE_PATH } = getConfigs()
   const asyncapiFileContent = await readFile(ASYNCAPI_FILE_PATH, 'utf-8')
   const parser = new Parser()
-  return toAsyncAPIDocument(parser.parse(asyncapiFileContent))
+  const {document} = await parser.parse(asyncapiFileContent)
+  return toAsyncAPIDocument(document)
 }
