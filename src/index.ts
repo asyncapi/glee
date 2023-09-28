@@ -79,34 +79,33 @@ export default async function GleeAppInitializer() {
 
   channelNames.forEach((channelName) => {
     const channel = parsedAsyncAPI.channels().get(channelName)
-    if (channel.operations().filterBySend().length !==0) {
-      const operationId = channel.operations()[0].operationId()
-      const publishOperation = channel.operations().filterBySend()[0]
-      if (operationId) {
-        const schema = {
-          oneOf: publishOperation
-          .messages()
-          .map(m => m.payload().json()),
-        } as any
-        app.use(channelName, validate(schema), (event, next) => {
-          triggerFunction({
-            app,
-            operationId,
-            message: event,
+    if (channel.operations().filterByReceive().length !==0) {
+
+      channel.operations().filterByReceive().forEach(operation => {
+        const receiveOperation = operation
+        const operationId = operation.operationId()
+        if (operationId) {
+          const schema = {
+            onOf: receiveOperation.messages().filterByReceive().map(m => m.payload())
+          } as any
+          app.use(channelName, validate(schema), (event, next) => {
+            triggerFunction({
+              app,
+              operationId,
+              message: event
+            }).then(next).catch(next)
           })
-            .then(next)
-            .catch(next)
-        })
-      }
+        }
+      })
     }
-    if (channel.operations().filterByReceive().length !== 0) {
-      const subscribeOperation = channel.operations().filterByReceive()[0]
-      const schema = {
-        oneOf: subscribeOperation
-        .messages()
-        .map(m => m.payload().json()),
-      } as any
-      app.useOutbound(channelName, validate(schema), json2string)
+    if (channel.operations().filterBySend().length !== 0) {
+      channel.operations().filterBySend().forEach(operation => {
+        const sendOperation = operation
+        const schema = {
+          onOf: sendOperation.messages().filterBySend().map(m => m.payload())
+        } as any
+        app.useOutbound(channelName, validate(schema), json2string)
+      })
     }
   })
 

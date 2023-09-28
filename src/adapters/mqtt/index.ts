@@ -43,19 +43,22 @@ class MqttAdapter extends Adapter {
 
   private getSecurityReqs() {
 
-    const parsedSecurityScehemes = this.parsedAsyncAPI.components().securitySchemes().all()
-
     let userAndPasswordSecurityReq
     let X509SecurityReq
 
-    for (const security of parsedSecurityScehemes) {
-      if (security.type() === 'userPassword') {
-        userAndPasswordSecurityReq = security
+    const securityRequirements = this.AsyncAPIServer.security().map(e => e.map(e => e.scheme()))
+
+    securityRequirements.forEach(sec => {
+      for (const security of sec) {
+        if(security.type() === 'userPassword') {
+          userAndPasswordSecurityReq = security
+        }
+
+        if (security.type() === 'x509') {
+          X509SecurityReq = security
+        }
       }
-      if (security.type() === 'x509') {
-        X509SecurityReq = security
-      }
-    }
+    })
 
     return {
       userAndPasswordSecurityReq,

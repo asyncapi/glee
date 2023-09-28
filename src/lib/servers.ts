@@ -8,7 +8,7 @@ export async function getSelectedServerNames(): Promise<string[]> {
   }
 
   const arrayOfNames = process.env.GLEE_SERVER_NAMES.split(',')
-  return parsedAsyncAPI.servers().all().map(e => e.url()).filter((name) => {
+  return parsedAsyncAPI.servers().all().map(e => e.id()).filter((name) => {
     return arrayOfNames.includes(name)
   })
 }
