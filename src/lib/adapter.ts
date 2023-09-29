@@ -27,6 +27,7 @@ class GleeAdapter extends EventEmitter {
   private _AsyncAPIServer: Server
   private _parsedAsyncAPI: AsyncAPIDocument
   private _channelNames: string[]
+  private _channelAddresses: string[]
   private _connections: GleeConnection[]
   private _serverUrlExpanded: string
 
@@ -52,6 +53,7 @@ class GleeAdapter extends EventEmitter {
 
     this._parsedAsyncAPI = parsedAsyncAPI
     this._channelNames = this._parsedAsyncAPI.channels().all().map(e => e.address())
+    this._channelAddresses = this._parsedAsyncAPI.channels().all().map(c => c.address())
     this._connections = []
 
     const uriTemplateValues = new Map()
@@ -192,6 +194,10 @@ class GleeAdapter extends EventEmitter {
 
   get channelNames(): string[] {
     return this._channelNames
+  }
+
+  get channelAddresses(): string[] {
+    return this._channelAddresses
   }
 
   get connections(): GleeConnection[] {
