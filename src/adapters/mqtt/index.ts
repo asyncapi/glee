@@ -132,8 +132,7 @@ class MqttAdapter extends Adapter {
 
   private subscribe(channels: string[]) {
     channels.forEach((channel) => {
-      const operation = this.parsedAsyncAPI.channels().get(channel).json().subscribe()
-      const binding = operation.binding('mqtt')
+      const binding = this.parsedAsyncAPI.channels().get(channel).bindings().get('mqtt').value()
       this.client.subscribe(channel, {
         qos: binding?.qos ? binding.qos : 0,
       }, (err, granted) => {
@@ -210,8 +209,7 @@ class MqttAdapter extends Adapter {
 
   _send(message: GleeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      const operation = this.parsedAsyncAPI.channels().get(message.channel).json().subscribe()
-      const binding = operation ? operation.binding('mqtt') : undefined
+      const binding = this.parsedAsyncAPI.channels().get(message.channel).bindings().get('mqtt').value()
       this.client.publish(
         message.channel,
         message.payload,
