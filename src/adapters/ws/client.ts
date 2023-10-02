@@ -38,7 +38,7 @@ class WsClientAdapter extends Adapter {
         this.serverName,
         authConfig
       )
-      let url = new URL(this.AsyncAPIServer.url() + channel)
+      let url = new URL(this.AsyncAPIServer.url() + this.parsedAsyncAPI.channels().get(channel).address())
       if (authConfig) {
         const modedAuth = await gleeAuth.processClientAuth(url, headers, {})
         headers = modedAuth.headers

@@ -52,7 +52,7 @@ class GleeAdapter extends EventEmitter {
     this._AsyncAPIServer = server
 
     this._parsedAsyncAPI = parsedAsyncAPI
-    this._channelNames = this._parsedAsyncAPI.channels().all().map(e => e.address())
+    this._channelNames = this._parsedAsyncAPI.channels().all().map(e => e.id())
     this._channelAddresses = this._parsedAsyncAPI.channels().all().map(c => c.address())
     this._connections = []
 
