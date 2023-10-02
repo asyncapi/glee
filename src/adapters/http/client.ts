@@ -31,7 +31,7 @@ class HttpClientAdapter extends Adapter {
         !channelServers.length || channelServers.includes(message.serverName)
       if (httpChannelBinding && isChannelServers) {
         const method = httpChannelBinding.json().method
-        let url = new URL(this.AsyncAPIServer.url() + this.parsedAsyncAPI.channels().get(channelName).address())
+        let url = new URL( serverUrl + this.parsedAsyncAPI.channels().get(channelName).address())
         const gleeAuth = new GleeAuth(
           this.AsyncAPIServer,
           this.parsedAsyncAPI,
