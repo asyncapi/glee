@@ -1,8 +1,10 @@
+import got from 'got'
+import http from 'http'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
-import got from 'got'
-import { HttpAuthConfig, HttpAdapterConfig } from '../../lib/index.js'
-import http from 'http'
+import { clientAuthConfig } from '../../lib/userAuth.js'
+import GleeAuth from '../../lib/wsHttpAuth.js'
+
 class HttpClientAdapter extends Adapter {
   name(): string {
     return 'HTTP client'
@@ -18,10 +20,8 @@ class HttpClientAdapter extends Adapter {
   }
 
   async send(message: GleeMessage): Promise<void> {
-    const headers = {}
-    const config: HttpAdapterConfig = await this.resolveProtocolConfig('http')
-    const auth: HttpAuthConfig = await this.getAuthConfig(config.client.auth)
-    headers['Authentication'] = auth?.token
+    let headers = {}
+    const authConfig = await clientAuthConfig(this.serverName)
     const serverUrl = this.serverUrlExpanded
     for (const channelName of this.channelNames) {
       const channelInfo = this.parsedAsyncAPI.channel(channelName)
@@ -31,15 +31,34 @@ class HttpClientAdapter extends Adapter {
         !channelServers.length || channelServers.includes(message.serverName)
       if (httpChannelBinding && isChannelServers) {
         const method = httpChannelBinding.method
-        const url = `${serverUrl}/${channelName}`
+        let url = `${serverUrl}/${channelName}`
+        const gleeAuth = new GleeAuth(
+          this.AsyncAPIServer,
+          this.parsedAsyncAPI,
+          this.serverName,
+          authConfig
+        )
         const body: any = message.payload
-        const query: { [key: string]: string } | { [key: string]: string[] } =
+        let query: { [key: string]: string } | { [key: string]: string[] } =
           message.query
+
+        if (authConfig) {
+          const modedAuth = await gleeAuth.processClientAuth(
+            url,
+            headers,
+            query
+          )
+          headers = modedAuth.headers
+          url = modedAuth.url.href
+          query = modedAuth.query
+        }
+
         got({
           method,
           url,
           json: body,
           searchParams: JSON.parse(JSON.stringify(query)),
+          headers,
         })
           .then((res) => {
             const msg = this.createMessage(channelName, res.body)

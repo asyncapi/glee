@@ -5,12 +5,15 @@ import { logErrorLine, logWarningMessage } from './logger.js'
 
 interface Config {
   functionsDir?: string
+  lifecycleDir?: string
+  authDir?: string
 }
 
 let GLEE_DIR: string
 let GLEE_PROJECT_DIR: string
 let GLEE_LIFECYCLE_DIR: string
 let GLEE_FUNCTIONS_DIR: string
+let GLEE_AUTH_DIR: string
 let GLEE_CONFIG_FILE_PATH: string
 let GLEE_CONFIG_FILE_PATH_JS: string
 let GLEE_CONFIG_FILE_PATH_TS: string
@@ -28,8 +31,9 @@ export async function initializeConfigs(
   )
   GLEE_FUNCTIONS_DIR = path.resolve(
     GLEE_DIR,
-    config.functionsDir || 'functions'
+    config.lifecycleDir || 'functions'
   )
+  GLEE_AUTH_DIR = path.resolve(GLEE_DIR, config.authDir || 'auth')
 
   GLEE_CONFIG_FILE_PATH_TS = path.resolve(GLEE_DIR, 'glee.config.ts')
   GLEE_CONFIG_FILE_PATH_JS = path.resolve(GLEE_DIR, 'glee.config.js')
@@ -74,19 +78,29 @@ function isFileReadable(filePath: string) {
 /**
  * Loads the configuration from glee project.
  */
-async function loadConfigsFromFile() {
+export async function loadConfigsFromFile() {
   if (!isFileReadable(GLEE_CONFIG_FILE_PATH)) return
   try {
     let { default: projectConfigs } = await import(
       pathToFileURL(GLEE_CONFIG_FILE_PATH).href
     )
-    if (typeof projectConfigs === 'function')
-      {projectConfigs = await projectConfigs()}
+    if (typeof projectConfigs === 'function') {
+      projectConfigs = await projectConfigs()
+    }
     if (!projectConfigs) return
 
-    GLEE_DIR = projectConfigs.glee?.gleeDir || GLEE_DIR
-    GLEE_LIFECYCLE_DIR = projectConfigs.glee?.lifecycleDir ?? GLEE_LIFECYCLE_DIR
-    GLEE_FUNCTIONS_DIR = projectConfigs.glee?.functionsDir ?? GLEE_FUNCTIONS_DIR
+    GLEE_DIR = projectConfigs.glee?.gleeDir
+      ? path.resolve(GLEE_PROJECT_DIR, projectConfigs.glee?.gleeDir)
+      : GLEE_DIR
+    GLEE_FUNCTIONS_DIR = projectConfigs.glee?.functionsDir
+      ? path.resolve(GLEE_DIR, projectConfigs.glee?.functionsDir)
+      : GLEE_FUNCTIONS_DIR
+    GLEE_LIFECYCLE_DIR = projectConfigs.glee?.lifecycleDir
+      ? path.resolve(GLEE_DIR, projectConfigs.glee?.lifecycleDir)
+      : GLEE_LIFECYCLE_DIR
+    GLEE_AUTH_DIR = projectConfigs.glee?.authDir
+      ? path.resolve(GLEE_DIR, projectConfigs.glee?.authDir)
+      : GLEE_AUTH_DIR
     ASYNCAPI_FILE_PATH =
       projectConfigs.glee?.asyncapiFilePath ?? ASYNCAPI_FILE_PATH
     return projectConfigs
@@ -120,6 +134,7 @@ export function getConfigs(): { [key: string]: string } {
     GLEE_LIFECYCLE_DIR,
     GLEE_FUNCTIONS_DIR,
     GLEE_CONFIG_FILE_PATH,
+    GLEE_AUTH_DIR,
     ASYNCAPI_FILE_PATH,
   }
 }

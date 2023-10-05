@@ -13,6 +13,10 @@ import {
   register as registerFunctions,
   trigger as triggerFunction,
 } from './lib/functions.js'
+import {
+  register as registerAuth,
+  triggerAuth as runAuth,
+} from './lib/userAuth.js'
 import buffer2string from './middlewares/buffer2string.js'
 import string2json from './middlewares/string2json.js'
 import json2string from './middlewares/json2string.js'
@@ -25,15 +29,20 @@ import validateConnection from './middlewares/validateConnection.js'
 import { initializeConfigs } from './lib/configs.js'
 import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
-import { EnrichedEvent } from './lib/adapter.js'
+import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 
 dotenvExpand(dotenv.config())
 
 export default async function GleeAppInitializer() {
   const config = await initializeConfigs()
-  const { GLEE_DIR, GLEE_PROJECT_DIR, GLEE_LIFECYCLE_DIR, GLEE_FUNCTIONS_DIR } =
-    config
+  const {
+    GLEE_DIR,
+    GLEE_PROJECT_DIR,
+    GLEE_LIFECYCLE_DIR,
+    GLEE_FUNCTIONS_DIR,
+    GLEE_AUTH_DIR,
+  } = config
 
   logWelcome({
     dev: process.env.NODE_ENV === 'development',
@@ -47,6 +56,7 @@ export default async function GleeAppInitializer() {
 
   await registerFunctions(GLEE_FUNCTIONS_DIR)
   await registerLifecycleEvents(GLEE_LIFECYCLE_DIR)
+  await registerAuth(GLEE_AUTH_DIR)
 
   const parsedAsyncAPI = await getParsedAsyncAPI()
   const channelNames = parsedAsyncAPI.channelNames()
@@ -57,6 +67,7 @@ export default async function GleeAppInitializer() {
 
   app.use(existsInAsyncAPI(parsedAsyncAPI))
   app.useOutbound(existsInAsyncAPI(parsedAsyncAPI))
+
   app.useOutbound(validateConnection)
   app.use(buffer2string)
   app.use(string2json)
@@ -99,6 +110,23 @@ export default async function GleeAppInitializer() {
     }
   })
 
+  app.on('adapter:auth', async (e: AuthEvent) => {
+    logLineWithIcon(
+      ':zap:',
+      `Running authentication on server ${e.serverName}.`,
+      {
+        highlightedWords: [e.serverName],
+      }
+    )
+    await runAuth({
+      glee: app,
+      serverName: e.serverName,
+      authProps: e.authProps,
+      done: e.done,
+      doc: e.doc,
+    })
+  })
+
   app.on('adapter:connect', async (e: EnrichedEvent) => {
     logLineWithIcon(':zap:', `Connected to server ${e.serverName}.`, {
       highlightedWords: [e.serverName],
@@ -138,7 +166,9 @@ export default async function GleeAppInitializer() {
   app.on('adapter:server:ready', async (e: EnrichedEvent) => {
     logLineWithIcon(
       ':zap:',
-      `Server ${e.serverName} is ready to accept connections on ${e.server.url()}.`,
+      `Server ${
+        e.serverName
+      } is ready to accept connections on ${e.server.url()}.`,
       {
         highlightedWords: [e.serverName],
       }

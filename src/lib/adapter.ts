@@ -6,11 +6,19 @@ import GleeConnection from './connection.js'
 import Glee from './glee.js'
 import GleeMessage from './message.js'
 import { resolveFunctions } from './util.js'
+import { AuthProps } from './index.js'
 
 export type EnrichedEvent = {
   connection?: GleeConnection
   serverName: string
   server: Server
+}
+
+export type AuthEvent = {
+  serverName: string
+  authProps: AuthProps
+  done: any
+  doc: any
 }
 
 class GleeAdapter extends EventEmitter {
@@ -49,8 +57,9 @@ class GleeAdapter extends EventEmitter {
     const uriTemplateValues = new Map()
     process.env.GLEE_SERVER_VARIABLES?.split(',').forEach((t) => {
       const [localServerName, variable, value] = t.split(':')
-      if (localServerName === this._serverName)
-        {uriTemplateValues.set(variable, value)}
+      if (localServerName === this._serverName) {
+        uriTemplateValues.set(variable, value)
+      }
     })
     this._serverUrlExpanded = uriTemplates(this._AsyncAPIServer.url()).fill(
       Object.fromEntries(uriTemplateValues.entries())
@@ -81,6 +90,18 @@ class GleeAdapter extends EventEmitter {
       }
     }
 
+    function enrichAuthEvent(ev): AuthEvent {
+      return {
+        ...ev,
+        ...{
+          serverName,
+          authProps: ev.authProps,
+          callback: ev.callback,
+          doc: ev.doc,
+        },
+      }
+    }
+
     function createConnection(ev: {
       channels?: string[]
       channel?: string
@@ -97,6 +118,10 @@ class GleeAdapter extends EventEmitter {
         parsedAsyncAPI,
       })
     }
+
+    this.on('auth', (ev) => {
+      this._glee.emit('adapter:auth', enrichAuthEvent(ev))
+    })
 
     this.on('connect', (ev) => {
       const conn = createConnection(ev)
@@ -226,7 +251,10 @@ class GleeAdapter extends EventEmitter {
    *
    * @param {GleeMessage} message The message to send.
    */
-  async send(message: GleeMessage): Promise<any> { // eslint-disable-line @typescript-eslint/no-unused-vars
+
+  async send(
+    message: GleeMessage /* eslint-disable-line @typescript-eslint/no-unused-vars */
+  ): Promise<any> {
     throw new Error('Method `send` is not implemented.')
   }
 }

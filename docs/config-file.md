@@ -18,10 +18,11 @@ This function must return an object with the following shape:
 export default async function () {
   return {
     glee: {},
+    docs: {},
+    cluster: {},
     kafka: {},
     websocket: {},
     mqtt: {},
-    cluster: {},
     http: {}
   }
 }
