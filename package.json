@@ -37,7 +37,7 @@
     "@asyncapi/generator": "^1.12.0",
     "@asyncapi/html-template": "^0.28.4",
     "@asyncapi/markdown-template": "^1.3.3",
-    "@asyncapi/parser": "^2.1.0",
+    "@asyncapi/parser": "v3.0.0-next-major-spec.3",
     "@types/jest": "^27.4.0",
     "@types/qs": "^6.9.7",
     "ajv": "^6.12.6",
