@@ -27,7 +27,7 @@ import generateDocs from './lib/docs.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
 import { initializeConfigs } from './lib/configs.js'
-import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
+import { getChannelNames, getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
@@ -59,7 +59,7 @@ export default async function GleeAppInitializer() {
   await registerAuth(GLEE_AUTH_DIR)
 
   const parsedAsyncAPI = await getParsedAsyncAPI()
-  const channelNames = parsedAsyncAPI.channels().all().map(e => e.address())
+  const channelNames = getChannelNames(parsedAsyncAPI)
 
   const app = new Glee(config)
 
@@ -79,34 +79,29 @@ export default async function GleeAppInitializer() {
 
   channelNames.forEach((channelName) => {
     const channel = parsedAsyncAPI.channels().get(channelName)
-    if (channel.operations().filterByReceive().length !==0) {
+    channel.operations().filterByReceive().forEach(operation => {
+      const operationId = operation.operationId()
 
-      channel.operations().filterByReceive().forEach(operation => {
-        const receiveOperation = operation
-        const operationId = operation.operationId()
-        if (operationId) {
-          const schema = {
-            onOf: receiveOperation.messages().filterByReceive().map(m => m.payload())
-          } as any
-          app.use(channelName, validate(schema), (event, next) => {
-            triggerFunction({
-              app,
-              operationId,
-              message: event
-            }).then(next).catch(next)
-          })
-        }
-      })
-    }
-    if (channel.operations().filterBySend().length !== 0) {
-      channel.operations().filterBySend().forEach(operation => {
-        const sendOperation = operation
+      if (operationId) {
         const schema = {
-          onOf: sendOperation.messages().filterBySend().map(m => m.payload())
+          oneOf: operation.messages().filterByReceive().map(m => m.payload())
         } as any
-        app.useOutbound(channelName, validate(schema), json2string)
-      })
-    }
+        app.use(channelName, validate(schema), (event, next) => {
+          triggerFunction({
+            app,
+            operationId,
+            message: event
+          }).then(next).catch(next)
+        })
+      }
+    })
+
+    channel.operations().filterBySend().forEach(operation => {
+      const schema = {
+        oneOf: operation.messages().filterBySend().map(m => m.payload())
+      } as any
+      app.useOutbound(channelName, validate(schema), json2string)
+    })
   })
 
   app.on('adapter:auth', async (e: AuthEvent) => {
@@ -165,8 +160,7 @@ export default async function GleeAppInitializer() {
   app.on('adapter:server:ready', async (e: EnrichedEvent) => {
     logLineWithIcon(
       ':zap:',
-      `Server ${
-        e.serverName
+      `Server ${e.serverName
       } is ready to accept connections on ${e.server.url()}.`,
       {
         highlightedWords: [e.serverName],

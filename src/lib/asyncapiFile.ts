@@ -9,3 +9,12 @@ export async function getParsedAsyncAPI(): Promise<AsyncAPIDocument> {
   const {document} = await parser.parse(asyncapiFileContent)
   return toAsyncAPIDocument(document)
 }
+
+
+export function getChannelNames(parsedAsyncAPI: AsyncAPIDocument) {
+  return parsedAsyncAPI.channels().all().map(e => e.id())
+}
+
+export function getChannelAddress(parsedAsyncAPI: AsyncAPIDocument, channelName: string) {
+  return parsedAsyncAPI.channels().get(channelName).address()
+}
