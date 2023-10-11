@@ -36,7 +36,7 @@
   "dependencies": {
     "@asyncapi/generator": "^1.13.1",
     "@asyncapi/html-template": "^0.28.4",
-    "@asyncapi/markdown-template": "^1.4.0",
+    "@asyncapi/markdown-template": "^1.3.3",
     "@asyncapi/parser": "^2.1.0",
     "@types/jest": "^27.4.0",
     "@types/qs": "^6.9.7",

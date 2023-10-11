@@ -99,7 +99,6 @@ describe('check config features when config is initialized', () => {
   })
 
   test('Should read config data from the current working directory', () => {
-    console.log('config_file_path', getConfigs())
     expect(getConfigs().GLEE_PROJECT_DIR).toBe(process.cwd())
   })
 
