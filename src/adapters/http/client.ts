@@ -23,7 +23,7 @@ class HttpClientAdapter extends Adapter {
     let headers = {}
     const authConfig = await clientAuthConfig(this.serverName)
     const serverUrl = this.serverUrlExpanded
-    for (const channelName of this.channelAddresses) {
+    for (const channelName of this.channelNames) {
       const channelInfo = this.parsedAsyncAPI.channels().get(channelName)
       const httpChannelBinding = channelInfo.bindings().get('http')
       const channelServers = channelInfo.servers().all().map(e => e.id())
