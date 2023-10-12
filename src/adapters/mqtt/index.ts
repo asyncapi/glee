@@ -46,7 +46,7 @@ class MqttAdapter extends Adapter {
     let userAndPasswordSecurityReq
     let X509SecurityReq
 
-    const securityRequirements = this.AsyncAPIServer.security().map(e => e.map(e => e.scheme()))
+    const securityRequirements = this.AsyncAPIServer.security().map(e => e.all().map(e => e.scheme()))
 
     securityRequirements.forEach(security => {
       for (const sec of security) {

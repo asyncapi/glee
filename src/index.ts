@@ -84,7 +84,7 @@ export default async function GleeAppInitializer() {
 
       if (operationId) {
         const schema = {
-          oneOf: operation.messages().filterByReceive().map(m => m.payload())
+          oneOf: operation.messages().filterByReceive().map(m => m.payload().json())
         } as any
         app.use(channelName, validate(schema), (event, next) => {
           triggerFunction({
@@ -98,7 +98,7 @@ export default async function GleeAppInitializer() {
 
     channel.operations().filterBySend().forEach(operation => {
       const schema = {
-        oneOf: operation.messages().filterBySend().map(m => m.payload())
+        oneOf: operation.messages().filterBySend().map(m => m.payload().json())
       } as any
       app.useOutbound(channelName, validate(schema), json2string)
     })
