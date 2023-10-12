@@ -138,7 +138,7 @@ export const isRemoteServer = (
   parsedAsyncAPI: AsyncAPIDocument,
   serverName: string
 ): boolean => {
-  const remoteServers = parsedAsyncAPI.extensions().get('x-remoteServers').value()
+  const remoteServers = parsedAsyncAPI.extensions().get('x-remoteServers')?.value()
   if (remoteServers) {
     return remoteServers.includes(serverName)
   }
