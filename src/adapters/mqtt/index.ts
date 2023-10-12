@@ -62,7 +62,7 @@ class MqttAdapter extends Adapter {
             X509SecurityReq = sec
             break
           default:
-            throw Error(`Invalid security type '${securityType}' specified for server '${this.serverName}'. Please double-check your configuration to ensure you're using a supported security type. Here is a list of supported types: ${Object.values(SecurityTypes)}`)
+            this.emit("error", new Error(`Invalid security type '${securityType}' specified for server '${this.serverName}'. Please double-check your configuration to ensure you're using a supported security type. Here is a list of supported types: ${Object.values(SecurityTypes)}`))
         }
       }
     })
