@@ -10,7 +10,11 @@ export async function serverAuth({ authProps, done }) {
   console.log("token", authProps.getToken())
   console.log("userpass", authProps.getUserPass())
 
-  done(false)
+  if (authProps.getToken().split(' ')[1] === process.env.TOKEN) {
+    done(true);
+  } else {
+    done(false);
+  }
 }
 
 export async function clientAuth({ parsedAsyncAPI, serverName }) {
