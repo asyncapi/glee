@@ -24,7 +24,10 @@ interface ClientData {
 
 const MQTT_UNSPECIFIED_ERROR_REASON = 0x80
 const MQTT_SUCCESS_REASON = 0
-
+enum SecurityTypes {
+  USER_PASSWORD = 'userpassword',
+  X509 = 'x509',
+}
 class MqttAdapter extends Adapter {
   private client: MqttClient
   private firstConnect: boolean
@@ -50,12 +53,16 @@ class MqttAdapter extends Adapter {
 
     securityRequirements.forEach(security => {
       for (const sec of security) {
-        if(sec.type() === 'userPassword') {
-          userAndPasswordSecurityReq = sec
-        }
-
-        if (sec.type() === 'x509') {
-          X509SecurityReq = sec
+        const securityType = sec.type().toLocaleLowerCase()
+        switch(securityType){
+          case SecurityTypes.USER_PASSWORD:
+            userAndPasswordSecurityReq = sec
+            break
+          case SecurityTypes.X509:
+            X509SecurityReq = sec
+            break
+          default:
+            throw Error(`Invalid security type '${securityType}' specified for server '${this.serverName}'. Please double-check your configuration to ensure you're using a supported security type. Here is a list of supported types: ${Object.values(SecurityTypes)}`)
         }
       }
     })
@@ -132,7 +139,8 @@ class MqttAdapter extends Adapter {
 
   private subscribe(channels: string[]) {
     channels.forEach((channel) => {
-      const binding = this.parsedAsyncAPI.channels().get(channel).bindings().get('mqtt').value()
+      const binding = this.parsedAsyncAPI.channels().get(channel).bindings().get('mqtt')?.value()
+      console.log(binding)
       this.client.subscribe(channel, {
         qos: binding?.qos ? binding.qos : 0,
       }, (err, granted) => {
@@ -209,7 +217,7 @@ class MqttAdapter extends Adapter {
 
   _send(message: GleeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      const binding = this.parsedAsyncAPI.channels().get(message.channel).bindings().get('mqtt').value()
+      const binding = this.parsedAsyncAPI.channels().get(message.channel).bindings().get('mqtt')?.value()
       this.client.publish(
         message.channel,
         message.payload,
