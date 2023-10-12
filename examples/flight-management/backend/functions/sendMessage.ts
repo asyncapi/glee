@@ -1,4 +1,4 @@
-import { GleeFunctionReturn } from '@asyncapi/glee'
+import type { GleeFunctionReturn } from '@asyncapi/glee'
 import allFlights from '../Events/allFlights.js'
 import updateFlight from '../Events/updateFlight.js'
 export default async function (gleeEvent): Promise<GleeFunctionReturn> {
