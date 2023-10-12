@@ -6,8 +6,6 @@ import GleeMessage from '../../src/lib/message.js'
 import GleeAdapter from '../../src/lib/adapter.js'
 import { jest } from '@jest/globals'
 
-jest.useFakeTimers()
-
 const TEST_SERVER_NAME = 'test'
 const ANOTHER_TEST_SERVER_NAME = 'another'
 const TEST_CHANNEL = 'test/channel'
