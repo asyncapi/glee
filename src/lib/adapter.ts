@@ -42,7 +42,7 @@ class GleeAdapter extends EventEmitter {
   constructor(
     glee: Glee,
     serverName: string,
-    server: Server | undefined,
+    server: Server,
     parsedAsyncAPI: AsyncAPIDocument
   ) {
     super()
