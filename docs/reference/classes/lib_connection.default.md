@@ -47,17 +47,17 @@ Instantiates a Glee connection.
 
 #### Defined in
 
-[src/lib/connection.ts:28](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L28)
+[src/lib/connection.ts:28](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L28)
 
 ## Properties
 
 ### \_AsyncAPIServer
 
-• `Private` **\_AsyncAPIServer**: `Server`
+• `Private` **\_AsyncAPIServer**: `ServerInterface`
 
 #### Defined in
 
-[src/lib/connection.ts:15](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L15)
+[src/lib/connection.ts:15](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L15)
 
 ___
 
@@ -67,17 +67,17 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:13](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L13)
+[src/lib/connection.ts:13](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L13)
 
 ___
 
 ### \_parsedAsyncAPI
 
-• `Private` **\_parsedAsyncAPI**: `AsyncAPIDocument`
+• `Private` **\_parsedAsyncAPI**: `AsyncAPIDocumentInterface`
 
 #### Defined in
 
-[src/lib/connection.ts:16](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L16)
+[src/lib/connection.ts:16](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L16)
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:12](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L12)
+[src/lib/connection.ts:12](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L12)
 
 ___
 
@@ -97,21 +97,21 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:14](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L14)
+[src/lib/connection.ts:14](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L14)
 
 ## Accessors
 
 ### AsyncAPIServer
 
-• `get` **AsyncAPIServer**(): `Server`
+• `get` **AsyncAPIServer**(): `ServerInterface`
 
 #### Returns
 
-`Server`
+`ServerInterface`
 
 #### Defined in
 
-[src/lib/connection.ts:54](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L54)
+[src/lib/connection.ts:54](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L54)
 
 ___
 
@@ -125,21 +125,21 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:46](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L46)
+[src/lib/connection.ts:46](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L46)
 
 ___
 
 ### parsedAsyncAPI
 
-• `get` **parsedAsyncAPI**(): `AsyncAPIDocument`
+• `get` **parsedAsyncAPI**(): `AsyncAPIDocumentInterface`
 
 #### Returns
 
-`AsyncAPIDocument`
+`AsyncAPIDocumentInterface`
 
 #### Defined in
 
-[src/lib/connection.ts:58](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L58)
+[src/lib/connection.ts:58](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L58)
 
 ___
 
@@ -153,7 +153,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:42](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L42)
+[src/lib/connection.ts:42](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L42)
 
 ___
 
@@ -167,7 +167,7 @@ ___
 
 #### Defined in
 
-[src/lib/connection.ts:50](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L50)
+[src/lib/connection.ts:50](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L50)
 
 ## Methods
 
@@ -183,7 +183,7 @@ Returns the real connection object.
 
 #### Defined in
 
-[src/lib/connection.ts:77](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L77)
+[src/lib/connection.ts:77](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L77)
 
 ___
 
@@ -205,4 +205,4 @@ Checks whether a channel is associated with this connection.
 
 #### Defined in
 
-[src/lib/connection.ts:68](https://github.com/asyncapi/glee/blob/c62dfe9/src/lib/connection.ts#L68)
+[src/lib/connection.ts:68](https://github.com/asyncapi/glee/blob/a15e431/src/lib/connection.ts#L68)
