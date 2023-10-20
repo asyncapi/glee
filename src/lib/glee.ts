@@ -2,7 +2,7 @@
 import EventEmitter from 'events'
 import async from 'async'
 import Debug from 'debug'
-import { AsyncAPIDocument, Server } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ServerInterface as Server } from '@asyncapi/parser'
 import GleeAdapter from './adapter.js'
 import GleeClusterAdapter from './cluster.js'
 import GleeRouter, {
@@ -78,7 +78,7 @@ export default class Glee extends EventEmitter {
       serverName,
       server,
       parsedAsyncAPI,
-    }: { serverName: string; server: Server; parsedAsyncAPI: AsyncAPIDocument }
+    }: { serverName: string; server: Server | undefined; parsedAsyncAPI: AsyncAPIDocument }
   ) {
     this._adapters.push({ Adapter, serverName, server, parsedAsyncAPI })
   }

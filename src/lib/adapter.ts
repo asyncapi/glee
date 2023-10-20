@@ -1,5 +1,5 @@
 /* eslint-disable security/detect-object-injection */
-import { AsyncAPIDocument, Server } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ServerInterface as Server } from '@asyncapi/parser'
 import EventEmitter from 'events'
 import uriTemplates from 'uri-templates'
 import GleeConnection from './connection.js'
@@ -27,6 +27,7 @@ class GleeAdapter extends EventEmitter {
   private _AsyncAPIServer: Server
   private _parsedAsyncAPI: AsyncAPIDocument
   private _channelNames: string[]
+  private _channelAddresses: string[]
   private _connections: GleeConnection[]
   private _serverUrlExpanded: string
 
@@ -51,7 +52,8 @@ class GleeAdapter extends EventEmitter {
     this._AsyncAPIServer = server
 
     this._parsedAsyncAPI = parsedAsyncAPI
-    this._channelNames = this._parsedAsyncAPI.channelNames()
+    this._channelNames = this._parsedAsyncAPI.channels().all().map(e => e.id())
+    this._channelAddresses = this._parsedAsyncAPI.channels().all().map(c => c.address())
     this._connections = []
 
     const uriTemplateValues = new Map()
@@ -194,6 +196,10 @@ class GleeAdapter extends EventEmitter {
     return this._channelNames
   }
 
+  get channelAddresses(): string[] {
+    return this._channelAddresses
+  }
+
   get connections(): GleeConnection[] {
     return this._connections
   }
@@ -229,12 +235,12 @@ class GleeAdapter extends EventEmitter {
    */
   getSubscribedChannels(): string[] {
     return this._channelNames.filter((channelName) => {
-      const channel = this._parsedAsyncAPI.channel(channelName)
-      if (!channel.hasPublish()) return false
+      const channel = this._parsedAsyncAPI.channels().get(channelName)
+      if (channel.operations().filterBySend().length == 0) return true
 
-      const channelServers = channel.hasServers()
+      const channelServers = channel.servers()
         ? channel.servers()
-        : channel.ext('x-servers') || this._parsedAsyncAPI.serverNames()
+        : channel.extensions().get('x-servers')?.value() || this._parsedAsyncAPI.allServers()
       return channelServers.includes(this._serverName)
     })
   }

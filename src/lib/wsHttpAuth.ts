@@ -1,4 +1,4 @@
-import { AsyncAPIDocument, SecurityScheme, Server } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, SecuritySchemeInterface as SecurityScheme, ServerInterface as Server } from '@asyncapi/parser'
 import { resolveFunctions } from './util.js'
 import { EventEmitter } from 'events'
 import { HttpAuthConfig, WsAuthConfig, AuthProps } from './index.js'
@@ -30,9 +30,9 @@ class GleeAuth extends EventEmitter {
 
   checkClientAuthConfig() {
     this.secReqs = (this.AsyncAPIServer.security() || []).map((sec) => {
-      const secName = Object.keys(sec.json())[0]
+      const secName = Object.keys(sec.values())[0]
       return {
-        [secName]: this.parsedAsyncAPI.components().securityScheme(secName),
+        [secName]: this.parsedAsyncAPI.securitySchemes().get(secName).json(),
       }
     })
 

@@ -2,7 +2,7 @@ import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import { MqttAuthConfig, MqttAdapterConfig } from '../../lib/index.js'
-import { SecurityScheme } from '@asyncapi/parser'
+import { SecuritySchemesInterface as SecurityScheme } from '@asyncapi/parser'
 import { logLineWithIcon } from '../../lib/logger.js'
 
 interface IMQTTHeaders {
@@ -24,7 +24,10 @@ interface ClientData {
 
 const MQTT_UNSPECIFIED_ERROR_REASON = 0x80
 const MQTT_SUCCESS_REASON = 0
-
+enum SecurityTypes {
+  USER_PASSWORD = 'userpassword',
+  X509 = 'x509',
+}
 class MqttAdapter extends Adapter {
   private client: MqttClient
   private firstConnect: boolean
@@ -42,22 +45,31 @@ class MqttAdapter extends Adapter {
   }
 
   private getSecurityReqs() {
-    const securityRequirements = (this.AsyncAPIServer.security() || []).map(
-      (sec) => {
-        const secName = Object.keys(sec.json())[0]
-        return this.parsedAsyncAPI.components().securityScheme(secName)
+
+    let userAndPasswordSecurityReq
+    let X509SecurityReq
+
+    const securityRequirements = this.AsyncAPIServer.security().map(e => e.all().map(e => e.scheme()))
+
+    securityRequirements.forEach(security => {
+      for (const sec of security) {
+        const securityType = sec.type().toLocaleLowerCase()
+        switch(securityType){
+          case SecurityTypes.USER_PASSWORD:
+            userAndPasswordSecurityReq = sec
+            break
+          case SecurityTypes.X509:
+            X509SecurityReq = sec
+            break
+          default:
+            this.emit("error", new Error(`Invalid security type '${securityType}' specified for server '${this.serverName}'. Please double-check your configuration to ensure you're using a supported security type. Here is a list of supported types: ${Object.values(SecurityTypes)}`))
+        }
       }
-    )
-    const userAndPasswordSecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'userPassword'
-    )
-    const X509SecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'X509'
-    )
+    })
 
     return {
       userAndPasswordSecurityReq,
-      X509SecurityReq,
+      X509SecurityReq
     }
   }
 
@@ -127,8 +139,8 @@ class MqttAdapter extends Adapter {
 
   private subscribe(channels: string[]) {
     channels.forEach((channel) => {
-      const operation = this.parsedAsyncAPI.channel(channel).publish()
-      const binding = operation.binding('mqtt')
+      const binding = this.parsedAsyncAPI.channels().get(channel).bindings().get('mqtt')?.value()
+      console.log(binding)
       this.client.subscribe(channel, {
         qos: binding?.qos ? binding.qos : 0,
       }, (err, granted) => {
@@ -154,8 +166,8 @@ class MqttAdapter extends Adapter {
     )
     const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions?.auth)
     const subscribedChannels = this.getSubscribedChannels()
-    const mqttServerBinding = this.AsyncAPIServer.binding('mqtt')
-    const mqtt5ServerBinding = this.AsyncAPIServer.binding('mqtt5')
+    const mqttServerBinding = this.AsyncAPIServer.bindings().get('mqtt')
+    const mqtt5ServerBinding = this.AsyncAPIServer.bindings().get('mqtt5')
 
     const { userAndPasswordSecurityReq, X509SecurityReq } =
       this.getSecurityReqs()
@@ -205,8 +217,7 @@ class MqttAdapter extends Adapter {
 
   _send(message: GleeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      const operation = this.parsedAsyncAPI.channel(message.channel).subscribe()
-      const binding = operation ? operation.binding('mqtt') : undefined
+      const binding = this.parsedAsyncAPI.channels().get(message.channel).bindings().get('mqtt')?.value()
       this.client.publish(
         message.channel,
         message.payload,

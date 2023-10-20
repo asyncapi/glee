@@ -1,4 +1,4 @@
-import { AsyncAPIDocument, Server } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ServerInterface } from '@asyncapi/parser'
 import MqttAdapter from './adapters/mqtt/index.js'
 import WebSocketServerAdapter from './adapters/ws/server.js'
 import WebsocketClientAdapter from './adapters/ws/client.js'
@@ -19,7 +19,7 @@ export default async (
   const serverNames = await getSelectedServerNames()
 
   serverNames.forEach((serverName) => {
-    const server = parsedAsyncAPI.server(serverName)
+    const server: ServerInterface = parsedAsyncAPI.servers().get(serverName)
 
     if (!server) {
       throw new Error(
@@ -35,13 +35,13 @@ export default async (
 
 function registerAdapterForServer(
   serverName: string,
-  server: Server,
+  server: ServerInterface,
   app: Glee,
   parsedAsyncAPI: AsyncAPIDocument,
   config: GleeConfig
 ) {
   const protocol = server.protocol()
-  const remoteServers = parsedAsyncAPI.extension('x-remoteServers')
+  const remoteServers = parsedAsyncAPI.extensions().get('x-remoteServers')?.value()
   if (['mqtt', 'mqtts', 'secure-mqtt'].includes(protocol)) {
     app.addAdapter(MqttAdapter, {
       serverName,

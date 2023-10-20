@@ -1,4 +1,4 @@
-import { GleeFunctionReturn } from '@asyncapi/glee/src/lib/index.js'
+import type { GleeFunctionReturn } from '@asyncapi/glee'
 import DatabaseManager from '../helpters/DatabaseManager.js'
 export default async function updateFlight(flight):Promise<GleeFunctionReturn> {
   const isSuccessful = await DatabaseManager.getInstance().updateFlight(flight)

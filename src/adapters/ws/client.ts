@@ -38,7 +38,7 @@ class WsClientAdapter extends Adapter {
         this.serverName,
         authConfig
       )
-      let url = new URL(this.AsyncAPIServer.url() + channel)
+      let url = new URL(this.AsyncAPIServer.url() + this.parsedAsyncAPI.channels().get(channel).address())
       if (authConfig) {
         const modedAuth = await gleeAuth.processClientAuth(url, headers, {})
         headers = modedAuth.headers
@@ -47,7 +47,7 @@ class WsClientAdapter extends Adapter {
       this.clients.push({
         channel,
         client: new ws(url, { headers }),
-        binding: this.parsedAsyncAPI.channel(channel).binding('ws'),
+        binding: this.parsedAsyncAPI.channels().get(channel).bindings().get('ws'),
       })
     }
 
@@ -77,13 +77,12 @@ class WsClientAdapter extends Adapter {
   private getWsChannels() {
     const channels = []
     for (const channel of this.channelNames) {
-      if (this.parsedAsyncAPI.channel(channel).hasBinding('ws')) {
-        if (this.parsedAsyncAPI.channel(channel).hasServers()) {
+      if (this.parsedAsyncAPI.channels().get(channel).bindings().get('ws')) {
+        if (this.parsedAsyncAPI.channels().get(channel).servers().all().length !== 0) { // NOSONAR
           if (
             this.parsedAsyncAPI
-              .channel(channel)
-              .servers()
-              .includes(this.serverName)
+              .channels().get(channel)
+              .servers().get(this.serverName)
           ) {
             channels.push(channel)
           }

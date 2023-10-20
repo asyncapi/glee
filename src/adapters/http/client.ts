@@ -24,14 +24,14 @@ class HttpClientAdapter extends Adapter {
     const authConfig = await clientAuthConfig(this.serverName)
     const serverUrl = this.serverUrlExpanded
     for (const channelName of this.channelNames) {
-      const channelInfo = this.parsedAsyncAPI.channel(channelName)
-      const httpChannelBinding = channelInfo.binding('http')
-      const channelServers = channelInfo.servers()
+      const channelInfo = this.parsedAsyncAPI.channels().get(channelName)
+      const httpChannelBinding = channelInfo.bindings().get('http')
+      const channelServers = channelInfo.servers().all().map(e => e.id())
       const isChannelServers =
         !channelServers.length || channelServers.includes(message.serverName)
       if (httpChannelBinding && isChannelServers) {
-        const method = httpChannelBinding.method
-        let url = `${serverUrl}/${channelName}`
+        const method = httpChannelBinding.json().method
+        let url = new URL( serverUrl + this.parsedAsyncAPI.channels().get(channelName).address())
         const gleeAuth = new GleeAuth(
           this.AsyncAPIServer,
           this.parsedAsyncAPI,

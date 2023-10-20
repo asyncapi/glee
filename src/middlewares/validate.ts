@@ -1,4 +1,4 @@
-import { Schema } from '@asyncapi/parser'
+import { SchemaV2 as Schema } from '@asyncapi/parser'
 import GleeError from '../errors/glee-error.js'
 import GleeMessage from '../lib/message.js'
 import { validateData } from '../lib/util.js'

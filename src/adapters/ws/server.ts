@@ -99,7 +99,7 @@ class WebSocketsAdapter extends Adapter {
       pathname = pathname.substring(1)
     }
 
-    if (!this.parsedAsyncAPI.channel(pathname)) {
+    if (!this.parsedAsyncAPI.channels().get(pathname)) {
       this.emitPathnameError(socket, pathname)
     }
 
@@ -232,8 +232,8 @@ class WebSocketsAdapter extends Adapter {
       )
 
       const wsChannelBinding = this.parsedAsyncAPI
-        .channel(pathname)
-        .binding('ws')
+        .channels().get(pathname)
+        .bindings().get('ws')
 
       if (wsChannelBinding) {
         const correctBindings = await this.checkBindings(socket, {
