@@ -1,0 +1,37 @@
+asyncapi: 3.0.0
+info:
+  title: Slack Websocket API
+  version: 1.0.0
+servers:
+  slack:
+    host: wss-primary.slack.com
+    protocol: wss
+channels:
+  "/":
+    address: /link/?ticket=1413e8d4-5bda-4007-88e0-e22e840e6070&app_id=b02112d9364cb2fee8a0ee048a920b8b4b0103cb03fab023b4e30f6ee2efb98f
+    bindings: 
+      ws: {}
+    messages:
+      reactionAdded:
+        $ref: "#/components/messages/reactionAdded"
+      error:
+        $ref: "#/components/messages/error"
+operations:
+  messageReceived:
+    action: receive
+    channel:
+      $ref: "#/channels/~1"
+    messages:
+      - $ref: "#/components/messages/reactionAdded"
+      - $ref: "#/components/messages/error"
+
+components:
+  messages:
+    reactionAdded:
+      payload:
+        type: object
+    error:
+      payload:
+        type: string
+x-remoteServers: 
+  - slack
