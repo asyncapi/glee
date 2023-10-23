@@ -18,7 +18,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `asyncapi` | `AsyncAPIDocument` |
+| `asyncapi` | `AsyncAPIDocumentInterface` |
 
 #### Returns
 
@@ -39,4 +39,4 @@
 
 #### Defined in
 
-[src/middlewares/existsInAsyncAPI.ts:5](https://github.com/asyncapi/glee/blob/59041da/src/middlewares/existsInAsyncAPI.ts#L5)
+[src/middlewares/existsInAsyncAPI.ts:5](https://github.com/asyncapi/glee/blob/a15e431/src/middlewares/existsInAsyncAPI.ts#L5)

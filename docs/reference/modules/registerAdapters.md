@@ -19,7 +19,7 @@
 | Name | Type |
 | :------ | :------ |
 | `app` | [`default`](../classes/lib_glee.default.md) |
-| `parsedAsyncAPI` | `AsyncAPIDocument` |
+| `parsedAsyncAPI` | `AsyncAPIDocumentInterface` |
 | `config` | [`GleeConfig`](lib.md#gleeconfig) |
 
 #### Returns
@@ -28,4 +28,4 @@
 
 #### Defined in
 
-[src/registerAdapters.ts:14](https://github.com/asyncapi/glee/blob/59041da/src/registerAdapters.ts#L14)
+[src/registerAdapters.ts:14](https://github.com/asyncapi/glee/blob/a15e431/src/registerAdapters.ts#L14)
