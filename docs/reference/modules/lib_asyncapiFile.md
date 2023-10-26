@@ -29,7 +29,7 @@
 
 #### Defined in
 
-[src/lib/asyncapiFile.ts:18](https://github.com/asyncapi/glee/blob/a15e431/src/lib/asyncapiFile.ts#L18)
+[src/lib/asyncapiFile.ts:25](https://github.com/asyncapi/glee/blob/100883e/src/lib/asyncapiFile.ts#L25)
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 #### Defined in
 
-[src/lib/asyncapiFile.ts:14](https://github.com/asyncapi/glee/blob/a15e431/src/lib/asyncapiFile.ts#L14)
+[src/lib/asyncapiFile.ts:21](https://github.com/asyncapi/glee/blob/100883e/src/lib/asyncapiFile.ts#L21)
 
 ___
 
@@ -63,4 +63,4 @@ ___
 
 #### Defined in
 
-[src/lib/asyncapiFile.ts:5](https://github.com/asyncapi/glee/blob/a15e431/src/lib/asyncapiFile.ts#L5)
+[src/lib/asyncapiFile.ts:6](https://github.com/asyncapi/glee/blob/100883e/src/lib/asyncapiFile.ts#L6)
