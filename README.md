@@ -54,7 +54,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/sudoshreyansh"><img src="https://avatars.githubusercontent.com/u/44190883?v=4?s=100" width="100px;" alt="sudoshreyansh"/><br /><sub><b>sudoshreyansh</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=sudoshreyansh" title="Tests">⚠️</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/afzal442"><img src="https://avatars.githubusercontent.com/u/11625672?v=4?s=100" width="100px;" alt="Afzal Ansari"/><br /><sub><b>Afzal Ansari</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=afzal442" title="Documentation">📖</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/oviecodes"><img src="https://avatars.githubusercontent.com/u/61796959?v=4?s=100" width="100px;" alt="Godwin Alexander"/><br /><sub><b>Godwin Alexander</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=oviecodes" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/oviecodes"><img src="https://avatars.githubusercontent.com/u/61796959?v=4?s=100" width="100px;" alt="Godwin Alexander"/><br /><sub><b>Godwin Alexander</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=oviecodes" title="Documentation">📖</a> <a href="https://github.com/asyncapi/glee/commits?author=oviecodes" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
