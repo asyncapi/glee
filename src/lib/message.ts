@@ -1,5 +1,6 @@
 import EventEmitter from 'events'
 import GleeConnection from './connection.js'
+import { OperationInterface } from '@asyncapi/parser'
 
 type MessageHeaders = { [key: string]: any }
 type QueryParam = { [key: string]: string } | { [key: string]: string[] }
@@ -8,6 +9,7 @@ interface IGleeMessageConstructor {
   payload?: any
   headers?: MessageHeaders
   channel?: string
+  request?: GleeMessage
   serverName?: string
   connection?: GleeConnection
   broadcast?: boolean
@@ -30,6 +32,8 @@ class GleeMessage extends EventEmitter {
   private _connection: GleeConnection
   private _broadcast: boolean
   private _inbound: boolean
+  private _request: GleeMessage
+  private _operation: OperationInterface
   private _outbound: boolean
   private _cluster: boolean
   private _params: { [key: string]: string }
@@ -43,6 +47,7 @@ class GleeMessage extends EventEmitter {
    * @param {Object} [options.headers] Message headers.
    * @param {String} [options.channel] Message channel.
    * @param {String} [options.serverName] The name of the associated AsyncAPI server.
+   * @param {GleeMessage} [options.request] The request that this message is created for as a reply.
    * @param {GleeConnection} [options.connection] The connection through which the message will be sent or has been received.
    * @param {Boolean} [options.broadcast=false] Whether the message should be broadcasted or not.
    * @param {Boolean} [options.cluster=false] Whether the message is from a cluster adapter or not.
@@ -54,6 +59,7 @@ class GleeMessage extends EventEmitter {
     channel,
     serverName,
     connection,
+    request,
     broadcast = false,
     cluster = false,
     query,
@@ -68,6 +74,7 @@ class GleeMessage extends EventEmitter {
     if (broadcast) this._broadcast = !!broadcast
     if (cluster) this._cluster = cluster
     if (query) this._query = query
+    if (request) this._request = request
   }
 
   get payload(): any {
@@ -77,6 +84,27 @@ class GleeMessage extends EventEmitter {
   set payload(value: any) {
     this._payload = value
   }
+
+  hasRequest(): boolean {
+    return !!this._request
+  }
+
+  set request(value: GleeMessage) {
+    this._request = value
+  }
+
+  get request() {
+    return this._request
+  }
+
+  get operation(): OperationInterface {
+    return this._operation
+  }
+
+  set operation(value: OperationInterface) {
+    this._operation = value
+  }
+
 
   get headers(): { [key: string]: string } {
     return this._headers
@@ -136,40 +164,6 @@ class GleeMessage extends EventEmitter {
 
   set query(value: QueryParam) {
     this._query = value
-  }
-  /**
-   * Sends the message back to the server/broker.
-   *
-   * @param {Object} options
-   * @param {Any} [options.payload] The new message payload. Pass falsy value if you don't want to change it.
-   * @param {Object|null} [options.headers] The new message headers. Pass null if you want to remove them.
-   * @param {String} [options.channel] The channel where the reply should go to.
-   * @param {Object} [options.query] The new message query parameters. Pass a falsy value if you don't want to change them.
-   */
-  reply({ payload, headers, channel, query }: IReply) {
-    if (payload) this._payload = payload
-
-    if (query) this._query = query
-
-    if (headers !== undefined) {
-      if (headers === null) {
-        this._headers = undefined
-      } else {
-        this._headers = headers
-      }
-    }
-
-    if (channel !== undefined) {
-      if (typeof channel === 'string') {
-        this._channel = channel
-      } else {
-        return console.error(
-          'GleeMessage.reply(): when specified, "channel" must be a string.'
-        )
-      }
-    }
-
-    this.send()
   }
 
   /**

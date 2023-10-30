@@ -4,24 +4,26 @@ import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
 import { logWarningMessage, logError } from './logger.js'
 import GleeMessage from './message.js'
-import { GleeFunction } from './index.js'
+import { GleeFunction, GleeFunctionReturn } from './index.js'
 import Glee from './glee.js'
 import {
   gleeMessageToFunctionEvent,
   validateData,
   isRemoteServer,
+  extractExpressionValueFromMessage,
 } from './util.js'
 import { pathToFileURL } from 'url'
 import GleeError from '../errors/glee-error.js'
 import { getParsedAsyncAPI } from './asyncapiFile.js'
 import Debug from 'debug'
+import { AsyncAPIDocumentInterface, OperationInterface } from '@asyncapi/parser'
 const debug = Debug('glee:functions')
 
 interface FunctionInfo {
   run: GleeFunction
 }
 
-const OutboundMessageSchema = {
+const FunctionReturnSchema = {
   type: 'object',
   properties: {
     payload: {},
@@ -30,25 +32,8 @@ const OutboundMessageSchema = {
       propertyNames: { type: 'string' },
       additionalProperties: { type: 'string' },
     },
-    channel: { type: 'string' },
-    server: { type: 'string' },
     query: { type: 'object' },
   },
-}
-const FunctionReturnSchema = {
-  type: ['object', 'null'],
-  properties: {
-    send: {
-      type: 'array',
-      items: OutboundMessageSchema,
-    },
-    reply: {
-      type: 'array',
-      items: OutboundMessageSchema,
-    },
-  },
-  additionalProperties: false,
-  anyOf: [{ required: ['send'] }, { required: ['reply'] }],
 }
 
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
@@ -58,7 +43,7 @@ export async function register(dir: string) {
   debug(`Attempting to register functions from directory: ${dir}`)
   try {
     const statsDir = await stat(dir)
-    if (!statsDir.isDirectory()){
+    if (!statsDir.isDirectory()) {
       debug('Provided path is not a directory. Skipping.')
       return
     }
@@ -95,82 +80,98 @@ export async function register(dir: string) {
 
 export async function trigger({
   app,
-  operationId,
+  operation,
   message,
 }: {
   app: Glee
-  operationId: string
+  operation: OperationInterface
   message: GleeMessage
 }) {
   try {
-    debug(`Triggering function for operation ID: ${operationId}`)
-    const parsedAsyncAPI = await getParsedAsyncAPI()
 
-    const operationFunction = functions.get(operationId)
-    if(!operationFunction){
-      const errMsg = `Failed to trigger function: No function registered for operation ID "${operationId}". please make sure you have a function named: "${operationId}(.js|.ts)" in your functions directory.`
-      logError(new Error(errMsg ), {
-        highlightedWords: [`"${operationId}"`],
-      })
-      return
+    debug(`Triggering function for operation ID: ${operation.id()}`)
+    const parsedAsyncAPI = await getParsedAsyncAPI()
+    message.operation = operation
+    const operationFunction = functions.get(operation.id())
+    if (!operationFunction) {
+      const errMsg = `Failed to trigger function: No function registered for operation ID "${operation.id()}". please make sure you have a function named: "${operation.id()}(.js|.ts)" in your functions directory.`
+      throw Error(errMsg)
     }
     let functionResult = await operationFunction.run(gleeMessageToFunctionEvent(message, app))
-    if (functionResult === undefined) functionResult = null
     const { humanReadableError, errors, isValid } = validateData(
       functionResult,
       FunctionReturnSchema
     )
-
     if (!isValid) {
-      debug(`Function ${operationId} returned invalid data.`)
       const err = new GleeError({
         humanReadableError,
         errors,
       })
-      err.message = `Function ${operationId} returned invalid data.`
-
+      err.message = `Function ${operation.id()} returned invalid data.`
       logError(err, {
-        highlightedWords: [operationId],
+        highlightedWords: [operation.id()],
       })
-
       return
     }
-
-    functionResult?.send?.forEach((msg) => {
-      const localServerProtocols = ['ws', 'wss', 'http', 'https']
-      const serverProtocol = parsedAsyncAPI.servers().get(msg.server || message.serverName).protocol().toLocaleLowerCase()
-      const isBroadcast =
-        localServerProtocols.includes(serverProtocol) &&
-        !isRemoteServer(parsedAsyncAPI, msg.server)
+    const replyMessage = createReply(functionResult, message, parsedAsyncAPI)
+    const replyChannel = parsedAsyncAPI.channels().get(replyMessage.channel)
+    replyChannel.servers().forEach((server) => {
+      replyMessage.serverName = server.id()
       app.send(
-        new GleeMessage({
-          payload: msg.payload,
-          query: msg.query,
-          headers: msg.headers,
-          channel: msg.channel || message.channel,
-          serverName: msg.server,
-          broadcast: isBroadcast,
-        })
+        replyMessage
       )
-    })
-
-    functionResult?.reply?.forEach((msg) => {
-      message.reply({
-        payload: msg.payload,
-        headers: msg.headers,
-        channel: msg.channel,
-      })
     })
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
       const functionsPath = relative(GLEE_DIR, GLEE_FUNCTIONS_DIR)
-      const missingFile = relative(GLEE_FUNCTIONS_DIR, `${operationId}.js`)
+      const missingFile = relative(GLEE_FUNCTIONS_DIR, `${operation.id()}.js`)
       const missingPath = join(functionsPath, missingFile)
       logWarningMessage(`Missing function file ${missingPath}.`, {
         highlightedWords: [missingPath],
       })
     } else {
-      throw err
+      logError(err)
+      return
     }
   }
+}
+
+function createReply(functionResult: void | GleeFunctionReturn, message: GleeMessage, parsedAsyncAPI: AsyncAPIDocumentInterface): GleeMessage {
+  const operation = message.operation
+  const reply = operation.reply()
+  if (!functionResult && !reply) {
+    return
+  }
+  if (!functionResult && reply) {
+    const errMsg = `Operation ${operation.id()} needs to return a response. please make sure your function returns the approprait reply.`
+    throw Error(errMsg)
+  }
+  if (functionResult && !reply) {
+    const warningMsg = `Operation ${operation.id()} doesn't have a reply field. the return result from your function will be ignored.`
+    logWarningMessage(warningMsg)
+    return
+  }
+
+  const localServerProtocols = ['ws', 'wss', 'http', 'https']
+  const serverProtocol = parsedAsyncAPI.servers().get(message.serverName).protocol().toLocaleLowerCase()
+  const isBroadcast = localServerProtocols.includes(serverProtocol) &&
+    !isRemoteServer(parsedAsyncAPI, message.serverName)
+
+  let replyChannel = parsedAsyncAPI.channels().all().filter((c) => c.address() === reply.channel().address())[0]
+  const replyAddress = reply.address()
+  if (replyAddress) {
+    const channelAddress = extractExpressionValueFromMessage(this, replyAddress.location())
+    if (!channelAddress) {
+      throw Error(`cannot parse the ${replyAddress.location()} from your message.`)
+    }
+    const channel = parsedAsyncAPI.allChannels().filter((c) => c.address === channelAddress)[0]
+    if (!channel) {
+      throw Error(`cannot find a channel with the address of "${channelAddress}" in your AsyncAPI file.`)
+    }
+    replyChannel = channel
+  }
+
+  return new GleeMessage({ ...functionResult, channel: replyChannel.id(), request: message, broadcast: isBroadcast });
+
+
 }
