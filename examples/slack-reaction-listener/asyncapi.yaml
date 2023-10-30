@@ -1,0 +1,147 @@
+asyncapi: 3.0.0
+info:
+  title: Slack Websocket API
+  version: 1.0.0
+servers:
+  OpenAI:
+    host: api.openai.com
+    protocol: https
+  Slack:
+    host: wss-primary.slack.com
+    protocol: wss
+  Slack_HTTP:
+    host:  slack.com
+    protocol: https
+channels:
+  slackResponse:
+    bindings:
+      http:
+        method: post
+    address: /api/chat.postMessage
+    servers:
+      - $ref: "#/servers/Slack_HTTP"
+    messages:
+      slackResponse:
+        $ref: "#/components/messages/slackResponse"
+  OpenAISent:
+    bindings:
+      http:
+        method: post
+    servers:
+      - $ref: "#/servers/OpenAI"
+    address: /v1/chat/completions
+    messages:
+      OpenAIRequest: 
+        $ref: "#/components/messages/OpenAIRequest"
+  slackReceive:
+    servers:
+      - $ref: "#/servers/Slack"
+    address: /link/?ticket={ticket}&app_id={app_id}
+    parameters:
+      ticket:
+        default: 35338c0f-ffcc-4325-b8d4-7c9e556c0ecf
+      app_id:
+        default: b02112d9364cb2fee8a0ee048a920b8b4b0103cb03fab023b4e30f6ee2efb98f
+    messages:
+      reactionAdded:
+        $ref: "#/components/messages/reactionAdded"
+      error:
+        $ref: "#/components/messages/error"
+operations:
+  slackResponse:
+    
+    action: send
+    channel: 
+      $ref: "#/channels/OpenAISent"
+    messages:
+      - $ref: "#/components/messages/slackResponse"
+  openAIResponse:
+    action: receive
+    channel:
+      $ref: "#/channels/OpenAISent"
+    messages:
+      - $ref: "#/components/messages/OpenAIResponse"
+    reply:
+      channel:
+        $ref: "#/channels/slackResponse"
+  reactionAdded:
+    reply:
+      channel: 
+        $ref: "#/channels/OpenAISent"
+    action: receive
+    channel:
+      $ref: "#/channels/slackReceive"
+    messages:
+      - $ref: "#/components/messages/reactionAdded"
+      - $ref: "#/components/messages/error"
+
+components:
+  messages:
+    slackResponse:
+      payload:
+        type: object
+        properties:
+          channel:
+            type: string
+          text:
+            type: string
+    OpenAIRequest:
+      payload:
+        type: object
+        properties:
+          model:
+            type: string
+            enum: ["gpt-3.5-turbo", "gpt-3.5-turbo-16k", "text-davinci-002"]
+          messages:
+            type: array
+            items:
+              type: object
+              properties:
+                role:
+                  type: string
+                  enum: ["user"]
+                content:
+                  type: string
+          temperature:
+            type: number
+            minimum: 0.0
+            maximum: 1.0
+        required:
+          - model
+          - messages
+          - temperature
+    OpenAIResponse:
+      payload:
+        type: object
+        properties:
+          choices:
+            type: array
+            items:
+              type: object
+              properties:
+                finish_reason:
+                  type: string
+                  enum: ['stop']
+                message:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+                    role:
+                      type: string
+                      enum: ['assistant']
+              required:
+                - finish_reason
+                - message
+        required:
+          - choices
+    reactionAdded:
+      payload:
+        type: object
+    error:
+      payload:
+        type: string
+x-remoteServers: 
+  - Slack_HTTP
+  - Slack
+  - OpenAI

@@ -59,7 +59,6 @@ export default async function GleeAppInitializer() {
   await registerAuth(GLEE_AUTH_DIR)
 
   const parsedAsyncAPI = await getParsedAsyncAPI()
-  const channelNames = getChannelNames(parsedAsyncAPI)
 
   const app = new Glee(config)
 
@@ -76,32 +75,26 @@ export default async function GleeAppInitializer() {
   app.use(errorLogger)
   app.useOutbound(errorLogger)
   await generateDocs(parsedAsyncAPI, config, null)
-
-  channelNames.forEach((channelName) => {
-    const channel = parsedAsyncAPI.channels().get(channelName)
-    channel.operations().filterByReceive().forEach(operation => {
-      const operationId = operation.operationId()
-
-      if (operationId) {
-        const schema = {
-          oneOf: operation.messages().filterByReceive().map(m => m.payload().json())
-        } as any
-        app.use(channelName, validate(schema), (event, next) => {
-          triggerFunction({
-            app,
-            operationId,
-            message: event
-          }).then(next).catch(next)
-        })
-      }
+  parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
+    const channel = operation.channels()[0] // operation can have only one channel. https://github.com/asyncapi/parser-js/issues/884
+    const schema = {
+      oneOf: operation.messages().filterByReceive().map(m => m.payload().json())
+    } as any
+    app.use(channel.id(), validate(schema), (event, next) => {
+      triggerFunction({
+        app,
+        operation,
+        message: event
+      }).then(next).catch(next)
     })
+  })
 
-    channel.operations().filterBySend().forEach(operation => {
-      const schema = {
-        oneOf: operation.messages().filterBySend().map(m => m.payload().json())
-      } as any
-      app.useOutbound(channelName, validate(schema), json2string)
-    })
+  parsedAsyncAPI.operations().filterBySend().forEach(operation => {
+    const channel = operation.channels()[0] // operation can have only one channel. https://github.com/asyncapi/parser-js/issues/884
+    const schema = {
+      oneOf: operation.messages().filterBySend().map(m => m.payload().json())
+    } as any
+    app.useOutbound(channel.address(), validate(schema), json2string)
   })
 
   app.on('adapter:auth', async (e: AuthEvent) => {

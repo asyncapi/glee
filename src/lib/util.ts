@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentInterface as AsyncAPIDocument } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ChannelInterface } from '@asyncapi/parser'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
@@ -54,6 +54,7 @@ export const duplicateMessage = (message: GleeMessage): GleeMessage => {
     payload: message.payload,
     headers: message.headers,
     channel: message.channel,
+    request: message.request,
     serverName: message.serverName,
     connection: message.connection,
     broadcast: message.broadcast,
@@ -127,6 +128,7 @@ export const gleeMessageToFunctionEvent = (
     payload: message.payload,
     query: message.query,
     headers: message.headers,
+    request: message.request,
     channel: message.channel,
     connection: message.connection,
     serverName: message.serverName,
@@ -156,4 +158,69 @@ export const resolveFunctions = async (object: any) => {
       object[String(key)] = await object[String(key)]()
     }
   }
+}
+
+
+function jsonPointer(obj: any, pointer: string): any {
+  const parts = pointer.split('/').slice(1);
+  let current = obj;
+
+  for (const part of parts) {
+    if (current === null || typeof current !== 'object') {
+      return undefined;
+    }
+    current = current[part];
+  }
+
+  return current;
+}
+
+export function extractExpressionValueFromMessage(message: { headers: any, payload: any }, expression: string): any {
+
+  // Parse the expression
+  const match = expression.match(/^\$message\.(header|payload)(#.*)?$/);
+  if (!match) {
+    throw new Error(`${expression} is invalid.`);
+  }
+
+  const source = match[1];
+  const fragment = match[2] ? match[2].slice(1) : undefined;
+  const headers = message.headers
+  const payload = message.payload
+  // Extract value based on source and fragment
+  if (source === 'header') {
+    return fragment ? jsonPointer(headers, fragment) : headers;
+  } else if (source === 'payload') {
+    return fragment ? jsonPointer(payload, fragment) : payload;
+  } else {
+    throw new Error(`${expression} source should be "header" or "fragment"`);
+  }
+}
+
+export function applyAddressParameters(channel: ChannelInterface, headers?: any, payload?: any) {
+  let address = channel.address()
+  const parameters = channel.parameters()
+  for (const parameter of parameters) {
+    const location = parameter.location()
+    const doesExistInAddress = address.includes(`{${parameter.id()}}`);
+    if (!doesExistInAddress) continue
+    let parameterValue: string
+    if (location) {
+      if (payload || headers) {
+        parameterValue = extractExpressionValueFromMessage({ headers, payload }, location)
+        if (!parameterValue) {
+          throw Error(`tried to parse parameter "${parameter.id()}" from ${location} but failed.`);
+        }
+      }
+    } else {
+      parameterValue = parameter.json().default
+    }
+    if (!parameterValue) {
+      throw Error(`parsing parameter "${parameter.id()}" value failed. please make sure it exists in your header/payload or in default field of the parameter.`);
+    }
+
+    address = address.replace(`{${parameter.id()}}`, parameterValue)
+  }
+
+  return address
 }

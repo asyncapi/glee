@@ -4,7 +4,9 @@ import GleeMessage from '../../lib/message.js'
 import ws from 'ws'
 import { clientAuthConfig } from '../../lib/userAuth.js'
 import GleeAuth from '../../lib/wsHttpAuth.js'
-
+import { applyAddressParameters } from '../../lib/util.js'
+import Debug from 'debug'
+const debug = Debug("glee:ws:client")
 interface Client {
   channel: string
   client: ws
@@ -29,7 +31,8 @@ class WsClientAdapter extends Adapter {
   private async _connect(): Promise<this> {
     const channelsOnThisServer = this.getWsChannels()
 
-    for (const channel of channelsOnThisServer) {
+    debug("connecting to ", this.serverName)
+    for (const channelName of channelsOnThisServer) {
       let headers = {}
       const authConfig = await clientAuthConfig(this.serverName)
       const gleeAuth = new GleeAuth(
@@ -38,16 +41,21 @@ class WsClientAdapter extends Adapter {
         this.serverName,
         authConfig
       )
-      let url = new URL(this.AsyncAPIServer.url() + this.parsedAsyncAPI.channels().get(channel).address())
+
+      const protocol = this.AsyncAPIServer.protocol()
+      const serverHost = this.AsyncAPIServer.host()
+      const channel = this.parsedAsyncAPI.channels().get(channelName);
+      const channelAddress = applyAddressParameters(channel);
+      let url = new URL(`${protocol}://${serverHost}${channelAddress}`)
       if (authConfig) {
         const modedAuth = await gleeAuth.processClientAuth(url, headers, {})
         headers = modedAuth.headers
         url = modedAuth.url
       }
       this.clients.push({
-        channel,
+        channel: channelName,
         client: new ws(url, { headers }),
-        binding: this.parsedAsyncAPI.channels().get(channel).bindings().get('ws'),
+        binding: this.parsedAsyncAPI.channels().get(channelName).bindings().get('ws'),
       })
     }
 
@@ -77,18 +85,16 @@ class WsClientAdapter extends Adapter {
   private getWsChannels() {
     const channels = []
     for (const channel of this.channelNames) {
-      if (this.parsedAsyncAPI.channels().get(channel).bindings().get('ws')) {
-        if (this.parsedAsyncAPI.channels().get(channel).servers().all().length !== 0) { // NOSONAR
-          if (
-            this.parsedAsyncAPI
-              .channels().get(channel)
-              .servers().get(this.serverName)
-          ) {
-            channels.push(channel)
-          }
-        } else {
+      if (this.parsedAsyncAPI.channels().get(channel).servers().all().length !== 0) { // NOSONAR
+        if (
+          this.parsedAsyncAPI
+            .channels().get(channel)
+            .servers().get(this.serverName)
+        ) {
           channels.push(channel)
         }
+      } else {
+        channels.push(channel)
       }
     }
 
