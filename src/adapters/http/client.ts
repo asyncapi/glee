@@ -62,11 +62,10 @@ class HttpClientAdapter extends Adapter {
           method,
           url,
           json: body,
-          searchParams: !!query ? JSON.parse(JSON.stringify(query)) : undefined,
+          searchParams: query ? JSON.parse(JSON.stringify(query)) : undefined,
           headers: headers,
         })
           .then((res) => {
-            console.log(message)
             const msg = this.createMessage(message, channelName, res.body)
             this.emit('message', msg, http)
           })

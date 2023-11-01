@@ -140,7 +140,6 @@ class MqttAdapter extends Adapter {
   private subscribe(channels: string[]) {
     channels.forEach((channel) => {
       const binding = this.parsedAsyncAPI.channels().get(channel).bindings().get('mqtt')?.value()
-      console.log(binding)
       this.client.subscribe(channel, {
         qos: binding?.qos ? binding.qos : 0,
       }, (err, granted) => {

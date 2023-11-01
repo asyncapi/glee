@@ -48,13 +48,12 @@ export async function register(dir: string) {
       return
     }
   } catch (e) {
-    debug(`Error while checking directory: ${e}`)
+    debug(`Error while checking directory...`)
     throw e
   }
 
   try {
     const files = await walkdir.async(dir, { return_object: true })
-    debug(`Found function files: ${Object.keys(files)}`)
 
     return await Promise.all(
       Object.keys(files).map(async (filePath) => {
@@ -97,23 +96,9 @@ export async function trigger({
       const errMsg = `Failed to trigger function: No function registered for operation ID "${operation.id()}". please make sure you have a function named: "${operation.id()}(.js|.ts)" in your functions directory.`
       throw Error(errMsg)
     }
-    let functionResult = await operationFunction.run(gleeMessageToFunctionEvent(message, app))
-    const { humanReadableError, errors, isValid } = validateData(
-      functionResult,
-      FunctionReturnSchema
-    )
-    if (!isValid) {
-      const err = new GleeError({
-        humanReadableError,
-        errors,
-      })
-      err.message = `Function ${operation.id()} returned invalid data.`
-      logError(err, {
-        highlightedWords: [operation.id()],
-      })
-      return
-    }
+    const functionResult = await operationFunction.run(gleeMessageToFunctionEvent(message, app))
     const replyMessage = createReply(functionResult, message, parsedAsyncAPI)
+    if (!replyMessage) return
     const replyChannel = parsedAsyncAPI.channels().get(replyMessage.channel)
     replyChannel.servers().forEach((server) => {
       replyMessage.serverName = server.id()
@@ -143,15 +128,30 @@ function createReply(functionResult: void | GleeFunctionReturn, message: GleeMes
     return
   }
   if (!functionResult && reply) {
-    const errMsg = `Operation ${operation.id()} needs to return a response. please make sure your function returns the approprait reply.`
-    throw Error(errMsg)
+    const warningMsg = `Operation ${operation.id()} needs to return a response. please make sure your function returns the approprait reply.`
+    logWarningMessage(warningMsg)
+    return
   }
   if (functionResult && !reply) {
     const warningMsg = `Operation ${operation.id()} doesn't have a reply field. the return result from your function will be ignored.`
     logWarningMessage(warningMsg)
     return
   }
-
+  const { humanReadableError, errors, isValid } = validateData(
+    functionResult,
+    FunctionReturnSchema
+  )
+  if (!isValid) {
+    const err = new GleeError({
+      humanReadableError,
+      errors,
+    })
+    err.message = `Function ${operation.id()} returned invalid data.`
+    logError(err, {
+      highlightedWords: [operation.id()],
+    })
+    return
+  }
   const localServerProtocols = ['ws', 'wss', 'http', 'https']
   const serverProtocol = parsedAsyncAPI.servers().get(message.serverName).protocol().toLocaleLowerCase()
   const isBroadcast = localServerProtocols.includes(serverProtocol) &&
