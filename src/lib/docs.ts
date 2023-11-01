@@ -12,7 +12,8 @@ export default async (spec, config, resDir) => {
     path.resolve(
       resDir ? resDir : './',
       configData?.folder ? configData.folder : 'docs'
-    )
+    ),
+    { forceWrite: true }
   )
   try {
     await generator.generateFromString(JSON.stringify(resolvedData))
