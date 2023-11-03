@@ -1,6 +1,3 @@
-Given the additional details about the project's functionality and the environment variables, I'll adjust the README to reflect this information.
-
-```markdown
 # Slack Websocket API
 
 This Slack Websocket API leverages the AsyncAPI specification to connect Slack with OpenAI's AI models. When a user reacts to a message on Slack, this API sends the reaction to OpenAI's server. ChatGPT then crafts a fun response, which is posted as a reply to the message thread on Slack.
