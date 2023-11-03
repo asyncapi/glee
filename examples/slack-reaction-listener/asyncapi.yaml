@@ -36,13 +36,7 @@ channels:
   SlackEventStream:
     servers:
       - $ref: "#/servers/Slack_WebSocket"
-    address: /link/?ticket={ticket}&app_id={app_id}
-    parameters:
-    # the ticket parameter should be added as a security parameter, but it doesn't work in glee. https://github.com/asyncapi/glee/issues/556
-      ticket:
-        default: 584f36b9-65c8-4683-bd5a-5da0965317b1
-      app_id:
-        default: b02112d9364cb2fee8a0ee048a920b8b4b0103cb03fab023b4e30f6ee2efb98f
+    address: /link/?ticket=bad69799-5b-4df6-941d-272c57c35cc1&app_id=b02112d9364cbb03ee2efb98f
     messages:
       SlackReactionAdded:
         $ref: "#/components/messages/SlackReactionAdded"
