@@ -44,8 +44,8 @@ class WsClientAdapter extends Adapter {
 
       const protocol = this.AsyncAPIServer.protocol()
       const serverHost = this.AsyncAPIServer.host()
-      const channel = this.parsedAsyncAPI.channels().get(channelName);
-      const channelAddress = applyAddressParameters(channel);
+      const channel = this.parsedAsyncAPI.channels().get(channelName)
+      const channelAddress = applyAddressParameters(channel)
       let url = new URL(`${protocol}://${serverHost}${channelAddress}`)
       if (authConfig) {
         const modedAuth = await gleeAuth.processClientAuth(url, headers, {})
@@ -60,6 +60,7 @@ class WsClientAdapter extends Adapter {
     }
 
     for (const { client, channel } of this.clients) {
+      console.log("openning a connection for channel: ", channel)
       client.on('open', () => {
         this.emit('connect', {
           name: this.name(),

@@ -7,12 +7,8 @@ This Slack Websocket API leverages the AsyncAPI specification to connect Slack w
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
 - [Configuration](#configuration)
-- [Installation](#installation)
 - [Usage](#usage)
 - [Environment Variables](#environment-variables)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Overview
 
@@ -60,4 +56,4 @@ The following environment variables are necessary for the API to function:
 - `SLACK_HTTP`: Your Slack app's OAuth token.
 - `CHAT_API`: Your OpenAI API key.
 
-Ensure these are set in your `.env` file or your deployment environment.
+Ensure these are set in your environment.

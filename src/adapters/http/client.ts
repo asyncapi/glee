@@ -53,17 +53,17 @@ class HttpClientAdapter extends Adapter {
           url = modedAuth.url.href
           query = modedAuth.query
         }
-        if (!!body && !this.shouldMethodHaveBody(method)) {
+        if (body && !this.shouldMethodHaveBody(method)) {
           logWarningMessage(`"${method}" can't have a body. please make sure you are using the correct http method for '${channelName}' channel. ignoring the body...`)
           body = undefined
         }
-        console.log("sending the request: ")
+
         got({
           method,
           url,
-          json: body,
+          body,
           searchParams: query ? JSON.parse(JSON.stringify(query)) : undefined,
-          headers: headers,
+          headers: { ...headers, "Content-Type": "application/json" },
         })
           .then((res) => {
             const msg = this.createMessage(message, channelName, res.body)

@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentInterface as AsyncAPIDocument, ChannelInterface } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument } from '@asyncapi/parser'
 import GleeAdapter from './adapter.js'
 import GleeClusterAdapter from './cluster.js'
 import GleeConnection from './connection.js'
@@ -113,16 +113,13 @@ export type GleeConfig = {
 }
 
 export type GleeFunctionReturn = {
-  payload?: any
-  query?: QueryParam
-  headers?: { [key: string]: string }
-}
-
-export type GleeLifecycleReturn = {
   send?: GleeFunctionReturnSend[]
+  reply?: GleeFunctionReturnReply[]
+  broadcast?: GleeFunctionReturnBroadcast[]
 }
 
-export type GleeLifecycleEvent = {
+export type GleeFunctionEvent = {
+  request: GleeMessage
   glee: Glee
   serverName: string
   connection?: GleeConnection
@@ -131,10 +128,8 @@ export type GleeLifecycleEvent = {
   headers?: { [key: string]: string }
   channel?: string
 }
-export type GleeFunctionEvent = GleeLifecycleEvent & {
-  request: GleeMessage
 
-}
+export type GleeLifecycleEvent = Omit<GleeFunctionEvent, "request">
 
 export type GleeAuthFunctionEvent = {
   glee: Glee
@@ -152,9 +147,12 @@ export type GleeFunctionReturnSend = {
   server?: string
 }
 
+export type GleeFunctionReturnReply = Omit<GleeFunctionReturnSend, "channel" | "server">
+export type GleeFunctionReturnBroadcast = GleeFunctionReturnSend
+
 export type GleeFunction = (
   event: GleeFunctionEvent
-) => Promise<GleeFunctionReturn | void>
+) => Promise<GleeFunctionReturn>
 
 export type GleeAuthFunction = (
   event: GleeAuthFunctionEvent

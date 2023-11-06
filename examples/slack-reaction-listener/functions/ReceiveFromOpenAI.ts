@@ -1,7 +1,7 @@
 import { GleeFunction } from "@asyncapi/glee"
 
 const myFunction: GleeFunction = async (event) => {
-  const { payload } = event.request.request;
+  const { payload } = event.request.request
   const slack_event = payload?.payload?.event
 
   if (!slack_event) return
@@ -12,14 +12,17 @@ const myFunction: GleeFunction = async (event) => {
 
 
   return {
-    payload: {
-      channel, thread_ts, text
-    },
-    headers: {
-      Authorization: `Bearer ${process.env.SLACK_HTTP}`,
-    }
+    send: [{
+      channel: "SlackPostMessage",
+      server: "Slack_HTTPS",
+      payload: {
+        channel, thread_ts, text
+      },
+      headers: {
+        Authorization: `Bearer ${process.env.SLACK_HTTP}`,
+      }
+    }]
   }
-
 }
 
 export default myFunction

@@ -1,6 +1,6 @@
 asyncapi: 3.0.0
 info:
-  title: Slack Websocket API
+  title: Slack Websocket and OpenAI API
   version: 1.0.0
 servers:
   OpenAI_HTTPS:
@@ -36,13 +36,30 @@ channels:
   SlackEventStream:
     servers:
       - $ref: "#/servers/Slack_WebSocket"
-    address: /link/?ticket=bad69799-5b-4df6-941d-272c57c35cc1&app_id=b02112d9364cbb03ee2efb98f
+    address: /link/?ticket={ticket}&app_id={app_id}
+    parameters:
+      ticket:
+        default: a2f0a4e5-cce3-4423-babb-045c2ab5aa50
+      app_id:
+        default: b02112d9364cb2fee8a0ee048a920b8b4b0103cb03fab023b4e30f6ee2efb98f
     messages:
       SlackReactionAdded:
         $ref: "#/components/messages/SlackReactionAdded"
       GenericErrorPayload:
         $ref: "#/components/messages/GenericErrorPayload"
 operations:
+  sentSlackMessage:
+    action: send
+    channel:
+      $ref: "#/channels/SlackPostMessage"
+    messages:
+      - $ref: "#/components/messages/slackResponse"
+  AckEvent:
+    action: send
+    channel:
+      $ref: "#/channels/SlackEventStream"
+    messages:
+      - $ref: "#/components/messages/slackAckEvent"
   SendToOpenAI:
     action: send
     channel: 
@@ -61,7 +78,7 @@ operations:
   HandleSlackReaction:
     reply:
       channel: 
-        $ref: "#/channels/OpenAICompletion"
+        $ref: "#/channels/SlackEventStream"
     action: receive
     channel:
       $ref: "#/channels/SlackEventStream"
@@ -70,6 +87,12 @@ operations:
       - $ref: "#/components/messages/GenericErrorPayload"
 components:
   messages:
+    slackAckEvent:
+      payload:
+        type: object
+        properties:
+          envelope_id:
+            type: string
     slackResponse:
       payload:
         type: object

@@ -4,7 +4,7 @@ import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
 import { logWarningMessage, logError } from './logger.js'
 import GleeMessage from './message.js'
-import { GleeFunction, GleeFunctionReturn } from './index.js'
+import { GleeFunction, GleeFunctionReturnReply } from './index.js'
 import Glee from './glee.js'
 import {
   gleeMessageToFunctionEvent,
@@ -16,24 +16,52 @@ import { pathToFileURL } from 'url'
 import GleeError from '../errors/glee-error.js'
 import { getParsedAsyncAPI } from './asyncapiFile.js'
 import Debug from 'debug'
-import { AsyncAPIDocumentInterface, OperationInterface } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface, ChannelInterface, OperationInterface } from '@asyncapi/parser'
 const debug = Debug('glee:functions')
 
 interface FunctionInfo {
   run: GleeFunction
 }
 
-const FunctionReturnSchema = {
+const HeadersSchema = {
+  type: 'object',
+  propertyNames: { type: 'string' },
+  additionalProperties: { type: 'string' },
+}
+
+const ReplyMessageSchema = {
   type: 'object',
   properties: {
     payload: {},
-    headers: {
-      type: 'object',
-      propertyNames: { type: 'string' },
-      additionalProperties: { type: 'string' },
-    },
+    headers: HeadersSchema,
     query: { type: 'object' },
   },
+}
+
+const SendMessageSchema = {
+  type: 'object',
+  properties: {
+    payload: {},
+    headers: HeadersSchema,
+    channel: { type: 'string' },
+    server: { type: 'string' },
+    query: { type: 'object' },
+  },
+}
+const FunctionReturnSchema = {
+  type: ['object', 'null'],
+  properties: {
+    send: {
+      type: 'array',
+      items: SendMessageSchema,
+    },
+    reply: {
+      type: 'array',
+      items: ReplyMessageSchema,
+    },
+  },
+  additionalProperties: false,
+  anyOf: [{ required: ['send'] }, { required: ['reply'] }],
 }
 
 const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
@@ -87,24 +115,77 @@ export async function trigger({
   message: GleeMessage
 }) {
   try {
-
     debug(`Triggering function for operation ID: ${operation.id()}`)
     const parsedAsyncAPI = await getParsedAsyncAPI()
     message.operation = operation
     const operationFunction = functions.get(operation.id())
     if (!operationFunction) {
       const errMsg = `Failed to trigger function: No function registered for operation ID "${operation.id()}". please make sure you have a function named: "${operation.id()}(.js|.ts)" in your functions directory.`
-      throw Error(errMsg)
+      logError(new Error(errMsg), {
+        highlightedWords: [`"${operation.id()}"`],
+      })
+      return
     }
-    const functionResult = await operationFunction.run(gleeMessageToFunctionEvent(message, app))
-    const replyMessage = createReply(functionResult, message, parsedAsyncAPI)
-    if (!replyMessage) return
-    const replyChannel = parsedAsyncAPI.channels().get(replyMessage.channel)
-    replyChannel.servers().forEach((server) => {
-      replyMessage.serverName = server.id()
+    let functionResult = await operationFunction.run(gleeMessageToFunctionEvent(message, app))
+    if (!functionResult) functionResult = null
+    const { humanReadableError, errors, isValid } = validateData(
+      functionResult,
+      FunctionReturnSchema
+    )
+
+    if (!isValid) {
+      const err = new GleeError({
+        humanReadableError,
+        errors,
+      })
+      err.message = `Function ${operation.id()} returned invalid data.`
+      logError(err, {
+        highlightedWords: [operation.id()],
+      })
+
+      return
+    }
+
+    functionResult?.send?.forEach((msg) => {
+      const localServerProtocols = ['ws', 'wss', 'http', 'https']
+      const serverProtocol = parsedAsyncAPI.servers().get(msg.server || message.serverName).protocol().toLocaleLowerCase()
+      const isBroadcast =
+        localServerProtocols.includes(serverProtocol) &&
+        !isRemoteServer(parsedAsyncAPI, msg.server)
+      const channel = parsedAsyncAPI.channels().get(msg.channel || message.channel)
+      if (!hasSendOperation(channel)) {
+        const warnMessage = `Send operation not allowed: The channel "${channel.id()}" does not support "send" operations. Please ensure a "send" operation is defined for this channel in your AsyncAPI specification. The current message will not be processed.`
+        logWarningMessage(warnMessage, { highlightedWords: [channel.id()] })
+        return
+      }
+      const outboundMessage = new GleeMessage({
+        request: message,
+        payload: msg.payload,
+        query: msg.query,
+        headers: msg.headers,
+        channel: msg.channel || message.channel,
+        serverName: msg.server,
+        broadcast: isBroadcast,
+      })
       app.send(
-        replyMessage
+        outboundMessage
       )
+    })
+
+    functionResult?.reply?.forEach((reply) => {
+      const replyMessage = createReply(reply, message, parsedAsyncAPI)
+      if (!replyMessage) return
+      const replyChannel = parsedAsyncAPI.channels().get(replyMessage.channel)
+      if (!hasSendOperation(replyChannel)) {
+        const warnMessage = `Send operation not allowed: The channel ${replyChannel.id()} does not support send operations. Please ensure a send operation is defined for this channel in your AsyncAPI file. The current message will not be processed.`
+        logWarningMessage(warnMessage, { highlightedWords: [replyChannel.id(), "send"] })
+      }
+      replyChannel.servers().forEach((server) => {
+        replyMessage.serverName = server.id()
+        app.send(
+          replyMessage
+        )
+      })
     })
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
@@ -121,41 +202,14 @@ export async function trigger({
   }
 }
 
-function createReply(functionResult: void | GleeFunctionReturn, message: GleeMessage, parsedAsyncAPI: AsyncAPIDocumentInterface): GleeMessage {
+function createReply(functionReply: GleeFunctionReturnReply, message: GleeMessage, parsedAsyncAPI: AsyncAPIDocumentInterface): GleeMessage {
   const operation = message.operation
   const reply = operation.reply()
-  if (!functionResult && !reply) {
-    return
-  }
-  if (!functionResult && reply) {
-    const warningMsg = `Operation ${operation.id()} needs to return a response. please make sure your function returns the approprait reply.`
-    logWarningMessage(warningMsg)
-    return
-  }
-  if (functionResult && !reply) {
+  if (!reply) {
     const warningMsg = `Operation ${operation.id()} doesn't have a reply field. the return result from your function will be ignored.`
     logWarningMessage(warningMsg)
     return
   }
-  const { humanReadableError, errors, isValid } = validateData(
-    functionResult,
-    FunctionReturnSchema
-  )
-  if (!isValid) {
-    const err = new GleeError({
-      humanReadableError,
-      errors,
-    })
-    err.message = `Function ${operation.id()} returned invalid data.`
-    logError(err, {
-      highlightedWords: [operation.id()],
-    })
-    return
-  }
-  const localServerProtocols = ['ws', 'wss', 'http', 'https']
-  const serverProtocol = parsedAsyncAPI.servers().get(message.serverName).protocol().toLocaleLowerCase()
-  const isBroadcast = localServerProtocols.includes(serverProtocol) &&
-    !isRemoteServer(parsedAsyncAPI, message.serverName)
 
   let replyChannel = parsedAsyncAPI.channels().all().filter((c) => c.address() === reply.channel().address())[0]
   const replyAddress = reply.address()
@@ -171,7 +225,9 @@ function createReply(functionResult: void | GleeFunctionReturn, message: GleeMes
     replyChannel = channel
   }
 
-  return new GleeMessage({ ...functionResult, channel: replyChannel.id(), request: message, broadcast: isBroadcast });
+  return new GleeMessage({ ...functionReply, channel: replyChannel.id(), request: message })
+}
 
-
+const hasSendOperation = (channel: ChannelInterface): boolean => {
+  return channel.operations().filterBySend().length > 0
 }

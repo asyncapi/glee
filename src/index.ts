@@ -27,7 +27,7 @@ import generateDocs from './lib/docs.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
 import { initializeConfigs } from './lib/configs.js'
-import { getChannelNames, getParsedAsyncAPI } from './lib/asyncapiFile.js'
+import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
@@ -76,7 +76,7 @@ export default async function GleeAppInitializer() {
   app.useOutbound(errorLogger)
   await generateDocs(parsedAsyncAPI, config, null)
   parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
-    const channel = operation.channels()[0] // operation can have only one channel. https://github.com/asyncapi/parser-js/issues/884
+    const channel = operation.channels()[0] // operation can have only one channel.
     const schema = {
       oneOf: operation.messages().filterByReceive().map(m => m.payload().json())
     } as any
@@ -90,11 +90,11 @@ export default async function GleeAppInitializer() {
   })
 
   parsedAsyncAPI.operations().filterBySend().forEach(operation => {
-    const channel = operation.channels()[0] // operation can have only one channel. https://github.com/asyncapi/parser-js/issues/884
+    const channel = operation.channels()[0] // operation can have only one channel.
     const schema = {
       oneOf: operation.messages().filterBySend().map(m => m.payload().json())
     } as any
-    app.useOutbound(channel.address(), validate(schema), json2string)
+    app.useOutbound(channel.id(), validate(schema), json2string)
   })
 
   app.on('adapter:auth', async (e: AuthEvent) => {
