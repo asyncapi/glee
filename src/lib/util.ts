@@ -5,6 +5,7 @@ import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
 import { GleeFunctionEvent } from './index.js'
 import GleeMessage from './message.js'
+import { logWarningMessage } from './logger.js'
 
 interface IValidateDataReturn {
   errors?: void | betterAjvErrors.IOutputError[]
@@ -210,6 +211,7 @@ const substituteParameterInAddress = (parameter: ChannelParameterInterface, addr
   const doesExistInAddress = address.includes(`{${parameter.id()}}`)
   if (!doesExistInAddress) return address
   const parameterValue = getParamValue(parameter, message)
+  console.log(parameterValue)
   if (!parameterValue) {
     throw Error(`parsing parameter "${parameter.id()}" value failed. please make sure it exists in your header/payload or in default field of the parameter.`)
   }
@@ -219,16 +221,18 @@ const substituteParameterInAddress = (parameter: ChannelParameterInterface, addr
 
 const getParamValue = (parameter: ChannelParameterInterface, message: GleeMessage): string | null => {
   const location = parameter.location()
-  if (location) return getParamFromLocation(location, message)
-  else return parameter.json().default
+  if (!location) return parameter.json().default
+  const paramFromLocation = getParamFromLocation(location, message)
+  console.log({ paramFromLocation })
+  if (!paramFromLocation) {
+    logWarningMessage(`tried to parse param from ${location} but failed: using the default param.`)
+    return parameter.json().default
+  }
+  return paramFromLocation
 }
 
 function getParamFromLocation(location: string, message: GleeMessage) {
-  if (message.payload || message.headers) {
-    const parameterValue = extractExpressionValueFromMessage(message, location)
-    if (!parameterValue) {
-      throw Error(`tried to parse a parameter from ${location} but failed.`)
-    }
-    return parameterValue
+  if ((message.payload || message.headers) && location) {
+    return extractExpressionValueFromMessage(message, location)
   }
 }
