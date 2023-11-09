@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentInterface as AsyncAPIDocument, ChannelInterface } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ChannelInterface, ChannelParameterInterface, MessageInterface } from '@asyncapi/parser'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
@@ -162,65 +162,73 @@ export const resolveFunctions = async (object: any) => {
 
 
 function jsonPointer(obj: any, pointer: string): any {
-  const parts = pointer.split('/').slice(1);
-  let current = obj;
+  const parts = pointer.split('/').slice(1)
+  let current = obj
 
   for (const part of parts) {
     if (current === null || typeof current !== 'object') {
-      return undefined;
+      return undefined
     }
-    current = current[part];
+    current = current[part]
   }
 
-  return current;
+  return current
 }
 
 export function extractExpressionValueFromMessage(message: { headers: any, payload: any }, expression: string): any {
 
   // Parse the expression
-  const match = expression.match(/^\$message\.(header|payload)(#.*)?$/);
+  const match = expression.match(/^\$message\.(header|payload)(#.*)?$/)
   if (!match) {
-    throw new Error(`${expression} is invalid.`);
+    throw new Error(`${expression} is invalid.`)
   }
 
-  const source = match[1];
-  const fragment = match[2] ? match[2].slice(1) : undefined;
-  const headers = message.headers
-  const payload = message.payload
+  const source = match[1]
+  const fragment = match[2] ? match[2].slice(1) : undefined
+  const headers = message?.headers
+  const payload = message?.payload
   // Extract value based on source and fragment
   if (source === 'header') {
-    return fragment ? jsonPointer(headers, fragment) : headers;
+    return fragment ? jsonPointer(headers, fragment) : headers
   } else if (source === 'payload') {
-    return fragment ? jsonPointer(payload, fragment) : payload;
+    return fragment ? jsonPointer(payload, fragment) : payload
   } else {
-    throw new Error(`${expression} source should be "header" or "fragment"`);
+    throw new Error(`${expression} source should be "header" or "fragment"`)
   }
 }
 
-export function applyAddressParameters(channel: ChannelInterface, headers?: any, payload?: any) {
+export function applyAddressParameters(channel: ChannelInterface, message?: GleeMessage): string {
   let address = channel.address()
   const parameters = channel.parameters()
   for (const parameter of parameters) {
-    const location = parameter.location()
-    const doesExistInAddress = address.includes(`{${parameter.id()}}`);
-    if (!doesExistInAddress) continue
-    let parameterValue: string
-    if (location) {
-      if (payload || headers) {
-        parameterValue = extractExpressionValueFromMessage({ headers, payload }, location)
-        if (!parameterValue) {
-          throw Error(`tried to parse parameter "${parameter.id()}" from ${location} but failed.`);
-        }
-      }
-    } else {
-      parameterValue = parameter.json().default
-    }
-    if (!parameterValue) {
-      throw Error(`parsing parameter "${parameter.id()}" value failed. please make sure it exists in your header/payload or in default field of the parameter.`);
-    }
-
-    address = address.replace(`{${parameter.id()}}`, parameterValue)
+    address = substituteParameterInAddress(parameter, address, message)
   }
-
   return address
+}
+
+const substituteParameterInAddress = (parameter: ChannelParameterInterface, address: string, message: GleeMessage): string => {
+  const doesExistInAddress = address.includes(`{${parameter.id()}}`)
+  if (!doesExistInAddress) return address
+  const parameterValue = getParamValue(parameter, message)
+  if (!parameterValue) {
+    throw Error(`parsing parameter "${parameter.id()}" value failed. please make sure it exists in your header/payload or in default field of the parameter.`)
+  }
+  address = address.replace(`{${parameter.id()}}`, parameterValue)
+  return address
+}
+
+const getParamValue = (parameter: ChannelParameterInterface, message: GleeMessage): string | null => {
+  const location = parameter.location()
+  if (location) return getParamFromLocation(location, message)
+  else return parameter.json().default
+}
+
+function getParamFromLocation(location: string, message: GleeMessage) {
+  if (message.payload || message.headers) {
+    const parameterValue = extractExpressionValueFromMessage(message, location)
+    if (!parameterValue) {
+      throw Error(`tried to parse a parameter from ${location} but failed.`)
+    }
+    return parameterValue
+  }
 }
