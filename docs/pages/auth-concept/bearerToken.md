@@ -1,5 +1,5 @@
 ---
-title: 'Bearer Token'
+title: 'Http (Bearer Token)'
 weight: 5
 ---
 
@@ -71,7 +71,7 @@ Following the client `asyncapi.yaml` file above, create a file named `trendingAn
 touch auth/trendingAnime.ts
 ```
 
-When using the `token` security scheme, it is important that you pass the parameters as follows:
+When using the `bearer` security scheme, it is important that you pass the parameters as follows:
 
 ```js
 export async clientAuth({ parsedAsyncAPI, serverName }) {
@@ -81,7 +81,7 @@ export async clientAuth({ parsedAsyncAPI, serverName }) {
 }
 ```
 
-`token` should be the name of the security requirement as specified in your `asyncapi.yaml` file, and it's value should be a string.
+Glee will utilize the `token` for server authentication, employing it in the header with the format: Authorization: Bearer {token}.
 
 ### Server side
 
@@ -97,8 +97,8 @@ On the server side, you can retrieve the values as follows
 
 export async serverAuth({ authProps, done }) {
   authProps.getToken()
-  
-  done(true)
+  // your authentication logic here...
+  done(true|false)
 }
 
 ```
