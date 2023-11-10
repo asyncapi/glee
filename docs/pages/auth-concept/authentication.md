@@ -24,10 +24,10 @@ The name of the authentication file should be the name of the targeted server th
 
 ## Supported Authentication Values in asyncapi.yaml file
 
-AsyncAPI currently supports a variety of authentication formats as specified in the [documentation](https://www.asyncapi.com/docs/reference/specification/v2.6.0#securitySchemeObject), however Glee supports the following authentication schemas.
+AsyncAPI currently supports a variety of authentication formats as specified in the [documentation](https://www.asyncapi.com/docs/reference/specification/v3.0.0-next-major-spec.15#securitySchemeObject), however Glee supports the following authentication schemas.
 
 - userPassword
-- http bearer
+- http ("bearer")
 - httpApiKey
 - Oauth2
 
@@ -42,10 +42,10 @@ info:
   description: This app is a dummy server that would stream the trending/upcoming anime.
 servers:
   trendingAnimeServer:
-    url: 'http://localhost:8081'
+    host: 'localhost:8081'
     protocol: http
     security:
-      - userPass: []
+      - $ref: '#/components/securitySchemes/userPassword'
 
   ...
 
@@ -62,12 +62,12 @@ A sample `asyncapi.yaml` for a client that implements some of the requirements o
 ##client asyncAPI schema
 servers:
   trendingAnime:
-    url: http://localhost:8081
+    host: localhost:8081
     protocol: http
     security:
-      - userPass: []
+      - $ref: '#/components/securitySchemes/userPassword'
   testwebhook:
-    url: ws://localhost:9000
+    host: localhost:9000
     protocol: ws
 x-remoteServers:
   - trendingAnime
