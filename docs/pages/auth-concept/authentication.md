@@ -27,15 +27,15 @@ The name of the authentication file should be the name of the targeted server th
 AsyncAPI currently supports a variety of authentication formats as specified in the [documentation](https://www.asyncapi.com/docs/reference/specification/v2.6.0#securitySchemeObject), however Glee supports the following authentication schemas.
 
 - userPassword
-- Bearer token
-- HttpPApiKey
-- ApiKey
+- http bearer
+- httpApiKey
+- Oauth2
 
 A sample `asyncapi.yaml` for a server with security requirements and a `userPassword` security schemes is shown below:
 
 ```yaml
 ##server asyncAPI schema
-asyncapi: 2.6.0
+asyncapi: 3.0.0
 info:
   title: AsyncAPI IMDB server
   version: 1.0.0
@@ -84,9 +84,9 @@ components:
 **The Client asyncapi.yaml file does not need to implement all the security requirements in the server, it only needs to implement the ones that it uses.**
 
 
-Glee can act as both a server and a client at the same time. Hence the need for `serverAuth` and `clientAuth`. Glee acts as a client when the `x-remoteServers` property is present in the `asyncapi.yaml` file.
+Glee can act as both a server and a client. Hence the need for `serverAuth` and `clientAuth`. Glee acts as a client when the server name is included in the `x-remoteServers` property in the `asyncapi.yaml` file.
 
-When Glee acts as a client, it can connect to a Glee server, and when Glee acts as a server it accepts connection from other Glee clients. Hence a Glee application can both accept connections from clients while also sending requests to other Glee applications (servers) ath the same time.
+When Glee acts as a client, it can connect to a Glee server, and when Glee acts as a server it accepts connections from other Glee clients. Hence a Glee application can both accept connections from clients while also sending requests to other Glee applications (servers) at the same time.
 
 When a security requirement is specified in the `asyncapi.yaml` file and Glee acts as a server, the `serverAuth` function should be implemented, if Glee acts as a client then the `clientAuth` function should be implemented. If Glee is being used as both client and server, then it should have both the `clientAuth` and `serverAuth` functions.
 
