@@ -11,17 +11,17 @@ A sample `asyncapi.yaml` for a server with security requirements and user passwo
 
 ```yaml
 ##server asyncAPI schema
-asyncapi: 2.6.0
+asyncapi: 3.0.0
 info:
   title: AsyncAPI IMDB server
   version: 1.0.0
   description: This app is a dummy server that would stream the trending/upcoming anime.
 servers:
   trendingAnimeServer:
-    url: 'http://localhost:8081'
+    host: 'localhost:8081'
     protocol: http
     security:
-      - token: []
+      - $ref: '#/components/securitySchemes/token'
 
       ...
 
@@ -40,12 +40,12 @@ A sample `asyncapi.yaml` for a client that implements some of the requirements o
 ##client asyncAPI schema
 servers:
   trendingAnime:
-    url: http://localhost:8081
+    host: localhost:8081
     protocol: http
     security:
-      - token: []
+      - $ref: '#/components/securitySchemes/token'
   testwebhook:
-    url: ws://localhost:9000
+    host: localhost:9000
     protocol: ws
 x-remoteServers:
   - trendingAnime
