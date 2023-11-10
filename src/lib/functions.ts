@@ -152,34 +152,22 @@ export async function trigger({
       const isBroadcast =
         localServerProtocols.includes(serverProtocol) &&
         !isRemoteServer(parsedAsyncAPI, msg.server)
-      const channel = parsedAsyncAPI.channels().get(msg.channel || message.channel)
-      if (!hasSendOperation(channel)) {
-        const warnMessage = `Send operation not allowed: The channel "${channel.id()}" does not support "send" operations. Please ensure a "send" operation is defined for this channel in your AsyncAPI specification. The current message will not be processed.`
-        logWarningMessage(warnMessage, { highlightedWords: [channel.id()] })
-        return
-      }
-      const outboundMessage = new GleeMessage({
-        request: message,
-        payload: msg.payload,
-        query: msg.query,
-        headers: msg.headers,
-        channel: msg.channel || message.channel,
-        serverName: msg.server,
-        broadcast: isBroadcast,
-      })
       app.send(
-        outboundMessage
-      )
+        new GleeMessage({
+          request: message,
+          payload: msg.payload,
+          query: msg.query,
+          headers: msg.headers,
+          channel: msg.channel || message.channel,
+          serverName: msg.server,
+          broadcast: isBroadcast,
+        }))
     })
 
     functionResult?.reply?.forEach((reply) => {
       const replyMessage = createReply(reply, message, parsedAsyncAPI)
       if (!replyMessage) return
       const replyChannel = parsedAsyncAPI.channels().get(replyMessage.channel)
-      if (!hasSendOperation(replyChannel)) {
-        const warnMessage = `Send operation not allowed: The channel ${replyChannel.id()} does not support send operations. Please ensure a send operation is defined for this channel in your AsyncAPI file. The current message will not be processed.`
-        logWarningMessage(warnMessage, { highlightedWords: [replyChannel.id(), "send"] })
-      }
       replyChannel.servers().forEach((server) => {
         replyMessage.serverName = server.id()
         app.send(
@@ -226,8 +214,4 @@ function createReply(functionReply: GleeFunctionReturnReply, message: GleeMessag
   }
 
   return new GleeMessage({ ...functionReply, channel: replyChannel.id(), request: message })
-}
-
-const hasSendOperation = (channel: ChannelInterface): boolean => {
-  return channel.operations().filterBySend().length > 0
 }
