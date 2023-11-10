@@ -9,10 +9,10 @@ Glee comes with Authentication features which help you erifying the identity of 
 Glee allows you to implement custom authentication logic by utilising authentication functions. This flexible approach enables developers to craft tailored authentication mechanisms, ensuring that access to resources is controlled precisely as required.
 
 
-# Bearer Token Authentication:
+# HTTP Bearer Token Authentication:
 In today's API-driven world, bearer token authentication is a widely adopted method. Glee supports this approach, allowing clients to present a token as proof of their identity, thus ensuring secure and efficient access to resources.
 
-# HTTPAPIKey Authentication:
+# HttpApiKey Authentication:
 Glee's authentication suite includes support for API key authentication, which is vital for protecting web APIs. By using API keys, you can regulate access to your services, making it an essential component of your application's security strategy.
 
 # Username and Password Authentication:
