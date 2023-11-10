@@ -1,25 +1,32 @@
-asyncapi: 2.0.0
+asyncapi: 3.0.0
 info:
   title: Account Service
   version: 1.0.0
   description: This service is in charge of processing user signups
 servers:
   mosquitto:
-    url: mqtts://test.mosquitto.org
+    host: test.mosquitto.org
     protocol: mqtts
     security:
-      - X509Certificate: []
+      - $ref: '#/components/securitySchemes/X509Certificate'
     bindings:
       mqtt:
         clientId: guest
         cleanSession: true
         keepAlive: 60
-        bindingVersion: 0.1.0
+        bindingVersion: 0.2.0
   websockets:
-    url: ws://localhost:3005/ws
+    host: 'localhost:3005'
+    pathname: /ws
     protocol: ws
 channels:
   user/signedup:
+    address: user/signedup
+    messages:
+      onUserSignedUp.message:
+        $ref: '#/components/messages/UserSignedUp'
+      subscribe.message:
+        $ref: '#/components/messages/UserSignedUp'
     bindings:
       ws:
         bindingVersion: 0.1.0
@@ -35,24 +42,36 @@ channels:
           properties:
             my-custom-header:
               type: string
-              const: 'custom value'
-
-    publish:
-      operationId: onUserSignedUp
-      message:
-        $ref: '#/components/messages/UserSignedUp'
-      bindings:
-        mqtt:
-          qos: 2
-          retain: true
-          bindingVersion: 0.1.0
-    subscribe:
-      message:
-        $ref: '#/components/messages/UserSignedUp'  
+              const: custom value
   server/announce:
-    subscribe:
-      message:
+    address: server/announce
+    messages:
+      subscribe.message:
         $ref: '#/components/messages/ServerAnnounce'
+operations:
+  onUserSignedUp:
+    action: receive
+    channel:
+      $ref: '#/channels/user~1signedup'
+    bindings:
+      mqtt:
+        qos: 2
+        retain: true
+        bindingVersion: 0.2.0
+    messages:
+      - $ref: '#/components/messages/UserSignedUp'
+  user/signedup.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/user~1signedup'
+    messages:
+      - $ref: '#/components/messages/UserSignedUp'
+  server/announce.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/server~1announce'
+    messages:
+      - $ref: '#/components/messages/ServerAnnounce'
 components:
   securitySchemes:
     userAndPassword:

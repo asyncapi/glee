@@ -1,5 +1,8 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 export default {
+  testMatch: [
+    "<rootDir>/test/**/*.test.ts"
+  ],
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
   setupFilesAfterEnv: ['./jest.setup.ts'],
