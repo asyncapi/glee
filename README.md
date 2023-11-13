@@ -1,7 +1,7 @@
 ![Glee — The AsyncAPI framework that will make you smile again.](assets/readme-banner.png)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
@@ -56,6 +56,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/afzal442"><img src="https://avatars.githubusercontent.com/u/11625672?v=4?s=100" width="100px;" alt="Afzal Ansari"/><br /><sub><b>Afzal Ansari</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=afzal442" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/KhudaDad414"><img src="https://avatars.githubusercontent.com/u/32505158?v=4?s=100" width="100px;" alt="Khuda Dad Nomani"/><br /><sub><b>Khuda Dad Nomani</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=KhudaDad414" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/oviecodes"><img src="https://avatars.githubusercontent.com/u/61796959?v=4?s=100" width="100px;" alt="Godwin Alexander"/><br /><sub><b>Godwin Alexander</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=oviecodes" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/freakfan15"><img src="https://avatars.githubusercontent.com/u/54408801?v=4?s=100" width="100px;" alt="Vivek Kumar"/><br /><sub><b>Vivek Kumar</b></sub></a><br /><a href="https://github.com/asyncapi/glee/commits?author=freakfan15" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
