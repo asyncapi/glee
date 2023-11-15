@@ -191,7 +191,7 @@ export async function trigger({
 }
 
 function createReply(functionReply: GleeFunctionReturnReply, message: GleeMessage, parsedAsyncAPI: AsyncAPIDocumentInterface): GleeMessage {
-  const operation = message.operation
+  const { operation } = message
   const reply = operation.reply()
   if (!reply) {
     const warningMsg = `Operation ${operation.id()} doesn't have a reply field. the return result from your function will be ignored.`
