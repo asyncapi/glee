@@ -47,7 +47,7 @@ class GleeMessage extends EventEmitter {
    * @param {Object} [options.headers] Message headers.
    * @param {String} [options.channel] Message channel.
    * @param {String} [options.serverName] The name of the associated AsyncAPI server.
-   * @param {GleeMessage} [options.request] The request that this message is created for as a reply.
+   * @param {GleeMessage} [options.request] If this message is a reply, the parent message that this message is created for as a reply.
    * @param {GleeConnection} [options.connection] The connection through which the message will be sent or has been received.
    * @param {Boolean} [options.broadcast=false] Whether the message should be broadcasted or not.
    * @param {Boolean} [options.cluster=false] Whether the message is from a cluster adapter or not.

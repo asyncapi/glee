@@ -16,7 +16,7 @@ import { pathToFileURL } from 'url'
 import GleeError from '../errors/glee-error.js'
 import { getParsedAsyncAPI } from './asyncapiFile.js'
 import Debug from 'debug'
-import { AsyncAPIDocumentInterface, ChannelInterface, OperationInterface } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface, OperationInterface } from '@asyncapi/parser'
 const debug = Debug('glee:functions')
 
 interface FunctionInfo {

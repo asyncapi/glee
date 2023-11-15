@@ -6,7 +6,7 @@ servers:
   OpenAI_HTTPS:
     host: api.openai.com
     protocol: https
-  Slack_WebSocket:
+  Slack_WebSocFket:
     host: wss-primary.slack.com
     protocol: wss
   Slack_HTTPS:
@@ -22,7 +22,13 @@ channels:
       - $ref: "#/servers/Slack_HTTPS"
     messages:
       slackResponse:
-        $ref: "#/components/messages/slackResponse"
+        payload:
+          type: object
+          properties:
+            channel:
+              type: string
+            text:
+              type: string
   OpenAICompletion:
     bindings:
       http:
@@ -39,7 +45,7 @@ channels:
     address: /link/?ticket={ticket}&app_id={app_id}
     parameters:
       ticket:
-        default: a2f0a4e5-cce3-4423-babb-045c2ab5aa50
+        default: 7700d8b4-e854-45172c-9cd65b7b1a92
       app_id:
         default: b02112d9364cb2fee8a0ee048a920b8b4b0103cb03fab023b4e30f6ee2efb98f
     messages:
