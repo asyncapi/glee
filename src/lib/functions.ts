@@ -208,7 +208,7 @@ function createReply(functionReply: GleeFunctionReturnReply, message: GleeMessag
     }
     const channel = parsedAsyncAPI.allChannels().filter((c) => c.address === channelAddress)[0]
     if (!channel) {
-      throw Error(`cannot find a channel with the address of "${channelAddress}" in your AsyncAPI file.`)
+      throw Error(`Cannot find a channel with the address "${channelAddress}" in your AsyncAPI file.`)
     }
     replyChannel = channel
   }
