@@ -152,28 +152,39 @@ export async function trigger({
       const isBroadcast =
         localServerProtocols.includes(serverProtocol) &&
         !isRemoteServer(parsedAsyncAPI, msg.server)
-      app.send(
-        new GleeMessage({
-          request: message,
-          payload: msg.payload,
-          query: msg.query,
-          headers: msg.headers,
-          channel: msg.channel || message.channel,
-          serverName: msg.server,
-          broadcast: isBroadcast,
-        }))
+      const channelName = msg.channel || message.channel
+      const operations = parsedAsyncAPI.channels().get(channelName).operations().filterBySend()
+      operations.forEach(operation => {
+        app.send(
+          new GleeMessage({
+            operation,
+            request: message,
+            payload: msg.payload,
+            query: msg.query,
+            headers: msg.headers,
+            channel: channelName,
+            serverName: msg.server,
+            broadcast: isBroadcast,
+          }))
+      })
     })
 
     functionResult?.reply?.forEach((reply) => {
-      const replyMessage = createReply(reply, message, parsedAsyncAPI)
-      if (!replyMessage) return
-      const replyChannel = parsedAsyncAPI.channels().get(replyMessage.channel)
-      replyChannel.servers().forEach((server) => {
-        replyMessage.serverName = server.id()
-        app.send(
-          replyMessage
-        )
+      const replyMessages = createReplies(reply, message, parsedAsyncAPI)
+      console.log({ replyMessages })
+      if (replyMessages || replyMessages.length < 1) {
+        return
+      }
+      replyMessages.forEach(replyMessage => {
+        const replyChannel = parsedAsyncAPI.channels().get(replyMessage.channel)
+        replyChannel.servers().forEach((server) => {
+          replyMessage.serverName = server.id()
+          app.send(
+            replyMessage
+          )
+        })
       })
+
     })
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
@@ -190,11 +201,11 @@ export async function trigger({
   }
 }
 
-function createReply(functionReply: GleeFunctionReturnReply, message: GleeMessage, parsedAsyncAPI: AsyncAPIDocumentInterface): GleeMessage {
-  const { operation } = message
+function createReplies(functionReply: GleeFunctionReturnReply, message: GleeMessage, parsedAsyncAPI: AsyncAPIDocumentInterface): GleeMessage[] {
+  const operation = message.operation
   const reply = operation.reply()
   if (!reply) {
-    const warningMsg = `Operation ${operation.id()} doesn't have a reply field. The returned result from your function will be ignored.`
+    const warningMsg = `Operation ${operation.id()} doesn't have a reply field. the return result from your function will be ignored.`
     logWarningMessage(warningMsg)
     return
   }
@@ -208,10 +219,10 @@ function createReply(functionReply: GleeFunctionReturnReply, message: GleeMessag
     }
     const channel = parsedAsyncAPI.allChannels().filter((c) => c.address === channelAddress)[0]
     if (!channel) {
-      throw Error(`Cannot find a channel with the address "${channelAddress}" in your AsyncAPI file.`)
+      throw Error(`cannot find a channel with the address of "${channelAddress}" in your AsyncAPI file.`)
     }
     replyChannel = channel
   }
 
-  return new GleeMessage({ ...functionReply, channel: replyChannel.id(), request: message })
+  return replyChannel.operations().filterBySend().map(operation => new GleeMessage({ ...functionReply, channel: replyChannel.id(), request: message, operation }))
 }
