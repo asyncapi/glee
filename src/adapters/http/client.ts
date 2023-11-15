@@ -54,7 +54,7 @@ class HttpClientAdapter extends Adapter {
           query = modedAuth.query
         }
         if (body && !this.shouldMethodHaveBody(method)) {
-          logWarningMessage(`"${method}" can't have a body. please make sure you are using the correct http method for '${channelName}' channel. ignoring the body...`)
+          logWarningMessage(`"${method}" can't have a body. Please make sure you are using the correct HTTP method for the '${channelName}' channel. Ignoring the body...`)
           body = undefined
         }
 
