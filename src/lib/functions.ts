@@ -194,7 +194,7 @@ function createReply(functionReply: GleeFunctionReturnReply, message: GleeMessag
   const { operation } = message
   const reply = operation.reply()
   if (!reply) {
-    const warningMsg = `Operation ${operation.id()} doesn't have a reply field. the return result from your function will be ignored.`
+    const warningMsg = `Operation ${operation.id()} doesn't have a reply field. The returned result from your function will be ignored.`
     logWarningMessage(warningMsg)
     return
   }
