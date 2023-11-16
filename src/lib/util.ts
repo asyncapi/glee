@@ -52,6 +52,7 @@ export const getParams = (
  */
 export const duplicateMessage = (message: GleeMessage): GleeMessage => {
   const newMessage = new GleeMessage({
+    operation: message.operation,
     payload: message.payload,
     headers: message.headers,
     channel: message.channel,

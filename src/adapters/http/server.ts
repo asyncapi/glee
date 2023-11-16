@@ -1,10 +1,12 @@
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
-import http from 'http'
+import http, { IncomingMessage, ServerResponse } from 'http'
+import { StringDecoder } from 'string_decoder'
 import { validateData } from '../../lib/util.js'
 import GleeError from '../../errors/glee-error.js'
 import * as url from 'url'
 import GleeAuth from '../../lib/wsHttpAuth.js'
+
 
 class HttpAdapter extends Adapter {
   private httpResponses = new Map()
@@ -21,113 +23,120 @@ class HttpAdapter extends Adapter {
     return this._send(message)
   }
 
+  async _readRequestBody(req: http.IncomingMessage): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const decoder = new StringDecoder("utf-8")
+      let result = ""
+
+      req.on('data', (chunk) => {
+        result += decoder.write(chunk);
+      })
+
+      req.on('end', () => {
+        result += decoder.end();
+        resolve(result)
+      })
+    })
+  }
+
+  async _authenticateRequest(req: IncomingMessage, res: ServerResponse) {
+
+    function done() {
+      let resolveFunc, rejectFunc
+      const promise = new Promise((resolve, reject) => {
+        resolveFunc = resolve
+        rejectFunc = reject
+      })
+      return {
+        promise,
+        done: (val: boolean, code = 401, message = 'Unauthorized') => {
+          if (val) {
+            resolveFunc(true)
+          } else {
+            rejectFunc({ code, message })
+          }
+        },
+      }
+    }
+
+    const gleeAuth = new GleeAuth(
+      this.AsyncAPIServer,
+      this.parsedAsyncAPI,
+      this.serverName,
+      req.headers
+    )
+
+    const { promise, done: callback } = done()
+    try {
+      if (!gleeAuth.checkAuthPresense()) return
+      this.emit('auth', {
+        authProps: gleeAuth.getServerAuthProps(
+          req.headers,
+          url.parse(req.url, true).query
+        ),
+        server: this.serverName,
+        done: callback,
+        doc: this.AsyncAPIServer,
+      })
+      await promise
+    } catch (e) {
+      res.statusCode = e.code
+      res.end()
+      this.emit('error', new Error(`${e.code} ${e.message}`))
+      return
+    }
+  }
+
+  async _processRequest(req: IncomingMessage, res: ServerResponse, body: any) {
+    this.httpResponses.set(this.serverName, res)
+    const serverUrl = new URL(this.serverUrlExpanded)
+    let { pathname } = new URL(req.url, serverUrl)
+    pathname = pathname.startsWith('/') ? pathname.substring(1) : pathname
+    if (!pathname) pathname = '/'
+    if (!this.parsedAsyncAPI.channels().all().filter(channel => channel.address() === pathname).length) {
+      res.end('HTTP/1.1 404 Not Found1\r\n\r\n')
+      const err = new Error(
+        `A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file. here`
+      )
+      this.emit('error', err)
+      return err
+    }
+    const { query } = url.parse(req.url, true)
+    const searchParams = { query }
+    let payload = body
+    const channel = this.parsedAsyncAPI.channels().all().filter(channel => channel.address() === pathname)[0]
+    this.emit('connect', {
+      name: this.name(),
+      adapter: this,
+      connection: http,
+      channel: channel.id(),
+    })
+    if (!payload) payload = null
+    const msg = this._createMessage(channel.id(), payload, searchParams)
+    this.emit('message', msg, http)
+
+  }
+
+
+  _handleRequest = async (req: IncomingMessage, res: ServerResponse) => {
+    try {
+      await this._authenticateRequest(req, res)
+      const body = await this._readRequestBody(req)
+      await this._processRequest(req, res, body)
+    } catch (e) {
+      const message = ""// write an error message here
+      this.emit("error", new Error(message))
+    }
+  }
+
   async _connect(): Promise<this> {
     // NOSONAR
     const config = await this.resolveProtocolConfig('http')
     const httpOptions = config?.server
-    const serverUrl = new URL(this.serverUrlExpanded)
     const httpServer = httpOptions?.httpServer || http.createServer()
-    const asyncapiServerPort = serverUrl.port || 80
-    const optionsPort = httpOptions?.port
-    const port = optionsPort || asyncapiServerPort
-
-    httpServer.on('request', async (req, res) => {
-      res.setHeader('Content-Type', 'application/json')
-
-      const bodyBuffer = []
-      let body: object
-      req.on('data', (chunk) => {
-        bodyBuffer.push(chunk)
-      })
-
-      function done() {
-        let resolveFunc, rejectFunc
-        const promise = new Promise((resolve, reject) => {
-          resolveFunc = resolve
-          rejectFunc = reject
-        })
-        return {
-          promise,
-          done: (val: boolean, code = 401, message = 'Unauthorized') => {
-            if (val) {
-              resolveFunc(true)
-            } else {
-              rejectFunc({ code, message })
-            }
-          },
-        }
-      }
-
-      const gleeAuth = new GleeAuth(
-        this.AsyncAPIServer,
-        this.parsedAsyncAPI,
-        this.serverName,
-        req.headers
-      )
-
-      const { promise, done: callback } = done()
-
-      if (gleeAuth.checkAuthPresense()) {
-        this.emit('auth', {
-          authProps: gleeAuth.getServerAuthProps(
-            req.headers,
-            url.parse(req.url, true).query
-          ),
-          server: this.serverName,
-          done: callback,
-          doc: this.AsyncAPIServer,
-        })
-      }
-
-      req.on('end', async () => {
-        try {
-          if (gleeAuth.checkAuthPresense()) await promise
-        } catch (e) {
-          res.statusCode = e.code
-          res.end()
-          this.emit('error', new Error(`${e.code} ${e.message}`))
-          return
-        }
-
-        body = JSON.parse(Buffer.concat(bodyBuffer).toString())
-        this.httpResponses.set(this.serverName, res)
-        let { pathname } = new URL(req.url, serverUrl)
-        pathname = pathname.startsWith('/') ? pathname.substring(1) : pathname
-        if (!this.parsedAsyncAPI.channels().get(pathname)) {
-          res.end('HTTP/1.1 404 Not Found1\r\n\r\n')
-          const err = new Error(
-            `A client attempted to connect to channel ${pathname} but this channel is not defined in your AsyncAPI file. here`
-          )
-          this.emit('error', err)
-          return err
-        }
-        const { query } = url.parse(req.url, true)
-        const searchParams = { query }
-        const payload = body
-        const httpChannelBinding = this.parsedAsyncAPI
-          .channels().get(pathname)
-          .bindings().get('http')
-        if (httpChannelBinding) {
-          this._checkHttpBinding(
-            req,
-            res,
-            pathname,
-            httpChannelBinding,
-            searchParams,
-            payload
-          )
-        }
-        this.emit('connect', {
-          name: this.name(),
-          adapter: this,
-          connection: http,
-          channel: pathname,
-        })
-        const msg = this._createMessage(pathname, payload, searchParams)
-        this.emit('message', msg, http)
-      })
-    })
-
+    const asyncapiServerPort = new URL(this.serverUrlExpanded).port || 80
+    const port = asyncapiServerPort
+    httpServer.on('request', this._handleRequest)
     httpServer.listen(port)
     this.emit('server:ready', { name: this.name(), adapter: this })
     return this

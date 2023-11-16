@@ -48,7 +48,7 @@ class WsClientAdapter extends Adapter {
       const channelAddress = applyAddressParameters(channel)
       let url = new URL(`${protocol}://${serverHost}${channelAddress}`)
       if (authConfig) {
-        const modedAuth = await gleeAuth.processClientAuth(url, headers, {})
+        const modedAuth = await gleeAuth.processClientAuth({ url, headers, query: {} })
         headers = modedAuth.headers
         url = modedAuth.url
       }

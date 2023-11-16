@@ -9,18 +9,12 @@ interface IGleeMessageConstructor {
   payload?: any
   headers?: MessageHeaders
   channel?: string
+  operation?: OperationInterface
   request?: GleeMessage
   serverName?: string
   connection?: GleeConnection
   broadcast?: boolean
   cluster?: boolean
-  query?: QueryParam
-}
-
-interface IReply {
-  payload?: any
-  headers?: { [key: string]: any }
-  channel?: string
   query?: QueryParam
 }
 
@@ -47,6 +41,7 @@ class GleeMessage extends EventEmitter {
    * @param {Object} [options.headers] Message headers.
    * @param {String} [options.channel] Message channel.
    * @param {String} [options.serverName] The name of the associated AsyncAPI server.
+   * @param {OperationInterface} [options.operation] The operation that this message belongs to.
    * @param {GleeMessage} [options.request] The request that this message is created for as a reply.
    * @param {GleeConnection} [options.connection] The connection through which the message will be sent or has been received.
    * @param {Boolean} [options.broadcast=false] Whether the message should be broadcasted or not.
@@ -58,6 +53,7 @@ class GleeMessage extends EventEmitter {
     headers,
     channel,
     serverName,
+    operation,
     connection,
     request,
     broadcast = false,
@@ -75,6 +71,7 @@ class GleeMessage extends EventEmitter {
     if (cluster) this._cluster = cluster
     if (query) this._query = query
     if (request) this._request = request
+    if (operation) this._operation = operation
   }
 
   get payload(): any {

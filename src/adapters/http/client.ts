@@ -5,6 +5,10 @@ import GleeMessage from '../../lib/message.js'
 import { clientAuthConfig } from '../../lib/userAuth.js'
 import GleeAuth from '../../lib/wsHttpAuth.js'
 import { logWarningMessage } from '../../lib/logger.js'
+import { ChannelInterface, OperationInterface } from '@asyncapi/parser'
+import { Authenticatable } from '../../lib/index.js'
+import { validateData } from '../../lib/util.js'
+import GleeError from '../../errors/glee-error.js'
 
 class HttpClientAdapter extends Adapter {
   name(): string {
@@ -21,70 +25,87 @@ class HttpClientAdapter extends Adapter {
   }
 
   async send(message: GleeMessage): Promise<void> {
-    let headers = message.headers
-    const authConfig = await clientAuthConfig(this.serverName)
-    const serverUrl = this.serverUrlExpanded
-    for (const channelName of this.channelNames) {
-      const channelInfo = this.parsedAsyncAPI.channels().get(channelName)
-      const httpChannelBinding = channelInfo.bindings().get('http')
-      const channelServers = channelInfo.servers().all().map(e => e.id())
-      const isChannelServers =
-        !channelServers.length || channelServers.includes(message.serverName)
-      if (httpChannelBinding && isChannelServers) {
-        const method: Method = httpChannelBinding.json().method
-        let url = new URL(serverUrl + this.parsedAsyncAPI.channels().get(channelName).address())
-        const gleeAuth = new GleeAuth(
-          this.AsyncAPIServer,
-          this.parsedAsyncAPI,
-          this.serverName,
-          authConfig
-        )
-        let body: any = message.payload
-        let query: { [key: string]: string } | { [key: string]: string[] } =
-          message.query
-
-        if (authConfig) {
-          const modedAuth = await gleeAuth.processClientAuth(
-            url,
-            headers,
-            query
-          )
-          headers = modedAuth.headers
-          url = modedAuth.url.href
-          query = modedAuth.query
-        }
-        if (body && !this.shouldMethodHaveBody(method)) {
-          logWarningMessage(`"${method}" can't have a body. please make sure you are using the correct http method for '${channelName}' channel. ignoring the body...`)
-          body = undefined
-        }
-
-        got({
-          method,
-          url,
-          body,
-          searchParams: query ? JSON.parse(JSON.stringify(query)) : undefined,
-          headers: { ...headers, "Content-Type": "application/json" },
-        })
-          .then((res) => {
-            const msg = this.createMessage(message, channelName, res.body)
-            this.emit('message', msg, http)
-          })
-          .catch((err) => {
-            console.error(err)
-            this.emit('error', err)
-          })
-      }
+    try {
+      this._validateMessage(message)
+      await this._sendMessage(message)
+    } catch (err) {
+      logWarningMessage(`Failed to Send Message: An attempt to send a message to '${this.name()}' on the '${message.channel}' channel was unsuccessful. Please review the error details below for further information and corrective action.`)
+      this.emit('error', err)
     }
   }
-  private createMessage(requestMessage: GleeMessage, channelName: string, payload: any) {
+
+  async _sendMessageToChannel(message: GleeMessage, channel: ChannelInterface, operation: OperationInterface) {
+    const serverHost = this.serverUrlExpanded
+    const httpURL = new URL(serverHost + channel.address())
+    const { url, headers, query } = await this._applyAuthConfiguration({ headers: message.headers, query: message.query, url: httpURL })
+    const method = this._getHttpMethod(operation)
+
+    const response = await got({
+      method,
+      url,
+      json: message.payload,
+      searchParams: JSON.parse(JSON.stringify(query)),
+      headers,
+    })
+    const msg = this._createMessage(message, channel.id(), response.body)
+    this.emit('message', msg, http)
+  }
+
+  async _applyAuthConfiguration(authenticatable: Authenticatable): Promise<Authenticatable> {
+    const authConfig = await clientAuthConfig(this.serverName)
+    const gleeAuth = new GleeAuth(
+      this.AsyncAPIServer,
+      this.parsedAsyncAPI,
+      this.serverName,
+      authConfig
+    )
+
+    if (!authConfig) return authenticatable
+
+    const authenticated = await gleeAuth.processClientAuth(authenticatable)
+    return { ...authenticated as Authenticatable }
+  }
+
+  _getHttpMethod(operation: OperationInterface): Method {
+    const method = operation.bindings().get("http").json().method
+    if (!method) {
+      logWarningMessage(`"Warning: HTTP Method Not Specified
+        In the operation '${operation.id()}', no HTTP method is specified. The system will default to using the GET method. Ensure that this is the intended behavior or specify the appropriate HTTP method in the http operation bindings."`)
+      return 'GET'
+    }
+    return method
+  }
+
+  async _sendMessage(message: GleeMessage) {
+    const operation = message.operation
+    const operationChannels = operation.channels()
+    operationChannels.forEach(channel => this._sendMessageToChannel(message, channel, operation))
+  }
+  _createMessage(request: GleeMessage, channelName: string, payload: any) {
     return new GleeMessage({
-      request: requestMessage,
+      request,
       payload: JSON.parse(JSON.stringify(payload)),
       channel: channelName,
     })
   }
-  private shouldMethodHaveBody(method: Method) {
-    return ["post", "put", "patch"].includes(method.toLocaleLowerCase())
+
+  _validateMessage(message: GleeMessage) {
+
+    const querySchema = message.operation.bindings().get("http").json().query
+    if (querySchema) this._validate(message.query, querySchema)
+    const messages = message.operation.messages().all()
+    if (!messages.length) return
+    const headersSchema = {
+      oneOf: messages.map(message => message?.bindings()?.get("http")?.json()?.headers).filter(header => !!header)
+    }
+    if (headersSchema.oneOf.length > 0) this._validate(message.headers, headersSchema)
+  }
+
+  _validate(data, schema) {
+    const { isValid, errors, humanReadableError } = validateData(data, schema)
+    if (!isValid) {
+      throw new GleeError({ humanReadableError, errors })
+    }
   }
 }
 
