@@ -15,8 +15,8 @@ servers:
       - $ref: '#/components/securitySchemes/apiKey'
       - $ref: '#/components/securitySchemes/cert'
 channels:
-  /price:
-    address: /price
+  price:
+    address: '/price'
     messages:
       index.message:
         $ref: '#/components/messages/indexGraph'
@@ -27,7 +27,7 @@ operations:
   index:
     action: receive
     channel:
-      $ref: '#/channels/~1price'
+      $ref: '#/channels/price'
     messages:
       - $ref: '#/components/messages/indexGraph'
 components:
