@@ -45,7 +45,7 @@ servers:
     host: 'localhost:8081'
     protocol: http
     security:
-      - $ref: '#/components/securitySchemes/userPassword'
+      - $ref: '#/components/securitySchemes/userPass'
 
   ...
 
@@ -65,7 +65,7 @@ servers:
     host: localhost:8081
     protocol: http
     security:
-      - $ref: '#/components/securitySchemes/userPassword'
+      - $ref: '#/components/securitySchemes/userPass'
   testwebhook:
     host: localhost:9000
     protocol: ws
@@ -109,9 +109,11 @@ The `done` parameter in the `serverAuth` function allows the broker/server to kn
 /* websocket.js */
 
 export async function serverAuth({ authProps, done }) {
-  // done(true)
-  //done(false, 401, "Unauthorized")
-  // done(false)
+  if (isValidUser(authProps)) {
+    done(true);
+  } else {
+    done(false, 401, "Unauthorized");
+  }
 }
 ```
 
