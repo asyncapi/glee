@@ -77,10 +77,12 @@ export default async function GleeAppInitializer() {
   await generateDocs(parsedAsyncAPI, config, null)
   parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
     const channel = operation.channels()[0] // operation can have only one channel.
+    const messagesSchemas = operation.messages().filterByReceive().map(m => m.payload().json()).filter(schema => !!schema)
     const schema = {
-      oneOf: operation.messages().filterByReceive().map(m => m.payload().json())
+      oneOf: messagesSchemas
     } as any
-    app.use(channel.id(), validate(schema), (event, next) => {
+    if (messagesSchemas.length > 0) app.use(channel.id(), validate(schema))
+    app.use(channel.id(), (event, next) => {
       triggerFunction({
         app,
         operation,
@@ -91,10 +93,12 @@ export default async function GleeAppInitializer() {
 
   parsedAsyncAPI.operations().filterBySend().forEach(operation => {
     const channel = operation.channels()[0] // operation can have only one channel.
+    const messagesSchemas = operation.messages().filterBySend().map(m => m.payload().json()).filter(schema => !!schema)
     const schema = {
-      oneOf: operation.messages().filterBySend().map(m => m.payload().json())
+      oneOf: messagesSchemas
     } as any
-    app.useOutbound(channel.id(), validate(schema), json2string)
+    if (messagesSchemas.length > 0) app.useOutbound(channel.id(), validate(schema))
+    app.useOutbound(channel.id(), json2string)
   })
 
   app.on('adapter:auth', async (e: AuthEvent) => {

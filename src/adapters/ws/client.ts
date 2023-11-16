@@ -60,7 +60,6 @@ class WsClientAdapter extends Adapter {
     }
 
     for (const { client, channel } of this.clients) {
-      console.log("openning a connection for channel: ", channel)
       client.on('open', () => {
         this.emit('connect', {
           name: this.name(),

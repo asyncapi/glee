@@ -3,7 +3,6 @@ import * as util from '../../src/lib/util.js'
 import GleeMessage from '../../src/lib/message.js'
 import Glee from '../../src/lib/glee.js'
 import { Channel } from '@asyncapi/parser/esm/models/v3/channel.js'
-import { Message } from '@asyncapi/parser/esm/models/v3/message.js'
 
 describe('util', () => {
   describe('getParams', () => {

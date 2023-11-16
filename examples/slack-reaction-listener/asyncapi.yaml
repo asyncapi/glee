@@ -22,7 +22,13 @@ channels:
       - $ref: "#/servers/Slack_HTTPS"
     messages:
       slackResponse:
-        $ref: "#/components/messages/slackResponse"
+        payload:
+          type: object
+          properties:
+            channel:
+              type: string
+            text:
+              type: string
   OpenAICompletion:
     bindings:
       http:
@@ -39,9 +45,9 @@ channels:
     address: /link/?ticket={ticket}&app_id={app_id}
     parameters:
       ticket:
-        default: a2f0a4e5-cce3-4423-babb-045c2ab5aa50
+        default: 5a271cc5-80c7-d-bbd0-fd8a62d5767a
       app_id:
-        default: b02112d9364cb2fee8a0ee048a920b8b4b0103cb03fab023b4e30f6ee2efb98f
+        default: b02112d9364cb2fee8a0a920b8b4b0103cb03fab023b4e30f6ee2efb98f
     messages:
       SlackReactionAdded:
         $ref: "#/components/messages/SlackReactionAdded"
