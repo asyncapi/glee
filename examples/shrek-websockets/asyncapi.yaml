@@ -17,37 +17,37 @@ servers:
     host: localhost
     protocol: ws
 channels:
-  /chat:
+  chat:
     address: /chat
     messages:
-      pubChatMessage.message:
+      receiveChatMessage:
         $ref: '#/components/messages/chatMessage'
-      subChatMessage.message:
+      sendChatMessage:
         $ref: '#/components/messages/chatMessage'
-  /travel/status:
+  travelStatus:
     address: /travel/status
     messages:
-      subTravelInfo.message:
+      subTravelInfo:
         $ref: '#/components/messages/travelInfo'
 operations:
-  pubChatMessage:
+  recieveChatMessage:
     action: receive
     channel:
-      $ref: '#/channels/~1chat'
+      $ref: '#/channels/chat'
     summary: Client can send chat messages.
     messages:
       - $ref: '#/components/messages/chatMessage'
-  subChatMessage:
+  sendChatMessage:
     action: send
     channel:
-      $ref: '#/channels/~1chat'
+      $ref: '#/channels/chat'
     summary: Client can receive chat messages.
     messages:
       - $ref: '#/components/messages/chatMessage'
-  subTravelInfo:
+  sendTravelInfo:
     action: send
     channel:
-      $ref: '#/channels/~1travel~1status'
+      $ref: '#/channels/travelStatus'
     summary: Client can receive travel info status.
     messages:
       - $ref: '#/components/messages/travelInfo'

@@ -20,12 +20,10 @@ servers:
     pathname: /ws
     protocol: ws
 channels:
-  user/signedup:
+  userSignedup:
     address: user/signedup
     messages:
-      onUserSignedUp.message:
-        $ref: '#/components/messages/UserSignedUp'
-      subscribe.message:
+      UserSignedUp:
         $ref: '#/components/messages/UserSignedUp'
     bindings:
       ws:
@@ -43,16 +41,16 @@ channels:
             my-custom-header:
               type: string
               const: custom value
-  server/announce:
+  serverAnnounce:
     address: server/announce
     messages:
-      subscribe.message:
+      ServerAnnounce:
         $ref: '#/components/messages/ServerAnnounce'
 operations:
   onUserSignedUp:
     action: receive
     channel:
-      $ref: '#/channels/user~1signedup'
+      $ref: '#/channels/userSignedup'
     bindings:
       mqtt:
         qos: 2
@@ -60,16 +58,16 @@ operations:
         bindingVersion: 0.2.0
     messages:
       - $ref: '#/components/messages/UserSignedUp'
-  user/signedup.subscribe:
+  onUserSignedUpReply:
     action: send
     channel:
-      $ref: '#/channels/user~1signedup'
+      $ref: '#/channels/userSignedup'
     messages:
       - $ref: '#/components/messages/UserSignedUp'
-  server/announce.subscribe:
+  announceUserSignedUp:
     action: send
     channel:
-      $ref: '#/channels/server~1announce'
+      $ref: '#/channels/serverAnnounce'
     messages:
       - $ref: '#/components/messages/ServerAnnounce'
 components:

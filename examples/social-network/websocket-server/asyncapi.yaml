@@ -13,19 +13,19 @@ servers:
       mqtt:
         clientId: the-social-network
 channels:
-  /:
+  index:
     address: /
     messages:
-      onLikeDislike.message:
+      likeOrDislike:
         $ref: '#/components/messages/likeOrDislike'
-      subscribe.message:
+      likeCountUpdated:
         $ref: '#/components/messages/likeCountUpdated'
     servers:
       - $ref: '#/servers/websockets'
-  post/liked:
+  postLiked:
     address: post/liked
     messages:
-      subscribe.message:
+      notifyPostLiked:
         $ref: '#/components/messages/notifyPostLiked'
     servers:
       - $ref: '#/servers/mosquitto'
@@ -33,19 +33,19 @@ operations:
   onLikeDislike:
     action: receive
     channel:
-      $ref: '#/channels/~1'
+      $ref: '#/channels/index'
     messages:
       - $ref: '#/components/messages/likeOrDislike'
-  /.subscribe:
+  onLikeCounted:
     action: send
     channel:
-      $ref: '#/channels/~1'
+      $ref: '#/channels/index'
     messages:
       - $ref: '#/components/messages/likeCountUpdated'
-  post/liked.subscribe:
+  notifyPostLiked:
     action: send
     channel:
-      $ref: '#/channels/post~1liked'
+      $ref: '#/channels/postLiked'
     messages:
       - $ref: '#/components/messages/notifyPostLiked'
 components:
