@@ -1,5 +1,4 @@
 export default async function (event) {
-  console.log("infunction")
   const server = "httpbin.org"
   return {
     reply: [{
@@ -10,6 +9,22 @@ export default async function (event) {
         server,
         channel: "DELETE"
       },
+      {
+        server,
+        channel: "GET"
+      },
+      {
+        server,
+        channel: "POST"
+      },
+      {
+        server,
+        channel: "PATCH"
+      },
+      {
+        server,
+        channel: "PUT"
+      }
     ],
   }
 }

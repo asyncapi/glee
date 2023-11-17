@@ -15,6 +15,11 @@ channels:
     address: /
     servers:
       - $ref: '#/servers/local-trigger'
+    messages:
+      string:
+        $ref: "#/components/messages/string"
+      empty:
+        $ref: "#/components/messages/empty"
   DELETE:
     address: /delete
     servers:
@@ -37,6 +42,11 @@ channels:
       - $ref: '#/servers/httpbin.org'
 operations:
   receiveTrigger:
+    reply:
+      channel:
+        $ref: "#/channels/TRIGGER"
+      messages:
+        - $ref: "#/components/messages/string"
     channel:
       $ref: '#/channels/TRIGGER'
     action: receive
@@ -54,13 +64,17 @@ operations:
     channel:
       $ref: '#/channels/DELETE'
     action: receive
-    bindings:
-      http:
-        method: DELETE
   sendGET:
     channel:
       $ref: '#/channels/GET'
     action: send
+    bindings:
+      http:
+        method: GET
+  receiveGET:
+    channel:
+      $ref: '#/channels/GET'
+    action: receive
     bindings:
       http:
         method: GET
@@ -71,6 +85,10 @@ operations:
     bindings:
       http:
         method: POST
+  receivePOST:
+    channel:
+      $ref: '#/channels/POST'
+    action: receive
   sendPATCH:
     channel:
       $ref: '#/channels/PATCH'
@@ -78,6 +96,10 @@ operations:
     bindings:
       http:
         method: PATCH
+  receivePATCH:
+    channel:
+      $ref: '#/channels/PATCH'
+    action: receive
   sendPUT:
     channel:
       $ref: '#/channels/PUT'
@@ -85,5 +107,17 @@ operations:
     bindings:
       http:
         method: PUT
+  receivePUT:
+    channel:
+      $ref: '#/channels/PUT'
+    action: receive
+components:
+  messages:
+    string:
+      payload:
+        type: string
+    empty:
+      payload:
+        type: "null"
 x-remoteServers:
   - httpbin.org
