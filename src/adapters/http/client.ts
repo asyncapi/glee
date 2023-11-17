@@ -39,14 +39,19 @@ class HttpClientAdapter extends Adapter {
     const httpURL = new URL(serverHost + channel.address())
     const { url, headers, query } = await this._applyAuthConfiguration({ headers: message.headers, query: message.query, url: httpURL })
     const method = this._getHttpMethod(operation)
-
-    const response = await got({
+    const gotRequest = {
       method,
       url,
-      json: message.payload,
-      searchParams: JSON.parse(JSON.stringify(query)),
+      body: message.payload,
+      searchParams: query as any,
       headers,
-    })
+    }
+
+    if (!message.payload) delete gotRequest.body
+    if (!query) delete gotRequest.searchParams
+    if (!headers) delete gotRequest.headers
+
+    const response = await got(gotRequest)
     const msg = this._createMessage(message, channel.id(), response.body)
     this.emit('message', msg, http)
   }

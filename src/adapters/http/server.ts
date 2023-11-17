@@ -103,7 +103,6 @@ class HttpAdapter extends Adapter {
     }
     const { query } = url.parse(req.url, true)
     const searchParams = { query }
-    let payload = body
     const channel = this.parsedAsyncAPI.channels().all().filter(channel => channel.address() === pathname)[0]
     this.emit('connect', {
       name: this.name(),
@@ -111,8 +110,7 @@ class HttpAdapter extends Adapter {
       connection: http,
       channel: channel.id(),
     })
-    if (!payload) payload = null
-    const msg = this._createMessage(channel.id(), payload, searchParams)
+    const msg = this._createMessage(channel.id(), body, searchParams)
     this.emit('message', msg, http)
 
   }
@@ -124,8 +122,12 @@ class HttpAdapter extends Adapter {
       const body = await this._readRequestBody(req)
       await this._processRequest(req, res, body)
     } catch (e) {
-      const message = ""// write an error message here
+      const method = req.method
+      const url = req.url
+      const serverName = this.name() // Assuming 'this.name' contains the server's name. Adjust as needed.
+      const message = `Error occurred while processing ${method} request at ${url} on server ${serverName}: ${e.message}.`
       this.emit("error", new Error(message))
+      this.emit("error", new Error(e))
     }
   }
 
@@ -189,9 +191,9 @@ class HttpAdapter extends Adapter {
 
   _createMessage(pathName: string, body: any, params: any) {
     return new GleeMessage({
-      payload: JSON.parse(JSON.stringify(body)),
+      payload: body || null,
       channel: pathName,
-      query: JSON.parse(JSON.stringify(params.query)),
+      query: params.query,
     })
   }
 }

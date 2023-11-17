@@ -99,7 +99,7 @@ export const validateData = (
 ): IValidateDataReturn => {
   const ajv = new Ajv({ allErrors: true, jsonPointers: true })
   const validation = ajv.compile(schema)
-  const isValid = validation(data)
+  const isValid = validation(data || null)
   let errors: void | betterAjvErrors.IOutputError[]
   let humanReadableError: void | betterAjvErrors.IOutputError[]
   if (!isValid) {
@@ -212,7 +212,6 @@ const substituteParameterInAddress = (parameter: ChannelParameterInterface, addr
   const doesExistInAddress = address.includes(`{${parameter.id()}}`)
   if (!doesExistInAddress) return address
   const parameterValue = getParamValue(parameter, message)
-  console.log(parameterValue)
   if (!parameterValue) {
     throw Error(`parsing parameter "${parameter.id()}" value failed. please make sure it exists in your header/payload or in default field of the parameter.`)
   }
@@ -224,7 +223,6 @@ const getParamValue = (parameter: ChannelParameterInterface, message: GleeMessag
   const location = parameter.location()
   if (!location) return parameter.json().default
   const paramFromLocation = getParamFromLocation(location, message)
-  console.log({ paramFromLocation })
   if (!paramFromLocation) {
     logWarningMessage(`tried to parse param from ${location} but failed: using the default param.`)
     return parameter.json().default
