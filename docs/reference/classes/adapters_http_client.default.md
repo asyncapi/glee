@@ -87,7 +87,7 @@ Instantiates a Glee adapter.
 
 #### Defined in
 
-[src/lib/adapter.ts:42](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L42)
+[src/lib/adapter.ts:42](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L42)
 
 ## Properties
 
@@ -171,7 +171,7 @@ Adapter.AsyncAPIServer
 
 #### Defined in
 
-[src/lib/adapter.ts:187](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L187)
+[src/lib/adapter.ts:187](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L187)
 
 ___
 
@@ -189,7 +189,7 @@ Adapter.channelAddresses
 
 #### Defined in
 
-[src/lib/adapter.ts:199](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L199)
+[src/lib/adapter.ts:199](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L199)
 
 ___
 
@@ -207,7 +207,7 @@ Adapter.channelNames
 
 #### Defined in
 
-[src/lib/adapter.ts:195](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L195)
+[src/lib/adapter.ts:195](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L195)
 
 ___
 
@@ -225,7 +225,7 @@ Adapter.connections
 
 #### Defined in
 
-[src/lib/adapter.ts:203](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L203)
+[src/lib/adapter.ts:203](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L203)
 
 ___
 
@@ -243,7 +243,7 @@ Adapter.glee
 
 #### Defined in
 
-[src/lib/adapter.ts:179](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L179)
+[src/lib/adapter.ts:179](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L179)
 
 ___
 
@@ -261,7 +261,7 @@ Adapter.parsedAsyncAPI
 
 #### Defined in
 
-[src/lib/adapter.ts:191](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L191)
+[src/lib/adapter.ts:191](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L191)
 
 ___
 
@@ -279,7 +279,7 @@ Adapter.serverName
 
 #### Defined in
 
-[src/lib/adapter.ts:183](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L183)
+[src/lib/adapter.ts:183](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L183)
 
 ___
 
@@ -297,7 +297,7 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/adapter.ts:207](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L207)
+[src/lib/adapter.ts:207](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L207)
 
 ## Methods
 
@@ -348,7 +348,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/adapters/http/client.ts:12](https://github.com/asyncapi/glee/blob/00a2a1a/src/adapters/http/client.ts#L12)
+[src/adapters/http/client.ts:12](https://github.com/asyncapi/glee/blob/1972258/src/adapters/http/client.ts#L12)
 
 ___
 
@@ -369,7 +369,7 @@ ___
 
 #### Defined in
 
-[src/adapters/http/client.ts:73](https://github.com/asyncapi/glee/blob/00a2a1a/src/adapters/http/client.ts#L73)
+[src/adapters/http/client.ts:73](https://github.com/asyncapi/glee/blob/1972258/src/adapters/http/client.ts#L73)
 
 ___
 
@@ -498,7 +498,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:220](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L220)
+[src/lib/adapter.ts:220](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L220)
 
 ___
 
@@ -543,7 +543,7 @@ Returns a list of the channels a given adapter has to subscribe to.
 
 #### Defined in
 
-[src/lib/adapter.ts:236](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L236)
+[src/lib/adapter.ts:236](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L236)
 
 ___
 
@@ -625,7 +625,7 @@ ___
 
 #### Defined in
 
-[src/adapters/http/client.ts:9](https://github.com/asyncapi/glee/blob/00a2a1a/src/adapters/http/client.ts#L9)
+[src/adapters/http/client.ts:9](https://github.com/asyncapi/glee/blob/1972258/src/adapters/http/client.ts#L9)
 
 ___
 
@@ -1067,7 +1067,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:211](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L211)
+[src/lib/adapter.ts:211](https://github.com/asyncapi/glee/blob/1972258/src/lib/adapter.ts#L211)
 
 ___
 
@@ -1093,7 +1093,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/adapters/http/client.ts:22](https://github.com/asyncapi/glee/blob/00a2a1a/src/adapters/http/client.ts#L22)
+[src/adapters/http/client.ts:22](https://github.com/asyncapi/glee/blob/1972258/src/adapters/http/client.ts#L22)
 
 ___
 
