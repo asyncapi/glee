@@ -37,7 +37,8 @@ describe('existsInAsyncAPI', () => {
   const parser = new Parser()
 
   it('checks if channel exists', async () => {
-    return parser.parse(document).then(({ document }) => {
+    return parser.parse(document).then(({ document, diagnostics }) => {
+      if (!document) console.log(diagnostics)
       const middleware = existsInAsyncAPI(document!!);
       const message = new GleeMessage({
         channel: 'testChannel'
