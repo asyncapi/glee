@@ -79,7 +79,7 @@ describe('util', () => {
     }
 
     const mockChannel = {
-      address: () => 'http://api/{param}',
+      address: () => 'https://api/{param}',
       parameters: () => [mockChannelParameter]
     } as Channel
 
@@ -89,7 +89,7 @@ describe('util', () => {
     } as unknown as GleeMessage
     it('replaces parameters in the address with values from message', () => {
       const result = util.applyAddressParameters(mockChannel, mockMessage)
-      expect(result).toBe('http://api/456') // Assuming that '456' is the intended substitution from the headers
+      expect(result).toBe('https://api/456') // Assuming that '456' is the intended substitution from the headers
     })
 
     it('uses default value when parameter is not found in message', () => {
@@ -98,12 +98,12 @@ describe('util', () => {
         payload: {}
       } as unknown as GleeMessage
       const result = util.applyAddressParameters(mockChannel, mockMessageWithNoParam)
-      expect(result).toBe('http://api/123') // The default value '123' should be used
+      expect(result).toBe('https://api/123') // The default value '123' should be used
     })
 
     it('throws an error when a required parameter is missing and no default is provided', () => {
       const mockChannelWithNoDefault = {
-        address: () => 'http://api/{param}',
+        address: () => 'https://api/{param}',
         parameters: () => [{ id: () => 'param', json: () => ({}) }] // No default value provided
       } as Channel
       const mockMessageWithNoParam = {
