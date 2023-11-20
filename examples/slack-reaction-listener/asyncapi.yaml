@@ -45,9 +45,9 @@ channels:
     address: /link/?ticket={ticket}&app_id={app_id}
     parameters:
       ticket:
-        default: 5a271cc5-80c7-d-bbd0-fd8a62d5767a
+        default: 38408ed1-5d39--82f0-6e1214dae1
       app_id:
-        default: b02112d9364cb2fee8a0a920b8b4b0103cb03fab023b4e30f6ee2efb98f
+        default: b02112d9364cb2fee8a0a920b8bcb03fab023b4e30f6ee2efb98f
     messages:
       SlackReactionAdded:
         $ref: "#/components/messages/SlackReactionAdded"
@@ -60,6 +60,10 @@ operations:
       $ref: "#/channels/SlackPostMessage"
     messages:
       - $ref: "#/components/messages/slackResponse"
+  receiveSlackConfirmation:
+    action: receive
+    channel:
+      $ref: "#/channels/SlackPostMessage"
   AckEvent:
     action: send
     channel:
