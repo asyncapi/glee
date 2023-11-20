@@ -1,42 +1,40 @@
 import 'jest-extended'
-import { AsyncAPIDocumentInterface, Parser } from '@asyncapi/parser'
+import { Parser } from '@asyncapi/parser'
 import existsInAsyncAPI from '../../src/middlewares/existsInAsyncAPI.js'
 import GleeMessage from '../../src/lib/message.js'
 
-
-const document = {
-  asyncapi: "3.0.0",
-  info: {
-    title: "",
-    version: ""
-  },
-  servers: {
-    test: {
-      host: "fake-url",
-      protocol: "mqtt"
-    }
-  },
-  channels: {
-    testChannel: {
-      address: "test/channel"
+describe('existsInAsyncAPI', () => {
+  const document = {
+    asyncapi: "3.0.0",
+    info: {
+      title: "",
+      version: ""
     },
-    noOperationChannel: {
-      address: "no/operation"
-    }
-  },
-  operations: {
-    receiveTest: {
-      action: "receive",
-      channel: {
-        "$ref": "#/channels/testChannel"
+    servers: {
+      test: {
+        host: "fake-url",
+        protocol: "mqtt"
+      }
+    },
+    channels: {
+      testChannel: {
+        address: "test/channel"
+      },
+      noOperationChannel: {
+        address: "no/operation"
+      }
+    },
+    operations: {
+      receiveTest: {
+        action: "receive",
+        channel: {
+          "$ref": "#/channels/testChannel"
+        }
       }
     }
   }
-}
 
-const parser = new Parser()
-
-describe('existsInAsyncAPI', () => {
+  const parser = new Parser()
 
   it('checks if channel exists', done => {
 
