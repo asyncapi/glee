@@ -36,22 +36,20 @@ describe('existsInAsyncAPI', () => {
 
   const parser = new Parser()
 
-  it('checks if channel exists', done => {
-
-    parser.parse(document).then(({ document }) => {
+  it('checks if channel exists', async () => {
+    return parser.parse(document).then(({ document }) => {
       const middleware = existsInAsyncAPI(document!!);
       const message = new GleeMessage({
         channel: 'testChannel'
       });
       middleware(message, err => {
         expect(err).toBeUndefined()
-        done()
       })
     })
   })
 
-  it('error if channel does not exist', done => {
-    parser.parse(document).then(({ document }) => {
+  it('error if channel does not exist', async () => {
+    return parser.parse(document).then(({ document }) => {
       const middleware = existsInAsyncAPI(document!!);
       const message = new GleeMessage({
         channel: 'nonExistentChannel'
@@ -59,13 +57,12 @@ describe('existsInAsyncAPI', () => {
 
       middleware(message, err => {
         expect(err).toBeInstanceOf(Error)
-        done()
       })
     })
   })
 
-  it('error if no send operation for outbound message', done => {
-    parser.parse(document).then(({ document }) => {
+  it('error if no send operation for outbound message', async () => {
+    return parser.parse(document).then(({ document }) => {
       const middleware = existsInAsyncAPI(document!!);
       const message = {
         channel: 'noOperationChannel',
@@ -76,13 +73,12 @@ describe('existsInAsyncAPI', () => {
       middleware(message, err => {
         expect(err).toBeInstanceOf(Error);
         expect(err?.message).toMatch(/No 'send' operation defined/);
-        done();
       });
     })
   })
 
-  it('error if no receive operation for inbound message', done => {
-    parser.parse(document).then(({ document }) => {
+  it('error if no receive operation for inbound message', async () => {
+    return parser.parse(document).then(({ document }) => {
       const middleware = existsInAsyncAPI(document!!);
       const message = {
         channel: 'noOperationChannel',
@@ -93,13 +89,12 @@ describe('existsInAsyncAPI', () => {
       middleware(message, err => {
         expect(err).toBeInstanceOf(Error);
         expect(err?.message).toMatch(/No 'receive' operation defined/);
-        done();
       });
     })
   })
 
-  it('passes if channel has required operations', done => {
-    parser.parse(document).then(({ document }) => {
+  it('passes if channel has required operations', async () => {
+    return parser.parse(document).then(({ document }) => {
       const middleware = existsInAsyncAPI(document!!);
       const message = {
         channel: 'testChannel',
@@ -109,7 +104,6 @@ describe('existsInAsyncAPI', () => {
 
       middleware(message, err => {
         expect(err).toBeUndefined();
-        done();
       })
     })
   })
