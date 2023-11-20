@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[src/middlewares/logger.ts:5](https://github.com/asyncapi/glee/blob/b35a83f/src/middlewares/logger.ts#L5)
+[src/middlewares/logger.ts:5](https://github.com/asyncapi/glee/blob/9352d7c/src/middlewares/logger.ts#L5)
