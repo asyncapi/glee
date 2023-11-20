@@ -1,11 +1,11 @@
 ---
-title: 'Http (Bearer Token)'
+title: 'userPassword'
 weight: 5
 ---
 
-## Getting started with Bearer Token authentication
+## Getting started with username and password authentication
 
-Bearer Token authentication is one of the most popular forms of authentication and is widely used because of its percieved security. This guide will walk through how to implement bearer token authentication in Glee.
+User and password authentication is one of the most basic forms of authentication. This guide will walk through how to implement username and password authentication in Glee.
 
 A sample `asyncapi.yaml` for a server with security requirements and user password security scheme is shown below:
 
@@ -21,16 +21,14 @@ servers:
     host: 'localhost:8081'
     protocol: http
     security:
-      - $ref: '#/components/securitySchemes/token'
+      - $ref: '#/components/securitySchemes/userPass
 
-      ...
+  ...
 
 components:
   securitySchemes:
-    token:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    userPass:
+      type: userPassword
 
 ```
 
@@ -43,7 +41,7 @@ servers:
     host: localhost:8081
     protocol: http
     security:
-      - $ref: '#/components/securitySchemes/token'
+      - $ref: '#/components/securitySchemes/userPass
   testwebhook:
     host: localhost:9000
     protocol: ws
@@ -54,14 +52,12 @@ x-remoteServers:
 
 components:
   securitySchemes:
-    token:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    userPass:
+      type: userPassword
 
 ```
 
-**The Client asyncapi.yaml file does't need to implement all the security requirements in the server, it only needs to implement the ones that it uses like `http (bearer token)` here.**
+**The Client asyncapi.yaml file does not need to implement all the security requirements in the server, it only needs to implement the ones that it uses like `userPassword` here.**
 
 ### Client Side
 
@@ -71,17 +67,21 @@ Following the client `asyncapi.yaml` file above, create a file named `trendingAn
 touch auth/trendingAnime.ts
 ```
 
-When using the `bearer` security scheme, it is important that you pass the parameters as follows:
+When using the `userPassword` security scheme, it is important that you pass the parameters as follows:
 
 ```js
 export async clientAuth({ parsedAsyncAPI, serverName }) {
   return {
-    token: process.env.TOKEN
+    userPass: {
+      user: process.env.user,
+      password: process.env.password,
+    },
   }
 }
 ```
 
-Glee will utilize the `token` for server authentication, employing it in the header with the format: Authorization: Bearer {token}.
+`userPass` should be the name of the security requirement as specified in your `asyncapi.yaml` file, then pass `user` and `password` as it's properties
+
 
 ### Server side
 
@@ -96,14 +96,11 @@ On the server side, you can retrieve the values as follows
 ```js
 
 export async serverAuth({ authProps, done }) {
-  authProps.getToken()
-  // your authentication logic here...
-  done(true|false)
+  authProps.getUserPass()
+  
+  done(true)
 }
 
 ```
 
-`getToken()` return a string which contains the token that was sent from the client.
-
-
-
+`getUserPass()` return an object containing the username and password that was sent from the client.

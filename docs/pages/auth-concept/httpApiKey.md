@@ -1,13 +1,13 @@
 ---
-title: 'Http (Bearer Token)'
+title: 'httpAPIKey'
 weight: 5
 ---
 
-## Getting started with Bearer Token authentication
+## Getting started with httpAPIKey authentication
 
-Bearer Token authentication is one of the most popular forms of authentication and is widely used because of its percieved security. This guide will walk through how to implement bearer token authentication in Glee.
+This guide will walk through how to implement authentication using the `httpAPiKey` security scheme in Glee.
 
-A sample `asyncapi.yaml` for a server with security requirements and user password security scheme is shown below:
+A sample `asyncapi.yaml` for a server with security requirements and user `HttpApiKey` security scheme is shown below:
 
 ```yaml
 ##server asyncAPI schema
@@ -21,16 +21,16 @@ servers:
     host: 'localhost:8081'
     protocol: http
     security:
-      - $ref: '#/components/securitySchemes/token'
+      - $ref: '#/components/securitySchemes/apiKey'
 
       ...
 
 components:
   securitySchemes:
-    token:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    apiKey:
+      type: httpApiKey
+      name: api_key
+      in: query
 
 ```
 
@@ -43,7 +43,7 @@ servers:
     host: localhost:8081
     protocol: http
     security:
-      - $ref: '#/components/securitySchemes/token'
+      - $ref: '#/components/securitySchemes/apiKey'
   testwebhook:
     host: localhost:9000
     protocol: ws
@@ -54,14 +54,17 @@ x-remoteServers:
 
 components:
   securitySchemes:
-    token:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    apiKey:
+      type: httpApiKey
+      name: api_key
+      in: query
+      
 
 ```
 
-**The Client asyncapi.yaml file does't need to implement all the security requirements in the server, it only needs to implement the ones that it uses like `http (bearer token)` here.**
+The `httpApiKey` could be in either the header or query parameter.
+
+**The Client asyncapi.yaml file does not need to implement all the security requirements in the server, it only needs to implement the ones that it uses like `httpApiKey` here.**
 
 ### Client Side
 
@@ -71,17 +74,18 @@ Following the client `asyncapi.yaml` file above, create a file named `trendingAn
 touch auth/trendingAnime.ts
 ```
 
-When using the `bearer` security scheme, it is important that you pass the parameters as follows:
+When using the `HttpApiKey` security scheme, it is important that you pass the parameters as follows:
 
 ```js
 export async clientAuth({ parsedAsyncAPI, serverName }) {
   return {
-    token: process.env.TOKEN
+    apiKey: process.env.APIKEY
   }
 }
 ```
 
-Glee will utilize the `token` for server authentication, employing it in the header with the format: Authorization: Bearer {token}.
+`apiKey` should be the name of the security requirement as specified in your `asyncapi.yaml` file, and it's value should be a string.
+
 
 ### Server side
 
@@ -96,14 +100,12 @@ On the server side, you can retrieve the values as follows
 ```js
 
 export async serverAuth({ authProps, done }) {
-  authProps.getToken()
-  // your authentication logic here...
-  done(true|false)
+  authProps.getHttpAPIKeys('api_key')()
+  
+  done(true)
 }
 
 ```
 
-`getToken()` return a string which contains the token that was sent from the client.
-
-
+`getHttpAPIKeys(name)` takes a name parameter to specify the name of the httpApiKey that is desired. Then it returns an object containing the httpApiKey value that was sent from the client.
 
