@@ -171,7 +171,8 @@ export async function trigger({
 
     functionResult?.reply?.forEach((reply) => {
       const replyMessages = createReplies(reply, message, parsedAsyncAPI)
-      if (!(replyMessages && replyMessages.length > 0)) {
+      const hasReplyMessages = replyMessages && replyMessages.length > 0
+      if (!hasReplyMessages) {
         return
       }
       replyMessages.forEach(replyMessage => {
