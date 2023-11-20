@@ -3,11 +3,10 @@ import { AsyncAPIDocumentInterface, Parser } from '@asyncapi/parser'
 import existsInAsyncAPI from '../../src/middlewares/existsInAsyncAPI.js'
 import GleeMessage from '../../src/lib/message.js'
 
+const parser = new Parser()
+let document: AsyncAPIDocumentInterface
+
 describe('existsInAsyncAPI', () => {
-
-
-  const parser = new Parser()
-  let document: AsyncAPIDocumentInterface
   beforeAll(async () => {
     const parsedResult = await parser.parse({
       asyncapi: "3.0.0",
