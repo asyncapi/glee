@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentInterface as AsyncAPIDocument, SecuritySchemeInterface as SecurityScheme, ServerInterface as Server } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, SecuritySchemeInterface as SecurityScheme, ServerInterface } from '@asyncapi/parser'
 import { resolveFunctions } from './util.js'
 import { EventEmitter } from 'events'
 import { HttpAuthConfig, WsAuthConfig, AuthProps } from './index.js'
@@ -7,7 +7,7 @@ class GleeAuth extends EventEmitter {
   private secReqs: { [key: string]: SecurityScheme }[]
   private parsedAsyncAPI: AsyncAPIDocument
   private serverName: string
-  private AsyncAPIServer: Server
+  private AsyncAPIServer: ServerInterface
   private authConfig: WsAuthConfig | HttpAuthConfig
   private auth: { [key: string]: string } | { [key: string]: string[] }
 
@@ -15,7 +15,7 @@ class GleeAuth extends EventEmitter {
    * Instantiates authentication.
    */
   constructor(
-    AsyncAPIServer: Server,
+    AsyncAPIServer: ServerInterface,
     parsedAsyncAPI: AsyncAPIDocument,
     serverName: string,
     authConfig?
@@ -29,30 +29,24 @@ class GleeAuth extends EventEmitter {
   }
 
   checkClientAuthConfig() {
-    this.secReqs = (this.AsyncAPIServer.security() || []).map((sec) => {
-      const secName = Object.keys(sec.values())[0]
-      return {
-        [secName]: this.parsedAsyncAPI.securitySchemes().get(secName).json(),
-      }
-    })
+    const securityScheme = []
+
+    const securitySchemeID = this.parsedAsyncAPI.securitySchemes().all().map(s => s.id())
+    
+    for (const id of securitySchemeID) {
+      securityScheme.push(this.parsedAsyncAPI.securitySchemes().get(id))
+    }
 
     const authKeys = Object.keys(this.auth)
-    const secNames = this.secReqs.map((el) => Object.keys(el)[0])
-
-    authKeys.forEach((el) => {
-      const allowed = secNames.includes(el)
-      if (!allowed) {
-        const err = new Error(
-          `${el} securityScheme is not defined in your asyncapi.yaml config`
-        )
+    authKeys.forEach(authKey => {
+      const allowed = securitySchemeID.includes(authKey)
+      if(!allowed) {
+        const err = new Error(`${authKey} securityScheme is not defined is your asyncapi.yaml config`)
         this.emit('error', err)
       }
     })
 
     return authKeys
-
-    //checkClientUnimplementedSecScheme()
-    //raise a warning about any unimplemented securityScheme
   }
 
   async getAuthConfig(auth) {
@@ -71,9 +65,9 @@ class GleeAuth extends EventEmitter {
   formClientAuth(authKeys, { url, headers, query }) {
     if (!authKeys) return { url, headers }
     authKeys.map((authKey) => {
-      const scheme = this.secReqs.find((sec) => Object.keys(sec) == authKey)
-      const currentScheme = scheme[String(authKey)].scheme()
-      const currentType = scheme[String(authKey)].type()
+      const scheme = this.parsedAsyncAPI.securitySchemes().get(authKey)
+      const currentScheme = scheme.scheme()
+      const currentType = scheme.type()
       if (currentScheme == 'bearer') {
         headers.authentication = `bearer ${this.auth[String(authKey)]}`
         return
