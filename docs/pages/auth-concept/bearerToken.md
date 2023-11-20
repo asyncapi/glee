@@ -61,7 +61,7 @@ components:
 
 ```
 
-**The Client asyncapi.yaml file does't need to implement all the security requirements in the server, it only needs to implement the ones that it uses like `http (bearer token)` here.**
+**The Client asyncapi.yaml file does't need to implement all the security requirements in the server, it only needs to implement the ones that it uses like &*http (bearer token)* here.**
 
 ### Client Side
 

@@ -57,7 +57,7 @@ components:
 
 ```
 
-**The Client asyncapi.yaml file does not need to implement all the security requirements in the server, it only needs to implement the ones that it uses like `userPassword` here.**
+**The Client asyncapi.yaml file does not need to implement all the security requirements in the server, it only needs to implement the ones that it uses like &*userPassword* here.**
 
 ### Client Side
 

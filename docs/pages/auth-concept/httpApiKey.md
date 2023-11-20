@@ -64,7 +64,7 @@ components:
 
 The `httpApiKey` could be in either the header or query parameter.
 
-**The Client asyncapi.yaml file does not need to implement all the security requirements in the server, it only needs to implement the ones that it uses like `httpApiKey` here.**
+**The Client asyncapi.yaml file does not need to implement all the security requirements in the server, it only needs to implement the ones that it uses like *httpApiKey* here.**
 
 ### Client Side
 
