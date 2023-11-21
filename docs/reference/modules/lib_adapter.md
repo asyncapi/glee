@@ -30,7 +30,7 @@
 
 #### Defined in
 
-[src/lib/adapter.ts:17](https://github.com/asyncapi/glee/blob/7b2ce83/src/lib/adapter.ts#L17)
+[src/lib/adapter.ts:17](https://github.com/asyncapi/glee/blob/a8e18a8/src/lib/adapter.ts#L17)
 
 ___
 
@@ -43,9 +43,9 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `connection?` | [`default`](../classes/lib_connection.default.md) |
-| `server` | `Server` |
+| `server` | `ServerInterface` |
 | `serverName` | `string` |
 
 #### Defined in
 
-[src/lib/adapter.ts:11](https://github.com/asyncapi/glee/blob/7b2ce83/src/lib/adapter.ts#L11)
+[src/lib/adapter.ts:11](https://github.com/asyncapi/glee/blob/a8e18a8/src/lib/adapter.ts#L11)

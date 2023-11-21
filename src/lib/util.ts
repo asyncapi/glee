@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentInterface as AsyncAPIDocument, ChannelInterface, ChannelParameterInterface, MessageInterface } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ChannelInterface, ChannelParameterInterface } from '@asyncapi/parser'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
@@ -171,6 +171,7 @@ function jsonPointer(obj: any, pointer: string): any {
     if (current === null || typeof current !== 'object') {
       return undefined
     }
+    // eslint-disable-next-line
     current = current[part]
   }
 
@@ -180,6 +181,7 @@ function jsonPointer(obj: any, pointer: string): any {
 export function extractExpressionValueFromMessage(message: { headers: any, payload: any }, expression: string): any {
 
   // Parse the expression
+  // eslint-disable-next-line
   const match = expression.match(/^\$message\.(header|payload)(#.*)?$/)
   if (!match) {
     throw new Error(`${expression} is invalid.`)
