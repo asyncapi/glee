@@ -18,6 +18,7 @@ interface IGleeMessageConstructor {
   query?: QueryParam
 }
 
+
 class GleeMessage extends EventEmitter {
   private _payload: any
   private _headers: { [key: string]: string }
