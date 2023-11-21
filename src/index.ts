@@ -27,7 +27,7 @@ import generateDocs from './lib/docs.js'
 import errorLogger from './middlewares/errorLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
 import { initializeConfigs } from './lib/configs.js'
-import { getChannelNames, getParsedAsyncAPI } from './lib/asyncapiFile.js'
+import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
@@ -59,7 +59,6 @@ export default async function GleeAppInitializer() {
   await registerAuth(GLEE_AUTH_DIR)
 
   const parsedAsyncAPI = await getParsedAsyncAPI()
-  const channelNames = getChannelNames(parsedAsyncAPI)
 
   const app = new Glee(config)
 
@@ -76,32 +75,30 @@ export default async function GleeAppInitializer() {
   app.use(errorLogger)
   app.useOutbound(errorLogger)
   await generateDocs(parsedAsyncAPI, config, null)
-
-  channelNames.forEach((channelName) => {
-    const channel = parsedAsyncAPI.channels().get(channelName)
-    channel.operations().filterByReceive().forEach(operation => {
-      const operationId = operation.operationId()
-
-      if (operationId) {
-        const schema = {
-          oneOf: operation.messages().filterByReceive().map(m => m.payload().json())
-        } as any
-        app.use(channelName, validate(schema), (event, next) => {
-          triggerFunction({
-            app,
-            operationId,
-            message: event
-          }).then(next).catch(next)
-        })
-      }
+  parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
+    const channel = operation.channels()[0] // operation can have only one channel.
+    const messagesSchemas = operation.messages().filterByReceive().map(m => m.payload().json()).filter(schema => !!schema)
+    const schema = {
+      oneOf: messagesSchemas
+    } as any
+    if (messagesSchemas.length > 0) app.use(channel.id(), validate(schema))
+    app.use(channel.id(), (event, next) => {
+      triggerFunction({
+        app,
+        operation,
+        message: event
+      }).then(next).catch(next)
     })
+  })
 
-    channel.operations().filterBySend().forEach(operation => {
-      const schema = {
-        oneOf: operation.messages().filterBySend().map(m => m.payload().json())
-      } as any
-      app.useOutbound(channelName, validate(schema), json2string)
-    })
+  parsedAsyncAPI.operations().filterBySend().forEach(operation => {
+    const channel = operation.channels()[0] // operation can have only one channel.
+    const messagesSchemas = operation.messages().filterBySend().map(m => m.payload().json()).filter(schema => !!schema)
+    const schema = {
+      oneOf: messagesSchemas
+    } as any
+    if (messagesSchemas.length > 0) app.useOutbound(channel.id(), validate(schema))
+    app.useOutbound(channel.id(), json2string)
   })
 
   app.on('adapter:auth', async (e: AuthEvent) => {

@@ -54,7 +54,7 @@ class MqttAdapter extends Adapter {
     securityRequirements.forEach(security => {
       for (const sec of security) {
         const securityType = sec.type().toLocaleLowerCase()
-        switch(securityType){
+        switch (securityType) {
           case SecurityTypes.USER_PASSWORD:
             userAndPasswordSecurityReq = sec
             break
@@ -140,7 +140,6 @@ class MqttAdapter extends Adapter {
   private subscribe(channels: string[]) {
     channels.forEach((channel) => {
       const binding = this.parsedAsyncAPI.channels().get(channel).bindings().get('mqtt')?.value()
-      console.log(binding)
       this.client.subscribe(channel, {
         qos: binding?.qos ? binding.qos : 0,
       }, (err, granted) => {
@@ -255,7 +254,6 @@ class MqttAdapter extends Adapter {
 
   _customAckHandler(channel, message, mqttPacket, done) {
     const msg = this._createMessage(mqttPacket as IPublishPacket)
-    console.log('Hello World')
 
     msg.on('processing:successful', () => done(MQTT_SUCCESS_REASON))
     msg.on('processing:failed', () => done(MQTT_UNSPECIFIED_ERROR_REASON))

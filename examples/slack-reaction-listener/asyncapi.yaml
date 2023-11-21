@@ -1,0 +1,173 @@
+asyncapi: 3.0.0
+info:
+  title: Slack Websocket and OpenAI API
+  version: 1.0.0
+servers:
+  OpenAI_HTTPS:
+    host: api.openai.com
+    protocol: https
+  Slack_WebSocket:
+    host: wss-primary.slack.com
+    protocol: wss
+  Slack_HTTPS:
+    host:  slack.com
+    protocol: https
+channels:
+  SlackPostMessage:
+    bindings:
+      http:
+        method: post
+    address: /api/chat.postMessage
+    servers:
+      - $ref: "#/servers/Slack_HTTPS"
+    messages:
+      slackResponse:
+        payload:
+          type: object
+          properties:
+            channel:
+              type: string
+            text:
+              type: string
+  OpenAICompletion:
+    bindings:
+      http:
+        method: post
+    servers:
+      - $ref: "#/servers/OpenAI_HTTPS"
+    address: /v1/chat/completions
+    messages:
+      OpenAIRequest: 
+        $ref: "#/components/messages/OpenAIRequest"
+  SlackEventStream:
+    servers:
+      - $ref: "#/servers/Slack_WebSocket"
+    address: /link/?ticket={ticket}&app_id={app_id}
+    parameters:
+      ticket:
+        default: 38408ed1-5d39--82f0-6e1214dae1
+      app_id:
+        default: b02112d9364cb2fee8a0a920b8bcb03fab023b4e30f6ee2efb98f
+    messages:
+      SlackReactionAdded:
+        $ref: "#/components/messages/SlackReactionAdded"
+      GenericErrorPayload:
+        $ref: "#/components/messages/GenericErrorPayload"
+operations:
+  sentSlackMessage:
+    action: send
+    channel:
+      $ref: "#/channels/SlackPostMessage"
+    messages:
+      - $ref: "#/components/messages/slackResponse"
+  receiveSlackConfirmation:
+    action: receive
+    channel:
+      $ref: "#/channels/SlackPostMessage"
+  AckEvent:
+    action: send
+    channel:
+      $ref: "#/channels/SlackEventStream"
+    messages:
+      - $ref: "#/components/messages/slackAckEvent"
+  SendToOpenAI:
+    action: send
+    channel: 
+      $ref: "#/channels/OpenAICompletion"
+    messages:
+      - $ref: "#/components/messages/slackResponse"
+  ReceiveFromOpenAI:
+    action: receive
+    channel:
+      $ref: "#/channels/OpenAICompletion"
+    messages:
+      - $ref: "#/components/messages/OpenAICompletionResponse"
+    reply:
+      channel:
+        $ref: "#/channels/SlackPostMessage"
+  HandleSlackReaction:
+    reply:
+      channel: 
+        $ref: "#/channels/SlackEventStream"
+    action: receive
+    channel:
+      $ref: "#/channels/SlackEventStream"
+    messages:
+      - $ref: "#/components/messages/SlackReactionAdded"
+      - $ref: "#/components/messages/GenericErrorPayload"
+components:
+  messages:
+    slackAckEvent:
+      payload:
+        type: object
+        properties:
+          envelope_id:
+            type: string
+    slackResponse:
+      payload:
+        type: object
+        properties:
+          channel:
+            type: string
+          text:
+            type: string
+    OpenAIRequest:
+      payload:
+        type: object
+        properties:
+          model:
+            type: string
+            enum: ["gpt-3.5-turbo", "gpt-3.5-turbo-16k", "text-davinci-002"]
+          messages:
+            type: array
+            items:
+              type: object
+              properties:
+                role:
+                  type: string
+                  enum: ["user"]
+                content:
+                  type: string
+          temperature:
+            type: number
+            minimum: 0.0
+            maximum: 1.0
+        required:
+          - model
+          - messages
+          - temperature
+    OpenAICompletionResponse:
+      payload:
+        type: object
+        properties:
+          choices:
+            type: array
+            items:
+              type: object
+              properties:
+                finish_reason:
+                  type: string
+                  enum: ['stop']
+                message:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+                    role:
+                      type: string
+                      enum: ['assistant']
+              required:
+                - finish_reason
+                - message
+        required:
+          - choices
+    SlackReactionAdded:
+      payload:
+        type: object
+    GenericErrorPayload:
+      payload:
+        type: string
+x-remoteServers: 
+  - Slack_HTTPS
+  - Slack_WebSocket
+  - OpenAI_HTTPS
