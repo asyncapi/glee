@@ -222,6 +222,13 @@ function createReplies(functionReply: GleeFunctionReturnReply, message: GleeMess
     }
     replyChannel = channel
   }
+  const sendOperations = replyChannel.operations().filterBySend()
 
-  return replyChannel.operations().filterBySend().map(operation => new GleeMessage({ ...functionReply, channel: replyChannel.id(), request: message, operation }))
+  if (!sendOperations || sendOperations.length === 0) {
+    const warningMsg = `No 'send' operations defined for channel '${replyChannel.id()}'. Ensure your AsyncAPI file defines a 'send' operation for this channel to enable message replies. As a result, no reply will be sent for the channel.`
+    logWarningMessage(warningMsg)
+    return []
+  }
+
+  return sendOperations.map(operation => new GleeMessage({ ...functionReply, channel: replyChannel.id(), request: message, operation }))
 }

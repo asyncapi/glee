@@ -41,6 +41,12 @@ channels:
     servers:
       - $ref: '#/servers/httpbin.org'
 operations:
+  sendTrigger:
+    action: send
+    channel:
+      $ref: "#/channels/TRIGGER"
+    messages:
+      - $ref: "#/components/messages/string"
   receiveTrigger:
     reply:
       channel:
@@ -52,7 +58,7 @@ operations:
     action: receive
     bindings:
       http:
-        method: GET
+        method: POST
   sendDELETE:
     channel:
       $ref: '#/channels/DELETE'
@@ -114,6 +120,16 @@ operations:
 components:
   messages:
     string:
+      bindings:
+        http:
+          headers:
+            type: object
+            required: ["a", "b"]
+            properties:
+              a:
+                type: string
+              b:
+                type: string
       payload:
         type: string
     empty:
