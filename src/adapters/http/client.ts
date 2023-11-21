@@ -51,7 +51,7 @@ class HttpClientAdapter extends Adapter {
     if (!query) delete gotRequest.searchParams
     if (!headers) delete gotRequest.headers
     if (message.payload && !this._shouldMethodHaveBody(method)) {
-      logWarningMessage(`"${method}" can't have a body. Please make sure you are using the correct HTTP method for the '${channelName}' channel. Ignoring the body...`)
+      logWarningMessage(`"${method}" can't have a body. Please make sure you are using the correct HTTP method for ${httpURL}. Ignoring the body...`)
       delete gotRequest.body
     }
 
