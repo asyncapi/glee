@@ -6,8 +6,10 @@
 
 ### Functions
 
+- [applyAddressParameters](lib_util.md#applyaddressparameters)
 - [arrayHasDuplicates](lib_util.md#arrayhasduplicates)
 - [duplicateMessage](lib_util.md#duplicatemessage)
+- [extractExpressionValueFromMessage](lib_util.md#extractexpressionvaluefrommessage)
 - [getParams](lib_util.md#getparams)
 - [gleeMessageToFunctionEvent](lib_util.md#gleemessagetofunctionevent)
 - [isRemoteServer](lib_util.md#isremoteserver)
@@ -16,6 +18,27 @@
 - [validateData](lib_util.md#validatedata)
 
 ## Functions
+
+### applyAddressParameters
+
+▸ **applyAddressParameters**(`channel`, `message?`): `string`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `channel` | `ChannelInterface` |
+| `message?` | [`default`](../classes/lib_message.default.md) |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[src/lib/util.ts:204](https://github.com/asyncapi/glee/blob/8f226b8/src/lib/util.ts#L204)
+
+___
 
 ### arrayHasDuplicates
 
@@ -33,7 +56,7 @@
 
 #### Defined in
 
-[src/lib/util.ts:118](https://github.com/asyncapi/glee/blob/41c5f6c/src/lib/util.ts#L118)
+[src/lib/util.ts:121](https://github.com/asyncapi/glee/blob/8f226b8/src/lib/util.ts#L121)
 
 ___
 
@@ -55,7 +78,30 @@ Duplicates a GleeMessage.
 
 #### Defined in
 
-[src/lib/util.ts:52](https://github.com/asyncapi/glee/blob/41c5f6c/src/lib/util.ts#L52)
+[src/lib/util.ts:53](https://github.com/asyncapi/glee/blob/8f226b8/src/lib/util.ts#L53)
+
+___
+
+### extractExpressionValueFromMessage
+
+▸ **extractExpressionValueFromMessage**(`message`, `expression`): `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | `Object` |
+| `message.headers` | `any` |
+| `message.payload` | `any` |
+| `expression` | `string` |
+
+#### Returns
+
+`any`
+
+#### Defined in
+
+[src/lib/util.ts:181](https://github.com/asyncapi/glee/blob/8f226b8/src/lib/util.ts#L181)
 
 ___
 
@@ -78,7 +124,7 @@ Determines if a path matches a channel, and returns the matching params and its 
 
 #### Defined in
 
-[src/lib/util.ts:22](https://github.com/asyncapi/glee/blob/41c5f6c/src/lib/util.ts#L22)
+[src/lib/util.ts:23](https://github.com/asyncapi/glee/blob/8f226b8/src/lib/util.ts#L23)
 
 ___
 
@@ -99,7 +145,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:122](https://github.com/asyncapi/glee/blob/41c5f6c/src/lib/util.ts#L122)
+[src/lib/util.ts:125](https://github.com/asyncapi/glee/blob/8f226b8/src/lib/util.ts#L125)
 
 ___
 
@@ -120,7 +166,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:137](https://github.com/asyncapi/glee/blob/41c5f6c/src/lib/util.ts#L137)
+[src/lib/util.ts:141](https://github.com/asyncapi/glee/blob/8f226b8/src/lib/util.ts#L141)
 
 ___
 
@@ -143,7 +189,7 @@ Determines if a path matches a channel.
 
 #### Defined in
 
-[src/lib/util.ts:81](https://github.com/asyncapi/glee/blob/41c5f6c/src/lib/util.ts#L81)
+[src/lib/util.ts:84](https://github.com/asyncapi/glee/blob/8f226b8/src/lib/util.ts#L84)
 
 ___
 
@@ -163,7 +209,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:148](https://github.com/asyncapi/glee/blob/41c5f6c/src/lib/util.ts#L148)
+[src/lib/util.ts:152](https://github.com/asyncapi/glee/blob/8f226b8/src/lib/util.ts#L152)
 
 ___
 
@@ -188,4 +234,4 @@ Object
 
 #### Defined in
 
-[src/lib/util.ts:93](https://github.com/asyncapi/glee/blob/41c5f6c/src/lib/util.ts#L93)
+[src/lib/util.ts:96](https://github.com/asyncapi/glee/blob/8f226b8/src/lib/util.ts#L96)
