@@ -50,6 +50,10 @@ class HttpClientAdapter extends Adapter {
     if (!message.payload) delete gotRequest.body
     if (!query) delete gotRequest.searchParams
     if (!headers) delete gotRequest.headers
+    if (message.payload && !this._shouldMethodHaveBody(method)) {
+      logWarningMessage(`"${method}" can't have a body. Please make sure you are using the correct HTTP method for the '${channelName}' channel. Ignoring the body...`)
+      delete gotRequest.body
+    }
 
     const response = await got(gotRequest)
     const msg = this._createMessage(message, channel.id(), response.body)
@@ -111,6 +115,9 @@ class HttpClientAdapter extends Adapter {
     if (!isValid) {
       throw new GleeError({ humanReadableError, errors })
     }
+  }
+  _shouldMethodHaveBody(method: Method) {
+    return ["post", "put", "patch"].includes(method.toLocaleLowerCase())
   }
 }
 
