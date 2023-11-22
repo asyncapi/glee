@@ -95,8 +95,15 @@ export type MqttAdapterConfig = {
 export type KafkaAdapterConfig = {
   auth?: KafkaAuthConfig | AuthFunction<KafkaAuthConfig>
 }
+export type Log = 'channel-only' | 'none'
+
+export type LogsConfig = {
+  incoming: Log
+  outgoing: Log
+}
 
 export type CoreGleeConfig = {
+  logs?: LogsConfig
   gleeDir?: string
   lifecycleDir?: string
   functionsDir?: string
