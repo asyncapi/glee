@@ -1,9 +1,10 @@
-import got from 'got'
+import got, { Method } from 'got'
 import http from 'http'
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import { clientAuthConfig } from '../../lib/userAuth.js'
 import GleeAuth from '../../lib/wsHttpAuth.js'
+import { logWarningMessage } from '../../lib/logger.js'
 
 class HttpClientAdapter extends Adapter {
   name(): string {
@@ -20,7 +21,7 @@ class HttpClientAdapter extends Adapter {
   }
 
   async send(message: GleeMessage): Promise<void> {
-    let headers = {}
+    let headers = message.headers
     const authConfig = await clientAuthConfig(this.serverName)
     const serverUrl = this.serverUrlExpanded
     for (const channelName of this.channelNames) {
@@ -30,15 +31,15 @@ class HttpClientAdapter extends Adapter {
       const isChannelServers =
         !channelServers.length || channelServers.includes(message.serverName)
       if (httpChannelBinding && isChannelServers) {
-        const method = httpChannelBinding.json().method
-        let url = new URL( serverUrl + this.parsedAsyncAPI.channels().get(channelName).address())
+        const method: Method = httpChannelBinding.json().method
+        let url = new URL(serverUrl + this.parsedAsyncAPI.channels().get(channelName).address())
         const gleeAuth = new GleeAuth(
           this.AsyncAPIServer,
           this.parsedAsyncAPI,
           this.serverName,
           authConfig
         )
-        const body: any = message.payload
+        let body: any = message.payload
         let query: { [key: string]: string } | { [key: string]: string[] } =
           message.query
 
@@ -52,29 +53,38 @@ class HttpClientAdapter extends Adapter {
           url = modedAuth.url.href
           query = modedAuth.query
         }
+        if (body && !this.shouldMethodHaveBody(method)) {
+          logWarningMessage(`"${method}" can't have a body. Please make sure you are using the correct HTTP method for the '${channelName}' channel. Ignoring the body...`)
+          body = undefined
+        }
 
         got({
           method,
           url,
-          json: body,
-          searchParams: JSON.parse(JSON.stringify(query)),
-          headers,
+          body,
+          searchParams: query ? JSON.parse(JSON.stringify(query)) : undefined,
+          headers: { ...headers, "Content-Type": "application/json" },
         })
           .then((res) => {
-            const msg = this.createMessage(channelName, res.body)
+            const msg = this.createMessage(message, channelName, res.body)
             this.emit('message', msg, http)
           })
           .catch((err) => {
+            console.error(err)
             this.emit('error', err)
           })
       }
     }
   }
-  private createMessage(channelName: string, payload: any) {
+  private createMessage(requestMessage: GleeMessage, channelName: string, payload: any) {
     return new GleeMessage({
+      request: requestMessage,
       payload: JSON.parse(JSON.stringify(payload)),
       channel: channelName,
     })
+  }
+  private shouldMethodHaveBody(method: Method) {
+    return ["post", "put", "patch"].includes(method.toLocaleLowerCase())
   }
 }
 

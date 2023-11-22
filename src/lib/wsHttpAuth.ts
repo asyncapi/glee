@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentInterface as AsyncAPIDocument, SecuritySchemeInterface as SecurityScheme, ServerInterface as Server } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, SecuritySchemeInterface as SecurityScheme, ServerInterface } from '@asyncapi/parser'
 import { resolveFunctions } from './util.js'
 import { EventEmitter } from 'events'
 import { HttpAuthConfig, WsAuthConfig, AuthProps } from './index.js'
@@ -7,7 +7,7 @@ class GleeAuth extends EventEmitter {
   private secReqs: { [key: string]: SecurityScheme }[]
   private parsedAsyncAPI: AsyncAPIDocument
   private serverName: string
-  private AsyncAPIServer: Server
+  private AsyncAPIServer: ServerInterface
   private authConfig: WsAuthConfig | HttpAuthConfig
   private auth: { [key: string]: string } | { [key: string]: string[] }
 
@@ -15,7 +15,7 @@ class GleeAuth extends EventEmitter {
    * Instantiates authentication.
    */
   constructor(
-    AsyncAPIServer: Server,
+    AsyncAPIServer: ServerInterface,
     parsedAsyncAPI: AsyncAPIDocument,
     serverName: string,
     authConfig?
