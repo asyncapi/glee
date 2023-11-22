@@ -278,11 +278,11 @@ class MqttAdapter extends Adapter {
       dup: packet.dup,
       length: packet.length,
     }
-
+    const id = this.parsedAsyncAPI.channels().filter(channel => channel.address() === packet.topic)[0].id()
     return new GleeMessage({
       payload: packet.payload,
       headers,
-      channel: packet.topic,
+      channel: id,
     })
   }
 
