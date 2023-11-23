@@ -265,7 +265,6 @@ export default class Glee extends EventEmitter {
 
       if (middlewares === this._router.getOutboundMiddlewares()) {
         debug('Outbound pipeline finished. Sending message...')
-        debug(msg)
         this._adapters.forEach((a: AdapterRecord) => {
           if (
             a.instance &&

@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/glee",
-  "version": "0.28.2",
+  "version": "0.31.0",
   "description": "The AsyncAPI framework",
   "exports": "./dist/moduleIndex.js",
   "type": "module",
@@ -34,10 +34,10 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/generator": "^1.14.1",
+    "@asyncapi/generator": "^1.15.0",
     "@asyncapi/html-template": "^1.0.0",
     "@asyncapi/markdown-template": "^1.4.0",
-    "@asyncapi/parser": "^v3.0.0-next-major-spec.7",
+    "@asyncapi/parser": "^3.0.0-next-major-spec.12",
     "@types/jest": "^27.4.0",
     "@types/qs": "^6.9.7",
     "ajv": "^6.12.6",

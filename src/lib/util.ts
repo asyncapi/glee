@@ -1,10 +1,11 @@
-import { AsyncAPIDocumentInterface as AsyncAPIDocument } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ChannelInterface, ChannelParameterInterface } from '@asyncapi/parser'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
 import Glee from './glee.js'
 import { GleeFunctionEvent } from './index.js'
 import GleeMessage from './message.js'
+import { logWarningMessage } from './logger.js'
 
 interface IValidateDataReturn {
   errors?: void | betterAjvErrors.IOutputError[]
@@ -51,9 +52,11 @@ export const getParams = (
  */
 export const duplicateMessage = (message: GleeMessage): GleeMessage => {
   const newMessage = new GleeMessage({
+    operation: message.operation,
     payload: message.payload,
     headers: message.headers,
     channel: message.channel,
+    request: message.request,
     serverName: message.serverName,
     connection: message.connection,
     broadcast: message.broadcast,
@@ -127,6 +130,7 @@ export const gleeMessageToFunctionEvent = (
     payload: message.payload,
     query: message.query,
     headers: message.headers,
+    request: message.request,
     channel: message.channel,
     connection: message.connection,
     serverName: message.serverName,
@@ -155,5 +159,83 @@ export const resolveFunctions = async (object: any) => {
     } else if (typeof object[String(key)] === 'function' && key !== 'auth') {
       object[String(key)] = await object[String(key)]()
     }
+  }
+}
+
+
+function jsonPointer(obj: any, pointer: string): any {
+  const parts = pointer.split('/').slice(1)
+  let current = obj
+
+  for (const part of parts) {
+    if (current === null || typeof current !== 'object') {
+      return undefined
+    }
+    // eslint-disable-next-line
+    current = current[part]
+  }
+
+  return current
+}
+
+export function extractExpressionValueFromMessage(message: { headers: any, payload: any }, expression: string): any {
+
+  // Parse the expression
+  // eslint-disable-next-line
+  const match = expression.match(/^\$message\.(header|payload)(#.*)?$/)
+  if (!match) {
+    throw new Error(`${expression} is invalid.`)
+  }
+
+  const source = match[1]
+  const fragment = match[2] ? match[2].slice(1) : undefined
+  const headers = message?.headers
+  const payload = message?.payload
+  // Extract value based on source and fragment
+  if (source === 'header') {
+    return fragment ? jsonPointer(headers, fragment) : headers
+  } else if (source === 'payload') {
+    return fragment ? jsonPointer(payload, fragment) : payload
+  } else {
+    throw new Error(`${expression} source should be "header" or "fragment"`)
+  }
+}
+
+export function applyAddressParameters(channel: ChannelInterface, message?: GleeMessage): string {
+  let address = channel.address()
+  const parameters = channel.parameters()
+  for (const parameter of parameters) {
+    address = substituteParameterInAddress(parameter, address, message)
+  }
+  return address
+}
+
+const substituteParameterInAddress = (parameter: ChannelParameterInterface, address: string, message: GleeMessage): string => {
+  const doesExistInAddress = address.includes(`{${parameter.id()}}`)
+  if (!doesExistInAddress) return address
+  const parameterValue = getParamValue(parameter, message)
+  console.log(parameterValue)
+  if (!parameterValue) {
+    throw Error(`parsing parameter "${parameter.id()}" value failed. please make sure it exists in your header/payload or in default field of the parameter.`)
+  }
+  address = address.replace(`{${parameter.id()}}`, parameterValue)
+  return address
+}
+
+const getParamValue = (parameter: ChannelParameterInterface, message: GleeMessage): string | null => {
+  const location = parameter.location()
+  if (!location) return parameter.json().default
+  const paramFromLocation = getParamFromLocation(location, message)
+  console.log({ paramFromLocation })
+  if (!paramFromLocation) {
+    logWarningMessage(`tried to parse param from ${location} but failed: using the default param.`)
+    return parameter.json().default
+  }
+  return paramFromLocation
+}
+
+function getParamFromLocation(location: string, message: GleeMessage) {
+  if ((message.payload || message.headers) && location) {
+    return extractExpressionValueFromMessage(message, location)
   }
 }

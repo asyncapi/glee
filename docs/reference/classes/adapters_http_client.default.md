@@ -30,6 +30,7 @@
 - [channelNames](adapters_http_client.default.md#channelnames)
 - [connections](adapters_http_client.default.md#connections)
 - [glee](adapters_http_client.default.md#glee)
+- [operationIds](adapters_http_client.default.md#operationids)
 - [parsedAsyncAPI](adapters_http_client.default.md#parsedasyncapi)
 - [serverName](adapters_http_client.default.md#servername)
 - [serverUrlExpanded](adapters_http_client.default.md#serverurlexpanded)
@@ -58,6 +59,7 @@
 - [resolveProtocolConfig](adapters_http_client.default.md#resolveprotocolconfig)
 - [send](adapters_http_client.default.md#send)
 - [setMaxListeners](adapters_http_client.default.md#setmaxlisteners)
+- [shouldMethodHaveBody](adapters_http_client.default.md#shouldmethodhavebody)
 - [getEventListeners](adapters_http_client.default.md#geteventlisteners)
 - [listenerCount](adapters_http_client.default.md#listenercount-1)
 - [on](adapters_http_client.default.md#on-1)
@@ -87,7 +89,7 @@ Instantiates a Glee adapter.
 
 #### Defined in
 
-[src/lib/adapter.ts:42](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L42)
+[src/lib/adapter.ts:43](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L43)
 
 ## Properties
 
@@ -171,7 +173,7 @@ Adapter.AsyncAPIServer
 
 #### Defined in
 
-[src/lib/adapter.ts:187](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L187)
+[src/lib/adapter.ts:189](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L189)
 
 ___
 
@@ -189,7 +191,7 @@ Adapter.channelAddresses
 
 #### Defined in
 
-[src/lib/adapter.ts:199](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L199)
+[src/lib/adapter.ts:205](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L205)
 
 ___
 
@@ -207,7 +209,7 @@ Adapter.channelNames
 
 #### Defined in
 
-[src/lib/adapter.ts:195](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L195)
+[src/lib/adapter.ts:197](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L197)
 
 ___
 
@@ -225,7 +227,7 @@ Adapter.connections
 
 #### Defined in
 
-[src/lib/adapter.ts:203](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L203)
+[src/lib/adapter.ts:209](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L209)
 
 ___
 
@@ -243,7 +245,25 @@ Adapter.glee
 
 #### Defined in
 
-[src/lib/adapter.ts:179](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L179)
+[src/lib/adapter.ts:181](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L181)
+
+___
+
+### operationIds
+
+• `get` **operationIds**(): `string`[]
+
+#### Returns
+
+`string`[]
+
+#### Inherited from
+
+Adapter.operationIds
+
+#### Defined in
+
+[src/lib/adapter.ts:201](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L201)
 
 ___
 
@@ -261,7 +281,7 @@ Adapter.parsedAsyncAPI
 
 #### Defined in
 
-[src/lib/adapter.ts:191](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L191)
+[src/lib/adapter.ts:193](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L193)
 
 ___
 
@@ -279,7 +299,7 @@ Adapter.serverName
 
 #### Defined in
 
-[src/lib/adapter.ts:183](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L183)
+[src/lib/adapter.ts:185](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L185)
 
 ___
 
@@ -297,7 +317,7 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/adapter.ts:207](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L207)
+[src/lib/adapter.ts:213](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L213)
 
 ## Methods
 
@@ -348,18 +368,19 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/adapters/http/client.ts:12](https://github.com/asyncapi/glee/blob/00a2a1a/src/adapters/http/client.ts#L12)
+[src/adapters/http/client.ts:13](https://github.com/asyncapi/glee/blob/918945b/src/adapters/http/client.ts#L13)
 
 ___
 
 ### createMessage
 
-▸ `Private` **createMessage**(`channelName`, `payload`): [`default`](lib_message.default.md)
+▸ `Private` **createMessage**(`requestMessage`, `channelName`, `payload`): [`default`](lib_message.default.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
+| `requestMessage` | [`default`](lib_message.default.md) |
 | `channelName` | `string` |
 | `payload` | `any` |
 
@@ -369,7 +390,7 @@ ___
 
 #### Defined in
 
-[src/adapters/http/client.ts:73](https://github.com/asyncapi/glee/blob/00a2a1a/src/adapters/http/client.ts#L73)
+[src/adapters/http/client.ts:79](https://github.com/asyncapi/glee/blob/918945b/src/adapters/http/client.ts#L79)
 
 ___
 
@@ -498,7 +519,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:220](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L220)
+[src/lib/adapter.ts:226](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L226)
 
 ___
 
@@ -543,7 +564,7 @@ Returns a list of the channels a given adapter has to subscribe to.
 
 #### Defined in
 
-[src/lib/adapter.ts:236](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L236)
+[src/lib/adapter.ts:242](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L242)
 
 ___
 
@@ -625,7 +646,7 @@ ___
 
 #### Defined in
 
-[src/adapters/http/client.ts:9](https://github.com/asyncapi/glee/blob/00a2a1a/src/adapters/http/client.ts#L9)
+[src/adapters/http/client.ts:10](https://github.com/asyncapi/glee/blob/918945b/src/adapters/http/client.ts#L10)
 
 ___
 
@@ -1067,7 +1088,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:211](https://github.com/asyncapi/glee/blob/00a2a1a/src/lib/adapter.ts#L211)
+[src/lib/adapter.ts:217](https://github.com/asyncapi/glee/blob/918945b/src/lib/adapter.ts#L217)
 
 ___
 
@@ -1093,7 +1114,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/adapters/http/client.ts:22](https://github.com/asyncapi/glee/blob/00a2a1a/src/adapters/http/client.ts#L22)
+[src/adapters/http/client.ts:23](https://github.com/asyncapi/glee/blob/918945b/src/adapters/http/client.ts#L23)
 
 ___
 
@@ -1129,6 +1150,26 @@ v0.3.5
 #### Defined in
 
 node_modules/@types/node/events.d.ts:520
+
+___
+
+### shouldMethodHaveBody
+
+▸ `Private` **shouldMethodHaveBody**(`method`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `method` | `Method` |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[src/adapters/http/client.ts:86](https://github.com/asyncapi/glee/blob/918945b/src/adapters/http/client.ts#L86)
 
 ___
 

@@ -3,6 +3,7 @@ import GleeAdapter from './adapter.js'
 import GleeClusterAdapter from './cluster.js'
 import GleeConnection from './connection.js'
 import Glee from './glee.js'
+import type GleeMessage from './message.js'
 
 type WebSocketServerType = 'native' | 'socket.io'
 type HttpServerType = 'native'
@@ -94,8 +95,15 @@ export type MqttAdapterConfig = {
 export type KafkaAdapterConfig = {
   auth?: KafkaAuthConfig | AuthFunction<KafkaAuthConfig>
 }
+export type Log = 'channel-only' | 'none'
+
+export type LogsConfig = {
+  incoming: Log
+  outgoing: Log
+}
 
 export type CoreGleeConfig = {
+  logs?: LogsConfig
   gleeDir?: string
   lifecycleDir?: string
   functionsDir?: string
@@ -118,6 +126,7 @@ export type GleeFunctionReturn = {
 }
 
 export type GleeFunctionEvent = {
+  request: GleeMessage
   glee: Glee
   serverName: string
   connection?: GleeConnection
@@ -126,6 +135,8 @@ export type GleeFunctionEvent = {
   headers?: { [key: string]: string }
   channel?: string
 }
+
+export type GleeLifecycleEvent = Omit<GleeFunctionEvent, "request">
 
 export type GleeAuthFunctionEvent = {
   glee: Glee
@@ -143,7 +154,7 @@ export type GleeFunctionReturnSend = {
   server?: string
 }
 
-export type GleeFunctionReturnReply = GleeFunctionReturnSend
+export type GleeFunctionReturnReply = Omit<GleeFunctionReturnSend, "channel" | "server">
 export type GleeFunctionReturnBroadcast = GleeFunctionReturnSend
 
 export type GleeFunction = (

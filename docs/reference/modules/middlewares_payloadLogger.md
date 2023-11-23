@@ -1,12 +1,12 @@
-[@asyncapi/glee](../README.md) / middlewares/logger
+[@asyncapi/glee](../README.md) / middlewares/payloadLogger
 
-# Module: middlewares/logger
+# Module: middlewares/payloadLogger
 
 ## Table of contents
 
 ### Functions
 
-- [default](middlewares_logger.md#default)
+- [default](middlewares_payloadLogger.md#default)
 
 ## Functions
 
@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[src/middlewares/logger.ts:5](https://github.com/asyncapi/glee/blob/00a2a1a/src/middlewares/logger.ts#L5)
+[src/middlewares/payloadLogger.ts:5](https://github.com/asyncapi/glee/blob/918945b/src/middlewares/payloadLogger.ts#L5)
