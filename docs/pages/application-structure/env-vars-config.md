@@ -50,7 +50,12 @@ export default async function () {
     glee: { // Glee core configurations
       lifecycleDir: './lifecycle',
       functionsDir: './functions',
-      asyncapiFilePath: './asyncapi.json'
+      asyncapiFilePath: './asyncapi.json',
+      logs: { // you can change the defualt behaviour of glee which logs everything by default.
+        incoming: 'channel-only', // only logs the channel not message payload.
+        outgoing: 'none', //log nothing.
+      }
+    },
     docs: {
       enabled: true, // Enable/Disable documentation generation
       folder: 'docs', // Folder where you want the output of your docs to reside.
@@ -115,6 +120,9 @@ These configurations apply to Glee itself, rather than any specific protocol.
 |glee.lifecycleDir|`lifecycle`|Path to the directory that stores your [lifecycle events](./lifecycle-events.md).|
 |glee.functionsDir|`functions`| Path to the directory that stores your [functions](./functions.md).|
 |glee.asyncapiFilePath|`asyncapi.(yaml \| yml \| json)`| Path to your AsyncAPI file. |
+|glee.logs|  | glee logs channel and payload by default. you can change this behaviour for incoming and outgoing messages. |
+|glee.logs.incoming| "all" | supported values are `channel-only` and `none`. |
+|glee.logs.outgoing| "all" | supported values are `channel-only` and `none`. |
 #### Generating Documentation
 |Field|Description|
 |--|--|

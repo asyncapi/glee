@@ -22,9 +22,10 @@ import string2json from './middlewares/string2json.js'
 import json2string from './middlewares/json2string.js'
 import validate from './middlewares/validate.js'
 import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
-import logger from './middlewares/logger.js'
+import channelLogger from './middlewares/channelLogger.js'
 import generateDocs from './lib/docs.js'
 import errorLogger from './middlewares/errorLogger.js'
+import payloadLogger from './middlewares/payloadLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
 import { initializeConfigs } from './lib/configs.js'
 import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
@@ -34,6 +35,10 @@ import { ClusterEvent } from './lib/cluster.js'
 
 dotenvExpand(dotenv.config())
 
+enum LOG_CONFIG {
+  NONE = 'none',
+  CHANNEL_ONLY = 'channel-only'
+}
 export default async function GleeAppInitializer() {
   const config = await initializeConfigs()
   const {
@@ -70,8 +75,25 @@ export default async function GleeAppInitializer() {
   app.useOutbound(validateConnection)
   app.use(buffer2string)
   app.use(string2json)
-  app.use(logger)
-  app.useOutbound(logger)
+
+  const inLogConfig = config?.glee?.logs?.incoming
+  const outLogConfig = config?.glee?.logs?.outgoing
+  const shouldLogChannel = config => config !== LOG_CONFIG.NONE
+  const shouldLogPayload = config => config !== LOG_CONFIG.CHANNEL_ONLY
+
+  if (shouldLogChannel(inLogConfig)) {
+    app.use(channelLogger)
+    if (shouldLogPayload(inLogConfig)) {
+      app.use(payloadLogger)
+    }
+  }
+
+  if (shouldLogChannel(outLogConfig)) {
+    app.useOutbound(channelLogger)
+    if (shouldLogPayload(outLogConfig)) {
+      app.useOutbound(payloadLogger)
+    }
+  }
   app.use(errorLogger)
   app.useOutbound(errorLogger)
   await generateDocs(parsedAsyncAPI, config, null)

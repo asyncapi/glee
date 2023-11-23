@@ -3,6 +3,12 @@ import fs from 'fs'
 
 export default async function () {
   return {
+    glee: {
+      logs: {
+        incoming: 'channel-only',
+        outgoing: 'channel-only'
+      }
+    },
     docs: {
       enabled: false
     },
