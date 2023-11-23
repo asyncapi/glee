@@ -1,0 +1,139 @@
+asyncapi: 3.0.0
+info:
+  title: Test HTTP in glee using httpbin.org
+  version: 1.0.0
+  description: This app is a test app. it will send requests to httpbin.org to see if glee works well with http protocol.
+servers:
+  httpbin.org:
+    host: 'httpbin.org'
+    protocol: https
+  local-trigger:
+    host: 'localhost:3000'
+    protocol: http
+channels:
+  TRIGGER:
+    address: /
+    servers:
+      - $ref: '#/servers/local-trigger'
+    messages:
+      string:
+        $ref: "#/components/messages/string"
+      empty:
+        $ref: "#/components/messages/empty"
+  DELETE:
+    address: /delete
+    servers:
+      - $ref: '#/servers/httpbin.org'
+  GET:
+    address: /get
+    servers:
+      - $ref: '#/servers/httpbin.org'
+  POST:
+    address: /post
+    servers:
+      - $ref: '#/servers/httpbin.org'
+  PATCH:
+    address: /patch
+    servers:
+      - $ref: '#/servers/httpbin.org'
+  PUT:
+    address: /put
+    servers:
+      - $ref: '#/servers/httpbin.org'
+operations:
+  sendTrigger:
+    action: send
+    channel:
+      $ref: "#/channels/TRIGGER"
+    messages:
+      - $ref: "#/components/messages/string"
+  receiveTrigger:
+    reply:
+      channel:
+        $ref: "#/channels/TRIGGER"
+      messages:
+        - $ref: "#/components/messages/string"
+    channel:
+      $ref: '#/channels/TRIGGER'
+    action: receive
+    bindings:
+      http:
+        method: POST
+  sendDELETE:
+    channel:
+      $ref: '#/channels/DELETE'
+    action: send
+    bindings:
+      http:
+        method: DELETE
+  receiveDELETE:
+    channel:
+      $ref: '#/channels/DELETE'
+    action: receive
+  sendGET:
+    channel:
+      $ref: '#/channels/GET'
+    action: send
+    bindings:
+      http:
+        method: GET
+  receiveGET:
+    channel:
+      $ref: '#/channels/GET'
+    action: receive
+    bindings:
+      http:
+        method: GET
+  sendPOST:
+    channel:
+      $ref: '#/channels/POST'
+    action: send
+    bindings:
+      http:
+        method: POST
+  receivePOST:
+    channel:
+      $ref: '#/channels/POST'
+    action: receive
+  sendPATCH:
+    channel:
+      $ref: '#/channels/PATCH'
+    action: send
+    bindings:
+      http:
+        method: PATCH
+  receivePATCH:
+    channel:
+      $ref: '#/channels/PATCH'
+    action: receive
+  sendPUT:
+    channel:
+      $ref: '#/channels/PUT'
+    action: send
+    bindings:
+      http:
+        method: PUT
+  receivePUT:
+    channel:
+      $ref: '#/channels/PUT'
+    action: receive
+components:
+  messages:
+    string:
+      bindings:
+        http:
+          headers:
+            type: object
+            required: ["a", "b"]
+            properties:
+              a:
+                type: string
+              b:
+                type: string
+      payload:
+        type: string
+    empty:
+      payload:
+        type: "null"
+x-remoteServers:
+  - httpbin.org

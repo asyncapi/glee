@@ -45,9 +45,9 @@ channels:
     address: /link/?ticket={ticket}&app_id={app_id}
     parameters:
       ticket:
-        default: 38408ed1-5d39--82f0-6e1214dae1
+        default: <your-ticket>
       app_id:
-        default: b02112d9364cb2fee8a0a920b8bcb03fab023b4e30f6ee2efb98f
+        default: <your-app-id>
     messages:
       SlackReactionAdded:
         $ref: "#/components/messages/SlackReactionAdded"

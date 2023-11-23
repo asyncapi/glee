@@ -164,3 +164,10 @@ export type GleeFunction = (
 export type GleeAuthFunction = (
   event: GleeAuthFunctionEvent
 ) => Promise<GleeAuthFunctionEvent>
+
+type Headers = { [key: string]: string }
+export interface Authenticatable {
+  headers: Headers,
+  query: QueryParam
+  url: URL
+}
