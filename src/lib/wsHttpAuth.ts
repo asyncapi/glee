@@ -29,13 +29,7 @@ class GleeAuth extends EventEmitter {
   }
 
   checkClientAuthConfig() {
-    const securityScheme = []
-
     const securitySchemeID = this.parsedAsyncAPI.securitySchemes().all().map(s => s.id())
-    
-    for (const id of securitySchemeID) {
-      securityScheme.push(this.parsedAsyncAPI.securitySchemes().get(id))
-    }
 
     const authKeys = Object.keys(this.auth)
     authKeys.forEach(authKey => {

@@ -42,6 +42,8 @@ channels:
     messages:
       testMessage:
         $ref: '#/components/messages/testMessage'
+    servers:
+      - $ref: '#/servers/testwebhook'
   trendingAnime:
     address: '/trendingAnime'
     bindings:
@@ -62,7 +64,7 @@ operations:
     messages:
       - $ref: '#/components/messages/testMessage'
   trendingAnimeListRecieverController:
-    action: receive
+    action: send
     channel:
       $ref: '#/channels/trendingAnime'
     messages:
@@ -131,5 +133,5 @@ components:
             availableScopes:
               'delete:pets': modify pets in your account
               'update:pets': read your pets
-  x-remoteServers:
-    - trendingAnime
+x-remoteServers:
+  - trendingAnime

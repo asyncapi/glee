@@ -62,7 +62,7 @@ class WebSocketsAdapter extends Adapter {
     servers.get(pathname).emit('connect', ws, request)
 
     ws.on('message', (payload) => {
-      const channelId = this.parsedAsyncAPI.channels().all().filter((channel) => channel.address() === pathname)[0].id()
+      const channelId = this.parsedAsyncAPI.channels().all().filter((channel) => channel.address() === `/${pathname}`)[0].id()
       const msg = this._createMessage(channelId, payload)
       this.emit('message', msg, ws)
     })
