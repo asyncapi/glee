@@ -1,82 +1,135 @@
-asyncapi: 2.4.0
+asyncapi: 3.0.0
 info:
   title: AsyncAPI IMDB client
   version: 1.0.0
-  description: This app creates a client that subscribes to the server for getting the top 10 trending/upcoming anime.
+  description: >-
+    This app creates a client that subscribes to the server for getting the top
+    10 trending/upcoming anime.
 servers:
   trendingAnime:
-    url: http://localhost:8081
+    host: 'localhost:8081'
     protocol: http
     security:
-      - token: []
-      - userPass: []
-      - apiKey: []
-      - UserOrPassKey: []
-      - oauth: 
-        - write:pets
-        - read:pets
+      - $ref: '#/components/securitySchemes/token'
+      - $ref: '#/components/securitySchemes/userPass'
+      - $ref: '#/components/securitySchemes/apiKey'
+      - $ref: '#/components/securitySchemes/UserOrPassKey'
+      - type: oauth2
+        flows:
+          implicit:
+            authorizationUrl: 'https://example.com/api/oauth/dialog'
+            availableScopes:
+              'write:pets': modify pets in your account
+              'read:pets': read your pets
+          authorizationCode:
+            authorizationUrl: 'https://example.com/api/oauth/dialog'
+            tokenUrl: 'https://example.com/api/oauth/dialog'
+            availableScopes:
+              'delete:pets': modify pets in your account
+              'update:pets': read your pets
+        scopes:
+          - 'write:pets'
+          - 'read:pets'
   testwebhook:
-    url: ws://localhost:9000
+    host: 'localhost:9000'
     protocol: ws
-x-remoteServers:
-  - trendingAnime
 channels:
-  /test:
+  test:
+    address: '/test'
     bindings:
       ws:
         bindingVersion: 0.1.0
-    publish:
-      operationId: index
-      message:
-        $ref: '#/components/messages/test'
+    messages:
+      testMessage:
+        $ref: '#/components/messages/testMessage'
   trendingAnime:
+    address: '/trendingAnime'
     bindings:
       http:
         type: request
         method: POST
         bindingVersion: 0.1.0
     servers:
-      - trendingAnime
-    publish:
-      operationId: trendingAnimeListRecieverController
-      message:
-        $ref: "../server/asyncapi.yaml#/components/messages/trendingAnime"
-    subscribe:
-      message:
-        payload:
-          type: object
+      - $ref: '#/servers/trendingAnime'
+    messages:
+      trendingAnimeMessage:
+        $ref: '#/components/messages/trendingAnimeMessage'
+operations:
+  index:
+    action: receive
+    channel:
+      $ref: '#/channels/test'
+    messages:
+      - $ref: '#/components/messages/testMessage'
+  trendingAnimeListRecieverController:
+    action: receive
+    channel:
+      $ref: '#/channels/trendingAnime'
+    messages:
+      - $ref: '#/components/messages/trendingAnimeMessage'
+    reply:
+      channel:
+        $ref: '#/channels/trendingAnime'
+      messages:
+        - $ref: '#/components/messages/trendingAnimeReply'
 components:
   messages:
-    test:
+    testMessage:
       summary: ping client
       payload:
         type: object
+    trendingAnimeMessage:
+      summary: Data required to populate trending anime
+      payload:
+        type: object
+        required:
+          - name
+          - rating
+          - genre
+          - studio
+        properties:
+          name:
+            type: string
+            description: Name of the anime.
+          rating:
+            type: string
+            description: Rating of the show.
+          genre:
+            type: string
+            description: The genre of anime.
+          studio:
+            type: string
+            description: The studio of anime.
+    trendingAnimeReply:
+      payload:
+        type: object
   securitySchemes:
-    token:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-    userPass:
-      type: userPassword
-    apiKey:
-      type: httpApiKey
-      name: api_key
-      in: query
-    UserOrPassKey:
-      type: apiKey
-      in: user
-    oauth:
+      token:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+      userPass:
+        type: userPassword
+      apiKey:
+        type: httpApiKey
+        name: api_key
+        in: query
+      UserOrPassKey:
+        type: apiKey
+        in: user
+      oauth:
         type: oauth2
         flows:
           implicit:
-            authorizationUrl: https://example.com/api/oauth/dialog
-            scopes:
-              write:pets: modify pets in your account
-              read:pets: read your pets
+            authorizationUrl: 'https://example.com/api/oauth/dialog'
+            availableScopes:
+              'write:pets': modify pets in your account
+              'read:pets': read your pets
           authorizationCode:
-            authorizationUrl: https://example.com/api/oauth/dialog
-            tokenUrl: https://example.com/api/oauth/dialog
-            scopes:
-              delete:pets: modify pets in your account
-              update:pets: read your pets
-            
+            authorizationUrl: 'https://example.com/api/oauth/dialog'
+            tokenUrl: 'https://example.com/api/oauth/dialog'
+            availableScopes:
+              'delete:pets': modify pets in your account
+              'update:pets': read your pets
+  x-remoteServers:
+    - trendingAnime
