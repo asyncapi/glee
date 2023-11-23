@@ -1,12 +1,12 @@
-[@asyncapi/glee](../README.md) / middlewares/json2string
+[@asyncapi/glee](../README.md) / middlewares/channelLogger
 
-# Module: middlewares/json2string
+# Module: middlewares/channelLogger
 
 ## Table of contents
 
 ### Functions
 
-- [default](middlewares_json2string.md#default)
+- [default](middlewares_channelLogger.md#default)
 
 ## Functions
 
@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[src/middlewares/json2string.ts:4](https://github.com/asyncapi/glee/blob/918945b/src/middlewares/json2string.ts#L4)
+[src/middlewares/channelLogger.ts:5](https://github.com/asyncapi/glee/blob/918945b/src/middlewares/channelLogger.ts#L5)

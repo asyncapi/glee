@@ -30,6 +30,8 @@
 - [HttpAdapterConfig](lib.md#httpadapterconfig)
 - [HttpServerType](lib.md#httpservertype)
 - [KafkaAdapterConfig](lib.md#kafkaadapterconfig)
+- [Log](lib.md#log)
+- [LogsConfig](lib.md#logsconfig)
 - [MqttAdapterConfig](lib.md#mqttadapterconfig)
 - [QueryParam](lib.md#queryparam)
 - [WebSocketServerType](lib.md#websocketservertype)
@@ -81,7 +83,7 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:12](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L12)
+[src/lib/index.d.ts:12](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L12)
 
 ___
 
@@ -102,7 +104,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:39](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L39)
+[src/lib/index.d.ts:39](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L39)
 
 ___
 
@@ -118,10 +120,11 @@ ___
 | `functionsDir?` | `string` |
 | `gleeDir?` | `string` |
 | `lifecycleDir?` | `string` |
+| `logs?` | [`LogsConfig`](lib.md#logsconfig) |
 
 #### Defined in
 
-[src/lib/index.d.ts:99](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L99)
+[src/lib/index.d.ts:105](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L105)
 
 ___
 
@@ -145,7 +148,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:157](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L157)
+[src/lib/index.d.ts:164](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L164)
 
 ___
 
@@ -165,7 +168,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:134](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L134)
+[src/lib/index.d.ts:141](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L141)
 
 ___
 
@@ -183,7 +186,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:62](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L62)
+[src/lib/index.d.ts:62](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L62)
 
 ___
 
@@ -204,7 +207,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:106](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L106)
+[src/lib/index.d.ts:113](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L113)
 
 ___
 
@@ -228,7 +231,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:153](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L153)
+[src/lib/index.d.ts:160](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L160)
 
 ___
 
@@ -251,7 +254,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:121](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L121)
+[src/lib/index.d.ts:128](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L128)
 
 ___
 
@@ -269,7 +272,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:115](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L115)
+[src/lib/index.d.ts:122](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L122)
 
 ___
 
@@ -279,7 +282,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:151](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L151)
+[src/lib/index.d.ts:158](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L158)
 
 ___
 
@@ -289,7 +292,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:150](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L150)
+[src/lib/index.d.ts:157](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L157)
 
 ___
 
@@ -309,7 +312,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:142](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L142)
+[src/lib/index.d.ts:149](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L149)
 
 ___
 
@@ -319,7 +322,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:132](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L132)
+[src/lib/index.d.ts:139](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L139)
 
 ___
 
@@ -341,7 +344,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:80](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L80)
+[src/lib/index.d.ts:80](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L80)
 
 ___
 
@@ -351,7 +354,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:9](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L9)
+[src/lib/index.d.ts:9](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L9)
 
 ___
 
@@ -367,7 +370,34 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:95](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L95)
+[src/lib/index.d.ts:95](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L95)
+
+___
+
+### Log
+
+Ƭ **Log**: ``"channel-only"`` \| ``"none"``
+
+#### Defined in
+
+[src/lib/index.d.ts:98](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L98)
+
+___
+
+### LogsConfig
+
+Ƭ **LogsConfig**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `incoming` | [`Log`](lib.md#log) |
+| `outgoing` | [`Log`](lib.md#log) |
+
+#### Defined in
+
+[src/lib/index.d.ts:100](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L100)
 
 ___
 
@@ -383,7 +413,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:91](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L91)
+[src/lib/index.d.ts:91](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L91)
 
 ___
 
@@ -393,7 +423,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:10](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L10)
+[src/lib/index.d.ts:10](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L10)
 
 ___
 
@@ -403,7 +433,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:8](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L8)
+[src/lib/index.d.ts:8](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L8)
 
 ___
 
@@ -425,7 +455,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:68](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L68)
+[src/lib/index.d.ts:68](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L68)
 
 ___
 
@@ -435,4 +465,4 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:51](https://github.com/asyncapi/glee/blob/9bc2de0/src/lib/index.d.ts#L51)
+[src/lib/index.d.ts:51](https://github.com/asyncapi/glee/blob/918945b/src/lib/index.d.ts#L51)
