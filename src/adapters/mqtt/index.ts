@@ -151,14 +151,11 @@ class MqttAdapter extends Adapter {
 
   private subscribe(channels: string[]) {
     channels.forEach((channel) => {
-      const binding = this.parsedAsyncAPI
-        .channels()
-        .get(channel)
-        .bindings()
-        .get('mqtt')
-        ?.value()
+      const asyncAPIChannel = this.parsedAsyncAPI.channels().get(channel)
+      const binding = asyncAPIChannel.bindings().get('mqtt')?.value()
+      const topic = asyncAPIChannel.address()
       this.client.subscribe(
-        channel,
+        topic,
         {
           qos: binding?.qos ? binding.qos : 0,
         },
@@ -166,9 +163,9 @@ class MqttAdapter extends Adapter {
           if (err) {
             logLineWithIcon(
               'x',
-              `Error while trying to subscribe to \`${channel}\` topic.`,
+              `Error while trying to subscribe to \`${topic}\` topic.`,
               {
-                highlightedWords: [channel],
+                highlightedWords: [topic],
                 iconColor: '#f00',
                 disableEmojis: true,
               }
@@ -178,9 +175,9 @@ class MqttAdapter extends Adapter {
           }
           logLineWithIcon(
             ':zap:',
-            `Subscribed to \`${channel}\` topic with QoS ${granted?.[0].qos}`,
+            `Subscribed to \`${topic}\` topic with QoS ${granted?.[0].qos}`,
             {
-              highlightedWords: [channel],
+              highlightedWords: [topic],
             }
           )
         }
@@ -278,7 +275,7 @@ class MqttAdapter extends Adapter {
       dup: packet.dup,
       length: packet.length,
     }
-    const id = this.parsedAsyncAPI.channels().filter(channel => channel.address() === packet.topic)[0].id()
+    const id = this.parsedAsyncAPI.channels().all().filter(channel => channel.address() === packet.topic)[0]?.id()
     return new GleeMessage({
       payload: packet.payload,
       headers,
