@@ -30,7 +30,7 @@
 
 #### Defined in
 
-[src/lib/router.ts:8](https://github.com/asyncapi/glee/blob/5f5040f/src/lib/router.ts#L8)
+[src/lib/router.ts:8](https://github.com/asyncapi/glee/blob/bb6db69/src/lib/router.ts#L8)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:3](https://github.com/asyncapi/glee/blob/5f5040f/src/lib/router.ts#L3)
+[src/lib/router.ts:3](https://github.com/asyncapi/glee/blob/bb6db69/src/lib/router.ts#L3)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:14](https://github.com/asyncapi/glee/blob/5f5040f/src/lib/router.ts#L14)
+[src/lib/router.ts:14](https://github.com/asyncapi/glee/blob/bb6db69/src/lib/router.ts#L14)
 
 ___
 
@@ -67,4 +67,4 @@ ___
 
 #### Defined in
 
-[src/lib/router.ts:13](https://github.com/asyncapi/glee/blob/5f5040f/src/lib/router.ts#L13)
+[src/lib/router.ts:13](https://github.com/asyncapi/glee/blob/bb6db69/src/lib/router.ts#L13)
