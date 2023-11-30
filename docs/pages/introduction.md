@@ -58,23 +58,36 @@ Once the process is completed, you should have a new Glee app ready for developm
 Glee being a spec-first framework, development starts with defining your API spec. To know more details into it, you can follow glee template to understand it step by step. For our case we will define our API:
 
 ```yaml
-asyncapi: 2.1.0
+asyncapi: 3.0.0
 info:
   title: Greet Bot
-  version: 0.1.0
+  version: 1.0.0
 servers:
   websockets:
-    url: ws://0.0.0.0:3000
+    host: 0.0.0.0:3000
     protocol: ws
 channels:
   greet:
-    publish:
-      operationId: onGreet
-      message:
-        $ref: '#/components/messages/time'
-    subscribe:
-      message:
+    address: greet
+    messages:
+      greet:
         $ref: '#/components/messages/greet'
+      time:
+        $ref: '#/components/messages/time'
+  time:
+    address: time
+    messages:
+      time:
+        $ref: '#/components/messages/time'
+operations:
+  onGreet:
+    action: receive
+    channel:
+      $ref: '#/channels/greet'
+  time.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/time'
 components:
   messages:
     time:
