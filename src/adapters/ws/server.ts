@@ -165,7 +165,7 @@ class WebSocketsAdapter extends Adapter {
     })
   }
 
-  _onUpgrade = async (request: IncomingMessage, socket: Duplex, head: Buffer) => {
+  private async _onUpgrade(request: IncomingMessage, socket: Duplex, head: Buffer) {
     try {
       this._handleRequest(request, socket, head)
     } catch (e) {
