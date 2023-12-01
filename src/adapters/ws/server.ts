@@ -263,7 +263,7 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  _handleDirectMessage(message: GleeMessage) {
+  private _handleDirectMessage(message: GleeMessage) {
     this._validateDirectMessage(message)
     message.connection.getRaw().send(message.payload)
   }
