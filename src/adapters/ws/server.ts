@@ -65,7 +65,7 @@ class WebSocketsAdapter extends Adapter {
     })
   }
 
-  async _connect(): Promise<this> {
+  private async _connect(): Promise<this> {
     this._validatePort()
     this._createServers()
     this.wsHttpServer.on('upgrade', this._onUpgrade)
