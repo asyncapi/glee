@@ -244,7 +244,7 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  _handleBroadcastMessage(message: GleeMessage) {
+  private _handleBroadcastMessage(message: GleeMessage) {
     this.glee.syncCluster(message)
 
     this.connections
