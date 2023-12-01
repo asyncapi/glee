@@ -161,7 +161,7 @@ class WebSocketsAdapter extends Adapter {
     if (!server) socket.destroy()
 
     this.websocketServers.get(channelId).handleUpgrade(request, socket, head, (ws) => {
-      this.initializeServerEvents({ server, ws, request })
+      this._initializeServerEvents({ server, ws, request })
     })
   }
 
@@ -183,7 +183,7 @@ class WebSocketsAdapter extends Adapter {
   }
 
 
-  private initializeServerEvents({ server, ws, request }) {
+  private _initializeServerEvents({ server, ws, request }) {
     const channelId = this._getChannel(request).id()
     server.emit('connect', ws, request)
     ws.on('message', (payload) => {
