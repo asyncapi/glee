@@ -78,7 +78,7 @@ class WebSocketsAdapter extends Adapter {
     return this
   }
 
-  _getChannel(req: IncomingMessage) {
+  private _getChannel(req: IncomingMessage) {
     const pathName = this._extractPathname(req)
     return this.parsedAsyncAPI.channels().all().filter(channel => channel.address() === pathName)[0]
   }
