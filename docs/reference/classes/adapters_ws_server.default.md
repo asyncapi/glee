@@ -110,7 +110,7 @@
 
 #### Defined in
 
-[src/adapters/ws/server.ts:21](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L21)
+[src/adapters/ws/server.ts:21](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L21)
 
 ## Properties
 
@@ -120,7 +120,7 @@
 
 #### Defined in
 
-[src/adapters/ws/server.ts:13](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L13)
+[src/adapters/ws/server.ts:13](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L13)
 
 ___
 
@@ -130,7 +130,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:16](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L16)
+[src/adapters/ws/server.ts:16](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L16)
 
 ___
 
@@ -140,7 +140,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:14](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L14)
+[src/adapters/ws/server.ts:14](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L14)
 
 ___
 
@@ -150,7 +150,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:18](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L18)
+[src/adapters/ws/server.ts:18](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L18)
 
 ___
 
@@ -160,7 +160,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:15](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L15)
+[src/adapters/ws/server.ts:15](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L15)
 
 ___
 
@@ -244,7 +244,7 @@ Adapter.AsyncAPIServer
 
 #### Defined in
 
-[src/lib/adapter.ts:184](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L184)
+[src/lib/adapter.ts:184](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L184)
 
 ___
 
@@ -262,7 +262,7 @@ Adapter.channelAddresses
 
 #### Defined in
 
-[src/lib/adapter.ts:200](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L200)
+[src/lib/adapter.ts:200](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L200)
 
 ___
 
@@ -280,7 +280,7 @@ Adapter.channelNames
 
 #### Defined in
 
-[src/lib/adapter.ts:192](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L192)
+[src/lib/adapter.ts:192](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L192)
 
 ___
 
@@ -298,7 +298,7 @@ Adapter.connections
 
 #### Defined in
 
-[src/lib/adapter.ts:204](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L204)
+[src/lib/adapter.ts:204](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L204)
 
 ___
 
@@ -316,7 +316,7 @@ Adapter.glee
 
 #### Defined in
 
-[src/lib/adapter.ts:176](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L176)
+[src/lib/adapter.ts:176](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L176)
 
 ___
 
@@ -334,7 +334,7 @@ Adapter.operationIds
 
 #### Defined in
 
-[src/lib/adapter.ts:196](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L196)
+[src/lib/adapter.ts:196](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L196)
 
 ___
 
@@ -352,7 +352,7 @@ Adapter.parsedAsyncAPI
 
 #### Defined in
 
-[src/lib/adapter.ts:188](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L188)
+[src/lib/adapter.ts:188](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L188)
 
 ___
 
@@ -370,7 +370,7 @@ Adapter.serverName
 
 #### Defined in
 
-[src/lib/adapter.ts:180](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L180)
+[src/lib/adapter.ts:180](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L180)
 
 ___
 
@@ -388,7 +388,7 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/adapter.ts:208](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L208)
+[src/lib/adapter.ts:208](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L208)
 
 ## Methods
 
@@ -402,7 +402,7 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/adapters/ws/server.ts:68](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L68)
+[src/adapters/ws/server.ts:68](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L68)
 
 ___
 
@@ -423,7 +423,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:283](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L283)
+[src/adapters/ws/server.ts:283](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L283)
 
 ___
 
@@ -437,7 +437,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:45](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L45)
+[src/adapters/ws/server.ts:45](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L45)
 
 ___
 
@@ -459,7 +459,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:91](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L91)
+[src/adapters/ws/server.ts:91](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L91)
 
 ___
 
@@ -479,7 +479,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:183](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L183)
+[src/adapters/ws/server.ts:183](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L183)
 
 ___
 
@@ -499,7 +499,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:86](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L86)
+[src/adapters/ws/server.ts:86](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L86)
 
 ___
 
@@ -513,7 +513,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:81](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L81)
+[src/adapters/ws/server.ts:81](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L81)
 
 ___
 
@@ -533,7 +533,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:251](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L251)
+[src/adapters/ws/server.ts:251](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L251)
 
 ___
 
@@ -553,7 +553,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:270](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L270)
+[src/adapters/ws/server.ts:270](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L270)
 
 ___
 
@@ -574,7 +574,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:95](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L95)
+[src/adapters/ws/server.ts:95](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L95)
 
 ___
 
@@ -596,7 +596,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:162](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L162)
+[src/adapters/ws/server.ts:162](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L162)
 
 ___
 
@@ -616,7 +616,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:191](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L191)
+[src/adapters/ws/server.ts:191](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L191)
 
 ___
 
@@ -638,7 +638,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:173](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L173)
+[src/adapters/ws/server.ts:173](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L173)
 
 ___
 
@@ -658,7 +658,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:275](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L275)
+[src/adapters/ws/server.ts:275](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L275)
 
 ___
 
@@ -678,7 +678,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:261](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L261)
+[src/adapters/ws/server.ts:261](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L261)
 
 ___
 
@@ -700,7 +700,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:119](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L119)
+[src/adapters/ws/server.ts:119](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L119)
 
 ___
 
@@ -722,7 +722,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:153](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L153)
+[src/adapters/ws/server.ts:153](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L153)
 
 ___
 
@@ -736,7 +736,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:208](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L208)
+[src/adapters/ws/server.ts:208](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L208)
 
 ___
 
@@ -758,7 +758,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:137](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L137)
+[src/adapters/ws/server.ts:137](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L137)
 
 ___
 
@@ -779,7 +779,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:101](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L101)
+[src/adapters/ws/server.ts:101](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L101)
 
 ___
 
@@ -800,7 +800,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:110](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L110)
+[src/adapters/ws/server.ts:110](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L110)
 
 ___
 
@@ -822,7 +822,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:230](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L230)
+[src/adapters/ws/server.ts:230](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L230)
 
 ___
 
@@ -856,7 +856,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:220](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L220)
+[src/adapters/ws/server.ts:220](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L220)
 
 ___
 
@@ -907,7 +907,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/adapters/ws/server.ts:35](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L35)
+[src/adapters/ws/server.ts:35](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L35)
 
 ___
 
@@ -1036,7 +1036,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:221](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L221)
+[src/lib/adapter.ts:221](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L221)
 
 ___
 
@@ -1081,7 +1081,7 @@ Returns a list of the channels a given adapter has to subscribe to.
 
 #### Defined in
 
-[src/lib/adapter.ts:237](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L237)
+[src/lib/adapter.ts:237](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L237)
 
 ___
 
@@ -1163,7 +1163,7 @@ ___
 
 #### Defined in
 
-[src/adapters/ws/server.ts:31](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L31)
+[src/adapters/ws/server.ts:31](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L31)
 
 ___
 
@@ -1605,7 +1605,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:212](https://github.com/asyncapi/glee/blob/169ef72/src/lib/adapter.ts#L212)
+[src/lib/adapter.ts:212](https://github.com/asyncapi/glee/blob/03a5be3/src/lib/adapter.ts#L212)
 
 ___
 
@@ -1631,7 +1631,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/adapters/ws/server.ts:242](https://github.com/asyncapi/glee/blob/169ef72/src/adapters/ws/server.ts#L242)
+[src/adapters/ws/server.ts:242](https://github.com/asyncapi/glee/blob/03a5be3/src/adapters/ws/server.ts#L242)
 
 ___
 
