@@ -124,7 +124,7 @@ class WebSocketsAdapter extends Adapter {
 
     if (!isValid) {
       this._endRequest(400, "Bad Request", socket)
-      const message = `Header validation failed: ${humanReadableError}. Please ensure that the headers match the expected format and types defined in the schema.`;
+      const message = `Header validation failed: ${humanReadableError}. Please ensure that the headers match the expected format and types defined in the schema.`
       throw new Error(message)
     }
   }
@@ -256,10 +256,10 @@ class WebSocketsAdapter extends Adapter {
 
   _validateDirectMessage(message: GleeMessage) {
     if (!message.connection) {
-      throw new Error('No WebSocket connection available for sending the message.');
+      throw new Error('No WebSocket connection available for sending the message.')
     }
     if (!(message.connection instanceof GleeConnection)) {
-      throw new Error('The connection object is not a valid GleeConnection instance.');
+      throw new Error('The connection object is not a valid GleeConnection instance.')
     }
   }
 

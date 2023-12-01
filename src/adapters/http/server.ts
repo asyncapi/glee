@@ -226,7 +226,7 @@ class HttpAdapter extends Adapter {
 
     if (!isValid) {
       this._endRequest(400, "Bad Request", res)
-      const message = `Header validation failed: ${humanReadableError}. Please ensure that the headers match the expected format and types defined in the schema.`;
+      const message = `Header validation failed: ${humanReadableError}. Please ensure that the headers match the expected format and types defined in the schema.`
       throw new Error(message)
     }
   }
