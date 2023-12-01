@@ -212,7 +212,7 @@ class WebSocketsAdapter extends Adapter {
     const customServerPort = String(customServer.address().port)
     if (customServerPort !== this._getPort()) {
       throw new Error(
-        `Your custom HTTP server is listening on port ${customServerPort} but your AsyncAPI file says it must listen on ${this._getPort()}. Please fix the inconsistency.`
+        `Your custom HTTP server is listening on port ${customServerPort} but your AsyncAPI or config file says it must listen on ${this._getPort()}. Please fix the inconsistency.`
       )
     }
   }
