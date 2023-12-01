@@ -42,7 +42,7 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  _createServers() {
+  private _createServers() {
     const gleeAuth = new GleeAuth(
       this.AsyncAPIServer,
       this.parsedAsyncAPI,
