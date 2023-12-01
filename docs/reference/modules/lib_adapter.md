@@ -8,6 +8,10 @@
 
 - [default](../classes/lib_adapter.default.md)
 
+### Interfaces
+
+- [GleeAdapterOptions](../interfaces/lib_adapter.GleeAdapterOptions.md)
+
 ### Type Aliases
 
 - [AuthEvent](lib_adapter.md#authevent)
@@ -30,7 +34,7 @@
 
 #### Defined in
 
-[src/lib/adapter.ts:17](https://github.com/asyncapi/glee/blob/b5a5655/src/lib/adapter.ts#L17)
+[src/lib/adapter.ts:17](https://github.com/asyncapi/glee/blob/0dde2da/src/lib/adapter.ts#L17)
 
 ___
 
@@ -48,4 +52,4 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:11](https://github.com/asyncapi/glee/blob/b5a5655/src/lib/adapter.ts#L11)
+[src/lib/adapter.ts:11](https://github.com/asyncapi/glee/blob/0dde2da/src/lib/adapter.ts#L11)
