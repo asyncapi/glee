@@ -102,7 +102,7 @@ class WebSocketsAdapter extends Adapter {
     this._validateRequestAgainstBindings(request, socket)
   }
 
-  _validateRequestAgainstBindings(req: IncomingMessage, socket: Duplex) {
+  private _validateRequestAgainstBindings(req: IncomingMessage, socket: Duplex) {
     const channel = this._getChannel(req)
     const channelBindings = channel.bindings().get("ws")
     if (!channelBindings) return
