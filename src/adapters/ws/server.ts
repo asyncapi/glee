@@ -213,7 +213,7 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  private wrapCallbackDecorator(cb) {
+  private _wrapCallbackDecorator(cb) {
     return function done(val: boolean, code = 401, message = 'Unauthorized') {
       cb(val, code, message)
       if (val === false) {
