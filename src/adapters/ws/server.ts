@@ -87,7 +87,7 @@ class WebSocketsAdapter extends Adapter {
     socket.end(`HTTP/1.1 ${code} ${message}\r\n\r\n`)
   }
 
-  _handleInvalidChannel(res: Duplex, pathName: string) {
+  private _handleInvalidChannel(res: Duplex, pathName: string) {
     this._endRequest(404, "Channel Not Found", res)
     const errorMessage = `A client tried to connect to ${pathName}, but this path is not defined in your AsyncAPI file.`
     throw new Error(errorMessage)
