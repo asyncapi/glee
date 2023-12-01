@@ -254,7 +254,7 @@ class WebSocketsAdapter extends Adapter {
       })
   }
 
-  _validateDirectMessage(message: GleeMessage) {
+  private _validateDirectMessage(message: GleeMessage) {
     if (!message.connection) {
       throw new Error('No WebSocket connection available for sending the message.')
     }
