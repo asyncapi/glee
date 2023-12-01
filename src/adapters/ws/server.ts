@@ -268,7 +268,7 @@ class WebSocketsAdapter extends Adapter {
     message.connection.getRaw().send(message.payload)
   }
 
-  _send(message: GleeMessage) {
+  private _send(message: GleeMessage) {
     if (message.broadcast) {
       this._handleBroadcastMessage(message)
     } else {
