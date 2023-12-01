@@ -232,5 +232,5 @@ function createReplies(functionReply: GleeFunctionReturnReply, message: GleeMess
     return []
   }
 
-  return sendOperations.map(operation => new GleeMessage({ ...functionReply, channel: replyChannel.id(), request: message, operation }))
+  return sendOperations.map(operation => new GleeMessage({ ...functionReply, channel: replyChannel.id(), request: message, operation, connection: message.connection }))
 }
