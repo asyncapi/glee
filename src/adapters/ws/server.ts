@@ -50,7 +50,7 @@ class WebSocketsAdapter extends Adapter {
     )
     const verifyClient = gleeAuth.checkAuthPresense()
       ? (info, cb) => {
-        this.verifyClientFunc(gleeAuth, info, cb)
+        this._verifyClientFunc(gleeAuth, info, cb)
       }
       : null
 
@@ -111,7 +111,7 @@ class WebSocketsAdapter extends Adapter {
     this._validateHeaders(req, socket, channelBindings)
   }
 
-  _validateHeaders(req: IncomingMessage, socket: Duplex, channelBindings) {
+  private _validateHeaders(req: IncomingMessage, socket: Duplex, channelBindings) {
 
     const schema = channelBindings.headers
     if (!schema) return
@@ -129,7 +129,7 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  _validateQueries(req: IncomingMessage, socket: Duplex, channelBindings) {
+  private _validateQueries(req: IncomingMessage, socket: Duplex, channelBindings) {
     const schema = channelBindings.query
     if (!schema) return
     const { query } = url.parse(req.url, true)
@@ -145,7 +145,7 @@ class WebSocketsAdapter extends Adapter {
 
   }
 
-  _validateMethod(req: IncomingMessage, socket: Duplex, channelBindings): void {
+  private _validateMethod(req: IncomingMessage, socket: Duplex, channelBindings): void {
     const validMethod = channelBindings?.method?.toLowerCase()
     if (!validMethod) return
     if (validMethod !== req.method?.toLowerCase()) {
@@ -154,7 +154,7 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  _handleRequest(request: IncomingMessage, socket: Duplex, head: Buffer) {
+  private _handleRequest(request: IncomingMessage, socket: Duplex, head: Buffer) {
     this._validateRequest(request, socket)
     const channelId = this._getChannel(request).id()
     const server = this.websocketServers.get(channelId)
@@ -175,7 +175,7 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  _extractPathname(req: IncomingMessage) {
+  private _extractPathname(req: IncomingMessage) {
     const serverUrl = new URL(this.serverUrlExpanded)
     let { pathname } = new URL(req.url, serverUrl)
     pathname = pathname.startsWith('/') ? pathname.substring(1) : pathname
@@ -223,9 +223,9 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  private verifyClientFunc(gleeAuth, info, cb) {
+  private _verifyClientFunc(gleeAuth, info, cb) {
     const authProps = gleeAuth.getServerAuthProps(info.req.headers, {})
-    const done = this.wrapCallbackDecorator(cb).bind(this)
+    const done = this._wrapCallbackDecorator(cb).bind(this)
     this.emit('auth', {
       authProps,
       server: this.serverName,
@@ -276,7 +276,7 @@ class WebSocketsAdapter extends Adapter {
     }
   }
 
-  _createMessage(eventName: string, payload: any): GleeMessage {
+  private _createMessage(eventName: string, payload: any): GleeMessage {
     return new GleeMessage({
       payload,
       channel: eventName,
