@@ -68,6 +68,7 @@ export type GleeClusterAdapterConfig = {
 export type WebsocketServerAdapterConfig = {
   httpServer?: any
   adapter?: WebSocketServerType | typeof GleeAdapter
+  port?: number
 }
 
 export type WebsocketAdapterConfig = {

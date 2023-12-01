@@ -71,11 +71,16 @@ class WebSocketsAdapter extends Adapter {
     this.wsHttpServer.on('upgrade', this._onUpgrade)
 
     if (!this.customHttpServer) {
-      this.wsHttpServer.listen(this.serverUrl.port)
+      this.wsHttpServer.listen(this._getPort())
     }
 
     this.emit('server:ready', { name: this.name(), adapter: this })
     return this
+  }
+
+  private _getPort() {
+    const configPort = this.config?.port
+    return configPort ? configPort : this.serverUrl.port
   }
 
   private _getChannel(req: IncomingMessage) {
@@ -205,10 +210,9 @@ class WebSocketsAdapter extends Adapter {
     if (!customServer) return
 
     const customServerPort = String(customServer.address().port)
-    const asyncAPIPort = this.serverUrl.port
-    if (customServerPort !== asyncAPIPort) {
+    if (customServerPort !== this._getPort()) {
       throw new Error(
-        `Your custom HTTP server is listening on port ${customServerPort} but your AsyncAPI file says it must listen on ${asyncAPIPort}. Please fix the inconsistency.`
+        `Your custom HTTP server is listening on port ${customServerPort} but your AsyncAPI file says it must listen on ${this._getPort()}. Please fix the inconsistency.`
       )
     }
   }

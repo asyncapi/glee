@@ -1,5 +1,5 @@
 import 'jest-extended'
-import { AsyncAPIDocumentV2 as AsyncAPIDocument, ServerInterface as Server } from '@asyncapi/parser'
+import {AsyncAPIDocumentV2 as AsyncAPIDocument, ServerInterface as Server} from '@asyncapi/parser'
 import GleeConnection from '../../src/lib/connection.js'
 import Glee from '../../src/lib/glee.js'
 import GleeMessage from '../../src/lib/message.js'
@@ -11,7 +11,7 @@ const ANOTHER_TEST_SERVER_NAME = 'another'
 const TEST_CHANNEL = 'test/channel'
 const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
   asyncapi: '2.2.0',
-  info: { title: '', version: '' },
+  info: {title: '', version: ''},
   servers: {
     test: {
       url: 'mqtt://fake-url',
@@ -54,7 +54,7 @@ class TEST_ADAPTER extends GleeAdapter {
     })
   }
 }
-class ANOTHER_TEST_ADAPTER extends GleeAdapter { }
+class ANOTHER_TEST_ADAPTER extends GleeAdapter {}
 
 const fakeConnection = new GleeConnection({
   connection: 'fake-connection',
