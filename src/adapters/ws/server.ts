@@ -14,7 +14,7 @@ class WebSocketsAdapter extends Adapter {
   private serverUrl: URL
   private wsHttpServer: HttpServer
   private customHttpServer: HttpServer
-  // since websocket only supports one connection path per server, we open create one server for each channel and store them here.
+  // WebSockets are limited to a single connection path per server. To accommodate multiple channels, we instantiate a separate server for each channel and maintain a record of these servers here.
   private websocketServers: Map<string, WebSocket.Server>
 
 
