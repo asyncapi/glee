@@ -83,7 +83,7 @@ class WebSocketsAdapter extends Adapter {
     return this.parsedAsyncAPI.channels().all().filter(channel => channel.address() === pathName)[0]
   }
 
-  _endRequest(code: number, message: string, socket: Duplex) {
+  private _endRequest(code: number, message: string, socket: Duplex) {
     socket.end(`HTTP/1.1 ${code} ${message}\r\n\r\n`)
   }
 
