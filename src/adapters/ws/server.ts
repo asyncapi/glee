@@ -68,7 +68,16 @@ class WebSocketsAdapter extends Adapter {
   private async _connect(): Promise<this> {
     this._validatePort()
     this._createServers()
-    this.wsHttpServer.on('upgrade', this._onUpgrade)
+    const onUpgrade = async (request: IncomingMessage, socket: Duplex, head: Buffer) => {
+      try {
+        this._handleRequest(request, socket, head)
+      } catch (e) {
+        const errorMessage = `Error handling request: ${e.message}`
+        this.emit('error', new Error(errorMessage))
+        if (!socket.writableEnded) this._endRequest(500, 'Internal Server Error', socket)
+      }
+    }
+    this.wsHttpServer.on('upgrade', onUpgrade)
 
     if (!this.customHttpServer) {
       this.wsHttpServer.listen(this._getPort())
@@ -170,15 +179,6 @@ class WebSocketsAdapter extends Adapter {
     })
   }
 
-  private async _onUpgrade(request: IncomingMessage, socket: Duplex, head: Buffer) {
-    try {
-      this._handleRequest(request, socket, head)
-    } catch (e) {
-      const errorMessage = `Error handling request: ${e.message}`
-      this.emit('error', new Error(errorMessage))
-      if (!socket.writableEnded) this._endRequest(500, 'Internal Server Error', socket)
-    }
-  }
 
   private _extractPathname(req: IncomingMessage) {
     const serverUrl = new URL(this.serverUrlExpanded)
