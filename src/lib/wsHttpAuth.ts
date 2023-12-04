@@ -99,11 +99,12 @@ class GleeAuth extends EventEmitter {
   }
 
   private httpApiKeyLogic(scheme, headers, query, authKey) {
-    const loc = scheme[String(authKey)].json('in')
+    
+    const loc = scheme.in()
     if (loc == 'header') {
-      headers[scheme[String(authKey)].json('name')] = this.auth[String(authKey)]
+      headers[scheme.name()] = this.auth[String(authKey)]
     } else if (loc == 'query') {
-      query[scheme[String(authKey)].json('name')] = this.auth[String(authKey)]
+      query[scheme.name()] = this.auth[String(authKey)]
     }
 
     return { headers, query }

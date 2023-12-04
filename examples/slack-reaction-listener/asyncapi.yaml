@@ -9,6 +9,9 @@ servers:
   Slack_WebSocket:
     host: wss-primary.slack.com
     protocol: wss
+    security:
+      - $ref: '#/components/securitySchemes/app_id'
+      - $ref: '#/components/securitySchemes/ticket'
   Slack_HTTPS:
     host:  slack.com
     protocol: https
@@ -96,6 +99,15 @@ operations:
       - $ref: "#/components/messages/SlackReactionAdded"
       - $ref: "#/components/messages/GenericErrorPayload"
 components:
+  securitySchemes:
+    ticket:
+      type: httpApiKey
+      name: ticket
+      in: query
+    app_id:
+      type: httpApiKey
+      name: app_id
+      in: query
   messages:
     slackAckEvent:
       payload:
