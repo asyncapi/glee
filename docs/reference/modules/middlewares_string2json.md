@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[src/middlewares/string2json.ts:4](https://github.com/asyncapi/glee/blob/cd08a2e/src/middlewares/string2json.ts#L4)
+[src/middlewares/string2json.ts:4](https://github.com/asyncapi/glee/blob/f0337b6/src/middlewares/string2json.ts#L4)
