@@ -51,30 +51,43 @@ We recommend creating a new Glee app using our official CLI which sets up everyt
 
 Once the process is completed, you should have a new Glee app ready for development and see these files that were made.
 
-![glee_structure](/assets/glee_struct.png)
+![glee_structure](glee_struct.png)
 
 #### Define our Spec for our API
 
 Glee being a spec-first framework, development starts with defining your API spec. To know more details into it, you can follow glee template to understand it step by step. For our case we will define our API:
 
 ```yaml
-asyncapi: 2.1.0
+asyncapi: 3.0.0
 info:
   title: Greet Bot
-  version: 0.1.0
+  version: 1.0.0
 servers:
   websockets:
-    url: ws://0.0.0.0:3000
+    host: 0.0.0.0:3000
     protocol: ws
 channels:
   greet:
-    publish:
-      operationId: onGreet
-      message:
-        $ref: '#/components/messages/time'
-    subscribe:
-      message:
+    address: greet
+    messages:
+      greet:
         $ref: '#/components/messages/greet'
+      time:
+        $ref: '#/components/messages/time'
+  time:
+    address: time
+    messages:
+      time:
+        $ref: '#/components/messages/time'
+operations:
+  onGreet:
+    action: receive
+    channel:
+      $ref: '#/channels/greet'
+  time.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/time'
 components:
   messages:
     time:
@@ -93,7 +106,7 @@ components:
 
 This will be the Specification that defines our API, in our case, it is very simple, as we will be sending a name and the time of the day, and our API will greet us accordingly.
 
-One thing to note here is the `operationId`, this is needed and is a crucial part of glee, as this is how we will be connecting our business logic with our spec, `operationId` is the name of the function that will be called every time a certain operation occurs. In our case whenever `/greet` channel received a message.
+One thing to note here is the `operations` item, this is needed and is a crucial part of glee, as this is how we will be connecting our business logic with our spec, `onGreet` is the name of the function that will be called every time a certain operation occurs. In our case whenever `/greet` channel receives a message, `onGreet` function is called.
 
 #### Define our operation function
 
@@ -125,10 +138,11 @@ export default async function (event) {
 
 Every file in the functions folder acts as a handler to develop business logic for glee, every file should export an async function that receives an event parameter, where you have access to payload and server details.
 
-Running and testing your application
+#### Running and testing your application
+
 We will not execute the application and carry out testing with Postman to ensure that it is functioning as intended.
 
-Now to run your glee application, just run:
+Now to execute your glee application, just run:
 
 ```
 npm run dev
@@ -137,6 +151,6 @@ npm run start
 ```
 To send a WebSocket request with a payload e.g. `{"name":"john", "time": "1567906535"}` to `ws://localhost:3000/greet`, open Postman and checkout the endpoint:
 
-![glee_response](/assets/glee_resp.png)
+![glee_response](glee_resp.png)
 
 So, this is how easy it is to build a WebSocket API using Glee. You can also check out the example code [here](https://github.com/Souvikns/greet-bot).
