@@ -36,7 +36,7 @@
 
 #### Defined in
 
-[src/lib/util.ts:204](https://github.com/asyncapi/glee/blob/994b957/src/lib/util.ts#L204)
+[src/lib/util.ts:204](https://github.com/asyncapi/glee/blob/cd08a2e/src/lib/util.ts#L204)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:121](https://github.com/asyncapi/glee/blob/994b957/src/lib/util.ts#L121)
+[src/lib/util.ts:121](https://github.com/asyncapi/glee/blob/cd08a2e/src/lib/util.ts#L121)
 
 ___
 
@@ -78,7 +78,7 @@ Duplicates a GleeMessage.
 
 #### Defined in
 
-[src/lib/util.ts:53](https://github.com/asyncapi/glee/blob/994b957/src/lib/util.ts#L53)
+[src/lib/util.ts:53](https://github.com/asyncapi/glee/blob/cd08a2e/src/lib/util.ts#L53)
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:181](https://github.com/asyncapi/glee/blob/994b957/src/lib/util.ts#L181)
+[src/lib/util.ts:181](https://github.com/asyncapi/glee/blob/cd08a2e/src/lib/util.ts#L181)
 
 ___
 
@@ -124,7 +124,7 @@ Determines if a path matches a channel, and returns the matching params and its 
 
 #### Defined in
 
-[src/lib/util.ts:23](https://github.com/asyncapi/glee/blob/994b957/src/lib/util.ts#L23)
+[src/lib/util.ts:23](https://github.com/asyncapi/glee/blob/cd08a2e/src/lib/util.ts#L23)
 
 ___
 
@@ -145,7 +145,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:125](https://github.com/asyncapi/glee/blob/994b957/src/lib/util.ts#L125)
+[src/lib/util.ts:125](https://github.com/asyncapi/glee/blob/cd08a2e/src/lib/util.ts#L125)
 
 ___
 
@@ -166,7 +166,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:141](https://github.com/asyncapi/glee/blob/994b957/src/lib/util.ts#L141)
+[src/lib/util.ts:141](https://github.com/asyncapi/glee/blob/cd08a2e/src/lib/util.ts#L141)
 
 ___
 
@@ -189,7 +189,7 @@ Determines if a path matches a channel.
 
 #### Defined in
 
-[src/lib/util.ts:84](https://github.com/asyncapi/glee/blob/994b957/src/lib/util.ts#L84)
+[src/lib/util.ts:84](https://github.com/asyncapi/glee/blob/cd08a2e/src/lib/util.ts#L84)
 
 ___
 
@@ -209,7 +209,7 @@ ___
 
 #### Defined in
 
-[src/lib/util.ts:152](https://github.com/asyncapi/glee/blob/994b957/src/lib/util.ts#L152)
+[src/lib/util.ts:152](https://github.com/asyncapi/glee/blob/cd08a2e/src/lib/util.ts#L152)
 
 ___
 
@@ -234,4 +234,4 @@ Object
 
 #### Defined in
 
-[src/lib/util.ts:96](https://github.com/asyncapi/glee/blob/994b957/src/lib/util.ts#L96)
+[src/lib/util.ts:96](https://github.com/asyncapi/glee/blob/cd08a2e/src/lib/util.ts#L96)
