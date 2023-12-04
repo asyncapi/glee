@@ -65,16 +65,14 @@ export type GleeClusterAdapterConfig = {
   url: string
 }
 
+export type WebsocketServerAdapterConfig = {
+  httpServer?: any
+  adapter?: WebSocketServerType | typeof GleeAdapter
+  port?: number
+}
+
 export type WebsocketAdapterConfig = {
-  server?: {
-    httpServer?: any
-    adapter?: WebSocketServerType | typeof GleeAdapter
-    port?: number
-  }
-  client?: {
-    query?: any
-    auth?: WsAuthConfig | AuthFunction<WsAuthConfig>
-  }
+  server?: WebsocketServerAdapterConfig
 }
 
 export type HttpAdapterConfig = {
@@ -164,3 +162,10 @@ export type GleeFunction = (
 export type GleeAuthFunction = (
   event: GleeAuthFunctionEvent
 ) => Promise<GleeAuthFunctionEvent>
+
+type Headers = { [key: string]: string }
+export interface Authenticatable {
+  headers: Headers,
+  query: QueryParam
+  url: URL
+}

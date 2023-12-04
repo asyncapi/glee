@@ -1,7 +1,7 @@
 import { AsyncAPIDocumentInterface as AsyncAPIDocument, SecuritySchemeInterface as SecurityScheme, ServerInterface } from '@asyncapi/parser'
 import { resolveFunctions } from './util.js'
 import { EventEmitter } from 'events'
-import { HttpAuthConfig, WsAuthConfig, AuthProps } from './index.js'
+import { HttpAuthConfig, WsAuthConfig, AuthProps, Authenticatable } from './index.js'
 
 class GleeAuth extends EventEmitter {
   private secReqs: { [key: string]: SecurityScheme }[]
@@ -146,7 +146,7 @@ class GleeAuth extends EventEmitter {
     return authProps
   }
 
-  async processClientAuth(url, headers, query) {
+  async processClientAuth({ url, headers, query }: Authenticatable) {
     this.auth = await this.getAuthConfig(this.authConfig)
     const authKeys = this.checkClientAuthConfig()
     if (!authKeys) return
@@ -159,10 +159,6 @@ class GleeAuth extends EventEmitter {
       Object.keys(this.AsyncAPIServer.security()).length > 0
     )
   }
-
-  //   checkClientUnimplementedSecScheme() {}
-
-  //   getSchemes(type) {}
 }
 
 export default GleeAuth

@@ -21,6 +21,13 @@ export type AuthEvent = {
   doc: any
 }
 
+export interface GleeAdapterOptions {
+  glee: Glee;
+  serverName: string;
+  server: ServerInterface;
+  parsedAsyncAPI: AsyncAPIDocument;
+}
+
 class GleeAdapter extends EventEmitter {
   private _glee: Glee
   private _serverName: string
@@ -32,20 +39,8 @@ class GleeAdapter extends EventEmitter {
   private _connections: GleeConnection[]
   private _serverUrlExpanded: string
 
-  /**
-   * Instantiates a Glee adapter.
-   *
-   * @param {Glee} glee  A reference to the Glee app.
-   * @param {String} serverName  The name of the AsyncAPI server to use for the connection.
-   * @param {AsyncAPIServer} server  The AsyncAPI server to use for the connection.
-   * @param {AsyncAPIDocument} parsedAsyncAPI The AsyncAPI document.
-   */
-  constructor(
-    glee: Glee,
-    serverName: string,
-    server: ServerInterface,
-    parsedAsyncAPI: AsyncAPIDocument
-  ) {
+
+  constructor({ glee, serverName, server, parsedAsyncAPI }: GleeAdapterOptions) {
     super()
 
     this._glee = glee
