@@ -84,7 +84,10 @@ operations:
     action: receive
     channel:
       $ref: '#/channels/greet'
-  time.subscribe:
+    reply:
+      channel:
+        $ref: '#/channels/greet'
+  sendGreet:
     action: send
     channel:
       $ref: '#/channels/time'

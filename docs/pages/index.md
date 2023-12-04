@@ -102,10 +102,13 @@ operations:
     action: receive
     channel:
       $ref: '#/channels/hello'
-  sendHello:
+    reply:
+      channel:
+        $ref: "#/channels/hello"
+  SendHello:
     action: send
-    channel:
-      $ref: '#/channels/hello'
+    channel: 
+      $ref: "#/channels/hello"
 components:
   messages:
     hello:
