@@ -51,6 +51,11 @@ class WsClientAdapter extends Adapter {
         const modedAuth = await gleeAuth.processClientAuth({ url, headers, query: {} })
         headers = modedAuth.headers
         url = modedAuth.url
+        if (modedAuth.query) {
+          Object.keys(modedAuth.query).forEach(k => {
+            url.searchParams.set(k, modedAuth.query[k])
+          })
+        }
       }
       this.clients.push({
         channel: channelName,

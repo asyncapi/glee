@@ -77,6 +77,7 @@ class GleeAuth extends EventEmitter {
         const conf = this.httpApiKeyLogic(scheme, headers, query, authKey)
         headers = conf.headers
         query = conf.query
+        
       }
     })
     return { url, headers, query }
