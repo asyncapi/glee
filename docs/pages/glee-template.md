@@ -24,10 +24,13 @@ operations:
     action: receive
     channel:
       $ref: '#/channels/hello'
-  sendHello:
+    reply:
+      channel:
+        $ref: "#/channels/hello"
+  SendHello:
     action: send
-    channel:
-      $ref: '#/channels/hello'
+    channel: 
+      $ref: "#/channels/hello"
 components:
   messages:
     hello:
@@ -70,6 +73,9 @@ operations:
     action: receive
     channel:
       $ref: '#/channels/hello'
+    reply:
+      channel:
+        $ref: "#/channels/hello"
   sendHello:
     action: send
     channel:
@@ -78,8 +84,8 @@ operations:
 
 The channels section defines the communication channels available in the API. In this case, there's a channel named "hello". This channel supports both sending and receiving.
 
-The `receive` action indicates that messages received on the `hello` channel should follow the structure defined in the hello message component.
-The `send` action specifies that the operation with ID `sendHello` is used for sending to the `hello` channel. The message structure is referenced from the hello message component.
+The `receive` action indicates that messages received on the `hello` channel should follow the structure defined in the hello message component. Under this action, `reply` which is in a request-reply operation, contains the payload on `onHello.js` function.
+The `send` action specifies that the operation with ID `sendHello` is used for sending messages to the `hello` channel. The message structure is referenced from the hello message component.
 
 Next is the `payload` property under `hello` message component which is used to understand how the event should look like when publishing to that channel:
 
