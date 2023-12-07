@@ -1,5 +1,5 @@
 ---
-title: 'Introduction'
+title: 'Introduction to Glee Authentication'
 weight: 30
 ---
 
