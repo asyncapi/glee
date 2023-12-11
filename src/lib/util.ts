@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentInterface as AsyncAPIDocument, ChannelInterface, ChannelParameterInterface } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ChannelInterface, ChannelParameterInterface, MessagesInterface } from '@asyncapi/parser'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
@@ -235,5 +235,12 @@ const getParamValue = (parameter: ChannelParameterInterface, message: GleeMessag
 function getParamFromLocation(location: string, message: GleeMessage) {
   if ((message.payload || message.headers) && location) {
     return extractExpressionValueFromMessage(message, location)
+  }
+}
+
+export function getMessagesSchema(operation: { messages: () => MessagesInterface }) {
+  const messagesSchemas = operation.messages().all().map(m => m.payload().json()).filter(schema => !!schema)
+  return {
+    oneOf: messagesSchemas
   }
 }
