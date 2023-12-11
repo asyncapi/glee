@@ -32,6 +32,7 @@ import { getParsedAsyncAPI } from './lib/asyncapiFile.js'
 import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
+import { getMessagesSchema } from './lib/util.js'
 
 dotenvExpand(dotenv.config())
 
@@ -99,11 +100,14 @@ export default async function GleeAppInitializer() {
   await generateDocs(parsedAsyncAPI, config, null)
   parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
     const channel = operation.channels()[0] // operation can have only one channel.
-    const messagesSchemas = operation.messages().filterByReceive().map(m => m.payload().json()).filter(schema => !!schema)
-    const schema = {
-      oneOf: messagesSchemas
-    } as any
-    if (messagesSchemas.length > 0) app.use(channel.id(), validate(schema))
+    const replyChannel = operation.reply()?.channel()
+    if (replyChannel) {
+      const replyMessagesSchemas = getMessagesSchema(operation.reply())
+      if (replyMessagesSchemas.oneOf.length > 0) app.useOutbound(replyChannel.id(), validate(replyMessagesSchemas))
+      app.useOutbound(replyChannel.id(), json2string)
+    }
+    const schema = getMessagesSchema(operation)
+    if (schema.oneOf.length > 0) app.use(channel.id(), validate(schema))
     app.use(channel.id(), (event, next) => {
       triggerFunction({
         app,
@@ -115,11 +119,8 @@ export default async function GleeAppInitializer() {
 
   parsedAsyncAPI.operations().filterBySend().forEach(operation => {
     const channel = operation.channels()[0] // operation can have only one channel.
-    const messagesSchemas = operation.messages().filterBySend().map(m => m.payload().json()).filter(schema => !!schema)
-    const schema = {
-      oneOf: messagesSchemas
-    } as any
-    if (messagesSchemas.length > 0) app.useOutbound(channel.id(), validate(schema))
+    const schema = getMessagesSchema(operation)
+    if (schema.oneOf.length > 0) app.useOutbound(channel.id(), validate(schema))
     app.useOutbound(channel.id(), json2string)
   })
 

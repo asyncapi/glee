@@ -170,19 +170,17 @@ export async function trigger({
     })
 
     functionResult?.reply?.forEach((reply) => {
-      const replyMessages = createReplies(reply, message, parsedAsyncAPI)
-      const hasReplyMessages = replyMessages && replyMessages.length > 0
-      if (!hasReplyMessages) {
+      const replyMessage = createReplies(reply, message, parsedAsyncAPI)
+      if (!replyMessage) {
         return
       }
-      replyMessages.forEach(replyMessage => {
-        const replyChannel = parsedAsyncAPI.channels().get(replyMessage.channel)
-        replyChannel.servers().forEach((server) => {
-          replyMessage.serverName = server.id()
-          app.send(
-            replyMessage
-          )
-        })
+
+      const replyChannel = parsedAsyncAPI.channels().get(replyMessage.channel)
+      replyChannel.servers().forEach((server) => {
+        replyMessage.serverName = server.id()
+        app.send(
+          replyMessage
+        )
       })
 
     })
@@ -201,7 +199,7 @@ export async function trigger({
   }
 }
 
-function createReplies(functionReply: GleeFunctionReturnReply, message: GleeMessage, parsedAsyncAPI: AsyncAPIDocumentInterface): GleeMessage[] {
+function createReplies(functionReply: GleeFunctionReturnReply, message: GleeMessage, parsedAsyncAPI: AsyncAPIDocumentInterface): GleeMessage {
   const operation = message.operation
   const reply = operation.reply()
   if (!reply) {
@@ -224,13 +222,5 @@ function createReplies(functionReply: GleeFunctionReturnReply, message: GleeMess
     replyChannel = channel
   }
 
-  const sendOperations = replyChannel.operations().filterBySend()
-
-  if (!sendOperations || sendOperations.length === 0) {
-    const warningMsg = `No 'send' operations defined for channel '${replyChannel.id()}'. Ensure your AsyncAPI file defines a 'send' operation for this channel to enable message replies. As a result, no reply will be sent for the channel.`
-    logWarningMessage(warningMsg)
-    return []
-  }
-
-  return sendOperations.map(operation => new GleeMessage({ ...functionReply, channel: replyChannel.id(), request: message, operation, connection: message.connection }))
+  return new GleeMessage({ ...functionReply, channel: replyChannel.id(), request: message, operation, connection: message.connection })
 }
