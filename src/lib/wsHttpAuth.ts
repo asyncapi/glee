@@ -77,6 +77,7 @@ class GleeAuth extends EventEmitter {
         const conf = this.httpApiKeyLogic(scheme, headers, query, authKey)
         headers = conf.headers
         query = conf.query
+
         if (query) {
           Object.keys(query).forEach(k => {
             url.searchParams.set(k, query[k])
