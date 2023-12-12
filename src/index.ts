@@ -97,7 +97,7 @@ export default async function GleeAppInitializer() {
   }
   app.use(errorLogger)
   app.useOutbound(errorLogger)
-  await generateDocs(parsedAsyncAPI, config, null)
+  await generateDocs(config)
   parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
     const channel = operation.channels()[0] // operation can have only one channel.
     const replyChannel = operation.reply()?.channel()
