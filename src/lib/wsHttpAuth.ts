@@ -29,30 +29,18 @@ class GleeAuth extends EventEmitter {
   }
 
   checkClientAuthConfig() {
-    this.secReqs = (this.AsyncAPIServer.security() || []).map((sec) => {
-      const secName = Object.keys(sec.values())[0]
-      return {
-        [secName]: this.parsedAsyncAPI.securitySchemes().get(secName).json(),
-      }
-    })
+    const securitySchemeID = this.parsedAsyncAPI.securitySchemes().all().map(s => s.id())
 
     const authKeys = Object.keys(this.auth)
-    const secNames = this.secReqs.map((el) => Object.keys(el)[0])
-
-    authKeys.forEach((el) => {
-      const allowed = secNames.includes(el)
-      if (!allowed) {
-        const err = new Error(
-          `${el} securityScheme is not defined in your asyncapi.yaml config`
-        )
+    authKeys.forEach(authKey => {
+      const allowed = securitySchemeID.includes(authKey)
+      if(!allowed) {
+        const err = new Error(`${authKey} securityScheme is not defined is your asyncapi.yaml config`)
         this.emit('error', err)
       }
     })
 
     return authKeys
-
-    //checkClientUnimplementedSecScheme()
-    //raise a warning about any unimplemented securityScheme
   }
 
   async getAuthConfig(auth) {
@@ -71,9 +59,9 @@ class GleeAuth extends EventEmitter {
   formClientAuth(authKeys, { url, headers, query }) {
     if (!authKeys) return { url, headers }
     authKeys.map((authKey) => {
-      const scheme = this.secReqs.find((sec) => Object.keys(sec) == authKey)
-      const currentScheme = scheme[String(authKey)].scheme()
-      const currentType = scheme[String(authKey)].type()
+      const scheme = this.parsedAsyncAPI.securitySchemes().get(authKey)
+      const currentScheme = scheme.scheme()
+      const currentType = scheme.type()
       if (currentScheme == 'bearer') {
         headers.authentication = `bearer ${this.auth[String(authKey)]}`
         return
@@ -89,6 +77,12 @@ class GleeAuth extends EventEmitter {
         const conf = this.httpApiKeyLogic(scheme, headers, query, authKey)
         headers = conf.headers
         query = conf.query
+
+        if (query) {
+          Object.keys(query).forEach(k => {
+            url.searchParams.set(k, query[k])
+          })
+        }
       }
     })
     return { url, headers, query }
@@ -111,11 +105,12 @@ class GleeAuth extends EventEmitter {
   }
 
   private httpApiKeyLogic(scheme, headers, query, authKey) {
-    const loc = scheme[String(authKey)].json('in')
+    
+    const loc = scheme.in()
     if (loc == 'header') {
-      headers[scheme[String(authKey)].json('name')] = this.auth[String(authKey)]
+      headers[scheme.name()] = this.auth[String(authKey)]
     } else if (loc == 'query') {
-      query[scheme[String(authKey)].json('name')] = this.auth[String(authKey)]
+      query[scheme.name()] = this.auth[String(authKey)]
     }
 
     return { headers, query }
