@@ -39,4 +39,4 @@
 
 #### Defined in
 
-[src/middlewares/validate.ts:7](https://github.com/asyncapi/glee/blob/bc5ceb4/src/middlewares/validate.ts#L7)
+[src/middlewares/validate.ts:7](https://github.com/asyncapi/glee/blob/b4e7607/src/middlewares/validate.ts#L7)

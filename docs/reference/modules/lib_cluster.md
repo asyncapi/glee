@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[src/lib/cluster.ts:9](https://github.com/asyncapi/glee/blob/bc5ceb4/src/lib/cluster.ts#L9)
+[src/lib/cluster.ts:9](https://github.com/asyncapi/glee/blob/b4e7607/src/lib/cluster.ts#L9)

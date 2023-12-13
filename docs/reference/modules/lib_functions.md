@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[src/lib/functions.ts:68](https://github.com/asyncapi/glee/blob/bc5ceb4/src/lib/functions.ts#L68)
+[src/lib/functions.ts:68](https://github.com/asyncapi/glee/blob/b4e7607/src/lib/functions.ts#L68)
 
 ## Functions
 
@@ -41,7 +41,7 @@
 
 #### Defined in
 
-[src/lib/functions.ts:70](https://github.com/asyncapi/glee/blob/bc5ceb4/src/lib/functions.ts#L70)
+[src/lib/functions.ts:70](https://github.com/asyncapi/glee/blob/b4e7607/src/lib/functions.ts#L70)
 
 ___
 
@@ -64,4 +64,4 @@ ___
 
 #### Defined in
 
-[src/lib/functions.ts:108](https://github.com/asyncapi/glee/blob/bc5ceb4/src/lib/functions.ts#L108)
+[src/lib/functions.ts:108](https://github.com/asyncapi/glee/blob/b4e7607/src/lib/functions.ts#L108)
