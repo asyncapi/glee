@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[src/lib/experimentalFlags.ts:3](https://github.com/asyncapi/glee/blob/00b23b6/src/lib/experimentalFlags.ts#L3)
+[src/lib/experimentalFlags.ts:3](https://github.com/asyncapi/glee/blob/bacf20d/src/lib/experimentalFlags.ts#L3)
