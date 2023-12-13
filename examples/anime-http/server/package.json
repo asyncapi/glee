@@ -13,6 +13,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@asyncapi/glee": "file:../../.."
+        "@asyncapi/glee": "file:../../..",
+        "axios": "^1.6.2"
     }
 }
