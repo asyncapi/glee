@@ -20,4 +20,4 @@
 
 #### Defined in
 
-[src/index.ts:43](https://github.com/asyncapi/glee/blob/bc5ceb4/src/index.ts#L43)
+[src/index.ts:43](https://github.com/asyncapi/glee/blob/ec13ae4/src/index.ts#L43)
