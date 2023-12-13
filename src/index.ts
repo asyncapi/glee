@@ -23,7 +23,7 @@ import json2string from './middlewares/json2string.js'
 import validate from './middlewares/validate.js'
 import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import channelLogger from './middlewares/channelLogger.js'
-import generateDocs from './lib/docs.js'
+import { generateDocs } from './lib/docs.js'
 import errorLogger from './middlewares/errorLogger.js'
 import payloadLogger from './middlewares/payloadLogger.js'
 import validateConnection from './middlewares/validateConnection.js'
@@ -97,7 +97,7 @@ export default async function GleeAppInitializer() {
   }
   app.use(errorLogger)
   app.useOutbound(errorLogger)
-  await generateDocs(parsedAsyncAPI, config, null)
+  await generateDocs(config)
   parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
     const channel = operation.channels()[0] // operation can have only one channel.
     const replyChannel = operation.reply()?.channel()
