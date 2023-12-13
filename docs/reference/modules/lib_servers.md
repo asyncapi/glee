@@ -20,4 +20,4 @@
 
 #### Defined in
 
-[src/lib/servers.ts:3](https://github.com/asyncapi/glee/blob/3d8e774/src/lib/servers.ts#L3)
+[src/lib/servers.ts:3](https://github.com/asyncapi/glee/blob/1ad3580/src/lib/servers.ts#L3)
