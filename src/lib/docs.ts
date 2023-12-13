@@ -3,17 +3,14 @@ import { logInfoMessage, logError } from './logger.js'
 import Generator from '@asyncapi/generator'
 import { getAsyncAPIFileContent } from './asyncapiFile.js'
 
-export default async (config) => {
-  const DOCS_CONFIG = config.docs
-  if (!DOCS_CONFIG?.enabled === false) return
+export const generateDocs = async (config) => {
+  if (!isDocsGenerationEnabled(config)) return
+
   const asyncAPIFileContent = await getAsyncAPIFileContent()
-  logInfoMessage(`Generating docs for your parsed specification...`)
-  const generator = new Generator(
-    DOCS_CONFIG?.template || '@asyncapi/markdown-template',
-    path.resolve('./', DOCS_CONFIG?.folder || 'docs'
-    ),
-    { forceWrite: true }
-  )
+  logInfoMessage('Generating docs for your parsed specification...')
+
+  const generator = createGenerator(config)
+
   try {
     await generator.generateFromString(asyncAPIFileContent)
     logInfoMessage('Successfully generated docs')
@@ -21,4 +18,15 @@ export default async (config) => {
     logError(error)
     return error
   }
+}
+
+const isDocsGenerationEnabled = (config) => {
+  return config.docs?.enabled !== false
+}
+
+const createGenerator = (config) => {
+  const template = config.docs?.template || '@asyncapi/markdown-template'
+  const outputDir = path.resolve('./', config.docs?.folder || 'docs')
+
+  return new Generator(template, outputDir, { forceWrite: true })
 }

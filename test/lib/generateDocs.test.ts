@@ -1,52 +1,45 @@
-import 'jest-extended'
-import { tmpdir } from 'os'
-import fs from 'fs-extra'
-import generateDocs from '../../src/lib/docs'
-import {AsyncAPIDocumentV2 as AsyncAPIDocument} from '@asyncapi/parser'
+import { jest } from '@jest/globals'
+jest.unstable_mockModule('../../src/lib/asyncapiFile.js', () => ({
+  getAsyncAPIFileContent: jest.fn(),
+}))
 
-const TEST_ASYNCAPI_DOCUMENT = new AsyncAPIDocument({
-  asyncapi: '2.2.0',
-  info: {
-    title: 'Account Service',
-    version: '1.0.0',
-    description: 'lorem ipsum',
-  },
-  servers: {
-    test: {
-      url: 'mqtt://fake-url',
-      protocol: 'mqtt',
-    },
-  },
-  channels: {
-    'test/channel': {
-      publish: {
-        message: {
-          payload: {
-            type: 'string',
-          },
-        },
-      },
-    },
-  },
-})
+jest.unstable_mockModule('../../src/lib/logger.js', () => ({
+  logInfoMessage: jest.fn(),
+  logError: jest.fn()
+}))
 
-const CONFIG_TEST_DATA = {
-  docs: {
-    enabled: false,
-    folder: "output",
-    template: "@asyncapi/markdown-template",
-  },
-};
+jest.unstable_mockModule('@asyncapi/generator', () => ({
+  default: function () {
+    return { generateFromString: jest.fn() }
+  }
+}));
+
 
 describe('generateDocs', () => {
-  it('should generate documentation', async () => {
-    const testDir = tmpdir() + `/${CONFIG_TEST_DATA.docs.folder}`
-    fs.emptyDirSync(testDir)
-    const result = await generateDocs(
-      TEST_ASYNCAPI_DOCUMENT,
-      CONFIG_TEST_DATA,
-      testDir
-    )
-    expect(result).toBe(JSON.stringify(result))
-  }, 100000)
+  const config = { docs: { enabled: true } }
+  it('should not proceed if docs generation is disabled', async () => {
+    const { getAsyncAPIFileContent } = await import('../../src/lib/asyncapiFile.js')
+    const { generateDocs } = await import('../../src/lib/docs.js')
+    const config = { docs: { enabled: false } }
+    await generateDocs(config)
+    expect(getAsyncAPIFileContent).not.toHaveBeenCalled()
+  });
+
+  it('should proceed with docs generation when enabled', async () => {
+    const { getAsyncAPIFileContent } = await import('../../src/lib/asyncapiFile.js')
+    const { generateDocs } = await import('../../src/lib/docs.js')
+    await generateDocs(config)
+    expect(getAsyncAPIFileContent).toHaveBeenCalled()
+  });
+
+  it('should generate docs successfully', async () => {
+    const { getAsyncAPIFileContent } = await import('../../src/lib/asyncapiFile.js')
+    const { generateDocs } = await import('../../src/lib/docs.js')
+    const { logInfoMessage } = await import('../../src/lib/logger.js')
+    await generateDocs(config);
+
+    expect(getAsyncAPIFileContent).toHaveBeenCalled();
+    expect(logInfoMessage).toHaveBeenCalledWith('Successfully generated docs');
+  });
+
 })
