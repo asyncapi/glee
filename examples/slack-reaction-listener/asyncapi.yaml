@@ -38,7 +38,7 @@ channels:
         method: post
     servers:
       - $ref: "#/servers/OpenAI_HTTPS"
-    address: /v1/chat/completions
+    address: v1/chat/completions
     messages:
       OpenAIRequest: 
         $ref: "#/components/messages/OpenAIRequest"
@@ -58,6 +58,9 @@ channels:
 operations:
   sentSlackMessage:
     action: send
+    bindings:
+      http:
+        method: POST
     channel:
       $ref: "#/channels/SlackPostMessage"
     messages:
@@ -66,14 +69,11 @@ operations:
     action: receive
     channel:
       $ref: "#/channels/SlackPostMessage"
-  AckEvent:
-    action: send
-    channel:
-      $ref: "#/channels/SlackEventStream"
-    messages:
-      - $ref: "#/channels/SlackEventStream/messages/slackAckEvent"
   SendToOpenAI:
     action: send
+    bindings:
+      http:
+        method: POST
     channel: 
       $ref: "#/channels/OpenAICompletion"
     messages:
@@ -91,6 +91,8 @@ operations:
     reply:
       channel: 
         $ref: "#/channels/SlackEventStream"
+      messages:
+        - $ref: "#/channels/SlackEventStream/messages/slackAckEvent"
     action: receive
     channel:
       $ref: "#/channels/SlackEventStream"
