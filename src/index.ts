@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import * as dotenv from 'dotenv'
 import dotenvExpand from 'dotenv-expand'
 import Glee from './lib/glee.js'
-import { logWelcome, logLineWithIcon } from './lib/logger.js'
+import { logWelcome, logLineWithIcon, logWarningMessage } from './lib/logger.js'
 import experimentalFlags from './lib/experimentalFlags.js'
 import registerAdapters from './registerAdapters.js'
 import {
@@ -33,6 +33,7 @@ import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 import { getMessagesSchema } from './lib/util.js'
+import { ChannelInterface, OperationReplyInterface } from '@asyncapi/parser'
 
 dotenvExpand(dotenv.config())
 
@@ -100,12 +101,9 @@ export default async function GleeAppInitializer() {
   await generateDocs(config)
   parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
     const channel = operation.channels()[0] // operation can have only one channel.
-    const replyChannel = operation.reply()?.channel()
-    if (replyChannel) {
-      const replyMessagesSchemas = getMessagesSchema(operation.reply())
-      if (replyMessagesSchemas.oneOf.length > 0) app.useOutbound(replyChannel.id(), validate(replyMessagesSchemas))
-      app.useOutbound(replyChannel.id(), json2string)
-    }
+    const reply = operation.reply()
+    setUpReplyMiddlewares(reply, app)
+
     const schema = getMessagesSchema(operation)
     if (schema.oneOf.length > 0) app.use(channel.id(), validate(schema))
     app.use(channel.id(), (event, next) => {
@@ -230,4 +228,20 @@ export default async function GleeAppInitializer() {
   })
 
   app.listen().catch(console.error)
+}
+
+
+export function setUpReplyMiddlewares(reply: OperationReplyInterface, app: Glee) {
+  const channel = reply.channel()
+  if (!channel) return
+  const hasSendOperation = channel.operations().filterBySend().length > 0
+  if (hasSendOperation) {
+    logWarningMessage(`Warning: Channel '${channel.id()}' is configured with both reply and send operations. The payload for the reply will be validated against the send operation's schema. and the binding of the send operation is going to be used for this reply. To avoid potential conflicts and streamline message processing, consider using only the send operation in your Glee function. Remove the reply operation if it's not required for your use case.`)
+    return
+  }
+  const replyMessagesSchemas = getMessagesSchema(reply)
+  if (replyMessagesSchemas.oneOf.length > 0) {
+    app.useOutbound(channel.id(), validate(replyMessagesSchemas))
+  }
+  app.useOutbound(channel.id(), json2string)
 }

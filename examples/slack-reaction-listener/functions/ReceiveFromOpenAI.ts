@@ -20,6 +20,7 @@ const myFunction: GleeFunction = async (event) => {
       },
       headers: {
         Authorization: `Bearer ${process.env.SLACK_HTTP}`,
+        'Content-Type': 'application/json'
       }
     }]
   }

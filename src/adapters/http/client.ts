@@ -54,10 +54,14 @@ class HttpClientAdapter extends Adapter {
       logWarningMessage(`"${method}" can't have a body. Please make sure you are using the correct HTTP method for ${httpURL}. Ignoring the body...`)
       delete gotRequest.body
     }
-
-    const response = await got(gotRequest)
-    const msg = this._createMessage(message, channel.id(), response.body)
-    this.emit('message', msg, http)
+    try {
+      const response = await got(gotRequest)
+      const msg = this._createMessage(message, channel.id(), response.body)
+      this.emit('message', msg, http)
+    } catch (e) {
+      const errorMessage = `Error encountered while sending message. Check the request configuration and network status. Method: ${method}, URL: ${url}, Headers: ${JSON.stringify(headers, null, 2)}, Payload: ${JSON.stringify(message.payload, null, 2)}, Query: ${JSON.stringify(query, null, 2)}`
+      throw new Error(errorMessage)
+    }
   }
 
   async _applyAuthConfiguration(authenticatable: Authenticatable): Promise<Authenticatable> {
@@ -76,7 +80,7 @@ class HttpClientAdapter extends Adapter {
   }
 
   _getHttpMethod(operation: OperationInterface): Method {
-    const method = operation.bindings().get("http").json().method
+    const method = operation.bindings().get("http")?.json()?.method
     if (!method) {
       logWarningMessage(`"Warning: HTTP Method Not Specified
         In the operation '${operation.id()}', no HTTP method is specified. The system will default to using the GET method. Ensure that this is the intended behavior or specify the appropriate HTTP method in the http operation bindings."`)
@@ -100,7 +104,7 @@ class HttpClientAdapter extends Adapter {
 
   _validateMessage(message: GleeMessage) {
 
-    const querySchema = message.operation.bindings().get("http").json().query
+    const querySchema = message.operation.bindings().get("http")?.json()?.query
     if (querySchema) this._validate(message.query, querySchema)
     const messages = message.operation.messages().all()
     if (!messages.length) return
