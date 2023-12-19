@@ -1,6 +1,6 @@
 ---
 title: Function and Lifecycle events
-weight: 80
+weight: 40
 ---
 
 # Functions
@@ -44,13 +44,14 @@ export default async function (event) {
 |channel|string|The channel/topic you want to send the message to. Defaults to `event.channel`, i.e., the same channel as the received event.
 |server|string|The server/broker you want to send the message to. Defaults to `event.serverName`, i.e., the same server as the received event.
 ## How does Glee know which function it should execute?
-Glee reads your `asyncapi.yaml` file and searches for all the `publish` operations containing an `operationId` attribute. The `operationId` serves as a mechanism to bind a given operation to a specific function file. For instance, given the folowing AsyncAPI definition:
+Glee reads your `asyncapi.yaml` file and searches for all the `receive` actions containing an `operations` attribute field. The `operations` field serves as a mechanism to bind a given operation to a specific function file. For instance, given the folowing AsyncAPI definition:
 ```yaml
 ...
-channels:
-  hello:
-    publish:
-      operationId: onHello
+operations:
+  onHello: # operation ID
+    action: receive
+    channel:
+      $ref: '#/channels/hello'
       ...
 ```
 
