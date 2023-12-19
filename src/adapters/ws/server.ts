@@ -218,10 +218,10 @@ class WebSocketsAdapter extends Adapter {
   }
 
   private _wrapCallbackDecorator(cb) {
-    return function done(val: boolean, code = 401, message = 'Unauthorized') {
-      cb(val, code, message)
+    return function done(val: boolean) {
+      cb(val)
       if (val === false) {
-        const err = new Error(`${code} ${message}`)
+        const err = new Error("401, Unauthorized")
         this.emit('error', err)
       }
     }
