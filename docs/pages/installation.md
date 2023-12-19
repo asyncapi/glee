@@ -1,6 +1,6 @@
 ---
 title: 'Installation guide'
-weight: 40
+weight: 20
 ---
 
 ## Glee Installation

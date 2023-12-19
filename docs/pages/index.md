@@ -1,6 +1,6 @@
 ---
 title: Getting Started
-weight: 30
+weight: 10
 ---
 
 ## Introduction
