@@ -61,8 +61,8 @@ describe('glee', () => {
       const msg = new GleeMessage({
         payload: 'test'
       })
-      const middlewareFn = jest.fn()
-      const middlewareFn2:any = jest.fn()
+      const middlewareFn = jest.fn(async (message, next: any) => next())
+      const middlewareFn2 = jest.fn(async (message, next: any) => next())
       const outboundMiddlewareFn = jest.fn()
       const app = new Glee()
       app.use(middlewareFn)
@@ -78,9 +78,9 @@ describe('glee', () => {
     
     it('registers inbound error middlewares in order', async () => {
       const middlewareFn = jest.fn()
-      const errorMiddlewareFn = jest.fn(async (err, message, next) => next)
-      const errorMiddlewareFn2:any = jest.fn(async (err, message, next) => next)
-      const outboundMiddlewareFn = jest.fn(async (err, message, next) => next)
+      const errorMiddlewareFn = jest.fn((err, message, next: any) => next())
+      const errorMiddlewareFn2: any = jest.fn(async (err, message, next: any) => next())
+      const outboundMiddlewareFn = jest.fn(async (err, message, next: any) => next())
       const app = new Glee()
       app.use(middlewareFn)
       app.use(errorMiddlewareFn)
@@ -101,8 +101,8 @@ describe('glee', () => {
       const msg = new GleeMessage({
         payload: 'test'
       })
-      const middlewareFn = jest.fn()
-      const middlewareFn2:any = jest.fn()
+      const middlewareFn = jest.fn(async (message, next: any) => next())
+      const middlewareFn2 = jest.fn(async (message, next: any) => next())
       const inboundMiddlewareFn = jest.fn()
       const app = new Glee()
       app.use(inboundMiddlewareFn)
@@ -141,7 +141,7 @@ describe('glee', () => {
   
   describe('connect()', () => {
     it('tells all adapters to connect', async () => {
-      TEST_ADAPTER.prototype.connect = jest.fn()
+      TEST_ADAPTER.prototype.connect = jest.fn(async () => { })
       const app = new Glee()
       app.addAdapter(TEST_ADAPTER, {
         serverName: TEST_SERVER_NAME,

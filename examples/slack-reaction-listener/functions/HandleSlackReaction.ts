@@ -16,7 +16,8 @@ const myFunction: GleeFunction = async ({ payload }) => {
       server: "OpenAI_HTTPS",
       channel: "OpenAICompletion",
       headers: {
-        'Authorization': `Bearer ${process.env.CHAT_API}`
+        'Authorization': `Bearer ${process.env.CHAT_API}`,
+        'Content-Type': 'application/json',
       },
       payload: {
         model: "gpt-3.5-turbo",

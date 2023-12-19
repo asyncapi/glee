@@ -6,21 +6,19 @@
 
 ### Functions
 
-- [default](lib_docs.md#default)
+- [generateDocs](lib_docs.md#generatedocs)
 
 ## Functions
 
-### default
+### generateDocs
 
-▸ **default**(`spec`, `config`, `resDir`): `Promise`<`any`\>
+▸ **generateDocs**(`config`): `Promise`<`any`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `spec` | `any` |
 | `config` | `any` |
-| `resDir` | `any` |
 
 #### Returns
 
@@ -28,4 +26,4 @@
 
 #### Defined in
 
-[src/lib/docs.ts:5](https://github.com/asyncapi/glee/blob/b4e7607/src/lib/docs.ts#L5)
+[src/lib/docs.ts:6](https://github.com/asyncapi/glee/blob/858a720/src/lib/docs.ts#L6)

@@ -9,6 +9,9 @@ servers:
   Slack_WebSocket:
     host: wss-primary.slack.com
     protocol: wss
+    security:
+      - $ref: '#/components/securitySchemes/app_id'
+      - $ref: '#/components/securitySchemes/ticket'
   Slack_HTTPS:
     host:  slack.com
     protocol: https
@@ -35,53 +38,52 @@ channels:
         method: post
     servers:
       - $ref: "#/servers/OpenAI_HTTPS"
-    address: /v1/chat/completions
+    address: v1/chat/completions
     messages:
       OpenAIRequest: 
         $ref: "#/components/messages/OpenAIRequest"
+      OpenAICompletionResponse: 
+        $ref: "#/components/messages/OpenAICompletionResponse"
   SlackEventStream:
     servers:
       - $ref: "#/servers/Slack_WebSocket"
-    address: /link/?ticket={ticket}&app_id={app_id}
-    parameters:
-      ticket:
-        default: <your-ticket>
-      app_id:
-        default: <your-app-id>
+    address: /link/
     messages:
       SlackReactionAdded:
         $ref: "#/components/messages/SlackReactionAdded"
       GenericErrorPayload:
         $ref: "#/components/messages/GenericErrorPayload"
+      slackAckEvent:
+        $ref: "#/components/messages/slackAckEvent"
 operations:
   sentSlackMessage:
     action: send
+    bindings:
+      http:
+        method: POST
     channel:
       $ref: "#/channels/SlackPostMessage"
     messages:
-      - $ref: "#/components/messages/slackResponse"
+      - $ref: "#/channels/SlackPostMessage/messages/slackResponse"
   receiveSlackConfirmation:
     action: receive
     channel:
       $ref: "#/channels/SlackPostMessage"
-  AckEvent:
-    action: send
-    channel:
-      $ref: "#/channels/SlackEventStream"
-    messages:
-      - $ref: "#/components/messages/slackAckEvent"
   SendToOpenAI:
     action: send
+    bindings:
+      http:
+        method: POST
     channel: 
       $ref: "#/channels/OpenAICompletion"
     messages:
-      - $ref: "#/components/messages/slackResponse"
+      - $ref: "#/channels/OpenAICompletion/messages/OpenAIRequest"
   ReceiveFromOpenAI:
     action: receive
     channel:
       $ref: "#/channels/OpenAICompletion"
     messages:
-      - $ref: "#/components/messages/OpenAICompletionResponse"
+      - $ref: "#/channels/OpenAICompletion/messages/OpenAICompletionResponse"
     reply:
       channel:
         $ref: "#/channels/SlackPostMessage"
@@ -89,13 +91,24 @@ operations:
     reply:
       channel: 
         $ref: "#/channels/SlackEventStream"
+      messages:
+        - $ref: "#/channels/SlackEventStream/messages/slackAckEvent"
     action: receive
     channel:
       $ref: "#/channels/SlackEventStream"
     messages:
-      - $ref: "#/components/messages/SlackReactionAdded"
-      - $ref: "#/components/messages/GenericErrorPayload"
+      - $ref: "#/channels/SlackEventStream/messages/SlackReactionAdded"
+      - $ref: "#/channels/SlackEventStream/messages/GenericErrorPayload"
 components:
+  securitySchemes:
+    ticket:
+      type: httpApiKey
+      name: ticket
+      in: query
+    app_id:
+      type: httpApiKey
+      name: app_id
+      in: query
   messages:
     slackAckEvent:
       payload:

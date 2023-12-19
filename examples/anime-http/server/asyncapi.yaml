@@ -1,21 +1,28 @@
-asyncapi: 2.6.0
+asyncapi: 3.0.0
 info:
   title: AsyncAPI IMDB server
   version: 1.0.0
   description: This app is a dummy server that would stream the trending/upcoming anime.
 servers:
   trendingAnimeServer:
-    url: 'http://localhost:8081'
+    host: 'localhost:8081'
     protocol: http
     security:
-      - token: []
-      - userPass: []
-      - apiKey: []
-      - UserOrPassKey: []
-      - cert: []
-      - oauth: []
+      - $ref: '#/components/securitySchemes/token'
+      - $ref: '#/components/securitySchemes/userPass'
+      - $ref: '#/components/securitySchemes/apiKey'
+      - $ref: '#/components/securitySchemes/UserOrPassKey'
+      - $ref: '#/components/securitySchemes/cert'
+      - $ref: '#/components/securitySchemes/oauth'
 channels:
   trendingAnime:
+    address: /trendingAnime
+    messages:
+      trendingAnimeController.message:
+        $ref: '#/components/messages/trendingAnime'
+      subscribe.message:
+        payload:
+          type: object
     bindings:
       http:
         type: request
@@ -25,20 +32,27 @@ channels:
           $ref: '#/components/schemas/request'
         body:
           $ref: '#/components/schemas/request'
-    publish:
-      operationId: trendingAnimeController
-      message:
-        $ref: '#/components/messages/trendingAnime'
-    subscribe:
-      message:
-        payload:
-          type: object
+operations:
+  trendingAnimeController:
+    action: receive
+    channel:
+      $ref: '#/channels/trendingAnime'
+    messages:
+      - $ref: '#/components/messages/trendingAnime'
+    reply:
+      channel:
+        $ref: "#/channels/trendingAnime"
+      messages:
+        - $ref: '#/components/messages/trendingAnimeReply'
 components:
   messages:
     trendingAnime:
       summary: Data required to populate trending anime
       payload:
         $ref: '#/components/schemas/request'
+    trendingAnimeReply:
+      payload:
+        type: object
   schemas:
     request:
       type: object
@@ -77,10 +91,10 @@ components:
     cert:
       type: X509
     oauth:
-        type: oauth2
-        flows:
-          clientCredentials:
-            tokenUrl: https://example.com/api/oauth/dialog
-            scopes:
-              delete:pets: modify pets in your account
-              update:pets: read your pets
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://example.com/api/oauth/dialog'
+          availableScopes:
+            'delete:pets': modify pets in your account
+            'update:pets': read your pets
