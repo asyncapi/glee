@@ -48,7 +48,7 @@ Glee reads your `asyncapi.yaml` file and searches for all the `receive` actions 
 ```yaml
 ...
 operations:
-  onHello:
+  onHello: # operation ID
     action: receive
     channel:
       $ref: '#/channels/hello'
