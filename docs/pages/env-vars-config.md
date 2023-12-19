@@ -1,6 +1,6 @@
 ---
 title: Environment variables and Configuration file
-weight: 80
+weight: 50
 ---
 
 # Environment Variables

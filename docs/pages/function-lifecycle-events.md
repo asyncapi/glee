@@ -1,6 +1,6 @@
 ---
 title: Function and Lifecycle events
-weight: 80
+weight: 40
 ---
 
 # Functions
