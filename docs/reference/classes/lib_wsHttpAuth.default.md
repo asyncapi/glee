@@ -83,7 +83,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:17](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L17)
+[src/lib/wsHttpAuth.ts:17](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L17)
 
 ## Properties
 
@@ -93,7 +93,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:10](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L10)
+[src/lib/wsHttpAuth.ts:10](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L10)
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:12](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L12)
+[src/lib/wsHttpAuth.ts:12](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L12)
 
 ___
 
@@ -113,7 +113,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:11](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L11)
+[src/lib/wsHttpAuth.ts:11](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L11)
 
 ___
 
@@ -123,7 +123,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:8](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L8)
+[src/lib/wsHttpAuth.ts:8](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L8)
 
 ___
 
@@ -133,7 +133,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:7](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L7)
+[src/lib/wsHttpAuth.ts:7](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L7)
 
 ___
 
@@ -143,7 +143,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:9](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L9)
+[src/lib/wsHttpAuth.ts:9](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L9)
 
 ___
 
@@ -254,7 +254,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:163](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L163)
+[src/lib/wsHttpAuth.ts:163](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L163)
 
 ___
 
@@ -268,7 +268,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:31](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L31)
+[src/lib/wsHttpAuth.ts:31](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L31)
 
 ___
 
@@ -394,7 +394,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:59](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L59)
+[src/lib/wsHttpAuth.ts:59](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L59)
 
 ___
 
@@ -414,7 +414,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:46](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L46)
+[src/lib/wsHttpAuth.ts:46](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L46)
 
 ___
 
@@ -460,7 +460,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:121](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L121)
+[src/lib/wsHttpAuth.ts:121](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L121)
 
 ___
 
@@ -488,7 +488,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:107](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L107)
+[src/lib/wsHttpAuth.ts:107](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L107)
 
 ___
 
@@ -797,7 +797,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:156](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L156)
+[src/lib/wsHttpAuth.ts:156](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L156)
 
 ___
 
@@ -1050,7 +1050,7 @@ ___
 
 #### Defined in
 
-[src/lib/wsHttpAuth.ts:91](https://github.com/asyncapi/glee/blob/60484de/src/lib/wsHttpAuth.ts#L91)
+[src/lib/wsHttpAuth.ts:91](https://github.com/asyncapi/glee/blob/c6fade7/src/lib/wsHttpAuth.ts#L91)
 
 ___
 
