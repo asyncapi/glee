@@ -50,11 +50,11 @@ class HttpAdapter extends Adapter {
       })
       return {
         promise,
-        done: (val: boolean, code = 401, message = 'Unauthorized') => {
+        done: (val: boolean) => {
           if (val) {
             resolveFunc(true)
           } else {
-            rejectFunc({ code, message })
+            rejectFunc({ code: 401, message: 'Unauthorized' })
           }
         },
       }
