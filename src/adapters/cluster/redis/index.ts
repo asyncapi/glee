@@ -22,6 +22,7 @@ class RedisClusterAdapter extends ClusterAdapter {
   }
 
   async _connect(): Promise<this> {
+    try {
     this._channelName = `${this.serverName}-channel`
 
     this._publisher = createClient({
@@ -62,6 +63,10 @@ class RedisClusterAdapter extends ClusterAdapter {
 
     this.emit('connect', { name: this.name(), adapter: this })
     return this
+    } catch (error) {
+      console.error('Error connecting to Redis:', error)
+      throw error
+    }
   }
 
   async _send(message: GleeMessage): Promise<void> {

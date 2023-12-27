@@ -10,26 +10,27 @@ class KafkaAdapter extends Adapter {
     return 'Kafka adapter'
   }
 
-  async connect() {
-    const kafkaOptions: KafkaAdapterConfig = await this.resolveProtocolConfig(
-      'kafka'
-    )
-    const auth: KafkaAuthConfig = await this.getAuthConfig(kafkaOptions?.auth)
-    const securityRequirements = this.AsyncAPIServer.security().map(
-      (sec) => {
-        const secName = Object.keys(sec.values())[0]
-        return this.parsedAsyncAPI.components().securitySchemes().get(secName)
-      }
-    )
-    const userAndPasswordSecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'userPassword'
-    )
-    const scramSha256SecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'scramSha256'
-    )
-    const scramSha512SecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'scramSha512'
-    )
+  async _connect() {
+    try {
+      const kafkaOptions: KafkaAdapterConfig = await this.resolveProtocolConfig(
+        'kafka'
+      )
+      const auth: KafkaAuthConfig = await this.getAuthConfig(kafkaOptions?.auth)
+      const securityRequirements = this.AsyncAPIServer.security().map(
+        (sec) => {
+          const secName = Object.keys(sec.values())[0]
+          return this.parsedAsyncAPI.components().securitySchemes().get(secName)
+        }
+      )
+      const userAndPasswordSecurityReq = securityRequirements.find(
+        (sec) => sec.type() === 'userPassword'
+      )
+      const scramSha256SecurityReq = securityRequirements.find(
+        (sec) => sec.type() === 'scramSha256'
+      )
+      const scramSha512SecurityReq = securityRequirements.find(
+        (sec) => sec.type() === 'scramSha512'
+      )
 
     const brokerUrl = new URL(this.AsyncAPIServer.url())
     this.kafka = new Kafka({
@@ -74,6 +75,9 @@ class KafkaAdapter extends Adapter {
         this.emit('message', msg, consumer)
       },
     })
+    } catch (error) {
+      console.error('Error connecting to Kafka:', error)
+    }
   }
 
   async send(message: GleeMessage) {

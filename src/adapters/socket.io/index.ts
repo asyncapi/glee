@@ -18,6 +18,7 @@ class SocketIOAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> {
+    try {
     const config = await this.resolveProtocolConfig('ws')
     const websocketOptions = config?.server
     const serverUrl: URL = new URL(this.serverUrlExpanded)
@@ -73,6 +74,10 @@ class SocketIOAdapter extends Adapter {
       this.server.listen(port)
     }
     return this
+    } catch (error) {
+      console.error('An error occurred while connecting:', error)
+      throw error
+    }
   }
 
   async _send(message: GleeMessage): Promise<void> {

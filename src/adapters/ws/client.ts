@@ -29,6 +29,7 @@ class WsClientAdapter extends Adapter {
   }
 
   private async _connect(): Promise<this> {
+    try{
     const channelsOnThisServer = this.getWsChannels()
 
     debug("connecting to ", this.serverName)
@@ -80,6 +81,10 @@ class WsClientAdapter extends Adapter {
       })
     }
     return this
+    }catch (error) {
+      console.error('An error occurred while connecting:', error)
+      throw error
+    }
   }
 
   private getWsChannels() {
