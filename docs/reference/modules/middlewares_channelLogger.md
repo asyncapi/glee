@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[src/middlewares/channelLogger.ts:5](https://github.com/asyncapi/glee/blob/4d135c8/src/middlewares/channelLogger.ts#L5)
+[src/middlewares/channelLogger.ts:5](https://github.com/asyncapi/glee/blob/88ae0e8/src/middlewares/channelLogger.ts#L5)
