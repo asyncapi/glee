@@ -232,7 +232,7 @@ export default async function GleeAppInitializer() {
 
 
 export function setUpReplyMiddlewares(reply: OperationReplyInterface, app: Glee) {
-  const channel = reply.channel()
+  const channel = reply?.channel()
   if (!channel) return
   const hasSendOperation = channel.operations().filterBySend().length > 0
   if (hasSendOperation) {

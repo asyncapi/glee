@@ -182,8 +182,7 @@ class WebSocketsAdapter extends Adapter {
 
   private _extractPathname(req: IncomingMessage) {
     const serverUrl = new URL(this.serverUrlExpanded)
-    let { pathname } = new URL(req.url, serverUrl)
-    pathname = pathname.startsWith('/') ? pathname.substring(1) : pathname
+    const { pathname } = new URL(req.url, serverUrl)
     return pathname || '/'
   }
 
