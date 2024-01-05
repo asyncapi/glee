@@ -37,11 +37,21 @@ class MqttAdapter extends Adapter {
   }
 
   async connect(): Promise<this> {
-    return this._connect()
+    try{
+      return this._connect()
+    } catch(error){
+      console.error('Error connecting to MQTT:', error)
+      throw error
+    }
   }
 
   async send(message: GleeMessage) {
-    return this._send(message)
+    try{
+      return this._send(message)
+    } catch(error){
+      console.error('Error sending message to MQTT:', error)
+      throw error
+    }
   }
 
   private getSecurityReqs() {

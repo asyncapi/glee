@@ -14,11 +14,21 @@ class RedisClusterAdapter extends ClusterAdapter {
   }
 
   async connect(): Promise<this> {
-    return this._connect()
+    try{
+      return this._connect()
+    } catch (error) { 
+      console.error('Error connecting to Redis:', error)
+      throw error
+    }
   }
 
   async send(message: GleeMessage): Promise<void> {
+    try{
     return this._send(message)
+    } catch (error) {
+      console.error('Error sending message to Redis:', error)
+      throw error
+    }
   }
 
   async _connect(): Promise<this> {

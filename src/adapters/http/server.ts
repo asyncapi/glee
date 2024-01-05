@@ -17,11 +17,21 @@ class HttpAdapter extends Adapter {
   }
 
   async connect(): Promise<this> {
-    return this._connect()
+    try {
+      return this._connect()
+    } catch (error) {
+      console.error('Error connecting to HTTP:', error)
+      throw error
+    }
   }
 
   async send(message: GleeMessage): Promise<void> {
-    return this._send(message)
+    try{
+      return this._send(message)
+    } catch (error) {
+      console.error('Error sending message to HTTP:', error)
+      throw error
+    }
   }
 
   async _readRequestBody(req: http.IncomingMessage): Promise<string> {
