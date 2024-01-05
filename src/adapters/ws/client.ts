@@ -75,9 +75,10 @@ class WsClientAdapter extends Adapter {
         this.emit('message', msg, client)
       })
 
-      client.on('error', (err) => {
-        console.log('GETING ERROR')
-        this.emit('error', err)
+      client.on('error', (err: any) => {
+        const errMessage = `WebSocket client error on channel '${channel}'`
+        this.emit('error', new Error(errMessage))
+        console.error(err)
       })
     }
     return this
