@@ -15,20 +15,17 @@ class KafkaAdapter extends Adapter {
       'kafka'
     )
     const auth: KafkaAuthConfig = await this.getAuthConfig(kafkaOptions?.auth)
-    const securityRequirements = this.AsyncAPIServer.security().map(
-      (sec) => {
-        const secName = Object.keys(sec.values())[0]
-        return this.parsedAsyncAPI.components().securitySchemes().get(secName)
-      }
+    const securityRequirements = this.AsyncAPIServer.json().security.map(
+      (sec) => sec
     )
     const userAndPasswordSecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'userPassword'
+      (sec) => sec.type === 'userPassword'
     )
     const scramSha256SecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'scramSha256'
+      (sec) => sec.type === 'scramSha256'
     )
     const scramSha512SecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'scramSha512'
+      (sec) => sec.type === 'scramSha512'
     )
 
     const brokerUrl = new URL(this.AsyncAPIServer.url())
