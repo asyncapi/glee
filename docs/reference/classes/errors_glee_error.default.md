@@ -53,7 +53,7 @@ Error.constructor
 
 #### Defined in
 
-[src/errors/glee-error.ts:5](https://github.com/asyncapi/glee/blob/dd79334/src/errors/glee-error.ts#L5)
+[src/errors/glee-error.ts:5](https://github.com/asyncapi/glee/blob/d9b503a/src/errors/glee-error.ts#L5)
 
 ## Properties
 
@@ -63,7 +63,7 @@ Error.constructor
 
 #### Defined in
 
-[src/errors/glee-error.ts:3](https://github.com/asyncapi/glee/blob/dd79334/src/errors/glee-error.ts#L3)
+[src/errors/glee-error.ts:3](https://github.com/asyncapi/glee/blob/d9b503a/src/errors/glee-error.ts#L3)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[src/errors/glee-error.ts:2](https://github.com/asyncapi/glee/blob/dd79334/src/errors/glee-error.ts#L2)
+[src/errors/glee-error.ts:2](https://github.com/asyncapi/glee/blob/d9b503a/src/errors/glee-error.ts#L2)
 
 ___
 
@@ -178,7 +178,7 @@ node_modules/@types/node/globals.d.ts:13
 
 #### Defined in
 
-[src/errors/glee-error.ts:16](https://github.com/asyncapi/glee/blob/dd79334/src/errors/glee-error.ts#L16)
+[src/errors/glee-error.ts:16](https://github.com/asyncapi/glee/blob/d9b503a/src/errors/glee-error.ts#L16)
 
 ___
 
@@ -192,7 +192,7 @@ ___
 
 #### Defined in
 
-[src/errors/glee-error.ts:12](https://github.com/asyncapi/glee/blob/dd79334/src/errors/glee-error.ts#L12)
+[src/errors/glee-error.ts:12](https://github.com/asyncapi/glee/blob/d9b503a/src/errors/glee-error.ts#L12)
 
 ## Methods
 
