@@ -196,7 +196,6 @@ class MqttAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> {
-    try {
     const mqttOptions: MqttAdapterConfig = await this.resolveProtocolConfig(
       'mqtt'
     )
@@ -249,10 +248,7 @@ class MqttAdapter extends Adapter {
     }
 
     return connectClient()
-    } catch (error) {
-      console.error(error)
-      throw error
-    }
+
   }
 
   _send(message: GleeMessage): Promise<void> {

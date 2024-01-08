@@ -10,7 +10,7 @@ class KafkaAdapter extends Adapter {
     return 'Kafka adapter'
   }
 
-  async _connect() {
+  async connect() {
     try {
       const kafkaOptions: KafkaAdapterConfig = await this.resolveProtocolConfig(
         'kafka'
