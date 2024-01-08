@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[src/index.ts:44](https://github.com/asyncapi/glee/blob/37c6c45/src/index.ts#L44)
+[src/index.ts:44](https://github.com/asyncapi/glee/blob/8d4f707/src/index.ts#L44)
 
 ___
 
@@ -42,4 +42,4 @@ ___
 
 #### Defined in
 
-[src/index.ts:234](https://github.com/asyncapi/glee/blob/37c6c45/src/index.ts#L234)
+[src/index.ts:234](https://github.com/asyncapi/glee/blob/8d4f707/src/index.ts#L234)
