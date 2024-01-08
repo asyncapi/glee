@@ -1,23 +1,47 @@
-asyncapi: 2.4.0
+asyncapi: 3.0.0
 info:
   title: Kafka test
   version: '1'
 servers:
   mykafka:
-    url: kafka://pkc-6ojv2.us-west4.gcp.confluent.cloud:9092
+    host: kafka://pkc-6ojv2.us-west4.gcp.confluent.cloud:9092
     protocol: kafka-secure
     security:
-      - saslScramExample: []
+      - $ref: '#/components/securitySchemes/saslScramExample'
+      # - saslScramExample: []
+      - $ref: '#/components/securitySchemes/saslScramExample2'
 channels:
   test:
-    publish:
-      operationId: onTest
-      message:
+    # address: null
+    messages:
+      testMessage:
         $ref: '#/components/messages/testMessage'
   produce:
-    subscribe:
-      message:
+    messages:
+      produceMessage:
         $ref: '#/components/messages/testMessage'
+operations: 
+  onTest:
+    title: Test Kafka Connection
+    summary: Publish messages to Test channel.
+    # description: A longer description
+    channel:
+      $ref: "#/channels/test"
+    action: send
+    reply:
+      address: 
+        location: "$message.header#/replyTo"
+      channel: 
+        $ref: '#/channels/produce'
+  
+  onProduce:
+    title: Test Kafka Connection
+    summary: Recieve messages from Produce channel.
+    # description: A longer description
+    channel:
+      $ref: "#/channels/produce"
+    action: receive
+  
 components:
   messages:
     testMessage:
@@ -28,4 +52,8 @@ components:
             type: string 
   securitySchemes:
       saslScramExample:
+        type: scramSha256
+      userPass:
+        type: userPassword
+      saslScramExample2:
         type: scramSha256
