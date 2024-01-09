@@ -10,8 +10,16 @@ class KafkaAdapter extends Adapter {
     return 'Kafka adapter'
   }
 
-  async connect() {
+  async connect(): Promise<this> {
     try {
+      return this._connect()
+    } catch (error) {
+      console.error('Error connecting to Kafka:', error)
+      throw error
+    }
+  }
+
+  async _connect() {
       const kafkaOptions: KafkaAdapterConfig = await this.resolveProtocolConfig(
         'kafka'
       )
@@ -75,9 +83,6 @@ class KafkaAdapter extends Adapter {
         this.emit('message', msg, consumer)
       },
     })
-    } catch (error) {
-      console.error('Error connecting to Kafka:', error)
-    }
   }
 
   async send(message: GleeMessage) {
