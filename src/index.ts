@@ -1,6 +1,4 @@
 import { resolve } from 'path'
-import * as dotenv from 'dotenv'
-import dotenvExpand from 'dotenv-expand'
 import Glee from './lib/glee.js'
 import { logWelcome, logLineWithIcon, logWarningMessage } from './lib/logger.js'
 import experimentalFlags from './lib/experimentalFlags.js'
@@ -33,9 +31,11 @@ import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 import { getMessagesSchema } from './lib/util.js'
-import { ChannelInterface, OperationReplyInterface } from '@asyncapi/parser'
+import { OperationReplyInterface } from '@asyncapi/parser'
+import {loadEnvConfig} from '@next/env'
 
-dotenvExpand(dotenv.config())
+const isDev = process.env.NODE_ENV === 'development'
+loadEnvConfig(process.cwd(), isDev)
 
 enum LOG_CONFIG {
   NONE = 'none',
