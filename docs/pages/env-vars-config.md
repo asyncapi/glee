@@ -7,8 +7,11 @@ weight: 50
 
 Glee provides a few environment variables for you to customize the Glee application's behavior according to your specific requirements:
 
-|Variable|Description for development environment
-- `.env.production` for production environment
+|Variable|Description|Example|
+|---|---|---|
+|GLEE_SERVER_NAMES|A comma-separated list of the servers to load on startup.|`GLEE_SERVER_NAMES=websockets,mosquitto`|
+|GLEE_SERVER_CERTS|A comma-separated list of `${serverName}:${pathToCertificateFile}`. These are the certificates to use when establishing the connection to the given server.|`GLEE_SERVER_CERTS=mosquitto:mosquitto.org.crt`|
+|GLEE_SERVER_VARIABLES|A comma-separated list of `${serverName}:${serverVariable}:${value}`. These are the values to use for each server variable.|`GLEE_SERVER_VARIABLES=websockets:namespace:public`|
 
 ### Support for multiple .env files
 Glee has support for loading variables from `.env.local` into `process.env`.
@@ -18,16 +21,6 @@ However, sometimes you might want to add some defaults for the `development` or 
 `.env.development` or `.env.production`
 
 `.env.local` always overrides any other existing `.env*` file.
-
-
-### Storing Environment Variables
-
-Inside each environment file, you can define your environment variables in the `KEY=VALUE` format. For example:
-n|Example|
-|---|---|---|
-|GLEE_SERVER_NAMES|A comma-separated list of the servers to load on startup.|`GLEE_SERVER_NAMES=websockets,mosquitto`|
-|GLEE_SERVER_CERTS|A comma-separated list of `${serverName}:${pathToCertificateFile}`. These are the certificates to use when establishing the connection to the given server.|`GLEE_SERVER_CERTS=mosquitto:mosquitto.org.crt`|
-|GLEE_SERVER_VARIABLES|A comma-separated list of `${serverName}:${serverVariable}:${value}`. These are the values to use for each server variable.|`GLEE_SERVER_VARIABLES=websockets:namespace:public`|
 
 ## Configuring Glee
 
