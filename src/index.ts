@@ -101,9 +101,6 @@ export default async function GleeAppInitializer() {
   await generateDocs(config)
   parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
     const channel = operation.channels()[0] // operation can have only one channel.
-    const reply = operation.reply()
-    setUpReplyMiddlewares(reply, app)
-
     const schema = getMessagesSchema(operation)
     if (schema.oneOf.length > 0) app.use(channel.id(), validate(schema))
     app.use(channel.id(), (event, next) => {
@@ -228,20 +225,4 @@ export default async function GleeAppInitializer() {
   })
 
   app.listen().catch(console.error)
-}
-
-
-export function setUpReplyMiddlewares(reply: OperationReplyInterface, app: Glee) {
-  const channel = reply?.channel()
-  if (!channel) return
-  const hasSendOperation = channel.operations().filterBySend().length > 0
-  if (hasSendOperation) {
-    logWarningMessage(`Warning: Channel '${channel.id()}' is configured with both reply and send operations. The payload for the reply will be validated against the send operation's schema. and the binding of the send operation is going to be used for this reply. To avoid potential conflicts and streamline message processing, consider using only the send operation in your Glee function. Remove the reply operation if it's not required for your use case.`)
-    return
-  }
-  const replyMessagesSchemas = getMessagesSchema(reply)
-  if (replyMessagesSchemas.oneOf.length > 0) {
-    app.useOutbound(channel.id(), validate(replyMessagesSchemas))
-  }
-  app.useOutbound(channel.id(), json2string)
 }
