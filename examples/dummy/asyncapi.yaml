@@ -17,15 +17,12 @@ servers:
         bindingVersion: 0.2.0
   websockets:
     host: 'localhost:3005'
-    pathname: /ws
     protocol: ws
 channels:
-  user/signedup:
-    address: user/signedup
+  userSignedUp:
+    address: /user/signedup
     messages:
-      onUserSignedUp.message:
-        $ref: '#/components/messages/UserSignedUp'
-      subscribe.message:
+      UserSignedUp:
         $ref: '#/components/messages/UserSignedUp'
     bindings:
       ws:
@@ -43,35 +40,35 @@ channels:
             my-custom-header:
               type: string
               const: custom value
-  server/announce:
+  serverAnnounce:
     address: server/announce
     messages:
-      subscribe.message:
+      ServerAnnounce:
         $ref: '#/components/messages/ServerAnnounce'
 operations:
-  onUserSignedUp:
+  recieveUserSignedUp:
     action: receive
     channel:
-      $ref: '#/channels/user~1signedup'
+      $ref: '#/channels/userSignedUp'
     bindings:
       mqtt:
         qos: 2
         retain: true
         bindingVersion: 0.2.0
     messages:
-      - $ref: '#/components/messages/UserSignedUp'
-  user/signedup.subscribe:
+      - $ref: '#/channels/userSignedUp/messages/UserSignedUp'
+  sendSignedUpUser:
     action: send
     channel:
-      $ref: '#/channels/user~1signedup'
+      $ref: '#/channels/userSignedUp'
     messages:
-      - $ref: '#/components/messages/UserSignedUp'
-  server/announce.subscribe:
+      - $ref: '#/channels/userSignedUp/messages/UserSignedUp'
+  sendServerAnnounce:
     action: send
     channel:
-      $ref: '#/channels/server~1announce'
+      $ref: '#/channels/serverAnnounce'
     messages:
-      - $ref: '#/components/messages/ServerAnnounce'
+      - $ref: '#/channels/serverAnnounce/messages/ServerAnnounce'
 components:
   securitySchemes:
     userAndPassword:
