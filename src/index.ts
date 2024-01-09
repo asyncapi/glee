@@ -1,6 +1,4 @@
 import { resolve } from 'path'
-import * as dotenv from 'dotenv'
-import dotenvExpand from 'dotenv-expand'
 import Glee from './lib/glee.js'
 import { logWelcome, logLineWithIcon, logWarningMessage } from './lib/logger.js'
 import experimentalFlags from './lib/experimentalFlags.js'
@@ -33,7 +31,7 @@ import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 import { getMessagesSchema } from './lib/util.js'
-import { ChannelInterface, OperationReplyInterface } from '@asyncapi/parser'
+import { OperationReplyInterface } from '@asyncapi/parser'
 import { loadEnvConfig } from '@next/env'
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -128,8 +126,9 @@ export default async function GleeAppInitializer() {
     .forEach((operation) => {
       const channel = operation.channels()[0] // operation can have only one channel.
       const schema = getMessagesSchema(operation)
-      if (schema.oneOf.length > 0)
+      if (schema.oneOf.length > 0) {
         app.useOutbound(channel.id(), validate(schema))
+      }
       app.useOutbound(channel.id(), json2string)
     })
 
