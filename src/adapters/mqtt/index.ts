@@ -66,8 +66,7 @@ class MqttAdapter extends Adapter {
             this.emit(
               'error',
               new Error(
-                `Invalid security type '${securityType}' specified for server '${
-                  this.serverName
+                `Invalid security type '${securityType}' specified for server '${this.serverName
                 }'. Please double-check your configuration to ensure you're using a supported security type. Here is a list of supported types: ${Object.values(
                   SecurityTypes
                 )}`
@@ -152,7 +151,12 @@ class MqttAdapter extends Adapter {
   private subscribe(channels: string[]) {
     channels.forEach((channel) => {
       const asyncAPIChannel = this.parsedAsyncAPI.channels().get(channel)
-      const binding = asyncAPIChannel.bindings().get('mqtt')?.value()
+      const receiveOperations = asyncAPIChannel.operations().filterByReceive()
+      if (receiveOperations.length > 1) {
+        this.emit('error', new Error(`Channel ${channel} has more than one receive operation. Please make sure you have only one.`))
+        return
+      }
+      const binding = asyncAPIChannel.operations().filterByReceive()[0].bindings().get('mqtt')?.value()
       const topic = asyncAPIChannel.address()
       this.client.subscribe(
         topic,
@@ -173,13 +177,15 @@ class MqttAdapter extends Adapter {
             console.log(err.message)
             return
           }
-          logLineWithIcon(
-            ':zap:',
-            `Subscribed to \`${topic}\` topic with QoS ${granted?.[0].qos}`,
-            {
-              highlightedWords: [topic],
-            }
-          )
+          granted.forEach(({ topic, qos }) => {
+            logLineWithIcon(
+              ':zap:',
+              `Subscribed to \`${topic}\` topic with QoS ${qos}`,
+              {
+                highlightedWords: [topic, qos.toString()],
+              }
+            )
+          })
         }
       )
     })
