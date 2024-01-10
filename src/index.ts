@@ -33,7 +33,6 @@ import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 import { getMessagesSchema } from './lib/util.js'
-import { ChannelInterface, OperationReplyInterface } from '@asyncapi/parser'
 
 dotenvExpand(dotenv.config())
 
