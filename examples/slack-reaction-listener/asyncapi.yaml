@@ -84,15 +84,7 @@ operations:
       $ref: "#/channels/OpenAICompletion"
     messages:
       - $ref: "#/channels/OpenAICompletion/messages/OpenAICompletionResponse"
-    reply:
-      channel:
-        $ref: "#/channels/SlackPostMessage"
   HandleSlackReaction:
-    reply:
-      channel: 
-        $ref: "#/channels/SlackEventStream"
-      messages:
-        - $ref: "#/channels/SlackEventStream/messages/slackAckEvent"
     action: receive
     channel:
       $ref: "#/channels/SlackEventStream"

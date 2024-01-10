@@ -101,6 +101,9 @@ export default async function GleeAppInitializer() {
   await generateDocs(config)
   parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
     const channel = operation.channels()[0] // operation can have only one channel.
+    if (operation.reply()) {
+      logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
+    }
     const schema = getMessagesSchema(operation)
     if (schema.oneOf.length > 0) app.use(channel.id(), validate(schema))
     app.use(channel.id(), (event, next) => {
@@ -114,6 +117,9 @@ export default async function GleeAppInitializer() {
 
   parsedAsyncAPI.operations().filterBySend().forEach(operation => {
     const channel = operation.channels()[0] // operation can have only one channel.
+    if (operation.reply()) {
+      logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
+    }
     const schema = getMessagesSchema(operation)
     if (schema.oneOf.length > 0) app.useOutbound(channel.id(), validate(schema))
     app.useOutbound(channel.id(), json2string)
