@@ -102,9 +102,6 @@ operations:
     action: receive
     channel:
       $ref: '#/channels/hello'
-    reply:
-      channel:
-        $ref: "#/channels/hello"
   SendHello:
     action: send
     channel: 
@@ -121,7 +118,9 @@ Create an operation function `onHello.js` inside `myapp/functions`:
 ```js
 export default async function (event) {  
   return {
-    reply: [{
+    send: [{
+      server: "websockets",
+      channel: "hello",
       payload: `Hello from Glee! You said: "${event.payload}".`
     }]
   }
