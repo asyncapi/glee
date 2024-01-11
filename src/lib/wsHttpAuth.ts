@@ -34,7 +34,7 @@ class GleeAuth extends EventEmitter {
     const authKeys = Object.keys(this.auth)
     authKeys.forEach(authKey => {
       const allowed = securitySchemeID.includes(authKey)
-      if(!allowed) {
+      if (!allowed) {
         const err = new Error(`${authKey} securityScheme is not defined is your asyncapi.yaml config`)
         this.emit('error', err)
       }
@@ -80,6 +80,7 @@ class GleeAuth extends EventEmitter {
 
         if (query) {
           Object.keys(query).forEach(k => {
+            // eslint-disable-next-line security/detect-object-injection
             url.searchParams.set(k, query[k])
           })
         }
@@ -105,7 +106,7 @@ class GleeAuth extends EventEmitter {
   }
 
   private httpApiKeyLogic(scheme, headers, query, authKey) {
-    
+
     const loc = scheme.in()
     if (loc == 'header') {
       headers[scheme.name()] = this.auth[String(authKey)]

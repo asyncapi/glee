@@ -3,12 +3,6 @@ import fs from 'fs'
 
 export default async function () {
   return {
-    glee: {
-      logs: {
-        incoming: 'channel-only',
-        outgoing: 'channel-only'
-      }
-    },
     docs: {
       enabled: false
     },
@@ -21,14 +15,5 @@ export default async function () {
         }
       }
     }
-    // websocket: {
-    //   httpServer: customServer,
-    //   adapter: 'native', // Default. Can also be 'socket.io' or a reference to a custom adapter.
-    // },
-    // cluster: {
-    //   adapter: 'redis',
-    //   name: 'gleeCluster',
-    //   url: 'redis://localhost:6379'
-    // }
   }
 }

@@ -22,12 +22,14 @@ Functions take a single argument, which is the event received from a broker or a
 |channel|The name of the channel/topic from which the event was read.
 |serverName|The name of the server/broker from which the event was received.
 
-Functions may return an object to tell Glee what to do next. For instance, the following example greets the user back:
+Functions may return an object to tell Glee what to do next. For instance, the following example sends a greeting message to `development` server:
 ```js
 /* onHello.js */
 export default async function (event) {
   return {
-    reply: [{
+    send: [{
+      server: 'developement',
+      channel: 'greets',
       payload: 'Greetings! How is your day going?'
     }]
   }
@@ -37,7 +39,7 @@ export default async function (event) {
 |Attribute|Type|Description|
 |---|---|---|
 |send|array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt;|A list of outbound messages to send when the processing of the inbound event has finished. All clients subscribed to the given channel/topic will receive the message.
-|reply|array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt;|A list of outbound messages to send as a reply when the processing of the inbound event has finished. This is useful when the target of your message is the sender of the inbound event. Note, however, that this only works when you're running Glee as a server. For example, using `reply` when receiving a WebSocket message is fine and the reply will exclusively go to the client that sent the message. However, if you're receiving a message from an MQTT broker, `reply` will work exactly the same way as `send` above, and will send the message to all the clients subscribed to the given channel/topic.
+
 ##### Anatomy of an outbound message
 |Attribute|Type|Description|
 |---|---|---|
