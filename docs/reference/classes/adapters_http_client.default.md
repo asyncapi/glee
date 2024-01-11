@@ -30,15 +30,23 @@
 - [channelNames](adapters_http_client.default.md#channelnames)
 - [connections](adapters_http_client.default.md#connections)
 - [glee](adapters_http_client.default.md#glee)
+- [operationIds](adapters_http_client.default.md#operationids)
 - [parsedAsyncAPI](adapters_http_client.default.md#parsedasyncapi)
 - [serverName](adapters_http_client.default.md#servername)
 - [serverUrlExpanded](adapters_http_client.default.md#serverurlexpanded)
 
 ### Methods
 
+- [\_applyAuthConfiguration](adapters_http_client.default.md#_applyauthconfiguration)
+- [\_createMessage](adapters_http_client.default.md#_createmessage)
+- [\_getHttpMethod](adapters_http_client.default.md#_gethttpmethod)
+- [\_sendMessage](adapters_http_client.default.md#_sendmessage)
+- [\_sendMessageToChannel](adapters_http_client.default.md#_sendmessagetochannel)
+- [\_shouldMethodHaveBody](adapters_http_client.default.md#_shouldmethodhavebody)
+- [\_validate](adapters_http_client.default.md#_validate)
+- [\_validateMessage](adapters_http_client.default.md#_validatemessage)
 - [addListener](adapters_http_client.default.md#addlistener)
 - [connect](adapters_http_client.default.md#connect)
-- [createMessage](adapters_http_client.default.md#createmessage)
 - [emit](adapters_http_client.default.md#emit)
 - [eventNames](adapters_http_client.default.md#eventnames)
 - [getAuthConfig](adapters_http_client.default.md#getauthconfig)
@@ -68,18 +76,13 @@
 
 ### constructor
 
-• **new default**(`glee`, `serverName`, `server`, `parsedAsyncAPI`)
-
-Instantiates a Glee adapter.
+• **new default**(`«destructured»`)
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `glee` | [`default`](lib_glee.default.md) | A reference to the Glee app. |
-| `serverName` | `string` | The name of the AsyncAPI server to use for the connection. |
-| `server` | `ServerInterface` | The AsyncAPI server to use for the connection. |
-| `parsedAsyncAPI` | `AsyncAPIDocumentInterface` | The AsyncAPI document. |
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | [`GleeAdapterOptions`](../interfaces/lib_adapter.GleeAdapterOptions.md) |
 
 #### Inherited from
 
@@ -87,7 +90,7 @@ Instantiates a Glee adapter.
 
 #### Defined in
 
-[src/lib/adapter.ts:42](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L42)
+[src/lib/adapter.ts:43](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L43)
 
 ## Properties
 
@@ -171,7 +174,7 @@ Adapter.AsyncAPIServer
 
 #### Defined in
 
-[src/lib/adapter.ts:187](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L187)
+[src/lib/adapter.ts:184](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L184)
 
 ___
 
@@ -189,7 +192,7 @@ Adapter.channelAddresses
 
 #### Defined in
 
-[src/lib/adapter.ts:199](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L199)
+[src/lib/adapter.ts:200](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L200)
 
 ___
 
@@ -207,7 +210,7 @@ Adapter.channelNames
 
 #### Defined in
 
-[src/lib/adapter.ts:195](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L195)
+[src/lib/adapter.ts:192](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L192)
 
 ___
 
@@ -225,7 +228,7 @@ Adapter.connections
 
 #### Defined in
 
-[src/lib/adapter.ts:203](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L203)
+[src/lib/adapter.ts:204](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L204)
 
 ___
 
@@ -243,7 +246,25 @@ Adapter.glee
 
 #### Defined in
 
-[src/lib/adapter.ts:179](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L179)
+[src/lib/adapter.ts:176](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L176)
+
+___
+
+### operationIds
+
+• `get` **operationIds**(): `string`[]
+
+#### Returns
+
+`string`[]
+
+#### Inherited from
+
+Adapter.operationIds
+
+#### Defined in
+
+[src/lib/adapter.ts:196](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L196)
 
 ___
 
@@ -261,7 +282,7 @@ Adapter.parsedAsyncAPI
 
 #### Defined in
 
-[src/lib/adapter.ts:191](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L191)
+[src/lib/adapter.ts:188](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L188)
 
 ___
 
@@ -279,7 +300,7 @@ Adapter.serverName
 
 #### Defined in
 
-[src/lib/adapter.ts:183](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L183)
+[src/lib/adapter.ts:180](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L180)
 
 ___
 
@@ -297,9 +318,174 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/adapter.ts:207](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L207)
+[src/lib/adapter.ts:208](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L208)
 
 ## Methods
+
+### \_applyAuthConfiguration
+
+▸ **_applyAuthConfiguration**(`authenticatable`): `Promise`<[`Authenticatable`](../interfaces/lib.Authenticatable.md)\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `authenticatable` | [`Authenticatable`](../interfaces/lib.Authenticatable.md) |
+
+#### Returns
+
+`Promise`<[`Authenticatable`](../interfaces/lib.Authenticatable.md)\>
+
+#### Defined in
+
+[src/adapters/http/client.ts:67](https://github.com/asyncapi/glee/blob/bf65565/src/adapters/http/client.ts#L67)
+
+___
+
+### \_createMessage
+
+▸ **_createMessage**(`request`, `channelName`, `payload`): [`default`](lib_message.default.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `request` | [`default`](lib_message.default.md) |
+| `channelName` | `string` |
+| `payload` | `any` |
+
+#### Returns
+
+[`default`](lib_message.default.md)
+
+#### Defined in
+
+[src/adapters/http/client.ts:97](https://github.com/asyncapi/glee/blob/bf65565/src/adapters/http/client.ts#L97)
+
+___
+
+### \_getHttpMethod
+
+▸ **_getHttpMethod**(`operation`): `Method`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `operation` | `OperationInterface` |
+
+#### Returns
+
+`Method`
+
+#### Defined in
+
+[src/adapters/http/client.ts:82](https://github.com/asyncapi/glee/blob/bf65565/src/adapters/http/client.ts#L82)
+
+___
+
+### \_sendMessage
+
+▸ **_sendMessage**(`message`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | [`default`](lib_message.default.md) |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[src/adapters/http/client.ts:92](https://github.com/asyncapi/glee/blob/bf65565/src/adapters/http/client.ts#L92)
+
+___
+
+### \_sendMessageToChannel
+
+▸ **_sendMessageToChannel**(`message`, `channel`, `operation`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | [`default`](lib_message.default.md) |
+| `channel` | `ChannelInterface` |
+| `operation` | `OperationInterface` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[src/adapters/http/client.ts:37](https://github.com/asyncapi/glee/blob/bf65565/src/adapters/http/client.ts#L37)
+
+___
+
+### \_shouldMethodHaveBody
+
+▸ **_shouldMethodHaveBody**(`method`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `method` | `Method` |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[src/adapters/http/client.ts:123](https://github.com/asyncapi/glee/blob/bf65565/src/adapters/http/client.ts#L123)
+
+___
+
+### \_validate
+
+▸ **_validate**(`data`, `schema`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | `any` |
+| `schema` | `any` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/adapters/http/client.ts:117](https://github.com/asyncapi/glee/blob/bf65565/src/adapters/http/client.ts#L117)
+
+___
+
+### \_validateMessage
+
+▸ **_validateMessage**(`message`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | [`default`](lib_message.default.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/adapters/http/client.ts:105](https://github.com/asyncapi/glee/blob/bf65565/src/adapters/http/client.ts#L105)
+
+___
 
 ### addListener
 
@@ -348,28 +534,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/adapters/http/client.ts:12](https://github.com/asyncapi/glee/blob/a15e431/src/adapters/http/client.ts#L12)
-
-___
-
-### createMessage
-
-▸ `Private` **createMessage**(`channelName`, `payload`): [`default`](lib_message.default.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `channelName` | `string` |
-| `payload` | `any` |
-
-#### Returns
-
-[`default`](lib_message.default.md)
-
-#### Defined in
-
-[src/adapters/http/client.ts:73](https://github.com/asyncapi/glee/blob/a15e431/src/adapters/http/client.ts#L73)
+[src/adapters/http/client.ts:17](https://github.com/asyncapi/glee/blob/bf65565/src/adapters/http/client.ts#L17)
 
 ___
 
@@ -498,7 +663,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:220](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L220)
+[src/lib/adapter.ts:221](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L221)
 
 ___
 
@@ -543,7 +708,7 @@ Returns a list of the channels a given adapter has to subscribe to.
 
 #### Defined in
 
-[src/lib/adapter.ts:236](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L236)
+[src/lib/adapter.ts:237](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L237)
 
 ___
 
@@ -625,7 +790,7 @@ ___
 
 #### Defined in
 
-[src/adapters/http/client.ts:9](https://github.com/asyncapi/glee/blob/a15e431/src/adapters/http/client.ts#L9)
+[src/adapters/http/client.ts:14](https://github.com/asyncapi/glee/blob/bf65565/src/adapters/http/client.ts#L14)
 
 ___
 
@@ -1067,7 +1232,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:211](https://github.com/asyncapi/glee/blob/a15e431/src/lib/adapter.ts#L211)
+[src/lib/adapter.ts:212](https://github.com/asyncapi/glee/blob/bf65565/src/lib/adapter.ts#L212)
 
 ___
 
@@ -1093,7 +1258,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/adapters/http/client.ts:22](https://github.com/asyncapi/glee/blob/a15e431/src/adapters/http/client.ts#L22)
+[src/adapters/http/client.ts:27](https://github.com/asyncapi/glee/blob/bf65565/src/adapters/http/client.ts#L27)
 
 ___
 

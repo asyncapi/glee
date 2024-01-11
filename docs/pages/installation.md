@@ -1,6 +1,6 @@
 ---
 title: 'Installation guide'
-weight: 30
+weight: 20
 ---
 
 ## Glee Installation
@@ -78,31 +78,34 @@ These scripts refer to the different stages of developing an application.
 
 - `glee start`: This script is responsible for starting your project or application. It is used to launch a production-ready server or application instance.
 
-#### Creating `asyncapi.yaml` file and other required directories
+#### Create `asyncapi.yaml` file and other required directories
 
 Create a yaml file that supports capable of receiving a "hello {name}" message with the protocol as `ws` and the channel name  as `hello` the hello API will subscribe to. The operationId property is `onHello` that's the name of function and the payload property is type string publishing to that channel.
 
 ```yaml
-asyncapi: 2.6.0
+asyncapi: 3.0.0
 info:
-  title: Hello, Glee!
-  version: 0.1.0
-
+  title: 'Hello, Glee!'
+  version: 1.0.0
 servers:
   websockets:
-    url: ws://0.0.0.0:3000
+    host: 0.0.0.0:3000
     protocol: ws
-
 channels:
   hello:
-    publish:
-      operationId: onHello
-      message:
+    address: hello
+    messages:
+      hello:
         $ref: '#/components/messages/hello'
-    subscribe:
-      message:
-        $ref: '#/components/messages/hello'
-
+operations:
+  onHello:
+    action: receive
+    channel:
+      $ref: '#/channels/hello'
+  SendHello:
+    action: send
+    channel: 
+      $ref: "#/channels/hello"
 components:
   messages:
     hello:
@@ -115,11 +118,14 @@ Create an operation function `onHello.js` inside `myapp/functions`:
 ```js
 export default async function (event) {  
   return {
-    reply: [{
+    send: [{
+      server: "websockets",
+      channel: "hello",
       payload: `Hello from Glee! You said: "${event.payload}".`
     }]
   }
 }
+```
 
 #### Run the Development Server
 

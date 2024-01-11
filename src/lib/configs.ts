@@ -22,7 +22,7 @@ let ASYNCAPI_FILE_PATH: string
 let errorMessage: string
 export async function initializeConfigs(
   config: Config = {}
-): Promise<{ [key: string]: string }> {
+): Promise<any> {
   GLEE_PROJECT_DIR = process.cwd()
   GLEE_DIR = path.resolve(GLEE_PROJECT_DIR, '.glee')
   GLEE_LIFECYCLE_DIR = path.resolve(

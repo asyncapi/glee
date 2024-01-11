@@ -1,30 +1,33 @@
 ---
 title: "Create AsyncAPI Glee template"
-weight: 170
+weight: 30
 ---
-This tutorial teaches you how to create a simple glee template. You'll use the AsyncAPI Glee template you develop to generate Javascript code. Additionally, you'll create a template code with a reusable component to reuse the custom functionality you create and test your code using an WS server.
+This tutorial teaches you how to create a simple glee template. You'll use the AsyncAPI Glee template that you develop to generate Javascript code. Additionally, you'll create a template code with a reusable component to reuse the custom functionality you create and test your code using an WS server.
 
 <CodeBlock>
-{`asyncapi: '2.1.0'
+{`asyncapi: 3.0.0
 info:
-  title: Hello, Glee!
-  version: 0.1.0
-
+  title: 'Hello, Glee!'
+  version: 1.0.0
 servers:
   websockets:
-    url: ws://0.0.0.0:3000
+    host: 0.0.0.0:3000
     protocol: ws
-
 channels:
   hello:
-    publish:
-      operationId: onHello
-      message:
+    address: hello
+    messages:
+      hello:
         $ref: '#/components/messages/hello'
-    subscribe:
-      message:
-        $ref: '#/components/messages/hello'
-
+operations:
+  onHello:
+    action: receive
+    channel:
+      $ref: '#/channels/hello'
+  SendHello:
+    action: send
+    channel: 
+      $ref: "#/channels/hello"
 components:
   messages:
     hello:
@@ -36,8 +39,8 @@ Let's break it down into pieces:
 
 <CodeBlock>
 {`info:
-  title: Hello, Glee!
-  version: 0.1.0`}
+  title: 'Hello, Glee!'
+  version: 1.0.0`}
 </CodeBlock>
 
 The `info` section provides general information about the API, including its title and version.
@@ -46,8 +49,8 @@ Moving on, let's talk about the `servers` section.
 
 <CodeBlock>
 {`servers:
-  mosquitto:
-    url: ws://0.0.0.0:3000
+  websockets:
+    host: 0.0.0.0:3000
     protocol: ws`}
 </CodeBlock> 
 
@@ -58,19 +61,25 @@ Now lets move on to the `channels` section. This section is used to describe the
 <CodeBlock>
 {`channels:
   hello:
-    publish:
-      operationId: onHello
-      message:
+    address: hello
+    messages:
+      hello:
         $ref: '#/components/messages/hello'
-    subscribe:
-      message:
-        $ref: '#/components/messages/hello'`}
+operations:
+  onHello:
+    action: receive
+    channel:
+      $ref: '#/channels/hello'
+  sendHello:
+    action: send
+    channel:
+      $ref: '#/channels/hello'`}
 </CodeBlock>
 
-The channels section defines the communication channels available in the API. In this case, there's a channel named "hello". This channel supports both publishing and subscribing.
+The channels section defines the communication channels available in the API. In this case, there's a channel named "hello". This channel supports both sending and receiving.
 
-The `publish` section specifies that the operation with ID onHello is used for publishing to the `hello` channel. The message structure is referenced from the hello message component.
-The `subscribe` section indicates that messages received on the `hello` channel should follow the structure defined in the hello message component.
+The `receive` action indicates that messages received on the `hello` channel should follow the structure defined in the hello message component. 
+The `send` action specifies that the operation with ID `sendHello` is used for sending messages to the `hello` channel. The message structure is referenced from the hello message component. The message payload is going to be validated against the `sendHello` operation message schemas.
 
 Next is the `payload` property under `hello` message component which is used to understand how the event should look like when publishing to that channel:
 

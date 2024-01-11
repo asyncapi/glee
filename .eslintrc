@@ -18,6 +18,7 @@
       "error",
       "multi-line"
     ],
+    "security/detect-non-literal-fs-filename": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "semi": [
       "warn",

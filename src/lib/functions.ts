@@ -14,20 +14,34 @@ import {
 import { pathToFileURL } from 'url'
 import GleeError from '../errors/glee-error.js'
 import { getParsedAsyncAPI } from './asyncapiFile.js'
+import Debug from 'debug'
+import { OperationInterface } from '@asyncapi/parser'
+const debug = Debug('glee:functions')
 
 interface FunctionInfo {
   run: GleeFunction
 }
 
-const OutboundMessageSchema = {
+const HeadersSchema = {
+  type: 'object',
+  propertyNames: { type: 'string' },
+  additionalProperties: { type: 'string' },
+}
+
+const ReplyMessageSchema = {
   type: 'object',
   properties: {
     payload: {},
-    headers: {
-      type: 'object',
-      propertyNames: { type: 'string' },
-      additionalProperties: { type: 'string' },
-    },
+    headers: HeadersSchema,
+    query: { type: 'object' },
+  },
+}
+
+const SendMessageSchema = {
+  type: 'object',
+  properties: {
+    payload: {},
+    headers: HeadersSchema,
     channel: { type: 'string' },
     server: { type: 'string' },
     query: { type: 'object' },
@@ -38,11 +52,11 @@ const FunctionReturnSchema = {
   properties: {
     send: {
       type: 'array',
-      items: OutboundMessageSchema,
+      items: SendMessageSchema,
     },
     reply: {
       type: 'array',
-      items: OutboundMessageSchema,
+      items: ReplyMessageSchema,
     },
   },
   additionalProperties: false,
@@ -53,52 +67,68 @@ const { GLEE_DIR, GLEE_FUNCTIONS_DIR } = getConfigs()
 export const functions: Map<string, FunctionInfo> = new Map()
 
 export async function register(dir: string) {
+  debug(`Attempting to register functions from directory: ${dir}`)
   try {
     const statsDir = await stat(dir)
-    if (!statsDir.isDirectory()) return
+    if (!statsDir.isDirectory()) {
+      debug('Provided path is not a directory. Skipping.')
+      return
+    }
   } catch (e) {
-    if (e.code === 'ENOENT') return
+    debug(`Error while checking directory...`)
     throw e
   }
 
   try {
     const files = await walkdir.async(dir, { return_object: true })
+
     return await Promise.all(
       Object.keys(files).map(async (filePath) => {
         try {
           const functionName = basename(filePath, extname(filePath))
+          debug(`Registering function: ${functionName}`)
+
           const { default: fn } = await import(pathToFileURL(filePath).href)
           functions.set(functionName, {
             run: fn,
           })
         } catch (e) {
+          debug(`Error while registering function:`)
           console.error(e)
         }
       })
     )
   } catch (e) {
+    debug(`Error while walking directory:`)
     console.error(e)
   }
 }
 
 export async function trigger({
   app,
-  operationId,
+  operation,
   message,
 }: {
   app: Glee
-  operationId: string
+  operation: OperationInterface
   message: GleeMessage
 }) {
   try {
+    debug(`Triggering function for operation ID: ${operation.id()}`)
     const parsedAsyncAPI = await getParsedAsyncAPI()
-
-    let res = await functions
-      .get(operationId)
-      .run(gleeMessageToFunctionEvent(message, app))
-    if (res === undefined) res = null
+    message.operation = operation
+    const operationFunction = functions.get(operation.id())
+    if (!operationFunction) {
+      const errMsg = `Failed to trigger function: No function registered for operation ID "${operation.id()}". please make sure you have a function named: "${operation.id()}(.js|.ts)" in your functions directory.`
+      logError(new Error(errMsg), {
+        highlightedWords: [`"${operation.id()}"`],
+      })
+      return
+    }
+    let functionResult = await operationFunction.run(gleeMessageToFunctionEvent(message, app))
+    if (!functionResult) functionResult = null
     const { humanReadableError, errors, isValid } = validateData(
-      res,
+      functionResult,
       FunctionReturnSchema
     )
 
@@ -107,50 +137,47 @@ export async function trigger({
         humanReadableError,
         errors,
       })
-      err.message = `Function ${operationId} returned invalid data.`
-
+      err.message = `Function ${operation.id()} returned invalid data.`
       logError(err, {
-        highlightedWords: [operationId],
+        highlightedWords: [operation.id()],
       })
 
       return
     }
 
-    res?.send?.forEach((msg) => {
+    functionResult?.send?.forEach((msg) => {
       const localServerProtocols = ['ws', 'wss', 'http', 'https']
       const serverProtocol = parsedAsyncAPI.servers().get(msg.server || message.serverName).protocol().toLocaleLowerCase()
       const isBroadcast =
         localServerProtocols.includes(serverProtocol) &&
         !isRemoteServer(parsedAsyncAPI, msg.server)
-      app.send(
-        new GleeMessage({
-          payload: msg.payload,
-          query: msg.query,
-          headers: msg.headers,
-          channel: msg.channel || message.channel,
-          serverName: msg.server,
-          broadcast: isBroadcast,
-        })
-      )
-    })
-
-    res?.reply?.forEach((msg) => {
-      message.reply({
-        payload: msg.payload,
-        headers: msg.headers,
-        channel: msg.channel,
+      const channelName = msg.channel || message.channel
+      const operations = parsedAsyncAPI.channels().get(channelName).operations().filterBySend()
+      operations.forEach(operation => {
+        app.send(
+          new GleeMessage({
+            operation,
+            request: message,
+            payload: msg.payload,
+            query: msg.query,
+            headers: msg.headers,
+            channel: channelName,
+            serverName: msg.server,
+            broadcast: isBroadcast,
+          }))
       })
     })
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
       const functionsPath = relative(GLEE_DIR, GLEE_FUNCTIONS_DIR)
-      const missingFile = relative(GLEE_FUNCTIONS_DIR, `${operationId}.js`)
+      const missingFile = relative(GLEE_FUNCTIONS_DIR, `${operation.id()}.js`)
       const missingPath = join(functionsPath, missingFile)
       logWarningMessage(`Missing function file ${missingPath}.`, {
         highlightedWords: [missingPath],
       })
     } else {
-      throw err
+      logError(err)
+      return
     }
   }
 }

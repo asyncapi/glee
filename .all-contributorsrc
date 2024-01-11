@@ -22,6 +22,34 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "KhudaDad414",
+      "name": "Khuda Dad Nomani",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32505158?v=4",
+      "profile": "https://github.com/KhudaDad414",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "oviecodes",
+      "name": "Godwin Alexander",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61796959?v=4",
+      "profile": "https://github.com/oviecodes",
+      "contributions": [
+        "doc",
+        "code"
+      ]
+    },
+    {
+      "login": "freakfan15",
+      "name": "Vivek Kumar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54408801?v=4",
+      "profile": "https://github.com/freakfan15",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -29,7 +57,7 @@
   "projectOwner": "asyncapi",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true,
+  "skipCi": false,
   "commitType": "docs",
   "commitConvention": "angular"
 }

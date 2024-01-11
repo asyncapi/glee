@@ -3,7 +3,7 @@ import {AsyncAPIDocumentV2 as AsyncAPIDocument, ServerInterface as Server} from 
 import GleeConnection from '../../src/lib/connection.js'
 import Glee from '../../src/lib/glee.js'
 import GleeMessage from '../../src/lib/message.js'
-import GleeAdapter from '../../src/lib/adapter.js'
+import GleeAdapter, { GleeAdapterOptions } from '../../src/lib/adapter.js'
 import { jest } from '@jest/globals'
 
 const TEST_SERVER_NAME = 'test'
@@ -66,12 +66,13 @@ const fakeConnection = new GleeConnection({
 
 const initializeAdapter = () => {
   const app = new Glee()
-  const adapter = new GleeAdapter(
-    app,
-    TEST_SERVER_NAME,
-    TEST_SERVER,
-    TEST_ASYNCAPI_DOCUMENT
-  )
+  const adapterOptions: GleeAdapterOptions = {
+    glee: app,
+    serverName: TEST_SERVER_NAME,
+    server: TEST_SERVER!!,
+    parsedAsyncAPI: TEST_ASYNCAPI_DOCUMENT
+  }
+  const adapter = new GleeAdapter(adapterOptions)
   app.on('adapter:server:connection:open', (ev) => {
     expect(ev.serverName).toStrictEqual(TEST_SERVER_NAME)
     expect(ev.server).toStrictEqual(TEST_SERVER)
@@ -87,15 +88,17 @@ const initializeAdapter = () => {
 }
 
 describe('adapter', () => {
+
+  const adapterOptions = {
+    serverName: TEST_SERVER_NAME,
+    server: TEST_SERVER!!,
+    parsedAsyncAPI: TEST_ASYNCAPI_DOCUMENT
+  }
+
   describe('glee', () => {
     it('returns the glee app passed on constructor', async () => {
       const app = new Glee()
-      const adapter = new GleeAdapter(
-        app,
-        TEST_SERVER_NAME,
-        TEST_SERVER,
-        TEST_ASYNCAPI_DOCUMENT
-      )
+      const adapter = new GleeAdapter({ ...adapterOptions, glee: app })
       expect(adapter.glee).toStrictEqual(app)
     })
   })
@@ -103,12 +106,7 @@ describe('adapter', () => {
   describe('serverName', () => {
     it('returns the server name passed on constructor', async () => {
       const app = new Glee()
-      const adapter = new GleeAdapter(
-        app,
-        TEST_SERVER_NAME,
-        TEST_SERVER,
-        TEST_ASYNCAPI_DOCUMENT
-      )
+      const adapter = new GleeAdapter({ ...adapterOptions, glee: app })
       expect(adapter.serverName).toStrictEqual(TEST_SERVER_NAME)
     })
   })
@@ -116,12 +114,7 @@ describe('adapter', () => {
   describe('AsyncAPIServer', () => {
     it('returns the AsyncAPI server object passed on constructor', async () => {
       const app = new Glee()
-      const adapter = new GleeAdapter(
-        app,
-        TEST_SERVER_NAME,
-        TEST_SERVER,
-        TEST_ASYNCAPI_DOCUMENT
-      )
+      const adapter = new GleeAdapter({ ...adapterOptions, glee: app })
       expect(adapter.AsyncAPIServer).toStrictEqual(TEST_SERVER)
     })
   })
@@ -129,12 +122,7 @@ describe('adapter', () => {
   describe('parsedAsyncAPI', () => {
     it('returns the AsyncAPI document object passed on constructor', async () => {
       const app = new Glee()
-      const adapter = new GleeAdapter(
-        app,
-        TEST_SERVER_NAME,
-        TEST_SERVER,
-        TEST_ASYNCAPI_DOCUMENT
-      )
+      const adapter = new GleeAdapter({ ...adapterOptions, glee: app })
       expect(adapter.parsedAsyncAPI).toStrictEqual(TEST_ASYNCAPI_DOCUMENT)
     })
   })
@@ -142,14 +130,9 @@ describe('adapter', () => {
   describe('channelNames', () => {
     it('returns the list of associated channel names', async () => {
       const app = new Glee()
-      const adapter = new GleeAdapter(
-        app,
-        TEST_SERVER_NAME,
-        TEST_SERVER,
-        TEST_ASYNCAPI_DOCUMENT
-      )
+      const adapter = new GleeAdapter({ ...adapterOptions, glee: app })
       expect(adapter.channelNames).toStrictEqual(
-        TEST_ASYNCAPI_DOCUMENT.channels().all().map(e =>e.address())
+        TEST_ASYNCAPI_DOCUMENT.channels().all().map(e => e.address())
       )
     })
   })
@@ -157,12 +140,7 @@ describe('adapter', () => {
   describe('connections', () => {
     it('returns an empty array when the adapter is just initialized', async () => {
       const app = new Glee()
-      const adapter = new GleeAdapter(
-        app,
-        TEST_SERVER_NAME,
-        TEST_SERVER,
-        TEST_ASYNCAPI_DOCUMENT
-      )
+      const adapter = new GleeAdapter({ ...adapterOptions, glee: app })
       expect(adapter.connections).toStrictEqual([])
     })
 
@@ -201,12 +179,14 @@ describe('adapter', () => {
 
     it('returns the server URL with variables expanded', async () => {
       const app = new Glee()
-      const adapter = new GleeAdapter(
-        app,
-        ANOTHER_TEST_SERVER_NAME,
-        ANOTHER_TEST_SERVER,
-        TEST_ASYNCAPI_DOCUMENT
-      )
+      const anotherAdapterOptions: GleeAdapterOptions = {
+        glee: app,
+        serverName: ANOTHER_TEST_SERVER_NAME,
+        server: ANOTHER_TEST_SERVER!!,
+        parsedAsyncAPI: TEST_ASYNCAPI_DOCUMENT
+
+      }
+      const adapter = new GleeAdapter(anotherAdapterOptions)
       expect(adapter.serverUrlExpanded).toStrictEqual(
         'ws://fake-url-with-vars:8000'
       )
@@ -276,12 +256,7 @@ describe('adapter', () => {
   describe('getSubscribedChannels()', () => {
     it('returns the list of channels to which the adapter is subscribed', async () => {
       const app = new Glee()
-      const adapter = new GleeAdapter(
-        app,
-        TEST_SERVER_NAME,
-        TEST_SERVER,
-        TEST_ASYNCAPI_DOCUMENT
-      )
+      const adapter = new GleeAdapter({ ...adapterOptions, glee: app })
       expect(adapter.getSubscribedChannels()).toStrictEqual(['test/channel'])
     })
   })
@@ -289,12 +264,7 @@ describe('adapter', () => {
   describe('connect()', () => {
     it('throws', async () => {
       const app = new Glee()
-      const adapter = new GleeAdapter(
-        app,
-        TEST_SERVER_NAME,
-        TEST_SERVER,
-        TEST_ASYNCAPI_DOCUMENT
-      )
+      const adapter = new GleeAdapter({ ...adapterOptions, glee: app })
       await expect(adapter.connect()).rejects.toThrowError(
         new Error('Method `connect` is not implemented.')
       )
@@ -307,12 +277,7 @@ describe('adapter', () => {
         payload: 'test',
       })
       const app = new Glee()
-      const adapter = new GleeAdapter(
-        app,
-        TEST_SERVER_NAME,
-        TEST_SERVER,
-        TEST_ASYNCAPI_DOCUMENT
-      )
+      const adapter = new GleeAdapter({ ...adapterOptions, glee: app })
       await expect(adapter.send(msg)).rejects.toThrowError(
         new Error('Method `send` is not implemented.')
       )

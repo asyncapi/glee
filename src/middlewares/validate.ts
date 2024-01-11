@@ -1,14 +1,14 @@
-import { SchemaV2 as Schema } from '@asyncapi/parser'
+import { AsyncAPISchema } from '@asyncapi/parser'
 import GleeError from '../errors/glee-error.js'
 import GleeMessage from '../lib/message.js'
 import { validateData } from '../lib/util.js'
 import { MiddlewareCallback } from './index.js'
 
-export default (schema: Schema) =>
+export default (schema: AsyncAPISchema) =>
   (event: GleeMessage, next: MiddlewareCallback) => {
     const { humanReadableError, errors, isValid } = validateData(
       event.payload,
-      schema
+      schema as any
     )
     if (!isValid) {
       return next(

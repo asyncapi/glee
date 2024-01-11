@@ -16,7 +16,7 @@ servers:
       - $ref: '#/components/securitySchemes/cert'
 channels:
   price:
-    address: '/price'
+    address: /price
     messages:
       indexGraph:
         $ref: '#/components/messages/indexGraph'
@@ -29,7 +29,7 @@ operations:
     channel:
       $ref: '#/channels/price'
     messages:
-      - $ref: '#/components/messages/indexGraph'
+      - $ref: '#/channels/price/messages/indexGraph'
 components:
   messages:
     indexGraph:

@@ -3,7 +3,7 @@ import EventEmitter from 'events'
 import async from 'async'
 import Debug from 'debug'
 import { AsyncAPIDocumentInterface as AsyncAPIDocument, ServerInterface as Server } from '@asyncapi/parser'
-import GleeAdapter from './adapter.js'
+import GleeAdapter, { GleeAdapterOptions } from './adapter.js'
 import GleeClusterAdapter from './cluster.js'
 import GleeRouter, {
   ChannelErrorMiddlewareTuple,
@@ -144,7 +144,14 @@ export default class Glee extends EventEmitter {
     const promises = []
 
     this._adapters.forEach((a) => {
-      a.instance = new a.Adapter(this, a.serverName, a.server, a.parsedAsyncAPI)
+      const adapterOptions: GleeAdapterOptions = {
+        glee: this,
+        serverName: a.serverName,
+        server: a.server,
+        parsedAsyncAPI: a.parsedAsyncAPI
+      }
+
+      a.instance = new a.Adapter(adapterOptions)
       promises.push(a.instance.connect())
     })
 
@@ -265,7 +272,6 @@ export default class Glee extends EventEmitter {
 
       if (middlewares === this._router.getOutboundMiddlewares()) {
         debug('Outbound pipeline finished. Sending message...')
-        debug(msg)
         this._adapters.forEach((a: AdapterRecord) => {
           if (
             a.instance &&

@@ -18,7 +18,7 @@ export default async function ({ glee, connection }) {
         const date = new Date()
         setTimeout(() => {
             glee.send(new Message({
-                channel: '/price',
+                channel: 'price',
                 connection,
                 payload: {time: date.getTime(), price: getPrice(), status}
             }))

@@ -45,16 +45,17 @@ class MqttAdapter extends Adapter {
   }
 
   private getSecurityReqs() {
-
     let userAndPasswordSecurityReq
     let X509SecurityReq
 
-    const securityRequirements = this.AsyncAPIServer.security().map(e => e.all().map(e => e.scheme()))
+    const securityRequirements = this.AsyncAPIServer.security().map((e) =>
+      e.all().map((e) => e.scheme())
+    )
 
-    securityRequirements.forEach(security => {
+    securityRequirements.forEach((security) => {
       for (const sec of security) {
         const securityType = sec.type().toLocaleLowerCase()
-        switch(securityType){
+        switch (securityType) {
           case SecurityTypes.USER_PASSWORD:
             userAndPasswordSecurityReq = sec
             break
@@ -62,14 +63,22 @@ class MqttAdapter extends Adapter {
             X509SecurityReq = sec
             break
           default:
-            this.emit("error", new Error(`Invalid security type '${securityType}' specified for server '${this.serverName}'. Please double-check your configuration to ensure you're using a supported security type. Here is a list of supported types: ${Object.values(SecurityTypes)}`))
+            this.emit(
+              'error',
+              new Error(
+                `Invalid security type '${securityType}' specified for server '${this.serverName
+                }'. Please double-check your configuration to ensure you're using a supported security type. Here is a list of supported types: ${Object.values(
+                  SecurityTypes
+                )}`
+              )
+            )
         }
       }
     })
 
     return {
       userAndPasswordSecurityReq,
-      X509SecurityReq
+      X509SecurityReq,
     }
   }
 
@@ -110,7 +119,9 @@ class MqttAdapter extends Adapter {
     this.client.on('close', () => {
       this.emit('close', {
         connection: this.client,
-        channels: this.channelNames,
+        channels: this.channelNames.map((channelName) =>
+          this.parsedAsyncAPI.channels().get(channelName).address()
+        ),
       })
     })
 
@@ -139,24 +150,44 @@ class MqttAdapter extends Adapter {
 
   private subscribe(channels: string[]) {
     channels.forEach((channel) => {
-      const binding = this.parsedAsyncAPI.channels().get(channel).bindings().get('mqtt')?.value()
-      console.log(binding)
-      this.client.subscribe(channel, {
-        qos: binding?.qos ? binding.qos : 0,
-      }, (err, granted) => {
-        if (err) {
-          logLineWithIcon('x', `Error while trying to subscribe to \`${channel}\` topic.`, {
-            highlightedWords: [channel],
-            iconColor: '#f00',
-            disableEmojis: true,
+      const asyncAPIChannel = this.parsedAsyncAPI.channels().get(channel)
+      const receiveOperations = asyncAPIChannel.operations().filterByReceive()
+      if (receiveOperations.length > 1) {
+        this.emit('error', new Error(`Channel ${channel} has more than one receive operation. Please make sure you have only one.`))
+        return
+      }
+      const binding = asyncAPIChannel.operations().filterByReceive()[0].bindings().get('mqtt')?.value()
+      const topic = asyncAPIChannel.address()
+      this.client.subscribe(
+        topic,
+        {
+          qos: binding?.qos ? binding.qos : 0,
+        },
+        (err, granted) => {
+          if (err) {
+            logLineWithIcon(
+              'x',
+              `Error while trying to subscribe to \`${topic}\` topic.`,
+              {
+                highlightedWords: [topic],
+                iconColor: '#f00',
+                disableEmojis: true,
+              }
+            )
+            console.log(err.message)
+            return
+          }
+          granted.forEach(({ topic, qos }) => {
+            logLineWithIcon(
+              ':zap:',
+              `Subscribed to \`${topic}\` topic with QoS ${qos}`,
+              {
+                highlightedWords: [topic, qos.toString()],
+              }
+            )
           })
-          console.log(err.message)
-          return
         }
-        logLineWithIcon(':zap:', `Subscribed to \`${channel}\` topic with QoS ${granted?.[0].qos}`, {
-          highlightedWords: [channel],
-        })
-      })
+      )
     })
   }
 
@@ -217,7 +248,12 @@ class MqttAdapter extends Adapter {
 
   _send(message: GleeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      const binding = this.parsedAsyncAPI.channels().get(message.channel).bindings().get('mqtt')?.value()
+      const binding = this.parsedAsyncAPI
+        .channels()
+        .get(message.channel)
+        .bindings()
+        .get('mqtt')
+        ?.value()
       this.client.publish(
         message.channel,
         message.payload,
@@ -245,17 +281,16 @@ class MqttAdapter extends Adapter {
       dup: packet.dup,
       length: packet.length,
     }
-
+    const id = this.parsedAsyncAPI.channels().all().filter(channel => channel.address() === packet.topic)[0]?.id()
     return new GleeMessage({
       payload: packet.payload,
       headers,
-      channel: packet.topic,
+      channel: id,
     })
   }
 
   _customAckHandler(channel, message, mqttPacket, done) {
     const msg = this._createMessage(mqttPacket as IPublishPacket)
-    console.log('Hello World')
 
     msg.on('processing:successful', () => done(MQTT_SUCCESS_REASON))
     msg.on('processing:failed', () => done(MQTT_UNSPECIFIED_ERROR_REASON))

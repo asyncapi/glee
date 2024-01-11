@@ -1,3 +1,8 @@
+---
+title: 'HttpApiKey Authentication'
+weight: 90
+---
+
 ## Getting started with httpAPIKey authentication
 
 This guide will walk through how to implement authentication using the `httpAPiKey` security scheme in Glee.
@@ -6,17 +11,17 @@ A sample `asyncapi.yaml` for a server with security requirements and user `HttpA
 
 ```yaml
 ##server asyncAPI schema
-asyncapi: 2.6.0
+asyncapi: 3.0.0
 info:
   title: AsyncAPI IMDB server
   version: 1.0.0
   description: This app is a dummy server that would stream the trending/upcoming anime.
 servers:
   trendingAnimeServer:
-    url: 'http://localhost:8081'
+    host: 'localhost:8081'
     protocol: http
     security:
-      - apiKey: []
+      - $ref: '#/components/securitySchemes/apiKey'
 
       ...
 
@@ -35,12 +40,12 @@ A sample `asyncapi.yaml` for a client that implements some of the requirements o
 ##client asyncAPI schema
 servers:
   trendingAnime:
-    url: http://localhost:8081
+    host: localhost:8081
     protocol: http
     security:
-      - apiKey: []
+      - $ref: '#/components/securitySchemes/apiKey'
   testwebhook:
-    url: ws://localhost:9000
+    host: localhost:9000
     protocol: ws
 x-remoteServers:
   - trendingAnime
@@ -59,7 +64,7 @@ components:
 
 The `httpApiKey` could be in either the header or query parameter.
 
-**The Client asyncapi.yaml file does not need to implement all the security requirements in the server, it only needs to implement the ones that it uses.**
+The Client asyncapi.yaml file **does not need to implement all the security requirements in the server, it only needs to implement the ones that it uses like *httpApiKey* here.**
 
 ### Client Side
 
@@ -90,7 +95,7 @@ From the server `asyncapi.yaml` file above, create a file named `trendingAnimeSe
 touch auth/trendingAnimeServer.ts
 ```
 
-On the server side, you can retrieve the values as follows
+On the server side, you can retrieve the values as follows:
 
 ```js
 
@@ -102,7 +107,4 @@ export async serverAuth({ authProps, done }) {
 
 ```
 
-`getHttpAPIKeys(name)` takes a name parameter to specify the name of the httpApiKey that is desired. Then it returns an object containing the httpApiKey value that was sent from the client.
-
-
-
+So, `getHttpAPIKeys(name)` takes a name parameter to specify the name of the httpApiKey that is desired. Then it returns an object containing the `httpApiKey` value that is sent from the client.

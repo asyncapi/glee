@@ -32,12 +32,12 @@ channels:
             token:
               type: string
 operations:
-  getPrice:
+  /price.subscribe:
     action: send
     channel:
       $ref: '#/channels/price'
     messages:
-      - $ref: '#/components/messages/indexGraph'
+      - $ref: '#/channels/price/messages/indexGraph'
 components:
   messages:
     indexGraph:

@@ -6,11 +6,26 @@
 
 ### Functions
 
+- [getAsyncAPIFileContent](lib_asyncapiFile.md#getasyncapifilecontent)
 - [getChannelAddress](lib_asyncapiFile.md#getchanneladdress)
 - [getChannelNames](lib_asyncapiFile.md#getchannelnames)
 - [getParsedAsyncAPI](lib_asyncapiFile.md#getparsedasyncapi)
 
 ## Functions
+
+### getAsyncAPIFileContent
+
+▸ **getAsyncAPIFileContent**(): `Promise`<`string`\>
+
+#### Returns
+
+`Promise`<`string`\>
+
+#### Defined in
+
+[src/lib/asyncapiFile.ts:9](https://github.com/asyncapi/glee/blob/bf65565/src/lib/asyncapiFile.ts#L9)
+
+___
 
 ### getChannelAddress
 
@@ -29,7 +44,7 @@
 
 #### Defined in
 
-[src/lib/asyncapiFile.ts:18](https://github.com/asyncapi/glee/blob/a15e431/src/lib/asyncapiFile.ts#L18)
+[src/lib/asyncapiFile.ts:35](https://github.com/asyncapi/glee/blob/bf65565/src/lib/asyncapiFile.ts#L35)
 
 ___
 
@@ -49,7 +64,7 @@ ___
 
 #### Defined in
 
-[src/lib/asyncapiFile.ts:14](https://github.com/asyncapi/glee/blob/a15e431/src/lib/asyncapiFile.ts#L14)
+[src/lib/asyncapiFile.ts:31](https://github.com/asyncapi/glee/blob/bf65565/src/lib/asyncapiFile.ts#L31)
 
 ___
 
@@ -63,4 +78,4 @@ ___
 
 #### Defined in
 
-[src/lib/asyncapiFile.ts:5](https://github.com/asyncapi/glee/blob/a15e431/src/lib/asyncapiFile.ts#L5)
+[src/lib/asyncapiFile.ts:15](https://github.com/asyncapi/glee/blob/bf65565/src/lib/asyncapiFile.ts#L15)

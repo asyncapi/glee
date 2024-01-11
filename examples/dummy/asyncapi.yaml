@@ -17,11 +17,10 @@ servers:
         bindingVersion: 0.2.0
   websockets:
     host: 'localhost:3005'
-    pathname: /ws
     protocol: ws
 channels:
-  userSignedup:
-    address: user/signedup
+  userSignedUp:
+    address: /user/signedup
     messages:
       UserSignedUp:
         $ref: '#/components/messages/UserSignedUp'
@@ -47,29 +46,29 @@ channels:
       ServerAnnounce:
         $ref: '#/components/messages/ServerAnnounce'
 operations:
-  onUserSignedUp:
+  recieveUserSignedUp:
     action: receive
     channel:
-      $ref: '#/channels/userSignedup'
+      $ref: '#/channels/userSignedUp'
     bindings:
       mqtt:
         qos: 2
         retain: true
         bindingVersion: 0.2.0
     messages:
-      - $ref: '#/components/messages/UserSignedUp'
-  onUserSignedUpReply:
+      - $ref: '#/channels/userSignedUp/messages/UserSignedUp'
+  sendSignedUpUser:
     action: send
     channel:
-      $ref: '#/channels/userSignedup'
+      $ref: '#/channels/userSignedUp'
     messages:
-      - $ref: '#/components/messages/UserSignedUp'
-  announceUserSignedUp:
+      - $ref: '#/channels/userSignedUp/messages/UserSignedUp'
+  sendServerAnnounce:
     action: send
     channel:
       $ref: '#/channels/serverAnnounce'
     messages:
-      - $ref: '#/components/messages/ServerAnnounce'
+      - $ref: '#/channels/serverAnnounce/messages/ServerAnnounce'
 components:
   securitySchemes:
     userAndPassword:

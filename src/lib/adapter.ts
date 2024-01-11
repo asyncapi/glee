@@ -1,5 +1,5 @@
 /* eslint-disable security/detect-object-injection */
-import { AsyncAPIDocumentInterface as AsyncAPIDocument, ServerInterface as Server } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, ServerInterface } from '@asyncapi/parser'
 import EventEmitter from 'events'
 import uriTemplates from 'uri-templates'
 import GleeConnection from './connection.js'
@@ -11,7 +11,7 @@ import { AuthProps } from './index.js'
 export type EnrichedEvent = {
   connection?: GleeConnection
   serverName: string
-  server: Server
+  server: ServerInterface
 }
 
 export type AuthEvent = {
@@ -21,30 +21,26 @@ export type AuthEvent = {
   doc: any
 }
 
+export interface GleeAdapterOptions {
+  glee: Glee;
+  serverName: string;
+  server: ServerInterface;
+  parsedAsyncAPI: AsyncAPIDocument;
+}
+
 class GleeAdapter extends EventEmitter {
   private _glee: Glee
   private _serverName: string
-  private _AsyncAPIServer: Server
+  private _AsyncAPIServer: ServerInterface
   private _parsedAsyncAPI: AsyncAPIDocument
   private _channelNames: string[]
+  private _operationIds: string[]
   private _channelAddresses: string[]
   private _connections: GleeConnection[]
   private _serverUrlExpanded: string
 
-  /**
-   * Instantiates a Glee adapter.
-   *
-   * @param {Glee} glee  A reference to the Glee app.
-   * @param {String} serverName  The name of the AsyncAPI server to use for the connection.
-   * @param {AsyncAPIServer} server  The AsyncAPI server to use for the connection.
-   * @param {AsyncAPIDocument} parsedAsyncAPI The AsyncAPI document.
-   */
-  constructor(
-    glee: Glee,
-    serverName: string,
-    server: Server,
-    parsedAsyncAPI: AsyncAPIDocument
-  ) {
+
+  constructor({ glee, serverName, server, parsedAsyncAPI }: GleeAdapterOptions) {
     super()
 
     this._glee = glee
@@ -54,6 +50,7 @@ class GleeAdapter extends EventEmitter {
     this._parsedAsyncAPI = parsedAsyncAPI
     this._channelNames = this._parsedAsyncAPI.channels().all().map(e => e.id())
     this._channelAddresses = this._parsedAsyncAPI.channels().all().map(c => c.address())
+    this._operationIds = this._parsedAsyncAPI.operations().all().map(o => o.id())
     this._connections = []
 
     const uriTemplateValues = new Map()
@@ -184,7 +181,7 @@ class GleeAdapter extends EventEmitter {
     return this._serverName
   }
 
-  get AsyncAPIServer(): Server {
+  get AsyncAPIServer(): ServerInterface {
     return this._AsyncAPIServer
   }
 
@@ -194,6 +191,10 @@ class GleeAdapter extends EventEmitter {
 
   get channelNames(): string[] {
     return this._channelNames
+  }
+
+  get operationIds(): string[] {
+    return this._operationIds
   }
 
   get channelAddresses(): string[] {
@@ -236,7 +237,7 @@ class GleeAdapter extends EventEmitter {
   getSubscribedChannels(): string[] {
     return this._channelNames.filter((channelName) => {
       const channel = this._parsedAsyncAPI.channels().get(channelName)
-      if (channel.operations().filterBySend().length == 0) return true
+      if (channel.operations().filterByReceive().length > 0) return true
 
       const channelServers = channel.servers()
         ? channel.servers()

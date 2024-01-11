@@ -29,7 +29,7 @@
 
 #### Defined in
 
-[src/lib/configs.ts:112](https://github.com/asyncapi/glee/blob/a15e431/src/lib/configs.ts#L112)
+[src/lib/configs.ts:112](https://github.com/asyncapi/glee/blob/bf65565/src/lib/configs.ts#L112)
 
 ___
 
@@ -43,13 +43,13 @@ ___
 
 #### Defined in
 
-[src/lib/configs.ts:130](https://github.com/asyncapi/glee/blob/a15e431/src/lib/configs.ts#L130)
+[src/lib/configs.ts:130](https://github.com/asyncapi/glee/blob/bf65565/src/lib/configs.ts#L130)
 
 ___
 
 ### initializeConfigs
 
-▸ **initializeConfigs**(`config?`): `Promise`<{ `[key: string]`: `string`;  }\>
+▸ **initializeConfigs**(`config?`): `Promise`<`any`\>
 
 #### Parameters
 
@@ -59,11 +59,11 @@ ___
 
 #### Returns
 
-`Promise`<{ `[key: string]`: `string`;  }\>
+`Promise`<`any`\>
 
 #### Defined in
 
-[src/lib/configs.ts:23](https://github.com/asyncapi/glee/blob/a15e431/src/lib/configs.ts#L23)
+[src/lib/configs.ts:23](https://github.com/asyncapi/glee/blob/bf65565/src/lib/configs.ts#L23)
 
 ___
 
@@ -79,4 +79,4 @@ Loads the configuration from glee project.
 
 #### Defined in
 
-[src/lib/configs.ts:81](https://github.com/asyncapi/glee/blob/a15e431/src/lib/configs.ts#L81)
+[src/lib/configs.ts:81](https://github.com/asyncapi/glee/blob/bf65565/src/lib/configs.ts#L81)

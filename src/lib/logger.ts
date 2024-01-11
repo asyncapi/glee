@@ -167,17 +167,16 @@ export const logJSON = (json: object | Array<any>, { error = false } = {}) => {
   )
 }
 
-export const logInboundMessage = (message: GleeMessage) => {
+export const logInboundChannel = (message: GleeMessage) => {
   console.log(
     chalk.reset.blue('↙'),
     chalk.yellow(message.channel),
     'was received from',
     chalk.gray(message.serverName)
   )
-  logJSON(message.payload)
 }
 
-export const logOutboundMessage = (message: GleeMessage) => {
+export const logOutboundChannel = (message: GleeMessage) => {
   const icon = message.broadcast ? '⇶' : '↗'
   const serverName = message.serverName || 'all servers'
   const verb = message.broadcast ? 'broadcasted' : 'sent'
@@ -189,7 +188,6 @@ export const logOutboundMessage = (message: GleeMessage) => {
     'to',
     chalk.gray(serverName)
   )
-  logJSON(message.payload)
 }
 
 export const logErrorLine = (

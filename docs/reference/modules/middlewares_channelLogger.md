@@ -1,12 +1,12 @@
-[@asyncapi/glee](../README.md) / middlewares/logger
+[@asyncapi/glee](../README.md) / middlewares/channelLogger
 
-# Module: middlewares/logger
+# Module: middlewares/channelLogger
 
 ## Table of contents
 
 ### Functions
 
-- [default](middlewares_logger.md#default)
+- [default](middlewares_channelLogger.md#default)
 
 ## Functions
 
@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[src/middlewares/logger.ts:5](https://github.com/asyncapi/glee/blob/a15e431/src/middlewares/logger.ts#L5)
+[src/middlewares/channelLogger.ts:5](https://github.com/asyncapi/glee/blob/bf65565/src/middlewares/channelLogger.ts#L5)

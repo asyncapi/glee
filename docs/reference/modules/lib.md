@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+- [Authenticatable](../interfaces/lib.Authenticatable.md)
 - [HttpAuthConfig](../interfaces/lib.HttpAuthConfig.md)
 - [KafkaAuthConfig](../interfaces/lib.KafkaAuthConfig.md)
 - [MqttAuthConfig](../interfaces/lib.MqttAuthConfig.md)
@@ -26,13 +27,18 @@
 - [GleeFunctionReturnBroadcast](lib.md#gleefunctionreturnbroadcast)
 - [GleeFunctionReturnReply](lib.md#gleefunctionreturnreply)
 - [GleeFunctionReturnSend](lib.md#gleefunctionreturnsend)
+- [GleeLifecycleEvent](lib.md#gleelifecycleevent)
+- [Headers](lib.md#headers)
 - [HttpAdapterConfig](lib.md#httpadapterconfig)
 - [HttpServerType](lib.md#httpservertype)
 - [KafkaAdapterConfig](lib.md#kafkaadapterconfig)
+- [Log](lib.md#log)
+- [LogsConfig](lib.md#logsconfig)
 - [MqttAdapterConfig](lib.md#mqttadapterconfig)
 - [QueryParam](lib.md#queryparam)
 - [WebSocketServerType](lib.md#websocketservertype)
 - [WebsocketAdapterConfig](lib.md#websocketadapterconfig)
+- [WebsocketServerAdapterConfig](lib.md#websocketserveradapterconfig)
 - [WsHttpAuth](lib.md#wshttpauth)
 
 ## Type Aliases
@@ -80,7 +86,7 @@
 
 #### Defined in
 
-[src/lib/index.d.ts:11](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L11)
+[src/lib/index.d.ts:12](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L12)
 
 ___
 
@@ -101,7 +107,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:38](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L38)
+[src/lib/index.d.ts:39](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L39)
 
 ___
 
@@ -117,10 +123,11 @@ ___
 | `functionsDir?` | `string` |
 | `gleeDir?` | `string` |
 | `lifecycleDir?` | `string` |
+| `logs?` | [`LogsConfig`](lib.md#logsconfig) |
 
 #### Defined in
 
-[src/lib/index.d.ts:98](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L98)
+[src/lib/index.d.ts:103](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L103)
 
 ___
 
@@ -144,7 +151,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:153](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L153)
+[src/lib/index.d.ts:162](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L162)
 
 ___
 
@@ -164,7 +171,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:130](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L130)
+[src/lib/index.d.ts:139](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L139)
 
 ___
 
@@ -182,7 +189,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:61](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L61)
+[src/lib/index.d.ts:62](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L62)
 
 ___
 
@@ -203,7 +210,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:105](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L105)
+[src/lib/index.d.ts:111](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L111)
 
 ___
 
@@ -227,7 +234,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:149](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L149)
+[src/lib/index.d.ts:158](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L158)
 
 ___
 
@@ -245,11 +252,12 @@ ___
 | `headers?` | { `[key: string]`: `string`;  } |
 | `payload?` | `any` |
 | `query?` | [`QueryParam`](lib.md#queryparam) |
+| `request` | [`default`](../classes/lib_message.default.md) |
 | `serverName` | `string` |
 
 #### Defined in
 
-[src/lib/index.d.ts:120](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L120)
+[src/lib/index.d.ts:126](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L126)
 
 ___
 
@@ -267,7 +275,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:114](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L114)
+[src/lib/index.d.ts:120](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L120)
 
 ___
 
@@ -277,17 +285,17 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:147](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L147)
+[src/lib/index.d.ts:156](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L156)
 
 ___
 
 ### GleeFunctionReturnReply
 
-Ƭ **GleeFunctionReturnReply**: [`GleeFunctionReturnSend`](lib.md#gleefunctionreturnsend)
+Ƭ **GleeFunctionReturnReply**: `Omit`<[`GleeFunctionReturnSend`](lib.md#gleefunctionreturnsend), ``"channel"`` \| ``"server"``\>
 
 #### Defined in
 
-[src/lib/index.d.ts:146](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L146)
+[src/lib/index.d.ts:155](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L155)
 
 ___
 
@@ -307,7 +315,31 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:138](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L138)
+[src/lib/index.d.ts:147](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L147)
+
+___
+
+### GleeLifecycleEvent
+
+Ƭ **GleeLifecycleEvent**: `Omit`<[`GleeFunctionEvent`](lib.md#gleefunctionevent), ``"request"``\>
+
+#### Defined in
+
+[src/lib/index.d.ts:137](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L137)
+
+___
+
+### Headers
+
+Ƭ **Headers**: `Object`
+
+#### Index signature
+
+▪ [key: `string`]: `string`
+
+#### Defined in
+
+[src/lib/index.d.ts:166](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L166)
 
 ___
 
@@ -329,7 +361,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:79](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L79)
+[src/lib/index.d.ts:78](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L78)
 
 ___
 
@@ -339,7 +371,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:8](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L8)
+[src/lib/index.d.ts:9](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L9)
 
 ___
 
@@ -355,7 +387,34 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:94](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L94)
+[src/lib/index.d.ts:93](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L93)
+
+___
+
+### Log
+
+Ƭ **Log**: ``"channel-only"`` \| ``"none"``
+
+#### Defined in
+
+[src/lib/index.d.ts:96](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L96)
+
+___
+
+### LogsConfig
+
+Ƭ **LogsConfig**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `incoming` | [`Log`](lib.md#log) |
+| `outgoing` | [`Log`](lib.md#log) |
+
+#### Defined in
+
+[src/lib/index.d.ts:98](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L98)
 
 ___
 
@@ -371,7 +430,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:90](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L90)
+[src/lib/index.d.ts:89](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L89)
 
 ___
 
@@ -381,7 +440,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:9](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L9)
+[src/lib/index.d.ts:10](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L10)
 
 ___
 
@@ -391,7 +450,7 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:7](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L7)
+[src/lib/index.d.ts:8](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L8)
 
 ___
 
@@ -403,17 +462,29 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `client?` | { `auth?`: [`WsAuthConfig`](../interfaces/lib.WsAuthConfig.md) \| [`AuthFunction`](lib.md#authfunction)<[`WsAuthConfig`](../interfaces/lib.WsAuthConfig.md)\> ; `query?`: `any`  } |
-| `client.auth?` | [`WsAuthConfig`](../interfaces/lib.WsAuthConfig.md) \| [`AuthFunction`](lib.md#authfunction)<[`WsAuthConfig`](../interfaces/lib.WsAuthConfig.md)\> |
-| `client.query?` | `any` |
-| `server?` | { `adapter?`: [`WebSocketServerType`](lib.md#websocketservertype) \| typeof [`default`](../classes/lib_adapter.default.md) ; `httpServer?`: `any` ; `port?`: `number`  } |
-| `server.adapter?` | [`WebSocketServerType`](lib.md#websocketservertype) \| typeof [`default`](../classes/lib_adapter.default.md) |
-| `server.httpServer?` | `any` |
-| `server.port?` | `number` |
+| `server?` | [`WebsocketServerAdapterConfig`](lib.md#websocketserveradapterconfig) |
 
 #### Defined in
 
-[src/lib/index.d.ts:67](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L67)
+[src/lib/index.d.ts:74](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L74)
+
+___
+
+### WebsocketServerAdapterConfig
+
+Ƭ **WebsocketServerAdapterConfig**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `adapter?` | [`WebSocketServerType`](lib.md#websocketservertype) \| typeof [`default`](../classes/lib_adapter.default.md) |
+| `httpServer?` | `any` |
+| `port?` | `number` |
+
+#### Defined in
+
+[src/lib/index.d.ts:68](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L68)
 
 ___
 
@@ -423,4 +494,4 @@ ___
 
 #### Defined in
 
-[src/lib/index.d.ts:50](https://github.com/asyncapi/glee/blob/a15e431/src/lib/index.d.ts#L50)
+[src/lib/index.d.ts:51](https://github.com/asyncapi/glee/blob/bf65565/src/lib/index.d.ts#L51)

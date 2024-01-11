@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[src/lib/functions.ts:53](https://github.com/asyncapi/glee/blob/a15e431/src/lib/functions.ts#L53)
+[src/lib/functions.ts:67](https://github.com/asyncapi/glee/blob/bf65565/src/lib/functions.ts#L67)
 
 ## Functions
 
@@ -41,7 +41,7 @@
 
 #### Defined in
 
-[src/lib/functions.ts:55](https://github.com/asyncapi/glee/blob/a15e431/src/lib/functions.ts#L55)
+[src/lib/functions.ts:69](https://github.com/asyncapi/glee/blob/bf65565/src/lib/functions.ts#L69)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 | `«destructured»` | `Object` |
 | › `app` | [`default`](../classes/lib_glee.default.md) |
 | › `message` | [`default`](../classes/lib_message.default.md) |
-| › `operationId` | `string` |
+| › `operation` | `OperationInterface` |
 
 #### Returns
 
@@ -64,4 +64,4 @@ ___
 
 #### Defined in
 
-[src/lib/functions.ts:84](https://github.com/asyncapi/glee/blob/a15e431/src/lib/functions.ts#L84)
+[src/lib/functions.ts:107](https://github.com/asyncapi/glee/blob/bf65565/src/lib/functions.ts#L107)
