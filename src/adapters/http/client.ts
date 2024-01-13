@@ -24,7 +24,7 @@ class HttpClientAdapter extends Adapter {
       })
       return this
     } catch (err) {
-      logWarningMessage(`Failed to Connect: An error occurred while connecting to '${this.name()}' on the '${this.channelNames}' channel. Please review the error details below for further information and corrective action.`)
+      logWarningMessage(`Failed to Connect: An error occurred while connecting to '${this.name()}' . Please review the error details below for further information and corrective action.`)
       this.emit('error', err)
       throw err
     }

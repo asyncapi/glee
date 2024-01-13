@@ -49,8 +49,9 @@ class MqttAdapter extends Adapter {
     try{
       return this._send(message)
     } catch(error){
-      console.error('Error sending message to MQTT:', error)
-      throw error
+      const errorMessage = `Failed to send message on channel '${message.channel}' to server '${message.serverName}'`
+      this.emit('error', new Error(errorMessage))
+      this.emit('error', error)
     }
   }
 
