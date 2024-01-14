@@ -106,6 +106,7 @@ export type CoreGleeConfig = {
   lifecycleDir?: string
   functionsDir?: string
   asyncapiFilePath?: string
+  remoteServers?: string[]
 }
 
 export type GleeConfig = {
