@@ -7,7 +7,6 @@
 ### Functions
 
 - [default](index.md#default)
-- [setUpReplyMiddlewares](index.md#setupreplymiddlewares)
 
 ## Functions
 
@@ -21,25 +20,4 @@
 
 #### Defined in
 
-[src/index.ts:44](https://github.com/asyncapi/glee/blob/dd79334/src/index.ts#L44)
-
-___
-
-### setUpReplyMiddlewares
-
-▸ **setUpReplyMiddlewares**(`reply`, `app`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `reply` | `OperationReplyInterface` |
-| `app` | [`default`](../classes/lib_glee.default.md) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/index.ts:234](https://github.com/asyncapi/glee/blob/dd79334/src/index.ts#L234)
+[src/index.ts:43](https://github.com/asyncapi/glee/blob/bf65565/src/index.ts#L43)
