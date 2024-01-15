@@ -32,7 +32,7 @@ channels:
             token:
               type: string
 operations:
-  /price.subscribe:
+  sendPrice:
     action: send
     channel:
       $ref: '#/channels/price'

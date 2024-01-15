@@ -10,15 +10,15 @@ servers:
       mqtt:
         clientId: notifications-service
 channels:
-  post/liked:
+  postLiked:
     address: post/liked
     messages:
-      onPostLiked.message:
+      onPostLikedMmessage:
         $ref: '../websocket-server/asyncapi.yaml#/components/messages/notifyPostLiked'
 operations:
   onPostLiked:
     action: receive
     channel:
-      $ref: '#/channels/post~1liked'
+      $ref: '#/channels/postLiked'
     messages:
-      - $ref: '#/channels/post~1liked/messages/onPostLiked.message'
+      - $ref: '#/channels/post~1liked/messages/onPostLikedMessage'
