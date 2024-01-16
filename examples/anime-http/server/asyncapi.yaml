@@ -39,7 +39,7 @@ operations:
       $ref: '#/channels/trendingAnime'
     messages:
       - $ref: '#/components/messages/trendingAnime'
-  trindingAnimeReply:
+  trendingAnimeReply:
     action: send
     channel:
       $ref: '#/channels/trendingAnime'
