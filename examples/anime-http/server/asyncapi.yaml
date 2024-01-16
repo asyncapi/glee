@@ -44,7 +44,7 @@ operations:
     channel:
       $ref: '#/channels/trendingAnime'
     messages:
-      - $ref: '#/components/messages/tendingAnime'
+      - $ref: '#/components/messages/trendingAnime'
 components:
   messages:
     trendingAnime:
