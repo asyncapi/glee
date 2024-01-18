@@ -38,7 +38,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/61796959?v=4",
       "profile": "https://github.com/oviecodes",
       "contributions": [
-        "doc"
+        "doc",
+        "code"
       ]
     },
     {
@@ -46,6 +47,15 @@
       "name": "Vivek Kumar",
       "avatar_url": "https://avatars.githubusercontent.com/u/54408801?v=4",
       "profile": "https://github.com/freakfan15",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "AkhilJ321",
+      "name": "Akhil Jamwal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98508374?v=4",
+      "profile": "https://github.com/AkhilJ321",
       "contributions": [
         "code"
       ]

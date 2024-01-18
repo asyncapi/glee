@@ -2,7 +2,7 @@ export default async function () {
   return {
     send: [{
       server: 'mosquitto',
-      channel: 'server/announce',
+      channel: 'serverAnnounce',
       payload: {
         id: process.env.SERVER_ID || String(Date.now()),
       }

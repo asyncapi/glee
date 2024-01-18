@@ -4,19 +4,18 @@ import walkdir from 'walkdir'
 import { getConfigs } from './configs.js'
 import { logWarningMessage, logError } from './logger.js'
 import GleeMessage from './message.js'
-import { GleeFunction, GleeFunctionReturnReply } from './index.js'
+import { GleeFunction } from './index.js'
 import Glee from './glee.js'
 import {
   gleeMessageToFunctionEvent,
   validateData,
   isRemoteServer,
-  extractExpressionValueFromMessage,
 } from './util.js'
 import { pathToFileURL } from 'url'
 import GleeError from '../errors/glee-error.js'
 import { getParsedAsyncAPI } from './asyncapiFile.js'
 import Debug from 'debug'
-import { AsyncAPIDocumentInterface, OperationInterface } from '@asyncapi/parser'
+import { OperationInterface } from '@asyncapi/parser'
 const debug = Debug('glee:functions')
 
 interface FunctionInfo {
@@ -168,22 +167,6 @@ export async function trigger({
           }))
       })
     })
-
-    functionResult?.reply?.forEach((reply) => {
-      const replyMessage = createReplies(reply, message, parsedAsyncAPI)
-      if (!replyMessage) {
-        return
-      }
-
-      const replyChannel = parsedAsyncAPI.channels().get(replyMessage.channel)
-      replyChannel.servers().forEach((server) => {
-        replyMessage.serverName = server.id()
-        app.send(
-          replyMessage
-        )
-      })
-
-    })
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
       const functionsPath = relative(GLEE_DIR, GLEE_FUNCTIONS_DIR)
@@ -197,30 +180,4 @@ export async function trigger({
       return
     }
   }
-}
-
-function createReplies(functionReply: GleeFunctionReturnReply, message: GleeMessage, parsedAsyncAPI: AsyncAPIDocumentInterface): GleeMessage {
-  const operation = message.operation
-  const reply = operation.reply()
-  if (!reply) {
-    const warningMsg = `Operation ${operation.id()} doesn't have a reply field. the return result from your function will be ignored.`
-    logWarningMessage(warningMsg)
-    return
-  }
-
-  let replyChannel = parsedAsyncAPI.channels().all().filter((c) => c.address() === reply.channel().address())[0]
-  const replyAddress = reply.address()
-  if (replyAddress) {
-    const channelAddress = extractExpressionValueFromMessage(this, replyAddress.location())
-    if (!channelAddress) {
-      throw Error(`cannot parse the ${replyAddress.location()} from your message.`)
-    }
-    const channel = parsedAsyncAPI.allChannels().filter((c) => c.address === channelAddress)[0]
-    if (!channel) {
-      throw Error(`cannot find a channel with the address of "${channelAddress}" in your AsyncAPI file.`)
-    }
-    replyChannel = channel
-  }
-
-  return new GleeMessage({ ...functionReply, channel: replyChannel.id(), request: message, operation, connection: message.connection })
 }

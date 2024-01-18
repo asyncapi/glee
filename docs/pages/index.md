@@ -82,9 +82,6 @@ operations:
     action: receive
     channel:
       $ref: '#/channels/greet'
-    reply:
-      channel:
-        $ref: '#/channels/greet'
   sendGreet:
     action: send
     channel:
@@ -127,8 +124,10 @@ export default async function (event) {
     response = `Good Evening ${name}`
   }
   return {
-    reply: [
+    send: [
       {
+        server: "websockets",
+        channel: "greet"
         payload: response,
       },
     ],
