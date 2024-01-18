@@ -3,6 +3,12 @@ import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import { KafkaAdapterConfig, KafkaAuthConfig } from '../../lib/index.js'
 
+enum SECURITY_TYPES {
+  USER_PASSWORD = 'userPassword',
+  SCRAM_SHA_256 = 'scramSha256',
+  SCRAM_SHA_512 = 'scramSha512',
+}
+
 class KafkaAdapter extends Adapter {
   private kafka: Kafka
   private firstConnect = true
