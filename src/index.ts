@@ -31,8 +31,8 @@ import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 import { getMessagesSchema } from './lib/util.js'
-import { OperationReplyInterface } from '@asyncapi/parser'
-import {loadEnvConfig} from '@next/env'
+import pkg from '@next/env'
+const { loadEnvConfig } = pkg
 
 
 const isDev = process.env.NODE_ENV === 'development'
