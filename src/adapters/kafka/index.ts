@@ -25,13 +25,13 @@ class KafkaAdapter extends Adapter {
       (sec) => sec
     )
     const userAndPasswordSecurityReq = securityRequirements.find(
-      (sec) => sec.type === 'userPassword'
+      (sec) => sec.type === SECURITY_TYPES.USER_PASSWORD
     )
     const scramSha256SecurityReq = securityRequirements.find(
-      (sec) => sec.type === 'scramSha256'
+      (sec) => sec.type === SECURITY_TYPES.SCRAM_SHA_256
     )
     const scramSha512SecurityReq = securityRequirements.find(
-      (sec) => sec.type === 'scramSha512'
+      (sec) => sec.type === SECURITY_TYPES.SCRAM_SHA_512
     )
 
     const brokerUrl = new URL(this.AsyncAPIServer.url())
