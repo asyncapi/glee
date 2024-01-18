@@ -11,12 +11,7 @@ class KafkaAdapter extends Adapter {
   }
 
   async connect(): Promise<void> {
-    try {
-      await this._connect()
-    } catch (error) {
-      console.error('Error connecting to Kafka:', error)
-      throw error
-    }
+    await this._connect()
   }
 
   async _connect() {

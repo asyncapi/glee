@@ -15,7 +15,6 @@ class HttpClientAdapter extends Adapter {
     return 'HTTP client'
   }
   async connect(): Promise<this> {
-    try {
       this.emit('connect', {
         name: this.name(),
         adapter: this,
@@ -23,11 +22,6 @@ class HttpClientAdapter extends Adapter {
         channel: this.channelNames,
       })
       return this
-    } catch (err) {
-      logWarningMessage(`Failed to Connect: An error occurred while connecting to '${this.name()}' . Please review the error details below for further information and corrective action.`)
-      this.emit('error', err)
-      throw err
-    }
   }
 
   async send(message: GleeMessage): Promise<void> {

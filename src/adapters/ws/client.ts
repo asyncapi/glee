@@ -21,22 +21,11 @@ class WsClientAdapter extends Adapter {
   }
 
   async connect(): Promise<this> {
-    try{
-      return this._connect()
-    } catch(error){
-      console.error('Error connecting to WS:', error)
-      throw error
-    }
+    return this._connect()
   }
 
   async send(message: GleeMessage) {
-    try{
-      return this._send(message)
-    } catch(error){
-      const errorMessage = `Failed to send message on channel '${message.channel}' to server '${message.serverName}'`
-      this.emit('error', new Error(errorMessage))
-      this.emit('error', error)
-    }
+    return this._send(message)
   }
 
   private async _connect(): Promise<this> {
