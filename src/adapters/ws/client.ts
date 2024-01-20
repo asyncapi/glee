@@ -2,7 +2,7 @@
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import ws from 'ws'
-import { clientAuthConfig } from '../../lib/userAuth.js'
+import { authFunctions, clientAuthConfig } from '../../lib/userAuth.js'
 import GleeAuth from '../../lib/wsHttpAuth.js'
 import { applyAddressParameters } from '../../lib/util.js'
 import Debug from 'debug'
@@ -75,7 +75,7 @@ class WsClientAdapter extends Adapter {
       })
 
       client.on('error', (err: any) => {
-        const errMessage = `WebSocket client error on channel '${channel}'`
+        const errMessage = `Error: Authentication function not found in auth/${this.serverName}. Expected function 'clientAuth'`
         this.emit('error', new Error(errMessage))
         console.error(err)
       })
