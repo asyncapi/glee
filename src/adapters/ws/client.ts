@@ -2,7 +2,7 @@
 import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import ws from 'ws'
-import { authFunctions, clientAuthConfig } from '../../lib/userAuth.js'
+import { clientAuthConfig } from '../../lib/userAuth.js'
 import GleeAuth from '../../lib/wsHttpAuth.js'
 import { applyAddressParameters } from '../../lib/util.js'
 import Debug from 'debug'
