@@ -32,9 +32,9 @@ import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 import { getMessagesSchema } from './lib/util.js'
 import { OperationReplyInterface } from '@asyncapi/parser'
-import {loadEnvConfig} from '@next/env'
+import nextEnv from '@next/env'
 
-
+const {loadEnvConfig} = nextEnv
 const isDev = process.env.NODE_ENV === 'development'
 loadEnvConfig(process.cwd(), isDev)
 
