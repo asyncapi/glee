@@ -38,7 +38,7 @@ jobs:
           rm -r ./pages/docs/tools/glee
           mkdir -p ./pages/docs/tools/glee      
           printf "%s\ntitle: Glee\nweight: 06\n%s" "---" "---"> ../glee/docs/_section.md
-          mv ../glee/docs/pages/*.{md,jpg,png} ./pages/docs/tools/glee
+          mv ../glee/docs/pages/*.md ./pages/docs/tools/glee
       - name: Commit and push
         working-directory: ./website
         run: |
