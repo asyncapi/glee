@@ -28,4 +28,4 @@
 
 #### Defined in
 
-[src/registerAdapters.ts:14](https://github.com/asyncapi/glee/blob/c3b8531/src/registerAdapters.ts#L14)
+[src/registerAdapters.ts:14](https://github.com/asyncapi/glee/blob/8d4f707/src/registerAdapters.ts#L14)

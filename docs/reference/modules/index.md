@@ -20,4 +20,25 @@
 
 #### Defined in
 
-[src/index.ts:45](https://github.com/asyncapi/glee/blob/c3b8531/src/index.ts#L45)
+[src/index.ts:44](https://github.com/asyncapi/glee/blob/8d4f707/src/index.ts#L44)
+
+___
+
+### setUpReplyMiddlewares
+
+▸ **setUpReplyMiddlewares**(`reply`, `app`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reply` | `OperationReplyInterface` |
+| `app` | [`default`](../classes/lib_glee.default.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/index.ts:234](https://github.com/asyncapi/glee/blob/8d4f707/src/index.ts#L234)

@@ -26,4 +26,4 @@
 
 #### Defined in
 
-[src/lib/docs.ts:6](https://github.com/asyncapi/glee/blob/c3b8531/src/lib/docs.ts#L6)
+[src/lib/docs.ts:6](https://github.com/asyncapi/glee/blob/8d4f707/src/lib/docs.ts#L6)
