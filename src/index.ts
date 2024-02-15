@@ -31,7 +31,13 @@ import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 import { getMessagesSchema } from './lib/util.js'
+import { OperationReplyInterface } from '@asyncapi/parser'
+import {loadEnvConfig} from '@next/env'
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1f51e1f (feat: add support for multiple .env files. (#683))
 const isDev = process.env.NODE_ENV === 'development'
 loadEnvConfig(process.cwd(), isDev)
 

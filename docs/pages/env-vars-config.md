@@ -13,8 +13,22 @@ Glee provides several environment variables that allow you to tailor your applic
 |GLEE_SERVER_CERTS|Indicates server-specific certificate files in a `${serverName}:${pathToCertificateFile}` format, separated by commas.|`GLEE_SERVER_CERTS=mosquitto:mosquitto.org.crt`|
 |GLEE_SERVER_VARIABLES|Sets server variables in a `${serverName}:${serverVariable}:${value}` format, separated by commas.|`GLEE_SERVER_VARIABLES=websockets:namespace:public`|
 
+<<<<<<< HEAD
 ### Handling Multiple .env Files
 Glee supports loading variables from `.env.local` directly into `process.env`. This feature is handy for keeping secrets out of your repository during development. You can also set environment-specific defaults in `.env.development` or `.env.production`.
+=======
+### Support for multiple .env files
+Glee has support for loading variables from `.env.local` into `process.env`.
+This is useful for storing secret environment variables needed in development while keeping them out of the repository.
+However, sometimes you might want to add some defaults for the `development` or `production` environment. You can do that by creating files with the following names:
+`.env.development` or `.env.production`
+
+`.env.local` always overrides any other existing `.env*` file.
+
+You can change the environment by setting the `NODE_ENV` variable to `development` or `production`.
+
+## Configuring Glee
+>>>>>>> 1f51e1f (feat: add support for multiple .env files. (#683))
 
 `.env.local` takes precedence over other `.env*` files.
 
