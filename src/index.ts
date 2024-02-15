@@ -31,13 +31,9 @@ import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 import { getMessagesSchema } from './lib/util.js'
-import { OperationReplyInterface } from '@asyncapi/parser'
-import {loadEnvConfig} from '@next/env'
+import pkg from '@next/env'
+const { loadEnvConfig } = pkg
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 1f51e1f (feat: add support for multiple .env files. (#683))
 const isDev = process.env.NODE_ENV === 'development'
 loadEnvConfig(process.cwd(), isDev)
 
@@ -103,37 +99,45 @@ export default async function GleeAppInitializer() {
   app.use(errorLogger)
   app.useOutbound(errorLogger)
   await generateDocs(config)
-  parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
-    const channel = operation.channels()[0] // operation can have only one channel.
-    if (operation.reply()) {
-      logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
-    }
-    if (operation.reply()) {
-      logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
-    }
-    const schema = getMessagesSchema(operation)
-    if (schema.oneOf.length > 0) app.use(channel.id(), validate(schema))
-    app.use(channel.id(), (event, next) => {
-      triggerFunction({
-        app,
-        operation,
-        message: event
-      }).then(next).catch(next)
+  parsedAsyncAPI
+    .operations()
+    .filterByReceive()
+    .forEach((operation) => {
+      const channel = operation.channels()[0] // operation can have only one channel.
+      if (operation.reply()) {
+        logWarningMessage(
+          `Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`
+        )
+      }
+      const schema = getMessagesSchema(operation)
+      if (schema.oneOf.length > 0) app.use(channel.id(), validate(schema))
+      app.use(channel.id(), (event, next) => {
+        triggerFunction({
+          app,
+          operation,
+          message: event,
+        })
+          .then(next)
+          .catch(next)
+      })
     })
-  })
 
-  parsedAsyncAPI.operations().filterBySend().forEach(operation => {
-    const channel = operation.channels()[0] // operation can have only one channel.
-    if (operation.reply()) {
-      logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
-    }
-    if (operation.reply()) {
-      logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
-    }
-    const schema = getMessagesSchema(operation)
-    if (schema.oneOf.length > 0) app.useOutbound(channel.id(), validate(schema))
-    app.useOutbound(channel.id(), json2string)
-  })
+  parsedAsyncAPI
+    .operations()
+    .filterBySend()
+    .forEach((operation) => {
+      const channel = operation.channels()[0] // operation can have only one channel.
+      if (operation.reply()) {
+        logWarningMessage(
+          `Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`
+        )
+      }
+      const schema = getMessagesSchema(operation)
+      if (schema.oneOf.length > 0) {
+        app.useOutbound(channel.id(), validate(schema))
+      }
+      app.useOutbound(channel.id(), json2string)
+    })
 
   app.on('adapter:auth', async (e: AuthEvent) => {
     logLineWithIcon(
