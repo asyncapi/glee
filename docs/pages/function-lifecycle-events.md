@@ -22,13 +22,13 @@ Functions take a single argument, which is the event received from a broker or a
 |channel|The name of the channel/topic from which the event was read.|
 |serverName|The name of the server/broker from which the event was received.|
 
-Functions may return an object to instruct Glee on what action to take next. For instance, the following example sends a greeting message to the `development` server:
+Functions may return an object to tell Glee what to do next. For instance, the following example sends a greeting message to `development` server:
 ```js
 /* onHello.js */
 export default async function (event) {
   return {
     send: [{
-      server: 'development',
+      server: 'developement',
       channel: 'greets',
       payload: 'Greetings! How is your day going?'
     }]
@@ -37,10 +37,10 @@ export default async function (event) {
 ```
 
 |Attribute|Type|Description|
-|---------|----|-----------|
-|send|array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt;|A list of outbound messages to send after processing the inbound event. All clients subscribed to the given channel/topic will receive the message.
+|---|---|---|
+|send|array&lt;[OutboundMessage](#anatomy-of-an-outbound-message)&gt;|A list of outbound messages to send when the processing of the inbound event has finished. All clients subscribed to the given channel/topic will receive the message.
 
-##### Anatomy of an Outbound Message
+##### Anatomy of an outbound message
 |Attribute|Type|Description|
 |---------|----|-----------|
 |payload|string|The payload/body of the message you want to send.|

@@ -31,9 +31,6 @@ import { getSelectedServerNames } from './lib/servers.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import { ClusterEvent } from './lib/cluster.js'
 import { getMessagesSchema } from './lib/util.js'
-import pkg from '@next/env'
-const { loadEnvConfig } = pkg
-
 
 const isDev = process.env.NODE_ENV === 'development'
 loadEnvConfig(process.cwd(), isDev)
@@ -105,6 +102,9 @@ export default async function GleeAppInitializer() {
     if (operation.reply()) {
       logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
     }
+    if (operation.reply()) {
+      logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
+    }
     const schema = getMessagesSchema(operation)
     if (schema.oneOf.length > 0) app.use(channel.id(), validate(schema))
     app.use(channel.id(), (event, next) => {
@@ -118,6 +118,9 @@ export default async function GleeAppInitializer() {
 
   parsedAsyncAPI.operations().filterBySend().forEach(operation => {
     const channel = operation.channels()[0] // operation can have only one channel.
+    if (operation.reply()) {
+      logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
+    }
     if (operation.reply()) {
       logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
     }
