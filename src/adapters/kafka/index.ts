@@ -3,6 +3,12 @@ import Adapter from '../../lib/adapter.js'
 import GleeMessage from '../../lib/message.js'
 import { KafkaAdapterConfig, KafkaAuthConfig } from '../../lib/index.js'
 
+enum SECURITY_TYPES {
+  USER_PASSWORD = 'userPassword',
+  SCRAM_SHA_256 = 'scramSha256',
+  SCRAM_SHA_512 = 'scramSha512',
+}
+
 class KafkaAdapter extends Adapter {
   private kafka: Kafka
   private firstConnect = true
@@ -15,20 +21,17 @@ class KafkaAdapter extends Adapter {
       'kafka'
     )
     const auth: KafkaAuthConfig = await this.getAuthConfig(kafkaOptions?.auth)
-    const securityRequirements = this.AsyncAPIServer.security().map(
-      (sec) => {
-        const secName = Object.keys(sec.values())[0]
-        return this.parsedAsyncAPI.components().securitySchemes().get(secName)
-      }
+    const securityRequirements = this.AsyncAPIServer.json().security.map(
+      (sec) => sec
     )
     const userAndPasswordSecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'userPassword'
+      (sec) => sec.type === SECURITY_TYPES.USER_PASSWORD
     )
     const scramSha256SecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'scramSha256'
+      (sec) => sec.type === SECURITY_TYPES.SCRAM_SHA_256
     )
     const scramSha512SecurityReq = securityRequirements.find(
-      (sec) => sec.type() === 'scramSha512'
+      (sec) => sec.type === SECURITY_TYPES.SCRAM_SHA_512
     )
 
     const brokerUrl = new URL(this.AsyncAPIServer.url())
