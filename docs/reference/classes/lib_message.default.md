@@ -101,7 +101,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/message.ts:52](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L52)
+[src/lib/message.ts:52](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L52)
 
 ## Properties
 
@@ -111,7 +111,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/message.ts:28](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L28)
+[src/lib/message.ts:28](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L28)
 
 ___
 
@@ -121,7 +121,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:25](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L25)
+[src/lib/message.ts:25](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L25)
 
 ___
 
@@ -131,7 +131,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:33](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L33)
+[src/lib/message.ts:33](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L33)
 
 ___
 
@@ -141,7 +141,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:27](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L27)
+[src/lib/message.ts:27](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L27)
 
 ___
 
@@ -155,7 +155,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:24](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L24)
+[src/lib/message.ts:24](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L24)
 
 ___
 
@@ -165,7 +165,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:29](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L29)
+[src/lib/message.ts:29](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L29)
 
 ___
 
@@ -175,7 +175,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:31](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L31)
+[src/lib/message.ts:31](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L31)
 
 ___
 
@@ -185,7 +185,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:32](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L32)
+[src/lib/message.ts:32](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L32)
 
 ___
 
@@ -199,7 +199,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:34](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L34)
+[src/lib/message.ts:34](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L34)
 
 ___
 
@@ -209,7 +209,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:23](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L23)
+[src/lib/message.ts:23](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L23)
 
 ___
 
@@ -219,7 +219,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:35](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L35)
+[src/lib/message.ts:35](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L35)
 
 ___
 
@@ -229,7 +229,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:30](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L30)
+[src/lib/message.ts:30](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L30)
 
 ___
 
@@ -239,7 +239,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:26](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L26)
+[src/lib/message.ts:26](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L26)
 
 ___
 
@@ -319,7 +319,7 @@ node_modules/@types/node/events.d.ts:327
 
 #### Defined in
 
-[src/lib/message.ts:139](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L139)
+[src/lib/message.ts:139](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L139)
 
 ___
 
@@ -333,7 +333,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:115](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L115)
+[src/lib/message.ts:115](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L115)
 
 • `set` **channel**(`value`): `void`
 
@@ -349,7 +349,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:119](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L119)
+[src/lib/message.ts:119](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L119)
 
 ___
 
@@ -363,7 +363,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:151](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L151)
+[src/lib/message.ts:151](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L151)
 
 • `set` **cluster**(`value`): `void`
 
@@ -379,7 +379,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:155](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L155)
+[src/lib/message.ts:155](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L155)
 
 ___
 
@@ -393,7 +393,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:131](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L131)
+[src/lib/message.ts:131](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L131)
 
 • `set` **connection**(`value`): `void`
 
@@ -409,7 +409,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:135](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L135)
+[src/lib/message.ts:135](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L135)
 
 ___
 
@@ -423,7 +423,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:107](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L107)
+[src/lib/message.ts:107](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L107)
 
 • `set` **headers**(`value`): `void`
 
@@ -439,7 +439,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:111](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L111)
+[src/lib/message.ts:111](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L111)
 
 ___
 
@@ -453,7 +453,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:98](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L98)
+[src/lib/message.ts:98](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L98)
 
 • `set` **operation**(`value`): `void`
 
@@ -469,7 +469,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:102](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L102)
+[src/lib/message.ts:102](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L102)
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:143](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L143)
+[src/lib/message.ts:143](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L143)
 
 • `set` **params**(`value`): `void`
 
@@ -499,7 +499,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:147](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L147)
+[src/lib/message.ts:147](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L147)
 
 ___
 
@@ -513,7 +513,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:78](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L78)
+[src/lib/message.ts:78](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L78)
 
 • `set` **payload**(`value`): `void`
 
@@ -529,7 +529,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:82](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L82)
+[src/lib/message.ts:82](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L82)
 
 ___
 
@@ -543,7 +543,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:159](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L159)
+[src/lib/message.ts:159](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L159)
 
 • `set` **query**(`value`): `void`
 
@@ -559,7 +559,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:163](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L163)
+[src/lib/message.ts:163](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L163)
 
 ___
 
@@ -573,7 +573,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:94](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L94)
+[src/lib/message.ts:94](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L94)
 
 • `set` **request**(`value`): `void`
 
@@ -589,7 +589,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:90](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L90)
+[src/lib/message.ts:90](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L90)
 
 ___
 
@@ -603,7 +603,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:123](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L123)
+[src/lib/message.ts:123](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L123)
 
 • `set` **serverName**(`value`): `void`
 
@@ -619,7 +619,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:127](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L127)
+[src/lib/message.ts:127](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L127)
 
 ## Methods
 
@@ -794,7 +794,7 @@ ___
 
 #### Defined in
 
-[src/lib/message.ts:86](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L86)
+[src/lib/message.ts:86](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L86)
 
 ___
 
@@ -810,7 +810,7 @@ Checks if it's an inbound message.
 
 #### Defined in
 
-[src/lib/message.ts:186](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L186)
+[src/lib/message.ts:186](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L186)
 
 ___
 
@@ -826,7 +826,7 @@ Checks if it's an outbound message.
 
 #### Defined in
 
-[src/lib/message.ts:193](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L193)
+[src/lib/message.ts:193](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L193)
 
 ___
 
@@ -910,7 +910,7 @@ Indicates failure in processing the message
 
 #### Defined in
 
-[src/lib/message.ts:214](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L214)
+[src/lib/message.ts:214](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L214)
 
 ___
 
@@ -926,7 +926,7 @@ Indicates successfully processed the message
 
 #### Defined in
 
-[src/lib/message.ts:207](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L207)
+[src/lib/message.ts:207](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L207)
 
 ___
 
@@ -1360,7 +1360,7 @@ Tells Glee to send the message.
 
 #### Defined in
 
-[src/lib/message.ts:200](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L200)
+[src/lib/message.ts:200](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L200)
 
 ___
 
@@ -1376,7 +1376,7 @@ Makes the message suitable only for the inbound pipeline.
 
 #### Defined in
 
-[src/lib/message.ts:170](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L170)
+[src/lib/message.ts:170](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L170)
 
 ___
 
@@ -1427,7 +1427,7 @@ Makes the message suitable only for the outbound pipeline.
 
 #### Defined in
 
-[src/lib/message.ts:178](https://github.com/asyncapi/glee/blob/abfd9cf/src/lib/message.ts#L178)
+[src/lib/message.ts:178](https://github.com/asyncapi/glee/blob/c4229bd/src/lib/message.ts#L178)
 
 ___
 
