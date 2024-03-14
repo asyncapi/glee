@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[src/middlewares/validateConnection.ts:4](https://github.com/asyncapi/glee/blob/4f30130/src/middlewares/validateConnection.ts#L4)
+[src/middlewares/validateConnection.ts:4](https://github.com/asyncapi/glee/blob/abfd9cf/src/middlewares/validateConnection.ts#L4)
