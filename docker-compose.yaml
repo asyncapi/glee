@@ -5,6 +5,7 @@ services:
   glee:
     build:
       context: .
+      # do we need to switch to USER root?
       dockerfile_inline: |
         FROM asyncapi/cli
         USER root
@@ -18,7 +19,7 @@ services:
       - ${PWD}:/app/project 
     networks:
       - default
-    user: root
+    user: root # can we stick to default user and have glee file/folders editable by local user?
     entrypoint: []
     working_dir: /app/project
     command: npm run dev
