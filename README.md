@@ -24,6 +24,8 @@ asyncapi new glee
 
 After the installation is complete, follow the instructions to start the development server.
 
+If you have Docker installed, you can also create a container to run the development server by downloading the [docker-compose.yaml](https://example.com) file. Its usage is explained here [placeholder reference](https://example.com)
+
 > For more information on how to install AsyncAPI CLI, you can review [CLI installation documentation](https://www.asyncapi.com/docs/tools/cli/installation)
 
 ## Getting started

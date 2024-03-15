@@ -1,0 +1,27 @@
+# draft, work on permissions for glee files/folders
+version: '3'
+
+services:
+  glee:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM asyncapi/cli
+        USER root
+        RUN apk add --no-cache --virtual .gyp python3 make g++ && \
+            rm -rf /var/lib/apt/lists/* && \
+            asyncapi new glee && \
+            cd project && \
+            npm install
+        ENTRYPOINT 
+    volumes:
+      - ${PWD}:/app/project 
+    networks:
+      - default
+    user: root
+    entrypoint: []
+    working_dir: /app/project
+    command: npm run dev
+   
+networks:
+  default: {}
