@@ -248,14 +248,11 @@ class MqttAdapter extends Adapter {
 
   _send(message: GleeMessage): Promise<void> {
     return new Promise((resolve, reject) => {
-      const binding = this.parsedAsyncAPI
-        .channels()
-        .get(message.channel)
-        .bindings()
-        .get('mqtt')
-        ?.value()
+      const channel = this.parsedAsyncAPI.channels().get(message.channel)
+      const address = channel.address()
+      const binding = channel.bindings().get('mqtt')?.value()
       this.client.publish(
-        message.channel,
+        address,
         message.payload,
         {
           qos: binding?.qos ? binding.qos : 2,
