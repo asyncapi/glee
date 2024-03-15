@@ -152,7 +152,26 @@ export async function trigger({
         localServerProtocols.includes(serverProtocol) &&
         !isRemoteServer(parsedAsyncAPI, msg.server)
       const channelName = msg.channel || message.channel
-      const operations = parsedAsyncAPI.channels().get(channelName).operations().filterBySend()
+      const channel = parsedAsyncAPI.channels().get(channelName)
+
+      if (!channel) {
+        const warnMessage = `Failed to send: "${channelName}" channel not found. please make sure you have a channel named: "${channelName}" in your AsyncAPI file.`
+        logWarningMessage(warnMessage, {
+          highlightedWords: [channelName],
+        })
+        return
+      }
+
+      const operations = channel.operations().filterBySend()
+
+      if (operations.length === 0) {
+        const warnMessage = `Failed to send: No 'send' operation found for channel "${channelName}".`
+        logWarningMessage(warnMessage, {
+          highlightedWords: [channelName],
+        })
+        return
+      }
+
       operations.forEach(operation => {
         app.send(
           new GleeMessage({
