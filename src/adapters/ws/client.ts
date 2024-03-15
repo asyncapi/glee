@@ -75,7 +75,7 @@ class WsClientAdapter extends Adapter {
       })
 
       client.on('error', (err: any) => {
-        const errMessage = `Error: Authentication function not found in auth/${this.serverName}. Expected function 'clientAuth'`
+        const errMessage = `Error: Authentication function not found at location auth/${this.serverName}. Expected function 'clientAuth'`
         this.emit('error', new Error(errMessage))
         console.error(err)
       })
