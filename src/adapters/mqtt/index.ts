@@ -244,6 +244,7 @@ class MqttAdapter extends Adapter {
     }
 
     return connectClient()
+
   }
 
   _send(message: GleeMessage): Promise<void> {
