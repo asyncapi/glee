@@ -28,7 +28,7 @@ If you have Docker installed, you can also create a container to run the develop
 ```bash
 docker compose up
 ```
-[Its usage is explained here](./docs/docker/usage.md)
+Its usage is explained [here](./docs/docker/usage.md)
 
 > For more information on how to install AsyncAPI CLI, you can review [CLI installation documentation](https://www.asyncapi.com/docs/tools/cli/installation)
 
