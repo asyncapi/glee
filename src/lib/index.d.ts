@@ -24,6 +24,13 @@ export interface MqttAuthConfig {
   clientId?: string
 }
 
+export interface AMQPAuthConfig {
+  cert?: string
+  key?: string
+  username?: string
+  password?: string
+}
+
 export interface WsAuthConfig {
   token?: string
   username?: string
@@ -90,6 +97,10 @@ export type MqttAdapterConfig = {
   auth?: MqttAuthConfig | AuthFunction<MqttAuthConfig>
 }
 
+export type AMQPAdapterConfig = {
+  auth?: AMQPAuthConfig | AuthFunction<AMQPAuthConfig>
+}
+
 export type KafkaAdapterConfig = {
   auth?: KafkaAuthConfig | AuthFunction<KafkaAuthConfig>
 }
@@ -115,6 +126,7 @@ export type GleeConfig = {
   mqtt?: MqttAdapterConfig
   http?: HttpAdapterConfig
   kafka?: KafkaAdapterConfig
+  amqp?: AMQPAdapterConfig
 }
 
 export type GleeFunctionReturn = {

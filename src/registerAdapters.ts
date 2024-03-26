@@ -10,6 +10,7 @@ import { GleeConfig, GleeClusterAdapterConfig } from './lib/index.js'
 import HttpServerAdapter from './adapters/http/server.js'
 import HttpClientAdapter from './adapters/http/client.js'
 import KafkaAdapter from './adapters/kafka/index.js'
+import AMQPAdapter from './adapters/amqp/index.js'
 
 export default async (
   app: Glee,
@@ -56,6 +57,11 @@ function registerAdapterForServer(
     })
   } else if (['amqp', 'amqps'].includes(protocol)) {
     // TODO: Implement AMQP support
+    app.addAdapter(AMQPAdapter, {
+      serverName,
+      server,
+      parsedAsyncAPI
+    });
   } else if (['ws', 'wss'].includes(protocol)) {
     registerWebsocketsAdapter(serverName, server, app, parsedAsyncAPI, config, remoteServers)
   } else if (['http', 'https'].includes(protocol)) {
