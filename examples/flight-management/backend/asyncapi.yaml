@@ -1,22 +1,28 @@
-asyncapi: 2.4.0
+asyncapi: 3.0.0
 info:
   title: Flight Board
   version: 0.0.1
-  description: Flight Board offers real time flight info on all of the screens at an airport. This AsyncAPI file is only for the real time communication. We are using Glee to manage the WebSocket server as well as the REST API server, which is being created with Express.js.
-
+  description: >-
+    Flight Board offers real time flight info on all of the screens at an
+    airport. This AsyncAPI file is only for the real time communication. We are
+    using Glee to manage the WebSocket server as well as the REST API server,
+    which is being created with Express.js.
 servers:
   websockets:
-    url: ws://localhost:3000
+    host: 'localhost:3000'
     protocol: ws
-    description: This Websocket server is available without authorization. It receives the changes that are made by different sources and updates the database and Flight Boards.
+    description: >-
+      This Websocket server is available without authorization. It receives the
+      changes that are made by different sources and updates the database and
+      Flight Boards.
 channels:
-  /:
-    publish:
-      operationId: sendMessage
-      message:
-        oneOf:
-          - $ref: '#/components/messages/updateFlight'
-          - $ref: '#/components/messages/getFlights'
+  index:
+    address: /
+    messages:
+      updateFlight:
+        $ref: '#/components/messages/updateFlight'
+      getFlights:
+        $ref: '#/components/messages/getFlights'
     bindings:
       ws:
         query:
@@ -24,10 +30,20 @@ channels:
           properties:
             airport:
               type: string
+operations:
+  sendMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/index'
+    messages:
+      - $ref: '#/components/messages/updateFlight'
+      - $ref: '#/components/messages/getFlights'
 components:
   messages:
     getFlights:
-      summary: This message should be published when a board wants to receive all of the flights that depart or arrive at that airport.
+      summary: >-
+        This message should be published when a board wants to receive all of
+        the flights that depart or arrive at that airport.
       payload:
         type: object
         additionalProperties: false
@@ -52,4 +68,6 @@ components:
     eventName:
       type: string
       description: The name of the event.
-      enum: ['allFlights', 'updateFlight']
+      enum:
+        - allFlights
+        - updateFlight

@@ -1,37 +1,53 @@
-asyncapi: 2.2.0
+asyncapi: 3.0.0
 info:
   title: The Social Network
   version: 0.1.0
-
 servers:
   websockets:
-    url: ws://0.0.0.0:3001
+    host: '0.0.0.0:3001'
     protocol: ws
   mosquitto:
-    url: mqtt://test.mosquitto.org
+    host: test.mosquitto.org
     protocol: mqtt
     bindings:
       mqtt:
         clientId: the-social-network
-
 channels:
-  /:
-    publish:
-      operationId: onLikeDislike
-      message:
+  index:
+    address: /
+    messages:
+      likeOrDislike:
         $ref: '#/components/messages/likeOrDislike'
-    subscribe:
-      message:
+      likeCountUpdated:
         $ref: '#/components/messages/likeCountUpdated'
     servers:
-      - websockets
-  post/liked:
-    subscribe:
-      message:
+      - $ref: '#/servers/websockets'
+  postLiked:
+    address: post/liked
+    messages:
+      notifyPostLiked:
         $ref: '#/components/messages/notifyPostLiked'
     servers:
-      - mosquitto
-
+      - $ref: '#/servers/mosquitto'
+operations:
+  onLikeDislike:
+    action: receive
+    channel:
+      $ref: '#/channels/index'
+    messages:
+      - $ref: '#/components/messages/likeOrDislike'
+  onLikeCounted:
+    action: send
+    channel:
+      $ref: '#/channels/index'
+    messages:
+      - $ref: '#/components/messages/likeCountUpdated'
+  notifyPostLiked:
+    action: send
+    channel:
+      $ref: '#/channels/postLiked'
+    messages:
+      - $ref: '#/components/messages/notifyPostLiked'
 components:
   messages:
     likeOrDislike:
