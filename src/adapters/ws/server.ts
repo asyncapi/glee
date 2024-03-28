@@ -94,7 +94,12 @@ class WebSocketsAdapter extends Adapter {
 
   private _getChannel(req: IncomingMessage) {
     const pathName = this._extractPathname(req)
-    return this.parsedAsyncAPI.channels().all().filter(channel => channel.address() === pathName)[0]
+    return this.parsedAsyncAPI.channels().all().filter(channel => {
+      let address = channel.address()
+      if (address.endsWith('/')) address = address.substring(0, address.length - 1)
+
+      return address === pathName
+    })[0]
   }
 
   private _endRequest(code: number, message: string, socket: Duplex) {
@@ -183,7 +188,14 @@ class WebSocketsAdapter extends Adapter {
   private _extractPathname(req: IncomingMessage) {
     const serverUrl = new URL(this.serverUrlExpanded)
     const { pathname } = new URL(req.url, serverUrl)
-    return pathname || '/'
+
+    if (!pathname) return '/'
+
+    if (pathname.endsWith('/')) {
+      return pathname.substring(0, pathname.length - 1)
+    }
+
+    return pathname
   }
 
 
