@@ -5,24 +5,21 @@ services:
   glee:
     build:
       context: .
-      # do we need to switch to USER root?
       dockerfile_inline: |
         FROM asyncapi/cli
         USER root
-        RUN apk add --no-cache --virtual .gyp python3 make g++ && \
-            rm -rf /var/lib/apt/lists/* && \
-            asyncapi new glee && \
-            cd project && \
+        RUN asyncapi new glee --name=tutorial --template tutorial && \
+            cd tutorial && \
             npm install
         ENTRYPOINT 
     volumes:
-      - ${PWD}:/app/project 
+      - ${PWD}:/app/tutorial 
     networks:
       - default
     user: root # can we stick to default user and have glee file/folders editable by local user?
     entrypoint: []
-    working_dir: /app/project
-    command: npm run dev
+    working_dir: /app/tutorial
+    command: sleep infinity
    
 networks:
   default: {}
