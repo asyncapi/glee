@@ -155,9 +155,15 @@ export default class Glee extends EventEmitter {
       promises.push(a.instance.connect())
     })
 
-    if (this._clusterAdapter) {
-      this._clusterAdapter.instance = new this._clusterAdapter.Adapter(this)
-      promises.push(this._clusterAdapter.instance.connect())
+    try {
+      if (this._clusterAdapter) {
+        this._clusterAdapter.instance = new this._clusterAdapter.Adapter(this)
+        promises.push(this._clusterAdapter.instance.connect().catch((error) => {
+          console.error('Error connecting to cluster:', error)
+        }))
+      }
+    } catch (error) {
+      console.error('Error connecting:', error)
     }
 
     return Promise.all(promises)
