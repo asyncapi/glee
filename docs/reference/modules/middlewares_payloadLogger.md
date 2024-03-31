@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[src/middlewares/payloadLogger.ts:5](https://github.com/asyncapi/glee/blob/3f8f824/src/middlewares/payloadLogger.ts#L5)
+[src/middlewares/payloadLogger.ts:5](https://github.com/asyncapi/glee/blob/f762a02/src/middlewares/payloadLogger.ts#L5)

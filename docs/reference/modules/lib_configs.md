@@ -29,7 +29,7 @@
 
 #### Defined in
 
-[src/lib/configs.ts:112](https://github.com/asyncapi/glee/blob/3f8f824/src/lib/configs.ts#L112)
+[src/lib/configs.ts:112](https://github.com/asyncapi/glee/blob/f762a02/src/lib/configs.ts#L112)
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 #### Defined in
 
-[src/lib/configs.ts:130](https://github.com/asyncapi/glee/blob/3f8f824/src/lib/configs.ts#L130)
+[src/lib/configs.ts:130](https://github.com/asyncapi/glee/blob/f762a02/src/lib/configs.ts#L130)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/lib/configs.ts:23](https://github.com/asyncapi/glee/blob/3f8f824/src/lib/configs.ts#L23)
+[src/lib/configs.ts:23](https://github.com/asyncapi/glee/blob/f762a02/src/lib/configs.ts#L23)
 
 ___
 
@@ -79,4 +79,4 @@ Loads the configuration from glee project.
 
 #### Defined in
 
-[src/lib/configs.ts:81](https://github.com/asyncapi/glee/blob/3f8f824/src/lib/configs.ts#L81)
+[src/lib/configs.ts:81](https://github.com/asyncapi/glee/blob/f762a02/src/lib/configs.ts#L81)
