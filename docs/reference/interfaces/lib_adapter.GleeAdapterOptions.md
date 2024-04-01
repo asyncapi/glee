@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[src/lib/adapter.ts:25](https://github.com/asyncapi/glee/blob/18e2e5a/src/lib/adapter.ts#L25)
+[src/lib/adapter.ts:25](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L25)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:28](https://github.com/asyncapi/glee/blob/18e2e5a/src/lib/adapter.ts#L28)
+[src/lib/adapter.ts:28](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L28)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:27](https://github.com/asyncapi/glee/blob/18e2e5a/src/lib/adapter.ts#L27)
+[src/lib/adapter.ts:27](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L27)
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:26](https://github.com/asyncapi/glee/blob/18e2e5a/src/lib/adapter.ts#L26)
+[src/lib/adapter.ts:26](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L26)
