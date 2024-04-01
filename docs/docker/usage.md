@@ -1,4 +1,5 @@
 Tentative usage. still buggy
+Validate in Linux (raspberry), windows and ask some-one to validate in macOS
 
 
 # developing the functionality
@@ -17,8 +18,9 @@ Tentative usage. still buggy
 - run docker command to open a container command prompt: docker exec -it name-of-container sh 
 ### at container command prompt
 - create glee project e.g. asyncapi new glee --name=tutorial --template tutorial
-- follow instructions to install and launch glee
-- change permission on Glee files so they can be edited in local file system with command chown.....
+- follow instructions to install glee (npm install)
+- change permission on glee files so they can be edited in local file system with command chown.....
+- follow instructions to launch glee (npm run dev)
 - monitor glee log
 - terminate glee server with ctrl-c
 ### in local workstation
