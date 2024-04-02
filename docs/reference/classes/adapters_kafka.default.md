@@ -86,7 +86,7 @@
 
 #### Defined in
 
-[src/lib/adapter.ts:43](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L43)
+[src/lib/adapter.ts:43](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L43)
 
 ## Properties
 
@@ -96,7 +96,7 @@
 
 #### Defined in
 
-[src/adapters/kafka/index.ts:8](https://github.com/asyncapi/glee/blob/f762a02/src/adapters/kafka/index.ts#L8)
+[src/adapters/kafka/index.ts:8](https://github.com/asyncapi/glee/blob/2f0e071/src/adapters/kafka/index.ts#L8)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 #### Defined in
 
-[src/adapters/kafka/index.ts:7](https://github.com/asyncapi/glee/blob/f762a02/src/adapters/kafka/index.ts#L7)
+[src/adapters/kafka/index.ts:7](https://github.com/asyncapi/glee/blob/2f0e071/src/adapters/kafka/index.ts#L7)
 
 ___
 
@@ -190,7 +190,7 @@ Adapter.AsyncAPIServer
 
 #### Defined in
 
-[src/lib/adapter.ts:184](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L184)
+[src/lib/adapter.ts:184](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L184)
 
 ___
 
@@ -208,7 +208,7 @@ Adapter.channelAddresses
 
 #### Defined in
 
-[src/lib/adapter.ts:200](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L200)
+[src/lib/adapter.ts:200](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L200)
 
 ___
 
@@ -226,7 +226,7 @@ Adapter.channelNames
 
 #### Defined in
 
-[src/lib/adapter.ts:192](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L192)
+[src/lib/adapter.ts:192](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L192)
 
 ___
 
@@ -244,7 +244,7 @@ Adapter.connections
 
 #### Defined in
 
-[src/lib/adapter.ts:204](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L204)
+[src/lib/adapter.ts:204](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L204)
 
 ___
 
@@ -262,7 +262,7 @@ Adapter.glee
 
 #### Defined in
 
-[src/lib/adapter.ts:176](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L176)
+[src/lib/adapter.ts:176](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L176)
 
 ___
 
@@ -280,7 +280,7 @@ Adapter.operationIds
 
 #### Defined in
 
-[src/lib/adapter.ts:196](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L196)
+[src/lib/adapter.ts:196](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L196)
 
 ___
 
@@ -298,7 +298,7 @@ Adapter.parsedAsyncAPI
 
 #### Defined in
 
-[src/lib/adapter.ts:188](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L188)
+[src/lib/adapter.ts:188](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L188)
 
 ___
 
@@ -316,7 +316,7 @@ Adapter.serverName
 
 #### Defined in
 
-[src/lib/adapter.ts:180](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L180)
+[src/lib/adapter.ts:180](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L180)
 
 ___
 
@@ -334,7 +334,7 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/lib/adapter.ts:208](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L208)
+[src/lib/adapter.ts:208](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L208)
 
 ## Methods
 
@@ -348,7 +348,7 @@ Adapter.serverUrlExpanded
 
 #### Defined in
 
-[src/adapters/kafka/index.ts:17](https://github.com/asyncapi/glee/blob/f762a02/src/adapters/kafka/index.ts#L17)
+[src/adapters/kafka/index.ts:17](https://github.com/asyncapi/glee/blob/2f0e071/src/adapters/kafka/index.ts#L17)
 
 ___
 
@@ -370,7 +370,7 @@ ___
 
 #### Defined in
 
-[src/adapters/kafka/index.ts:99](https://github.com/asyncapi/glee/blob/f762a02/src/adapters/kafka/index.ts#L99)
+[src/adapters/kafka/index.ts:99](https://github.com/asyncapi/glee/blob/2f0e071/src/adapters/kafka/index.ts#L99)
 
 ___
 
@@ -421,7 +421,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/adapters/kafka/index.ts:13](https://github.com/asyncapi/glee/blob/f762a02/src/adapters/kafka/index.ts#L13)
+[src/adapters/kafka/index.ts:13](https://github.com/asyncapi/glee/blob/2f0e071/src/adapters/kafka/index.ts#L13)
 
 ___
 
@@ -550,7 +550,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:221](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L221)
+[src/lib/adapter.ts:221](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L221)
 
 ___
 
@@ -595,7 +595,7 @@ Returns a list of the channels a given adapter has to subscribe to.
 
 #### Defined in
 
-[src/lib/adapter.ts:237](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L237)
+[src/lib/adapter.ts:237](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L237)
 
 ___
 
@@ -677,7 +677,7 @@ ___
 
 #### Defined in
 
-[src/adapters/kafka/index.ts:9](https://github.com/asyncapi/glee/blob/f762a02/src/adapters/kafka/index.ts#L9)
+[src/adapters/kafka/index.ts:9](https://github.com/asyncapi/glee/blob/2f0e071/src/adapters/kafka/index.ts#L9)
 
 ___
 
@@ -1119,7 +1119,7 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:212](https://github.com/asyncapi/glee/blob/f762a02/src/lib/adapter.ts#L212)
+[src/lib/adapter.ts:212](https://github.com/asyncapi/glee/blob/2f0e071/src/lib/adapter.ts#L212)
 
 ___
 
@@ -1145,7 +1145,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/adapters/kafka/index.ts:83](https://github.com/asyncapi/glee/blob/f762a02/src/adapters/kafka/index.ts#L83)
+[src/adapters/kafka/index.ts:83](https://github.com/asyncapi/glee/blob/2f0e071/src/adapters/kafka/index.ts#L83)
 
 ___
 
