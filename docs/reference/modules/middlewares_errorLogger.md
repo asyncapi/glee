@@ -28,4 +28,4 @@
 
 #### Defined in
 
-[src/middlewares/errorLogger.ts:6](https://github.com/asyncapi/glee/blob/b4bf434/src/middlewares/errorLogger.ts#L6)
+[src/middlewares/errorLogger.ts:6](https://github.com/asyncapi/glee/blob/38cc674/src/middlewares/errorLogger.ts#L6)
