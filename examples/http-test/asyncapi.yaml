@@ -46,13 +46,13 @@ operations:
     channel:
       $ref: "#/channels/TRIGGER"
     messages:
-      - $ref: "#/components/messages/string"
+      - $ref: "#/channels/TRIGGER/messages/string"
   receiveTrigger:
     reply:
       channel:
         $ref: "#/channels/TRIGGER"
       messages:
-        - $ref: "#/components/messages/string"
+        - $ref: "#/channels/TRIGGER/messages/string"
     channel:
       $ref: '#/channels/TRIGGER'
     action: receive
