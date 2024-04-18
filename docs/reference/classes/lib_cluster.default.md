@@ -83,7 +83,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/cluster.ts:46](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L46)
+[src/lib/cluster.ts:46](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L46)
 
 ## Properties
 
@@ -93,7 +93,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/lib/cluster.ts:36](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L36)
+[src/lib/cluster.ts:36](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L36)
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 #### Defined in
 
-[src/lib/cluster.ts:39](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L39)
+[src/lib/cluster.ts:39](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L39)
 
 ___
 
@@ -113,7 +113,7 @@ ___
 
 #### Defined in
 
-[src/lib/cluster.ts:37](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L37)
+[src/lib/cluster.ts:37](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L37)
 
 ___
 
@@ -123,7 +123,7 @@ ___
 
 #### Defined in
 
-[src/lib/cluster.ts:38](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L38)
+[src/lib/cluster.ts:38](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L38)
 
 ___
 
@@ -203,7 +203,7 @@ node_modules/@types/node/events.d.ts:327
 
 #### Defined in
 
-[src/lib/cluster.ts:100](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L100)
+[src/lib/cluster.ts:100](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L100)
 
 ___
 
@@ -217,7 +217,7 @@ ___
 
 #### Defined in
 
-[src/lib/cluster.ts:112](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L112)
+[src/lib/cluster.ts:112](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L112)
 
 ___
 
@@ -231,7 +231,7 @@ ___
 
 #### Defined in
 
-[src/lib/cluster.ts:104](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L104)
+[src/lib/cluster.ts:104](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L104)
 
 ___
 
@@ -245,7 +245,7 @@ ___
 
 #### Defined in
 
-[src/lib/cluster.ts:108](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L108)
+[src/lib/cluster.ts:108](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L108)
 
 ## Methods
 
@@ -292,7 +292,7 @@ Connects to the remote server.
 
 #### Defined in
 
-[src/lib/cluster.ts:119](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L119)
+[src/lib/cluster.ts:119](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L119)
 
 ___
 
@@ -316,7 +316,7 @@ The deserialized message.
 
 #### Defined in
 
-[src/lib/cluster.ts:158](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L158)
+[src/lib/cluster.ts:158](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L158)
 
 ___
 
@@ -954,7 +954,7 @@ Sends a message to the remote server.
 
 #### Defined in
 
-[src/lib/cluster.ts:128](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L128)
+[src/lib/cluster.ts:128](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L128)
 
 ___
 
@@ -978,7 +978,7 @@ The serialized message,
 
 #### Defined in
 
-[src/lib/cluster.ts:138](https://github.com/asyncapi/glee/blob/62ee66e/src/lib/cluster.ts#L138)
+[src/lib/cluster.ts:138](https://github.com/asyncapi/glee/blob/f31e335/src/lib/cluster.ts#L138)
 
 ___
 
