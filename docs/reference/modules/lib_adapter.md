@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[src/lib/adapter.ts:17](https://github.com/asyncapi/glee/blob/f31e335/src/lib/adapter.ts#L17)
+[src/lib/adapter.ts:17](https://github.com/asyncapi/glee/blob/d8e3bd7/src/lib/adapter.ts#L17)
 
 ___
 
@@ -52,4 +52,4 @@ ___
 
 #### Defined in
 
-[src/lib/adapter.ts:11](https://github.com/asyncapi/glee/blob/f31e335/src/lib/adapter.ts#L11)
+[src/lib/adapter.ts:11](https://github.com/asyncapi/glee/blob/d8e3bd7/src/lib/adapter.ts#L11)
