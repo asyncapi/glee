@@ -11,6 +11,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/glee": "file:../..",
-    "@asyncapi/parser": "^1.18.0"
+    "@asyncapi/parser": "^3.0.14"
   }
 }

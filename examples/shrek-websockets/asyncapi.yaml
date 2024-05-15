@@ -1,50 +1,56 @@
-asyncapi: 2.0.0
-
-#
-# Overal information for users of the application
-#
+asyncapi: 3.0.0
 info:
   title: Shrek App
-  version: '1.0.0'
-  description: |
-    Purpose of this app is to have some fun with AsyncAPI and WebSocket and define an interface for ... Shrek.
+  version: 1.0.0
+  description: >
+    Purpose of this app is to have some fun with AsyncAPI and WebSocket and
+    define an interface for ... Shrek.
+
 
     ![](https://media.giphy.com/media/10Ug6rDDuG3YoU/giphy-downsized.gif)
 
-    You can use this API to chat with Shrek bot or to get updates about artifical travels to different locations.
-#
-# Details on how to connect to the application
-#
+
+    You can use this API to chat with Shrek bot or to get updates about
+    artifical travels to different locations.
 servers:
   swamp:
-    url: ws://localhost
+    host: localhost
     protocol: ws
-
-#
-# Details about all the channels that you can listen to or send to messages
-#
 channels:
-  /chat:
-    subscribe:
-      summary: Client can receive chat messages.
-      operationId: subChatMessage
-      message:
+  chat:
+    address: /chat
+    messages:
+      receiveChatMessage:
         $ref: '#/components/messages/chatMessage'
-    publish:
-      summary: Client can send chat messages.
-      operationId: pubChatMessage
-      message:
+      sendChatMessage:
         $ref: '#/components/messages/chatMessage'
-  /travel/status:
-    subscribe:
-      summary: Client can receive travel info status.
-      operationId: subTravelInfo
-      message:
+  travelStatus:
+    address: /travel/status
+    messages:
+      subTravelInfo:
         $ref: '#/components/messages/travelInfo'
-
-#
-# All reusable parts for readability and staying DRY
-#
+operations:
+  recieveChatMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/chat'
+    summary: Client can send chat messages.
+    messages:
+      - $ref: '#/components/messages/chatMessage'
+  sendChatMessage:
+    action: send
+    channel:
+      $ref: '#/channels/chat'
+    summary: Client can receive chat messages.
+    messages:
+      - $ref: '#/components/messages/chatMessage'
+  sendTravelInfo:
+    action: send
+    channel:
+      $ref: '#/channels/travelStatus'
+    summary: Client can receive travel info status.
+    messages:
+      - $ref: '#/components/messages/travelInfo'
 components:
   messages:
     chatMessage:

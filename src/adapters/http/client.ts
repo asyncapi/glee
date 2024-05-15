@@ -15,13 +15,13 @@ class HttpClientAdapter extends Adapter {
     return 'HTTP client'
   }
   async connect(): Promise<this> {
-    this.emit('connect', {
-      name: this.name(),
-      adapter: this,
-      connection: http,
-      channel: this.channelNames,
-    })
-    return this
+      this.emit('connect', {
+        name: this.name(),
+        adapter: this,
+        connection: http,
+        channel: this.channelNames,
+      })
+      return this
   }
 
   async send(message: GleeMessage): Promise<void> {

@@ -24,7 +24,7 @@
   "homepage": "https://github.com/asyncapi/glee-hello-world#readme",
   "dependencies": {
     "@asyncapi/glee": "file:../../..",
-    "@asyncapi/parser": "^3.0.3",
+    "@asyncapi/parser": "^3.0.14",
     "flat-file-db": "^1.0.0",
     "lowdb": "^3.0.0"
   }

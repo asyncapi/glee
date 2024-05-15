@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "outDir": "./dist",
     "allowJs": false,
     "target": "es6",
     "esModuleInterop": true,
     "moduleResolution": "nodenext",
-    "module": "es2020"
+    "module": "NodeNext"
   },
   "include": [
     "./src/**/*"

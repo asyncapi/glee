@@ -75,7 +75,7 @@ class WsClientAdapter extends Adapter {
       })
 
       client.on('error', (err: any) => {
-        const errMessage = `WebSocket client error on channel '${channel}'`
+        const errMessage = `Error: Authentication function not found at location auth/${this.serverName}. Expected function 'clientAuth'`
         this.emit('error', new Error(errMessage))
         console.error(err)
       })

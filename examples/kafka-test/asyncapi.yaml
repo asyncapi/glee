@@ -4,44 +4,34 @@ info:
   version: '1'
 servers:
   mykafka:
-    host: kafka://pkc-6ojv2.us-west4.gcp.confluent.cloud:9092
+    host: 'pkc-6ojv2.us-west4.gcp.confluent.cloud:9092'
     protocol: kafka-secure
     security:
       - $ref: '#/components/securitySchemes/saslScramExample'
-      # - saslScramExample: []
-      - $ref: '#/components/securitySchemes/saslScramExample2'
 channels:
   test:
-    # address: null
+    address: test
     messages:
       testMessage:
         $ref: '#/components/messages/testMessage'
   produce:
+    address: produce
     messages:
-      produceMessage:
+      testMessage:
         $ref: '#/components/messages/testMessage'
-operations: 
+operations:
   onTest:
-    title: Test Kafka Connection
-    summary: Publish messages to Test channel.
-    # description: A longer description
-    channel:
-      $ref: "#/channels/test"
-    action: send
-    reply:
-      address: 
-        location: "$message.header#/replyTo"
-      channel: 
-        $ref: '#/channels/produce'
-  
-  onProduce:
-    title: Test Kafka Connection
-    summary: Recieve messages from Produce channel.
-    # description: A longer description
-    channel:
-      $ref: "#/channels/produce"
     action: receive
-  
+    channel:
+      $ref: '#/channels/test'
+    messages:
+      - $ref: '#/components/messages/testMessage'
+  sendMessage:
+    action: send
+    channel:
+      $ref: '#/channels/produce'
+    messages:
+      - $ref: '#/components/messages/testMessage'
 components:
   messages:
     testMessage:
@@ -49,11 +39,7 @@ components:
         type: object
         properties:
           test:
-            type: string 
+            type: string
   securitySchemes:
-      saslScramExample:
-        type: scramSha256
-      userPass:
-        type: userPassword
-      saslScramExample2:
-        type: scramSha256
+    saslScramExample:
+      type: scramSha256

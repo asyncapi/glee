@@ -1,19 +1,24 @@
-asyncapi: 2.2.0
+asyncapi: 3.0.0
 info:
   title: Notifications Service
   version: 0.1.0
-
 servers:
   mosquitto:
-    url: mqtt://test.mosquitto.org
+    host: test.mosquitto.org
     protocol: mqtt
     bindings:
       mqtt:
         clientId: notifications-service
-
 channels:
-  post/liked:
-    publish:
-      operationId: onPostLiked
-      message:
+  postLiked:
+    address: post/liked
+    messages:
+      onPostLikedMmessage:
         $ref: '../websocket-server/asyncapi.yaml#/components/messages/notifyPostLiked'
+operations:
+  onPostLiked:
+    action: receive
+    channel:
+      $ref: '#/channels/postLiked'
+    messages:
+      - $ref: '#/channels/post~1liked/messages/onPostLikedMessage'
