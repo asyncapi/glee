@@ -34,7 +34,6 @@ import { getMessagesSchema } from './lib/util.js'
 import pkg from '@next/env'
 const { loadEnvConfig } = pkg
 
-
 const isDev = process.env.NODE_ENV === 'development'
 loadEnvConfig(process.cwd(), isDev)
 
@@ -100,31 +99,45 @@ export default async function GleeAppInitializer() {
   app.use(errorLogger)
   app.useOutbound(errorLogger)
   await generateDocs(config)
-  parsedAsyncAPI.operations().filterByReceive().forEach(operation => {
-    const channel = operation.channels()[0] // operation can have only one channel.
-    if (operation.reply()) {
-      logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
-    }
-    const schema = getMessagesSchema(operation)
-    if (schema.oneOf.length > 0) app.use(channel.id(), validate(schema))
-    app.use(channel.id(), (event, next) => {
-      triggerFunction({
-        app,
-        operation,
-        message: event
-      }).then(next).catch(next)
+  parsedAsyncAPI
+    .operations()
+    .filterByReceive()
+    .forEach((operation) => {
+      const channel = operation.channels()[0] // operation can have only one channel.
+      if (operation.reply()) {
+        logWarningMessage(
+          `Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`
+        )
+      }
+      const schema = getMessagesSchema(operation)
+      if (schema.oneOf.length > 0) app.use(channel.id(), validate(schema))
+      app.use(channel.id(), (event, next) => {
+        triggerFunction({
+          app,
+          operation,
+          message: event,
+        })
+          .then(next)
+          .catch(next)
+      })
     })
-  })
 
-  parsedAsyncAPI.operations().filterBySend().forEach(operation => {
-    const channel = operation.channels()[0] // operation can have only one channel.
-    if (operation.reply()) {
-      logWarningMessage(`Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`)
-    }
-    const schema = getMessagesSchema(operation)
-    if (schema.oneOf.length > 0) app.useOutbound(channel.id(), validate(schema))
-    app.useOutbound(channel.id(), json2string)
-  })
+  parsedAsyncAPI
+    .operations()
+    .filterBySend()
+    .forEach((operation) => {
+      const channel = operation.channels()[0] // operation can have only one channel.
+      if (operation.reply()) {
+        logWarningMessage(
+          `Operation ${operation.id()} has a reply defined. Glee does not support replies yet.`
+        )
+      }
+      const schema = getMessagesSchema(operation)
+      if (schema.oneOf.length > 0) {
+        app.useOutbound(channel.id(), validate(schema))
+      }
+      app.useOutbound(channel.id(), json2string)
+    })
 
   app.on('adapter:auth', async (e: AuthEvent) => {
     logLineWithIcon(
