@@ -81,7 +81,7 @@ export async function clientAuth({ parsedAsyncAPI, serverName }) {
 }
 ```
 
-Glee will utilize the `token` for server authentication, employing it in the header with the format: `Authorization: Bearer {token}`.
+Glee will utilize the `token` for server authentication, employing it in the header with the format: `Authorization: Bearer \{token\}`.
 
 ### Server Side
 
