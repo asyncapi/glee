@@ -5,3 +5,4 @@ dist
 .glee
 test
 jest.config.js
+docs

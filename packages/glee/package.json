@@ -70,6 +70,7 @@
     "ws": "^7.4.6"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@tsconfig/node14": "^1.0.1",
     "@types/async": "^3.2.11",
     "@types/debug": "^4.1.7",
@@ -90,8 +91,8 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^29.1.1",
     "tsc-watch": "^4.5.0",
-    "typedoc": "^0.23.28",
-    "typedoc-plugin-markdown": "^3.11.8",
+    "typedoc": "^0.26.10",
+    "typedoc-plugin-markdown": "^4.2.9",
     "unixify": "^1.0.0"
   }
 }
