@@ -1,4 +1,4 @@
-import GleeMessage from '../lib/message.js'
+import GleeMessage from '../lib/message.ts'
 
 export type Middleware = (
   message: GleeMessage,

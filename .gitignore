@@ -1,7 +1,8 @@
-node_modules
 .DS_Store
+node_modules
+.vscode/
+/lib
+build
 dist
-coverage
-.vscode
-.glee
-.next
+.turbo
+.env
