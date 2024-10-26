@@ -1,0 +1,8 @@
+node_modules
+examples/social-network/frontend
+examples/crypto-websockets
+dist
+.glee
+test
+jest.config.js
+docs

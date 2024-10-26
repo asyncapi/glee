@@ -6,3 +6,5 @@
 
 # The default owners are automatically added as reviewers when you open a pull request unless different owners are specified in the file.
 * @Souvikns @KhudaDad414 @asyncapi-bot-eve
+
+* packages/glee @Souvikns @KhudaDad414 @asyncapi-bot-eve
