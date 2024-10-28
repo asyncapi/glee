@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "allowJs": false,
+    "target": "es6",
+    "esModuleInterop": true,
+    "moduleResolution": "nodenext",
+    "module": "NodeNext"
+  },
+  "include": [
+    "./*.ts"
+, "http/client.ts", "http/server.ts"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
