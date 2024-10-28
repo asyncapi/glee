@@ -2,7 +2,7 @@ import got, { Method } from 'got'
 import http from 'http'
 import { GleeQuoreAdapter, GleeQuoreMessage } from '@asyncapi/gleequore'
 import { ChannelInterface, OperationInterface } from '@asyncapi/parser'
-import type { Authenticatable } from '@asyncapi/gleequore'
+import type { Authenticatable } from './index.d.js'
 import GleeQuoreAuth from './wsHttpAuth.js'
 
 class HttpClientAdapter extends GleeQuoreAdapter {
