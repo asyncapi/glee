@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/glee-mqtt-adapter",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "MQTT adapter for Glee.",
   "exports": "./dist/index.js",
   "type": "module",
