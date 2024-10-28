@@ -81,9 +81,26 @@ jobs:
         with:
           node-version: "16.0.0"
       - if: steps.packagejson.outputs.exists == 'true'
+        uses: pnpm/action-setup@v3
+        with:
+          run_install: false
+      - if: steps.packagejson.outputs.exists == 'true'
+        name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - if: steps.packagejson.outputs.exists == 'true'
+        uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
         shell: bash
-        run: npm install
+        run: pnpm install --frozen-lockfile
       - if: steps.packagejson.outputs.exists == 'true'
         name: Build dependency
         shell: bash
