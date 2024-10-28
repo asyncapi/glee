@@ -441,6 +441,24 @@ importers:
         specifier: ^6.2.0
         version: 6.3.0
     devDependencies:
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^5.9.0
+        version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.57.1)(typescript@4.9.5)
+      '@typescript-eslint/parser':
+        specifier: ^5.9.0
+        version: 5.62.0(eslint@8.57.1)(typescript@4.9.5)
+      eslint:
+        specifier: ^8.6.0
+        version: 8.57.1
+      eslint-plugin-github:
+        specifier: ^4.3.5
+        version: 4.10.2(eslint@8.57.1)(typescript@4.9.5)
+      eslint-plugin-security:
+        specifier: ^1.4.0
+        version: 1.7.1
+      eslint-plugin-sonarjs:
+        specifier: ^0.19.0
+        version: 0.19.0(eslint@8.57.1)
       typescript:
         specifier: ^4.5.4
         version: 4.9.5

@@ -214,7 +214,7 @@ export default class GleeQuore {
    * @param {String} [clusterName] The name of the cluster.
    * @param {String} [clusterURL] The URL of the cluster.
    */
-  setClusterAdapter(Adapter: typeof GleeQuoreClusterAdapter, clusterName: string = 'cluster', clusterURL: string) {
+  setClusterAdapter(Adapter: typeof GleeQuoreClusterAdapter, clusterName = 'cluster', clusterURL: string) {
     this._clusterAdapter = {
       Adapter,
       clusterName,
@@ -641,6 +641,6 @@ export default class GleeQuore {
 
   async getSelectedServerNames(): Promise<string[]> {
     const serverNames = this._adapters.map(a => a.serverName).filter(Boolean)
-    return [...new Set(serverNames)]; // Dedupe the array
+    return [...new Set(serverNames)] // Dedupe the array
   }
 }

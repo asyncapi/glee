@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentInterface as AsyncAPIDocument, ChannelInterface, ChannelParameterInterface, MessagesInterface } from '@asyncapi/parser'
+import { AsyncAPIDocumentInterface as AsyncAPIDocument, MessagesInterface } from '@asyncapi/parser'
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'

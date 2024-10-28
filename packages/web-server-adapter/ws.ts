@@ -16,7 +16,7 @@ export default class WebSocketsServerAdapter extends GleeQuoreAdapter {
   private websocketServers: Map<string, WebSocket.Server>
 
   constructor(options: WebsocketServerAdapterConfig) {
-    const { httpServer, adapter, port, ...rest } = options
+    const { httpServer, adapter, port, ...rest } = options // eslint-disable-line @typescript-eslint/no-unused-vars
     super(rest as GleeQuoreAdapterOptions)
     this.config = options
     this.customHttpServer = this.config?.httpServer

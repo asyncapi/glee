@@ -1,5 +1,3 @@
-import { GleeQuoreAdapterOptions } from "@asyncapi/gleequore"
-
 export type WsHttpAuth = WsAuthConfig | HttpAuthConfig
 
 export interface HttpAuthConfig {

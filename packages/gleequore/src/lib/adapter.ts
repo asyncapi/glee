@@ -258,7 +258,7 @@ class GleeQuoreAdapter extends EventEmitter {
     throw new Error('Method `send` is not implemented.')
   }
 
-  validate(data: any, schema: object, triggerError: boolean = false) {
+  validate(data: any, schema: object, triggerError = false) {
     const { isValid, errors, humanReadableError } = validateData(data, schema)
     if (!isValid && triggerError) {
       throw new GleeQuoreError({ humanReadableError, errors })
