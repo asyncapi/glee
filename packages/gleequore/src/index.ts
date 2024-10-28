@@ -2,7 +2,7 @@
 import EventEmitter from 'events'
 import async from 'async'
 import Debug from 'debug'
-import GleeQuoreAdapter from './lib/adapter.js'
+import GleeQuoreAdapter, { EnrichedEvent, AuthEvent } from './lib/adapter.js'
 import GleeQuoreClusterAdapter from './lib/cluster.js'
 import GleeQuoreRouter, {
   ChannelErrorMiddlewareTuple,
@@ -10,7 +10,7 @@ import GleeQuoreRouter, {
   GenericMiddleware,
 } from './lib/router.js'
 import GleeQuoreMessage, { IGleeQuoreMessageConstructor } from './lib/message.js'
-import { matchChannel, getParams } from '@asyncapi/glee-shared-utils'
+import { matchChannel, getParams, getMessagesSchema } from '@asyncapi/glee-shared-utils'
 import { duplicateMessage } from './lib/utils.js'
 import GleeQuoreConnection from './lib/connection.js'
 import { MiddlewareCallback } from './middlewares/index.js'
@@ -20,11 +20,8 @@ import json2string from './middlewares/json2string.js'
 import validate from './middlewares/validate.js'
 import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import validateConnection from './middlewares/validateConnection.js'
-import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
-import { getMessagesSchema } from '@asyncapi/glee-shared-utils'
-
 import { AsyncAPIDocumentInterface } from '@asyncapi/parser'
-import { AdapterRecord, AuthFunctionInfo, ClusterAdapterRecord, GleeQuoreFunction, GleeQuoreLifecycleFunction, GleeQuoreLifecycleEvent, GleeQuoreFunctionEvent, GleeQuoreAuthFunction, GleeQuoreAuthFunctionEvent, GleeQuoreAdapterOptions } from './index.d.js'
+import { AdapterRecord, AuthFunctionInfo, ClusterAdapterRecord, GleeQuoreFunction, GleeQuoreLifecycleFunction, GleeQuoreLifecycleEvent, GleeQuoreFunctionEvent, GleeQuoreAuthFunctionEvent, GleeQuoreAdapterOptions } from './index.d.js'
 
 const debug = Debug('gleequore')
 
