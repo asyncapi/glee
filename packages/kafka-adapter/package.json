@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/glee-kafka-adapter",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Kafka adapter for Glee.",
   "exports": "./dist/index.js",
   "type": "module",
