@@ -1,7 +1,7 @@
 import { AsyncAPIDocumentInterface as AsyncAPIDocument, ServerInterface } from '@asyncapi/parser'
-import { resolveFunctions } from './util.js'
+import { resolveFunctions } from '@asyncapi/glee-shared-utils'
 import { EventEmitter } from 'events'
-import { HttpAuthConfig, WsAuthConfig, AuthProps, Authenticatable } from '../index.d.js'
+import { HttpAuthConfig, WsAuthConfig, AuthProps, Authenticatable } from './index.d.js'
 
 class GleeQuoreAuth extends EventEmitter {
   private parsedAsyncAPI: AsyncAPIDocument

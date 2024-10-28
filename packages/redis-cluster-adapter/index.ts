@@ -1,11 +1,10 @@
 import { createClient } from 'redis'
-import ClusterAdapter from '../../../lib/cluster.js'
-import GleeQuoreMessage from '../../../lib/message.js'
+import { GleeQuoreClusterAdapter, GleeQuoreMessage } from '@asyncapi/gleequore'
 
 const client = createClient()
 type RedisClientType = typeof client
 
-class RedisClusterAdapter extends ClusterAdapter {
+class RedisClusterAdapter extends GleeQuoreClusterAdapter {
   private _channelName: string
   private _publisher: RedisClientType
 

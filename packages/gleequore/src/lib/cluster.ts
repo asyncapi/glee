@@ -3,7 +3,7 @@ import uriTemplates from 'uri-templates'
 import { v4 as uuidv4 } from 'uuid'
 import GleeQuore from '../index.js'
 import GleeQuoreMessage from './message.js'
-import { validateData } from './util.js'
+import { validateData } from '@asyncapi/glee-shared-utils'
 import GleeError from '../errors.js'
 
 export type ClusterEvent = {
@@ -48,9 +48,9 @@ class GleeQuoreClusterAdapter extends EventEmitter {
 
     this._instanceId = uuidv4()
     this._glee = glee
-    const serverName = this._glee.options?.cluster?.name || 'cluster'
+    const serverName = this._glee.clusterAdapter.clusterName || 'cluster'
     this._serverName = serverName
-    const url = this._glee.options?.cluster?.url
+    const url = this._glee.clusterAdapter.clusterURL
 
     if (!url) {
       console.log(

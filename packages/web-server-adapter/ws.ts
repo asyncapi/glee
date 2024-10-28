@@ -1,15 +1,13 @@
 import WebSocket from 'ws'
 import http, { IncomingMessage, Server as HttpServer } from 'http'
 import type { Duplex } from 'stream'
-import { validateData } from '../../lib/util.js'
-import Adapter, { GleeQuoreAdapterOptions } from '../../lib/adapter.js'
-import GleeQuoreConnection from '../../lib/connection.js'
-import GleeQuoreMessage from '../../lib/message.js'
-import GleeQuoreAuth from '../../lib/wsHttpAuth.js'
-import { WebsocketServerAdapterConfig } from '../../index.d.js'
+import { validateData } from '@asyncapi/glee-shared-utils'
+import { GleeQuoreAdapter, GleeQuoreMessage, GleeQuoreConnection, GleeQuoreAdapterOptions } from '@asyncapi/gleequore'
+import GleeQuoreAuth from './wsHttpAuth.js'
+import { WebsocketServerAdapterConfig } from './index.d.js'
 import * as url from 'url'
-class WebSocketsAdapter extends Adapter {
 
+export default class WebSocketsServerAdapter extends GleeQuoreAdapter {
   private config: WebsocketServerAdapterConfig
   private serverUrl: URL
   private wsHttpServer: HttpServer
@@ -17,15 +15,14 @@ class WebSocketsAdapter extends Adapter {
   // WebSockets are limited to a single connection path per server. To accommodate multiple channels, we instantiate a separate server for each channel and maintain a record of these servers here.
   private websocketServers: Map<string, WebSocket.Server>
 
-
-  constructor(options: GleeQuoreAdapterOptions) {
-    super(options)
-    this.config = this.app.options?.ws?.server
+  constructor(options: WebsocketServerAdapterConfig) {
+    const { httpServer, adapter, port, ...rest } = options
+    super(rest as GleeQuoreAdapterOptions)
+    this.config = options
     this.customHttpServer = this.config?.httpServer
     this.wsHttpServer = this.customHttpServer || http.createServer()
     this.serverUrl = new URL(this.serverUrlExpanded)
     this.websocketServers = new Map()
-
   }
 
   name(): string {
@@ -35,11 +32,11 @@ class WebSocketsAdapter extends Adapter {
   async connect(): Promise<this> {
     try {
       await this._connect()
-      return this
     } catch (e) {
       const errorMessage = `Unable to connect to ${this.name()}: ${e.message}`
       this.emit('error', new Error(errorMessage))
     }
+    return this
   }
 
   private _createServers() {
@@ -96,7 +93,7 @@ class WebSocketsAdapter extends Adapter {
     const pathName = this._extractPathname(req)
     return this.parsedAsyncAPI.channels().all().filter(channel => {
       let address = channel.address()
-      if (address.endsWith('/')) address = address.substring(0, address.length - 1)
+      if (address && address.endsWith('/')) address = address.substring(0, address.length - 1)
 
       return address === pathName
     })[0]
@@ -151,7 +148,7 @@ class WebSocketsAdapter extends Adapter {
   private _validateQueries(req: IncomingMessage, socket: Duplex, channelBindings) {
     const schema = channelBindings.query
     if (!schema) return
-    const { query } = url.parse(req.url, true)
+    const { query } = url.parse(req.url || '', true)
     const { isValid, humanReadableError } = validateData(
       query,
       schema
@@ -187,7 +184,7 @@ class WebSocketsAdapter extends Adapter {
 
   private _extractPathname(req: IncomingMessage) {
     const serverUrl = new URL(this.serverUrlExpanded)
-    const { pathname } = new URL(req.url, serverUrl)
+    const { pathname } = new URL(req.url || '', serverUrl)
 
     if (!pathname) return '/'
 
@@ -299,4 +296,3 @@ class WebSocketsAdapter extends Adapter {
   }
 }
 
-export default WebSocketsAdapter

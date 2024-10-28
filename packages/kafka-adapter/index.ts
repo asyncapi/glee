@@ -1,9 +1,8 @@
 import { Kafka, SASLOptions } from 'kafkajs'
-import Adapter from '../../lib/adapter.js'
-import GleeQuoreMessage from '../../lib/message.js'
-import { KafkaAdapterConfig, KafkaAuthConfig } from '../../index.d.js'
+import { GleeQuoreAdapter, GleeQuoreMessage } from '@asyncapi/gleequore'
+import { KafkaAdapterConfig, KafkaAuthConfig } from './index.d.js'
 
-class KafkaAdapter extends Adapter {
+class KafkaAdapter extends GleeQuoreAdapter {
   private kafka: Kafka
   private firstConnect = true
   name(): string {
@@ -15,9 +14,7 @@ class KafkaAdapter extends Adapter {
   }
 
   async _connect() {
-      const kafkaOptions: KafkaAdapterConfig = await this.resolveProtocolConfig(
-        'kafka'
-      )
+      const kafkaOptions: KafkaAdapterConfig = await this.resolveConfig()
       const auth: KafkaAuthConfig = await this.getAuthConfig(kafkaOptions?.auth)
       const securityRequirements = this.AsyncAPIServer.security().map(
         (sec) => {

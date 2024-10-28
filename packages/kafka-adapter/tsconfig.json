@@ -6,15 +6,12 @@
     "target": "es6",
     "esModuleInterop": true,
     "moduleResolution": "nodenext",
-    "module": "NodeNext",
-    "rootDir": "./src"
+    "module": "NodeNext"
   },
   "include": [
-    "./src/**/*"
+    "./*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "lib",
-    "examples"
+    "node_modules"
   ]
 }

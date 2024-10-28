@@ -2,7 +2,6 @@ import { AsyncAPIDocumentInterface as AsyncAPIDocument, ChannelInterface, Channe
 import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
-import GleeQuoreMessage from './message.js'
 
 interface IValidateDataReturn {
   errors?: void | betterAjvErrors.IOutputError[]
@@ -38,36 +37,6 @@ export const getParams = (
       }),
       {}
     )
-}
-
-/**
- * Duplicates a GleeMessage.
- *
- * @private
- * @param {GleeQuoreMessage} message The message to duplicate.
- * @return {GleeQuoreMessage}
- */
-export const duplicateMessage = (message: GleeQuoreMessage): GleeQuoreMessage => {
-  const newMessage = new GleeQuoreMessage({
-    operation: message.operation,
-    payload: message.payload,
-    headers: message.headers,
-    channel: message.channel,
-    request: message.request,
-    serverName: message.serverName,
-    connection: message.connection,
-    broadcast: message.broadcast,
-    cluster: message.cluster,
-    query: message.query,
-  })
-
-  if (message.isInbound()) {
-    newMessage.setInbound()
-  } else {
-    newMessage.setOutbound()
-  }
-
-  return newMessage
 }
 
 /**
@@ -175,42 +144,6 @@ export function extractExpressionValueFromMessage(message: { headers: any, paylo
     return fragment ? jsonPointer(payload, fragment) : payload
   } else {
     throw new Error(`${expression} source should be "header" or "fragment"`)
-  }
-}
-
-export function applyAddressParameters(channel: ChannelInterface, message?: GleeQuoreMessage): string {
-  let address = channel.address()
-  const parameters = channel.parameters()
-  for (const parameter of parameters) {
-    address = substituteParameterInAddress(parameter, address, message)
-  }
-  return address
-}
-
-const substituteParameterInAddress = (parameter: ChannelParameterInterface, address: string, message: GleeQuoreMessage): string => {
-  const doesExistInAddress = address.includes(`{${parameter.id()}}`)
-  if (!doesExistInAddress) return address
-  const parameterValue = getParamValue(parameter, message)
-  if (!parameterValue) {
-    throw Error(`parsing parameter "${parameter.id()}" value failed. please make sure it exists in your header/payload or in default field of the parameter.`)
-  }
-  address = address.replace(`{${parameter.id()}}`, parameterValue)
-  return address
-}
-
-const getParamValue = (parameter: ChannelParameterInterface, message: GleeQuoreMessage): string | null => {
-  const location = parameter.location()
-  if (!location) return parameter.json().default
-  const paramFromLocation = getParamFromLocation(location, message)
-  if (!paramFromLocation) {
-    return parameter.json().default
-  }
-  return paramFromLocation
-}
-
-function getParamFromLocation(location: string, message: GleeQuoreMessage) {
-  if ((message.payload || message.headers) && location) {
-    return extractExpressionValueFromMessage(message, location)
   }
 }
 

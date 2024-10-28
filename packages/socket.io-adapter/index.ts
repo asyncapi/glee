@@ -1,8 +1,7 @@
 import { Server } from 'socket.io'
-import Adapter from '../../lib/adapter.js'
-import GleeQuoreMessage from '../../lib/message.js'
+import { GleeQuoreAdapter, GleeQuoreMessage } from '@asyncapi/gleequore'
 
-class SocketIOAdapter extends Adapter {
+class SocketIOAdapter extends GleeQuoreAdapter {
   private server: Server
 
   name(): string {
@@ -18,7 +17,7 @@ class SocketIOAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> {
-    const config = await this.resolveProtocolConfig('ws')
+    const config = await this.resolveConfig()
     const websocketOptions = config?.server
     const serverUrl: URL = new URL(this.serverUrlExpanded)
     const asyncapiServerPort: number = serverUrl.port

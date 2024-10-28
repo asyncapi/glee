@@ -1,14 +1,11 @@
 import got, { Method } from 'got'
 import http from 'http'
-import Adapter from '../../lib/adapter.js'
-import GleeQuoreMessage from '../../lib/message.js'
-import GleeQuoreAuth from '../../lib/wsHttpAuth.js'
+import { GleeQuoreAdapter, GleeQuoreMessage } from '@asyncapi/gleequore'
 import { ChannelInterface, OperationInterface } from '@asyncapi/parser'
-import { Authenticatable } from '../../index.d.js'
-import { validateData } from '../../lib/util.js'
-import GleeError from '../../errors.js'
+import type { Authenticatable } from '@asyncapi/gleequore'
+import GleeQuoreAuth from './wsHttpAuth.js'
 
-class HttpClientAdapter extends Adapter {
+class HttpClientAdapter extends GleeQuoreAdapter {
   name(): string {
     return 'HTTP client'
   }
@@ -103,21 +100,15 @@ class HttpClientAdapter extends Adapter {
   _validateMessage(message: GleeQuoreMessage) {
 
     const querySchema = message.operation.bindings().get("http")?.json()?.query
-    if (querySchema) this._validate(message.query, querySchema)
+    if (querySchema) this.validate(message.query, querySchema, true)
     const messages = message.operation.messages().all()
     if (!messages.length) return
     const headersSchema = {
       oneOf: messages.map(message => message?.bindings()?.get("http")?.json()?.headers).filter(header => !!header)
     }
-    if (headersSchema.oneOf.length > 0) this._validate(message.headers, headersSchema)
+    if (headersSchema.oneOf.length > 0) this.validate(message.headers, headersSchema, true)
   }
 
-  _validate(data, schema) {
-    const { isValid, errors, humanReadableError } = validateData(data, schema)
-    if (!isValid) {
-      throw new GleeError({ humanReadableError, errors })
-    }
-  }
   _shouldMethodHaveBody(method: Method) {
     return ["post", "put", "patch"].includes(method.toLocaleLowerCase())
   }

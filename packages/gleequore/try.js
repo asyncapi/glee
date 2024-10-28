@@ -39,9 +39,13 @@ const { document: asyncapi } = await parser.parse({
   },
 })
 
-const gleeQuore = new GleeQuore(asyncapi, {
-  servers: ['test']
-})
+const gleeQuore = new GleeQuore(asyncapi)
+
+// gleeQuore.addAdapter(HttpAdapter, 'test', {
+//   httpServer: {
+//     port: 3000,
+//   },
+// })
 
 gleeQuore.on('receiveTest', (event) => {
   console.log(event.payload)

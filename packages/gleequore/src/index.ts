@@ -2,7 +2,7 @@
 import EventEmitter from 'events'
 import async from 'async'
 import Debug from 'debug'
-import GleeQuoreAdapter, { GleeQuoreAdapterOptions } from './lib/adapter.js'
+import GleeQuoreAdapter from './lib/adapter.js'
 import GleeQuoreClusterAdapter from './lib/cluster.js'
 import GleeQuoreRouter, {
   ChannelErrorMiddlewareTuple,
@@ -10,7 +10,8 @@ import GleeQuoreRouter, {
   GenericMiddleware,
 } from './lib/router.js'
 import GleeQuoreMessage, { IGleeQuoreMessageConstructor } from './lib/message.js'
-import { matchChannel, duplicateMessage, getParams } from './lib/util.js'
+import { matchChannel, getParams } from '@asyncapi/glee-shared-utils'
+import { duplicateMessage } from './lib/utils.js'
 import GleeQuoreConnection from './lib/connection.js'
 import { MiddlewareCallback } from './middlewares/index.js'
 import buffer2string from './middlewares/buffer2string.js'
@@ -19,19 +20,11 @@ import json2string from './middlewares/json2string.js'
 import validate from './middlewares/validate.js'
 import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import validateConnection from './middlewares/validateConnection.js'
-import WebSocketServerAdapter from './adapters/ws/server.js'
-import WebsocketClientAdapter from './adapters/ws/client.js'
 import { EnrichedEvent, AuthEvent } from './lib/adapter.js'
-import { getMessagesSchema } from './lib/util.js'
+import { getMessagesSchema } from '@asyncapi/glee-shared-utils'
 
-import { AsyncAPIDocumentInterface, ServerInterface } from '@asyncapi/parser'
-import { AdapterRecord, AuthFunctionInfo, ClusterAdapterRecord, GleeQuoreFunction, GleeQuoreLifecycleFunction, GleeQuoreConfig, GleeQuoreLifecycleEvent, GleeQuoreFunctionEvent, GleeQuoreAuthFunction, GleeQuoreAuthFunctionEvent } from './index.d.js'
-import MqttAdapter from './adapters/mqtt/index.js'
-import KafkaAdapter from './adapters/kafka/index.js'
-import HttpClientAdapter from './adapters/http/client.js'
-import HttpServerAdapter from './adapters/http/server.js'
-import RedisClusterAdapter from './adapters/cluster/redis/index.js'
-import SocketIOAdapter from './adapters/socket.io/index.js'
+import { AsyncAPIDocumentInterface } from '@asyncapi/parser'
+import { AdapterRecord, AuthFunctionInfo, ClusterAdapterRecord, GleeQuoreFunction, GleeQuoreLifecycleFunction, GleeQuoreLifecycleEvent, GleeQuoreFunctionEvent, GleeQuoreAuthFunction, GleeQuoreAuthFunctionEvent, GleeQuoreAdapterOptions } from './index.d.js'
 
 const debug = Debug('gleequore')
 
@@ -55,7 +48,6 @@ export interface FunctionInfoRecord {
 
 export default class GleeQuore {
   private _asyncapi: AsyncAPIDocumentInterface
-  private _options: GleeQuoreConfig
   private _router: GleeQuoreRouter
   private _adapters: AdapterRecord[]
   private _clusterAdapter: ClusterAdapterRecord
@@ -70,9 +62,8 @@ export default class GleeQuore {
    *
    * @param {Object} [options={}]
    */
-  constructor(asyncapi: AsyncAPIDocumentInterface, options: GleeQuoreConfig = {}) {
+  constructor(asyncapi: AsyncAPIDocumentInterface) {
     this._asyncapi = asyncapi
-    this._options = options
     this._router = new GleeQuoreRouter()
     this._adapters = []
     this._internalEvents = new EventEmitter({ captureRejections: true })
@@ -191,10 +182,6 @@ export default class GleeQuore {
     return this._asyncapi
   }
 
-  get options(): GleeQuoreConfig {
-    return this._options
-  }
-
   get adapters(): AdapterRecord[] {
     return this._adapters
   }
@@ -208,28 +195,30 @@ export default class GleeQuore {
    *
    * @param {GleeQuoreAdapter} adapter The adapter.
    * @param {String} serverName The name of the AsyncAPI Server to use with the adapter.
-   * @param {AsyncAPIServer} server AsyncAPI Server to use with the adapter.
-   * @param {AsyncAPIDocument} asyncapi The AsyncAPI document.
+   * @param {Object} [config] The configuration for the adapter.
    */
-  addAdapter(
-    Adapter: typeof GleeQuoreAdapter,
-    {
+  addAdapter(Adapter: typeof GleeQuoreAdapter, serverName: string, config?: object) {
+    this._adapters.push({
+      Adapter,
       serverName,
-      server,
-      asyncapi,
-    }: { serverName: string; server: ServerInterface | undefined; asyncapi: AsyncAPIDocumentInterface }
-  ) {
-    this._adapters.push({ Adapter, serverName, server, asyncapi })
+      server: this.asyncapi.servers().get(serverName),
+      asyncapi: this.asyncapi,
+      config,
+    })
   }
 
   /**
    * Sets the cluster adapter to use.
    *
    * @param {GleeQuoreClusterAdapter} adapter The adapter.
+   * @param {String} [clusterName] The name of the cluster.
+   * @param {String} [clusterURL] The URL of the cluster.
    */
-  setClusterAdapter(Adapter: typeof GleeQuoreClusterAdapter) {
+  setClusterAdapter(Adapter: typeof GleeQuoreClusterAdapter, clusterName: string = 'cluster', clusterURL: string) {
     this._clusterAdapter = {
       Adapter,
+      clusterName,
+      clusterURL,
     }
   }
 
@@ -290,14 +279,13 @@ export default class GleeQuore {
   async start(): Promise<any[]> {
     const promises = []
 
-    await this.registerAdapters()
-
     this._adapters.forEach((a) => {
       const adapterOptions: GleeQuoreAdapterOptions = {
         glee: this,
         serverName: a.serverName,
         server: a.server,
-        parsedAsyncAPI: a.asyncapi
+        parsedAsyncAPI: a.asyncapi,
+        config: a.config,
       }
 
       a.instance = new a.Adapter(adapterOptions)
@@ -651,108 +639,8 @@ export default class GleeQuore {
     this._internalEvents.on('error', errorCallback)
   }
 
-  private async registerAdapters() {
-    const serverNames = await this.getSelectedServerNames()
-
-    serverNames.forEach((serverName) => {
-      const server: ServerInterface = this.asyncapi.servers().get(serverName)
-
-      if (!server) {
-        throw new Error(
-          `Server "${serverName}" is not defined in the AsyncAPI file.`
-        )
-      }
-
-      const protocol = server.protocol()
-      const remoteServers = this.asyncapi.extensions().get('x-remoteServers')?.value()
-      if (['mqtt', 'mqtts', 'secure-mqtt'].includes(protocol)) {
-        this.addAdapter(MqttAdapter, {
-          serverName,
-          server,
-          asyncapi: this.asyncapi,
-        })
-      } else if (['kafka', 'kafka-secure'].includes(protocol)) {
-        this.addAdapter(KafkaAdapter, {
-          serverName,
-          server,
-          asyncapi: this.asyncapi,
-        })
-      } else if (['amqp', 'amqps'].includes(protocol)) {
-        // TODO: Implement AMQP support
-      } else if (['ws', 'wss'].includes(protocol)) {
-        const configWsAdapter = this.options?.ws?.server?.adapter
-        if (remoteServers && remoteServers.includes(serverName)) {
-          this.addAdapter(WebsocketClientAdapter, {
-            serverName,
-            server,
-            asyncapi: this.asyncapi,
-          })
-        } else {
-          if (!configWsAdapter || configWsAdapter === 'native') {
-            this.addAdapter(WebSocketServerAdapter, {
-              serverName,
-              server,
-              asyncapi: this.asyncapi,
-            })
-          } else if (configWsAdapter === 'socket.io') {
-            this.addAdapter(SocketIOAdapter, {
-              serverName,
-              server,
-              asyncapi: this.asyncapi,
-            })
-          } else if (typeof configWsAdapter === 'object') {
-            this.addAdapter(configWsAdapter, {
-              serverName,
-              server,
-              asyncapi: this.asyncapi,
-            })
-          } else {
-            throw new Error(
-              `Unknown value for websocket.adapter found in glee.config.js: ${this.options?.ws?.server?.adapter}. Allowed values are 'native-websocket', 'socket.io', or a reference to a custom Glee adapter.`
-            )
-          }
-        }
-      } else if (['http', 'https'].includes(protocol)) {
-        if (remoteServers && remoteServers.includes(serverName)) {
-          this.addAdapter(HttpClientAdapter, {
-            serverName,
-            server,
-            asyncapi: this.asyncapi,
-          })
-        } else {
-          this.addAdapter(HttpServerAdapter, {
-            serverName,
-            server,
-            asyncapi: this.asyncapi,
-          })
-        }
-      } else {
-        // TODO: Improve error message with link to repo encouraging the developer to contribute.
-        throw new Error(`Protocol "${server.protocol()}" is not supported yet.`)
-      }
-    })
-
-    if (this.options.cluster) {
-      const { adapter } = this.options.cluster
-
-      if (!adapter || adapter === 'redis') {
-        this.setClusterAdapter(RedisClusterAdapter)
-      } else if (typeof adapter === 'function') {
-        this.setClusterAdapter(adapter)
-      } else {
-        throw new Error(`Unknown value for cluster.adapter in glee.config.js`)
-      }
-    }
-  }
-
   async getSelectedServerNames(): Promise<string[]> {
-    const { includeServers: selectedServerNames } = this.options
-    if (!selectedServerNames || selectedServerNames.length === 0) {
-      return this.asyncapi.servers().all().map(e => e.id())
-    }
-
-    return this.asyncapi.servers().all().map(e => e.id()).filter((name) => {
-      return selectedServerNames.includes(name)
-    })
+    const serverNames = this._adapters.map(a => a.serverName).filter(Boolean)
+    return [...new Set(serverNames)]; // Dedupe the array
   }
 }

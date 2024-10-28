@@ -1,7 +1,6 @@
 import mqtt, { IPublishPacket, MqttClient, QoS } from 'mqtt'
-import Adapter from '../../lib/adapter.js'
-import GleeQuoreMessage from '../../lib/message.js'
-import { MqttAuthConfig, MqttAdapterConfig } from '../../index.d.js'
+import { GleeQuoreAdapter, GleeQuoreMessage } from '@asyncapi/gleequore'
+import { MqttAuthConfig, MqttAdapterConfig } from './index.d.js'
 import { SecuritySchemesInterface as SecurityScheme } from '@asyncapi/parser'
 
 interface IMQTTHeaders {
@@ -27,7 +26,7 @@ enum SecurityTypes {
   USER_PASSWORD = 'userpassword',
   X509 = 'x509',
 }
-class MqttAdapter extends Adapter {
+class MqttAdapter extends GleeQuoreAdapter {
   private client: MqttClient
   private firstConnect: boolean
 
@@ -177,9 +176,7 @@ class MqttAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> {
-    const mqttOptions: MqttAdapterConfig = await this.resolveProtocolConfig(
-      'mqtt'
-    )
+    const mqttOptions: MqttAdapterConfig = await this.resolveConfig()
     const auth: MqttAuthConfig = await this.getAuthConfig(mqttOptions?.auth)
     const subscribedChannels = this.getSubscribedChannels()
     const mqttServerBinding = this.AsyncAPIServer.bindings().get('mqtt')

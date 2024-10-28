@@ -1,14 +1,11 @@
-import Adapter from '../../lib/adapter.js'
-import GleeQuoreMessage from '../../lib/message.js'
+import { GleeQuoreAdapter, GleeQuoreMessage } from '@asyncapi/gleequore'
 import http, { IncomingMessage, ServerResponse } from 'http'
 import { StringDecoder } from 'string_decoder'
-import { validateData } from '../../lib/util.js'
 import * as url from 'url'
-import GleeQuoreAuth from '../../lib/wsHttpAuth.js'
 import { ChannelInterface } from '@asyncapi/parser'
+import GleeQuoreAuth from './wsHttpAuth.js'
 
-
-class HttpAdapter extends Adapter {
+class HttpAdapter extends GleeQuoreAdapter {
   private httpResponses = new Map()
 
   name(): string {
@@ -162,7 +159,7 @@ class HttpAdapter extends Adapter {
   }
 
   async _connect(): Promise<this> {
-    const config = await this.resolveProtocolConfig('http')
+    const config = await this.resolveConfig()
     const httpOptions = config?.server
     const httpServer = httpOptions?.httpServer || http.createServer()
     const asyncapiServerPort = new URL(this.serverUrlExpanded).port || 80
@@ -196,7 +193,7 @@ class HttpAdapter extends Adapter {
 
     const schema = { anyOf: querySchemas }
     const { query } = url.parse(req.url, true)
-    const { isValid, humanReadableError } = validateData(
+    const { isValid, humanReadableError } = this.validate(
       query,
       schema
     )
@@ -217,7 +214,7 @@ class HttpAdapter extends Adapter {
     const schema = { anyOf: headerSchemas }
     const headers = req.headers
 
-    const { isValid, humanReadableError } = validateData(
+    const { isValid, humanReadableError } = this.validate(
       headers,
       schema
     )

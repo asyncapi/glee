@@ -1,10 +1,10 @@
 /* eslint-disable security/detect-object-injection */
-import Adapter from '../../lib/adapter.js'
-import GleeQuoreMessage from '../../lib/message.js'
+import { GleeQuoreAdapter, GleeQuoreMessage } from '@asyncapi/gleequore'
 import ws from 'ws'
-import GleeQuoreAuth from '../../lib/wsHttpAuth.js'
-import { applyAddressParameters } from '../../lib/util.js'
+import GleeQuoreAuth from './wsHttpAuth.js'
 import Debug from 'debug'
+import { ChannelInterface } from '@asyncapi/parser'
+import { substituteParameterInAddress } from './utils.js'
 const debug = Debug("glee:ws:client")
 interface Client {
   channel: string
@@ -12,7 +12,7 @@ interface Client {
   binding?: any
 }
 
-class WsClientAdapter extends Adapter {
+class WsClientAdapter extends GleeQuoreAdapter {
   private clients: Array<Client> = []
 
   name(): string {
@@ -28,7 +28,7 @@ class WsClientAdapter extends Adapter {
   }
 
   private async _connect(): Promise<this> {
-    const channelsOnThisServer = this.getWsChannels()
+    const channelsOnThisServer: string[] = this.getWsChannels()
 
     debug("connecting to ", this.serverName)
     for (const channelName of channelsOnThisServer) {
@@ -44,17 +44,18 @@ class WsClientAdapter extends Adapter {
       const protocol = this.AsyncAPIServer.protocol()
       const serverHost = this.AsyncAPIServer.host()
       const channel = this.parsedAsyncAPI.channels().get(channelName)
+      if (!channel) continue
       const channelAddress = applyAddressParameters(channel)
       let url = new URL(`${protocol}://${serverHost}${channelAddress}`)
       if (authConfig) {
         const modedAuth = await gleeAuth.processClientAuth({ url, headers, query: {} })
-        headers = modedAuth.headers
-        url = modedAuth.url
+        headers = modedAuth?.headers ? modedAuth.headers : headers
+        url = modedAuth?.url ? modedAuth.url : url
       }
       this.clients.push({
         channel: channelName,
         client: new ws(url, { headers }),
-        binding: this.parsedAsyncAPI.channels().get(channelName).bindings().get('ws'),
+        binding: this.parsedAsyncAPI.channels().get(channelName)?.bindings().get('ws'),
       })
     }
 
@@ -82,18 +83,18 @@ class WsClientAdapter extends Adapter {
     return this
   }
 
-  private getWsChannels() {
-    const channels = []
+  private getWsChannels(): string[] {
+    const channels: string[] = []
     for (const channel of this.channelNames) {
-      if (this.parsedAsyncAPI.channels().get(channel).servers().all().length !== 0) { // NOSONAR
+      if (this.parsedAsyncAPI.channels().get(channel)?.servers().all().length !== 0) { // NOSONAR
         if (
           this.parsedAsyncAPI
             .channels().get(channel)
-            .servers().get(this.serverName)
+            ?.servers().get(this.serverName)
         ) {
           channels.push(channel)
         }
-      } else {
+      } else if (channel) {
         channels.push(channel)
       }
     }
@@ -120,6 +121,16 @@ class WsClientAdapter extends Adapter {
       channel: eventName,
     })
   }
+}
+
+function applyAddressParameters(channel: ChannelInterface, message?: GleeQuoreMessage): string | undefined {
+  let address = channel.address()
+  if (!address) return undefined
+  
+  for (const parameter of channel.parameters()) {
+    address = substituteParameterInAddress(parameter, address, message)
+  }
+  return address
 }
 
 export default WsClientAdapter

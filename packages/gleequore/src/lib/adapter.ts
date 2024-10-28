@@ -5,8 +5,9 @@ import uriTemplates from 'uri-templates'
 import GleeQuoreConnection from './connection.js'
 import GleeQuore from '../index.js'
 import GleeQuoreMessage from './message.js'
-import { resolveFunctions } from './util.js'
-import { AuthProps } from '../index.d.js'
+import { resolveFunctions, validateData } from '@asyncapi/glee-shared-utils'
+import { AuthProps, GleeQuoreAdapterOptions } from '../index.d.js'
+import GleeQuoreError from '../errors.js'
 
 export type EnrichedEvent = {
   connection?: GleeQuoreConnection
@@ -21,13 +22,6 @@ export type AuthEvent = {
   doc: any
 }
 
-export interface GleeQuoreAdapterOptions {
-  glee: GleeQuore;
-  serverName: string;
-  server: ServerInterface;
-  parsedAsyncAPI: AsyncAPIDocument;
-}
-
 class GleeQuoreAdapter extends EventEmitter {
   private _glee: GleeQuore
   private _serverName: string
@@ -38,15 +32,16 @@ class GleeQuoreAdapter extends EventEmitter {
   private _channelAddresses: string[]
   private _connections: GleeQuoreConnection[]
   private _serverUrlExpanded: string
+  private _config: object
 
 
-  constructor({ glee, serverName, server, parsedAsyncAPI }: GleeQuoreAdapterOptions) {
+  constructor({ glee, serverName, server, parsedAsyncAPI, config }: GleeQuoreAdapterOptions) {
     super()
 
     this._glee = glee
     this._serverName = serverName
     this._AsyncAPIServer = server
-
+    this._config = config
     this._parsedAsyncAPI = parsedAsyncAPI
     this._channelNames = this._parsedAsyncAPI.channels().all().map(e => e.id())
     this._channelAddresses = this._parsedAsyncAPI.channels().all().map(c => c.address())
@@ -209,11 +204,9 @@ class GleeQuoreAdapter extends EventEmitter {
     return this._serverUrlExpanded
   }
 
-  async resolveProtocolConfig(protocol: string) {
-    if (!this.app.options[protocol]) return undefined
-    const protocolConfig = { ...this.app.options[protocol] }
-    if (!protocolConfig) return undefined
-
+  async resolveConfig() {
+    if (!this._config) return undefined
+    const protocolConfig = { ...this._config } as any
     await resolveFunctions(protocolConfig)
     return protocolConfig
   }
@@ -263,6 +256,19 @@ class GleeQuoreAdapter extends EventEmitter {
     message: GleeQuoreMessage /* eslint-disable-line @typescript-eslint/no-unused-vars */
   ): Promise<any> {
     throw new Error('Method `send` is not implemented.')
+  }
+
+  validate(data: any, schema: object, triggerError: boolean = false) {
+    const { isValid, errors, humanReadableError } = validateData(data, schema)
+    if (!isValid && triggerError) {
+      throw new GleeQuoreError({ humanReadableError, errors })
+    }
+
+    return {
+      isValid,
+      errors,
+      humanReadableError,
+    }
   }
 }
 
