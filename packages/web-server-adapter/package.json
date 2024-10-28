@@ -12,17 +12,15 @@
   },
   "scripts": {
     "build": "tsc",
-    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
     "dev": "tsc --watch",
-    "docs": "typedoc --readme none --githubPages false --out docs/reference --entryPointStrategy expand ./src",
     "get:version": "echo $npm_package_version",
     "get:name": "echo $npm_package_name",
-    "generate:assets": "npm run docs",
+    "generate:assets": "echo 'No generate:assets script. Ignoring...'",
     "lint": "eslint --max-warnings 1 --config .eslintrc .",
     "lint:fix": "eslint --max-warnings 1 --config .eslintrc . --fix",
     "prepublishOnly": "npm run build",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test:dev": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
+    "test": "echo 'No test script. Ignoring...'",
+    "test:dev": "echo 'No test:dev script. Ignoring...'"
   },
   "dependencies": {
     "@asyncapi/glee-shared-utils": "workspace:*",

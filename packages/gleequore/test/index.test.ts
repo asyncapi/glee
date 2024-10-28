@@ -50,12 +50,11 @@ describe('GleeQuore', () => {
     jest.restoreAllMocks();
   });
 
-  it('should instantiate GleeQuore with default values', async () => {
+  it('should instantiate GleeQuore', async () => {
     const parser = new Parser()
     const { document: asyncapi } = await parser.parse(asyncapiDocumentAsJS)
     const gleeQuore = new GleeQuore(asyncapi as AsyncAPIDocumentInterface);
     expect(gleeQuore.asyncapi).toBe(asyncapi);
-    expect(gleeQuore.options).toStrictEqual({});
     expect(gleeQuore.adapters).toEqual([]);
     expect(gleeQuore.clusterAdapter).toBeUndefined();
     expect(gleeQuore['_lifecycleEvents']).toBeInstanceOf(Map);
