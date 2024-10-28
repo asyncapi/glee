@@ -83,7 +83,7 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
         shell: bash
-        run: npm ci
+        run: npm install
       - if: steps.packagejson.outputs.exists == 'true'
         name: Build dependency
         shell: bash

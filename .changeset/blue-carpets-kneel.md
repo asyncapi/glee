@@ -9,4 +9,4 @@
 "@asyncapi/glee-web-server-adapter": minor
 ---
 
-Initial release (previous release failed)
+Initial release of GleeQuore and adapters.
