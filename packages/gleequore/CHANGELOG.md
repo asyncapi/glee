@@ -1,5 +1,12 @@
 # @asyncapi/gleequore
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies [c8e50e7]
+  - @asyncapi/glee-shared-utils@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes
