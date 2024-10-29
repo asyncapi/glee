@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/glee-web-adapter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "HTTP and WebSocket client adapter for Glee.",
   "exports": {
     "./http": "./dist/http.js",

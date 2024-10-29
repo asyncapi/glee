@@ -1,5 +1,17 @@
 # @asyncapi/glee-kafka-adapter
 
+## 0.2.0
+
+### Minor Changes
+
+- c8e50e7: Publish packages to npm as public
+
+### Patch Changes
+
+- Updated dependencies [c8e50e7]
+  - @asyncapi/glee-shared-utils@0.2.0
+  - @asyncapi/gleequore@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
