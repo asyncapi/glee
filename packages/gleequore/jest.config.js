@@ -14,6 +14,17 @@ export default {
     '^nimma/legacy$': '<rootDir>/../../node_modules/nimma/dist/legacy/cjs/index.js',
     '^nimma/fallbacks$':
       '<rootDir>/../../node_modules/nimma/dist/legacy/cjs/fallbacks/index.js',
+    '^@asyncapi/glee-shared-utils$': '<rootDir>/../../packages/shared-utils/index.ts'
   },
-  transform: {},
+  transform: {
+    '^.+\\.tsx?$': ['ts-jest', {
+      useESM: true,
+      tsconfig: {
+        rootDir: "../../",
+        baseUrl: ".",
+      }
+    }]
+  },
+  roots: ['<rootDir>/src/', '<rootDir>/test/', '<rootDir>/../../packages/shared-utils/'],
+  modulePaths: ['<rootDir>/src/', '<rootDir>/../../packages/shared-utils/'],
 }
