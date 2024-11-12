@@ -2,8 +2,8 @@ import EventEmitter from 'events'
 import GleeQuoreConnection from './connection.js'
 import { OperationInterface } from '@asyncapi/parser'
 
-type MessageHeaders = { [key: string]: any }
-type QueryParam = { [key: string]: string } | { [key: string]: string[] }
+export type MessageHeaders = { [key: string]: any }
+export type QueryParam = { [key: string]: string } | { [key: string]: string[] }
 
 export interface IGleeQuoreMessageConstructor {
   payload?: any

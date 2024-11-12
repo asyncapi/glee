@@ -6,7 +6,8 @@ import GleeQuoreConnection from './connection.js'
 import GleeQuore from '../index.js'
 import GleeQuoreMessage from './message.js'
 import { resolveFunctions, validateData } from '@asyncapi/glee-shared-utils'
-import { AuthProps, GleeQuoreAdapterOptions } from '../index.d.js'
+import type { IValidateDataReturn } from '@asyncapi/glee-shared-utils'
+import { AuthProps, GleeQuoreAdapterOptions } from '../index.js'
 import GleeQuoreError from '../errors.js'
 
 export type EnrichedEvent = {
@@ -258,7 +259,7 @@ class GleeQuoreAdapter extends EventEmitter {
     throw new Error('Method `send` is not implemented.')
   }
 
-  validate(data: any, schema: object, triggerError = false) {
+  validate(data: any, schema: object, triggerError = false): IValidateDataReturn {
     const { isValid, errors, humanReadableError } = validateData(data, schema)
     if (!isValid && triggerError) {
       throw new GleeQuoreError({ humanReadableError, errors })

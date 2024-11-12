@@ -39,6 +39,10 @@ const { document: asyncapi } = await parser.parse({
   },
 })
 
+if (!asyncapi) {
+  throw new Error('Not a valid AsyncAPI document')
+}
+
 const gleeQuore = new GleeQuore(asyncapi)
 
 // gleeQuore.addAdapter(HttpAdapter, 'test', {

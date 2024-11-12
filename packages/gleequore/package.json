@@ -8,10 +8,9 @@
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   },
   "files": [
-    "dist",
-    "./src/index.d.ts"
+    "dist"
   ],
-  "types": "./src/index.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",

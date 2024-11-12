@@ -3,7 +3,7 @@ import Ajv from 'ajv'
 import betterAjvErrors from 'better-ajv-errors'
 import { pathToRegexp } from 'path-to-regexp'
 
-interface IValidateDataReturn {
+export interface IValidateDataReturn {
   errors?: void | betterAjvErrors.IOutputError[]
   humanReadableError?: void | betterAjvErrors.IOutputError[]
   isValid: boolean | PromiseLike<any>

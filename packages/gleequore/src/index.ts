@@ -9,7 +9,7 @@ import GleeQuoreRouter, {
   ChannelMiddlewareTuple,
   GenericMiddleware,
 } from './lib/router.js'
-import GleeQuoreMessage, { IGleeQuoreMessageConstructor } from './lib/message.js'
+import GleeQuoreMessage, { IGleeQuoreMessageConstructor, QueryParam } from './lib/message.js'
 import { matchChannel, getParams, getMessagesSchema } from '@asyncapi/glee-shared-utils'
 import { duplicateMessage } from './lib/utils.js'
 import GleeQuoreConnection from './lib/connection.js'
@@ -20,8 +20,87 @@ import json2string from './middlewares/json2string.js'
 import validate from './middlewares/validate.js'
 import existsInAsyncAPI from './middlewares/existsInAsyncAPI.js'
 import validateConnection from './middlewares/validateConnection.js'
-import { AsyncAPIDocumentInterface } from '@asyncapi/parser'
-import { AdapterRecord, AuthFunctionInfo, ClusterAdapterRecord, GleeQuoreFunction, GleeQuoreLifecycleFunction, GleeQuoreLifecycleEvent, GleeQuoreFunctionEvent, GleeQuoreAuthFunctionEvent, GleeQuoreAdapterOptions } from './index.d.js'
+import type { AsyncAPIDocumentInterface, ServerInterface } from '@asyncapi/parser'
+
+export interface AuthFunctionInfo {
+  clientAuth?: GleeQuoreAuthFunction
+  serverAuth?: GleeQuoreAuthFunction
+}
+
+export type AuthProps = {
+  getToken: () => string
+  getUserPass: () => {
+    username: string
+    password: string
+  }
+  getCert: () => string
+  getOauthToken: () => string
+  getHttpAPIKeys: (name: string) => string
+  getAPIKeys: () => string
+}
+
+export type GleeQuoreClusterAdapterConfig = {
+  adapter?: string | typeof GleeQuoreClusterAdapter
+  name?: string
+  url: string
+}
+
+export type GleeQuoreFunctionEvent = {
+  request: GleeQuoreMessage
+  app: GleeQuore
+  serverName: string
+  connection?: GleeQuoreConnection
+  payload?: any
+  query?: QueryParam
+  headers?: { [key: string]: string }
+  channel?: string
+}
+
+export type GleeQuoreLifecycleEvent = Omit<GleeQuoreFunctionEvent, "request">
+
+export type GleeQuoreAuthFunctionEvent = {
+  app: GleeQuore
+  authProps: AuthProps
+  done: any
+  serverName: string
+  doc: any
+}
+
+export type GleeQuoreFunction = (
+  event: GleeQuoreFunctionEvent
+) => Promise<any> | any
+
+export type GleeQuoreLifecycleFunction = (
+  event: GleeQuoreLifecycleEvent
+) => Promise<any> | any
+
+export type GleeQuoreAuthFunction = (
+  event: GleeQuoreAuthFunctionEvent
+) => Promise<GleeQuoreAuthFunctionEvent> | void
+
+export interface GleeQuoreAdapterOptions {
+  glee: GleeQuore;
+  serverName: string;
+  server: ServerInterface;
+  parsedAsyncAPI: AsyncAPIDocumentInterface;
+  config?: object
+}
+
+export type AdapterRecord = {
+  Adapter: typeof GleeQuoreAdapter
+  instance?: GleeQuoreAdapter
+  serverName: string
+  server: ServerInterface
+  asyncapi: AsyncAPIDocumentInterface
+  config?: object
+}
+
+export type ClusterAdapterRecord = {
+  Adapter: typeof GleeQuoreClusterAdapter
+  instance?: GleeQuoreClusterAdapter,
+  clusterName?: string,
+  clusterURL?: string
+}
 
 const debug = Debug('gleequore')
 
@@ -641,3 +720,9 @@ export default class GleeQuore {
     return [...new Set(serverNames)] // Dedupe the array
   }
 }
+
+export { default as GleeQuoreAdapter } from './lib/adapter.js'
+export { default as GleeQuoreMessage } from './lib/message.js'
+export { default as GleeQuoreConnection } from './lib/connection.js'
+export { default as GleeQuoreClusterAdapter } from './lib/cluster.js'
+export { default as GleeQuoreError } from './errors.js'

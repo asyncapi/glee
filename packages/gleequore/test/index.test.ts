@@ -1,10 +1,7 @@
 import { describe, it, jest, beforeEach, expect } from '@jest/globals';
 import { AsyncAPIDocumentInterface } from '@asyncapi/parser';
 import GleeQuore from '../src/index';
-import { EventEmitter } from 'events';
 import { Parser } from '@asyncapi/parser'
-import { GleeQuoreAuthFunction, GleeQuoreAuthFunctionEvent } from '../src/index.d';
-import GleeQuoreConnection from '../src/lib/connection';
 
 const asyncapiDocumentAsJS = {
   asyncapi: '3.0.0',
