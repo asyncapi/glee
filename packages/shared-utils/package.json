@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/glee-shared-utils",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Shared utilities for Glee",
   "main": "dist/index.js",
   "type": "module",

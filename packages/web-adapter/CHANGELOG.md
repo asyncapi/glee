@@ -1,5 +1,13 @@
 # @asyncapi/glee-web-adapter
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [d5e7672]
+  - @asyncapi/glee-shared-utils@0.2.1
+  - @asyncapi/gleequore@0.1.2
+
 ## 0.2.0
 
 ### Minor Changes
